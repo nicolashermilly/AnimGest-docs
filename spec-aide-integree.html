@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Spec Système d'Aide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f6f3;
+  --bg2: #ffffff;
+  --bg3: #f0ede8;
+  --border: #e2ddd6;
+  --border2: #c8c2b8;
+  --ink: #1a1714;
+  --ink2: #6b6560;
+  --ink3: #a09b94;
+  --green: #2a7a5a;
+  --green2: #e8f5ef;
+  --green3: #d0ead8;
+  --amber: #9a6820;
+  --amber2: #fef3e2;
+  --blue: #1a5fa0;
+  --blue2: #e8f0fb;
+  --red: #b83030;
+  --red2: #fdeaea;
+  --purple: #5a3fa0;
+  --purple2: #ede8fc;
+  --r: 12px;
+  --rs: 7px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-panel: 0 8px 40px rgba(0,0,0,0.16), 0 2px 8px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.6; }
+
+/* ─── NAV ─────────────────────────────────────── */
+.nav {
+  background: var(--bg2); border-bottom: 1px solid var(--border);
+  padding: 0 32px; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 10;
+}
+.nav-brand { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+.nav-sub { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--ink3); background: var(--bg3); padding: 3px 10px; border-radius: 20px; }
+
+/* ─── MAIN ────────────────────────────────────── */
+.main { max-width: 1100px; margin: 0 auto; padding: 40px 32px 100px; }
+
+/* ─── HERO ────────────────────────────────────── */
+.hero { margin-bottom: 48px; }
+.hero h1 { font-family: 'Syne', sans-serif; font-size: 34px; font-weight: 800; letter-spacing: -1px; line-height: 1.15; margin-bottom: 8px; }
+.hero h1 em { font-style: normal; color: var(--green); }
+.hero-sub { font-size: 14px; color: var(--ink2); max-width: 580px; }
+
+/* ─── SECTION ─────────────────────────────────── */
+.section { margin-bottom: 52px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.section-num { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; color: var(--ink3); background: var(--bg3); border: 1px solid var(--border); padding: 3px 9px; border-radius: 4px; }
+.section-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -.3px; }
+.section-line { flex: 1; height: 1px; background: var(--border); }
+
+/* ─── ARCHI SCHEMA ────────────────────────────── */
+.archi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.archi-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 24px;
+}
+.archi-card-title {
+  font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+  margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+}
+.archi-icon { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.archi-row { display: flex; gap: 8px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--border); }
+.archi-row:last-child { border-bottom: none; }
+.archi-label { font-size: 12px; color: var(--ink2); flex: 1; }
+.archi-val { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--ink); }
+.pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+.p-green { background: var(--green2); color: var(--green); }
+.p-blue { background: var(--blue2); color: var(--blue); }
+.p-amber { background: var(--amber2); color: var(--amber); }
+.p-purple { background: var(--purple2); color: var(--purple); }
+.p-gray { background: var(--bg3); color: var(--ink2); border: 1px solid var(--border); }
+
+/* ─── CONTENU MODULES ─────────────────────────── */
+.modules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+.module-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--rs); padding: 16px;
+  border-top: 3px solid transparent;
+}
+.module-card.m-green { border-top-color: var(--green); }
+.module-card.m-blue { border-top-color: var(--blue); }
+.module-card.m-amber { border-top-color: #c28820; }
+.module-card.m-purple { border-top-color: var(--purple); }
+.module-card.m-red { border-top-color: var(--red); }
+.module-card.m-teal { border-top-color: #0f8080; }
+.module-title { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+.module-count { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink3); }
+.article-item { font-size: 11px; color: var(--ink2); padding: 4px 0; border-bottom: 1px solid var(--bg3); display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+.article-item:last-child { border-bottom: none; }
+.article-item::before { content: '→'; color: var(--ink3); flex-shrink: 0; font-size: 10px; margin-top: 1px; }
+
+/* ─── DEMO SIMULEE ────────────────────────────── */
+.demo-layout {
+  display: grid; grid-template-columns: 1fr 380px; gap: 24px;
+  align-items: start;
+}
+.demo-app {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.demo-app-bar {
+  background: var(--bg3); border-bottom: 1px solid var(--border);
+  padding: 10px 16px; display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--ink2);
+}
+.demo-app-dot { width: 10px; height: 10px; border-radius: 50%; }
+.demo-app-body { padding: 20px; min-height: 380px; position: relative; }
+.demo-page-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.demo-page-sub { font-size: 12px; color: var(--ink2); margin-bottom: 20px; }
+.demo-field { margin-bottom: 14px; }
+.demo-field label { font-size: 11px; font-weight: 700; color: var(--ink2); display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .05em; }
+.demo-input { width: 100%; height: 34px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--rs); }
+.demo-textarea { width: 100%; height: 70px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--rs); }
+.demo-help-btn {
+  position: absolute; bottom: 20px; right: 20px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--green); color: #fff;
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 12px rgba(42,122,90,0.4);
+  cursor: pointer; border: none;
+  transition: transform .15s;
+}
+.demo-help-btn:hover { transform: scale(1.08); }
+.demo-help-btn.active { background: var(--ink); }
+
+/* ─── PANNEAU CONTEXTUEL ──────────────────────── */
+.help-panel {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); box-shadow: var(--shadow-panel);
+  overflow: hidden; font-size: 13px;
+}
+.panel-header {
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.panel-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; }
+.panel-context { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--ink3); background: var(--bg3); padding: 2px 8px; border-radius: 4px; margin-top: 2px; }
+.panel-search {
+  margin: 12px 16px; display: flex; align-items: center;
+  gap: 8px; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--rs); padding: 7px 12px;
+}
+.panel-search-icon { font-size: 14px; color: var(--ink3); }
+.panel-search input { border: none; background: transparent; font-size: 13px; color: var(--ink); width: 100%; outline: none; font-family: 'Lato', sans-serif; }
+.panel-search input::placeholder { color: var(--ink3); }
+.panel-section-title { font-size: 10px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: .07em; padding: 4px 16px 8px; }
+.faq-item { border-bottom: 1px solid var(--bg3); }
+.faq-item:last-of-type { border-bottom: none; }
+.faq-q {
+  padding: 11px 16px; cursor: pointer;
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; font-weight: 400; color: var(--ink);
+  transition: background .1s;
+}
+.faq-q:hover { background: var(--bg3); }
+.faq-q.open { color: var(--green); font-weight: 700; background: var(--green2); }
+.faq-chevron { font-size: 10px; color: var(--ink3); flex-shrink: 0; margin-top: 3px; transition: transform .2s; }
+.faq-q.open .faq-chevron { transform: rotate(90deg); color: var(--green); }
+.faq-a {
+  padding: 0 16px 12px 36px;
+  font-size: 12px; color: var(--ink2); line-height: 1.6;
+  display: none; background: var(--green2);
+}
+.faq-a.open { display: block; }
+.faq-a code { font-family: 'DM Mono', monospace; font-size: 11px; background: var(--bg3); padding: 1px 5px; border-radius: 3px; color: var(--green); }
+.panel-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg3);
+}
+.panel-footer-link { font-size: 12px; color: var(--green); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+.panel-footer-link:hover { text-decoration: underline; }
+.panel-count { font-size: 11px; color: var(--ink3); font-family: 'DM Mono', monospace; }
+
+/* ─── CENTRE D'AIDE ───────────────────────────── */
+.aide-layout { display: grid; grid-template-columns: 200px 1fr; gap: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); }
+.aide-sidebar { background: var(--bg3); border-right: 1px solid var(--border); padding: 20px 0; }
+.aide-sidebar-title { font-size: 10px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: .07em; padding: 0 16px 10px; }
+.aide-nav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; font-size: 13px; cursor: pointer;
+  transition: background .1s; color: var(--ink2);
+  border-left: 2px solid transparent;
+}
+.aide-nav-item:hover { background: var(--bg2); color: var(--ink); }
+.aide-nav-item.active { background: var(--bg2); color: var(--green); font-weight: 700; border-left-color: var(--green); }
+.aide-nav-count { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink3); margin-left: auto; }
+.aide-content { padding: 24px; }
+.aide-search-wrap { margin-bottom: 20px; }
+.aide-search {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--rs); padding: 10px 14px; width: 100%;
+}
+.aide-search input { border: none; background: transparent; font-size: 14px; color: var(--ink); width: 100%; outline: none; font-family: 'Lato', sans-serif; }
+.aide-search input::placeholder { color: var(--ink3); }
+.aide-module-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.aide-faq-item { border: 1px solid var(--border); border-radius: var(--rs); margin-bottom: 8px; overflow: hidden; }
+.aide-faq-q {
+  padding: 13px 16px; cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; font-weight: 400;
+  transition: background .1s;
+  background: var(--bg2);
+}
+.aide-faq-q:hover { background: var(--bg3); }
+.aide-faq-q.open { background: var(--green2); color: var(--green); font-weight: 700; }
+.aide-faq-chevron { font-size: 11px; color: var(--ink3); flex-shrink: 0; margin-left: auto; transition: transform .2s; }
+.aide-faq-q.open .aide-faq-chevron { transform: rotate(90deg); color: var(--green); }
+.aide-faq-a { display: none; padding: 12px 16px 14px; font-size: 13px; color: var(--ink2); line-height: 1.65; background: var(--green2); border-top: 1px solid var(--green3); }
+.aide-faq-a.open { display: block; }
+.aide-faq-a code { font-family: 'DM Mono', monospace; font-size: 11px; background: rgba(255,255,255,.6); padding: 1px 5px; border-radius: 3px; color: var(--green); }
+.aide-tag { display: inline-block; font-size: 10px; color: var(--ink3); background: var(--bg3); padding: 2px 7px; border-radius: 3px; margin-right: 4px; font-family: 'DM Mono', monospace; }
+
+/* ─── INTEGRATION ─────────────────────────────── */
+.code-block {
+  background: #1a1714; color: #e8e4de;
+  border-radius: var(--rs); padding: 18px 20px;
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  line-height: 1.7; overflow-x: auto; margin-bottom: 16px;
+}
+.code-block .ck { color: #88c0d0; }
+.code-block .cv { color: #a3be8c; }
+.code-block .cs { color: #ebcb8b; }
+.code-block .cm { color: #616e88; font-style: italic; }
+.code-block .ct { color: #b48ead; }
+
+@media (max-width: 900px) {
+  .archi-grid { grid-template-columns: 1fr; }
+  .modules-grid { grid-template-columns: 1fr 1fr; }
+  .demo-layout { grid-template-columns: 1fr; }
+  .aide-layout { grid-template-columns: 1fr; }
+  .aide-sidebar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-dot"></div>
+    PetSuite
+  </div>
+  <span class="nav-sub">Spec — Système d'aide intégré</span>
+</nav>
+
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Système d'aide<br><em>intégré</em></h1>
+    <p class="hero-sub">Architecture + contenu + démo interactive — panneau contextuel par page + centre d'aide global. Zéro backend, contenu statique JSON, intégration Next.js.</p>
+  </div>
+
+  <!-- 01 ARCHITECTURE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Architecture</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="archi-grid">
+      <div class="archi-card">
+        <div class="archi-card-title">
+          <div class="archi-icon" style="background:var(--green2);">💬</div>
+          HelpPanel — Panneau contextuel
+        </div>
+        <div class="archi-row"><span class="archi-label">Déclencheur</span><span class="archi-val">Bouton ? fixe bas-droit</span></div>
+        <div class="archi-row"><span class="archi-label">Détection page</span><span class="archi-val">usePathname() Next.js</span></div>
+        <div class="archi-row"><span class="archi-label">Contenu affiché</span><span class="archi-val">4–5 articles filtrés par page[]</span></div>
+        <div class="archi-row"><span class="archi-label">Recherche</span><span class="archi-val">Locale dans le panneau</span></div>
+        <div class="archi-row"><span class="archi-label">Fermeture</span><span class="archi-val">Clic extérieur / Escape</span></div>
+        <div class="archi-row"><span class="archi-label">Lien sortant</span><span class="archi-val">→ /app/aide</span></div>
+        <div class="archi-row"><span class="archi-label">Présent sur</span><span class="archi-val">Toutes les pages /app/*</span></div>
+        <div class="archi-row"><span class="archi-label">Effort dev</span><span class="pill p-green">~4h</span></div>
+      </div>
+
+      <div class="archi-card">
+        <div class="archi-card-title">
+          <div class="archi-icon" style="background:var(--blue2);">📖</div>
+          Centre d'aide — /app/aide
+        </div>
+        <div class="archi-row"><span class="archi-label">Accès</span><span class="archi-val">Menu principal + panel contextuel</span></div>
+        <div class="archi-row"><span class="archi-label">Recherche</span><span class="archi-val">Plein texte (titre + corps + tags)</span></div>
+        <div class="archi-row"><span class="archi-label">Navigation</span><span class="archi-val">6 modules en sidebar</span></div>
+        <div class="archi-row"><span class="archi-label">Format articles</span><span class="archi-val">Accordéon Q/R, 2–5 lignes max</span></div>
+        <div class="archi-row"><span class="archi-label">URL ancrable</span><span class="archi-val">/app/aide#edc-creer-fiche</span></div>
+        <div class="archi-row"><span class="archi-label">Backend</span><span class="archi-val">Aucun — JSON statique</span></div>
+        <div class="archi-row"><span class="archi-label">Volume</span><span class="archi-val">~60 articles, 6 modules</span></div>
+        <div class="archi-row"><span class="archi-label">Effort dev</span><span class="pill p-blue">~6h</span></div>
+      </div>
+
+      <div class="archi-card">
+        <div class="archi-card-title">
+          <div class="archi-icon" style="background:var(--amber2);">📁</div>
+          Structure fichiers
+        </div>
+        <div class="code-block" style="margin-bottom:0;font-size:11px;">
+<span class="cv">src/</span>
+  <span class="cv">lib/</span>
+    <span class="cs">help-content.ts</span>     <span class="cm">← source de vérité JSON</span>
+  <span class="cv">components/</span>
+    <span class="cs">HelpPanel.tsx</span>       <span class="cm">← panneau flottant</span>
+    <span class="cs">HelpButton.tsx</span>      <span class="cm">← bouton ? (remplace existant)</span>
+  <span class="cv">app/app/</span>
+    <span class="cs">layout.tsx</span>          <span class="cm">← &lt;HelpPanel /&gt; ici (1 fois)</span>
+    <span class="cv">aide/</span>
+      <span class="cs">page.tsx</span>          <span class="cm">← centre d'aide complet</span></div>
+      </div>
+
+      <div class="archi-card">
+        <div class="archi-card-title">
+          <div class="archi-icon" style="background:var(--purple2);">🔖</div>
+          Structure d'un article JSON
+        </div>
+        <div class="code-block" style="margin-bottom:0;font-size:11px;">
+<span class="ct">interface</span> <span class="ck">HelpArticle</span> {
+  <span class="cv">id</span>:      <span class="ct">string</span>;          <span class="cm">// 'edc-creer-fiche'</span>
+  <span class="cv">module</span>: <span class="ct">string</span>;          <span class="cm">// 'EDC / CAC'</span>
+  <span class="cv">pages</span>:  <span class="ct">string</span>[];        <span class="cm">// ['/seances/[id]/etude-...']</span>
+  <span class="cv">titre</span>:  <span class="ct">string</span>;          <span class="cm">// question affichée</span>
+  <span class="cv">corps</span>:  <span class="ct">string</span>;          <span class="cm">// réponse (2–5 lignes)</span>
+  <span class="cv">tags</span>:   <span class="ct">string</span>[];        <span class="cm">// ['edc','fiche','créer']</span>
+}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 CONTENU -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">Contenu — 6 modules, ~60 articles</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="modules-grid">
+      <div class="module-card m-green">
+        <div class="module-title">🐾 Animaux <span class="module-count">8 articles</span></div>
+        <div class="article-item">Créer un animal — numéro de puce</div>
+        <div class="article-item">Modifier les informations d'un animal</div>
+        <div class="article-item">Associer deux races</div>
+        <div class="article-item">Comprendre le score CAC</div>
+        <div class="article-item">Consulter l'évolution CAC</div>
+        <div class="article-item">Ajouter une photo</div>
+        <div class="article-item">Lier un animal à un client</div>
+        <div class="article-item">Archiver un animal</div>
+      </div>
+
+      <div class="module-card m-blue">
+        <div class="module-title">📅 Séances <span class="module-count">10 articles</span></div>
+        <div class="article-item">Créer une séance depuis l'agenda</div>
+        <div class="article-item">Types de séance : EDC / Suivi / Garde</div>
+        <div class="article-item">Changer le statut d'une séance</div>
+        <div class="article-item">Lier une séance à un devis</div>
+        <div class="article-item">Générer un devis depuis une séance</div>
+        <div class="article-item">Saisir un compte-rendu</div>
+        <div class="article-item">Accéder à la fiche EDC</div>
+        <div class="article-item">Accéder au suivi CAC</div>
+        <div class="article-item">Annuler une séance</div>
+        <div class="article-item">Configurer les couleurs par type</div>
+      </div>
+
+      <div class="module-card m-amber">
+        <div class="module-title">🧠 EDC / CAC <span class="module-count">12 articles</span></div>
+        <div class="article-item">Qu'est-ce que l'Étude Comportementale ?</div>
+        <div class="article-item">Remplir les 7 sections de la fiche EDC</div>
+        <div class="article-item">Ajouter un problème comportemental</div>
+        <div class="article-item">Sauvegarder une fiche en cours</div>
+        <div class="article-item">Qu'est-ce que le CAC ?</div>
+        <div class="article-item">Cocher les critères acquis</div>
+        <div class="article-item">Comprendre le pré-remplissage CAC</div>
+        <div class="article-item">Lire l'onglet Évolution</div>
+        <div class="article-item">Personnaliser les 14 libellés CAC</div>
+        <div class="article-item">Personnaliser les libellés EDC</div>
+        <div class="article-item">EDC et CAC sont-ils liés ?</div>
+        <div class="article-item">Exporter la fiche EDC en PDF</div>
+      </div>
+
+      <div class="module-card m-purple">
+        <div class="module-title">💶 Facturation <span class="module-count">10 articles</span></div>
+        <div class="article-item">Créer un devis depuis zéro</div>
+        <div class="article-item">Transformer un devis en facture</div>
+        <div class="article-item">Saisir un règlement partiel</div>
+        <div class="article-item">Créer un avoir</div>
+        <div class="article-item">Numérotation automatique FAC/DCE</div>
+        <div class="article-item">Comprendre le reste à payer</div>
+        <div class="article-item">Exporter le FEC</div>
+        <div class="article-item">Clôturer un exercice</div>
+        <div class="article-item">Ajouter une remise</div>
+        <div class="article-item">Configurer les taux de TVA</div>
+      </div>
+
+      <div class="module-card m-red">
+        <div class="module-title">⚙️ Paramètres <span class="module-count">10 articles</span></div>
+        <div class="article-item">Configurer les informations société</div>
+        <div class="article-item">Ajouter un utilisateur</div>
+        <div class="article-item">Attribuer un rôle</div>
+        <div class="article-item">Configurer le SMTP</div>
+        <div class="article-item">Gérer le catalogue articles</div>
+        <div class="article-item">Personnaliser les 14 critères CAC</div>
+        <div class="article-item">Personnaliser les 60 libellés EDC</div>
+        <div class="article-item">Configurer les conditions de paiement</div>
+        <div class="article-item">Paramétrer les comptes comptables</div>
+        <div class="article-item">Personnaliser les couleurs de séance</div>
+      </div>
+
+      <div class="module-card m-teal">
+        <div class="module-title">📊 CRM <span class="module-count">8 articles</span></div>
+        <div class="article-item">Créer un lead</div>
+        <div class="article-item">Convertir un lead en client</div>
+        <div class="article-item">Gérer le pipeline opportunités</div>
+        <div class="article-item">Saisir une activité (appel, RDV)</div>
+        <div class="article-item">Ajouter une note CRM</div>
+        <div class="article-item">Créer une campagne</div>
+        <div class="article-item">Cibler des contacts</div>
+        <div class="article-item">Utiliser les tags CRM</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 DEMO PANNEAU CONTEXTUEL -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">Démo — Panneau contextuel</span>
+      <div class="section-line"></div>
+    </div>
+    <p style="font-size:13px;color:var(--ink2);margin-bottom:20px;">Simulation du panneau sur la page <code style="font-family:'DM Mono',monospace;font-size:11px;background:var(--bg3);padding:2px 6px;border-radius:4px;">/app/seances/[id]/suivi-cac</code> — cliquez sur les questions pour les ouvrir.</p>
+
+    <div class="demo-layout">
+      <!-- App simulée -->
+      <div class="demo-app">
+        <div class="demo-app-bar">
+          <div class="demo-app-dot" style="background:#ef9f27;"></div>
+          <div class="demo-app-dot" style="background:#1d9e75;margin-left:2px;"></div>
+          <div class="demo-app-dot" style="background:#e24b4a;margin-left:2px;"></div>
+          <span style="margin-left:8px;font-family:'DM Mono',monospace;font-size:10px;">/app/seances/42/suivi-cac</span>
+        </div>
+        <div class="demo-app-body">
+          <div class="demo-page-title">Suivi CAC</div>
+          <div class="demo-page-sub">Rousseau · Titan · séance du 14/03/2026</div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:16px;margin-bottom:16px;">
+            <div style="font-size:11px;font-weight:700;color:var(--ink2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em;">Score actuel</div>
+            <div style="font-size:28px;font-family:'Syne',sans-serif;font-weight:800;color:var(--ink);margin-bottom:8px;">3<span style="font-size:14px;color:var(--ink3);font-weight:400;">/14</span></div>
+            <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:21%;height:100%;background:var(--amber);border-radius:3px;"></div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:var(--green2);border:2px solid var(--green3);border-radius:var(--rs);padding:10px 12px;font-size:12px;font-weight:700;color:var(--green);">✓ Sociabilisation chiens</div>
+            <div style="background:var(--green2);border:2px solid var(--green3);border-radius:var(--rs);padding:10px 12px;font-size:12px;font-weight:700;color:var(--green);">✓ Marche en laisse</div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;font-size:12px;color:var(--ink2);">Rappel</div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;font-size:12px;color:var(--ink2);">Position assise</div>
+          </div>
+          <!-- Bouton aide -->
+          <button class="demo-help-btn" id="helpBtn" onclick="togglePanel()">?</button>
+        </div>
+      </div>
+
+      <!-- Panneau contextuel -->
+      <div class="help-panel" id="helpPanel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Aide</div>
+            <div class="panel-context">Suivi CAC · 5 articles</div>
+          </div>
+          <button onclick="togglePanel()" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--ink3);">×</button>
+        </div>
+
+        <div class="panel-search">
+          <span class="panel-search-icon">🔍</span>
+          <input type="text" placeholder="Rechercher…" id="panelSearch" oninput="filterPanel(this.value)">
+        </div>
+
+        <div class="panel-section-title" id="panelSectionTitle">Questions fréquentes sur cette page</div>
+
+        <div id="panelFaqs">
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              <span class="faq-chevron">▶</span>
+              Qu'est-ce que le CAC ?
+            </div>
+            <div class="faq-a">Le CAC (Critères d'Aptitude au Contact) est une grille de 14 critères comportementaux que vous évaluez séance après séance. Chaque critère coché = 1 point. Le score reflète la progression de l'animal.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              <span class="faq-chevron">▶</span>
+              Comment fonctionne le pré-remplissage ?
+            </div>
+            <div class="faq-a">Lors d'une nouvelle séance, les critères cochés lors de la <strong>dernière séance réalisée</strong> de cet animal sont automatiquement pré-cochés. Vous n'avez qu'à ajuster ce qui a changé.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q open" onclick="toggleFaq(this)">
+              <span class="faq-chevron">▶</span>
+              Puis-je personnaliser les 14 libellés ?
+            </div>
+            <div class="faq-a open">Oui — rendez-vous dans <code>Paramètres → Libellés EC</code>. Vous pouvez renommer chacun des 14 critères CAC selon votre méthode. Les modifications s'appliquent immédiatement sur toutes les séances.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              <span class="faq-chevron">▶</span>
+              À quoi sert l'onglet Évolution ?
+            </div>
+            <div class="faq-a">L'onglet Évolution affiche un graphique et un tableau comparatif de tous les CAC sauvegardés pour cet animal. Vous voyez la progression séance par séance et identifiez les critères bloquants.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              <span class="faq-chevron">▶</span>
+              Le CAC est-il lié à la fiche EDC ?
+            </div>
+            <div class="faq-a">Le CAC et l'EDC sont deux fiches distinctes rattachées à la même séance. L'EDC est remplie une fois (à la 1ère séance), le CAC est mis à jour à chaque séance de suivi.</div>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <a href="#centre-aide" class="panel-footer-link" onclick="scrollToCentre()">Toute l'aide →</a>
+          <span class="panel-count">5 / 12 articles EDC·CAC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 CENTRE D'AIDE -->
+  <div class="section" id="centre-aide">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Démo — Centre d'aide /app/aide</span>
+      <div class="section-line"></div>
+    </div>
+    <p style="font-size:13px;color:var(--ink2);margin-bottom:20px;">Interface complète simulée — barre de recherche, navigation modules, accordéons.</p>
+
+    <div class="aide-layout">
+      <!-- Sidebar -->
+      <div class="aide-sidebar">
+        <div class="aide-sidebar-title">Modules</div>
+        <div class="aide-nav-item" onclick="setModule(this, 'all')">
+          <span>Tous les articles</span>
+          <span class="aide-nav-count">58</span>
+        </div>
+        <div class="aide-nav-item active" onclick="setModule(this, 'edc')">
+          <span>🧠 EDC / CAC</span>
+          <span class="aide-nav-count">12</span>
+        </div>
+        <div class="aide-nav-item" onclick="setModule(this, 'seances')">
+          <span>📅 Séances</span>
+          <span class="aide-nav-count">10</span>
+        </div>
+        <div class="aide-nav-item" onclick="setModule(this, 'animaux')">
+          <span>🐾 Animaux</span>
+          <span class="aide-nav-count">8</span>
+        </div>
+        <div class="aide-nav-item" onclick="setModule(this, 'facturation')">
+          <span>💶 Facturation</span>
+          <span class="aide-nav-count">10</span>
+        </div>
+        <div class="aide-nav-item" onclick="setModule(this, 'parametres')">
+          <span>⚙️ Paramètres</span>
+          <span class="aide-nav-count">10</span>
+        </div>
+        <div class="aide-nav-item" onclick="setModule(this, 'crm')">
+          <span>📊 CRM</span>
+          <span class="aide-nav-count">8</span>
+        </div>
+      </div>
+
+      <!-- Contenu -->
+      <div class="aide-content">
+        <div class="aide-search-wrap">
+          <div class="aide-search">
+            <span style="font-size:16px;color:var(--ink3);">🔍</span>
+            <input type="text" placeholder="Rechercher dans toute l'aide…" id="aideSearch" oninput="filterAide(this.value)">
+          </div>
+        </div>
+
+        <div class="aide-module-title" id="aideModuleTitle">
+          🧠 EDC / CAC
+          <span class="pill p-green">12 articles</span>
+        </div>
+
+        <div id="aideFaqs">
+          <div class="aide-faq-item" data-tags="edc fiche créer">
+            <div class="aide-faq-q" onclick="toggleAide(this)">
+              <span>Qu'est-ce que l'Étude Comportementale (EDC) ?</span>
+              <span class="aide-faq-chevron">▶</span>
+            </div>
+            <div class="aide-faq-a">L'EDC est un formulaire structuré en 7 sections (Identité, Alimentation, Comportement, Mode de vie, Antécédents, Grille comportementale, Attentes) rempli lors de la première séance avec un animal. Il est unique par animal et constitue la base du programme de travail. <span class="aide-tag">edc</span><span class="aide-tag">fiche</span></div>
+          </div>
+          <div class="aide-faq-item" data-tags="edc remplir sections sauvegarder">
+            <div class="aide-faq-q" onclick="toggleAide(this)">
+              <span>Comment remplir la fiche EDC ?</span>
+              <span class="aide-faq-chevron">▶</span>
+            </div>
+            <div class="aide-faq-a">Depuis une séance de type EDC, cliquez sur <code>Étude Comportementale</code>. Naviguez entre les 7 sections via le menu latéral gauche. Sauvegardez à tout moment — la fiche reste en brouillon jusqu'à complétion. La barre de progression en haut indique le nombre de sections renseignées. <span class="aide-tag">edc</span><span class="aide-tag">sections</span></div>
+          </div>
+          <div class="aide-faq-item" data-tags="cac critères cocher score">
+            <div class="aide-faq-q open" onclick="toggleAide(this)">
+              <span>Comment saisir le CAC d'une séance ?</span>
+              <span class="aide-faq-chevron">▶</span>
+            </div>
+            <div class="aide-faq-a open">Depuis la fiche d'une séance, cliquez sur <code>Suivi CAC</code>. Cochez les critères acquis lors de cette séance en cliquant sur chaque case. Le score se met à jour en temps réel. Ajoutez un commentaire si besoin puis cliquez <code>Sauvegarder</code>. <span class="aide-tag">cac</span><span class="aide-tag">séance</span><span class="aide-tag">score</span></div>
+          </div>
+          <div class="aide-faq-item" data-tags="cac préremplissage dernière séance">
+            <div class="aide-faq-q" onclick="toggleAide(this)">
+              <span>Pourquoi certains critères sont-ils déjà cochés ?</span>
+              <span class="aide-faq-chevron">▶</span>
+            </div>
+            <div class="aide-faq-a">Le système pré-remplit automatiquement les critères qui étaient cochés lors de la dernière séance réalisée de cet animal. C'est un gain de temps : vous ne ressaisissez que ce qui a changé (nouveaux acquis ou régressions). <span class="aide-tag">cac</span><span class="aide-tag">préremplissage</span></div>
+          </div>
+          <div class="aide-faq-item" data-tags="cac libellés personnaliser paramètres">
+            <div class="aide-faq-q" onclick="toggleAide(this)">
+              <span>Comment personnaliser les noms des 14 critères ?</span>
+              <span class="aide-faq-chevron">▶</span>
+            </div>
+            <div class="aide-faq-a">Allez dans <code>Paramètres → Libellés EC</code>. Vous pouvez modifier le libellé de chacun des 14 critères CAC. Les modifications s'appliquent immédiatement et sur toutes les séances passées et futures. <span class="aide-tag">cac</span><span class="aide-tag">libellés</span><span class="aide-tag">paramètres</span></div>
+          </div>
+          <div class="aide-faq-item" data-tags="edc problème comportemental grille ajouter">
+            <div class="aide-faq-q" onclick="toggleAide(this)">
+              <span>Comment ajouter un problème comportemental dans l'EDC ?</span>
+              <span class="aide-faq-chevron">▶</span>
+            </div>
+            <div class="aide-faq-a">Dans la section <code>Grille comportementale</code> de la fiche EDC, cliquez sur <code>+ Ajouter un problème</code>. Renseignez le comportement, la fréquence, l'intensité, la durée et le contexte. Vous pouvez en ajouter autant que nécessaire. <em>Important : la fiche doit être sauvegardée une première fois avant de pouvoir ajouter des problèmes.</em> <span class="aide-tag">edc</span><span class="aide-tag">problème</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// Panneau contextuel
+function togglePanel() {
+  const btn = document.getElementById('helpBtn');
+  const panel = document.getElementById('helpPanel');
+  const isOpen = btn.classList.contains('active');
+  btn.classList.toggle('active', !isOpen);
+  btn.textContent = isOpen ? '?' : '×';
+  panel.style.opacity = isOpen ? '0.4' : '1';
+  panel.style.pointerEvents = isOpen ? 'none' : 'auto';
+}
+
+function toggleFaq(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('#panelFaqs .faq-q').forEach(q => {
+    q.classList.remove('open');
+    q.nextElementSibling.classList.remove('open');
+  });
+  if (!wasOpen) {
+    el.classList.add('open');
+    el.nextElementSibling.classList.add('open');
+  }
+}
+
+function filterPanel(val) {
+  const items = document.querySelectorAll('#panelFaqs .faq-item');
+  const title = document.getElementById('panelSectionTitle');
+  const v = val.toLowerCase();
+  let shown = 0;
+  items.forEach(item => {
+    const q = item.querySelector('.faq-q').textContent.toLowerCase();
+    const a = item.querySelector('.faq-a').textContent.toLowerCase();
+    const match = !v || q.includes(v) || a.includes(v);
+    item.style.display = match ? '' : 'none';
+    if (match) shown++;
+  });
+  title.textContent = v ? `${shown} résultat${shown > 1 ? 's' : ''} pour "${val}"` : 'Questions fréquentes sur cette page';
+}
+
+function scrollToCentre() {
+  document.getElementById('centre-aide').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Centre d'aide
+function toggleAide(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('#aideFaqs .aide-faq-q').forEach(q => {
+    q.classList.remove('open');
+    q.nextElementSibling.classList.remove('open');
+  });
+  if (!wasOpen) {
+    el.classList.add('open');
+    el.nextElementSibling.classList.add('open');
+  }
+}
+
+function setModule(el, mod) {
+  document.querySelectorAll('.aide-nav-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function filterAide(val) {
+  const items = document.querySelectorAll('#aideFaqs .aide-faq-item');
+  const v = val.toLowerCase();
+  items.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    const tags = (item.dataset.tags || '').toLowerCase();
+    item.style.display = (!v || text.includes(v) || tags.includes(v)) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
