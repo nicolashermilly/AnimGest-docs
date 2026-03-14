@@ -322,6 +322,49 @@ try {
     <div class="alert alert-danger">Les routes DOIVENT être dans le bloc try { const _h56 = ... } — jamais entre await app.listen et ce bloc.</div>
   </div>
 
+  <div class="subsection">
+    <div class="subsection-title">Découverte critique S24 — Injection routes NestJS</div>
+    <div class="alert alert-danger" style="margin-bottom:10px;">
+      <strong>_h56.get/post/put() → 404 systématique</strong> — le filtre NestJS intercepte avant d'atteindre la route injectée.
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">🔴</div>Problème identifié</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">_h56.get/post/put()</span><span class="item-val">404 systématique — filtre NestJS intercepte en amont</span></div>
+          <div class="item"><span class="item-label">app.get(DbService)</span><span class="item-val">Ne fonctionne pas dans ce contexte — retourne undefined</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">✅</div>Solution validée</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">_h56.use()</span><span class="item-val">S'exécute AVANT le filtre 404 NestJS — fonctionne</span></div>
+          <div class="item"><span class="item-label">mysql2/promise</span><span class="item-val">Accès BDD direct via _q() — pas app.get(DbService)</span></div>
+          <div class="item"><span class="item-label">Préfixe /ged-*</span><span class="item-val">Convention pour éviter les conflits NestJS</span></div>
+          <div class="item"><span class="item-label">Nginx strip /api/</span><span class="item-val">Routes internes enregistrées SANS le préfixe /api/</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="subsection-title" style="margin-top:14px;">Pattern correct pour routes injectées S24+</div>
+    <div class="code">
+<span class="cm">// ✅ CORRECT — _h56.use() s'exécute avant le filtre 404 NestJS</span>
+<span class="cm">// Nginx strip /api/ → routes internes enregistrées SANS /api/</span>
+<span class="cv">_h56</span>.use(<span class="ck">'/ged-libelles-ec'</span>, async (req, res) => {
+  <span class="cm">// BDD : mysql2/promise directement via _q(), pas app.get(DbService)</span>
+  const rows = await <span class="cv">_q</span>(<span class="ck">'SELECT * FROM param_libelles_ec'</span>);
+  res.json(rows);
+});
+
+<span class="cm">// Routes actives S24 (préfixe /ged-* par convention)</span>
+<span class="cv">_h56</span>.use(<span class="ck">'/ged-libelles-ec'</span>, ...)    <span class="cm">// → /api/ged-libelles-ec côté client</span>
+<span class="cv">_h56</span>.use(<span class="ck">'/ged-edc'</span>, ...)            <span class="cm">// → /api/ged-edc/*</span>
+<span class="cv">_h56</span>.use(<span class="ck">'/ged-cac'</span>, ...)            <span class="cm">// → /api/ged-cac/*</span>
+
+<span class="cm">// ❌ NE PLUS UTILISER pour nouvelles routes</span>
+<span class="cm">// _h56.get('/edc', ...) → 404 systématique</span>
+    </div>
+  </div>
+
   <div class="subsection" id="s3-endpoints">
     <div class="subsection-title">Endpoints</div>
     <div class="grid2">
@@ -339,7 +382,8 @@ try {
               <tr><td>GET</td><td>/api/crm/leads, /api/crm/opportunites, /api/crm/activites</td></tr>
               <tr><td>GET/POST</td><td>/api/ged/documents, /api/ged/animal/:id/photo</td></tr>
               <tr><td>GET</td><td>/api/parametres/*, /api/dashboard/stats, /api/admin/*</td></tr>
-              <tr><td>GET/PUT</td><td>/api/parametres/libelles-ec (S24)</td></tr>
+              <tr><td>GET/PUT</td><td>/api/ged-libelles-ec (S24 — via _h56.use)</td></tr>
+              <tr><td>GET/POST/PUT</td><td>/api/ged-edc/*, /api/ged-cac/* (S24 — via _h56.use)</td></tr>
             </tbody>
           </table>
         </div>
@@ -348,14 +392,13 @@ try {
         <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:8px;">À implanter S24+</div>
         <div class="tbl-wrap">
           <table class="tbl">
-            <thead><tr><th>Route</th><th>État</th></tr></thead>
+            <thead><tr><th>Route</th><th>Méthode</th><th>État</th></tr></thead>
             <tbody>
-              <tr><td>GET/POST/PUT /api/edc/*</td><td><span class="pill pill-wip">S24</span></td></tr>
-              <tr><td>GET/POST /api/edc/:id/problemes</td><td><span class="pill pill-wip">S24</span></td></tr>
-              <tr><td>GET/POST /api/seances/:id/cac</td><td><span class="pill pill-wip">S24</span></td></tr>
-              <tr><td>GET /api/animaux/:id/evolution-cac</td><td><span class="pill pill-wip">S24</span></td></tr>
-              <tr><td>/api/stock/*, /api/achats/*</td><td><span class="pill pill-todo">S10</span></td></tr>
-              <tr><td>/api/signature/*, /api/bilan/*</td><td><span class="pill pill-todo">S10</span></td></tr>
+              <tr><td>/api/ged-edc/:id/problemes</td><td>_h56.use</td><td><span class="pill pill-wip">S24</span></td></tr>
+              <tr><td>/api/ged-cac/:sea_id</td><td>_h56.use</td><td><span class="pill pill-wip">S24</span></td></tr>
+              <tr><td>/api/ged-cac/:sea_id/initial</td><td>_h56.use</td><td><span class="pill pill-wip">S24</span></td></tr>
+              <tr><td>/api/ged-evolution-cac/:ani_id</td><td>_h56.use</td><td><span class="pill pill-wip">S24</span></td></tr>
+              <tr><td>/api/stock/*, /api/achats/*</td><td>—</td><td><span class="pill pill-todo">S10</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -504,6 +547,8 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
         <div class="item"><span class="item-label">docker exec</span><span class="item-val">Nom container (micro_api), pas le service</span></div>
         <div class="item"><span class="item-label">docker compose</span><span class="item-val">cd "$root\deploy" AVANT toute commande</span></div>
         <div class="item"><span class="item-label">PATCH_ROUTES_S56</span><span class="item-val">Routes DANS le bloc try { const _h56 = ... }</span></div>
+        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Règle 13 ★</span><span class="item-val"><strong>Routes injectées → _h56.use() uniquement</strong> + préfixe /ged-* — _h56.get/post/put() → 404 systématique (filtre NestJS)</span></div>
+        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Règle 14 ★</span><span class="item-val"><strong>Nginx strip /api/</strong> → routes internes enregistrées SANS le préfixe /api/</span></div>
       </div>
     </div>
     <div class="card">
@@ -515,6 +560,7 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
         <div class="item"><span class="item-label">Regex JS</span><span class="item-val">Échapper / → \/png (crash Node.js sinon)</span></div>
         <div class="item"><span class="item-label">-LiteralPath</span><span class="item-val">Pour chemins PS avec [id] dans le nom</span></div>
         <div class="item"><span class="item-label">require() nodes</span><span class="item-val">Chemin absolu /app/node_modules/xxx</span></div>
+        <div class="item"><span class="item-label">BDD injectée</span><span class="item-val">mysql2/promise via _q() directement — pas app.get(DbService)</span></div>
       </div>
     </div>
   </div>

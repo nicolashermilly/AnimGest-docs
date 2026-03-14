@@ -206,6 +206,8 @@ footer strong{color:rgba(255,255,255,0.7);}
         <div class="item"><span class="item-label">docker exec</span><span class="item-val">Nom container (micro_api), pas service</span></div>
         <div class="item"><span class="item-label">docker compose</span><span class="item-val">cd "$root\deploy" AVANT toute commande</span></div>
         <div class="item"><span class="item-label">PATCH_ROUTES_S56</span><span class="item-val">Routes DANS le bloc try { const _h56 = ... }</span></div>
+        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Règle 13 ★</span><span class="item-val"><strong>Routes injectées → _h56.use() uniquement</strong> + préfixe /ged-* — _h56.get/post/put() → 404 systématique (filtre NestJS intercepte en amont)</span></div>
+        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Règle 14 ★</span><span class="item-val"><strong>Nginx strip /api/</strong> → routes internes enregistrées SANS le préfixe /api/ dans _h56.use()</span></div>
       </div>
     </div>
     <div class="card">
@@ -217,6 +219,7 @@ footer strong{color:rgba(255,255,255,0.7);}
         <div class="item"><span class="item-label">Regex JS</span><span class="item-val">Échapper / → \/png (crash Node.js sinon)</span></div>
         <div class="item"><span class="item-label">-LiteralPath</span><span class="item-val">Pour chemins PS avec [id] dans le nom</span></div>
         <div class="item"><span class="item-label">head PS</span><span class="item-val">N'existe pas → Select-Object -First N</span></div>
+        <div class="item"><span class="item-label">BDD injectée</span><span class="item-val">mysql2/promise via _q() — jamais app.get(DbService) dans les routes _h56.use()</span></div>
       </div>
     </div>
   </div>

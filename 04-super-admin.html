@@ -228,7 +228,7 @@ footer strong{color:rgba(255,255,255,0.7);}
 php artisan tenant:create \
   --id=tenant_0042 \
   --siret=12345678901234 \
-  --admin=email@societe.fr \
+  <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="587575393c353136653d35393134182b373b313d2c3d763e2a">[email&#160;protected]</a> \
   --plan=STANDARD
 
 <span class="code-comment"># Vérifier le tenant</span>
@@ -345,6 +345,35 @@ php artisan tenant:purge tenant_0042 --confirm
     </div>
   </div>
 
+  <!-- 4b. PATCHES ACTIFS API -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Patches actifs API — découvertes critiques S24</div>
+      <div class="section-num">04b</div>
+    </div>
+    <div class="danger-box" style="margin-bottom:16px;"><strong>Découverte critique S24 — Injection routes NestJS :</strong> _h56.get/post/put() → 404 systématique (filtre NestJS intercepte en amont). SOLUTION : _h56.use() s'exécute AVANT le filtre 404.</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">⚠️</div>Règles injection routes</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Règle 13 ★</span><span class="item-val">Routes injectées → <strong>_h56.use() uniquement</strong> + préfixe /ged-*</span></div>
+          <div class="item"><span class="item-label">Règle 14 ★</span><span class="item-val">Nginx strip /api/ → routes internes SANS ce préfixe dans _h56.use()</span></div>
+          <div class="item"><span class="item-label">BDD injectée</span><span class="item-val">mysql2/promise via _q() — jamais app.get(DbService)</span></div>
+          <div class="item"><span class="item-label">Convention</span><span class="item-val">Préfixe /ged-* pour éviter conflits NestJS</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">✅</div>Routes actives S24</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">/api/ged-libelles-ec</span><span class="item-val">Libellés paramétrables EC</span></div>
+          <div class="item"><span class="item-label">/api/ged-edc/*</span><span class="item-val">Fiches Étude Comportementale</span></div>
+          <div class="item"><span class="item-label">/api/ged-cac/*</span><span class="item-val">Suivi CAC par séance</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 5. DONNEES POST-RESILIATION -->
   <div class="section">
     <div class="section-header">
@@ -420,9 +449,4 @@ php artisan tenant:purge tenant_0042 --confirm
 
 <footer>
   <div><strong>PetSuite</strong> — Espace super admin · Document vivant</div>
-  <div style="font-size:11px;color:rgba(255,255,255,0.3);">Accès restreint — super admin uniquement · v0.1</div>
-  <div>Strictement confidentiel</div>
-</footer>
-
-</body>
-</html>
+  <div style="font-size:11px;color:rgba(255,255,255,0.3
