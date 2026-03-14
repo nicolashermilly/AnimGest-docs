@@ -121,7 +121,7 @@ footer strong{color:rgba(255,255,255,0.7);}
   <h1>Roadmap <em>sprints</em></h1>
   <p class="hero-sub">Feuille de route complète du projet — état des sprints réalisés, en cours et planifiés jusqu'au passage en production SaaS multi-tenant.</p>
   <div class="hero-kpis">
-    <div class="kpi"><div class="kpi-num">S24</div><div class="kpi-lbl">Session courante</div></div>
+    <div class="kpi"><div class="kpi-num">S25</div><div class="kpi-lbl">Session courante</div></div>
     <div class="kpi"><div class="kpi-num">9</div><div class="kpi-lbl">Sprints réalisés</div></div>
     <div class="kpi"><div class="kpi-num">3</div><div class="kpi-lbl">Sprints planifiés</div></div>
     <div class="kpi"><div class="kpi-num">S12+</div><div class="kpi-lbl">Cible SaaS prod</div></div>
@@ -132,7 +132,7 @@ footer strong{color:rgba(255,255,255,0.7);}
 <nav class="toc">
   <div class="toc-title">Sommaire</div>
   <a href="#s1" class="toc-h2">État global</a>
-  <a href="#s2" class="toc-h2">Sprint 9 — En cours</a>
+  <a href="#s2" class="toc-h2">Sprint 9 — Complet ✓</a>
   <a href="#s2-tables" class="toc-h3">Tables ajoutées S24</a>
   <a href="#s3" class="toc-h2">Sprint 10 — Planifié</a>
   <a href="#s3-ec" class="toc-h3">Étude Comportementale</a>
@@ -163,8 +163,8 @@ footer strong{color:rgba(255,255,255,0.7);}
         <tr><td>S6</td><td>Statistiques avancées, Questionnaires, CRM</td><td><span class="pill pill-ok">COMPLET</span></td><td>12–13</td></tr>
         <tr><td>S7</td><td>PWA mobile, Backup BDD, Animal V2+V3, Fix éditions</td><td><span class="pill pill-ok">COMPLET</span></td><td>16–17</td></tr>
         <tr><td>S8</td><td>Fix crashes, audit visuel, PATCH animaux, couleurs agenda</td><td><span class="pill pill-ok">COMPLET</span></td><td>18–22</td></tr>
-        <tr><td>S9</td><td>EC, CAC, param_libelles_ec, achats, stock, tarif, bilan</td><td><span class="pill pill-wip">EN COURS</span></td><td>23→</td></tr>
-        <tr><td>S10</td><td>Frontend modules S9 complets</td><td><span class="pill pill-todo">PLANIFIÉ</span></td><td>—</td></tr>
+        <tr><td>S9</td><td>EC, CAC, param_libelles_ec, achats, stock, tarif, bilan</td><td><span class="pill pill-ok">COMPLET</span></td><td>23–25</td></tr>
+        <tr><td>S10</td><td>Frontend modules S9 complets + Formulaire pré-qualification lead CRM + Aide intégrée (HelpPanel)</td><td><span class="pill pill-todo">PLANIFIÉ</span></td><td>—</td></tr>
         <tr><td>S11</td><td>PDF tous types, responsive mobile, PWA notifications</td><td><span class="pill pill-todo">PLANIFIÉ</span></td><td>—</td></tr>
         <tr><td>S12+</td><td>SaaS multi-tenant, provisionnement, SEPA, production</td><td><span class="pill pill-spec">SaaS PROD</span></td><td>—</td></tr>
       </tbody>
@@ -173,7 +173,7 @@ footer strong{color:rgba(255,255,255,0.7);}
 </div>
 
 <div class="section" id="s2">
-  <div class="section-header"><span class="section-num">02</span><span class="section-title">Sprint 9 — En cours (session 23–24)</span></div>
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">Sprint 9 — Complet (sessions 23–25)</span></div>
 
   <div class="subsection">
     <div class="subsection-title">Modules spécifiés et scripts prêts</div>
@@ -186,8 +186,8 @@ footer strong{color:rgba(255,255,255,0.7);}
           <tr><td>Tarification 3 méthodes</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">Script prêt</span></td><td><span class="pill pill-todo">À faire</span></td></tr>
           <tr><td>Bilan PCG 2025</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">Script prêt</span></td><td><span class="pill pill-todo">À faire</span></td></tr>
           <tr><td>Signature Yousign</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">Script prêt</span></td><td><span class="pill pill-spec">Spec prête</span></td></tr>
-          <tr><td>Étude Comportementale</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-wip">S24</span></td><td><span class="pill pill-wip">En cours</span></td></tr>
-          <tr><td>CAC par séance</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-wip">S24</span></td><td><span class="pill pill-wip">En cours</span></td></tr>
+          <tr><td>Étude Comportementale</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">Déployé S25</span></td></tr>
+          <tr><td>CAC par séance</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">Déployé S25</span></td></tr>
           <tr><td>Cycles + chrono docs</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-todo">À faire</span></td><td><span class="pill pill-todo">À faire</span></td></tr>
         </tbody>
       </table>
@@ -268,6 +268,34 @@ docker exec micro_api node /tmp/create_etude_comportementale.js
           <div class="check-item">Tableau comparatif par séance</div>
           <div class="check-item">Graphique évolution score</div>
           <div class="check-item">Fix B2 : labels génériques → param_libelles_ec</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-crm">
+    <div class="subsection-title">CRM — Formulaire pré-qualification lead</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">📋</div>Fonctionnalité</div>
+        <div class="check-list">
+          <div class="check-item">Lien public paramétrable par tenant : /formulaire/[token]</div>
+          <div class="check-item">Accessible sans connexion — réseaux sociaux, site web, email</div>
+          <div class="check-item">Soumission → création automatique lead dans le CRM</div>
+          <div class="check-item">Coordonnées : nom, prénom, téléphone, email</div>
+          <div class="check-item">Animal : nom, race, âge/naissance, sexe</div>
+          <div class="check-item">Questions paramétrables + commentaire libre</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">🗄️</div>Architecture BDD + API</div>
+        <div class="check-list">
+          <div class="check-item">lead_formulaire — modèle paramétrable par tenant</div>
+          <div class="check-item">lead_formulaire_question — questions ordonnées (texte, choix, échelle)</div>
+          <div class="check-item">lead_formulaire_reponse — réponses prospect</div>
+          <div class="check-item">GET /public/formulaire/:token — récupère le formulaire</div>
+          <div class="check-item">POST /public/formulaire/:token — soumet + crée lead CRM</div>
+          <div class="check-item">/app/parametres/formulaire-lead — configuration questions</div>
         </div>
       </div>
     </div>
@@ -393,7 +421,7 @@ docker exec micro_api node /tmp/create_etude_comportementale.js
       <thead><tr><th>#</th><th>Sévérité</th><th>Page</th><th>Description</th><th>Sprint</th></tr></thead>
       <tbody>
         <tr><td>B1</td><td><span class="pill pill-red">HAUTE</span></td><td>API main.js</td><td>Restart loop PUT /seances/types — fix appliqué S24 via fix_main_s24.ps1</td><td><span class="pill pill-ok">Fix S24</span></td></tr>
-        <tr><td>B2</td><td><span class="pill pill-gold">MOYENNE</span></td><td>Fiche animal</td><td>Labels CAC "CAC 1"..."CAC 14" génériques — doit utiliser param_libelles_ec</td><td><span class="pill pill-wip">S24</span></td></tr>
+        <tr><td>B2</td><td><span class="pill pill-gray">MOYENNE</span></td><td>Fiche animal</td><td>Labels CAC "CAC 1"..."CAC 14" génériques — corrigé S25 via param_libelles_ec dans page-cac.tsx</td><td><span class="pill pill-ok">Corrigé S25</span></td></tr>
         <tr><td>B3</td><td><span class="pill pill-gray">BASSE</span></td><td>Paramètres</td><td>Titre "Mes paramètres" → "Paramètres" corrigé S24</td><td><span class="pill pill-ok">Corrigé</span></td></tr>
       </tbody>
     </table>

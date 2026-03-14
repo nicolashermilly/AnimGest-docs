@@ -160,6 +160,7 @@ footer strong{color:rgba(255,255,255,0.7);}
     <a href="17-api-reference.html">API</a>
   </div>
   <span class="nav-badge">Session 24 · 14/03/2026</span>
+  <a href="#s7" class="toc-h2">07. Formulaire pré-qualification lead</a>
 </nav>
 
 <div class="hero">
@@ -197,6 +198,7 @@ footer strong{color:rgba(255,255,255,0.7);}
   <a href="#s8" class="toc-h2">08. Analyse des réponses</a>
   <a href="#s9" class="toc-h2">09. API endpoints</a>
   <a href="#s10" class="toc-h2">10. Checklist</a>
+  <a href="#s7" class="toc-h2">07. Formulaire pré-qualification lead</a>
 </nav>
 
 <div class="main">
@@ -763,6 +765,98 @@ footer strong{color:rgba(255,255,255,0.7);}
 </div>
 
 </div>
+</div>
+
+
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Formulaire pré-qualification lead CRM</span></div>
+
+  <div class="subsection">
+    <div class="subsection-title">Concept</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:#e8f5ef;font-size:18px;">🔗</div>Lien public paramétrable</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">URL</span><span class="item-val">petsuite.fr/formulaire/[token]</span></div>
+          <div class="item"><span class="item-label">Accès</span><span class="item-val">Sans connexion — public</span></div>
+          <div class="item"><span class="item-label">Usage</span><span class="item-val">Réseaux sociaux, site web, email</span></div>
+          <div class="item"><span class="item-label">Token</span><span class="item-val">Unique par tenant, permanent</span></div>
+          <div class="item"><span class="item-label">Résultat</span><span class="item-val">Création automatique lead dans le CRM</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:#e8f0fb;font-size:18px;">📋</div>Champs du formulaire</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Coordonnées</span><span class="item-val">Nom, prénom, téléphone, email (obligatoires)</span></div>
+          <div class="item"><span class="item-label">Animal</span><span class="item-val">Nom, race, âge/naissance, sexe (optionnels)</span></div>
+          <div class="item"><span class="item-label">Questions</span><span class="item-val">Paramétrables par le comportementaliste</span></div>
+          <div class="item"><span class="item-label">Commentaire</span><span class="item-val">Champ libre — expression libre du prospect</span></div>
+          <div class="item"><span class="item-label">Consentement</span><span class="item-val">Checkbox RGPD obligatoire</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">BDD — 3 tables</div>
+    <div class="grid3">
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:#e8f5ef;font-size:16px;">🗄️</div>lead_formulaire</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">LFO_ID</span><span class="item-val">INT PK</span></div>
+          <div class="item"><span class="item-label">LFO_TOKEN</span><span class="item-val">CHAR(32) — lien public unique</span></div>
+          <div class="item"><span class="item-label">LFO_TITRE</span><span class="item-val">VARCHAR(150) — nom du formulaire</span></div>
+          <div class="item"><span class="item-label">LFO_ACTIF</span><span class="item-val">TINYINT(1)</span></div>
+          <div class="item"><span class="item-label">LFO_CREATED</span><span class="item-val">DATETIME</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:#e8f0fb;font-size:16px;">🗄️</div>lead_formulaire_question</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">LFQ_ID</span><span class="item-val">INT PK</span></div>
+          <div class="item"><span class="item-label">LFO_ID</span><span class="item-val">FK lead_formulaire</span></div>
+          <div class="item"><span class="item-label">LFQ_ORDRE</span><span class="item-val">INT</span></div>
+          <div class="item"><span class="item-label">LFQ_LIBELLE</span><span class="item-val">VARCHAR(255)</span></div>
+          <div class="item"><span class="item-label">LFQ_TYPE</span><span class="item-val">ENUM texte / choix / echelle</span></div>
+          <div class="item"><span class="item-label">LFQ_OBLIGATOIRE</span><span class="item-val">TINYINT(1)</span></div>
+          <div class="item"><span class="item-label">LFQ_OPTIONS</span><span class="item-val">JSON — options si choix</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:#fdf3e0;font-size:16px;">🗄️</div>lead_formulaire_reponse</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">LFR_ID</span><span class="item-val">BIGINT PK</span></div>
+          <div class="item"><span class="item-label">LFO_ID</span><span class="item-val">FK lead_formulaire</span></div>
+          <div class="item"><span class="item-label">LED_ID</span><span class="item-val">FK crm_lead (créé à la soumission)</span></div>
+          <div class="item"><span class="item-label">LFR_NOM</span><span class="item-val">VARCHAR(100)</span></div>
+          <div class="item"><span class="item-label">LFR_PRENOM</span><span class="item-val">VARCHAR(100)</span></div>
+          <div class="item"><span class="item-label">LFR_TEL</span><span class="item-val">VARCHAR(20)</span></div>
+          <div class="item"><span class="item-label">LFR_EMAIL</span><span class="item-val">VARCHAR(150)</span></div>
+          <div class="item"><span class="item-label">LFR_ANIMAL_NOM</span><span class="item-val">VARCHAR(100)</span></div>
+          <div class="item"><span class="item-label">LFR_ANIMAL_RACE</span><span class="item-val">VARCHAR(150)</span></div>
+          <div class="item"><span class="item-label">LFR_ANIMAL_AGE</span><span class="item-val">VARCHAR(50)</span></div>
+          <div class="item"><span class="item-label">LFR_REPONSES</span><span class="item-val">JSON — réponses aux questions</span></div>
+          <div class="item"><span class="item-label">LFR_COMMENTAIRE</span><span class="item-val">TEXT</span></div>
+          <div class="item"><span class="item-label">LFR_IP</span><span class="item-val">VARCHAR(45) — traçabilité RGPD</span></div>
+          <div class="item"><span class="item-label">LFR_DATE</span><span class="item-val">DATETIME</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">API — Routes publiques (sans auth)</div>
+    <div class="card" style="max-width:600px;">
+      <div class="item-list">
+        <div class="item"><span class="item-label">GET /public/formulaire/:token</span><span class="item-val">Récupère le formulaire + questions</span></div>
+        <div class="item"><span class="item-label">POST /public/formulaire/:token</span><span class="item-val">Soumet réponses → crée lead CRM automatiquement</span></div>
+        <div class="item"><span class="item-label">GET /app/parametres/formulaire-lead</span><span class="item-val">Configuration des questions (admin)</span></div>
+        <div class="item"><span class="item-label">POST /app/parametres/formulaire-lead</span><span class="item-val">Créer/modifier question</span></div>
+        <div class="item"><span class="item-label">GET /app/crm/leads/:id/reponse-formulaire</span><span class="item-val">Voir la réponse originale du prospect</span></div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <footer>
