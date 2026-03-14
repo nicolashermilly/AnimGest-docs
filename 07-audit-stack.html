@@ -90,28 +90,27 @@ footer strong{color:rgba(255,255,255,0.7);}
 </style>
 </head>
 <body>
-
 <nav>
   <a class="nav-logo" href="index.html">Pet<span>Suite</span></a>
   <div class="nav-links">
-    <a href="05-architecture-roadmap.html">Architecture</a>
+    <a href="05-feuille-de-route-architecture.html">Architecture</a>
     <a href="06-roadmap.html">Roadmap</a>
     <a href="07-audit-stack.html" class="active">Audit Stack</a>
-    <a href="08-projet-reference.html">Référence</a>
-    <a href="09-scenario-video.html">Vidéo</a>
+    <a href="08-projet-reference.html">Reference</a>
+    <a href="09-scenario-video.html">Video</a>
   </div>
-  <span class="nav-badge">Session 24 · 14/03/2026</span>
+  <span class="nav-badge">Session 25 · 14/03/2026</span>
 </nav>
 
 <div class="hero">
   <div class="hero-tag">Audit technique — Document vivant</div>
   <h1>Audit <em>Stack</em></h1>
-  <p class="hero-sub">État complet de l'infrastructure Docker, de la base de données, de l'API et des patches actifs — référence technique de session en session.</p>
+  <p class="hero-sub">Etat complet de l'infrastructure Docker, de la base de donnees, de l'API et des patches actifs — reference technique de session en session.</p>
   <div class="hero-kpis">
     <div class="kpi"><div class="kpi-num">3</div><div class="kpi-lbl">Conteneurs Docker</div></div>
-    <div class="kpi"><div class="kpi-num">60+</div><div class="kpi-lbl">Tables BDD</div></div>
+    <div class="kpi"><div class="kpi-num">63+</div><div class="kpi-lbl">Tables BDD</div></div>
     <div class="kpi"><div class="kpi-num">18+</div><div class="kpi-lbl">Triggers actifs</div></div>
-    <div class="kpi"><div class="kpi-num">5</div><div class="kpi-lbl">Patches volatils</div></div>
+    <div class="kpi"><div class="kpi-num">6</div><div class="kpi-lbl">Patches volatils</div></div>
   </div>
 </div>
 
@@ -121,18 +120,18 @@ footer strong{color:rgba(255,255,255,0.7);}
   <a href="#s1" class="toc-h2">01. Infrastructure Docker</a>
   <a href="#s1-nginx" class="toc-h3">Nginx routage</a>
   <a href="#s1-ps" class="toc-h3">Variables PowerShell</a>
-  <a href="#s2" class="toc-h2">02. Base de données</a>
-  <a href="#s2-vol" class="toc-h3">Volume données</a>
-  <a href="#s2-tables" class="toc-h3">Tables S24</a>
+  <a href="#s2" class="toc-h2">02. Base de donnees</a>
+  <a href="#s2-vol" class="toc-h3">Volume donnees</a>
+  <a href="#s2-tables" class="toc-h3">Tables S25</a>
   <a href="#s2-triggers" class="toc-h3">Triggers</a>
-  <a href="#s2-vues" class="toc-h3">Vues & procédures</a>
-  <a href="#s3" class="toc-h2">03. État API S24</a>
+  <a href="#s2-vues" class="toc-h3">Vues &amp; procedures</a>
+  <a href="#s3" class="toc-h2">03. Etat API S25</a>
   <a href="#s3-patch" class="toc-h3">PATCH_ROUTES_S56</a>
   <a href="#s3-endpoints" class="toc-h3">Endpoints</a>
   <a href="#s4" class="toc-h2">04. Patches volatils</a>
   <a href="#s5" class="toc-h2">05. Documentation</a>
   <a href="#s6" class="toc-h2">06. Audit visuel</a>
-  <a href="#s7" class="toc-h2">07. Règles critiques</a>
+  <a href="#s7" class="toc-h2">07. Regles critiques</a>
 </nav>
 
 <div class="main">
@@ -146,31 +145,28 @@ footer strong{color:rgba(255,255,255,0.7);}
       <table class="tbl">
         <thead><tr><th>Container</th><th>Service</th><th>Description</th><th>Port</th></tr></thead>
         <tbody>
-          <tr><td>micro_api</td><td>api</td><td>NestJS compilé JS + smtp_server Express 8081</td><td>interne</td></tr>
+          <tr><td>micro_api</td><td>api</td><td>NestJS compile JS + smtp_server Express 8081</td><td>interne</td></tr>
           <tr><td>micro_frontend</td><td>frontend</td><td>Next.js 15 App Router</td><td>3000 interne</td></tr>
           <tr><td>micro_nginx</td><td>nginx</td><td>nginx:1.27-alpine — reverse proxy</td><td>80:80, 8443:443</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="alert alert-info" style="margin-top:8px;">Volume nommé : deploy_uploads_data — micro_api → /app/uploads (rw) · micro_nginx → /uploads (ro) · micro_nginx → /docs (ro)</div>
+    <div class="alert alert-info" style="margin-top:8px;">Volume nomme : deploy_uploads_data — micro_api /app/uploads (rw) · micro_nginx /uploads (ro) · micro_nginx /docs (ro)</div>
   </div>
-
   <div class="subsection" id="s1-nginx">
     <div class="subsection-title">Routage Nginx</div>
     <div class="code">
 <span class="cm"># Routage principal</span>
-/api/                <span class="ck">-></span> proxy micro_api:8080
-/                    <span class="ck">-></span> proxy micro_frontend:3000
-/api/parametres/smtp <span class="ck">-></span> micro_api:8081 (smtp_server)
-/api/ged/animal      <span class="ck">-></span> micro_api:8081
-
-<span class="cm"># Documentation statique (public/docs Next.js)</span>
-/docs/guide_parametrage.html   <span class="ck">-></span> tous utilisateurs connectés
-/docs/notice_utilisateur.html  <span class="ck">-></span> tous utilisateurs connectés
-/docs/doc_supervision.html     <span class="ck">-></span> SuperAdmin uniquement
+/api/ <span class="ck">-&gt;</span> proxy micro_api:8080
+/ <span class="ck">-&gt;</span> proxy micro_frontend:3000
+/api/parametres/smtp <span class="ck">-&gt;</span> micro_api:8081 (smtp_server)
+/api/ged/animal <span class="ck">-&gt;</span> micro_api:8081
+<span class="cm"># Routes publiques (sans auth)</span>
+/formulaire/ <span class="ck">-&gt;</span> proxy micro_frontend:3000 (pas de middleware auth)
+<span class="cm"># Documentation GitHub Pages</span>
+https://nicolashermilly.github.io/petsuite-docs/ <span class="ck">-&gt;</span> docs publiques
     </div>
   </div>
-
   <div class="subsection" id="s1-ps">
     <div class="subsection-title">Variables PowerShell projet</div>
     <div class="code">
@@ -184,74 +180,72 @@ footer strong{color:rgba(255,255,255,0.7);}
 
 <!-- 02 BDD -->
 <div class="section" id="s2">
-  <div class="section-header"><span class="section-num">02</span><span class="section-title">Base de données</span></div>
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">Base de donnees</span></div>
   <div class="alert alert-info" style="margin-bottom:16px;">Host : 192.168.1.62:3307 · BDD : micro_logiciel + micro_logiciel_ged · Charset : utf8mb4_unicode_ci / InnoDB · User : compte technique applicatif</div>
-
   <div class="subsection" id="s2-vol">
-    <div class="subsection-title">Volume des données (session 24)</div>
+    <div class="subsection-title">Volume des donnees (session 25)</div>
     <div class="tbl-wrap">
       <table class="tbl">
         <thead><tr><th>Table</th><th>Lignes</th><th>Notes</th></tr></thead>
         <tbody>
           <tr><td>tiers</td><td>15+</td><td>Clients</td></tr>
           <tr><td>contact</td><td>20+</td><td>—</td></tr>
-          <tr><td>animal</td><td>29+</td><td>Puces 15 chiffres, races</td></tr>
-          <tr><td>seance</td><td>59+</td><td>EC / SEANCE / GARDIENNAGE</td></tr>
+          <tr><td>animal</td><td>32+</td><td>Puces 15 chiffres, races</td></tr>
+          <tr><td>seance</td><td>64+</td><td>EC / SEANCE / GARDIENNAGE</td></tr>
           <tr><td>devis_contrat_entete</td><td>9+</td><td>—</td></tr>
           <tr><td>facture</td><td>30+</td><td>—</td></tr>
           <tr><td>reglement</td><td>5+</td><td>—</td></tr>
           <tr><td>article_prestation</td><td>15+</td><td>—</td></tr>
           <tr><td>race</td><td>200+</td><td>—</td></tr>
           <tr><td>utilisateur</td><td>2</td><td>admin + SuperAdmin</td></tr>
-          <tr><td>param_libelles_ec</td><td>60</td><td>S24 — libellés paramétrables EC</td></tr>
-          <tr><td>edc_fiche</td><td>—</td><td>S24 — fiches Étude Comportementale</td></tr>
+          <tr><td>param_libelles_ec</td><td>60</td><td>S24 — libelles parametrables EC</td></tr>
+          <tr><td>edc_fiche</td><td>—</td><td>S24 — fiches Etude Comportementale</td></tr>
           <tr><td>edc_probleme</td><td>—</td><td>S24 — grille comportementale</td></tr>
-          <tr><td>seance_suivi_cac</td><td>—</td><td>S24 — CAC par séance</td></tr>
+          <tr><td>seance_suivi_cac</td><td>—</td><td>S24 — CAC par seance</td></tr>
+          <tr><td>lead_formulaire</td><td>1</td><td>S25 — formulaire public pre-qualification</td></tr>
+          <tr><td>lead_formulaire_question</td><td>—</td><td>S25 — questions parametrables</td></tr>
+          <tr><td>lead_formulaire_reponse</td><td>—</td><td>S25 — reponses prospects (tracabilite RGPD)</td></tr>
         </tbody>
       </table>
     </div>
   </div>
-
   <div class="subsection" id="s2-tables">
-    <div class="subsection-title">Tables & colonnes ajoutées session 24</div>
+    <div class="subsection-title">Tables &amp; colonnes ajoutees S25</div>
     <div class="grid2">
       <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">📋</div>Nouvelles tables</div>
+        <div class="card-title"><div class="card-icon icon-green">📋</div>Nouvelles tables S25</div>
         <div class="item-list">
-          <div class="item"><span class="item-label">edc_fiche</span><span class="item-val">Fiche EC complète — 60+ champs</span></div>
-          <div class="item"><span class="item-label">edc_probleme</span><span class="item-val">Grille comportementale multi-lignes</span></div>
-          <div class="item"><span class="item-label">seance_suivi_cac</span><span class="item-val">CAC par séance avec propagation</span></div>
-          <div class="item"><span class="item-label">param_libelles_ec</span><span class="item-val">60 libellés paramétrables dont 14 CAC</span></div>
+          <div class="item"><span class="item-label">lead_formulaire</span><span class="item-val">Token 32 chars — lien public unique</span></div>
+          <div class="item"><span class="item-label">lead_formulaire_question</span><span class="item-val">Questions TEXTE / CHOIX / ECHELLE</span></div>
+          <div class="item"><span class="item-label">lead_formulaire_reponse</span><span class="item-val">Prospect + LED_ID FK + IP RGPD</span></div>
         </div>
       </div>
       <div class="card">
-        <div class="card-title"><div class="card-icon icon-blue">🔧</div>Colonnes ajoutées</div>
+        <div class="card-title"><div class="card-icon icon-blue">🔧</div>Tables S24 rappel</div>
         <div class="item-list">
-          <div class="item"><span class="item-label">ANI_SCORE_CAC</span><span class="item-val">Score CAC actuel (0..14)</span></div>
-          <div class="item"><span class="item-label">ANI_DERNIERE_SEA_ID</span><span class="item-val">ID dernière séance avec CAC</span></div>
-          <div class="item"><span class="item-label">ANI_DERNIERE_SEA_DATE</span><span class="item-val">Date dernière séance avec CAC</span></div>
-          <div class="item"><span class="item-label">STY_COULEUR</span><span class="item-val">Couleur hex agenda (S22)</span></div>
-          <div class="item"><span class="item-label">STY_LIBELLE</span><span class="item-val">'Etude Comportementale' (renommé depuis EDC)</span></div>
+          <div class="item"><span class="item-label">edc_fiche</span><span class="item-val">Fiche EC complete — 60+ champs</span></div>
+          <div class="item"><span class="item-label">edc_probleme</span><span class="item-val">Grille comportementale multi-lignes</span></div>
+          <div class="item"><span class="item-label">seance_suivi_cac</span><span class="item-val">CAC par seance avec propagation</span></div>
+          <div class="item"><span class="item-label">param_libelles_ec</span><span class="item-val">60 libelles parametrables dont 14 CAC</span></div>
         </div>
       </div>
     </div>
   </div>
-
   <div class="subsection" id="s2-triggers">
-    <div class="subsection-title">Triggers actifs — session 24</div>
+    <div class="subsection-title">Triggers actifs</div>
     <div class="tbl-wrap">
       <table class="tbl">
-        <thead><tr><th>Trigger</th><th>Table cible</th><th>Rôle</th></tr></thead>
+        <thead><tr><th>Trigger</th><th>Table cible</th><th>Role</th></tr></thead>
         <tbody>
-          <tr><td>trg_facture_num</td><td>facture</td><td>Numéro FAC-YYMM-0001 auto</td></tr>
-          <tr><td>trg_reglement_check</td><td>reglement</td><td>Bloque dépassement TTC</td></tr>
+          <tr><td>trg_facture_num</td><td>facture</td><td>Numero FAC-YYMM-0001 auto</td></tr>
+          <tr><td>trg_reglement_check</td><td>reglement</td><td>Bloque depassement TTC</td></tr>
           <tr><td>trg_dcl_calc_insert/update</td><td>devis_contrat_ligne</td><td>Calcul HT/TVA/TTC</td></tr>
           <tr><td>trg_fli_calc_insert/update</td><td>facture_ligne</td><td>Calcul HT/TVA/TTC</td></tr>
-          <tr><td>trg_facture_no_*_if_closed</td><td>facture</td><td>Verrou exercice clôturé</td></tr>
-          <tr><td>trg_reglement_no_*_if_closed</td><td>reglement</td><td>Verrou exercice clôturé</td></tr>
-          <tr><td>trg_dce_num</td><td>devis_contrat_entete</td><td>Numéro DEV-YYMM-0001 auto</td></tr>
-          <tr><td>trg_sel_calc_*</td><td>seance_ligne</td><td>Calcul lignes séance</td></tr>
-          <tr><td>trg_sel_after_*</td><td>seance_ligne</td><td>MAJ totaux séance</td></tr>
+          <tr><td>trg_facture_no_*_if_closed</td><td>facture</td><td>Verrou exercice cloture</td></tr>
+          <tr><td>trg_reglement_no_*_if_closed</td><td>reglement</td><td>Verrou exercice cloture</td></tr>
+          <tr><td>trg_dce_num</td><td>devis_contrat_entete</td><td>Numero DEV-YYMM-0001 auto</td></tr>
+          <tr><td>trg_sel_calc_*</td><td>seance_ligne</td><td>Calcul lignes seance</td></tr>
+          <tr><td>trg_sel_after_*</td><td>seance_ligne</td><td>MAJ totaux seance</td></tr>
           <tr><td>trg_sea_unique_par_animal_*</td><td>seance</td><td>EC unique par animal</td></tr>
           <tr><td>trg_ssc_score_insert/update</td><td>seance_suivi_cac</td><td>Score CAC auto (S24)</td></tr>
           <tr><td>trg_ssc_remonte_animal</td><td>seance_suivi_cac</td><td>MAJ fiche animal (S24)</td></tr>
@@ -261,29 +255,28 @@ footer strong{color:rgba(255,255,255,0.7);}
       </table>
     </div>
   </div>
-
   <div class="subsection" id="s2-vues">
-    <div class="subsection-title">Vues & procédures</div>
+    <div class="subsection-title">Vues &amp; procedures</div>
     <div class="grid2">
       <div class="card">
         <div class="card-title"><div class="card-icon icon-purple">👁</div>Vues utiles</div>
         <div class="item-list">
           <div class="item"><span class="item-label">v_facture_totaux</span><span class="item-val">HT/TVA/TTC par facture</span></div>
-          <div class="item"><span class="item-label">v_facture_suivi</span><span class="item-val">Reste à payer par facture</span></div>
+          <div class="item"><span class="item-label">v_facture_suivi</span><span class="item-val">Reste a payer par facture</span></div>
           <div class="item"><span class="item-label">v_encours_client</span><span class="item-val">Encours total par client</span></div>
-          <div class="item"><span class="item-label">v_edc_sans_devis</span><span class="item-val">EC sans devis lié (widget dashboard)</span></div>
+          <div class="item"><span class="item-label">v_edc_sans_devis</span><span class="item-val">EC sans devis lie (widget dashboard)</span></div>
           <div class="item"><span class="item-label">v_fec_complet</span><span class="item-val">FEC dynamique complet</span></div>
-          <div class="item"><span class="item-label">v_fec_export_non_equilibre</span><span class="item-val">Écritures non équilibrées</span></div>
+          <div class="item"><span class="item-label">v_fec_export_non_equilibre</span><span class="item-val">Ecritures non equilibrees</span></div>
           <div class="item"><span class="item-label">v_ged_pj_animal</span><span class="item-val">PJ d'un animal</span></div>
-          <div class="item"><span class="item-label">v_animal_evolution_cac</span><span class="item-val">Évolution CAC par séance (S24)</span></div>
+          <div class="item"><span class="item-label">v_animal_evolution_cac</span><span class="item-val">Evolution CAC par seance (S24)</span></div>
         </div>
       </div>
       <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">⚙️</div>Procédures stockées</div>
+        <div class="card-title"><div class="card-icon icon-green">⚙️</div>Procedures stockees</div>
         <div class="item-list">
-          <div class="item"><span class="item-label">sp_fec_generer_par_exercice</span><span class="item-val">Génère export FEC figé</span></div>
-          <div class="item"><span class="item-label">sp_exercice_cloturer</span><span class="item-val">Clôture exercice comptable</span></div>
-          <div class="item"><span class="item-label">sp_dce_creer_depuis_seance</span><span class="item-val">Crée devis depuis séance</span></div>
+          <div class="item"><span class="item-label">sp_fec_generer_par_exercice</span><span class="item-val">Genere export FEC fige</span></div>
+          <div class="item"><span class="item-label">sp_exercice_cloturer</span><span class="item-val">Cloture exercice comptable</span></div>
+          <div class="item"><span class="item-label">sp_dce_creer_depuis_seance</span><span class="item-val">Cree devis depuis seance</span></div>
         </div>
       </div>
     </div>
@@ -292,87 +285,51 @@ footer strong{color:rgba(255,255,255,0.7);}
 
 <!-- 03 API -->
 <div class="section" id="s3">
-  <div class="section-header"><span class="section-num">03</span><span class="section-title">État API — Session 24</span></div>
-
-  <div class="alert alert-warn" style="margin-bottom:14px;">Historique crashes : S19 regex /png → corrigé · S22 PUT /seances/types avant _h56 → corrigé S24 par fix_main_s24.ps1</div>
-
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">Etat API — Session 25</span></div>
+  <div class="alert alert-warn" style="margin-bottom:14px;">Historique crashes : S19 regex /png corrige · S22 PUT /seances/types avant _h56 corrige S24 par fix_main_s24.ps1</div>
   <div class="subsection" id="s3-patch">
     <div class="subsection-title">Structure PATCH_ROUTES_S56</div>
     <div class="code">
 await app.listen(port, <span class="ck">"0.0.0.0"</span>);
-
-<span class="cm">// PATCH_ROUTES_S56 — toutes les routes injectées ICI</span>
+<span class="cm">// PATCH_ROUTES_S56 — toutes les routes injectees ICI</span>
 try {
   const <span class="cv">_h56</span> = app.getHttpAdapter().getInstance();
-  const <span class="cv">_db56</span> = app.get(require(<span class="ck">'./common/db.service'</span>).DbService);
-
-  <span class="cv">_h56</span>.put(<span class="ck">'/seances/types/:id'</span>, ...)
-  <span class="cv">_h56</span>.get(<span class="ck">'/parametres/libelles-ec'</span>, ...)
-  <span class="cv">_h56</span>.put(<span class="ck">'/parametres/libelles-ec/:id'</span>, ...)
-  <span class="cv">_h56</span>.get(<span class="ck">'/edc'</span>, ...)          <span class="cm">// S24</span>
-  <span class="cv">_h56</span>.post(<span class="ck">'/edc'</span>, ...)         <span class="cm">// S24</span>
-  <span class="cv">_h56</span>.put(<span class="ck">'/edc/:id'</span>, ...)      <span class="cm">// S24</span>
-  <span class="cv">_h56</span>.get(<span class="ck">'/edc/:id/problemes'</span>, ...) <span class="cm">// S24</span>
-  <span class="cv">_h56</span>.get(<span class="ck">'/seances/:id/cac'</span>, ...)   <span class="cm">// S24</span>
-  <span class="cv">_h56</span>.post(<span class="ck">'/seances/:id/cac'</span>, ...)  <span class="cm">// S24</span>
-  <span class="cv">_h56</span>.get(<span class="ck">'/animaux/:id/evolution-cac'</span>, ...) <span class="cm">// S24</span>
-
+  <span class="cm">// Routes S24</span>
+  <span class="cv">_h56</span>.use(<span class="ck">'/ged-libelles-ec'</span>, ...)
+  <span class="cv">_h56</span>.use(<span class="ck">'/ged-edc'</span>, ...)
+  <span class="cv">_h56</span>.use(<span class="ck">'/ged-cac'</span>, ...)
+  <span class="cm">// Routes S25 — formulaire lead</span>
+  require(<span class="ck">'/app/dist/patch_formulaire_lead_s25'</span>)(app);
 } catch(<span class="cv">_e56</span>) { console.warn(<span class="ck">'PATCH_ROUTES_S56 error:'</span>, <span class="cv">_e56</span>.message); }
     </div>
-    <div class="alert alert-danger">Les routes DOIVENT être dans le bloc try { const _h56 = ... } — jamais entre await app.listen et ce bloc.</div>
-  </div>
-
-  <div class="subsection">
-    <div class="subsection-title">Découverte critique S24 — Injection routes NestJS</div>
-    <div class="alert alert-danger" style="margin-bottom:10px;">
-      <strong>_h56.get/post/put() → 404 systématique</strong> — le filtre NestJS intercepte avant d'atteindre la route injectée.
-    </div>
-    <div class="grid2">
+    <div class="alert alert-danger">Les routes DOIVENT etre dans le bloc try { const _h56 = ... } — jamais entre await app.listen et ce bloc.</div>
+    <div class="grid2" style="margin-top:12px;">
       <div class="card">
-        <div class="card-title"><div class="card-icon icon-red">🔴</div>Problème identifié</div>
+        <div class="card-title"><div class="card-icon icon-red">🔴</div>Probleme identifie</div>
         <div class="item-list">
-          <div class="item"><span class="item-label">_h56.get/post/put()</span><span class="item-val">404 systématique — filtre NestJS intercepte en amont</span></div>
+          <div class="item"><span class="item-label">_h56.get/post/put()</span><span class="item-val">404 systematique — filtre NestJS intercepte en amont</span></div>
           <div class="item"><span class="item-label">app.get(DbService)</span><span class="item-val">Ne fonctionne pas dans ce contexte — retourne undefined</span></div>
         </div>
       </div>
       <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">✅</div>Solution validée</div>
+        <div class="card-title"><div class="card-icon icon-green">✅</div>Solution validee</div>
         <div class="item-list">
-          <div class="item"><span class="item-label">_h56.use()</span><span class="item-val">S'exécute AVANT le filtre 404 NestJS — fonctionne</span></div>
-          <div class="item"><span class="item-label">mysql2/promise</span><span class="item-val">Accès BDD direct via _q() — pas app.get(DbService)</span></div>
-          <div class="item"><span class="item-label">Préfixe /ged-*</span><span class="item-val">Convention pour éviter les conflits NestJS</span></div>
-          <div class="item"><span class="item-label">Nginx strip /api/</span><span class="item-val">Routes internes enregistrées SANS le préfixe /api/</span></div>
+          <div class="item"><span class="item-label">_h56.use()</span><span class="item-val">S'execute AVANT le filtre 404 NestJS — fonctionne</span></div>
+          <div class="item"><span class="item-label">mysql2/promise</span><span class="item-val">Acces BDD direct via _q() — pas app.get(DbService)</span></div>
+          <div class="item"><span class="item-label">Prefixe /ged-*</span><span class="item-val">Convention pour eviter les conflits NestJS</span></div>
+          <div class="item"><span class="item-label">Nginx strip /api/</span><span class="item-val">Routes internes enregistrees SANS le prefixe /api/</span></div>
         </div>
       </div>
     </div>
-    <div class="subsection-title" style="margin-top:14px;">Pattern correct pour routes injectées S24+</div>
-    <div class="code">
-<span class="cm">// ✅ CORRECT — _h56.use() s'exécute avant le filtre 404 NestJS</span>
-<span class="cm">// Nginx strip /api/ → routes internes enregistrées SANS /api/</span>
-<span class="cv">_h56</span>.use(<span class="ck">'/ged-libelles-ec'</span>, async (req, res) => {
-  <span class="cm">// BDD : mysql2/promise directement via _q(), pas app.get(DbService)</span>
-  const rows = await <span class="cv">_q</span>(<span class="ck">'SELECT * FROM param_libelles_ec'</span>);
-  res.json(rows);
-});
-
-<span class="cm">// Routes actives S24 (préfixe /ged-* par convention)</span>
-<span class="cv">_h56</span>.use(<span class="ck">'/ged-libelles-ec'</span>, ...)    <span class="cm">// → /api/ged-libelles-ec côté client</span>
-<span class="cv">_h56</span>.use(<span class="ck">'/ged-edc'</span>, ...)            <span class="cm">// → /api/ged-edc/*</span>
-<span class="cv">_h56</span>.use(<span class="ck">'/ged-cac'</span>, ...)            <span class="cm">// → /api/ged-cac/*</span>
-
-<span class="cm">// ❌ NE PLUS UTILISER pour nouvelles routes</span>
-<span class="cm">// _h56.get('/edc', ...) → 404 systématique</span>
-    </div>
   </div>
-
   <div class="subsection" id="s3-endpoints">
     <div class="subsection-title">Endpoints</div>
     <div class="grid2">
       <div>
-        <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:8px;">Confirmés OK</div>
+        <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:8px;">Confirmes OK</div>
         <div class="tbl-wrap">
           <table class="tbl">
-            <thead><tr><th>Méthode</th><th>Route</th></tr></thead>
+            <thead><tr><th>Methode</th><th>Route</th></tr></thead>
             <tbody>
               <tr><td>GET</td><td>/api/tiers, /api/tiers?type=CLIENT</td></tr>
               <tr><td>GET/POST/PATCH</td><td>/api/animaux, /api/animaux/:id, /api/animaux/races</td></tr>
@@ -382,23 +339,23 @@ try {
               <tr><td>GET</td><td>/api/crm/leads, /api/crm/opportunites, /api/crm/activites</td></tr>
               <tr><td>GET/POST</td><td>/api/ged/documents, /api/ged/animal/:id/photo</td></tr>
               <tr><td>GET</td><td>/api/parametres/*, /api/dashboard/stats, /api/admin/*</td></tr>
-              <tr><td>GET/PUT</td><td>/api/ged-libelles-ec (S24 — via _h56.use)</td></tr>
-              <tr><td>GET/POST/PUT</td><td>/api/ged-edc/*, /api/ged-cac/* (S24 — via _h56.use)</td></tr>
+              <tr><td>GET/PUT</td><td>/api/ged-libelles-ec (S24)</td></tr>
+              <tr><td>GET/POST/PUT</td><td>/api/ged-edc/*, /api/ged-cac/* (S24)</td></tr>
+              <tr><td>GET/POST</td><td>/api/public/formulaire/:token (S25 — sans auth)</td></tr>
+              <tr><td>GET/POST/PUT</td><td>/api/ged-formulaire-lead/* (S25)</td></tr>
             </tbody>
           </table>
         </div>
       </div>
       <div>
-        <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:8px;">À implanter S24+</div>
+        <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:8px;">A implanter S10+</div>
         <div class="tbl-wrap">
           <table class="tbl">
-            <thead><tr><th>Route</th><th>Méthode</th><th>État</th></tr></thead>
+            <thead><tr><th>Route</th><th>Sprint</th></tr></thead>
             <tbody>
-              <tr><td>/api/ged-edc/:id/problemes</td><td>_h56.use</td><td><span class="pill pill-wip">S24</span></td></tr>
-              <tr><td>/api/ged-cac/:sea_id</td><td>_h56.use</td><td><span class="pill pill-wip">S24</span></td></tr>
-              <tr><td>/api/ged-cac/:sea_id/initial</td><td>_h56.use</td><td><span class="pill pill-wip">S24</span></td></tr>
-              <tr><td>/api/ged-evolution-cac/:ani_id</td><td>_h56.use</td><td><span class="pill pill-wip">S24</span></td></tr>
-              <tr><td>/api/stock/*, /api/achats/*</td><td>—</td><td><span class="pill pill-todo">S10</span></td></tr>
+              <tr><td>/api/stock/*, /api/achats/*</td><td><span class="pill pill-todo">S10</span></td></tr>
+              <tr><td>/api/signature/*, /api/bilan/*</td><td><span class="pill pill-todo">S10</span></td></tr>
+              <tr><td>/api/tarification/*</td><td><span class="pill pill-todo">S10</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -411,28 +368,28 @@ try {
 <div class="section" id="s4">
   <div class="section-header"><span class="section-num">04</span><span class="section-title">Patches actifs — /app/dist/ (volatils)</span></div>
   <div class="alert alert-danger" style="margin-bottom:14px;">Perdus si rebuild image api. Sauvegarder AVANT tout docker compose up --build api.</div>
-
   <div class="tbl-wrap" style="margin-bottom:16px;">
     <table class="tbl">
       <thead><tr><th>Fichier</th><th>Contenu</th></tr></thead>
       <tbody>
         <tr><td>main.js</td><td>Bootstrap NestJS + PATCH_ROUTES_S56 (reconstruit S24)</td></tr>
         <tr><td>patch_animaux_v2.js</td><td>PATCH /api/animaux/:id</td></tr>
-        <tr><td>patch_rappels.js</td><td>Routes rappels impayés</td></tr>
+        <tr><td>patch_rappels.js</td><td>Routes rappels impayes</td></tr>
         <tr><td>smtp_server.js</td><td>Express port 8081 — SMTP + photo animal</td></tr>
         <tr><td>factures/factures.service.js</td><td>FAC_TOTAL_HT dans findAll</td></tr>
+        <tr><td>patch_formulaire_lead_s25.js</td><td>S25 — routes formulaire public + CRUD admin formulaire</td></tr>
       </tbody>
     </table>
   </div>
-
   <div class="subsection-title">Commande sauvegarde patches</div>
   <div class="code">
 <span class="cv">$bk</span> = <span class="ck">"C:\Backup\micro_logiciel\$(Get-Date -Format 'yyyyMMdd_HHmm')"</span>
 New-Item -ItemType Directory -Force -Path <span class="cv">$bk</span>
-docker cp micro_api:/app/dist/main.js              <span class="ck">"$bk\main.js"</span>
-docker cp micro_api:/app/dist/patch_animaux_v2.js  <span class="ck">"$bk\patch_animaux_v2.js"</span>
-docker cp micro_api:/app/dist/smtp_server.js       <span class="ck">"$bk\smtp_server.js"</span>
-docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\factures"</span>
+docker cp micro_api:/app/dist/main.js <span class="ck">"$bk\main.js"</span>
+docker cp micro_api:/app/dist/patch_animaux_v2.js <span class="ck">"$bk\patch_animaux_v2.js"</span>
+docker cp micro_api:/app/dist/smtp_server.js <span class="ck">"$bk\smtp_server.js"</span>
+docker cp micro_api:/app/dist/patch_formulaire_lead_s25.js <span class="ck">"$bk\patch_formulaire_lead_s25.js"</span>
+docker cp micro_api:/app/dist/factures <span class="ck">"$bk\factures"</span>
   </div>
 </div>
 
@@ -444,10 +401,10 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
       <div class="card-title"><div class="card-icon icon-blue">📄</div>Fichiers HTML locaux ($root\public\docs\)</div>
       <div class="tbl-wrap" style="margin-top:8px;">
         <table class="tbl">
-          <thead><tr><th>Fichier</th><th>Accès</th></tr></thead>
+          <thead><tr><th>Fichier</th><th>Acces</th></tr></thead>
           <tbody>
-            <tr><td>guide_parametrage.html</td><td>Tous utilisateurs connectés</td></tr>
-            <tr><td>notice_utilisateur.html</td><td>Tous utilisateurs connectés</td></tr>
+            <tr><td>guide_parametrage.html</td><td>Tous utilisateurs connectes</td></tr>
+            <tr><td>notice_utilisateur.html</td><td>Tous utilisateurs connectes</td></tr>
             <tr><td>doc_supervision.html</td><td>SuperAdmin uniquement</td></tr>
           </tbody>
         </table>
@@ -457,22 +414,22 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
       <div class="card-title"><div class="card-icon icon-green">🌐</div>GitHub Pages — petsuite-docs</div>
       <div class="item-list">
         <div class="item"><span class="item-label">Accueil</span><span class="item-val"><a href="https://nicolashermilly.github.io/petsuite-docs/" style="color:var(--blue);">petsuite-docs/</a></span></div>
-        <div class="item"><span class="item-label">Architecture</span><span class="item-val"><a href="https://nicolashermilly.github.io/petsuite-docs/05-architecture-roadmap.html" style="color:var(--blue);">05-architecture-roadmap.html</a></span></div>
-        <div class="item"><span class="item-label">Roadmap</span><span class="item-val"><a href="https://nicolashermilly.github.io/petsuite-docs/06-roadmap.html" style="color:var(--blue);">06-roadmap.html</a></span></div>
-        <div class="item"><span class="item-label">Audit Stack</span><span class="item-val"><a href="https://nicolashermilly.github.io/petsuite-docs/07-audit-stack.html" style="color:var(--blue);">07-audit-stack.html</a></span></div>
+        <div class="item"><span class="item-label">Architecture</span><span class="item-val"><a href="05-feuille-de-route-architecture.html" style="color:var(--blue);">05-feuille-de-route-architecture.html</a></span></div>
+        <div class="item"><span class="item-label">Roadmap</span><span class="item-val"><a href="06-roadmap.html" style="color:var(--blue);">06-roadmap.html</a></span></div>
+        <div class="item"><span class="item-label">Audit Stack</span><span class="item-val"><a href="07-audit-stack.html" style="color:var(--blue);">07-audit-stack.html</a></span></div>
       </div>
     </div>
   </div>
   <div class="subsection" style="margin-top:14px;">
-    <div class="subsection-title">Aide contextuelle HelpButton</div>
-    <div class="tbl-wrap">
+    <div class="subsection-title">Liens docs depuis l'application (S25)</div>
+    <div class="alert alert-ok">Les boutons "Guide de parametrage", "Notice utilisateur" et "Documentation technique" dans /app/parametres pointent desormais vers GitHub Pages — corriges S25.</div>
+    <div class="tbl-wrap" style="margin-top:8px;">
       <table class="tbl">
-        <thead><tr><th>Page</th><th>Ancre</th></tr></thead>
+        <thead><tr><th>Bouton</th><th>URL</th></tr></thead>
         <tbody>
-          <tr><td>/app/animaux</td><td>#client-animal</td></tr>
-          <tr><td>/app/seances</td><td>#seances</td></tr>
-          <tr><td>/app/seances/[id]/etude-comportementale</td><td>#etude-comport</td></tr>
-          <tr><td>/app/seances/[id]/suivi-cac</td><td>#suivi-cac</td></tr>
+          <tr><td>Guide de parametrage</td><td>https://nicolashermilly.github.io/petsuite-docs/02-guide-parametrage.html</td></tr>
+          <tr><td>Notice utilisateur</td><td>https://nicolashermilly.github.io/petsuite-docs/03-notice-utilisateur.html</td></tr>
+          <tr><td>Documentation technique</td><td>https://nicolashermilly.github.io/petsuite-docs/07-audit-stack.html</td></tr>
         </tbody>
       </table>
     </div>
@@ -484,36 +441,42 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
   <div class="section-header"><span class="section-num">06</span><span class="section-title">Audit visuel</span></div>
   <div class="grid2">
     <div>
-      <div class="subsection-title">Pages validées OK (S19–S24)</div>
+      <div class="subsection-title">Pages validees OK (S19–S25)</div>
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Page</th><th>État</th></tr></thead>
+          <thead><tr><th>Page</th><th>Etat</th></tr></thead>
           <tbody>
             <tr><td>/login</td><td><span class="pill pill-ok">OK</span></td></tr>
             <tr><td>/app (dashboard)</td><td><span class="pill pill-ok">OK</span></td></tr>
             <tr><td>/app/clients</td><td><span class="pill pill-ok">OK</span> 15 clients</td></tr>
-            <tr><td>/app/animaux</td><td><span class="pill pill-ok">OK</span> 29 animaux</td></tr>
-            <tr><td>/app/seances</td><td><span class="pill pill-ok">OK</span> 59 séances, couleurs</td></tr>
+            <tr><td>/app/animaux</td><td><span class="pill pill-ok">OK</span> 32 animaux</td></tr>
+            <tr><td>/app/animaux/new</td><td><span class="pill pill-ok">Fix S25</span> validation puce + double-submit</td></tr>
+            <tr><td>/app/seances</td><td><span class="pill pill-ok">OK</span> 64 seances</td></tr>
             <tr><td>/app/devis</td><td><span class="pill pill-ok">OK</span></td></tr>
             <tr><td>/app/factures</td><td><span class="pill pill-ok">OK</span> FAC_TOTAL_HT</td></tr>
-            <tr><td>/app/statistiques</td><td><span class="pill pill-ok">OK</span> CA HT corrigé S21</td></tr>
+            <tr><td>/app/statistiques</td><td><span class="pill pill-ok">OK</span></td></tr>
             <tr><td>/app/agenda</td><td><span class="pill pill-ok">OK</span> couleurs STY_COULEUR</td></tr>
             <tr><td>/app/crm</td><td><span class="pill pill-ok">OK</span></td></tr>
-            <tr><td>/app/parametres</td><td><span class="pill pill-ok">V2 S24</span> 14 tuiles</td></tr>
+            <tr><td>/app/aide</td><td><span class="pill pill-ok">Fix S25</span> 6 modules + recherche</td></tr>
+            <tr><td>/app/parametres</td><td><span class="pill pill-ok">Fix S25</span> liens docs + 5 sections ajoutees</td></tr>
           </tbody>
         </table>
       </div>
     </div>
     <div>
-      <div class="subsection-title">Pages ajoutées S24</div>
+      <div class="subsection-title">Corrections appliquees S25</div>
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Page</th><th>État</th></tr></thead>
+          <thead><tr><th>Correction</th><th>Etat</th></tr></thead>
           <tbody>
-            <tr><td>/app/parametres/libelles-ec</td><td><span class="pill pill-ok">Frontend OK</span></td></tr>
-            <tr><td>/app/seances/[id]/etude-comportementale</td><td><span class="pill pill-wip">En cours</span></td></tr>
-            <tr><td>/app/seances/[id]/suivi-cac</td><td><span class="pill pill-wip">En cours</span></td></tr>
-            <tr><td>/app/animaux/[id] onglet CAC V2</td><td><span class="pill pill-todo">Spec prête</span></td></tr>
+            <tr><td>HELP_MODULES retourne objets {id,label,icon}</td><td><span class="pill pill-ok">Corrige</span></td></tr>
+            <tr><td>Alias searchArticles / getArticlesForPage</td><td><span class="pill pill-ok">Corrige</span></td></tr>
+            <tr><td>Sections stock/yousign/compta/articles/tarification</td><td><span class="pill pill-ok">Ajoute</span></td></tr>
+            <tr><td>Liens docs GitHub Pages (plus de 404)</td><td><span class="pill pill-ok">Corrige</span></td></tr>
+            <tr><td>Sidebar : suppression Config SMTP + Criteres CAC</td><td><span class="pill pill-ok">Corrige</span></td></tr>
+            <tr><td>Validation puce 15 chiffres + anti double-submit</td><td><span class="pill pill-ok">Corrige</span></td></tr>
+            <tr><td>Formulaire lead public /formulaire/:token</td><td><span class="pill pill-ok">S25</span></td></tr>
+            <tr><td>BDD lead_formulaire + questions + reponses</td><td><span class="pill pill-ok">S25</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -521,11 +484,12 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
       <div class="subsection-title">Anomalies</div>
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>#</th><th>Sév.</th><th>Description</th></tr></thead>
+          <thead><tr><th>#</th><th>Sev.</th><th>Description</th></tr></thead>
           <tbody>
-            <tr><td>B1</td><td><span class="pill pill-ok">Fix S24</span></td><td>Restart loop API — corrigé</td></tr>
-            <tr><td>B2</td><td><span class="pill pill-gold">MOYENNE</span></td><td>Labels CAC génériques — à corriger S24</td></tr>
-            <tr><td>B3</td><td><span class="pill pill-ok">Corrigé</span></td><td>Titre "Mes paramètres"</td></tr>
+            <tr><td>B1</td><td><span class="pill pill-ok">Fix S24</span></td><td>Restart loop API — corrige</td></tr>
+            <tr><td>B2</td><td><span class="pill pill-ok">Fix S25</span></td><td>Labels CAC generiques corriges via param_libelles_ec</td></tr>
+            <tr><td>B3</td><td><span class="pill pill-ok">Corrige</span></td><td>Titre "Mes parametres" corrige S24</td></tr>
+            <tr><td>B4</td><td><span class="pill pill-todo">S10</span></td><td>Badge Type vide dans liste seances (STY_LIBELLE manquant)</td></tr>
           </tbody>
         </table>
       </div>
@@ -535,32 +499,34 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
 
 <!-- 07 REGLES -->
 <div class="section" id="s7">
-  <div class="section-header"><span class="section-num">07</span><span class="section-title">Règles critiques</span></div>
-  <div class="alert alert-danger" style="margin-bottom:14px;">À respecter impérativement à chaque session pour éviter les régressions.</div>
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Regles critiques</span></div>
+  <div class="alert alert-danger" style="margin-bottom:14px;">A respecter imperativement a chaque session pour eviter les regressions.</div>
   <div class="grid2">
     <div class="card">
       <div class="card-title"><div class="card-icon icon-red">⚠️</div>Docker</div>
       <div class="item-list">
         <div class="item"><span class="item-label">Patches volatils</span><span class="item-val">Perdus si rebuild image api — sauvegarder AVANT</span></div>
-        <div class="item"><span class="item-label">Rebuild frontend</span><span class="item-val">docker compose restart nginx obligatoire après</span></div>
-        <div class="item"><span class="item-label">docker cp</span><span class="item-val">Fonctionne sur container ARRÊTÉ uniquement</span></div>
+        <div class="item"><span class="item-label">Rebuild frontend</span><span class="item-val">docker compose up -d --build frontend depuis deploy/</span></div>
+        <div class="item"><span class="item-label">docker cp</span><span class="item-val">Fonctionne sur container ARRETE uniquement</span></div>
         <div class="item"><span class="item-label">docker exec</span><span class="item-val">Nom container (micro_api), pas le service</span></div>
         <div class="item"><span class="item-label">docker compose</span><span class="item-val">cd "$root\deploy" AVANT toute commande</span></div>
         <div class="item"><span class="item-label">PATCH_ROUTES_S56</span><span class="item-val">Routes DANS le bloc try { const _h56 = ... }</span></div>
-        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Règle 13 ★</span><span class="item-val"><strong>Routes injectées → _h56.use() uniquement</strong> + préfixe /ged-* — _h56.get/post/put() → 404 systématique (filtre NestJS)</span></div>
-        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Règle 14 ★</span><span class="item-val"><strong>Nginx strip /api/</strong> → routes internes enregistrées SANS le préfixe /api/</span></div>
+        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Regle 13 ★</span><span class="item-val"><strong>Routes injectees → _h56.use() uniquement</strong> + prefixe /ged-* — _h56.get/post/put() → 404 (filtre NestJS)</span></div>
+        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Regle 14 ★</span><span class="item-val"><strong>Nginx strip /api/</strong> → routes internes enregistrees SANS le prefixe /api/</span></div>
+        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Regle 15 ★</span><span class="item-val"><strong>Routes publiques /formulaire/*</strong> → ne pas mettre de middleware auth dans Nginx</span></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-title"><div class="card-icon icon-gold">⚙️</div>Code & PowerShell</div>
+      <div class="card-title"><div class="card-icon icon-gold">⚙️</div>Code &amp; PowerShell</div>
       <div class="item-list">
         <div class="item"><span class="item-label">DECIMAL MariaDB</span><span class="item-val">parseFloat(val || 0) avant .toFixed() en JS</span></div>
         <div class="item"><span class="item-label">Scripts PS</span><span class="item-val">ASCII pur — pas d'accents ni emojis</span></div>
         <div class="item"><span class="item-label">Chemins PS</span><span class="item-val">C:\Users\AdminPC\ (pas $env:USERPROFILE)</span></div>
-        <div class="item"><span class="item-label">Regex JS</span><span class="item-val">Échapper / → \/png (crash Node.js sinon)</span></div>
+        <div class="item"><span class="item-label">Regex JS</span><span class="item-val">Echapper / → \/png (crash Node.js sinon)</span></div>
         <div class="item"><span class="item-label">-LiteralPath</span><span class="item-val">Pour chemins PS avec [id] dans le nom</span></div>
         <div class="item"><span class="item-label">require() nodes</span><span class="item-val">Chemin absolu /app/node_modules/xxx</span></div>
-        <div class="item"><span class="item-label">BDD injectée</span><span class="item-val">mysql2/promise via _q() directement — pas app.get(DbService)</span></div>
+        <div class="item"><span class="item-label">BDD injectee</span><span class="item-val">mysql2/promise via _q() directement — pas app.get(DbService)</span></div>
+        <div class="item"><span class="item-label">Next.js rebuild</span><span class="item-val">Remove-Item -Recurse -Force ".\.next" avant npm run build si EINVAL</span></div>
       </div>
     </div>
   </div>
@@ -571,7 +537,7 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
 
 <footer>
   <div><strong>PetSuite</strong> — Audit Stack · Document vivant</div>
-  <div style="font-size:11px;color:rgba(255,255,255,0.3);">Session 24 · 14/03/2026 · v0.1</div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.3);">Session 25 · 14/03/2026 · v0.2</div>
   <div>Confidentiel — usage interne</div>
 </footer>
 </body>
