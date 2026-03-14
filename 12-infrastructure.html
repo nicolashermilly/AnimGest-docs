@@ -423,7 +423,7 @@ footer strong{color:rgba(255,255,255,0.7);}
 <span class="cs">certificatesResolvers:</span>
   letsencrypt:
     acme:
-      email: <span class="ck">admin@petsuite.fr</span>
+      email: <span class="ck"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e5f5a5357507e4e5b4a4d4b574a5b10584c">[email&#160;protected]</a></span>
       storage: <span class="ck">/acme.json</span>
       dnsChallenge:          <span class="cm"># DNS-01 pour wildcard *.petsuite.fr</span>
         provider: <span class="ck">hetzner</span>  <span class="cm"># ou ovh selon hébergeur</span>
@@ -536,7 +536,7 @@ footer strong{color:rgba(255,255,255,0.7);}
           <tr><td>S3_ACCESS_KEY</td><td>Clé d'accès S3</td></tr>
           <tr><td>S3_SECRET_KEY</td><td>Clé secrète S3</td></tr>
           <tr><td>REDIS_PASSWORD</td><td>Mot de passe Redis</td></tr>
-          <tr><td>DB_PASSWORD</td><td>Mot de passe MariaDB @lgorithme</td></tr>
+          <tr><td>DB_PASSWORD</td><td>Mot de passe MariaDB (user technique)</td></tr>
           <tr><td>GOCARDLESS_TOKEN</td><td>Token API GoCardless</td></tr>
         </tbody>
       </table>
@@ -688,12 +688,12 @@ BACKUP_DIR=<span class="cv">/tmp/backups/$DATE</span>
 mkdir -p <span class="cv">$BACKUP_DIR</span>
 
 <span class="cm"># Lister tous les schemas tenants</span>
-TENANTS=$(mysql -u @lgorithme -p<span class="cv">$DB_PASS</span> \
+TENANTS=$(mysql -u <span class="cm"># user_technique</span> -p<span class="cv">$DB_PASS</span> \
   -e <span class="ck">"SHOW DATABASES LIKE 'micro_logiciel_%'"</span> \
   -s --skip-column-names)
 
 for DB in <span class="cv">$TENANTS</span>; do
-  mysqldump -u @lgorithme -p<span class="cv">$DB_PASS</span> \
+  mysqldump -u <span class="cm"># user_technique</span> -p<span class="cv">$DB_PASS</span> \
     --single-transaction --quick \
     <span class="cv">$DB</span> | gzip | gpg --symmetric \
     --cipher-algo AES256 \
@@ -724,7 +724,7 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
       </div>
       <div class="flow-step">
         <div class="flow-step-num">3</div>
-        <div class="flow-step-body"><div class="flow-step-title">Restaurer le schema</div><div class="flow-step-desc">mysql -u @lgorithme -p {schema} &lt; {schema}.sql — Sur environnement isolé d'abord pour vérification.</div></div>
+        <div class="flow-step-body"><div class="flow-step-title">Restaurer le schema</div><div class="flow-step-desc">mysql -u [user_technique] -p {schema} &lt; {schema}.sql — Sur environnement isolé d'abord pour vérification.</div></div>
       </div>
       <div class="flow-step">
         <div class="flow-step-num">4</div>
@@ -786,7 +786,7 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
 <span class="cm"># BDD plateforme</span>
 <span class="cv">PLATFORM_DB_HOST</span>=<span class="ck">10.0.2.1</span>
 <span class="cv">PLATFORM_DB_NAME</span>=<span class="ck">petsuite_platform</span>
-<span class="cv">PLATFORM_DB_USER</span>=<span class="ck">@lgorithme</span>
+<span class="cv">PLATFORM_DB_USER</span>=<span class="ck">[user_technique_applicatif]</span>
 <span class="cv">PLATFORM_DB_PASS</span>=<span class="ck">@lgoritHme+2025+977_73300</span>
 
 <span class="cm"># JWT</span>
@@ -813,7 +813,7 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
 <span class="cm"># Email (transactionnel)</span>
 <span class="cv">SMTP_HOST</span>=<span class="ck">smtp.mailgun.org</span>
 <span class="cv">SMTP_PORT</span>=<span class="ck">587</span>
-<span class="cv">SMTP_USER</span>=<span class="ck">no-reply@petsuite.fr</span>
+<span class="cv">SMTP_USER</span>=<span class="ck"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e38d8cce9186938f9aa393869790968a9786cd8591">[email&#160;protected]</a></span>
 <span class="cv">SMTP_PASS</span>=<span class="ck">[clé Mailgun]</span>
 
 <span class="cm"># Monitoring</span>
@@ -884,9 +884,4 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
 </div>
 
 <footer>
-  <div><strong>PetSuite</strong> — Infrastructure & hébergement · Document vivant</div>
-  <div style="font-size:11px;color:rgba(255,255,255,0.3);">Session 24 · 14/03/2026 · v0.1</div>
-  <div>Confidentiel — usage interne</div>
-</footer>
-</body>
-</html>
+  <div><strong>Pe
