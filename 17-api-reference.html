@@ -136,7 +136,7 @@ footer strong{color:rgba(255,255,255,0.6);}
 <nav>
   <div style="display:flex;align-items:center;gap:14px;">
     <a class="nav-logo" href="index.html">Pet<span>Suite</span></a>
-    <span class="nav-version">v1.0 · S24</span>
+    <span class="nav-version">v1.0 · S25</span>
   </div>
   <div class="nav-links">
     <a href="#global" class="active">Global</a>
@@ -301,7 +301,7 @@ footer strong{color:rgba(255,255,255,0.6);}
   </div>
 
   <div class="alert alert-warn">
-    <strong>Règles d'injection S24 :</strong> Les routes GED injectées via PATCH_ROUTES_S56 utilisent le préfixe <code style="font-family:'DM Mono',monospace;">/ged-*</code> et sont enregistrées sans le préfixe <code style="font-family:'DM Mono',monospace;">/api/</code> en interne (strippé par Nginx). Utiliser <code style="font-family:'DM Mono',monospace;">_h56.use()</code> uniquement — jamais <code style="font-family:'DM Mono',monospace;">_h56.get/post/put()</code>.
+    <strong>Règles d'injection S25 :</strong> Les routes GED injectées via PATCH_ROUTES_S56 utilisent le préfixe <code style="font-family:'DM Mono',monospace;">/ged-*</code> et sont enregistrées sans le préfixe <code style="font-family:'DM Mono',monospace;">/api/</code> en interne (strippé par Nginx). Utiliser <code style="font-family:'DM Mono',monospace;">_h56.use()</code> uniquement — jamais <code style="font-family:'DM Mono',monospace;">_h56.get/post/put()</code>.
   </div>
 
   <div id="errors" style="margin-top:20px;">
@@ -541,7 +541,7 @@ Authorization: Bearer <span class="cs">{token}</span></div>
     <div class="endpoint-header" onclick="this.parentElement.classList.toggle('open')">
       <span class="method-badge m-get">GET</span>
       <span class="endpoint-path">/animaux/<span class="param">:id</span>/evolution-cac</span>
-      <span class="endpoint-summary">Évolution CAC par séance (S24 — _h56.use)</span>
+      <span class="endpoint-summary">Évolution CAC par séance (S25 — _h56.use · /ged-evolution-cac/:ani_id)</span>
       <span class="endpoint-auth auth-jwt">JWT</span>
       <span class="endpoint-toggle">▾</span>
     </div>
@@ -564,7 +564,7 @@ Authorization: Bearer <span class="cs">{token}</span></div>
         </div>
         <div>
           <div class="ep-col-title">Source</div>
-          <div class="alert alert-ok">Vue <code style="font-family:'DM Mono',monospace;">v_animal_evolution_cac</code> — créée S24.</div>
+          <div class="alert alert-ok">Vue <code style="font-family:'DM Mono',monospace;">v_animal_evolution_cac</code> — créée S24 · Route <code style="font-family:'DM Mono',monospace;">/api/ged-evolution-cac/:ani_id</code> déployée S25.</div>
           <div class="resp-list" style="margin-top:8px;">
             <div class="resp-row"><span class="resp-code resp-200">200</span><span class="resp-desc">Tableau évolution (peut être vide)</span></div>
             <div class="resp-row"><span class="resp-code resp-404">404</span><span class="resp-desc">Animal introuvable</span></div>
@@ -579,7 +579,7 @@ Authorization: Bearer <span class="cs">{token}</span></div>
 <div class="api-section" id="edc">
   <div class="api-section-header">
     <div class="api-section-icon" style="background:var(--purple2);">🧠</div>
-    <div><div class="api-section-title">Étude Comportementale (EDC)</div><div class="api-section-desc">Fiches EC — routes injectées via _h56.use() · préfixe /ged-edc · S24</div></div>
+    <div><div class="api-section-title">Étude Comportementale (EDC)</div><div class="api-section-desc">Fiches EC — routes injectées via _h56.use() · préfixe /ged-edc · déployé S25 · patch_edc_cac_s25.js</div></div>
   </div>
   <div class="alert alert-info" style="margin-bottom:14px;">Toutes les routes EDC sont injectées via <code style="font-family:'DM Mono',monospace;">_h56.use('/ged-edc', ...)</code>. Côté client : <code style="font-family:'DM Mono',monospace;">/api/ged-edc</code> (Nginx ajoute /api/ au préfixe).</div>
 
@@ -681,11 +681,51 @@ Authorization: Bearer <span class="cs">{token}</span></div>
   </div>
 </div>
 
+<!-- EDC PUT + DELETE problemes -->
+<div class="endpoint-group" id="edc-put">
+  <div class="endpoint-row">
+    <span class="method m-put">PUT</span>
+    <span class="endpoint-path">/ged-edc/<span class="param">:id</span></span>
+    <span class="endpoint-summary">Mettre à jour une fiche EDC</span>
+  </div>
+  <div class="endpoint-body">
+    <div class="param-table-wrap"><table class="param-table"><thead><tr><th>Paramètre</th><th>Type</th><th>Description</th></tr></thead><tbody>
+      <tr><td><span class="param-name">id<span class="param-required">*</span></span></td><td><span class="param-type">integer</span></td><td class="param-desc">EDC_ID à mettre à jour</td></tr>
+      <tr><td><span class="param-name">EDC_COMPORTEMENT_GENERAL</span></td><td><span class="param-type">string</span></td><td class="param-desc">Comportement général (tous champs optionnels)</td></tr>
+      <tr><td><span class="param-name">EDC_ATTENTES</span></td><td><span class="param-type">string</span></td><td class="param-desc">Attentes propriétaire</td></tr>
+      <tr><td><span class="param-name">EDC_COMMENTAIRE_LIBRE</span></td><td><span class="param-type">string</span></td><td class="param-desc">Commentaire libre</td></tr>
+    </tbody></table></div>
+    <div class="resp-list">
+      <div class="resp-row"><span class="resp-code resp-200">200</span><span class="resp-desc">Fiche mise à jour — objet EDC retourné</span></div>
+      <div class="resp-row"><span class="resp-code resp-404">404</span><span class="resp-desc">EDC non trouvée</span></div>
+    </div>
+    <div class="alert alert-ok">Route injectée via <code style="font-family:'DM Mono',monospace;">_h56.use('/ged-edc', ...)</code> — patch_edc_cac_s25.js · S25</div>
+  </div>
+</div>
+
+<div class="endpoint-group" id="edc-probleme-delete">
+  <div class="endpoint-row">
+    <span class="method m-delete">DELETE</span>
+    <span class="endpoint-path">/ged-edc/<span class="param">:id</span>/problemes/<span class="param">:pid</span></span>
+    <span class="endpoint-summary">Supprimer un problème comportemental</span>
+  </div>
+  <div class="endpoint-body">
+    <div class="param-table-wrap"><table class="param-table"><thead><tr><th>Paramètre</th><th>Type</th><th>Description</th></tr></thead><tbody>
+      <tr><td><span class="param-name">id<span class="param-required">*</span></span></td><td><span class="param-type">integer</span></td><td class="param-desc">EDC_ID</td></tr>
+      <tr><td><span class="param-name">pid<span class="param-required">*</span></span></td><td><span class="param-type">integer</span></td><td class="param-desc">EDP_ID du problème</td></tr>
+    </tbody></table></div>
+    <div class="resp-list">
+      <div class="resp-row"><span class="resp-code resp-200">200</span><span class="resp-desc">{ "deleted": true }</span></div>
+    </div>
+    <div class="alert alert-ok">Route injectée via <code style="font-family:'DM Mono',monospace;">_h56.use('/ged-edc', ...)</code> — patch_edc_cac_s25.js · S25</div>
+  </div>
+</div>
+
 <!-- CAC -->
 <div class="api-section" id="cac-get">
   <div class="api-section-header">
     <div class="api-section-icon" style="background:var(--accent3);">📊</div>
-    <div><div class="api-section-title">CAC par séance</div><div class="api-section-desc">Critères d'Aptitude au Contact — routes /ged-cac · S24</div></div>
+    <div><div class="api-section-title">CAC par séance</div><div class="api-section-desc">Critères d'Aptitude au Contact — routes /ged-cac · déployé S25 · patch_edc_cac_s25.js</div></div>
   </div>
 
   <div class="endpoint open">
@@ -1256,7 +1296,7 @@ GET /api/portail/auth/550e8400-e29b-41d4-a716-446655440000</div>
 </div><!-- /layout -->
 
 <footer>
-  <div><strong>PetSuite API</strong> — v1.0 · S24 · 14/03/2026</div>
+  <div><strong>PetSuite API</strong> — v1.0 · S25 · 14/03/2026</div>
   <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.2);">NestJS + PATCH_ROUTES_S56 · MariaDB utf8mb4</div>
   <div>Confidentiel — usage interne</div>
 </footer>

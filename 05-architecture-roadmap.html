@@ -191,7 +191,7 @@ footer strong{color:rgba(255,255,255,0.7);}
   <h1>Architecture <em>& Roadmap</em></h1>
   <p class="hero-sub">Vision technique complète du projet PetSuite — stack, BDD, modules, multi-tenant SaaS, modèle commercial, scalabilité et feuille de route par phase.</p>
   <div class="hero-kpis">
-    <div class="kpi"><div class="kpi-num">S24</div><div class="kpi-lbl">Session courante</div></div>
+    <div class="kpi"><div class="kpi-num">S25</div><div class="kpi-lbl">Session courante</div></div>
     <div class="kpi"><div class="kpi-num">60+</div><div class="kpi-lbl">Tables BDD</div></div>
     <div class="kpi"><div class="kpi-num">18</div><div class="kpi-lbl">Triggers actifs</div></div>
     <div class="kpi"><div class="kpi-num">9</div><div class="kpi-lbl">Sprints réalisés</div></div>
@@ -212,7 +212,7 @@ footer strong{color:rgba(255,255,255,0.7);}
   <a href="#s4-triggers" class="toc-h3">Triggers</a>
   <a href="#s4-vues" class="toc-h3">Vues & procédures</a>
   <a href="#s5" class="toc-h2">05. GED</a>
-  <a href="#s6" class="toc-h2">06. API — État S24</a>
+  <a href="#s6" class="toc-h2">06. API — État S25</a>
   <a href="#s6-endpoints" class="toc-h3">Endpoints</a>
   <a href="#s6-patches" class="toc-h3">Patches volatils</a>
   <a href="#s7" class="toc-h2">07. Modules fonctionnels</a>
@@ -524,7 +524,12 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
               <tr><td>GET/POST /api/edc/:id/problemes</td><td><span class="pill pill-spec">SPEC</span></td></tr>
               <tr><td>GET/POST /api/seances/:id/cac</td><td><span class="pill pill-spec">SPEC</span></td></tr>
               <tr><td>GET /api/seances/:id/cac-initial</td><td><span class="pill pill-spec">SPEC</span></td></tr>
-              <tr><td>GET /api/animaux/:id/evolution-cac</td><td><span class="pill pill-spec">SPEC</span></td></tr>
+              <tr><td>GET /api/ged-libelles-ec, PUT /api/ged-libelles-ec/:id</td><td><span class="pill pill-ok">S24 ✓</span></td></tr>
+              <tr><td>GET/POST/PUT /api/ged-edc — CRUD fiche EDC</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>GET/POST/PUT/DELETE /api/ged-edc/:id/problemes</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>GET/POST /api/ged-cac/:id — CAC séance</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>GET /api/ged-cac/:id/initial — CAC pré-remplis</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>GET /api/ged-evolution-cac/:ani_id — Historique CAC</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
               <tr><td>/api/stock/*, /api/achats/*</td><td><span class="pill pill-todo">À FAIRE</span></td></tr>
               <tr><td>/api/signature/*, /api/bilan/*</td><td><span class="pill pill-todo">À FAIRE</span></td></tr>
             </tbody>
@@ -541,6 +546,7 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
         <thead><tr><th>Fichier</th><th>Contenu</th></tr></thead>
         <tbody>
           <tr><td>main.js</td><td>Bootstrap NestJS + PATCH_ROUTES_S56 (reconstruit S24)</td></tr>
+          <tr><td>patch_edc_cac_s25.js</td><td>CRUD EDC + CAC séance + évolution CAC (S25)</td></tr>
           <tr><td>patch_animaux_v2.js</td><td>PATCH /api/animaux/:id</td></tr>
           <tr><td>patch_rappels.js</td><td>Routes rappels impayés</td></tr>
           <tr><td>smtp_server.js</td><td>Express port 8081 (SMTP + photo animal)</td></tr>
@@ -564,8 +570,8 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
       <tbody>
         <tr><td>Tiers / Clients</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
         <tr><td>Animaux</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Étude Comportementale</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-wip">EN COURS</span></td><td><span class="pill pill-wip">S24</span></td></tr>
-        <tr><td>Suivi CAC par séance</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-wip">EN COURS</span></td><td><span class="pill pill-wip">S24</span></td></tr>
+        <tr><td>Étude Comportementale</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">COMPLET</span></td><td><span class="pill pill-ok">S25</span></td></tr>
+        <tr><td>Suivi CAC par séance</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">COMPLET</span></td><td><span class="pill pill-ok">S25</span></td></tr>
         <tr><td>Séances / Agenda</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
         <tr><td>Devis / Contrats</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
         <tr><td>Factures vente</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
@@ -786,7 +792,7 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
   </div>
   <div class="sprint-row">
     <div class="sprint"><div class="sprint-num" style="background:var(--accent2);">S1–S8</div><div class="sprint-content"><div class="sprint-title">Sprints 1 à 8 — <span class="pill pill-ok">COMPLETS</span></div><div class="sprint-desc">Setup BDD · Auth · CRUD tiers/animaux · PDF/SMTP · Agenda · Rappels · Portail client · Stripe · SMS · CRM · GED · FEC · PWA · Fix crashes · Audit visuel · Couleurs agenda</div></div></div>
-    <div class="sprint"><div class="sprint-num" style="background:var(--gold);">S9</div><div class="sprint-content"><div class="sprint-title">Sprint 9 — <span class="pill pill-wip">EN COURS</span> · Session 24</div><div class="sprint-desc">Étude Comportementale (edc_fiche, edc_probleme) · Suivi CAC par séance (seance_suivi_cac) · Libellés paramétrables (param_libelles_ec) · Fix API PATCH_ROUTES_S56 · Frontend EC et CAC en cours</div></div></div>
+    <div class="sprint"><div class="sprint-num" style="background:var(--gold);">S9</div><div class="sprint-content"><div class="sprint-title">Sprint 9 — <span class="pill pill-ok">COMPLET</span> · Sessions 24–25</div><div class="sprint-desc">Étude Comportementale (edc_fiche, edc_probleme) · Suivi CAC par séance (seance_suivi_cac) · Libellés paramétrables (param_libelles_ec) · Fix API PATCH_ROUTES_S56 · Frontend EDC + CAC déployés S25</div></div></div>
     <div class="sprint"><div class="sprint-num" style="background:var(--blue);">S10</div><div class="sprint-content"><div class="sprint-title">Sprint 10 — <span class="pill pill-todo">PLANIFIÉ</span></div><div class="sprint-desc">Frontend modules S9 : EC complet · Suivi CAC · Tarification 3 méthodes · Achats fournisseurs · Stock PMP/FIFO/LIFO · Bilan PCG 2025 · Signature Yousign · Cycles documents</div></div></div>
     <div class="sprint"><div class="sprint-num" style="background:var(--blue);">S11</div><div class="sprint-content"><div class="sprint-title">Sprint 11 — <span class="pill pill-todo">PLANIFIÉ</span></div><div class="sprint-desc">Éditions PDF tous types (DMP, BLIV, BRET, CMD, AVR, AVF…) · PDF Étude Comportementale · Responsive mobile complet · PWA notifications push · Export CSV tous modules</div></div></div>
     <div class="sprint"><div class="sprint-num" style="background:var(--purple);">S12+</div><div class="sprint-content"><div class="sprint-title">Sprint 12+ — <span class="pill pill-spec">SaaS / PROD</span></div><div class="sprint-desc">Passage multi-tenant · Provisionnement tenant auto · BDD plateforme · Contrats SEPA · Portail super admin · Infrastructure hébergement · CI/CD · Monitoring · Vidéos commerciales GIF</div></div></div>
