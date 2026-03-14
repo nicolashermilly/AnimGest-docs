@@ -9,77 +9,114 @@
 :root{--ink:#1a1a2e;--ink2:#3d3d5c;--ink3:#8888aa;--paper:#f7f6f1;--paper2:#eeecea;--paper3:#e2e0da;--accent:#2d6a4f;--accent2:#40916c;--accent3:#d8f3dc;--gold:#a07030;--gold2:#fdf3e0;--blue:#1d4e8f;--blue2:#dbeafe;--red:#9b2335;--red2:#fdecea;--purple:#5b3fa0;--purple2:#ede8fc;--r:12px;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);font-size:14px;min-height:100vh;display:flex;flex-direction:column;}
-.hero{background:var(--ink);color:#fff;padding:80px 48px;text-align:center;flex:0;}
+.hero{background:var(--ink);color:#fff;padding:72px 48px;text-align:center;}
 .logo{font-family:'DM Serif Display',serif;font-size:52px;color:#fff;margin-bottom:12px;}
 .logo span{color:#74c69d;}
-.tagline{color:rgba(255,255,255,0.5);font-size:15px;max-width:480px;margin:0 auto 32px;}
+.tagline{color:rgba(255,255,255,0.5);font-size:15px;max-width:480px;margin:0 auto 28px;}
 .version{display:inline-block;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);font-size:11px;padding:4px 14px;border-radius:20px;}
-.container{max-width:900px;margin:0 auto;padding:56px 48px;flex:1;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
-.doc-card{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:28px;text-decoration:none;color:var(--ink);display:block;transition:all .2s;position:relative;overflow:hidden;}
+.section-label{max-width:960px;margin:40px auto 12px;padding:0 48px;font-size:11px;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;}
+.container{max-width:960px;margin:0 auto;padding:0 48px 52px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+.doc-card{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:24px;text-decoration:none;color:var(--ink);display:block;transition:all .2s;position:relative;overflow:hidden;}
 .doc-card:hover{border-color:var(--accent2);transform:translateY(-2px);}
 .doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;}
-.card-synth::before{background:var(--accent2);}
-.card-param::before{background:var(--gold);}
-.card-notice::before{background:var(--blue);}
-.card-admin::before{background:var(--red);}
-.doc-num{font-size:11px;color:var(--ink3);font-weight:500;margin-bottom:12px;letter-spacing:.06em;}
-.doc-title{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:8px;line-height:1.2;}
-.doc-desc{font-size:12px;color:var(--ink3);line-height:1.6;margin-bottom:16px;}
-.doc-tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;}
+.c1::before{background:var(--accent2);}
+.c2::before{background:var(--blue);}
+.c3::before{background:var(--gold);}
+.c4::before{background:#40a0c0;}
+.c5::before{background:var(--red);}
+.c6::before{background:var(--purple);}
+.doc-num{font-size:10px;color:var(--ink3);font-weight:500;margin-bottom:8px;letter-spacing:.06em;}
+.doc-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px;line-height:1.2;}
+.doc-desc{font-size:11px;color:var(--ink3);line-height:1.55;margin-bottom:14px;}
+.doc-tag{display:inline-block;font-size:10px;font-weight:500;padding:2px 9px;border-radius:20px;}
 .tag-green{background:var(--accent3);color:var(--accent);}
-.tag-gold{background:var(--gold2);color:var(--gold);}
 .tag-blue{background:var(--blue2);color:var(--blue);}
+.tag-gold{background:var(--gold2);color:var(--gold);}
+.tag-teal{background:#d0f0f8;color:#0f6e8f;}
 .tag-red{background:var(--red2);color:var(--red);}
-.arrow{position:absolute;bottom:24px;right:24px;font-size:18px;color:var(--paper3);transition:all .2s;}
+.tag-purple{background:var(--purple2);color:var(--purple);}
+.arrow{position:absolute;bottom:20px;right:20px;font-size:16px;color:var(--paper3);transition:all .2s;}
 .doc-card:hover .arrow{color:var(--accent2);}
-footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:20px 48px;font-size:12px;display:flex;justify-content:space-between;align-items:center;}
+.updated{text-align:center;color:var(--ink3);font-size:11px;margin-top:32px;padding-bottom:8px;}
+.updated span{background:var(--paper2);padding:4px 12px;border-radius:20px;border:1px solid var(--paper3);}
+footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:20px 48px;font-size:12px;display:flex;justify-content:space-between;align-items:center;margin-top:auto;}
 footer strong{color:rgba(255,255,255,0.7);}
+@media(max-width:600px){.hero{padding:48px 24px;}.logo{font-size:38px;}.container,.section-label{padding-left:20px;padding-right:20px;}footer{padding:16px 20px;flex-direction:column;gap:8px;text-align:center;}}
 </style>
 </head>
 <body>
 <div class="hero">
   <div class="logo">Pet<span>Suite</span></div>
   <p class="tagline">Documentation officielle — Logiciel SaaS de gestion pour professionnels des animaux de compagnie</p>
-  <span class="version">Nom provisoire · Version 0.1 · Document vivant</span>
+  <span class="version">Nom provisoire · Session 24 · 14/03/2026</span>
 </div>
 
+<div class="section-label">Documents utilisateurs</div>
 <div class="container">
   <div class="grid">
-
-    <a class="doc-card card-synth" href="01-synthese-projet.html">
+    <a class="doc-card c1" href="01-synthese-projet.html">
       <div class="doc-num">01 — INTERNE</div>
       <div class="doc-title">Synthèse projet</div>
-      <div class="doc-desc">Vision globale de fin de projet — architecture, modules métier, modèle commercial, scalabilité 5 000–20 000 clients.</div>
-      <span class="doc-tag tag-green">Document vivant</span>
-      <div class="arrow">→</div>
+      <div class="doc-desc">Vision globale — architecture, modules, modèle commercial, scalabilité 5 000–20 000 clients.</div>
+      <span class="doc-tag tag-green">Document vivant</span><div class="arrow">→</div>
     </a>
-
-    <a class="doc-card card-param" href="02-guide-parametrage.html">
+    <a class="doc-card c4" href="02-guide-parametrage.html">
       <div class="doc-num">02 — ADMIN SOCIÉTÉ</div>
       <div class="doc-title">Guide de paramétrage</div>
-      <div class="doc-desc">Configuration initiale de votre espace — référentiels TVA, catalogue, utilisateurs, GED, exercice comptable.</div>
-      <span class="doc-tag tag-gold">Administrateurs</span>
-      <div class="arrow">→</div>
+      <div class="doc-desc">Configuration initiale — TVA, catalogue, utilisateurs, GED, exercice comptable.</div>
+      <span class="doc-tag tag-gold">Administrateurs</span><div class="arrow">→</div>
     </a>
-
-    <a class="doc-card card-notice" href="03-notice-utilisateur.html">
+    <a class="doc-card c4" href="03-notice-utilisateur.html">
       <div class="doc-num">03 — TOUS UTILISATEURS</div>
       <div class="doc-title">Notice d'utilisation</div>
-      <div class="doc-desc">Guide pratique au quotidien — animaux, séances, devis, facturation, GED, CRM et questions fréquentes.</div>
-      <span class="doc-tag tag-blue">Tous utilisateurs</span>
-      <div class="arrow">→</div>
+      <div class="doc-desc">Guide pratique — animaux, séances, devis, facturation, GED, CRM, FAQ.</div>
+      <span class="doc-tag tag-teal">Tous utilisateurs</span><div class="arrow">→</div>
     </a>
-
-    <a class="doc-card card-admin" href="04-super-admin.html">
+    <a class="doc-card c5" href="04-super-admin.html">
       <div class="doc-num">04 — ACCÈS RESTREINT</div>
       <div class="doc-title">Espace super admin</div>
-      <div class="doc-desc">Pilotage plateforme — contrats, provisionnement tenants, supervision technique, données post-résiliation.</div>
-      <span class="doc-tag tag-red">Super admin uniquement</span>
-      <div class="arrow">→</div>
+      <div class="doc-desc">Pilotage plateforme — contrats, tenants, supervision, données post-résiliation.</div>
+      <span class="doc-tag tag-red">Super admin</span><div class="arrow">→</div>
     </a>
-
   </div>
+</div>
+
+<div class="section-label">Documents techniques</div>
+<div class="container">
+  <div class="grid">
+    <a class="doc-card c2" href="05-architecture-roadmap.html">
+      <div class="doc-num">05 — TECHNIQUE</div>
+      <div class="doc-title">Architecture &amp; Roadmap</div>
+      <div class="doc-desc">Stack, BDD 60+ tables, API S24, multi-tenant SaaS, modèle SEPA, sprints.</div>
+      <span class="doc-tag tag-blue">Session 24</span><div class="arrow">→</div>
+    </a>
+    <a class="doc-card c2" href="06-roadmap.html">
+      <div class="doc-num">06 — TECHNIQUE</div>
+      <div class="doc-title">Roadmap sprints</div>
+      <div class="doc-desc">Feuille de route complète S1→S24 + S10, S11, S12+ planifiés. Bugs et backlog.</div>
+      <span class="doc-tag tag-blue">S1→S12+</span><div class="arrow">→</div>
+    </a>
+    <a class="doc-card c2" href="07-audit-stack.html">
+      <div class="doc-num">07 — TECHNIQUE</div>
+      <div class="doc-title">Audit Stack</div>
+      <div class="doc-desc">Infrastructure Docker, état BDD, triggers, vues, API S24, patches volatils, règles critiques.</div>
+      <span class="doc-tag tag-blue">Session 24</span><div class="arrow">→</div>
+    </a>
+    <a class="doc-card c2" href="08-projet-reference.html">
+      <div class="doc-num">08 — TECHNIQUE</div>
+      <div class="doc-title">Référence projet</div>
+      <div class="doc-desc">Stack, accès, variables PS, numérotation docs, architecture BDD complète, historique sessions.</div>
+      <span class="doc-tag tag-blue">Référence</span><div class="arrow">→</div>
+    </a>
+    <a class="doc-card c6" href="09-scenario-video.html">
+      <div class="doc-num">09 — PRODUCTION</div>
+      <div class="doc-title">Scénario vidéo</div>
+      <div class="doc-desc">Script complet 7 min — 12 séquences, données démo, narrations, conseils tournage.</div>
+      <span class="doc-tag tag-purple">Commercial</span><div class="arrow">→</div>
+    </a>
+  </div>
+  <div class="updated"><span>Session 24 · 14/03/2026 · 9 documents · Format 100% HTML</span></div>
 </div>
 
 <footer>
