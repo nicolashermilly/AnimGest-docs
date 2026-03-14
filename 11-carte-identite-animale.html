@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Carte d'identité animale</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a2e;--ink2:#3d3d5c;--ink3:#8888aa;--paper:#f7f6f1;--paper2:#eeecea;--paper3:#e2e0da;--accent:#2d6a4f;--accent2:#40916c;--accent3:#d8f3dc;--gold:#a07030;--gold2:#fdf3e0;--blue:#1d4e8f;--blue2:#dbeafe;--red:#9b2335;--red2:#fdecea;--purple:#5b3fa0;--purple2:#ede8fc;--teal:#0f6e56;--teal2:#e1f5ee;--r:10px;--rs:6px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);font-size:14px;line-height:1.65;}
+nav{background:var(--ink);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;text-decoration:none;}
+.nav-logo span{color:#74c69d;}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap;}
+.nav-links a{color:rgba(255,255,255,0.55);font-size:11px;font-weight:500;text-decoration:none;padding:5px 12px;border-radius:20px;transition:all .2s;white-space:nowrap;}
+.nav-links a:hover{background:rgba(255,255,255,0.1);color:#fff;}
+.nav-links a.active{background:rgba(116,198,157,0.2);color:#74c69d;}
+.nav-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.45);font-size:10px;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.hero{background:var(--ink);color:#fff;padding:52px 48px 44px;}
+.hero-tag{display:inline-block;background:rgba(116,198,157,0.15);border:1px solid rgba(116,198,157,0.3);color:#74c69d;font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;margin-bottom:18px;letter-spacing:.04em;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:40px;line-height:1.1;margin-bottom:12px;}
+.hero h1 em{font-style:italic;color:#74c69d;}
+.hero-sub{color:rgba(255,255,255,0.5);font-size:14px;max-width:680px;margin-bottom:28px;}
+.hero-kpis{display:flex;gap:10px;flex-wrap:wrap;}
+.kpi{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r);padding:12px 18px;min-width:110px;}
+.kpi-num{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;line-height:1.1;}
+.kpi-lbl{font-size:10px;color:rgba(255,255,255,0.4);margin-top:3px;}
+.layout{display:flex;gap:0;max-width:1200px;margin:0 auto;}
+.toc{width:220px;flex-shrink:0;padding:32px 24px;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;border-right:1px solid var(--paper3);}
+.toc-title{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;}
+.toc a{display:block;font-size:12px;color:var(--ink3);text-decoration:none;padding:5px 0;border-left:2px solid transparent;padding-left:10px;transition:all .15s;line-height:1.4;}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent2);}
+.toc a.toc-h2{font-weight:500;color:var(--ink2);margin-top:8px;}
+.toc a.toc-h3{font-size:11px;padding-left:18px;}
+.main{flex:1;padding:40px 48px;min-width:0;}
+.section{margin-bottom:52px;scroll-margin-top:80px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--paper3);}
+.section-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);background:var(--paper2);padding:3px 8px;border-radius:var(--rs);}
+.section-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);}
+.subsection{margin-bottom:28px;}
+.subsection-title{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.subsection-title::before{content:'';display:inline-block;width:3px;height:14px;background:var(--accent2);border-radius:2px;flex-shrink:0;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+.card{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:18px 20px;}
+.card-title{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.card-icon{width:24px;height:24px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+.icon-green{background:var(--accent3);}
+.icon-blue{background:var(--blue2);}
+.icon-gold{background:var(--gold2);}
+.icon-red{background:var(--red2);}
+.icon-purple{background:var(--purple2);}
+.icon-teal{background:var(--teal2);}
+.pill{display:inline-block;font-size:10px;font-weight:500;padding:2px 9px;border-radius:20px;white-space:nowrap;}
+.pill-green{background:var(--accent3);color:var(--accent);}
+.pill-blue{background:var(--blue2);color:var(--blue);}
+.pill-gold{background:var(--gold2);color:var(--gold);}
+.pill-red{background:var(--red2);color:var(--red);}
+.pill-purple{background:var(--purple2);color:var(--purple);}
+.pill-gray{background:var(--paper2);color:var(--ink2);}
+.pill-teal{background:var(--teal2);color:var(--teal);}
+.pill-ok{background:#d8f3dc;color:#2d6a4f;}
+.pill-wip{background:#fdf3e0;color:#a07030;}
+.pill-todo{background:#fdecea;color:#9b2335;}
+.pill-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl th{text-align:left;font-weight:500;font-size:10px;letter-spacing:.05em;color:var(--ink3);padding:7px 10px;border-bottom:1px solid var(--paper3);background:var(--paper2);white-space:nowrap;}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--paper2);color:var(--ink2);vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{font-weight:500;color:var(--ink);}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--paper3);border-radius:var(--r);}
+.code{background:#0d0d1a;border-radius:var(--r);padding:16px 20px;font-family:'DM Mono',monospace;font-size:12px;color:#a0e0c0;line-height:1.9;overflow-x:auto;margin:10px 0;}
+.code .cm{color:#4a7a6a;}
+.code .ck{color:#74c69d;}
+.code .cv{color:#f0c080;}
+.code .ct{color:#e0a0c0;}
+.item-list{display:flex;flex-direction:column;}
+.item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--paper2);font-size:12px;}
+.item:last-child{border-bottom:none;}
+.item-label{font-weight:500;color:var(--ink);min-width:160px;flex-shrink:0;}
+.item-val{color:var(--ink2);}
+.alert{border-radius:var(--rs);padding:11px 14px;font-size:12px;margin:10px 0;}
+.alert-warn{background:#fffbeb;border:1px solid #f0d070;color:#805010;}
+.alert-info{background:var(--blue2);border:1px solid #90b8e8;color:var(--blue);}
+.alert-danger{background:var(--red2);border:1px solid rgba(155,35,53,0.3);color:var(--red);}
+.alert-ok{background:var(--accent3);border:1px solid #80c09a;color:var(--accent);}
+.div{height:1px;background:var(--paper3);margin:12px 0;}
+
+/* FLOW STEPS */
+.flow-steps{display:flex;flex-direction:column;gap:0;}
+.flow-step{display:flex;gap:16px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--paper2);}
+.flow-step:last-child{border-bottom:none;}
+.flow-step-num{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-family:'DM Mono',monospace;}
+.flow-step-body{flex:1;}
+.flow-step-title{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px;}
+.flow-step-desc{font-size:11px;color:var(--ink3);line-height:1.55;}
+
+/* SCHEMA TABLE */
+.schema-table{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);overflow:hidden;margin-bottom:12px;}
+.schema-table-header{background:var(--ink);color:#fff;padding:8px 14px;font-size:11px;font-weight:500;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:8px;}
+.schema-table-header .tname{color:#74c69d;}
+.schema-table-header .tdesc{color:rgba(255,255,255,0.45);font-weight:400;font-size:10px;}
+.schema-field{display:flex;gap:0;border-bottom:1px solid var(--paper2);font-size:11px;font-family:'DM Mono',monospace;}
+.schema-field:last-child{border-bottom:none;}
+.sf-name{padding:6px 12px;color:var(--ink);font-weight:500;min-width:220px;flex-shrink:0;border-right:1px solid var(--paper2);}
+.sf-type{padding:6px 10px;color:var(--blue);min-width:130px;flex-shrink:0;border-right:1px solid var(--paper2);}
+.sf-desc{padding:6px 10px;color:var(--ink3);flex:1;}
+.sf-pk{color:var(--gold);}
+.sf-fk{color:var(--purple);}
+
+/* PDF MOCKUP */
+.pdf-mockup{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.pdf-header{background:var(--ink);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
+.pdf-header-logo{font-family:'DM Serif Display',serif;font-size:18px;color:#fff;}
+.pdf-header-logo span{color:#74c69d;}
+.pdf-header-title{font-size:11px;color:rgba(255,255,255,0.5);text-align:right;}
+.pdf-header-title strong{display:block;font-size:14px;color:#fff;font-weight:500;}
+.pdf-body{padding:20px 24px;}
+.pdf-section-title{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--paper3);}
+.pdf-section-title:first-child{margin-top:0;}
+.pdf-identity{display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;}
+.pdf-photo{width:72px;height:72px;border-radius:var(--rs);background:var(--paper2);border:1px solid var(--paper3);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.pdf-fields{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;}
+.pdf-field{font-size:11px;}
+.pdf-field-label{color:var(--ink3);font-size:10px;}
+.pdf-field-value{color:var(--ink);font-weight:500;}
+.pdf-puce{font-family:'DM Mono',monospace;font-size:12px;color:var(--blue);font-weight:500;background:var(--blue2);padding:3px 10px;border-radius:var(--rs);display:inline-block;margin-bottom:8px;}
+.cac-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cac-item{background:var(--paper2);border-radius:4px;padding:4px;text-align:center;}
+.cac-item.cac-ok{background:var(--accent3);}
+.cac-item.cac-ok .cac-check{color:var(--accent);}
+.cac-num{font-size:9px;color:var(--ink3);font-family:'DM Mono',monospace;}
+.cac-check{font-size:11px;color:var(--paper3);}
+.cac-label{font-size:8px;color:var(--ink3);line-height:1.2;margin-top:2px;}
+.pdf-seance-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--paper2);font-size:11px;}
+.pdf-seance-row:last-child{border-bottom:none;}
+.pdf-seance-date{color:var(--ink3);font-family:'DM Mono',monospace;min-width:80px;font-size:10px;}
+.pdf-seance-type{background:var(--blue2);color:var(--blue);padding:1px 8px;border-radius:12px;font-size:10px;font-weight:500;}
+.pdf-seance-score{margin-left:auto;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);font-weight:500;}
+.pdf-footer{background:var(--paper2);padding:10px 24px;font-size:10px;color:var(--ink3);display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--paper3);}
+.pdf-qr{width:40px;height:40px;background:var(--ink);border-radius:4px;display:flex;align-items:center;justify-content:center;}
+.pdf-qr-inner{width:28px;height:28px;background:#fff;border-radius:2px;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;padding:2px;}
+.qr-cell{background:var(--ink);border-radius:1px;}
+.qr-cell.w{background:#fff;}
+
+/* DATA SECTIONS */
+.data-section{border:1px solid var(--paper3);border-radius:var(--r);overflow:hidden;margin-bottom:12px;}
+.data-section-header{background:var(--paper2);padding:8px 14px;font-size:11px;font-weight:500;color:var(--ink2);display:flex;align-items:center;justify-content:space-between;}
+.data-section-body{padding:0;}
+.data-row{display:flex;align-items:flex-start;gap:0;border-bottom:1px solid var(--paper2);font-size:12px;}
+.data-row:last-child{border-bottom:none;}
+.data-key{padding:8px 12px;color:var(--ink);font-weight:500;min-width:200px;flex-shrink:0;border-right:1px solid var(--paper2);}
+.data-val{padding:8px 12px;color:var(--ink2);flex:1;}
+.data-source{padding:8px 10px;font-size:10px;color:var(--ink3);font-family:'DM Mono',monospace;min-width:160px;flex-shrink:0;border-left:1px solid var(--paper2);}
+
+footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:20px 48px;font-size:12px;display:flex;justify-content:space-between;align-items:center;}
+footer strong{color:rgba(255,255,255,0.7);}
+.toc::-webkit-scrollbar{width:4px;}
+.toc::-webkit-scrollbar-thumb{background:var(--paper3);border-radius:2px;}
+@media(max-width:768px){.layout{flex-direction:column;}.toc{display:none;}.main{padding:24px 20px;}nav{padding:12px 20px;}.hero{padding:36px 20px 32px;}.pdf-fields{grid-template-columns:1fr;}.cac-grid{grid-template-columns:repeat(4,1fr);}footer{padding:16px 20px;flex-direction:column;gap:8px;text-align:center;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Pet<span>Suite</span></a>
+  <div class="nav-links">
+    <a href="01-synthese-projet.html">Synthèse</a>
+    <a href="05-architecture-roadmap.html">Architecture</a>
+    <a href="10-modele-commercial.html">Commercial</a>
+    <a href="11-carte-identite-animale.html" class="active">Carte animale</a>
+    <a href="04-super-admin.html">Super admin</a>
+  </div>
+  <span class="nav-badge">Session 24 · 14/03/2026</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Spécification fonctionnelle — Document vivant</div>
+  <h1>Carte d'identité <em>animale</em></h1>
+  <p class="hero-sub">Le numéro de puce (15 chiffres) comme clé universelle unique — document PDF mutualisable regroupant l'identité, le suivi comportemental, les données médicales et l'historique des séances.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-num">15</div><div class="kpi-lbl">Chiffres — clé universelle</div></div>
+    <div class="kpi"><div class="kpi-num">14</div><div class="kpi-lbl">Critères CAC</div></div>
+    <div class="kpi"><div class="kpi-num">15 min</div><div class="kpi-lbl">Durée URL signée</div></div>
+    <div class="kpi"><div class="kpi-num">PDF</div><div class="kpi-lbl">Format export</div></div>
+    <div class="kpi"><div class="kpi-num">RGPD</div><div class="kpi-lbl">Consentement requis</div></div>
+  </div>
+</div>
+
+<div class="layout">
+<nav class="toc">
+  <div class="toc-title">Sommaire</div>
+  <a href="#s1" class="toc-h2">01. Concept & principes</a>
+  <a href="#s2" class="toc-h2">02. Données incluses</a>
+  <a href="#s2-identite" class="toc-h3">Identité</a>
+  <a href="#s2-cac" class="toc-h3">Suivi CAC</a>
+  <a href="#s2-seances" class="toc-h3">Historique séances</a>
+  <a href="#s2-docs" class="toc-h3">Documents GED</a>
+  <a href="#s3" class="toc-h2">03. Maquette PDF</a>
+  <a href="#s4" class="toc-h2">04. Architecture technique</a>
+  <a href="#s4-gen" class="toc-h3">Génération PDF</a>
+  <a href="#s4-stockage" class="toc-h3">Stockage</a>
+  <a href="#s4-api" class="toc-h3">Endpoints API</a>
+  <a href="#s5" class="toc-h2">05. Sécurité & RGPD</a>
+  <a href="#s5-url" class="toc-h3">URL signée</a>
+  <a href="#s5-consentement" class="toc-h3">Consentement</a>
+  <a href="#s6" class="toc-h2">06. Partage cross-tenant</a>
+  <a href="#s7" class="toc-h2">07. Intégration application</a>
+  <a href="#s8" class="toc-h2">08. BDD — tables impliquées</a>
+  <a href="#s9" class="toc-h2">09. Évolutions prévues</a>
+  <a href="#s10" class="toc-h2">10. Checklist implémentation</a>
+</nav>
+
+<div class="main">
+
+<!-- 01 CONCEPT -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">Concept & principes fondateurs</span></div>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🐾</div>La puce comme clé universelle</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Format</span><span class="item-val">15 chiffres — standard ISO 11784/11785</span></div>
+        <div class="item"><span class="item-label">Unicité mondiale</span><span class="item-val">Identifiant implanté, non modifiable, unique</span></div>
+        <div class="item"><span class="item-label">Clé primaire</span><span class="item-val">ANI_PUC — UNIQUE KEY dans la table animal</span></div>
+        <div class="item"><span class="item-label">Cross-tenant</span><span class="item-val">La puce permet de retrouver l'animal dans n'importe quelle société PetSuite</span></div>
+        <div class="item"><span class="item-label">Vérification</span><span class="item-val">Format validé à la saisie (REGEXP '^[0-9]{15}$')</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📄</div>Objectifs de la carte</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Synthèse dossier</span><span class="item-val">Vision complète de l'animal en un document</span></div>
+        <div class="item"><span class="item-label">Partage professionnel</span><span class="item-val">Vétérinaire, éleveur, autre comportementaliste</span></div>
+        <div class="item"><span class="item-label">Suivi progression</span><span class="item-val">Évolution score CAC séance par séance</span></div>
+        <div class="item"><span class="item-label">Document légal</span><span class="item-val">Preuve horodatée des interventions réalisées</span></div>
+        <div class="item"><span class="item-label">Mutualisable</span><span class="item-val">Partageable avec consentement propriétaire</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">⚙️</div>Principes techniques</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Génération</span><span class="item-val">À la demande — pas de PDF pré-généré stocké</span></div>
+        <div class="item"><span class="item-label">Champs sélectionnables</span><span class="item-val">L'utilisateur choisit les sections à inclure</span></div>
+        <div class="item"><span class="item-label">Horodatage</span><span class="item-val">Date/heure de génération en pied de page</span></div>
+        <div class="item"><span class="item-label">Données financières</span><span class="item-val">Jamais incluses dans la carte (confidentialité)</span></div>
+        <div class="item"><span class="item-label">Format</span><span class="item-val">A4 portrait — imprimable et numérique</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 DONNEES -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">Données incluses dans la carte</span></div>
+
+  <div class="subsection" id="s2-identite">
+    <div class="subsection-title">Section 1 — Identité de l'animal</div>
+    <div class="data-section">
+      <div class="data-section-header"><span>Données d'identification</span><span class="pill pill-ok">Toujours incluses</span></div>
+      <div class="data-section-body">
+        <div class="data-row"><div class="data-key">Numéro de puce</div><div class="data-val">15 chiffres — identifiant universel affiché en évidence</div><div class="data-source">animal.ANI_PUC</div></div>
+        <div class="data-row"><div class="data-key">Nom</div><div class="data-val">Nom de l'animal</div><div class="data-source">animal.ANI_NOM</div></div>
+        <div class="data-row"><div class="data-key">Date de naissance</div><div class="data-val">Format DD/MM/YYYY + âge calculé</div><div class="data-source">animal.ANI_NAI</div></div>
+        <div class="data-row"><div class="data-key">Race principale</div><div class="data-val">Libellé race — groupe FCI si disponible</div><div class="data-source">race.RACE_NOM via ANI_ESP_1</div></div>
+        <div class="data-row"><div class="data-key">Race secondaire</div><div class="data-val">Si croisé — libellé race secondaire</div><div class="data-source">race.RACE_NOM via ANI_ESP_2</div></div>
+        <div class="data-row"><div class="data-key">Photo de l'animal</div><div class="data-val">Dernière photo déposée dans la GED (rôle PHOTO)</div><div class="data-source">ged_document_lien (ANIMAL / PHOTO)</div></div>
+        <div class="data-row"><div class="data-key">Propriétaire</div><div class="data-val">Nom/prénom ou raison sociale — téléphone optionnel</div><div class="data-source">tiers.TIE_RAISON_SOCIALE</div></div>
+        <div class="data-row"><div class="data-key">Commentaire général</div><div class="data-val">Notes libres de la fiche animal</div><div class="data-source">animal.ANI_COM_1</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-cac">
+    <div class="subsection-title">Section 2 — Suivi comportemental CAC</div>
+    <div class="data-section">
+      <div class="data-section-header"><span>Critères d'Aptitude au Contact (14 critères)</span><span class="pill pill-blue">Optionnel</span></div>
+      <div class="data-section-body">
+        <div class="data-row"><div class="data-key">Score actuel</div><div class="data-val">N/14 critères acquis — date de dernière mise à jour</div><div class="data-source">animal.ANI_SCORE_CAC</div></div>
+        <div class="data-row"><div class="data-key">Grille 14 critères</div><div class="data-val">Libellés paramétrables (param_libelles_ec) + statut acquis/non acquis par critère</div><div class="data-source">seance_suivi_cac + param_libelles_ec</div></div>
+        <div class="data-row"><div class="data-key">Progression</div><div class="data-val">Tableau d'évolution du score séance par séance (vue v_animal_evolution_cac)</div><div class="data-source">v_animal_evolution_cac</div></div>
+        <div class="data-row"><div class="data-key">Dernière séance CAC</div><div class="data-val">Date et type de la dernière séance ayant renseigné le CAC</div><div class="data-source">animal.ANI_DERNIERE_SEA_DATE</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-seances">
+    <div class="subsection-title">Section 3 — Historique des séances</div>
+    <div class="data-section">
+      <div class="data-section-header"><span>Interventions réalisées</span><span class="pill pill-blue">Optionnel — N dernières séances</span></div>
+      <div class="data-section-body">
+        <div class="data-row"><div class="data-key">Date et heure</div><div class="data-val">Date/heure de début de chaque séance réalisée</div><div class="data-source">seance.SEA_DATE_DEBUT</div></div>
+        <div class="data-row"><div class="data-key">Type de séance</div><div class="data-val">Étude Comportementale / Séance de suivi / Gardiennage…</div><div class="data-source">seance_type.STY_LIBELLE</div></div>
+        <div class="data-row"><div class="data-key">Lieu</div><div class="data-val">Lieu de l'intervention si renseigné</div><div class="data-source">seance.SEA_LIEU</div></div>
+        <div class="data-row"><div class="data-key">Compte-rendu</div><div class="data-val">Texte du compte-rendu (optionnel — décision utilisateur)</div><div class="data-source">seance.SEA_COMPTE_RENDU</div></div>
+        <div class="data-row"><div class="data-key">Score CAC séance</div><div class="data-val">Score CAC au moment de cette séance</div><div class="data-source">seance_suivi_cac</div></div>
+        <div class="data-row"><div class="data-key">Nom intervenant</div><div class="data-val">Prénom + nom du responsable de séance</div><div class="data-source">utilisateur via SEA_USR_ID_OWNER</div></div>
+      </div>
+    </div>
+    <div class="alert alert-warn" style="margin-top:8px;">Les données financières (montants, règlements) ne sont jamais incluses dans la carte — elles sont confidentielles entre le professionnel et son client.</div>
+  </div>
+
+  <div class="subsection" id="s2-docs">
+    <div class="subsection-title">Section 4 — Documents attachés (optionnel)</div>
+    <div class="data-section">
+      <div class="data-section-header"><span>Documents GED liés à l'animal</span><span class="pill pill-gray">Sur sélection</span></div>
+      <div class="data-section-body">
+        <div class="data-row"><div class="data-key">Photos</div><div class="data-val">Photos déposées avec rôle PHOTO dans la GED animale</div><div class="data-source">ged_document_lien (ANIMAL/PHOTO)</div></div>
+        <div class="data-row"><div class="data-key">Rapports PDF</div><div class="data-val">Bilans comportementaux, comptes-rendus attachés</div><div class="data-source">ged_document_lien (ANIMAL/RAPPORT)</div></div>
+        <div class="data-row"><div class="data-key">Documents EC</div><div class="data-val">Documents liés à la fiche Étude Comportementale</div><div class="data-source">ged_document_lien (EDC_FICHE)</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 MAQUETTE PDF -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">Maquette du document PDF</span></div>
+  <div class="alert alert-info" style="margin-bottom:16px;">Rendu indicatif — la mise en page finale sera réalisée avec la librairie PDF choisie (Puppeteer ou pdfkit). Format A4 portrait.</div>
+
+  <div class="pdf-mockup">
+    <!-- En-tête -->
+    <div class="pdf-header">
+      <div>
+        <div class="pdf-header-logo">Pet<span>Suite</span></div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:4px;">Cabinet Canin Harmonie — Sophie Martin</div>
+      </div>
+      <div class="pdf-header-title">
+        <span>Carte d'identité animale</span>
+        <strong>Générée le 14/03/2026 à 10:32</strong>
+      </div>
+    </div>
+
+    <div class="pdf-body">
+      <!-- Puce -->
+      <div class="pdf-puce">🔖 Puce : 250269811500001</div>
+
+      <!-- Identité -->
+      <div class="pdf-section-title">Identité de l'animal</div>
+      <div class="pdf-identity">
+        <div class="pdf-photo">🐕</div>
+        <div class="pdf-fields">
+          <div class="pdf-field"><div class="pdf-field-label">Nom</div><div class="pdf-field-value">Titan</div></div>
+          <div class="pdf-field"><div class="pdf-field-label">Date de naissance</div><div class="pdf-field-value">15/06/2022 — 3 ans</div></div>
+          <div class="pdf-field"><div class="pdf-field-label">Race principale</div><div class="pdf-field-value">Berger Allemand</div></div>
+          <div class="pdf-field"><div class="pdf-field-label">Race secondaire</div><div class="pdf-field-value">—</div></div>
+          <div class="pdf-field"><div class="pdf-field-label">Propriétaire</div><div class="pdf-field-value">Famille Rousseau</div></div>
+          <div class="pdf-field"><div class="pdf-field-label">Tél. propriétaire</div><div class="pdf-field-value">06 XX XX XX XX</div></div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:6px;font-style:italic;">Réactivité marquée en laisse identifiée. Programme de désensibilisation progressive en cours.</div>
+
+      <!-- CAC -->
+      <div class="pdf-section-title">Suivi comportemental CAC — Score actuel : 3 / 14</div>
+      <div class="cac-grid">
+        <div class="cac-item cac-ok"><div class="cac-num">01</div><div class="cac-check">✓</div><div class="cac-label">Sociabilisation chiens</div></div>
+        <div class="cac-item cac-ok"><div class="cac-num">02</div><div class="cac-check">✓</div><div class="cac-label">Marche en laisse</div></div>
+        <div class="cac-item"><div class="cac-num">03</div><div class="cac-check">—</div><div class="cac-label">Socialisation humains</div></div>
+        <div class="cac-item"><div class="cac-num">04</div><div class="cac-check">—</div><div class="cac-label">Mordillement</div></div>
+        <div class="cac-item cac-ok"><div class="cac-num">05</div><div class="cac-check">✓</div><div class="cac-label">Rappel</div></div>
+        <div class="cac-item"><div class="cac-num">06</div><div class="cac-check">—</div><div class="cac-label">Position assise</div></div>
+        <div class="cac-item"><div class="cac-num">07</div><div class="cac-check">—</div><div class="cac-label">Couché</div></div>
+        <div class="cac-item"><div class="cac-num">08</div><div class="cac-check">—</div><div class="cac-label">Reste</div></div>
+        <div class="cac-item"><div class="cac-num">09</div><div class="cac-check">—</div><div class="cac-label">Aboiement</div></div>
+        <div class="cac-item"><div class="cac-num">10</div><div class="cac-check">—</div><div class="cac-label">Véhicule</div></div>
+        <div class="cac-item"><div class="cac-num">11</div><div class="cac-check">—</div><div class="cac-label">Seul à domicile</div></div>
+        <div class="cac-item"><div class="cac-num">12</div><div class="cac-check">—</div><div class="cac-label">Propreté</div></div>
+        <div class="cac-item"><div class="cac-num">13</div><div class="cac-check">—</div><div class="cac-label">Jeu sans mordre</div></div>
+        <div class="cac-item"><div class="cac-num">14</div><div class="cac-check">—</div><div class="cac-label">Câlins</div></div>
+      </div>
+
+      <!-- Séances -->
+      <div class="pdf-section-title">Historique des séances (3 dernières)</div>
+      <div class="pdf-seance-row">
+        <div class="pdf-seance-date">14/03/2026</div>
+        <div class="pdf-seance-type">Étude Comportementale</div>
+        <div style="font-size:11px;color:var(--ink2);flex:1;padding:0 8px;">Domicile client — Paris 8e</div>
+        <div class="pdf-seance-score">3/14</div>
+      </div>
+      <div class="pdf-seance-row">
+        <div class="pdf-seance-date">28/03/2026</div>
+        <div class="pdf-seance-type" style="background:var(--accent3);color:var(--accent);">Séance de suivi</div>
+        <div style="font-size:11px;color:var(--ink2);flex:1;padding:0 8px;">Cabinet</div>
+        <div class="pdf-seance-score">—</div>
+      </div>
+      <div class="pdf-seance-row">
+        <div class="pdf-seance-date">14/04/2026</div>
+        <div class="pdf-seance-type" style="background:var(--accent3);color:var(--accent);">Séance de suivi</div>
+        <div style="font-size:11px;color:var(--ink2);flex:1;padding:0 8px;">Domicile client</div>
+        <div class="pdf-seance-score">—</div>
+      </div>
+    </div>
+
+    <!-- Pied de page -->
+    <div class="pdf-footer">
+      <div>
+        <div>Document généré par PetSuite · puce 250269811500001</div>
+        <div style="margin-top:2px;">Confidentiel — partagé avec le consentement du propriétaire · Validité 30 jours</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="font-size:9px;text-align:right;">Scanner pour<br>vérifier l'authenticité</div>
+        <div class="pdf-qr">
+          <div class="pdf-qr-inner">
+            <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
+            <div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div>
+            <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
+            <div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div>
+            <div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div><div class="qr-cell w"></div><div class="qr-cell"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 ARCHITECTURE TECHNIQUE -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">Architecture technique</span></div>
+
+  <div class="subsection" id="s4-gen">
+    <div class="subsection-title">Génération PDF — choix technique</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">🖨</div>Option A — Puppeteer (recommandé)</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Principe</span><span class="item-val">Rendu HTML → capture PDF via Chromium headless</span></div>
+          <div class="item"><span class="item-label">Avantage</span><span class="item-val">Mise en page identique à la maquette HTML — CSS complet</span></div>
+          <div class="item"><span class="item-label">Photos</span><span class="item-val">Images GED intégrées nativement via base64</span></div>
+          <div class="item"><span class="item-label">Intégration</span><span class="item-val">Module NestJS dédié — ou micro-service isolé</span></div>
+          <div class="item"><span class="item-label">Inconvénient</span><span class="item-val">Chromium lourd (~300 Mo) — à isoler dans conteneur dédié</span></div>
+        </div>
+        <div class="pill-row"><span class="pill pill-ok">Recommandé</span><span class="pill pill-blue">npm install puppeteer</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">📝</div>Option B — pdfkit</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Principe</span><span class="item-val">Génération programmatique du PDF (drawText, drawImage…)</span></div>
+          <div class="item"><span class="item-label">Avantage</span><span class="item-val">Léger — pas de Chromium — déjà utilisable dans micro_api</span></div>
+          <div class="item"><span class="item-label">Photos</span><span class="item-val">Intégration images possible mais moins flexible</span></div>
+          <div class="item"><span class="item-label">Inconvénient</span><span class="item-val">Mise en page manuelle — plus laborieuse à maintenir</span></div>
+        </div>
+        <div class="pill-row"><span class="pill pill-gray">Alternative légère</span><span class="pill pill-blue">npm install pdfkit</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s4-stockage">
+    <div class="subsection-title">Stratégie de stockage</div>
+    <div class="card">
+      <div class="item-list">
+        <div class="item"><span class="item-label">Pas de stockage permanent</span><span class="item-val">Le PDF est généré à la demande et retourné en streaming — pas sauvegardé sur disque</span></div>
+        <div class="item"><span class="item-label">Exception : partage</span><span class="item-val">Si l'utilisateur génère un lien de partage, le PDF est temporairement stocké dans le bucket S3 GED du tenant avec TTL 15 min</span></div>
+        <div class="item"><span class="item-label">Chemin S3 temporaire</span><span class="item-val">/{tenant_id}/cartes-tmp/{uuid-generation}.pdf — suppression auto après TTL</span></div>
+        <div class="item"><span class="item-label">Cache optionnel</span><span class="item-val">Redis — cache le PDF 5 min pour éviter les régénérations multiples sur la même fiche</span></div>
+        <div class="item"><span class="item-label">Invalidation cache</span><span class="item-val">Toute modification de l'animal ou d'une séance invalide le cache immédiatement</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s4-api">
+    <div class="subsection-title">Endpoints API</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Méthode</th><th>Route</th><th>Action</th><th>Retour</th></tr></thead>
+        <tbody>
+          <tr><td>GET</td><td>/api/animaux/:id/carte-pdf</td><td>Génère et retourne le PDF en streaming</td><td>application/pdf</td></tr>
+          <tr><td>POST</td><td>/api/animaux/:id/carte-partage</td><td>Génère un lien de partage sécurisé (URL signée)</td><td>{ url, expires_at }</td></tr>
+          <tr><td>GET</td><td>/api/animaux/:id/carte-config</td><td>Retourne les options de génération disponibles</td><td>{ sections, options }</td></tr>
+          <tr><td>POST</td><td>/api/animaux/:id/carte-pdf</td><td>Génère avec sections personnalisées (body JSON)</td><td>application/pdf</td></tr>
+          <tr><td>GET</td><td>/api/carte/:token</td><td>Accès public via token signé (partage cross-tenant)</td><td>application/pdf ou HTML</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection-title" style="margin-top:16px;">Body de génération personnalisée</div>
+    <div class="code">
+<span class="ct">POST</span> /api/animaux/42/carte-pdf
+{
+  "sections": {
+    "identite": <span class="ck">true</span>,       <span class="cm">// toujours true</span>
+    "cac": <span class="ck">true</span>,             <span class="cm">// grille 14 critères</span>
+    "progression_cac": <span class="ck">true</span>,   <span class="cm">// tableau évolution score</span>
+    "seances": <span class="ck">true</span>,          <span class="cm">// historique séances</span>
+    "comptes_rendus": <span class="ck">false</span>,   <span class="cm">// textes CR (optionnel)</span>
+    "photos": <span class="ck">true</span>,           <span class="cm">// photos GED</span>
+    "documents_ged": <span class="ck">false</span>     <span class="cm">// liens docs attachés</span>
+  },
+  "nb_seances_max": <span class="cv">10</span>,         <span class="cm">// limiter l'historique</span>
+  "inclure_proprietaire_tel": <span class="ck">false</span>  <span class="cm">// masquer tél. si partage</span>
+}
+    </div>
+  </div>
+</div>
+
+<!-- 05 SECURITE RGPD -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">Sécurité & RGPD</span></div>
+
+  <div class="subsection" id="s5-url">
+    <div class="subsection-title">URL signée éphémère</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🔐</div>Fonctionnement</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Durée de vie</span><span class="item-val">15 minutes par défaut — paramétrable jusqu'à 24h</span></div>
+          <div class="item"><span class="item-label">Structure token</span><span class="item-val">JWT signé HMAC-SHA256 : ani_id + tenant_id + sections + exp</span></div>
+          <div class="item"><span class="item-label">Accès</span><span class="item-val">Route publique /api/carte/:token — pas d'authentification requise</span></div>
+          <div class="item"><span class="item-label">Usage unique</span><span class="item-val">Option : token invalidé après premier accès</span></div>
+          <div class="item"><span class="item-label">Traçabilité</span><span class="item-val">Chaque accès loggé : IP, date/heure, tenant_id source</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">🔗</div>Exemple token</div>
+        <div class="code" style="margin:0;font-size:11px;">
+<span class="cm">// Payload JWT</span>
+{
+  "ani_id": <span class="cv">42</span>,
+  "tenant_id": <span class="ck">"tenant_0042"</span>,
+  "sections": [<span class="ck">"identite"</span>, <span class="ck">"cac"</span>],
+  "masquer_tel": <span class="ck">true</span>,
+  "iat": <span class="cv">1710410400</span>,
+  "exp": <span class="cv">1710411300</span>  <span class="cm">// +15 min</span>
+}
+
+<span class="cm">// URL partagée</span>
+https://app.petsuite.fr/api/carte/
+  eyJhbGciOiJIUzI1NiJ9...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s5-consentement">
+    <div class="subsection-title">Consentement propriétaire (RGPD)</div>
+    <div class="card">
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Déclenchement partage</div>
+            <div class="flow-step-desc">L'utilisateur clique "Générer un lien de partage" depuis la fiche animal. Une modale apparaît avant toute génération.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Confirmation consentement</div>
+            <div class="flow-step-desc">Modale : "Confirmez-vous que le propriétaire [Famille Rousseau] a donné son accord pour partager ces informations ?" — bouton Confirmer obligatoire.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Enregistrement traçabilité</div>
+            <div class="flow-step-desc">INSERT dans table partage_carte : ani_id, tenant_id, utilisateur, date, destinataire (optionnel), token, sections partagées. Conservé 5 ans.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Génération URL + copie</div>
+            <div class="flow-step-desc">URL copiée dans le presse-papier. Bouton "Envoyer par email" disponible. Validité affichée clairement (ex: "expire dans 15 min").</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-warn">Le partage crée une traçabilité RGPD obligatoire. Chaque partage doit être justifiable par le consentement du propriétaire de l'animal. Les données personnelles du propriétaire (téléphone, email) ne sont jamais incluses par défaut dans un partage.</div>
+  </div>
+</div>
+
+<!-- 06 CROSS-TENANT -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">Partage cross-tenant (vision SaaS)</span></div>
+  <div class="alert alert-info" style="margin-bottom:16px;">Fonctionnalité avancée — à implémenter après la mise en production mono-tenant. La puce comme clé universelle permet de retrouver un animal entre sociétés PetSuite distinctes.</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">🌐</div>Scénario type</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">A</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Société A partage la carte</div>
+            <div class="flow-step-desc">Cabinet Canin Harmonie génère un lien de partage pour Titan (puce 250269811500001) et l'envoie au vétérinaire du Dr Dupont.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">B</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Accès via URL signée</div>
+            <div class="flow-step-desc">Le vétérinaire (Société B — autre tenant PetSuite) accède au PDF via le lien. Lecture seule des données autorisées uniquement.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">C</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Recherche par puce (optionnel)</div>
+            <div class="flow-step-desc">Si le vétérinaire est client PetSuite et saisit la puce dans son interface, il peut demander accès à la carte via un workflow de consentement.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-red">⚠️</div>Contraintes strictes</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Pas d'accès direct BDD</span><span class="item-val">Jamais d'accès au schema d'un autre tenant — uniquement via le token signé</span></div>
+        <div class="item"><span class="item-label">Données minimales</span><span class="item-val">Seules les sections explicitement autorisées sont exposées</span></div>
+        <div class="item"><span class="item-label">Données financières</span><span class="item-val">Toujours exclues — jamais partagées entre tenants</span></div>
+        <div class="item"><span class="item-label">Consentement obligatoire</span><span class="item-val">Chaque partage nécessite confirmation explicite</span></div>
+        <div class="item"><span class="item-label">Audit complet</span><span class="item-val">Chaque accès cross-tenant loggé dans audit_plateforme</span></div>
+        <div class="item"><span class="item-label">Révocation</span><span class="item-val">Le propriétaire ou l'admin société peut révoquer tout partage actif</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 INTEGRATION APP -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Intégration dans l'application</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">📱</div>Points d'entrée UI</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Fiche animal</span><span class="item-val">Bouton principal "Carte d'identité PDF" — accès direct en un clic</span></div>
+        <div class="item"><span class="item-label">Liste animaux</span><span class="item-val">Menu contextuel (3 points) → "Générer carte PDF"</span></div>
+        <div class="item"><span class="item-label">Fin de séance</span><span class="item-val">Suggestion automatique après saisie d'un CAC : "Générer la carte mise à jour ?"</span></div>
+        <div class="item"><span class="item-label">Fiche EC</span><span class="item-val">Bouton "Exporter le bilan" → option carte + rapport EC joint</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">⚙️</div>Options de génération (modale)</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Sections</span><span class="item-val">Checkboxes : Identité / CAC / Progression / Séances / Comptes-rendus / Photos</span></div>
+        <div class="item"><span class="item-label">Nb séances</span><span class="item-val">Slider : 5 / 10 / 20 / Toutes</span></div>
+        <div class="item"><span class="item-label">Masquer tél.</span><span class="item-val">Toggle : masquer le téléphone du propriétaire (partage)</span></div>
+        <div class="item"><span class="item-label">Action</span><span class="item-val">Télécharger PDF / Copier lien de partage / Envoyer par email</span></div>
+        <div class="item"><span class="item-label">Durée lien</span><span class="item-val">15 min / 1h / 24h (seulement pour lien de partage)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 BDD -->
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">BDD — tables impliquées</span></div>
+  <div class="tbl-wrap" style="margin-bottom:16px;">
+    <table class="tbl">
+      <thead><tr><th>Table</th><th>Rôle dans la carte</th><th>Données extraites</th></tr></thead>
+      <tbody>
+        <tr><td>animal</td><td>Données principales</td><td>ANI_PUC, ANI_NOM, ANI_NAI, ANI_COM_1, ANI_SCORE_CAC, ANI_DERNIERE_SEA_DATE</td></tr>
+        <tr><td>race</td><td>Libellé races</td><td>RACE_NOM (via ANI_ESP_1 et ANI_ESP_2)</td></tr>
+        <tr><td>tiers</td><td>Propriétaire</td><td>TIE_RAISON_SOCIALE (téléphone optionnel)</td></tr>
+        <tr><td>seance</td><td>Historique interventions</td><td>SEA_DATE_DEBUT, SEA_LIEU, SEA_COMPTE_RENDU, SEA_STATUT</td></tr>
+        <tr><td>seance_type</td><td>Type de séance</td><td>STY_LIBELLE</td></tr>
+        <tr><td>seance_suivi_cac</td><td>Valeurs CAC par séance</td><td>SSC_CAC_1..14, SSC_DATE</td></tr>
+        <tr><td>param_libelles_ec</td><td>Libellés 14 critères</td><td>LEC_CAC_1..14 (paramétrables)</td></tr>
+        <tr><td>utilisateur</td><td>Intervenant séance</td><td>USR_NOM, USR_PRENOM (via SEA_USR_ID_OWNER)</td></tr>
+        <tr><td>ged_document_lien</td><td>Photos & documents</td><td>Liens vers fichiers GED de type PHOTO/RAPPORT</td></tr>
+        <tr><td>v_animal_evolution_cac</td><td>Progression CAC</td><td>Score par séance pour graphique évolution</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection-title">Nouvelle table à créer : partage_carte</div>
+  <div class="schema-table">
+    <div class="schema-table-header"><span class="tname">partage_carte</span><span class="tdesc">Traçabilité RGPD des partages de carte</span></div>
+    <div class="schema-field"><div class="sf-name sf-pk">partage_id</div><div class="sf-type">BIGINT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
+    <div class="schema-field"><div class="sf-name sf-fk">ANI_ID</div><div class="sf-type">INT</div><div class="sf-desc">FK → animal</div></div>
+    <div class="schema-field"><div class="sf-name sf-fk">USR_ID</div><div class="sf-type">INT</div><div class="sf-desc">FK → utilisateur ayant généré le partage</div></div>
+    <div class="schema-field"><div class="sf-name">par_token_hash</div><div class="sf-type">CHAR(64)</div><div class="sf-desc">SHA-256 du token JWT (pas le token lui-même)</div></div>
+    <div class="schema-field"><div class="sf-name">par_date_creation</div><div class="sf-type">DATETIME</div><div class="sf-desc">Date/heure de génération</div></div>
+    <div class="schema-field"><div class="sf-name">par_date_expiration</div><div class="sf-type">DATETIME</div><div class="sf-desc">Expiration du lien</div></div>
+    <div class="schema-field"><div class="sf-name">par_sections_json</div><div class="sf-type">JSON</div><div class="sf-desc">Sections incluses dans le partage</div></div>
+    <div class="schema-field"><div class="sf-name">par_acces_count</div><div class="sf-type">INT</div><div class="sf-desc">Nombre d'accès effectifs au lien</div></div>
+    <div class="schema-field"><div class="sf-name">par_destinataire</div><div class="sf-type">VARCHAR(150) NULL</div><div class="sf-desc">Email ou nom du destinataire (optionnel — aide traçabilité)</div></div>
+    <div class="schema-field"><div class="sf-name">par_revoque</div><div class="sf-type">TINYINT(1)</div><div class="sf-desc">1 = lien révoqué manuellement avant expiration</div></div>
+    <div class="schema-field"><div class="sf-name">par_consentement_confirme</div><div class="sf-type">TINYINT(1)</div><div class="sf-desc">1 = confirmation consentement propriétaire validée par l'utilisateur</div></div>
+  </div>
+</div>
+
+<!-- 09 EVOLUTIONS -->
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><span class="section-title">Évolutions prévues</span></div>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🟢</div>Phase 1 — MVP</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Génération PDF</span><span class="item-val">Sections identité + CAC + séances</span></div>
+        <div class="item"><span class="item-label">Téléchargement</span><span class="item-val">Bouton depuis fiche animal</span></div>
+        <div class="item"><span class="item-label">Photo principale</span><span class="item-val">Dernière photo GED intégrée</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-wip">Sprint 10</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🔵</div>Phase 2 — Partage</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">URL signée</span><span class="item-val">Partage éphémère 15 min</span></div>
+        <div class="item"><span class="item-label">Consentement</span><span class="item-val">Modale + traçabilité RGPD</span></div>
+        <div class="item"><span class="item-label">Envoi email</span><span class="item-val">Depuis l'application directement</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-todo">Sprint 11</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">🟣</div>Phase 3 — Cross-tenant</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Recherche par puce</span><span class="item-val">Entre sociétés PetSuite</span></div>
+        <div class="item"><span class="item-label">Workflow consentement</span><span class="item-val">Demande formelle + approbation</span></div>
+        <div class="item"><span class="item-label">API publique puce</span><span class="item-val">Endpoint authentifié inter-tenants</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-todo">Sprint 12+</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 10 CHECKLIST -->
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">10</span><span class="section-title">Checklist implémentation</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🗄</div>BDD</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Table partage_carte</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer dans micro_logiciel</span></div>
+        <div class="item"><span class="item-label">Vue v_animal_evolution_cac</span><span class="item-val"><span class="pill pill-ok">Créée S24</span> Disponible</span></div>
+        <div class="item"><span class="item-label">param_libelles_ec</span><span class="item-val"><span class="pill pill-ok">Créée S24</span> 60 libellés dont 14 CAC</span></div>
+        <div class="item"><span class="item-label">seance_suivi_cac</span><span class="item-val"><span class="pill pill-ok">Créée S24</span> CAC par séance</span></div>
+        <div class="item"><span class="item-label">GED photo animal</span><span class="item-val"><span class="pill pill-ok">OK</span> ged_document_lien (ANIMAL/PHOTO)</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">⚙️</div>API & Frontend</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Endpoint GET carte-pdf</span><span class="item-val"><span class="pill pill-todo">TODO</span> Via _h56.use + Puppeteer</span></div>
+        <div class="item"><span class="item-label">Endpoint POST carte-partage</span><span class="item-val"><span class="pill pill-todo">TODO</span> JWT signé + stockage S3 tmp</span></div>
+        <div class="item"><span class="item-label">Template HTML carte</span><span class="item-val"><span class="pill pill-todo">TODO</span> Maquette → HTML générable</span></div>
+        <div class="item"><span class="item-label">Bouton fiche animal</span><span class="item-val"><span class="pill pill-todo">TODO</span> UI + modale options</span></div>
+        <div class="item"><span class="item-label">Modale consentement</span><span class="item-val"><span class="pill pill-todo">TODO</span> RGPD obligatoire avant partage</span></div>
+        <div class="item"><span class="item-label">Route publique /carte/:token</span><span class="item-val"><span class="pill pill-todo">TODO</span> Vérification JWT + rendu</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<footer>
+  <div><strong>PetSuite</strong> — Carte d'identité animale · Document vivant</div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.3);">Session 24 · 14/03/2026 · v0.1</div>
+  <div>Confidentiel — usage interne</div>
+</footer>
+</body>
+</html>
