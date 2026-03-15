@@ -1,116 +1,45 @@
 # BRIEF S30 → S31 — PetSuite / micro_logiciel
-## Date : 15/03/2026 — Fin session S30
+## Date clôture : 16/03/2026 00h41 — Fin session S30 complète
 
 ---
 
-## SITUATION STACK AU MOMENT DE LA FERMETURE
+## ✅ STACK AU DÉMARRAGE S31
 
 ### Conteneurs Docker
 | Conteneur | État | Note |
 |---|---|---|
-| micro_frontend | ✅ UP | Build 58 pages OK |
+| micro_frontend | ✅ UP | Build 58 pages |
 | micro_nginx | ✅ UP | Reverse proxy :80 |
-| micro_api | ✅ UP | NestJS + custom-routes S30 actifs |
+| micro_api | ✅ UP | NestJS + custom-routes.ts 290 lignes |
 | MariaDB | ✅ UP | 192.168.1.62:3307 — HORS Docker |
 
-### État API — IMPORTANT
-- `api/src/custom-routes.ts` — 259 lignes, toutes routes S27→S30 présentes
-- Routes S30 ajoutées : `/dashboard/stats`, `/parametres/metier`, `/programmes`, `/ged-admin-roles`, `/ged-devis-formule`, `/ged-edc-sans-devis`, `/ged-formulaire-lead`, `/ged-factures-email`
-- Backup propre : `C:\Backup\micro_logiciel\20260315_1633_PROPRE\`
+### API — custom-routes.ts
+- Fichier : `api/src/custom-routes.ts` — **290 lignes** — S27→S30
+- Backup : `api/src/custom-routes.ts.bak_races`
+- 24 routes custom opérationnelles (voir liste complète ci-dessous)
 
-### Convention injection — DÉFINITIVE
-- ✅ **custom-routes.ts** dans `api/src/` — approche définitive
-- Si custom-routes échoue : `docker compose build api --no-cache && docker compose up -d api`
+### BDD — État S30
+- `race` : 392 races, RACE_TYPE + RACE_CATEGORIE — migration S30 ✅
+- `programme_suivi`, `programme_semaine`, `param_metier` : **À CRÉER en S31** (voir scripts ci-dessous)
 
 ---
 
-## SQL S30 — ÉTAT
+## 🔑 CHEMINS IMPORTANTS
 
-| Migration | État |
-|---|---|
-| Toutes migrations S28/S29 | ✅ |
-| `programme_suivi` + `programme_semaine` | ⚠️ Tables à créer si manquantes |
-| `param_metier` | ⚠️ Table à créer (route retourne {} si absente) |
-
-### Script SQL à vérifier au démarrage S31
-```sql
--- Vérifier existence tables S30
-SHOW TABLES LIKE 'programme_suivi';
-SHOW TABLES LIKE 'programme_semaine';
-SHOW TABLES LIKE 'param_metier';
-
--- Si manquantes, créer :
-CREATE TABLE IF NOT EXISTS micro_logiciel.programme_suivi (
-  PRG_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  ANI_ID INT NOT NULL,
-  TIE_ID INT NOT NULL,
-  PRG_TITRE VARCHAR(200) NOT NULL,
-  PRG_DATE_DEBUT DATE NOT NULL,
-  PRG_NB_SEMAINES INT NOT NULL DEFAULT 8,
-  PRG_STATUT ENUM('EN_COURS','TERMINE','PAUSE') NOT NULL DEFAULT 'EN_COURS',
-  PRG_OBJECTIF TEXT NULL,
-  PRG_CREE_LE DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE IF NOT EXISTS micro_logiciel.programme_semaine (
-  SEW_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  PRG_ID INT NOT NULL,
-  SEW_NUMERO INT NOT NULL,
-  SEW_TITRE VARCHAR(200) NOT NULL DEFAULT '',
-  SEW_OBJECTIFS TEXT NULL,
-  SEW_EXERCICES TEXT NULL,
-  SEW_NOTES TEXT NULL,
-  SEW_STATUT ENUM('A_FAIRE','EN_COURS','REALISE') NOT NULL DEFAULT 'A_FAIRE',
-  CONSTRAINT fk_sew_prg FOREIGN KEY (PRG_ID) REFERENCES programme_suivi(PRG_ID) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE IF NOT EXISTS micro_logiciel.param_metier (
-  ID INT NOT NULL PRIMARY KEY DEFAULT 1,
-  MET_NOM VARCHAR(150) NOT NULL DEFAULT '',
-  MET_ACTIVITE VARCHAR(150) NOT NULL DEFAULT '',
-  MET_DEVISE CHAR(3) NOT NULL DEFAULT 'EUR',
-  MET_LANGUE CHAR(2) NOT NULL DEFAULT 'fr'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+Frontend src  : D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs\src
+API src       : D:\...\micro_logiciel_frontend_nextjs\api\src
+custom-routes : D:\...\api\src\custom-routes.ts
+Deploy        : D:\...\micro_logiciel_frontend_nextjs\deploy
+Sauvegarde    : G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1
+Git docs      : C:\petsuite-docs\
+Backup propre : C:\Backup\micro_logiciel\20260315_1633_PROPRE\
+mariadb-dump  : C:\ProgramData\OptimBTP\MariaDB\bin\mariadb-dump.exe
 ```
 
 ---
 
-## SAUVEGARDE — OPÉRATIONNELLE ✅
-
-| Composant | État |
-|---|---|
-| Script v5 | `G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1` |
-| Dump BDD | `mariadb-dump.exe` local — `backup_AAAA-MM-JJ.zip` |
-| ZIP projet | `projet_AAAA-MM-JJ.zip` (203 fichiers) |
-| Fichiers critiques | custom-routes.ts, docker-compose.yml, help-content.ts |
-| Git push | Token configuré — push automatique |
-| Tâche planifiée | À créer (déclenchement 04h00) |
-
-### Créer la tâche planifiée sauvegarde (si pas encore fait)
-```powershell
-$action = New-ScheduledTaskAction -Execute "powershell.exe" `
-  -Argument "-ExecutionPolicy Bypass -File `"G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1`""
-$trigger = New-ScheduledTaskTrigger -Daily -At "04:00"
-$settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Hours 1)
-Register-ScheduledTask -TaskName "PetSuite_Sauvegarde" -Action $action -Trigger $trigger -Settings $settings -RunLevel Highest -Force
-```
-
----
-
-## FRONTEND — Build 58 pages ✅
-
-### Pages déployées S30
-- `/app/achats/[id]` → fiche achat avec lignes
-- `/app/clients/[id]` → intégration composant ReseauxSociaux
-- Filtre animaux par client corrigé (API)
-- Centre d'aide → opérationnel (rebuild frontend)
-
-### Composants S30
-- `ReseauxSociaux.tsx` → icônes LinkedIn/FB/IG/WA dans fiche client
-
----
-
-## ROUTES API DISPONIBLES (via custom-routes.ts) — COMPLET S30
+## 📋 ROUTES API — custom-routes.ts (290 lignes S30)
 
 | Route | Méthode | Sprint |
 |---|---|---|
@@ -133,55 +62,153 @@ Register-ScheduledTask -TaskName "PetSuite_Sauvegarde" -Action $action -Trigger 
 | /parametres/metier | GET/POST/PUT | S30 |
 | /ged-edc-sans-devis | GET | S30 |
 | /ged-formulaire-lead | GET | S30 |
-| /ged-factures-email/:id | POST | S30 |
+| /ged-factures-email | POST | S30 |
 | /programmes | GET/POST | S30 |
 | /programmes/:id | GET | S30 |
 | /programmes/:id/semaines/:num | PATCH | S30 |
 | /ged-devis-formule/:id/seances | GET | S30 |
+| /animaux/races | GET (?type=&categorie=) | S30 |
+| /animaux/races/types | GET | S30 |
+| /animaux/races/categories | GET (?type=) | S30 |
 
 ---
 
-## CHEMINS IMPORTANTS
+## 🗄️ SQL S31 — TABLES À CRÉER
 
-```
-Frontend src  : D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs\src
-Deploy        : D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs\deploy
-API src       : D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs\api\src
-Backups       : C:\Backup\micro_logiciel\
-Sauvegarde    : G:\Sauvegarde_micro_logiciel\
-Git docs      : C:\petsuite-docs\
+```sql
+-- Vérifier existence avant de créer
+SHOW TABLES LIKE 'programme_suivi';
+SHOW TABLES LIKE 'programme_semaine';
+SHOW TABLES LIKE 'param_metier';
+
+-- programme_suivi
+CREATE TABLE IF NOT EXISTS micro_logiciel.programme_suivi (
+  PRG_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  ANI_ID INT NOT NULL,
+  TIE_ID INT NOT NULL,
+  PRG_TITRE VARCHAR(200) NOT NULL,
+  PRG_DATE_DEBUT DATE NOT NULL,
+  PRG_NB_SEMAINES INT NOT NULL DEFAULT 8,
+  PRG_STATUT ENUM('EN_COURS','TERMINE','PAUSE') NOT NULL DEFAULT 'EN_COURS',
+  PRG_OBJECTIF TEXT NULL,
+  PRG_CREE_LE DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_prg_ani FOREIGN KEY (ANI_ID) REFERENCES animal(ANI_ID) ON DELETE RESTRICT,
+  CONSTRAINT fk_prg_tie FOREIGN KEY (TIE_ID) REFERENCES tiers(TIE_ID) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- programme_semaine
+CREATE TABLE IF NOT EXISTS micro_logiciel.programme_semaine (
+  SEW_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  PRG_ID INT NOT NULL,
+  SEW_NUMERO INT NOT NULL,
+  SEW_TITRE VARCHAR(200) NOT NULL DEFAULT '',
+  SEW_OBJECTIFS TEXT NULL,
+  SEW_EXERCICES TEXT NULL,
+  SEW_NOTES TEXT NULL,
+  SEW_STATUT ENUM('A_FAIRE','EN_COURS','REALISE') NOT NULL DEFAULT 'A_FAIRE',
+  UNIQUE KEY uq_sew (PRG_ID, SEW_NUMERO),
+  CONSTRAINT fk_sew_prg FOREIGN KEY (PRG_ID) REFERENCES programme_suivi(PRG_ID) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- param_metier (singleton ID=1)
+CREATE TABLE IF NOT EXISTS micro_logiciel.param_metier (
+  ID INT NOT NULL PRIMARY KEY DEFAULT 1,
+  MET_NOM VARCHAR(150) NOT NULL DEFAULT '',
+  MET_ACTIVITE VARCHAR(150) NOT NULL DEFAULT '',
+  MET_DEVISE CHAR(3) NOT NULL DEFAULT 'EUR',
+  MET_LANGUE CHAR(2) NOT NULL DEFAULT 'fr',
+  MET_ACACED TINYINT(1) NOT NULL DEFAULT 0,
+  MET_RC_PRO VARCHAR(100) NULL,
+  MET_SIRET CHAR(14) NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT IGNORE INTO micro_logiciel.param_metier (ID) VALUES (1);
+
+-- Extensions table race (déjà faites S30 — vérification)
+SELECT COUNT(*) AS nb_races, 
+       SUM(RACE_TYPE='CHIEN') AS chiens,
+       SUM(RACE_TYPE='CHAT') AS chats
+FROM micro_logiciel.race;
+-- Attendu : ~392 races total, ~211 chiens, ~48 chats
 ```
 
 ---
 
-## ROADMAP S31 — PRIORITÉS
+## 🎯 PRIORITÉS S31
 
-### Priorité 1 — SQL (tables manquantes S30)
-- [ ] Créer `programme_suivi`, `programme_semaine`, `param_metier`
-- [ ] Extensions `animal` : alimentation, médicaments, habitudes, contact_veto, ferrure, photo
-- [ ] Extensions `tiers` : numéro urgence, instructions, RC_Pro
+### 1. SQL (immédiat)
+- [ ] Créer `programme_suivi`, `programme_semaine`, `param_metier` (scripts ci-dessus)
+- [ ] Extensions `animal` : +ANI_ALIMENTATION, +ANI_MEDICAMENTS, +ANI_HABITUDES, +ANI_CONTACT_VETO, +ANI_FERRURE, +ANI_PHOTOS (TEXT/VARCHAR)
+- [ ] Extensions `tiers` : +TIE_URGENCE_TEL, +TIE_INSTRUCTIONS, +TIE_RC_PRO_NUM
 
-### Priorité 2 — Module Éditions (CGV + Documents métier)
-- [ ] CGV paramétrables dans Mes Paramètres → Éditions spécifiques
-- [ ] Contrats de prestation avec champs de fusion (solution intégrée)
-- [ ] Ajout annexes CGV/contrats en fin de Devis/Facture
+### 2. Frontend races (immédiat)
+- [ ] Copier `races-page.tsx` → `src/app/app/parametres/races/page.tsx`
+- [ ] Copier `RaceSelector.tsx` → `src/components/RaceSelector.tsx`
+- [ ] Intégrer RaceSelector dans page creation animal (remplace les 2 selects race)
+- [ ] Rebuild frontend
 
-### Priorité 3 — Carnet pension DDPP
-- [ ] Table `pension_sejour` (entrée/sortie, animal, propriétaire, sanitaire)
+### 3. Module Éditions (S31 core)
+- [ ] Page `/app/mes-parametres/editions` — gestion CGV + documents
+- [ ] Table `param_edition` (CGV, modèles contrats)
+- [ ] Système champs de fusion (solution intégrée, pas Word)
+- [ ] Annexes automatiques en fin de Devis/Facture
+
+### 4. Carnet pension DDPP
+- [ ] Table `pension_sejour` (ANI_ID, TIE_ID, date_entree, date_sortie, observations)
 - [ ] Vue registre DDPP
-- [ ] Export PDF conforme
+- [ ] Page `/app/pension/registre`
 
-### Priorité 4 — Frontend S31
-- [ ] Page `/app/mes-parametres/metier` (devise, langue, activité)
-- [ ] Tâche planifiée sauvegarde Windows
-- [ ] Nettoyage Git (fichiers obsolètes)
-- [ ] HTML docs mis à jour sur Git
+### 5. Paramètres métier
+- [ ] Page `/app/mes-parametres/metier` — activité, devise, langue, ACACED, RC Pro
+- [ ] Route `/parametres/metier` déjà en place (retourne {} si table vide)
 
 ---
 
-## ROADMAP S32 — VUE D'ENSEMBLE
+## 💾 SAUVEGARDE — v5 OPÉRATIONNELLE ✅
 
-### 14 métiers couverts
+```
+Script    : G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1
+Tâche     : PetSuite_Sauvegarde — 04h00 quotidien
+Résultat  : 5/5 OK — backup_2026-03-15.zip (1.8 Mo) + projet_2026-03-15.zip (0.4 Mo)
+```
+
+---
+
+## 📁 DOCS GIT — État S30
+
+Repo : `C:\petsuite-docs` — github.com/nicolashermilly/petsuite-docs
+
+Fichiers mis à jour cette session :
+- `index.html` ✅ — portail navigation S30
+- `01-synthese-projet.html` ✅
+- `03-notice-utilisateur.html` ✅ — v4.0 S30
+- `05-architecture-roadmap.html` ✅
+- `06-roadmap.html` ✅ — S31/S32 complet
+- `07-audit-stack.html` ✅ — stack S30, custom-routes 290 lignes
+- `08-roadmap-metiers.html` ✅ — 14 métiers
+- `11-carte-identite-animale.html` ✅ — 392 races S30
+- `12-infrastructure.html` ✅ — Docker + sauvegarde v5
+- `17-api-reference.html` ✅ — 27 routes documentées
+- `20-pilotage-projet.html` ✅ — sprint S30 + roadmap S31/S32
+- `22-demarches-eleveur.html` ✅ — DDPP, I-CAD, SCC
+- `BRIEF_S31_nouvelle_conversation.md` ✅ — ce fichier
+
+---
+
+## 🗺️ ROADMAP S31/S32 — 14 MÉTIERS
+
+### Mutualisations confirmées
+| Table | Extensions S31 |
+|---|---|
+| `animal` | alimentation, médicaments, habitudes, contact_veto, ferrure, photos |
+| `tiers` | numéro urgence, instructions, RC_Pro, licence FFE |
+| `seance` | photos, type métier, exercices domicile, techniques appliquées |
+| Module Éditions | CGV, contrats, autorisations, décharges, champs fusion |
+| Agenda | rappels auto, tournées géo, optimisation trajets |
+| Stock/Inventaire | matériel toilettage, fers/clous, sellerie |
+| GED | carnets santé, contrats cession, certificats vétérinaires |
+| Carnet pension DDPP | registre entrées/sorties, observation sanitaire |
+
+### 14 métiers
 1. Comportementaliste/Éducateur (cœur PetSuite)
 2. Éleveur canin/félin
 3. Éleveur animalier
@@ -197,34 +224,16 @@ Git docs      : C:\petsuite-docs\
 13. Chenil/Chatterie
 14. Organisateur événements animaliers
 
-### Mutualisations confirmées
-| Table | Extensions S31 |
-|---|---|
-| `animal` | alimentation, médicaments, habitudes, contact_veto, ferrure, photos |
-| `tiers` | numéro urgence, instructions, RC_Pro |
-| `seance` | photos, type métier, exercices domicile |
-| Module Éditions | contrats, CGV, autorisations, décharges, champs fusion |
-| Agenda | rappels auto, tournées, optimisation trajets |
-
-### Fonctionnalités transversales S32
-- [ ] Internationalisation FR/EN/IT/DE/ES
-- [ ] Devise paramétrable (€, $, £, CHF...)
-- [ ] Registre élevage DDPP/I-CAD/SCC
-- [ ] Suivi génétique reproducteurs
-- [ ] Réservations en ligne
-- [ ] Planning multi-ressources (moniteurs, chevaux, boxes)
-- [ ] Carnet santé électronique
-
 ---
 
-## RÈGLES ABSOLUES
+## 🚨 RÈGLES ABSOLUES
 
 1. `cd deploy` AVANT toute commande docker compose
-2. MariaDB HORS Docker (192.168.1.62:3307) — jamais `docker exec micro_api mysql`
-3. `--skip-ssl` pour connexion MariaDB
-4. Suspense requis pour useSearchParams
-5. Supprimer .next ET deploy/.next avant npm run build
-6. Token GitHub expire → renouveler sur https://github.com/settings/tokens
-7. custom-routes.ts = approche définitive pour les routes API
-8. NE JAMAIS utiliser inject_v4_final.js
-9. Dump BDD : `C:\ProgramData\OptimBTP\MariaDB\bin\mariadb-dump.exe` user=optimbtp/optimbtp host=localhost port=3307
+2. MariaDB HORS Docker (192.168.1.62:3307) — jamais docker exec mysql
+3. `--skip-ssl` obligatoire pour connexion MariaDB
+4. Supprimer `.next` ET `deploy/.next` avant npm run build
+5. `custom-routes.ts` = approche définitive pour routes supplémentaires
+6. NE JAMAIS utiliser `inject_v4_final.js`
+7. Dump BDD : `mariadb-dump.exe` user=optimbtp/optimbtp host=localhost port=3307
+8. Token GitHub expire → renouveler sur github.com/settings/tokens
+9. Suspense requis pour `useSearchParams` dans les pages Next.js
