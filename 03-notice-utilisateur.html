@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Notice Utilisateur v3</title>
+<title>PetSuite — Notice Utilisateur v3.1</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-  :root {
+  /* === DARK MODE (défaut) === */
+  :root, [data-theme="dark"] {
     --bg: #0f1117;
     --surface: #181c27;
     --surface2: #1e2336;
@@ -20,7 +21,46 @@
     --text-dim: #535b7a;
     --warning: #ffd166;
     --danger: #ff6b6b;
+    --toggle-bg: #1e2336;
+    --toggle-border: #2a3050;
+    --toggle-icon: '☀️';
   }
+
+  /* === LIGHT MODE === */
+  [data-theme="light"] {
+    --bg: #f8f9fc;
+    --surface: #ffffff;
+    --surface2: #f0f2f8;
+    --border: #dde1f0;
+    --accent: #3a6aff;
+    --accent2: #d46b1a;
+    --accent3: #1a9e6a;
+    --text: #1a1d2e;
+    --text-muted: #4a5275;
+    --text-dim: #8890b0;
+    --warning: #c88000;
+    --danger: #cc2244;
+    --toggle-bg: #f0f2f8;
+    --toggle-border: #dde1f0;
+    --toggle-icon: '🌙';
+  }
+
+  /* === TOGGLE BOUTON === */
+  .theme-toggle {
+    position: fixed;
+    top: 18px; right: 18px;
+    z-index: 999;
+    background: var(--toggle-bg);
+    border: 1px solid var(--toggle-border);
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .theme-toggle:hover { transform: scale(1.1); }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -807,13 +847,118 @@
       </div>
     </section>
 
+    <!-- ELEVAGE -->
+    <section class="section" id="elevage">
+      <div class="section-header">
+        <span class="section-num">16</span>
+        <div class="section-icon icon-green">🐣</div>
+        <h2>Élevage</h2>
+      </div>
+      <p>Le module élevage permet de gérer l'intégralité du cycle de reproduction : saillies, gestations, portées et naissances individuelles, avec suivi automatique des déclarations officielles.</p>
+      <h3>Workflow</h3>
+      <div class="workflow">
+        <div class="wf-step"><strong>Saillie</strong>Femelle + mâle</div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-step"><strong>Gestation</strong>Terme calculé auto</div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-step"><strong>Portée</strong>Naissances</div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-step"><strong>Cession</strong>Vente + ICAD</div>
+      </div>
+      <h3>Alertes automatiques</h3>
+      <p>Dès qu'une saillie est enregistrée, PetSuite crée automatiquement les rappels : déclaration SCC sous 8 semaines, LOOF sous 3 mois. À la naissance : déclaration obligatoire sous 15 jours.</p>
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-text">La page <strong>Démarches Éleveur</strong> (accessible via le menu Documentation) centralise tous les liens officiels SCC, LOOF et I-CAD avec les formulaires pré-remplis avec vos informations d'entreprise.</span>
+      </div>
+    </section>
+
+    <!-- ACHATS -->
+    <section class="section" id="achats">
+      <div class="section-header">
+        <span class="section-num">17</span>
+        <div class="section-icon icon-orange">🛒</div>
+        <h2>Achats fournisseurs</h2>
+      </div>
+      <p>La gestion des achats permet d'enregistrer vos factures fournisseurs et de les intégrer automatiquement dans la comptabilité (journal AC — comptes 401/607/445660).</p>
+      <table>
+        <thead><tr><th>Statut</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Brouillon</strong></td><td>En cours de saisie</td></tr>
+          <tr><td><strong>Reçu</strong></td><td>Marchandise/prestation reçue</td></tr>
+          <tr><td><strong>Validé</strong></td><td>Achat comptabilisé</td></tr>
+          <tr><td><strong>Annulé</strong></td><td>Annulé</td></tr>
+        </tbody>
+      </table>
+      <p>La numérotation est automatique au format <code>ACH-YYMM-0001</code>. Comme pour les factures, toute modification d'un achat sur un exercice clôturé est bloquée.</p>
+    </section>
+
+    <!-- INVENTAIRES -->
+    <section class="section" id="inventaires">
+      <div class="section-header">
+        <span class="section-num">18</span>
+        <div class="section-icon icon-blue">📦</div>
+        <h2>Inventaires</h2>
+      </div>
+      <p>Le module inventaires permet de valoriser votre stock à une date donnée en comparant les quantités théoriques aux quantités réelles comptées.</p>
+      <div class="steps">
+        <div class="step"><div class="step-content"><div class="step-title">Créer un inventaire</div><div class="step-desc">Donnez un libellé (ex: "Inventaire annuel 2026") et choisissez la date</div></div></div>
+        <div class="step"><div class="step-content"><div class="step-title">Ajouter les articles</div><div class="step-desc">Sélectionnez les articles depuis votre catalogue</div></div></div>
+        <div class="step"><div class="step-content"><div class="step-title">Saisir les quantités réelles</div><div class="step-desc">Pour chaque article, saisissez la quantité comptée. L'écart est calculé automatiquement.</div></div></div>
+        <div class="step"><div class="step-content"><div class="step-title">Valider</div><div class="step-desc">La valorisation est figée. L'écart de valeur apparaît dans le bilan.</div></div></div>
+      </div>
+    </section>
+
+    <!-- BILAN -->
+    <section class="section" id="bilan">
+      <div class="section-header">
+        <span class="section-num">19</span>
+        <div class="section-icon icon-yellow">📊</div>
+        <h2>Bilan / Pré-bilan</h2>
+      </div>
+      <p>La page Bilan offre une synthèse financière simplifiée de votre activité sur la période choisie.</p>
+      <table>
+        <thead><tr><th>Indicateur</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CA HT</strong></td><td>Chiffre d'affaires hors taxes (factures non annulées)</td></tr>
+          <tr><td><strong>Charges HT</strong></td><td>Total des achats fournisseurs validés</td></tr>
+          <tr><td><strong>Résultat brut</strong></td><td>CA − Charges (hors charges fixes, salaires, amortissements)</td></tr>
+          <tr><td><strong>Encours</strong></td><td>Total des factures impayées</td></tr>
+          <tr><td><strong>Top clients</strong></td><td>Classement par CA sur la période</td></tr>
+          <tr><td><strong>Top prestations</strong></td><td>Classement par CA des lignes de facturation</td></tr>
+          <tr><td><strong>CA mensuel</strong></td><td>Graphique des 12 derniers mois</td></tr>
+        </tbody>
+      </table>
+      <p>Sélecteur de période disponible : ce mois, ce trimestre, cette année, année précédente.</p>
+    </section>
+
   </main>
 </div>
 
 <footer class="doc-footer">
-  <div><strong>PetSuite — micro_logiciel</strong> · Notice Utilisateur v3.0 · Sprint S27</div>
+  <div><strong>PetSuite — micro_logiciel</strong> · Notice Utilisateur v3.1 · Sprint S29</div>
   <div>Mars 2026 · Stack : Next.js 15 + NestJS + MariaDB</div>
 </footer>
+
+<button class="theme-toggle" onclick="toggleTheme()" title="Basculer thème clair/sombre">☀️</button>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    document.querySelector('.theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
+    localStorage.setItem('petsuite-theme', next);
+  }
+  // Restaurer le thème sauvegardé (dark par défaut)
+  const saved = localStorage.getItem('petsuite-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.querySelector('.theme-toggle');
+    if (btn) btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+  });
+</script>
 
 </body>
 </html>
