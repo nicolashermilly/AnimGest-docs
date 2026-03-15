@@ -1,657 +1,164 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite — Démarches Éleveur</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-
-  :root, [data-theme="dark"] {
-    --bg: #0a0c10;
-    --surface: #111318;
-    --surface2: #16191f;
-    --border: #252932;
-    --accent-blue: #4d9fff;
-    --accent-green: #3ddc97;
-    --accent-orange: #ff8f40;
-    --accent-red: #ff4d6a;
-    --accent-yellow: #ffd166;
-    --text: #e2e8f0;
-    --text-muted: #8892a4;
-    --text-dim: #4a5568;
-    --header-grad: linear-gradient(135deg, #0a0c10 0%, #1a1f2e 100%);
-  }
-  [data-theme="light"] {
-    --bg: #f4f6fb;
-    --surface: #ffffff;
-    --surface2: #eef0f8;
-    --border: #d0d5e8;
-    --accent-blue: #1a5fcc;
-    --accent-green: #1a7a50;
-    --accent-orange: #c05a10;
-    --accent-red: #cc1a30;
-    --accent-yellow: #a06000;
-    --text: #1a1d2e;
-    --text-muted: #4a5275;
-    --text-dim: #8890b0;
-    --header-grad: linear-gradient(135deg, #1a1d2e 0%, #2a3050 100%);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.7; }
-
-  .theme-toggle {
-    position: fixed; top: 16px; right: 16px; z-index: 999;
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 50%; width: 38px; height: 38px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 16px; transition: transform 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  }
-  .theme-toggle:hover { transform: scale(1.1); }
-
-  /* HEADER */
-  .header {
-    background: var(--header-grad);
-    padding: 50px 80px 40px;
-    border-bottom: 1px solid var(--border);
-  }
-  .header-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-green); letter-spacing: 1.5px; margin-bottom: 12px; }
-  .header h1 { font-size: 38px; font-weight: 800; color: #fff; margin-bottom: 8px; }
-  .header h1 span { color: var(--accent-blue); }
-  .header .sub { font-size: 15px; color: var(--text-muted); font-weight: 300; }
-
-  /* LAYOUT */
-  .layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 160px); }
-
-  /* NAV */
-  nav { background: var(--surface); border-right: 1px solid var(--border); padding: 20px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
-  .nav-group { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; padding: 16px 18px 5px; }
-  nav a { display: block; padding: 7px 18px; font-size: 12.5px; color: var(--text-muted); text-decoration: none; border-left: 2px solid transparent; transition: all 0.12s; }
-  nav a:hover { color: var(--accent-blue); border-left-color: var(--accent-blue); background: rgba(77,159,255,0.05); }
-
-  /* CONTENT */
-  .content { padding: 44px 60px; max-width: 900px; }
-  .section { margin-bottom: 64px; scroll-margin-top: 20px; }
-  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  h2 { font-size: 24px; font-weight: 700; color: #fff; }
-  h3 { font-size: 15px; font-weight: 700; color: var(--text); margin: 22px 0 10px; }
-  p { color: var(--text-muted); margin-bottom: 12px; font-size: 13.5px; }
-  strong { color: var(--text); font-weight: 600; }
-
-  /* CARDS ORGANISME */
-  .org-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin: 16px 0; }
-  .org-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; transition: border-color 0.2s; }
-  .org-card:hover { border-color: var(--accent-blue); }
-  .org-card .oc-name { font-weight: 700; color: var(--text); font-size: 15px; margin-bottom: 4px; }
-  .org-card .oc-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
-  .org-card a { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--accent-blue); text-decoration: none; }
-  .org-card a:hover { text-decoration: underline; }
-
-  /* TIMELINE DÉMARCHES */
-  .timeline { margin: 16px 0; }
-  .tl-item {
-    display: grid;
-    grid-template-columns: 100px 24px 1fr;
-    gap: 0 14px;
-    margin-bottom: 6px;
-    align-items: start;
-  }
-  .tl-date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); text-align: right; padding-top: 3px; }
-  .tl-dot { display: flex; flex-direction: column; align-items: center; }
-  .tl-dot .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-  .tl-dot .line { width: 2px; flex: 1; min-height: 20px; background: var(--border); margin: 4px 0; }
-  .tl-body { padding-bottom: 12px; }
-  .tl-title { font-weight: 600; color: var(--text); font-size: 13.5px; margin-bottom: 2px; }
-  .tl-desc { font-size: 12.5px; color: var(--text-muted); }
-  .tl-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-top: 4px; }
-  .tag-urgent { background: rgba(255,77,106,0.15); color: var(--accent-red); }
-  .tag-warn { background: rgba(255,209,102,0.12); color: var(--accent-yellow); }
-  .tag-ok { background: rgba(61,220,151,0.12); color: var(--accent-green); }
-  .tag-info { background: rgba(77,159,255,0.12); color: var(--accent-blue); }
-  .dot-red { background: var(--accent-red); }
-  .dot-yellow { background: var(--accent-yellow); }
-  .dot-green { background: var(--accent-green); }
-  .dot-blue { background: var(--accent-blue); }
-
-  /* ALERTES */
-  .alert { padding: 12px 16px; border-radius: 8px; margin: 12px 0; border-left: 3px solid; font-size: 13px; display: flex; gap: 10px; }
-  .alert-red { background: rgba(255,77,106,0.08); border-color: var(--accent-red); color: #ff8fa0; }
-  .alert-yellow { background: rgba(255,209,102,0.08); border-color: var(--accent-yellow); color: #ffd166; }
-  .alert-green { background: rgba(61,220,151,0.08); border-color: var(--accent-green); color: #6dead7; }
-  .alert-blue { background: rgba(77,159,255,0.08); border-color: var(--accent-blue); color: #7ab8ff; }
-
-  /* TABLE */
-  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
-  th { text-align: left; padding: 8px 12px; font-size: 10.5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); background: var(--surface2); border-bottom: 1px solid var(--border); }
-  td { padding: 9px 12px; color: var(--text-muted); border-bottom: 1px solid rgba(37,41,50,0.5); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  td strong { color: var(--text); }
-
-  /* FORMULAIRE PRÉ-REMPLI */
-  .form-preview { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 16px 0; }
-  .form-header { background: var(--surface2); padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: between; gap: 10px; }
-  .form-header .fh-title { font-weight: 700; font-size: 14px; color: var(--text); flex: 1; }
-  .form-header .fh-badge { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: rgba(61,220,151,0.12); color: var(--accent-green); font-family: 'JetBrains Mono', monospace; }
-  .form-body { padding: 16px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
-  .form-field { }
-  .form-field label { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dim); margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
-  .form-field .fv { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; font-size: 13px; color: var(--text); font-weight: 500; }
-  .form-field .fv.placeholder { color: var(--text-dim); font-style: italic; font-weight: 400; }
-  .form-field.full { grid-column: 1 / -1; }
-
-  /* BOUTONS LIENS */
-  .link-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; transition: opacity 0.15s; margin: 4px 6px 4px 0; }
-  .link-btn:hover { opacity: 0.85; }
-  .btn-blue { background: rgba(77,159,255,0.15); color: var(--accent-blue); border: 1px solid rgba(77,159,255,0.3); }
-  .btn-green { background: rgba(61,220,151,0.12); color: var(--accent-green); border: 1px solid rgba(61,220,151,0.3); }
-  .btn-orange { background: rgba(255,143,64,0.12); color: var(--accent-orange); border: 1px solid rgba(255,143,64,0.3); }
-
-  /* DUREES */
-  .duree-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin: 14px 0; }
-  .duree-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
-  .duree-card .dc-esp { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
-  .duree-card .dc-nb { font-size: 22px; font-weight: 800; color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; }
-  .duree-card .dc-unit { font-size: 12px; color: var(--text-muted); }
-
-  footer { background: var(--surface); border-top: 1px solid var(--border); padding: 20px 80px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); display: flex; justify-content: space-between; }
+  :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+  .header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
+  .header h1{font-size:2.5rem;font-weight:800;color:#fff;}
+  .header p{color:var(--accent2);margin-top:8px;}
+  .badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
+  .container{max-width:1100px;margin:0 auto;padding:32px;}
+  .section{margin-bottom:40px;}
+  .section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
+  .section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
+  .card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:8px;}
+  .card p,.card li{font-size:.875rem;color:var(--text2);}
+  ul{list-style:none;padding:0;}
+  li{padding:3px 0;display:flex;gap:6px;}
+  li::before{content:'→';color:var(--accent);flex-shrink:0;}
+  table{width:100%;border-collapse:collapse;margin:12px 0;}
+  th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
+  td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}
+  .highlight{background:var(--surface2);border-left:3px solid var(--green);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+  .warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+  .planned{background:rgba(99,102,241,.1);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+  footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
 </style>
 </head>
 <body>
-
-<button class="theme-toggle" onclick="toggleTheme()" title="Basculer thème">☀️</button>
-
 <div class="header">
-  <div class="header-eyebrow">// PetSuite · Module Élevage</div>
-  <h1>Démarches <span>Éleveur</span></h1>
-  <div class="sub">Gestation · Portées · Naissances · Déclarations officielles SCC / LOOF / I-CAD</div>
+  <h1>🐕 PetSuite — Démarches Éleveur</h1>
+  <p>DDPP, I-CAD, SCC, LOOF, registre, certifications</p>
+  <div class="badge">v4.0 — Sprint S30 — Mars 2026</div>
 </div>
+<div class="container">
 
-<div class="layout">
-  <nav>
-    <div class="nav-group">Organismes</div>
-    <a href="#organismes">🏛️ SCC / LOOF / I-CAD</a>
-
-    <div class="nav-group">Démarches</div>
-    <a href="#saillie">⚡ Saillie</a>
-    <a href="#gestation">🤰 Gestation</a>
-    <a href="#naissance">🐣 Naissance</a>
-    <a href="#identification">🔖 Identification I-CAD</a>
-    <a href="#portee">📋 Déclaration portée</a>
-    <a href="#cession">📦 Cession</a>
-
-    <div class="nav-group">Référence</div>
-    <a href="#durees">⏱️ Durées gestation</a>
-    <a href="#delais">📅 Récap délais</a>
-    <a href="#formulaires">📄 Formulaires pré-remplis</a>
-    <a href="#petsuite">🐾 PetSuite - module</a>
-  </nav>
-
-  <main class="content">
-
-    <!-- ORGANISMES -->
-    <section class="section" id="organismes">
-      <div class="section-header">
-        <h2>🏛️ Organismes officiels</h2>
+  <div class="section">
+    <h2>📋 Registre d'élevage DDPP</h2>
+    <div class="highlight">
+      <p>Le registre d'élevage est obligatoire pour tout éleveur déclaré. Il peut être demandé lors d'un contrôle par la Direction Départementale de la Protection des Populations.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h4>Données obligatoires</h4>
+        <ul>
+          <li>Identification (puce/tatouage)</li>
+          <li>Date de naissance</li>
+          <li>Sexe, race, couleur</li>
+          <li>Parents (pedigree si applicable)</li>
+          <li>Dates d'entrée/sortie de l'élevage</li>
+          <li>Statut (reproducteur, retraité, vendu, décédé)</li>
+        </ul>
       </div>
-      <div class="org-grid">
-        <div class="org-card">
-          <div class="oc-name">SCC — Société Centrale Canine</div>
-          <div class="oc-desc">Livre des Origines Français (LOF) — Chiens de race</div>
-          <a href="https://www.centrale-canine.fr" target="_blank">🌐 centrale-canine.fr ↗</a><br>
-          <a href="https://www.lofselect.fr" target="_blank" style="margin-top:6px;display:inline-flex;">🔗 LOFselect (espace éleveur) ↗</a>
-        </div>
-        <div class="org-card">
-          <div class="oc-name">LOOF — Livre Officiel des Origines Félines</div>
-          <div class="oc-desc">Registre officiel des chats de race</div>
-          <a href="https://loof.asso.fr" target="_blank">🌐 loof.asso.fr ↗</a><br>
-          <a href="https://www.myloof.fr" target="_blank" style="margin-top:6px;display:inline-flex;">🔗 MyLOOF (déclaration en ligne) ↗</a>
-        </div>
-        <div class="org-card">
-          <div class="oc-name">I-CAD — Fichier National d'Identification</div>
-          <div class="oc-desc">Identification puces & tatouages, changements de détenteur</div>
-          <a href="https://www.i-cad.fr" target="_blank">🌐 i-cad.fr ↗</a><br>
-          <a href="https://www.i-cad.fr/pro/login" target="_blank" style="margin-top:6px;display:inline-flex;">🔗 Espace pro éleveur ↗</a>
-        </div>
-        <div class="org-card">
-          <div class="oc-name">Service-Public.fr</div>
-          <div class="oc-desc">Réglementation élevage, obligations légales, CEC</div>
-          <a href="https://www.service-public.fr/particuliers/vosdroits/F34837" target="_blank">🌐 Réglementation élevage ↗</a>
-        </div>
+      <div class="card">
+        <h4>Événements à tracer</h4>
+        <ul>
+          <li>Dates de saillies</li>
+          <li>Dates de mise bas</li>
+          <li>Nombre de petits (mâles, femelles, mort-nés)</li>
+          <li>Identifications des chiots/chatons</li>
+          <li>Décès éventuels</li>
+          <li>Ventes avec coordonnées acheteur</li>
+        </ul>
       </div>
-    </section>
-
-    <!-- SAILLIE -->
-    <section class="section" id="saillie">
-      <div class="section-header">
-        <h2>⚡ Déclaration de saillie</h2>
+      <div class="card">
+        <h4>Suivi sanitaire</h4>
+        <ul>
+          <li>Vaccinations + dates</li>
+          <li>Vermifugations</li>
+          <li>Traitements antiparasitaires</li>
+          <li>Consultations vétérinaires</li>
+          <li>Tests génétiques</li>
+          <li>Résultats analyses</li>
+        </ul>
       </div>
-      <p>La saillie doit être déclarée rapidement auprès de la SCC (chiens) ou du LOOF (chats). C'est le point de départ de toutes les démarches d'une portée.</p>
+    </div>
+  </div>
 
-      <div class="alert alert-yellow">
-        <span>⚠️</span>
-        <div>Depuis septembre 2023, les deux parents doivent avoir une <strong>empreinte ADN enregistrée à la SCC</strong> avant toute déclaration de saillie. Faites le prélèvement chez votre vétérinaire.</div>
+  <div class="section">
+    <h2>🏛️ Organismes de référence</h2>
+    <table>
+      <thead><tr><th>Organisme</th><th>Rôle</th><th>Espèce</th><th>Déclaration</th></tr></thead>
+      <tbody>
+        <tr><td>I-CAD</td><td>Identification et registre national des carnivores domestiques</td><td>Chien, Chat, Furet</td><td>Obligatoire — chaque animal</td></tr>
+        <tr><td>SCC</td><td>Société Centrale Canine — LOF (Livre des Origines Français)</td><td>Chien</td><td>Pour reproduction LOF + confirmation</td></tr>
+        <tr><td>LOOF</td><td>Livre Officiel des Origines Félines</td><td>Chat</td><td>Pour reproduction LOOF</td></tr>
+        <tr><td>DDPP</td><td>Contrôle des établissements d'élevage</td><td>Tous</td><td>Déclaration si ≥1 portée/an vendue</td></tr>
+        <tr><td>ACACED</td><td>Attestation de Connaissances pour les Animaux de Compagnie des Espèces Domestiques</td><td>Tous</td><td>Obligatoire si élevage déclaré</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>📄 Documents réglementaires</h2>
+    <div class="warn">
+      <p>Ces documents sont obligatoires pour chaque vente d'animal. PetSuite S31 fournira des modèles prêts à remplir avec champs de fusion automatique.</p>
+    </div>
+    <table>
+      <thead><tr><th>Document</th><th>Obligatoire</th><th>Destinataire</th></tr></thead>
+      <tbody>
+        <tr><td>Certificat de cession</td><td>Oui — Code rural L214-8</td><td>Acheteur</td></tr>
+        <tr><td>Certificat vétérinaire de bonne santé</td><td>Oui (recommandé)</td><td>Acheteur</td></tr>
+        <tr><td>Document d'information sur les besoins de l'animal</td><td>Oui — Loi Grandin 2021</td><td>Acheteur</td></tr>
+        <tr><td>Carnet de santé / vaccination</td><td>Oui</td><td>Acheteur</td></tr>
+        <tr><td>Facture de vente</td><td>Oui si professionnel</td><td>Acheteur</td></tr>
+        <tr><td>Attestation de pedigree LOF/LOOF</td><td>Si race inscrite</td><td>Acheteur + SCC/LOOF</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>🔬 Suivi génétique (S32)</h2>
+    <div class="planned">
+      <p><strong>Planifié S32 :</strong> Module suivi génétique pour éviter la consanguinité — calcul coefficient de consanguinité, planification des saillies, historique des reproducteurs.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h4>Cycle reproducteur</h4>
+        <ul>
+          <li>Suivi cycles de chaleurs</li>
+          <li>Saillies planifiées</li>
+          <li>Historique des portées</li>
+          <li>Performances reproductrices</li>
+        </ul>
       </div>
-
-      <table>
-        <thead><tr><th>Organisme</th><th>Délai</th><th>Tarif</th><th>Procédure</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><strong>SCC (chiens LOF)</strong></td>
-            <td>
-              <span class="tl-tag tag-ok">≤ 2 mois</span><br>
-              <span class="tl-tag tag-warn">2–4 mois : 20 €</span><br>
-              <span class="tl-tag tag-urgent">+ 4 mois : test ADN obligatoire</span>
-            </td>
-            <td>10 €</td>
-            <td>En ligne via <a href="https://www.lofselect.fr" target="_blank" style="color:var(--accent-blue)">LOFselect</a> ou courrier postal</td>
-          </tr>
-          <tr>
-            <td><strong>LOOF (chats)</strong></td>
-            <td><span class="tl-tag tag-ok">≤ 3 mois</span></td>
-            <td>15 € / chaton</td>
-            <td>En ligne via <a href="https://www.myloof.fr" target="_blank" style="color:var(--accent-blue)">MyLOOF</a></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <a href="https://www.lofselect.fr" target="_blank" class="link-btn btn-blue">🔗 LOFselect — Déclarer saillie SCC ↗</a>
-      <a href="https://www.myloof.fr" target="_blank" class="link-btn btn-green">🔗 MyLOOF — Déclarer saillie LOOF ↗</a>
-    </section>
-
-    <!-- GESTATION -->
-    <section class="section" id="gestation">
-      <div class="section-header">
-        <h2>🤰 Suivi de gestation</h2>
+      <div class="card">
+        <h4>Tests génétiques courants</h4>
+        <ul>
+          <li>Dysplasie hanche/coude (HD/ED)</li>
+          <li>Tests ADN maladies héréditaires</li>
+          <li>Groupe sanguin</li>
+          <li>Coefficient de consanguinité</li>
+        </ul>
       </div>
-      <p>PetSuite calcule automatiquement la date de terme et génère les alertes de déclarations en fonction de la date de saillie.</p>
+    </div>
+  </div>
 
-      <div id="durees" class="section">
-        <h3>⏱️ Durées de gestation par espèce</h3>
-        <div class="duree-grid">
-          <div class="duree-card"><div class="dc-esp">🐕 Chien</div><div class="dc-nb">63</div><div class="dc-unit">jours (58–68)</div></div>
-          <div class="duree-card"><div class="dc-esp">🐈 Chat</div><div class="dc-nb">65</div><div class="dc-unit">jours (58–67)</div></div>
-          <div class="duree-card"><div class="dc-esp">🐇 Lapin</div><div class="dc-nb">31</div><div class="dc-unit">jours (28–33)</div></div>
-          <div class="duree-card"><div class="dc-esp">🐹 Cobaye</div><div class="dc-nb">68</div><div class="dc-unit">jours (59–72)</div></div>
-          <div class="duree-card"><div class="dc-esp">🐹 Hamster</div><div class="dc-nb">16</div><div class="dc-unit">jours (15–18)</div></div>
-          <div class="duree-card"><div class="dc-esp">🐴 Cheval</div><div class="dc-nb">340</div><div class="dc-unit">jours (320–370)</div></div>
-          <div class="duree-card"><div class="dc-esp">🦡 Furet</div><div class="dc-nb">42</div><div class="dc-unit">jours (41–43)</div></div>
-          <div class="duree-card"><div class="dc-esp">🐏 Brebis</div><div class="dc-nb">150</div><div class="dc-unit">jours (144–155)</div></div>
-        </div>
-      </div>
+  <div class="section">
+    <h2>🐾 Races disponibles dans PetSuite S30</h2>
+    <table>
+      <thead><tr><th>Type</th><th>Nb races</th><th>Catégories</th></tr></thead>
+      <tbody>
+        <tr><td>🐕 Chiens</td><td>211</td><td>10 Groupes FCI (Bergers, Molossoïdes, Terriers, Teckels, Spitz, Courants, Arrêt, Rapporteurs, Agrément, Lévriers)</td></tr>
+        <tr><td>🐱 Chats</td><td>48</td><td>Shorthair / Longhair / Semi-longhair (races LOOF)</td></tr>
+        <tr><td>🐴 Équidés</td><td>31</td><td>Cheval sport/trait/loisir/course, Poney, Âne</td></tr>
+        <tr><td>🐦 Oiseaux</td><td>29</td><td>Perroquet, Cacatoes, Perruche, Passereau, Tourterelle</td></tr>
+        <tr><td>🐰 Lapins</td><td>25</td><td>Belier, Nain, Grand, Rex, Lop, Angora</td></tr>
+        <tr><td>🦎 Reptiles</td><td>23</td><td>Lézard, Serpent, Gecko, Tortue, Caméléon (légaux France)</td></tr>
+        <tr><td>🐭 Rongeurs</td><td>16</td><td>Hamster, Rat, Cochon d'Inde, Gerbille, Chinchilla</td></tr>
+        <tr><td>🐾 NAC</td><td>9</td><td>Furet, Hérisson, Phalanger, Pogona, Fennec... (légaux France)</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-      <h3>Suivi recommandé</h3>
-      <table>
-        <thead><tr><th>Semaine</th><th>Action</th></tr></thead>
-        <tbody>
-          <tr><td><strong>J+0</strong></td><td>Enregistrer la saillie dans PetSuite</td></tr>
-          <tr><td><strong>J+21</strong></td><td>Échographie de confirmation (chien/chat)</td></tr>
-          <tr><td><strong>J+45</strong></td><td>Radiographie comptage fœtus</td></tr>
-          <tr><td><strong>J+55</strong></td><td>Préparation naissance, mise en place de la nurserie</td></tr>
-          <tr><td><strong>J+63</strong></td><td>Terme estimé — surveiller la mise bas</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- NAISSANCE -->
-    <section class="section" id="naissance">
-      <div class="section-header">
-        <h2>🐣 Déclaration de naissance</h2>
-      </div>
-
-      <div class="alert alert-red">
-        <span>🚨</span>
-        <div><strong>Délai strict : 15 jours après la naissance</strong> pour déclarer le nombre de petits et leur sexe à la SCC/LOOF. Passé ce délai, des pénalités s'appliquent.</div>
-      </div>
-
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-date">J+0</div>
-          <div class="tl-dot"><div class="dot dot-green"></div><div class="line"></div></div>
-          <div class="tl-body">
-            <div class="tl-title">Mise bas</div>
-            <div class="tl-desc">Noter : date, nb total, nb mâles, nb femelles, nb morts-nés</div>
-            <span class="tl-tag tag-ok">Enregistrer dans PetSuite</span>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-date">J+15 max</div>
-          <div class="tl-dot"><div class="dot dot-red"></div><div class="line"></div></div>
-          <div class="tl-body">
-            <div class="tl-title">🚨 Déclaration de naissance SCC/LOOF</div>
-            <div class="tl-desc">Nombre de petits + sexes. En ligne (LOFselect / MyLOOF) ou courrier.</div>
-            <span class="tl-tag tag-urgent">Obligatoire sous 15 jours</span>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-date">J+56 (8 sem.)</div>
-          <div class="tl-dot"><div class="dot dot-blue"></div><div class="line"></div></div>
-          <div class="tl-body">
-            <div class="tl-title">Identification obligatoire + vaccin</div>
-            <div class="tl-desc">Puce électronique par vétérinaire. Enregistrement I-CAD automatique.</div>
-            <span class="tl-tag tag-info">Avant cession</span>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-date">J+90 max</div>
-          <div class="tl-dot"><div class="dot dot-yellow"></div><div class="line"></div></div>
-          <div class="tl-body">
-            <div class="tl-title">Déclaration portée complète</div>
-            <div class="tl-desc">Nom de chaque petit, couleur/robe, n° de puce. LOF : 10 €/chiot. LOOF : 15 €/chaton.</div>
-            <span class="tl-tag tag-warn">Avant 3 mois</span>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-date">J+56 min</div>
-          <div class="tl-dot"><div class="dot dot-green"></div><div class="line"></div></div>
-          <div class="tl-body">
-            <div class="tl-title">Cession possible</div>
-            <div class="tl-desc">Âge légal minimum de cession : 8 semaines. CEC signé 7 jours avant.</div>
-            <span class="tl-tag tag-ok">Légal</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- IDENTIFICATION ICAD -->
-    <section class="section" id="identification">
-      <div class="section-header">
-        <h2>🔖 Identification I-CAD</h2>
-      </div>
-      <p>L'identification par puce est <strong>obligatoire avant toute cession</strong>. Pour les chats : obligatoire avant 7 mois. Pour les chiens : avant 4 mois.</p>
-
-      <h3>Procédure éleveur professionnel</h3>
-      <div class="alert alert-blue">
-        <span>ℹ️</span>
-        <div>En tant qu'éleveur professionnel, vous disposez d'un <strong>espace pro I-CAD</strong> permettant de gérer tous vos animaux, effectuer les changements de détenteur instantanément et télécharger les cartes d'identification.</div>
-      </div>
-
-      <a href="https://www.i-cad.fr/pro/login" target="_blank" class="link-btn btn-blue">🔗 Espace pro I-CAD ↗</a>
-      <a href="https://www.i-cad.fr/articles/changement-de-detenteur-quelle-procedure" target="_blank" class="link-btn btn-orange">🔗 Procédure changement de détenteur ↗</a>
-
-      <h3>Tarifs I-CAD</h3>
-      <table>
-        <thead><tr><th>Démarche</th><th>Tarif</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Carte d'identification (espace pro)</strong></td><td>Gratuit (dématérialisé)</td></tr>
-          <tr><td><strong>Changement de détenteur en ligne</strong></td><td>Gratuit</td></tr>
-          <tr><td><strong>Changement de détenteur par courrier</strong></td><td>12,00 € TTC</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- DÉCLARATION PORTÉE -->
-    <section class="section" id="portee">
-      <div class="section-header">
-        <h2>📋 Déclaration portée complète</h2>
-      </div>
-      <table>
-        <thead><tr><th>Élément</th><th>SCC (LOF chiens)</th><th>LOOF (chats)</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Délai normal</strong></td><td>≤ 3 mois après naissance</td><td>≤ 3 mois après naissance</td></tr>
-          <tr><td><strong>Tarif normal</strong></td><td>10 € / chiot</td><td>15 € / chaton</td></tr>
-          <tr><td><strong>Hors délai (3–6 mois)</strong></td><td>25 € / chiot</td><td>25 € / chaton</td></tr>
-          <tr><td><strong>Hors délai (+ 6 mois)</strong></td><td>50 € + tests ADN filiation</td><td>50 € + tests ADN</td></tr>
-          <tr><td><strong>Numéro de portée</strong></td><td>LOF-[dossier]-[année]-1</td><td>Fourni par LOOF</td></tr>
-          <tr><td><strong>Obligatoire pour annonce vente</strong></td><td>✅ Oui</td><td>✅ Oui</td></tr>
-        </tbody>
-      </table>
-
-      <div class="alert alert-yellow">
-        <span>⚠️</span>
-        <div>Le <strong>numéro de portée</strong> est obligatoire pour toute annonce de vente. Sans SIRET, une seule portée commercialisée par an est autorisée.</div>
-      </div>
-    </section>
-
-    <!-- CESSION -->
-    <section class="section" id="cession">
-      <div class="section-header">
-        <h2>📦 Cession — Documents obligatoires</h2>
-      </div>
-      <table>
-        <thead><tr><th>Document</th><th>Délai</th><th>Obligatoire</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Certificat d'Engagement et de Connaissance (CEC)</strong></td><td>Signé par l'acheteur <strong>7 jours avant</strong> la remise</td><td>✅ Oui</td></tr>
-          <tr><td><strong>Attestation / Certificat de cession</strong></td><td>Au moment de la remise</td><td>✅ Oui</td></tr>
-          <tr><td><strong>Carte d'identification I-CAD</strong></td><td>Au moment de la remise</td><td>✅ Oui si identifié</td></tr>
-          <tr><td><strong>Certificat vétérinaire</strong></td><td>Daté de moins de 3 mois</td><td>✅ Oui</td></tr>
-          <tr><td><strong>Carnet de santé / passeport</strong></td><td>Avec vaccinations à jour</td><td>✅ Recommandé</td></tr>
-          <tr><td><strong>Changement de détenteur I-CAD</strong></td><td>Au moment de la cession</td><td>✅ Obligatoire</td></tr>
-        </tbody>
-      </table>
-
-      <a href="https://www.service-public.fr/particuliers/vosdroits/F34837" target="_blank" class="link-btn btn-blue">🔗 Service-Public — Obligations cédant ↗</a>
-      <a href="https://www.i-cad.fr/pro/login" target="_blank" class="link-btn btn-green">🔗 Changement détenteur I-CAD ↗</a>
-    </section>
-
-    <!-- DÉLAIS RÉCAP -->
-    <section class="section" id="delais">
-      <div class="section-header">
-        <h2>📅 Récapitulatif des délais</h2>
-      </div>
-      <table>
-        <thead><tr><th>Étape</th><th>Délai max</th><th>Tarif</th><th>Urgence</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Déclaration saillie SCC</strong></td><td>8 semaines</td><td>10 €</td><td><span class="tl-tag tag-warn">Important</span></td></tr>
-          <tr><td><strong>Déclaration saillie LOOF</strong></td><td>3 mois</td><td>15 €/ch.</td><td><span class="tl-tag tag-warn">Important</span></td></tr>
-          <tr><td><strong>Déclaration naissance SCC/LOOF</strong></td><td>15 jours</td><td>—</td><td><span class="tl-tag tag-urgent">Critique</span></td></tr>
-          <tr><td><strong>Identification I-CAD</strong></td><td>Avant cession</td><td>—</td><td><span class="tl-tag tag-urgent">Obligatoire</span></td></tr>
-          <tr><td><strong>Déclaration portée complète</strong></td><td>3 mois</td><td>10–15 €/petit</td><td><span class="tl-tag tag-warn">Important</span></td></tr>
-          <tr><td><strong>CEC signé par acheteur</strong></td><td>7 jours avant cession</td><td>—</td><td><span class="tl-tag tag-urgent">Légal</span></td></tr>
-          <tr><td><strong>Cession minimum</strong></td><td>8 semaines de vie</td><td>—</td><td><span class="tl-tag tag-urgent">Légal</span></td></tr>
-          <tr><td><strong>Changement détenteur I-CAD</strong></td><td>Au moment cession</td><td>Gratuit</td><td><span class="tl-tag tag-urgent">Obligatoire</span></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- FORMULAIRES PRÉ-REMPLIS -->
-    <section class="section" id="formulaires">
-      <div class="section-header">
-        <h2>📄 Formulaires pré-remplis (données entreprise)</h2>
-      </div>
-      <p>Ces formulaires sont pré-remplis avec les informations de votre entreprise configurées dans PetSuite. Saisissez les informations spécifiques à la portée pour compléter.</p>
-
-      <div class="alert alert-blue">
-        <span>ℹ️</span>
-        <div>Ces formulaires sont des <strong>aides à la saisie</strong>. Les déclarations officielles doivent être effectuées directement sur les plateformes SCC (LOFselect), LOOF (MyLOOF) ou I-CAD.</div>
-      </div>
-
-      <!-- Formulaire Déclaration Saillie SCC -->
-      <h3>Déclaration de saillie — SCC (aide mémoire)</h3>
-      <div class="form-preview">
-        <div class="form-header">
-          <span class="fh-title">Déclaration de saillie — Société Centrale Canine</span>
-          <span class="fh-badge">SCC · 10 €</span>
-        </div>
-        <div class="form-body">
-          <div class="form-row">
-            <div class="form-field">
-              <label>Éleveur (propriétaire femelle)</label>
-              <div class="fv" id="pf-nom">Chargement...</div>
-            </div>
-            <div class="form-field">
-              <label>SIRET</label>
-              <div class="fv" id="pf-siret">Chargement...</div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label>Adresse</label>
-              <div class="fv" id="pf-adr">Chargement...</div>
-            </div>
-            <div class="form-field">
-              <label>Téléphone / Email</label>
-              <div class="fv" id="pf-contact">Chargement...</div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label>Femelle (nom + n° puce)</label>
-              <div class="fv placeholder">— Sélectionner dans PetSuite —</div>
-            </div>
-            <div class="form-field">
-              <label>Mâle (nom + n° puce)</label>
-              <div class="fv placeholder">— Sélectionner dans PetSuite —</div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label>Date de saillie</label>
-              <div class="fv placeholder">— Date enregistrée dans PetSuite —</div>
-            </div>
-            <div class="form-field">
-              <label>Type</label>
-              <div class="fv placeholder">Naturelle / IA</div>
-            </div>
-          </div>
-          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-            <a href="https://www.lofselect.fr" target="_blank" class="link-btn btn-blue">🔗 Déclarer sur LOFselect ↗</a>
-            <a href="https://www.lofselect.fr" target="_blank" class="link-btn btn-orange">📋 Tarifs SCC ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Formulaire Attestation de cession -->
-      <h3>Attestation de cession (modèle)</h3>
-      <div class="form-preview">
-        <div class="form-header">
-          <span class="fh-title">Attestation de cession — Animal carnivore domestique</span>
-          <span class="fh-badge">Obligatoire</span>
-        </div>
-        <div class="form-body">
-          <div class="form-row">
-            <div class="form-field">
-              <label>Cédant (éleveur)</label>
-              <div class="fv" id="pf-cedant">Chargement...</div>
-            </div>
-            <div class="form-field">
-              <label>SIRET / N° éleveur</label>
-              <div class="fv" id="pf-siret2">Chargement...</div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label>Acquéreur (nom, prénom)</label>
-              <div class="fv placeholder">— Sélectionner le client dans PetSuite —</div>
-            </div>
-            <div class="form-field">
-              <label>Date de cession</label>
-              <div class="fv placeholder">— Date de la vente —</div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label>Animal (nom)</label>
-              <div class="fv placeholder">— Nom du petit dans PetSuite —</div>
-            </div>
-            <div class="form-field">
-              <label>N° puce / tatouage</label>
-              <div class="fv placeholder">— ANI_PUC —</div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label>Race</label>
-              <div class="fv placeholder">— Race enregistrée —</div>
-            </div>
-            <div class="form-field">
-              <label>Date de naissance</label>
-              <div class="fv placeholder">— ANI_NAI —</div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label>N° de portée LOF/LOOF</label>
-              <div class="fv placeholder">— POR_NUM_LOF —</div>
-            </div>
-            <div class="form-field">
-              <label>Prix de cession</label>
-              <div class="fv placeholder">— Montant facture —</div>
-            </div>
-          </div>
-          <div style="margin-top:14px">
-            <a href="https://www.i-cad.fr/pro/login" target="_blank" class="link-btn btn-blue">🔗 Changement détenteur I-CAD ↗</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PETSUITE MODULE -->
-    <section class="section" id="petsuite">
-      <div class="section-header">
-        <h2>🐾 PetSuite — Module élevage</h2>
-      </div>
-      <p>Le module élevage de PetSuite centralise toutes les données et génère automatiquement les alertes de déclarations.</p>
-      <table>
-        <thead><tr><th>Fonctionnalité</th><th>Détail</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Enregistrement saillie</strong></td><td>Lien femelle + mâle, date, type (naturelle/IA), vétérinaire</td></tr>
-          <tr><td><strong>Suivi gestation</strong></td><td>Date terme calculée automatiquement, suivi vétérinaire, échographie</td></tr>
-          <tr><td><strong>Portée</strong></td><td>Nombre de petits par sexe, affixe, lettre de l'année, numéro LOF/LOOF</td></tr>
-          <tr><td><strong>Naissances individuelles</strong></td><td>Nom, couleur, sexe, poids, puce, statut (vivant / vendu / gardé)</td></tr>
-          <tr><td><strong>Alertes automatiques</strong></td><td>Déclaration saillie J+56, naissance J+15, portée J+90 — vue <code>v_elevage_alertes</code></td></tr>
-          <tr><td><strong>Déclarations</strong></td><td>Suivi envoi/validation SCC, LOOF, I-CAD avec numéros de dossier</td></tr>
-          <tr><td><strong>Lien avec tiers</strong></td><td>Création automatique d'une facture lors de la cession d'un petit</td></tr>
-          <tr><td><strong>GED</strong></td><td>Certificats de naissance, pedigrees, attestations de cession attachés à chaque portée</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-  </main>
 </div>
-
-<footer>
-  <div>// PetSuite · Module Élevage · Démarches Officielles · v1.0 S28</div>
-  <div>Sources : SCC · LOOF · I-CAD · Service-Public.fr · Mars 2026</div>
-</footer>
-
-<script>
-  // Theme toggle
-  function toggleTheme() {
-    const html = document.documentElement;
-    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    document.querySelector('.theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
-    localStorage.setItem('petsuite-theme', next);
-  }
-  const saved = localStorage.getItem('petsuite-theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.querySelector('.theme-toggle');
-    if (btn) btn.textContent = saved === 'dark' ? '☀️' : '🌙';
-
-    // Pré-remplir les infos entreprise depuis l'API PetSuite
-    fetch('/api/parametres/entreprise')
-      .then(r => r.json())
-      .then(d => {
-        const nom    = d?.TIE_RAISON_SOCIALE || d?.nom || '—';
-        const siret  = d?.TIE_SIRET || d?.siret || '—';
-        const adr    = [d?.TIE_ADR1, d?.TIE_CP, d?.VIL_NOM].filter(Boolean).join(', ') || '—';
-        const contact = [d?.TIE_TEL, d?.TIE_EMAIL].filter(Boolean).join(' · ') || '—';
-
-        ['pf-nom','pf-cedant'].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) { el.textContent = nom; el.classList.remove('placeholder'); }
-        });
-        ['pf-siret','pf-siret2'].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) { el.textContent = siret; el.classList.remove('placeholder'); }
-        });
-        const adrEl = document.getElementById('pf-adr');
-        if (adrEl) { adrEl.textContent = adr; adrEl.classList.remove('placeholder'); }
-        const cEl = document.getElementById('pf-contact');
-        if (cEl) { cEl.textContent = contact; cEl.classList.remove('placeholder'); }
-      })
-      .catch(() => {
-        // Si l'API n'est pas dispo (page consultée hors PetSuite)
-        ['pf-nom','pf-cedant'].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) { el.textContent = 'Configurer dans Paramètres → Mon entreprise'; el.style.color = 'var(--accent-orange)'; }
-        });
-      });
-  });
-</script>
+<footer>PetSuite Démarches Éleveur v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel</footer>
 </body>
 </html>
