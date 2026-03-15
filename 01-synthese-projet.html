@@ -3,899 +3,175 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Documentation Technique v3</title>
+<title>PetSuite — Synthèse projet v4.0</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-
-  :root {
-    --bg: #0a0c10;
-    --surface: #111318;
-    --surface2: #16191f;
-    --surface3: #1c2028;
-    --border: #252932;
-    --border2: #2e3440;
-    --accent-blue: #4d9fff;
-    --accent-green: #3ddc97;
-    --accent-orange: #ff8f40;
-    --accent-red: #ff4d6a;
-    --accent-purple: #a78bfa;
-    --text: #e2e8f0;
-    --text-muted: #8892a4;
-    --text-dim: #4a5568;
-    --code-bg: #0d1117;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    font-size: 14px;
-  }
-
-  /* HEADER */
-  .doc-header {
-    background: linear-gradient(to right, #0a0c10, #111827);
-    border-bottom: 1px solid var(--border);
-    padding: 50px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-  .doc-header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 80px,
-      rgba(77,159,255,0.02) 80px,
-      rgba(77,159,255,0.02) 81px
-    );
-  }
-  .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    position: relative;
-  }
-  .header-left {}
-  .header-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent-green);
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .header-badge::before { content: '//'; color: var(--text-dim); }
-  .doc-header h1 {
-    font-size: 42px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.1;
-  }
-  .doc-header h1 .mono {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 36px;
-    color: var(--accent-blue);
-    font-weight: 400;
-  }
-  .doc-header .subtitle { font-size: 15px; color: var(--text-muted); margin-top: 10px; font-weight: 300; }
-  .version-box {
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    border-radius: 10px;
-    padding: 16px 20px;
-    min-width: 200px;
-    text-align: right;
-  }
-  .version-box .vb-label { font-size: 10px; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
-  .version-box .vb-value { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent-green); }
-  .header-stack {
-    display: flex;
-    gap: 10px;
-    margin-top: 24px;
-    flex-wrap: wrap;
-    position: relative;
-  }
-  .stack-badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    border-radius: 6px;
-    padding: 5px 12px;
-    font-size: 12px;
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .stack-badge .dot { width: 6px; height: 6px; border-radius: 50%; }
-  .dot-blue { background: var(--accent-blue); }
-  .dot-green { background: var(--accent-green); }
-  .dot-orange { background: var(--accent-orange); }
-  .dot-purple { background: var(--accent-purple); }
-
-  /* LAYOUT */
-  .doc-layout {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    min-height: calc(100vh - 200px);
-  }
-
-  /* NAV */
-  .doc-nav {
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    padding: 24px 0;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-  }
-  .nav-group { margin-bottom: 6px; }
-  .nav-group-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--text-dim);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 14px 20px 5px;
-  }
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 20px;
-    font-size: 12.5px;
-    color: var(--text-muted);
-    text-decoration: none;
-    border-left: 2px solid transparent;
-    transition: all 0.12s;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .nav-link:hover { color: var(--accent-blue); background: rgba(77,159,255,0.06); border-left-color: var(--accent-blue); }
-  .nav-link.active { color: var(--accent-green); border-left-color: var(--accent-green); }
-
-  /* CONTENT */
-  .doc-content { padding: 48px 64px; max-width: 920px; }
-
-  /* SECTIONS */
-  .section { margin-bottom: 72px; scroll-margin-top: 24px; }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-  }
-  .section-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    color: var(--text-dim);
-    padding: 2px 8px;
-    border-radius: 4px;
-  }
-  h2 { font-size: 26px; font-weight: 700; color: #fff; }
-  h3 { font-size: 15px; font-weight: 700; color: var(--text); margin: 24px 0 10px; display: flex; align-items: center; gap: 8px; }
-  h3::before { content: '▸'; color: var(--accent-blue); font-size: 12px; }
-  h4 { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin: 18px 0 6px; }
-  p { color: var(--text-muted); margin-bottom: 12px; font-size: 13.5px; }
-  strong { color: var(--text); font-weight: 600; }
-
-  /* CODE */
-  pre {
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 18px 20px;
-    overflow-x: auto;
-    margin: 14px 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12.5px;
-    line-height: 1.6;
-    color: var(--text-muted);
-  }
-  code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    background: rgba(77,159,255,0.1);
-    border: 1px solid rgba(77,159,255,0.2);
-    padding: 1px 6px;
-    border-radius: 4px;
-    color: var(--accent-blue);
-  }
-  pre code { background: none; border: none; padding: 0; color: inherit; }
-
-  /* HIGHLIGHT */
-  .kw { color: var(--accent-purple); }
-  .fn { color: var(--accent-blue); }
-  .str { color: var(--accent-green); }
-  .cm { color: var(--text-dim); }
-  .nb { color: var(--accent-orange); }
-
-  /* TABLE */
-  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
-  th {
-    text-align: left;
-    padding: 8px 12px;
-    font-size: 10.5px;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border2);
-  }
-  td {
-    padding: 9px 12px;
-    color: var(--text-muted);
-    border-bottom: 1px solid rgba(37,41,50,0.5);
-    vertical-align: top;
-  }
-  tr:last-child td { border-bottom: none; }
-  td strong { color: var(--text); }
-
-  /* ALERTS */
-  .alert {
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin: 14px 0;
-    border-left: 3px solid;
-    font-size: 13px;
-    display: flex;
-    gap: 10px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-  }
-  .alert-icon { flex-shrink: 0; }
-  .alert-critical { background: rgba(255,77,106,0.08); border-color: var(--accent-red); color: #ff8fa0; }
-  .alert-warning { background: rgba(255,143,64,0.08); border-color: var(--accent-orange); color: #ffb06a; }
-  .alert-info { background: rgba(77,159,255,0.08); border-color: var(--accent-blue); color: #7ab8ff; }
-  .alert-success { background: rgba(61,220,151,0.08); border-color: var(--accent-green); color: #6dead7; }
-
-  /* ARCH DIAGRAM */
-  .arch {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 24px;
-    margin: 16px 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 2;
-  }
-  .arch .layer { display: flex; align-items: center; gap: 12px; margin: 4px 0; }
-  .arch .box {
-    background: var(--surface3);
-    border: 1px solid var(--border2);
-    border-radius: 6px;
-    padding: 6px 14px;
-    color: var(--text);
-    white-space: nowrap;
-  }
-  .arch .box.blue { border-color: rgba(77,159,255,0.4); color: var(--accent-blue); }
-  .arch .box.green { border-color: rgba(61,220,151,0.4); color: var(--accent-green); }
-  .arch .box.orange { border-color: rgba(255,143,64,0.4); color: var(--accent-orange); }
-  .arch .arrow { color: var(--text-dim); }
-  .arch .port { font-size: 10px; color: var(--text-dim); }
-
-  /* TRIGGER LIST */
-  .trigger-list { margin: 12px 0; }
-  .trigger-item {
-    display: grid;
-    grid-template-columns: 200px 80px 1fr;
-    gap: 12px;
-    padding: 8px 12px;
-    border-bottom: 1px solid var(--border);
-    font-size: 12.5px;
-    align-items: center;
-  }
-  .trigger-item:last-child { border-bottom: none; }
-  .trigger-name { font-family: 'JetBrains Mono', monospace; color: var(--accent-blue); }
-  .trigger-event {
-    font-size: 11px;
-    padding: 2px 7px;
-    border-radius: 4px;
-    text-align: center;
-    font-weight: 600;
-  }
-  .ev-insert { background: rgba(61,220,151,0.12); color: var(--accent-green); }
-  .ev-update { background: rgba(77,159,255,0.12); color: var(--accent-blue); }
-  .ev-delete { background: rgba(255,77,106,0.12); color: var(--accent-red); }
-  .ev-before { background: rgba(167,139,250,0.12); color: var(--accent-purple); }
-
-  /* DB SCHEMA */
-  .db-table {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 10px 0;
-  }
-  .db-table-header {
-    background: var(--surface3);
-    padding: 8px 14px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--accent-blue);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .db-table-header .db-icon { color: var(--text-dim); font-size: 12px; }
-  .db-col {
-    display: grid;
-    grid-template-columns: 160px 100px 1fr;
-    gap: 10px;
-    padding: 6px 14px;
-    border-bottom: 1px solid rgba(37,41,50,0.4);
-    font-size: 12px;
-    align-items: center;
-  }
-  .db-col:last-child { border-bottom: none; }
-  .db-col-name { font-family: 'JetBrains Mono', monospace; color: var(--text); }
-  .db-col-name.pk { color: var(--accent-orange); }
-  .db-col-name.fk { color: var(--accent-purple); }
-  .db-col-type { color: var(--accent-green); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
-  .db-col-desc { color: var(--text-muted); font-size: 11.5px; }
-
-  /* GED */
-  .ged-types {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin: 14px 0;
-  }
-  .ged-type {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px;
-  }
-  .ged-type .gt-code { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent-green); margin-bottom: 4px; }
-  .ged-type .gt-label { font-size: 13px; color: var(--text); font-weight: 500; }
-  .ged-type .gt-pk { font-size: 11px; color: var(--text-dim); font-family: monospace; }
-
-  /* BADGE */
-  .badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-  .badge-green { background: rgba(61,220,151,0.12); color: var(--accent-green); }
-  .badge-blue { background: rgba(77,159,255,0.12); color: var(--accent-blue); }
-  .badge-red { background: rgba(255,77,106,0.12); color: var(--accent-red); }
-  .badge-orange { background: rgba(255,143,64,0.12); color: var(--accent-orange); }
-
-  /* FOOTER */
-  .doc-footer {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    padding: 24px 80px;
-    display: flex;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim);
-  }
+  :root { --bg:#0f1117; --surface:#1a1d27; --surface2:#22263a; --accent:#6366f1; --accent2:#818cf8; --text:#e2e8f0; --text2:#94a3b8; --border:#2d3348; --green:#10b981; --yellow:#f59e0b; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+  .header { background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b); padding:48px 32px; text-align:center; border-bottom:1px solid var(--border); }
+  .header h1 { font-size:2.5rem; font-weight:800; color:#fff; }
+  .header p { color:var(--accent2); margin-top:8px; }
+  .badge { display:inline-block; background:var(--accent); color:#fff; padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:600; margin-top:12px; }
+  .container { max-width:1100px; margin:0 auto; padding:32px; }
+  .section { margin-bottom:40px; }
+  .section h2 { font-size:1.4rem; font-weight:700; color:#fff; padding-bottom:12px; border-bottom:2px solid var(--accent); margin-bottom:20px; }
+  .section h3 { font-size:1rem; font-weight:600; color:var(--accent2); margin:16px 0 8px; }
+  .section p { color:var(--text2); margin-bottom:10px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; margin:16px 0; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px; }
+  .card h4 { font-size:0.95rem; font-weight:600; color:#fff; margin-bottom:6px; }
+  .card p { font-size:0.85rem; color:var(--text2); }
+  .sprint-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px; }
+  .sprint { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px; }
+  .sprint h4 { font-size:0.875rem; font-weight:700; color:var(--accent2); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:10px; }
+  .sprint ul { list-style:none; }
+  .sprint li { font-size:0.85rem; color:var(--text2); padding:3px 0; display:flex; align-items:center; gap:8px; }
+  .sprint li::before { content:'✅'; font-size:0.75rem; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; }
+  th { background:var(--surface2); color:var(--text2); font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; padding:10px 14px; text-align:left; }
+  td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--text2); font-size:0.875rem; }
+  .highlight { background:var(--surface2); border-left:3px solid var(--accent); padding:16px 20px; border-radius:0 8px 8px 0; margin:16px 0; }
+  .metier-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+  .metier { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 16px; font-size:0.875rem; color:var(--text2); display:flex; align-items:center; gap:8px; }
+  footer { background:var(--surface); border-top:1px solid var(--border); padding:24px 32px; text-align:center; color:var(--text2); font-size:0.875rem; }
+  .new { background:var(--green); color:#fff; font-size:0.65rem; font-weight:700; padding:2px 6px; border-radius:4px; }
 </style>
 </head>
 <body>
 
-<div class="doc-header">
-  <div class="header-top">
-    <div class="header-left">
-      <div class="header-badge">DOCUMENTATION TECHNIQUE — Sprint S27</div>
-      <h1>PetSuite<br><span class="mono">micro_logiciel</span></h1>
-      <div class="subtitle">Architecture, BDD, API, Triggers, GED · v3.0 · Mars 2026</div>
-    </div>
-    <div class="version-box">
-      <div class="vb-label">Version</div>
-      <div class="vb-value">v3.0-S27</div>
-      <div class="vb-label" style="margin-top:12px">Sprint</div>
-      <div class="vb-value">S27</div>
-      <div class="vb-label" style="margin-top:12px">BDD</div>
-      <div class="vb-value">MariaDB 10.x</div>
+<div class="header">
+  <h1>🐾 PetSuite — Synthèse projet</h1>
+  <p>Architecture, stack technique et roadmap</p>
+  <div class="badge">v4.0 — Sprint S30 — Mars 2026</div>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <h2>🏗️ Architecture technique</h2>
+    <div class="grid">
+      <div class="card"><h4>Frontend</h4><p>Next.js 15 — 58 pages — Build statique + SSR — Tailwind CSS</p></div>
+      <div class="card"><h4>API</h4><p>NestJS TypeScript — custom-routes.ts — 24 routes custom S27→S30</p></div>
+      <div class="card"><h4>Base de données</h4><p>MariaDB 11 — HORS Docker — 192.168.1.62:3307 — 2 bases : micro_logiciel + micro_logiciel_ged</p></div>
+      <div class="card"><h4>Infrastructure</h4><p>Docker Compose — nginx reverse proxy :80 — 3 conteneurs</p></div>
+      <div class="card"><h4>Sauvegarde</h4><p>Script PS v5 — mariadb-dump.exe — ZIP BDD + Projet — Git push — 04h00 quotidien</p></div>
+      <div class="card"><h4>GED</h4><p>Base dédiée micro_logiciel_ged — stockage URI externe — liens polymorphes</p></div>
     </div>
   </div>
-  <div class="header-stack">
-    <div class="stack-badge"><span class="dot dot-blue"></span>Next.js 15 App Router</div>
-    <div class="stack-badge"><span class="dot dot-green"></span>NestJS API :8080</div>
-    <div class="stack-badge"><span class="dot dot-orange"></span>MariaDB :3307</div>
-    <div class="stack-badge"><span class="dot dot-purple"></span>Nginx :80/443</div>
-    <div class="stack-badge"><span class="dot dot-blue"></span>Docker Compose</div>
+
+  <div class="section">
+    <h2>📦 Modules disponibles S30</h2>
+    <div class="sprint-grid">
+      <div class="sprint">
+        <h4>S25-S26 — Socle</h4>
+        <ul>
+          <li>Clients / Tiers / Contacts</li>
+          <li>Animaux / Races</li>
+          <li>Séances (EDC, Suivi, Garde)</li>
+          <li>Devis / Contrats</li>
+          <li>Facturation + Règlements</li>
+          <li>Export FEC / Comptabilité</li>
+          <li>CRM complet</li>
+          <li>GED documents</li>
+          <li>Tableau de bord</li>
+          <li>Admin / Audit</li>
+        </ul>
+      </div>
+      <div class="sprint">
+        <h4>S27-S28 — Extensions</h4>
+        <ul>
+          <li>Factures impayées + Rappels</li>
+          <li>Achats fournisseurs</li>
+          <li>Module élevage</li>
+          <li>Saillies / Portées</li>
+          <li>Réseaux sociaux tiers</li>
+          <li>Génération devis depuis séance</li>
+          <li>Templates de devis</li>
+        </ul>
+      </div>
+      <div class="sprint">
+        <h4>S29 — Gestion</h4>
+        <ul>
+          <li>Bilan financier</li>
+          <li>Inventaires / Valorisation</li>
+          <li>Fiche achat [id]</li>
+        </ul>
+      </div>
+      <div class="sprint">
+        <h4>S30 — Consolidation <span class="new">NEW</span></h4>
+        <ul>
+          <li>Programmes de suivi</li>
+          <li>Dashboard KPIs temps réel</li>
+          <li>ReseauxSociaux fiche client</li>
+          <li>Filtre animaux par client</li>
+          <li>Routes API consolidées</li>
+          <li>Sauvegarde BDD v5</li>
+          <li>Centre d'aide opérationnel</li>
+          <li>Rappels impayés corrigés</li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <div class="section">
+    <h2>🎯 14 métiers couverts — Roadmap S31/S32</h2>
+    <div class="metier-grid">
+      <div class="metier">🧠 Comportementaliste</div>
+      <div class="metier">🐕 Éleveur canin/félin</div>
+      <div class="metier">🐾 Éleveur animalier</div>
+      <div class="metier">✂️ Toiletteur</div>
+      <div class="metier">🏠 Pet-sitter</div>
+      <div class="metier">🌿 Naturopathe</div>
+      <div class="metier">🔨 Maréchal-ferrant</div>
+      <div class="metier">🐎 Centre équestre</div>
+      <div class="metier">🐩 Centre canin</div>
+      <div class="metier">💆 Ostéopathe/Kiné</div>
+      <div class="metier">📚 Éducateur animalier</div>
+      <div class="metier">🏨 Pension animale</div>
+      <div class="metier">🐱 Chenil/Chatterie</div>
+      <div class="metier">🏆 Organisateur événements</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🗄️ Schéma base de données</h2>
+    <table>
+      <thead><tr><th>Table</th><th>Rôle</th><th>Clé</th></tr></thead>
+      <tbody>
+        <tr><td>tiers</td><td>Clients / Fournisseurs</td><td>TIE_ID</td></tr>
+        <tr><td>contact</td><td>Contacts rattachés aux tiers</td><td>CON_ID</td></tr>
+        <tr><td>animal</td><td>Animaux des clients</td><td>ANI_ID</td></tr>
+        <tr><td>race</td><td>Référentiel races</td><td>RACE_ID</td></tr>
+        <tr><td>seance</td><td>RDV et prestations</td><td>SEA_ID (BIGINT)</td></tr>
+        <tr><td>devis_contrat_entete</td><td>Devis et contrats</td><td>DCE_ID</td></tr>
+        <tr><td>facture</td><td>Factures</td><td>FAC_ID</td></tr>
+        <tr><td>reglement</td><td>Règlements factures</td><td>REG_ID</td></tr>
+        <tr><td>avoir</td><td>Avoirs</td><td>AVO_ID</td></tr>
+        <tr><td>programme_suivi</td><td>Programmes comportementaux</td><td>PRG_ID</td></tr>
+        <tr><td>programme_semaine</td><td>Semaines des programmes</td><td>SEW_ID</td></tr>
+        <tr><td>achat_entete</td><td>Achats fournisseurs</td><td>ACH_ID</td></tr>
+        <tr><td>crm_lead</td><td>Leads/prospects</td><td>LED_ID</td></tr>
+        <tr><td>crm_opportunite</td><td>Pipeline commercial</td><td>OPP_ID</td></tr>
+        <tr><td>utilisateur</td><td>Utilisateurs applicatifs</td><td>USR_ID</td></tr>
+        <tr><td>audit_log</td><td>Journal d'audit</td><td>AUD_ID</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>🚀 Roadmap S31/S32</h2>
+    <h3>S31 — Priorités</h3>
+    <div class="highlight">
+      <p>1. Tables SQL manquantes (programme_suivi, param_metier) • 2. Module Éditions (CGV, contrats, champs fusion) • 3. Carnet pension DDPP • 4. Extensions animal/tiers/seance pour les 14 métiers • 5. Internationalisation + devise</p>
+    </div>
+    <h3>S32 — Vision</h3>
+    <div class="highlight">
+      <p>Registre élevage DDPP/I-CAD • Suivi génétique reproducteurs • Réservations en ligne • Planning multi-ressources • Carnet santé électronique • Organisateur événements</p>
+    </div>
+  </div>
+
 </div>
 
-<div class="doc-layout">
-  <nav class="doc-nav">
-    <div class="nav-group">
-      <div class="nav-group-label">Architecture</div>
-      <a class="nav-link active" href="#archi">Stack & Conteneurs</a>
-      <a class="nav-link" href="#nginx">Nginx / Routing</a>
-      <a class="nav-link" href="#api-rule">Règle critique API</a>
-    </div>
-    <div class="nav-group">
-      <div class="nav-group-label">Base de données</div>
-      <a class="nav-link" href="#bdd-overview">Vue d'ensemble</a>
-      <a class="nav-link" href="#tables-core">Tables métier</a>
-      <a class="nav-link" href="#tables-ged">Tables GED</a>
-      <a class="nav-link" href="#triggers">Triggers</a>
-      <a class="nav-link" href="#vues">Vues SQL</a>
-      <a class="nav-link" href="#procedures">Procédures</a>
-    </div>
-    <div class="nav-group">
-      <div class="nav-group-label">GED</div>
-      <a class="nav-link" href="#ged-archi">Architecture GED</a>
-      <a class="nav-link" href="#ged-types">Types d'objets</a>
-      <a class="nav-link" href="#ged-trigger">Validation inter-BDD</a>
-    </div>
-    <div class="nav-group">
-      <div class="nav-group-label">Frontend</div>
-      <a class="nav-link" href="#frontend">Structure Next.js</a>
-      <a class="nav-link" href="#composants">Composants clés</a>
-    </div>
-    <div class="nav-group">
-      <div class="nav-group-label">Maintenance</div>
-      <a class="nav-link" href="#sauvegarde">Sauvegarde</a>
-      <a class="nav-link" href="#bugs">Bugs connus S27</a>
-      <a class="nav-link" href="#roadmap">Roadmap</div>
-    </div>
-  </nav>
-
-  <main class="doc-content">
-
-    <!-- ARCHITECTURE -->
-    <section class="section" id="archi">
-      <div class="section-header">
-        <span class="section-tag">01</span>
-        <h2>Stack & Conteneurs Docker</h2>
-      </div>
-
-      <div class="arch">
-        <div class="layer">
-          <div class="box blue">micro_frontend</div>
-          <div class="arrow">→</div>
-          <span class="port">Next.js 15 App Router · Port 3000</span>
-        </div>
-        <div class="layer" style="margin-left:20px">
-          <div class="arrow">↕ HTTP</div>
-        </div>
-        <div class="layer">
-          <div class="box">micro_nginx</div>
-          <div class="arrow">→</div>
-          <span class="port">Reverse proxy · :80/:443 · strip /api/</span>
-        </div>
-        <div class="layer" style="margin-left:20px">
-          <div class="arrow">↕ HTTP</div>
-        </div>
-        <div class="layer">
-          <div class="box green">micro_api</div>
-          <div class="arrow">→</div>
-          <span class="port">NestJS · Port 8080 · dist/main.js</span>
-        </div>
-        <div class="layer" style="margin-left:20px">
-          <div class="arrow">↕ TCP</div>
-        </div>
-        <div class="layer">
-          <div class="box orange">MariaDB</div>
-          <div class="arrow">→</div>
-          <span class="port">192.168.1.62:3307 · micro_logiciel + micro_logiciel_ged</span>
-        </div>
-      </div>
-
-      <div class="alert alert-info">
-        <span class="alert-icon">📁</span>
-        <div>Répertoire de déploiement : <code>D:\...\micro_logiciel_frontend_nextjs\deploy</code><br>
-        Toujours faire <code>cd deploy</code> avant toute commande <code>docker compose</code>.</div>
-      </div>
-    </section>
-
-    <!-- NGINX -->
-    <section class="section" id="nginx">
-      <div class="section-header">
-        <span class="section-tag">02</span>
-        <h2>Nginx — Routing</h2>
-      </div>
-      <p>Nginx agit comme reverse proxy et strip le préfixe <code>/api/</code> avant de transmettre à NestJS.</p>
-      <pre><span class="cm"># Nginx strip /api/ → routes internes sans préfixe</span>
-location /api/ {
-    proxy_pass http://micro_api:8080/;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-}</pre>
-      <div class="alert alert-critical">
-        <span class="alert-icon">🚨</span>
-        <div>Les routes internes NestJS n'ont PAS le préfixe <code>/api/</code>. Une route accessible via <code>GET /api/clients</code> est enregistrée en interne comme <code>GET /clients</code>.</div>
-      </div>
-    </section>
-
-    <!-- API RULE -->
-    <section class="section" id="api-rule">
-      <div class="section-header">
-        <span class="section-tag">03</span>
-        <h2>Règle critique — Injection de routes API</h2>
-      </div>
-
-      <div class="alert alert-critical">
-        <span class="alert-icon">🔴</span>
-        <div><strong>RÈGLE ABSOLUE :</strong> Utiliser uniquement <code>_h56.use()</code> pour injecter des routes dans <code>dist/main.js</code>.<br>
-        Les méthodes <code>_h56.get()</code>, <code>_h56.post()</code>, <code>_h56.patch()</code> retournent systématiquement 404.</div>
-      </div>
-
-      <h3>Procédure d'injection de routes (inject_v3_force.js)</h3>
-      <pre><span class="cm"># Sauvegarder avant toute modification</span>
-$bk = <span class="str">"C:\Backup\micro_logiciel\$(Get-Date -Format 'yyyyMMdd_HHmm')"</span>
-New-Item -ItemType Directory -Force -Path $bk
-docker cp micro_api:/app/dist/main.js <span class="str">"$bk\main.js"</span>
-
-<span class="cm"># Copier et exécuter le script d'injection</span>
-docker cp <span class="str">"C:\Users\AdminPC\Downloads\inject_v3_force.js"</span> micro_api:/tmp/
-docker exec micro_api node /tmp/inject_v3_force.js
-docker compose restart api
-
-<span class="cm"># Vérification</span>
-Start-Sleep 8
-Invoke-WebRequest -Uri <span class="str">"http://localhost/api/ged-factures-impayees"</span> -UseBasicParsing | Select StatusCode
-<span class="cm"># Doit retourner 200</span></pre>
-
-      <div class="alert alert-warning">
-        <span class="alert-icon">⚠️</span>
-        <div>Les patches API sont <strong>volatils</strong> : ils sont perdus si l'image API est rebuildée. Toujours sauvegarder <code>main.js</code> avant toute opération.</div>
-      </div>
-
-      <h3>Routes injectées (S27)</h3>
-      <table>
-        <thead><tr><th>Route</th><th>Méthode</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><code>/ged-factures-impayees</code></td><td><span class="badge badge-blue">GET</span></td><td>Rappels impayés (19 factures attendues)</td></tr>
-          <tr><td><code>/ged-factures-statut/:id</code></td><td><span class="badge badge-orange">PATCH</span></td><td>Changer statut facture</td></tr>
-          <tr><td><code>/ged-factures-email/:id</code></td><td><span class="badge badge-green">POST</span></td><td>Email de rappel</td></tr>
-          <tr><td><code>/ged-admin-users</code></td><td><span class="badge badge-blue">GET</span> <span class="badge badge-green">POST</span></td><td>Gestion utilisateurs</td></tr>
-          <tr><td><code>/ged-admin-users/:id/toggle</code></td><td><span class="badge badge-orange">PUT</span></td><td>Activer/désactiver utilisateur</td></tr>
-          <tr><td><code>/ged-admin-audit</code></td><td><span class="badge badge-blue">GET</span></td><td>Journal d'audit</td></tr>
-          <tr><td><code>/ged-exercices</code></td><td><span class="badge badge-blue">GET</span></td><td>Exercices comptables</td></tr>
-          <tr><td><code>/ged-compta-fec</code></td><td><span class="badge badge-blue">GET</span></td><td>Export FEC (vue)</td></tr>
-          <tr><td><code>/ged-compta-fec-generer</code></td><td><span class="badge badge-green">POST</span></td><td>Générer FEC figé</td></tr>
-          <tr><td><code>/parametres/metier</code></td><td><span class="badge badge-blue">GET</span> <span class="badge badge-green">POST</span></td><td>Config métier</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- BDD OVERVIEW -->
-    <section class="section" id="bdd-overview">
-      <div class="section-header">
-        <span class="section-tag">04</span>
-        <h2>Base de données — Vue d'ensemble</h2>
-      </div>
-
-      <p>Deux bases de données MariaDB coexistent sur le même serveur <code>192.168.1.62:3307</code>.</p>
-      <table>
-        <thead><tr><th>Base</th><th>Tables</th><th>Rôle</th></tr></thead>
-        <tbody>
-          <tr><td><strong>micro_logiciel</strong></td><td>~35 tables</td><td>Données métier (clients, séances, facturation, CRM...)</td></tr>
-          <tr><td><strong>micro_logiciel_ged</strong></td><td>5 tables</td><td>Gestion électronique de documents (métadonnées)</td></tr>
-        </tbody>
-      </table>
-      <p>Les deux bases partagent un seul utilisateur SQL : <code>@lgorithme@%</code>.</p>
-      <div class="alert alert-info">
-        <span class="alert-icon">ℹ️</span>
-        <div>Les clés étrangères inter-bases ne sont pas supportées par MariaDB. La cohérence est assurée par des <strong>triggers de validation</strong> dans micro_logiciel_ged qui interrogent micro_logiciel.</div>
-      </div>
-    </section>
-
-    <!-- TABLES CORE -->
-    <section class="section" id="tables-core">
-      <div class="section-header">
-        <span class="section-tag">05</span>
-        <h2>Tables métier — micro_logiciel</h2>
-      </div>
-
-      <h3>Hiérarchie des dépendances</h3>
-      <div class="arch" style="line-height:1.8">
-        <div>ville → tiers → contact</div>
-        <div style="margin-left:20px">→ animal (+ race)</div>
-        <div style="margin-left:20px">→ devis_contrat_entete → devis_contrat_ligne</div>
-        <div style="margin-left:20px">→ facture → facture_ligne</div>
-        <div style="margin-left:40px">→ reglement</div>
-        <div style="margin-left:40px">→ avoir → avoir_ligne</div>
-        <div style="margin-left:40px">→ facture_acompte / facture_remise</div>
-        <div>compte_compta → tva_taux → categorie → article_prestation</div>
-        <div>seance_type + seance_statut → seance → seance_ligne</div>
-        <div>utilisateur → utilisateur_role ← role</div>
-        <div>exercice_comptable → fec_export → fec_export_ligne</div>
-        <div>crm_source + crm_lead_statut → crm_lead → crm_opportunite → crm_activite</div>
-      </div>
-
-      <h3>Tables clés</h3>
-
-      <div class="db-table">
-        <div class="db-table-header"><span class="db-icon">▤</span>animal</div>
-        <div class="db-col"><span class="db-col-name pk">ANI_ID</span><span class="db-col-type">INT AI PK</span><span class="db-col-desc">Identifiant animal</span></div>
-        <div class="db-col"><span class="db-col-name">ANI_PUC</span><span class="db-col-type">CHAR(15)</span><span class="db-col-desc">Puce 15 chiffres — UNIQUE — CHECK regex</span></div>
-        <div class="db-col"><span class="db-col-name fk">ANI_CLI</span><span class="db-col-type">INT</span><span class="db-col-desc">→ tiers.TIE_ID (propriétaire)</span></div>
-        <div class="db-col"><span class="db-col-name fk">ANI_ESP_1/2</span><span class="db-col-type">INT NULL</span><span class="db-col-desc">→ race.RACE_ID (race principale / secondaire)</span></div>
-        <div class="db-col"><span class="db-col-name">ANI_CAC_1..14</span><span class="db-col-type">TINYINT(1)</span><span class="db-col-desc">14 cases à cocher configurables</span></div>
-      </div>
-
-      <div class="db-table" style="margin-top:12px">
-        <div class="db-table-header"><span class="db-icon">▤</span>seance</div>
-        <div class="db-col"><span class="db-col-name pk">SEA_ID</span><span class="db-col-type">BIGINT AI PK</span><span class="db-col-desc">Identifiant séance (BIGINT pour volume)</span></div>
-        <div class="db-col"><span class="db-col-name fk">STY_ID</span><span class="db-col-type">INT</span><span class="db-col-desc">→ seance_type.STY_ID</span></div>
-        <div class="db-col"><span class="db-col-name fk">SST_ID</span><span class="db-col-type">INT</span><span class="db-col-desc">→ seance_statut.SST_ID</span></div>
-        <div class="db-col"><span class="db-col-name fk">TIE_ID</span><span class="db-col-type">INT</span><span class="db-col-desc">→ tiers.TIE_ID (client)</span></div>
-        <div class="db-col"><span class="db-col-name fk">ANI_ID</span><span class="db-col-type">INT NULL</span><span class="db-col-desc">→ animal.ANI_ID (optionnel sauf EDC)</span></div>
-        <div class="db-col"><span class="db-col-name fk">DCE_ID / FAC_ID</span><span class="db-col-type">INT NULL</span><span class="db-col-desc">Devis et facture liés</span></div>
-      </div>
-
-      <div class="db-table" style="margin-top:12px">
-        <div class="db-table-header"><span class="db-icon">▤</span>facture</div>
-        <div class="db-col"><span class="db-col-name pk">FAC_ID</span><span class="db-col-type">INT AI PK</span><span class="db-col-desc">Identifiant facture</span></div>
-        <div class="db-col"><span class="db-col-name">FAC_NUM</span><span class="db-col-type">VARCHAR(20)</span><span class="db-col-desc">Format FAC-YYMM-0001 (généré par trigger)</span></div>
-        <div class="db-col"><span class="db-col-name">FAC_STATUT</span><span class="db-col-type">ENUM</span><span class="db-col-desc">BROUILLON / EMISE / PAYEE / ANNULEE</span></div>
-        <div class="db-col"><span class="db-col-name">FAC_TOTAL_TTC</span><span class="db-col-type">DECIMAL(12,2)</span><span class="db-col-desc">Snapshot — recalculé via vue v_facture_totaux</span></div>
-      </div>
-    </section>
-
-    <!-- TRIGGERS -->
-    <section class="section" id="triggers">
-      <div class="section-header">
-        <span class="section-tag">06</span>
-        <h2>Triggers</h2>
-      </div>
-      <p>PetSuite utilise 18 triggers pour automatiser les calculs, numérotations et contraintes métier.</p>
-
-      <div class="trigger-list">
-        <div style="display:grid;grid-template-columns:200px 130px 1fr;gap:12px;padding:8px 12px;background:var(--surface2);border-radius:6px 6px 0 0;border:1px solid var(--border);font-size:10.5px;font-family:monospace;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">
-          <div>TRIGGER</div><div>ÉVÉNEMENT</div><div>DESCRIPTION</div>
-        </div>
-        <div class="trigger-item"><span class="trigger-name">trg_facture_num</span><span class="trigger-event ev-insert">BI facture</span><span>Numérotation FAC-YYMM-0001 via fac_compteur_mois</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_reglement_check</span><span class="trigger-event ev-insert">BI reglement</span><span>Bloque si total règlements &gt; FAC_TOTAL_TTC</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_dcl_calc_insert</span><span class="trigger-event ev-insert">BI devis_ligne</span><span>Calcule HT / TVA / TTC ligne devis</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_dcl_calc_update</span><span class="trigger-event ev-update">BU devis_ligne</span><span>Recalcule HT / TVA / TTC ligne devis</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_fli_calc_insert</span><span class="trigger-event ev-insert">BI facture_ligne</span><span>Calcule HT / TVA / TTC ligne facture</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_fli_calc_update</span><span class="trigger-event ev-update">BU facture_ligne</span><span>Recalcule HT / TVA / TTC ligne facture</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_facture_no_update_if_closed</span><span class="trigger-event ev-update">BU facture</span><span>Bloque si exercice clôturé</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_facture_no_delete_if_closed</span><span class="trigger-event ev-delete">BD facture</span><span>Bloque suppression si exercice clôturé</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_reglement_no_update_if_closed</span><span class="trigger-event ev-update">BU reglement</span><span>Bloque modification si exercice clôturé</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_reglement_no_delete_if_closed</span><span class="trigger-event ev-delete">BD reglement</span><span>Bloque suppression si exercice clôturé</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_dce_num</span><span class="trigger-event ev-insert">BI devis_entete</span><span>Numérotation DCE-YYMM-0001 via dce_compteur_mois</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_sel_calc_insert/update</span><span class="trigger-event ev-insert">BI seance_ligne</span><span>Calcule HT / TVA / TTC ligne séance</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_sel_after_insert/update/delete</span><span class="trigger-event ev-before">AI seance_ligne</span><span>Réagrège les totaux sur seance (SEA_MONTANT_*)</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_sea_unique_par_animal_ins</span><span class="trigger-event ev-insert">BI seance</span><span>Bloque 2ème EDC pour le même animal</span></div>
-        <div class="trigger-item"><span class="trigger-name">trg_sea_unique_par_animal_upd</span><span class="trigger-event ev-update">BU seance</span><span>Idem sur UPDATE</span></div>
-      </div>
-
-      <div class="alert alert-warning">
-        <span class="alert-icon">⚠️</span>
-        <div>Format numéro facture : <code>YYMM</code> = 2 chiffres année + 2 chiffres mois (ex: <code>2603</code> pour mars 2026). Le format complet est <code>FAC-2603-0001</code>.</div>
-      </div>
-    </section>
-
-    <!-- VUES -->
-    <section class="section" id="vues">
-      <div class="section-header">
-        <span class="section-tag">07</span>
-        <h2>Vues SQL</h2>
-      </div>
-      <table>
-        <thead><tr><th>Vue</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><code>v_facture_totaux</code></td><td>Somme HT/TVA/TTC par facture depuis les lignes</td></tr>
-          <tr><td><code>v_facture_suivi</code></td><td>Facture + montant payé + reste à payer</td></tr>
-          <tr><td><code>v_encours_client</code></td><td>Encours global par client (reste à payer)</td></tr>
-          <tr><td><code>v_export_compta_ventes</code></td><td>UNION client + HT par catégorie + TVA</td></tr>
-          <tr><td><code>v_export_compta_reglements</code></td><td>Écritures banque / client pour les règlements</td></tr>
-          <tr><td><code>v_fec_ventes</code></td><td>Format FEC brut pour les ventes (3 écritures par facture)</td></tr>
-          <tr><td><code>v_fec_reglements</code></td><td>Format FEC brut pour les règlements</td></tr>
-          <tr><td><code>v_fec_complet</code></td><td>UNION ventes + règlements — export FEC live</td></tr>
-          <tr><td><code>v_fec_export_non_equilibre</code></td><td>Contrôle : écritures non équilibrées débit/crédit</td></tr>
-          <tr><td><code>v_edc_sans_devis</code></td><td>EDC sans devis lié (suivi commercial)</td></tr>
-          <tr><td><code>v_ged_pj_animal</code></td><td><em>(GED)</em> Documents actifs liés à un animal</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- PROCEDURES -->
-    <section class="section" id="procedures">
-      <div class="section-header">
-        <span class="section-tag">08</span>
-        <h2>Procédures stockées</h2>
-      </div>
-      <table>
-        <thead><tr><th>Procédure</th><th>Paramètres</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><code>sp_fec_generer_par_exercice</code></td><td><code>p_exe_code VARCHAR(9)</code></td><td>Génère un snapshot FEC hashé pour un exercice. Appel : <code>CALL sp_fec_generer_par_exercice('2026')</code></td></tr>
-          <tr><td><code>sp_exercice_cloturer</code></td><td><code>p_exe_code VARCHAR(9)</code></td><td>Clôture un exercice (irréversible). Active le verrouillage des factures.</td></tr>
-          <tr><td><code>sp_dce_creer_depuis_seance</code></td><td><code>p_sea_id BIGINT, p_forcer TINYINT</code></td><td>Génère un devis depuis les lignes d'une séance. Si <code>p_forcer=0</code>, refuse si un devis est déjà lié.</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- GED -->
-    <section class="section" id="ged-archi">
-      <div class="section-header">
-        <span class="section-tag">09</span>
-        <h2>Architecture GED</h2>
-      </div>
-      <p>La GED est dans une base séparée <code>micro_logiciel_ged</code> et stocke uniquement les métadonnées. Le fichier physique est référencé via <code>DOC_URI</code> (filesystem, S3, etc.).</p>
-
-      <div class="db-table">
-        <div class="db-table-header"><span class="db-icon">▤</span>ged_document</div>
-        <div class="db-col"><span class="db-col-name pk">DOC_ID</span><span class="db-col-type">BIGINT AI PK</span><span class="db-col-desc">Identifiant document</span></div>
-        <div class="db-col"><span class="db-col-name">DOC_NOM_ORIGINE</span><span class="db-col-type">VARCHAR(255)</span><span class="db-col-desc">Nom original fourni par l'utilisateur</span></div>
-        <div class="db-col"><span class="db-col-name">DOC_NOM_STOCKAGE</span><span class="db-col-type">VARCHAR(255)</span><span class="db-col-desc">Nom technique interne (UUID)</span></div>
-        <div class="db-col"><span class="db-col-name">DOC_HASH_SHA256</span><span class="db-col-type">CHAR(64)</span><span class="db-col-desc">Empreinte SHA-256 (déduplication + intégrité)</span></div>
-        <div class="db-col"><span class="db-col-name">DOC_URI</span><span class="db-col-type">VARCHAR(500)</span><span class="db-col-desc">Chemin/URL vers le fichier physique</span></div>
-        <div class="db-col"><span class="db-col-name">DOC_STATUT</span><span class="db-col-type">ENUM</span><span class="db-col-desc">ACTIF / ARCHIVE / SUPPRIME</span></div>
-      </div>
-
-      <div class="db-table" style="margin-top:12px">
-        <div class="db-table-header"><span class="db-icon">▤</span>ged_document_lien</div>
-        <div class="db-col"><span class="db-col-name fk">DOC_ID</span><span class="db-col-type">BIGINT</span><span class="db-col-desc">→ ged_document.DOC_ID</span></div>
-        <div class="db-col"><span class="db-col-name fk">GOT_ID</span><span class="db-col-type">INT</span><span class="db-col-desc">→ ged_objet_type.GOT_ID (type d'objet métier)</span></div>
-        <div class="db-col"><span class="db-col-name">OBJ_ID</span><span class="db-col-type">BIGINT</span><span class="db-col-desc">ID de l'objet cible (ANI_ID, FAC_ID, SEA_ID...)</span></div>
-        <div class="db-col"><span class="db-col-name">DLI_ROLE</span><span class="db-col-type">VARCHAR(50)</span><span class="db-col-desc">PJ / PHOTO / SIGNATURE / RAPPORT...</span></div>
-      </div>
-    </section>
-
-    <!-- GED TYPES -->
-    <section class="section" id="ged-types">
-      <div class="section-header">
-        <span class="section-tag">10</span>
-        <h2>Types d'objets GED (ged_objet_type)</h2>
-      </div>
-      <div class="ged-types">
-        <div class="ged-type"><div class="gt-code">ANIMAL</div><div class="gt-label">Animal</div><div class="gt-pk">ANI_ID</div></div>
-        <div class="ged-type"><div class="gt-code">ARTICLE_PRESTATION</div><div class="gt-label">Article/Prestation</div><div class="gt-pk">ART_ID</div></div>
-        <div class="ged-type"><div class="gt-code">CONTACT</div><div class="gt-label">Contact</div><div class="gt-pk">CON_ID</div></div>
-        <div class="ged-type"><div class="gt-code">FACTURE</div><div class="gt-label">Facture</div><div class="gt-pk">FAC_ID</div></div>
-        <div class="ged-type"><div class="gt-code">RACE</div><div class="gt-label">Race</div><div class="gt-pk">RACE_ID</div></div>
-        <div class="ged-type"><div class="gt-code">SEANCE</div><div class="gt-label">Séance</div><div class="gt-pk">SEA_ID</div></div>
-        <div class="ged-type"><div class="gt-code">TIERS</div><div class="gt-label">Tiers</div><div class="gt-pk">TIE_ID</div></div>
-        <div class="ged-type"><div class="gt-code">UTILISATEUR</div><div class="gt-label">Utilisateur</div><div class="gt-pk">USR_ID</div></div>
-        <div class="ged-type"><div class="gt-code">DEVIS_CONTRAT</div><div class="gt-label">Devis/Contrat</div><div class="gt-pk">DCE_ID</div></div>
-        <div class="ged-type"><div class="gt-code">AVOIR</div><div class="gt-label">Avoir</div><div class="gt-pk">AVO_ID</div></div>
-        <div class="ged-type"><div class="gt-code">REGLEMENT</div><div class="gt-label">Règlement</div><div class="gt-pk">REG_ID</div></div>
-        <div class="ged-type"><div class="gt-code">CRM_NOTE</div><div class="gt-label">Note CRM</div><div class="gt-pk">CNO_ID</div></div>
-        <div class="ged-type"><div class="gt-code">CRM_ACTIVITE</div><div class="gt-label">Activité CRM</div><div class="gt-pk">CAC_ID</div></div>
-      </div>
-    </section>
-
-    <!-- GED TRIGGER -->
-    <section class="section" id="ged-trigger">
-      <div class="section-header">
-        <span class="section-tag">11</span>
-        <h2>GED — Validation inter-bases (Trigger)</h2>
-      </div>
-      <p>Les triggers <code>bi_ged_document_lien_check_objet</code> et <code>bu_ged_document_lien_check_objet</code> vérifient l'existence de l'objet métier dans <code>micro_logiciel</code> avant insertion/modification d'un lien.</p>
-      <pre><span class="cm">-- Exemple de vérification dans le trigger (BEFORE INSERT)</span>
-<span class="kw">CASE</span> v_code
-  <span class="kw">WHEN</span> <span class="str">'ANIMAL'</span> <span class="kw">THEN</span>
-    <span class="kw">SELECT COUNT</span>(*) <span class="kw">INTO</span> v_exists
-    <span class="kw">FROM</span> micro_logiciel.animal
-    <span class="kw">WHERE</span> ANI_ID = NEW.OBJ_ID;
-  <span class="kw">WHEN</span> <span class="str">'FACTURE'</span> <span class="kw">THEN</span>
-    <span class="kw">SELECT COUNT</span>(*) <span class="kw">INTO</span> v_exists
-    <span class="kw">FROM</span> micro_logiciel.facture
-    <span class="kw">WHERE</span> FAC_ID = NEW.OBJ_ID;
-  <span class="cm">-- ... 11 autres types ...</span>
-<span class="kw">END CASE</span>;
-
-<span class="kw">IF</span> v_exists = <span class="nb">0</span> <span class="kw">THEN</span>
-  <span class="fn">SIGNAL</span> SQLSTATE <span class="str">'45000'</span>
-    <span class="kw">SET</span> MESSAGE_TEXT = <span class="str">'Objet métier introuvable pour ce lien GED'</span>;
-<span class="kw">END IF</span>;</pre>
-    </section>
-
-    <!-- FRONTEND -->
-    <section class="section" id="frontend">
-      <div class="section-header">
-        <span class="section-tag">12</span>
-        <h2>Structure Frontend Next.js 15</h2>
-      </div>
-      <pre>src/
-  app/
-    app/               <span class="cm"># Pages applicatives (App Router)</span>
-      animaux/
-        page.tsx       <span class="cm"># Liste animaux</span>
-        new/page.tsx   <span class="cm"># Création animal (form ANI_PUC, ANI_NOM, ANI_CLI...)</span>
-        [id]/page.tsx  <span class="cm"># Fiche animal</span>
-      clients/
-        page.tsx
-        [id]/page.tsx  <span class="cm"># Fiche client — KPIs séances/factures/encours</span>
-      seances/
-        page.tsx       <span class="cm"># Liste — badges STY_LIBELLE + SST_CODE</span>
-        new/page.tsx   <span class="cm"># Animaux filtrés par client + lieu intelligent</span>
-        [id]/page.tsx  <span class="cm"># Fiche séance — lit SEA_ID</span>
-      devis/
-      templates/       <span class="cm"># Templates devis (modale)</span>
-      factures/
-      parametres/
-        entreprise/    <span class="cm"># ⚠️ /entreprise et non /mon-entreprise</span>
-        metier/        <span class="cm"># ⚠️ "Nutritionniste" (2n)</span>
-  components/
-    PageHeader.tsx
-    Sidebar.tsx        <span class="cm"># Libellé dynamique selon métier (à implémenter)</span>
-  lib/
-    api.ts             <span class="cm"># Utilise fetch vers /api/* — Nginx strip /api/</span></pre>
-
-      <div class="alert alert-critical">
-        <span class="alert-icon">🚨</span>
-        <div>Rebuild frontend : supprimer <code>.next</code> ET <code>deploy/.next</code> avant <code>npm run build</code>. Sinon risque de cache corrompue.</div>
-      </div>
-    </section>
-
-    <!-- SAUVEGARDE -->
-    <section class="section" id="sauvegarde">
-      <div class="section-header">
-        <span class="section-tag">13</span>
-        <h2>Sauvegarde</h2>
-      </div>
-      <pre><span class="cm"># Script : G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1</span>
-<span class="cm"># mysqldump via docker exec (pas d'installation locale requise)</span>
-docker exec micro_api mysqldump \
-  -h 192.168.1.62 -P 3307 \
-  -u '@lgorithme' -p'@lgoritHme+2025+977_73300' \
-  micro_logiciel > backup_micro_logiciel_$(date +%Y%m%d).sql</pre>
-
-      <div class="alert alert-warning">
-        <span class="alert-icon">⚠️</span>
-        <div><strong>Token Git :</strong> expire régulièrement. Renouveler sur https://github.com/settings/tokens (scope: repo) et remplacer <code>RENOUVELER_ICI</code> dans le script de sauvegarde.</div>
-      </div>
-    </section>
-
-    <!-- BUGS -->
-    <section class="section" id="bugs">
-      <div class="section-header">
-        <span class="section-tag">14</span>
-        <h2>Bugs connus — Sprint S27</h2>
-      </div>
-      <table>
-        <thead><tr><th>Priorité</th><th>Bug</th><th>Fichier / Action</th></tr></thead>
-        <tbody>
-          <tr><td><span class="badge badge-red">🔴 CRIT</span></td><td>Routes 404 — inject_v3_force.js à exécuter</td><td>Voir procédure §03</td></tr>
-          <tr><td><span class="badge badge-orange">🟡</span></td><td>btn-ghost invisibles sur fond sombre</td><td>src/app/globals.css — ajouter <code>color: var(--text-secondary)</code></td></tr>
-          <tr><td><span class="badge badge-orange">🟡</span></td><td>Liste séances — badges Type + Statut vides</td><td>src/app/app/seances/page.tsx</td></tr>
-          <tr><td><span class="badge badge-orange">🟡</span></td><td>Fiche séance [id] — "introuvable"</td><td>src/app/app/seances/[id]/page.tsx — vérifier lecture SEA_ID</td></tr>
-          <tr><td><span class="badge badge-orange">🟡</span></td><td>Fiche client — KPIs "—"</td><td>src/app/app/clients/[id]/page.tsx</td></tr>
-          <tr><td><span class="badge badge-orange">🟡</span></td><td>Paramètres → "Mon entreprise" — 404</td><td>Corriger lien → <code>/parametres/entreprise</code></td></tr>
-          <tr><td><span class="badge badge-orange">🟡</span></td><td>Contact absent dans modale templates devis</td><td>Charger contacts après sélection client</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- ROADMAP -->
-    <section class="section" id="roadmap">
-      <div class="section-header">
-        <span class="section-tag">15</span>
-        <h2>Roadmap S28+</h2>
-      </div>
-      <table>
-        <thead><tr><th>Feature</th><th>BDD</th><th>Frontend</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Réseaux sociaux tiers/contact</strong></td><td>Colonnes TIE_LINKEDIN, TIE_FACEBOOK... sur tiers et contact</td><td>Champs fiche client/contact + icônes</td></tr>
-          <tr><td><strong>Gestion achats</strong></td><td>Tables achat_entete, achat_ligne</td><td>Liste + fiche achat + journal FEC</td></tr>
-          <tr><td><strong>Inventaires</strong></td><td>Tables inventaire_entete, inventaire_ligne</td><td>Page inventaire + valorisation</td></tr>
-          <tr><td><strong>Sidebar dynamique métier</strong></td><td>–</td><td>Sidebar.tsx — lire métier configuré</td></tr>
-          <tr><td><strong>Données démo multi-espèces</strong></td><td>Seeds SQL chats/lapins/chevaux...</td><td>–</td></tr>
-          <tr><td><strong>Fiche séance complète</strong></td><td>–</td><td>CR riche + lignes + bouton devis</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-  </main>
-</div>
-
-<div class="doc-footer">
-  <div>// PetSuite — micro_logiciel · Documentation Technique v3.0 · Sprint S27</div>
-  <div>MariaDB 192.168.1.62:3307 · Next.js 15 · NestJS · Docker · Mars 2026</div>
-</div>
-
+<footer>PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel</footer>
 </body>
 </html>

@@ -1,964 +1,285 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Notice Utilisateur v3.1</title>
+<title>PetSuite — Notice utilisateur v4.0</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
-
-  /* === DARK MODE (défaut) === */
-  :root, [data-theme="dark"] {
+  :root {
     --bg: #0f1117;
-    --surface: #181c27;
-    --surface2: #1e2336;
-    --border: #2a3050;
-    --accent: #6c8fff;
-    --accent2: #ff8c42;
-    --accent3: #42e8a0;
-    --text: #e8eaf2;
-    --text-muted: #8890b0;
-    --text-dim: #535b7a;
-    --warning: #ffd166;
-    --danger: #ff6b6b;
-    --toggle-bg: #1e2336;
-    --toggle-border: #2a3050;
-    --toggle-icon: '☀️';
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --accent: #6366f1;
+    --accent2: #818cf8;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --border: #2d3348;
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
   }
-
-  /* === LIGHT MODE === */
-  [data-theme="light"] {
-    --bg: #f8f9fc;
-    --surface: #ffffff;
-    --surface2: #f0f2f8;
-    --border: #dde1f0;
-    --accent: #3a6aff;
-    --accent2: #d46b1a;
-    --accent3: #1a9e6a;
-    --text: #1a1d2e;
-    --text-muted: #4a5275;
-    --text-dim: #8890b0;
-    --warning: #c88000;
-    --danger: #cc2244;
-    --toggle-bg: #f0f2f8;
-    --toggle-border: #dde1f0;
-    --toggle-icon: '🌙';
-  }
-
-  /* === TOGGLE BOUTON === */
-  .theme-toggle {
-    position: fixed;
-    top: 18px; right: 18px;
-    z-index: 999;
-    background: var(--toggle-bg);
-    border: 1px solid var(--toggle-border);
-    border-radius: 50%;
-    width: 40px; height: 40px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    font-size: 18px;
-    transition: all 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
-  .theme-toggle:hover { transform: scale(1.1); }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    font-size: 15px;
-  }
-
-  /* HEADER */
-  .doc-header {
-    background: linear-gradient(135deg, #0d1320 0%, #1a2040 50%, #0f1830 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 60px 80px 50px;
-    position: relative;
-    overflow: hidden;
-  }
-  .doc-header::before {
-    content: '';
-    position: absolute;
-    top: -80px; right: -80px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(108,143,255,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .doc-header::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; left: 200px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(66,232,160,0.07) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .header-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(108,143,255,0.15);
-    border: 1px solid rgba(108,143,255,0.3);
-    border-radius: 20px;
-    padding: 4px 14px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--accent);
-    letter-spacing: 0.5px;
-    margin-bottom: 20px;
-  }
-  .header-badge::before { content: '●'; font-size: 8px; }
-  .doc-header h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 52px;
-    line-height: 1.1;
-    color: #fff;
-    position: relative;
-  }
-  .doc-header h1 span { color: var(--accent); }
-  .doc-header .subtitle {
-    font-size: 18px;
-    color: var(--text-muted);
-    margin-top: 12px;
-    font-weight: 300;
-  }
-  .header-meta {
-    display: flex;
-    gap: 30px;
-    margin-top: 30px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-  }
-  .meta-item { font-size: 13px; color: var(--text-muted); }
-  .meta-item strong { color: var(--text); display: block; font-size: 14px; }
-
-  /* LAYOUT */
-  .doc-layout {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    min-height: calc(100vh - 220px);
-  }
-
-  /* SIDEBAR NAV */
-  .doc-nav {
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    padding: 30px 0;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-  }
-  .nav-section-title {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    padding: 20px 24px 8px;
-  }
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 24px;
-    font-size: 13.5px;
-    color: var(--text-muted);
-    text-decoration: none;
-    border-left: 3px solid transparent;
-    transition: all 0.15s;
-  }
-  .nav-link:hover { color: var(--text); background: rgba(108,143,255,0.06); border-left-color: var(--accent); }
-  .nav-link.active { color: var(--accent); background: rgba(108,143,255,0.1); border-left-color: var(--accent); }
-  .nav-icon { width: 16px; opacity: 0.7; }
-
-  /* CONTENT */
-  .doc-content {
-    padding: 50px 70px;
-    max-width: 900px;
-  }
-
-  /* SECTIONS */
-  .section {
-    margin-bottom: 70px;
-    scroll-margin-top: 30px;
-  }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 28px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
-  }
-  .section-num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 13px;
-    color: var(--text-dim);
-    min-width: 24px;
-  }
-  .section-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-  .icon-blue { background: rgba(108,143,255,0.15); }
-  .icon-green { background: rgba(66,232,160,0.12); }
-  .icon-orange { background: rgba(255,140,66,0.12); }
-  .icon-yellow { background: rgba(255,209,102,0.12); }
-  .icon-pink { background: rgba(255,107,107,0.12); }
-
-  h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px;
-    color: #fff;
-    font-weight: 400;
-  }
-  h3 {
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--text);
-    margin: 28px 0 12px;
-  }
-  h4 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin: 20px 0 8px;
-  }
-  p { color: var(--text-muted); margin-bottom: 14px; }
-  strong { color: var(--text); font-weight: 600; }
-
-  /* CARDS */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 14px;
-    margin: 20px 0;
-  }
-  .feature-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-    transition: border-color 0.2s;
-  }
-  .feature-card:hover { border-color: var(--accent); }
-  .feature-card .fc-icon { font-size: 24px; margin-bottom: 10px; }
-  .feature-card .fc-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-  .feature-card .fc-desc { font-size: 12px; color: var(--text-muted); }
-
-  /* STEPS */
-  .steps {
-    counter-reset: step;
-    margin: 20px 0;
-  }
-  .step {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 20px;
-    padding: 18px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    position: relative;
-  }
-  .step::before {
-    counter-increment: step;
-    content: counter(step);
-    width: 28px; height: 28px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700;
-    flex-shrink: 0;
-  }
-  .step-content { flex: 1; }
-  .step-title { font-weight: 600; color: var(--text); margin-bottom: 4px; }
-  .step-desc { font-size: 13.5px; color: var(--text-muted); }
-
-  /* ALERTS */
-  .alert {
-    border-radius: 10px;
-    padding: 14px 18px;
-    margin: 16px 0;
-    border-left: 4px solid;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .alert-text { font-size: 13.5px; }
-  .alert-info { background: rgba(108,143,255,0.08); border-color: var(--accent); }
-  .alert-info .alert-text { color: #a0b4ff; }
-  .alert-warning { background: rgba(255,209,102,0.08); border-color: var(--warning); }
-  .alert-warning .alert-text { color: #ffd166; }
-  .alert-tip { background: rgba(66,232,160,0.08); border-color: var(--accent3); }
-  .alert-tip .alert-text { color: #42e8a0; }
-
-  /* TABLE */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .header { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%); padding: 48px 32px; text-align: center; border-bottom: 1px solid var(--border); }
+  .header h1 { font-size: 2.5rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+  .header p { color: var(--accent2); margin-top: 8px; font-size: 1.1rem; }
+  .badge { display: inline-block; background: var(--accent); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-top: 12px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px; }
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 32px; }
+  .toc h2 { font-size: 1rem; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; }
+  .toc ul { list-style: none; columns: 2; gap: 8px; }
+  .toc li { padding: 4px 0; }
+  .toc a { color: var(--text2); text-decoration: none; font-size: 0.9rem; }
+  .toc a:hover { color: var(--accent2); }
+  .section { margin-bottom: 40px; }
+  .section h2 { font-size: 1.4rem; font-weight: 700; color: #fff; padding-bottom: 12px; border-bottom: 2px solid var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  .section h3 { font-size: 1.1rem; font-weight: 600; color: var(--accent2); margin: 20px 0 10px; }
+  .section p { color: var(--text2); margin-bottom: 12px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 16px 0; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .card h4 { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+  .card p { font-size: 0.875rem; color: var(--text2); }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin: 2px; }
+  .tag-green { background: rgba(16,185,129,0.15); color: var(--green); }
+  .tag-yellow { background: rgba(245,158,11,0.15); color: var(--yellow); }
+  .tag-blue { background: rgba(99,102,241,0.15); color: var(--accent2); }
+  .new-badge { background: var(--green); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; }
   table { width: 100%; border-collapse: collapse; margin: 16px 0; }
-  th {
-    background: var(--surface);
-    padding: 10px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  td {
-    padding: 11px 14px;
-    font-size: 13.5px;
-    color: var(--text-muted);
-    border-bottom: 1px solid rgba(42,48,80,0.5);
-  }
-  td strong { color: var(--text); }
-  tr:last-child td { border-bottom: none; }
-
-  /* CODE */
-  code {
-    background: rgba(108,143,255,0.1);
-    border: 1px solid rgba(108,143,255,0.2);
-    border-radius: 4px;
-    padding: 2px 8px;
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-size: 12.5px;
-    color: var(--accent);
-  }
-
-  /* BADGE */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-  .badge-blue { background: rgba(108,143,255,0.15); color: var(--accent); }
-  .badge-green { background: rgba(66,232,160,0.12); color: var(--accent3); }
-  .badge-orange { background: rgba(255,140,66,0.12); color: var(--accent2); }
-
-  /* WORKFLOW */
-  .workflow {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    margin: 20px 0;
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-  .wf-step {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 16px;
-    font-size: 13px;
-    color: var(--text-muted);
-    text-align: center;
-  }
-  .wf-step strong { color: var(--text); display: block; font-size: 12px; margin-bottom: 2px; }
-  .wf-arrow { color: var(--text-dim); font-size: 18px; padding: 0 4px; }
-
-  /* SIDEBAR MODULES */
-  .sidebar-preview {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    margin: 16px 0;
-  }
-  .sp-item {
-    padding: 10px 16px;
-    font-size: 13px;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .sp-item:last-child { border-bottom: none; }
-  .sp-item.active { background: rgba(108,143,255,0.1); color: var(--accent); }
-  .sp-section { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); padding: 12px 16px 4px; }
-
-  /* FOOTER */
-  .doc-footer {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    padding: 30px 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    color: var(--text-dim);
-  }
-  .doc-footer strong { color: var(--text-muted); }
-
-  @media print {
-    .doc-nav { display: none; }
-    .doc-layout { grid-template-columns: 1fr; }
-    .doc-content { padding: 20px; }
-  }
+  th { background: var(--surface2); color: var(--text2); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text2); font-size: 0.875rem; }
+  tr:hover td { background: var(--surface); }
+  .highlight { background: var(--surface2); border-left: 3px solid var(--accent); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+  .highlight p { color: var(--text); margin: 0; }
+  footer { background: var(--surface); border-top: 1px solid var(--border); padding: 24px 32px; text-align: center; color: var(--text2); font-size: 0.875rem; }
 </style>
 </head>
 <body>
 
-<div class="doc-header">
-  <div class="header-badge">Notice Utilisateur</div>
-  <h1><span>Pet</span>Suite — micro_logiciel</h1>
-  <div class="subtitle">Guide complet d'utilisation · Version 3.0 · Sprint S27</div>
-  <div class="header-meta">
-    <div class="meta-item"><strong>Version</strong>3.0 (S27 — Mars 2026)</div>
-    <div class="meta-item"><strong>Stack</strong>Next.js 15 + NestJS + MariaDB</div>
-    <div class="meta-item"><strong>Public</strong>Utilisateurs finaux</div>
-    <div class="meta-item"><strong>Mise à jour</strong>Mars 2026</div>
+<div class="header">
+  <h1>🐾 PetSuite</h1>
+  <p>Logiciel de gestion pour professionnels animaliers</p>
+  <div class="badge">Notice utilisateur — v4.0 — S30 — Mars 2026</div>
+</div>
+
+<div class="container">
+
+  <div class="toc">
+    <h2>Sommaire</h2>
+    <ul>
+      <li><a href="#tableau-bord">Tableau de bord</a></li>
+      <li><a href="#clients">Clients & Animaux</a></li>
+      <li><a href="#seances">Séances</a></li>
+      <li><a href="#devis">Devis / Contrats</a></li>
+      <li><a href="#factures">Facturation</a></li>
+      <li><a href="#programmes">Programmes suivi</a></li>
+      <li><a href="#elevage">Élevage</a></li>
+      <li><a href="#achats">Achats</a></li>
+      <li><a href="#inventaires">Inventaires</a></li>
+      <li><a href="#bilan">Bilan</a></li>
+      <li><a href="#crm">CRM</a></li>
+      <li><a href="#comptabilite">Comptabilité / FEC</a></li>
+      <li><a href="#ged">Documents (GED)</a></li>
+      <li><a href="#parametres">Paramètres</a></li>
+    </ul>
   </div>
+
+  <!-- TABLEAU DE BORD -->
+  <div class="section" id="tableau-bord">
+    <h2>📊 Tableau de bord</h2>
+    <p>Vue d'ensemble de votre activité en temps réel.</p>
+    <div class="grid">
+      <div class="card">
+        <h4>KPIs temps réel</h4>
+        <p>Nombre de clients, animaux, séances et CA HT de l'année en cours.</p>
+      </div>
+      <div class="card">
+        <h4>QR Code site PetSuite</h4>
+        <p>Partagez le site commercial via WhatsApp, Email, SMS ou lien copié.</p>
+      </div>
+      <div class="card">
+        <h4>Formulaire de contact</h4>
+        <p>QR Code personnalisé pour recevoir des demandes dans le CRM.</p>
+      </div>
+      <div class="card">
+        <h4>EDC sans devis <span class="new-badge">S30</span></h4>
+        <p>Alerte sur les études de comportement réalisées sans devis associé.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIENTS & ANIMAUX -->
+  <div class="section" id="clients">
+    <h2>👥 Clients & Animaux</h2>
+    <h3>Fiche client</h3>
+    <p>5 onglets : Informations, Contacts, Animaux, Séances, Factures. KPIs CA, encours, séances réalisées.</p>
+    <div class="highlight">
+      <p><strong>Nouveau S30 :</strong> Réseaux sociaux (LinkedIn, Facebook, Instagram, WhatsApp) affichés en onglet Informations avec boutons cliquables.</p>
+    </div>
+    <h3>Fiche animal</h3>
+    <p>Puce (15 chiffres), races, date de naissance, CAC (14 cases), commentaire, dashboard séances/factures.</p>
+    <div class="highlight">
+      <p><strong>Nouveau S30 :</strong> Filtre animaux par client corrigé — le select Animal dans les templates et formulaires affiche uniquement les animaux du client sélectionné.</p>
+    </div>
+  </div>
+
+  <!-- SÉANCES -->
+  <div class="section" id="seances">
+    <h2>📅 Séances</h2>
+    <p>Gestion complète des rendez-vous et prestations : EDC, séances de suivi, gardiennage.</p>
+    <div class="grid">
+      <div class="card">
+        <h4>Fiche séance</h4>
+        <p>Compte-rendu éditable, changement de statut (Planifiée → Réalisée), génération de devis depuis la séance.</p>
+      </div>
+      <div class="card">
+        <h4>Règle EDC unique</h4>
+        <p>Une seule EDC non annulée par animal. Le trigger SQL vérifie automatiquement.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEVIS -->
+  <div class="section" id="devis">
+    <h2>📄 Devis / Contrats</h2>
+    <p>Numérotation automatique DCE-YYMM-0001. Statuts : Brouillon, Envoyé, Accepté, Refusé, Annulé.</p>
+    <h3>Templates de devis</h3>
+    <p>5 modèles prédéfinis : EDC, EDC+Suivi 4 semaines, Gardiennage 1 semaine, Suivi 8 séances, Gardiennage week-end. Création en 2 clics avec client, animal et lignes modifiables.</p>
+  </div>
+
+  <!-- FACTURATION -->
+  <div class="section" id="factures">
+    <h2>🧾 Facturation</h2>
+    <p>Numérotation FAC-YYMM-0001. Impression PDF, envoi par email, suivi règlements.</p>
+    <h3>Rappels impayés <span class="new-badge">S30</span></h3>
+    <p>Liste de toutes les factures avec reste à payer > 0. Envoi de rappels par email directement depuis la liste.</p>
+    <h3>Avoirs</h3>
+    <p>Création d'avoirs rattachés à une facture d'origine.</p>
+  </div>
+
+  <!-- PROGRAMMES DE SUIVI -->
+  <div class="section" id="programmes">
+    <h2>📋 Programmes de suivi <span class="new-badge">S30</span></h2>
+    <p>Plans comportementaux semaine par semaine pour chaque animal suivi.</p>
+    <div class="grid">
+      <div class="card">
+        <h4>Création</h4>
+        <p>2 templates : Suivi 8 semaines standard, Programme agressivité 12 semaines. Sélection animal et personnalisation.</p>
+      </div>
+      <div class="card">
+        <h4>Suivi semaine par semaine</h4>
+        <p>Objectifs, exercices, notes, statut (À faire / En cours / Réalisé). Barre de progression globale.</p>
+      </div>
+      <div class="card">
+        <h4>Export PDF</h4>
+        <p>Impression du programme complet pour le client.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉLEVAGE -->
+  <div class="section" id="elevage">
+    <h2>🐕 Élevage</h2>
+    <p>Module dédié aux éleveurs canins et félin. Accessible depuis le menu latéral.</p>
+    <div class="grid">
+      <div class="card">
+        <h4>Dashboard éleveur</h4>
+        <p>Alertes gestation, gestations en cours, suivi des portées.</p>
+      </div>
+      <div class="card">
+        <h4>Saillies</h4>
+        <p>Enregistrement saillie (femelle, mâle, date, type, vétérinaire).</p>
+      </div>
+      <div class="card">
+        <h4>Portées</h4>
+        <p>Fiche portée avec suivi des naissances.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACHATS -->
+  <div class="section" id="achats">
+    <h2>🛒 Achats</h2>
+    <p>Gestion des achats fournisseurs avec lignes, statuts et écritures FEC automatiques.</p>
+    <h3>Fiche achat <span class="new-badge">S30</span></h3>
+    <p>Détail des lignes d'achat, montants HT/TVA/TTC, écritures comptables associées.</p>
+  </div>
+
+  <!-- INVENTAIRES -->
+  <div class="section" id="inventaires">
+    <h2>📦 Inventaires</h2>
+    <p>Création d'inventaires avec saisie des quantités réelles et valorisation automatique.</p>
+  </div>
+
+  <!-- BILAN -->
+  <div class="section" id="bilan">
+    <h2>📈 Bilan</h2>
+    <p>Tableau de bord financier avec filtres par période (mois, trimestre, année, année précédente).</p>
+    <table>
+      <thead><tr><th>Indicateur</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>CA HT / TTC</td><td>Chiffre d'affaires de la période</td></tr>
+        <tr><td>Charges HT</td><td>Total achats de la période</td></tr>
+        <tr><td>Résultat brut</td><td>CA HT - Charges HT</td></tr>
+        <tr><td>Encours</td><td>Total factures impayées</td></tr>
+        <tr><td>Top 10 clients</td><td>Classement par CA TTC</td></tr>
+        <tr><td>CA par mois</td><td>Évolution sur 12 mois glissants</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRM -->
+  <div class="section" id="crm">
+    <h2>🎯 CRM</h2>
+    <p>Gestion des leads, opportunités, activités et campagnes marketing.</p>
+    <div class="grid">
+      <div class="card"><h4>Leads</h4><p>Qualification, score 0-100, conversion en tiers/contact.</p></div>
+      <div class="card"><h4>Opportunités</h4><p>Pipeline avec probabilité et montant estimé.</p></div>
+      <div class="card"><h4>Activités</h4><p>Appels, emails, RDV, notes rattachés aux leads/opportunités.</p></div>
+      <div class="card"><h4>Campagnes</h4><p>Ciblage leads/tiers, suivi statuts (Ciblée → Convertie).</p></div>
+    </div>
+  </div>
+
+  <!-- COMPTABILITÉ -->
+  <div class="section" id="comptabilite">
+    <h2>📒 Comptabilité / FEC</h2>
+    <p>Export FEC conforme DGFiP. Génération des journaux ventes et banque.</p>
+    <div class="highlight">
+      <p>Procédure : Comptabilité → Exercices → Créer exercice → Générer FEC → Télécharger le fichier .txt pour transmission à l'expert-comptable.</p>
+    </div>
+  </div>
+
+  <!-- GED -->
+  <div class="section" id="ged">
+    <h2>📁 Documents (GED)</h2>
+    <p>Centralisation des documents liés aux objets métier (animaux, factures, séances, etc.).</p>
+    <p>Stockage par URI/chemin externe. Tags, versioning, rôles (PJ, PHOTO, SIGNATURE...).</p>
+  </div>
+
+  <!-- PARAMÈTRES -->
+  <div class="section" id="parametres">
+    <h2>⚙️ Paramètres</h2>
+    <table>
+      <thead><tr><th>Section</th><th>Contenu</th></tr></thead>
+      <tbody>
+        <tr><td>Entreprise</td><td>Raison sociale, adresse, SIRET</td></tr>
+        <tr><td>Éditions</td><td>Logo, filigrane, paramètres PDF</td></tr>
+        <tr><td>TVA</td><td>Taux de TVA applicables</td></tr>
+        <tr><td>Modes de paiement</td><td>CB, virement, chèque, espèces</td></tr>
+        <tr><td>Conditions de paiement</td><td>30j fin de mois, comptant...</td></tr>
+        <tr><td>Types de séance</td><td>EDC, Séance suivi, Gardiennage</td></tr>
+        <tr><td>Statuts de séance</td><td>Planifiée, Réalisée, Annulée, No-show</td></tr>
+        <tr><td>Messages modèles</td><td>Templates email/SMS réutilisables</td></tr>
+        <tr><td>Charte graphique</td><td>Couleurs et style de l'interface</td></tr>
+        <tr><td>Mon métier</td><td>Activité, devise, langue (S31)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
-<div class="doc-layout">
-  <nav class="doc-nav">
-    <div class="nav-section-title">Navigation</div>
-    <a class="nav-link active" href="#intro">🏠 Introduction</a>
-    <a class="nav-link" href="#connexion">🔐 Connexion</a>
-    <a class="nav-link" href="#tableau-bord">📊 Tableau de bord</a>
-
-    <div class="nav-section-title">Clients & Animaux</div>
-    <a class="nav-link" href="#clients">👥 Clients (Tiers)</a>
-    <a class="nav-link" href="#contacts">👤 Contacts</a>
-    <a class="nav-link" href="#animaux">🐾 Animaux</a>
-    <a class="nav-link" href="#carte">🗺️ Carte</a>
-
-    <div class="nav-section-title">Activité</div>
-    <a class="nav-link" href="#seances">📅 Séances</a>
-    <a class="nav-link" href="#programmes">📋 Programmes suivi</a>
-    <a class="nav-link" href="#questionnaires">📝 Questionnaires</a>
-
-    <div class="nav-section-title">Commercial</div>
-    <a class="nav-link" href="#devis">📄 Devis / Contrats</a>
-    <a class="nav-link" href="#templates">⚡ Templates devis</a>
-    <a class="nav-link" href="#factures">🧾 Factures</a>
-    <a class="nav-link" href="#reglements">💳 Règlements</a>
-    <a class="nav-link" href="#rappels">🔔 Rappels impayés</a>
-
-    <div class="nav-section-title">Gestion</div>
-    <a class="nav-link" href="#compta">📒 Comptabilité</a>
-    <a class="nav-link" href="#fec">📤 Export FEC</a>
-    <a class="nav-link" href="#ged">📁 GED (Documents)</a>
-    <a class="nav-link" href="#stats">📈 Statistiques</a>
-
-    <div class="nav-section-title">CRM</div>
-    <a class="nav-link" href="#crm">🎯 Leads & Opportunités</a>
-
-    <div class="nav-section-title">Administration</div>
-    <a class="nav-link" href="#parametres">⚙️ Paramètres</a>
-    <a class="nav-link" href="#utilisateurs">👨‍💼 Utilisateurs</a>
-  </nav>
-
-  <main class="doc-content">
-
-    <!-- INTRO -->
-    <section class="section" id="intro">
-      <div class="section-header">
-        <span class="section-num">01</span>
-        <div class="section-icon icon-blue">🏠</div>
-        <h2>Bienvenue dans PetSuite</h2>
-      </div>
-      <p>PetSuite est un logiciel de gestion dédié aux professionnels du monde animal : comportementalistes, toiletteurs, pet-sitters, vétérinaires, centres équestres. Il centralise votre activité dans une seule interface : clients, animaux, séances, facturation et comptabilité.</p>
-
-      <div class="card-grid">
-        <div class="feature-card"><div class="fc-icon">👥</div><div class="fc-title">Clients & Animaux</div><div class="fc-desc">Fiches complètes avec historique et documents</div></div>
-        <div class="feature-card"><div class="fc-icon">📅</div><div class="fc-title">Séances</div><div class="fc-desc">Planification, compte-rendu et suivi</div></div>
-        <div class="feature-card"><div class="fc-icon">🧾</div><div class="fc-title">Facturation</div><div class="fc-desc">Devis, factures, règlements automatisés</div></div>
-        <div class="feature-card"><div class="fc-icon">📁</div><div class="fc-title">GED</div><div class="fc-desc">Documents attachés à chaque objet métier</div></div>
-        <div class="feature-card"><div class="fc-icon">📒</div><div class="fc-title">Comptabilité</div><div class="fc-desc">Export FEC, journaux, exercices</div></div>
-        <div class="feature-card"><div class="fc-icon">🎯</div><div class="fc-title">CRM</div><div class="fc-desc">Leads, opportunités, campagnes</div></div>
-      </div>
-
-      <div class="alert alert-info">
-        <span class="alert-icon">ℹ️</span>
-        <span class="alert-text">PetSuite s'adapte à votre métier : le terme "Séances" peut devenir "Rendez-vous", "Cours", "Consultations" ou "Visites" selon votre configuration dans Paramètres → Mon métier.</span>
-      </div>
-    </section>
-
-    <!-- CONNEXION -->
-    <section class="section" id="connexion">
-      <div class="section-header">
-        <span class="section-num">02</span>
-        <div class="section-icon icon-blue">🔐</div>
-        <h2>Connexion & Accès</h2>
-      </div>
-      <p>L'accès à PetSuite se fait via votre navigateur web (Chrome, Firefox, Edge recommandés).</p>
-      <div class="steps">
-        <div class="step"><div class="step-content"><div class="step-title">Ouvrez votre navigateur</div><div class="step-desc">Accédez à l'adresse fournie par votre administrateur (ex: <code>http://192.168.1.x</code> ou votre domaine)</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Saisissez vos identifiants</div><div class="step-desc">Login (email ou identifiant) et mot de passe fournis par votre administrateur</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Accédez au tableau de bord</div><div class="step-desc">Après connexion, vous arrivez automatiquement sur le tableau de bord principal</div></div></div>
-      </div>
-      <div class="alert alert-warning">
-        <span class="alert-icon">⚠️</span>
-        <span class="alert-text">En cas d'oubli de mot de passe, contactez votre administrateur. Aucune procédure de réinitialisation automatique n'est disponible pour l'instant.</span>
-      </div>
-    </section>
-
-    <!-- TABLEAU DE BORD -->
-    <section class="section" id="tableau-bord">
-      <div class="section-header">
-        <span class="section-num">03</span>
-        <div class="section-icon icon-blue">📊</div>
-        <h2>Tableau de bord</h2>
-      </div>
-      <p>Le tableau de bord affiche une synthèse de votre activité en temps réel. Il est la première page après connexion.</p>
-      <h3>Indicateurs disponibles</h3>
-      <table>
-        <thead><tr><th>Indicateur</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Séances du jour</strong></td><td>Nombre de séances planifiées aujourd'hui</td></tr>
-          <tr><td><strong>Clients actifs</strong></td><td>Total des clients enregistrés</td></tr>
-          <tr><td><strong>Factures impayées</strong></td><td>Montant total des factures en attente de règlement</td></tr>
-          <tr><td><strong>CA du mois</strong></td><td>Chiffre d'affaires HT du mois en cours</td></tr>
-          <tr><td><strong>Prochains RDV</strong></td><td>Liste des 5 prochaines séances planifiées</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- CLIENTS -->
-    <section class="section" id="clients">
-      <div class="section-header">
-        <span class="section-num">04</span>
-        <div class="section-icon icon-green">👥</div>
-        <h2>Clients (Tiers)</h2>
-      </div>
-      <p>Les clients sont gérés dans la section <strong>Clients &amp; Animaux → Clients</strong>. Un client peut être de type CLIENT, FOURNISSEUR ou CLIENT_FOURNISSEUR.</p>
-      <h3>Créer un client</h3>
-      <div class="steps">
-        <div class="step"><div class="step-content"><div class="step-title">Cliquez sur "Nouveau client"</div><div class="step-desc">Depuis la liste Clients, bouton en haut à droite</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Renseignez la raison sociale</div><div class="step-desc">Obligatoire. Pour un particulier, saisissez Nom + Prénom. Pour une entreprise, la raison sociale.</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Complétez les coordonnées</div><div class="step-desc">Adresse, téléphone, email. Le code postal est lié au référentiel des villes INSEE.</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Enregistrez</div><div class="step-desc">Le client est créé et la fiche s'ouvre automatiquement.</div></div></div>
-      </div>
-      <h3>Fiche client</h3>
-      <p>La fiche client affiche : coordonnées, contacts rattachés, animaux, historique des séances, factures et encours (reste à payer).</p>
-      <table>
-        <thead><tr><th>Champ</th><th>Description</th><th>Obligatoire</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Raison sociale</strong></td><td>Nom affiché partout dans l'application</td><td><span class="badge badge-orange">Oui</span></td></tr>
-          <tr><td><strong>SIRET</strong></td><td>14 chiffres — vérifié automatiquement</td><td><span class="badge badge-blue">Non</span></td></tr>
-          <tr><td><strong>IBAN / BIC</strong></td><td>Pour les virements</td><td><span class="badge badge-blue">Non</span></td></tr>
-          <tr><td><strong>Condition de paiement</strong></td><td>Délai appliqué aux devis et factures</td><td><span class="badge badge-blue">Non</span></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- CONTACTS -->
-    <section class="section" id="contacts">
-      <div class="section-header">
-        <span class="section-num">05</span>
-        <div class="section-icon icon-green">👤</div>
-        <h2>Contacts</h2>
-      </div>
-      <p>Un contact est une personne physique rattachée à un client (tiers). Il peut être sélectionné dans les devis, séances et notes CRM.</p>
-      <div class="alert alert-tip">
-        <span class="alert-icon">💡</span>
-        <span class="alert-text">Pour un client particulier, créez un contact avec son nom/prénom. Pour une société, créez autant de contacts que d'interlocuteurs (comptable, responsable, etc.).</span>
-      </div>
-      <h3>Champs disponibles</h3>
-      <p>Civilité, nom, prénom, fonction, téléphone direct, email, adresse spécifique si différente du siège.</p>
-    </section>
-
-    <!-- ANIMAUX -->
-    <section class="section" id="animaux">
-      <div class="section-header">
-        <span class="section-num">06</span>
-        <div class="section-icon icon-green">🐾</div>
-        <h2>Animaux</h2>
-      </div>
-      <p>Chaque animal est rattaché à un client propriétaire. La gestion des animaux est au cœur de PetSuite.</p>
-      <h3>Créer un animal</h3>
-      <div class="steps">
-        <div class="step"><div class="step-content"><div class="step-title">Numéro de puce (obligatoire)</div><div class="step-desc">15 chiffres exactement. Vérifié automatiquement. Unique dans le système.</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Nom et propriétaire</div><div class="step-desc">Sélectionnez le client dans la liste déroulante. Le nom est libre.</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Race(s)</div><div class="step-desc">Principale et secondaire (croisé). Choisir dans le référentiel ou laisser vide.</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Date de naissance et commentaire</div><div class="step-desc">Optionnels. Le commentaire est libre (observations, pathologies...)</div></div></div>
-      </div>
-      <h3>Cases CAC (1 à 14)</h3>
-      <p>Les 14 cases CAC sont des cases à cocher configurables selon votre métier (vaccins, traitements, certifications...). Leur libellé est défini dans Paramètres.</p>
-      <h3>Documents de l'animal</h3>
-      <p>Via la <strong>GED</strong>, vous pouvez attacher des documents à un animal : photos, carnet de santé, résultats d'examens, etc.</p>
-    </section>
-
-    <!-- SEANCES -->
-    <section class="section" id="seances">
-      <div class="section-header">
-        <span class="section-num">07</span>
-        <div class="section-icon icon-orange">📅</div>
-        <h2>Séances</h2>
-      </div>
-      <p>Les séances représentent vos rendez-vous, consultations, cours ou visites selon votre métier. Elles sont au centre du workflow métier.</p>
-
-      <h3>Types de séance</h3>
-      <table>
-        <thead><tr><th>Type</th><th>Code</th><th>Description</th><th>Unique / animal</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Étude de comportement</strong></td><td><code>EDC</code></td><td>Diagnostic complet — obligatoirement lié à un animal</td><td><span class="badge badge-orange">Oui</span></td></tr>
-          <tr><td><strong>Séance de suivi</strong></td><td><code>SEANCE</code></td><td>Suivi comportemental récurrent</td><td><span class="badge badge-blue">Non</span></td></tr>
-          <tr><td><strong>Gardiennage</strong></td><td><code>GARDIENNAGE</code></td><td>Pension comportementale</td><td><span class="badge badge-blue">Non</span></td></tr>
-        </tbody>
-      </table>
-
-      <h3>Statuts de séance</h3>
-      <div class="workflow">
-        <div class="wf-step"><strong>PLANIFIÉE</strong>Prévue</div>
-        <div class="wf-arrow">→</div>
-        <div class="wf-step"><strong>RÉALISÉE</strong>Effectuée</div>
-        <div class="wf-arrow">→</div>
-        <div class="wf-step"><strong>ANNULÉE</strong>Annulée</div>
-        <div class="wf-arrow">ou</div>
-        <div class="wf-step"><strong>NO-SHOW</strong>Absent</div>
-      </div>
-
-      <h3>Créer une séance</h3>
-      <div class="steps">
-        <div class="step"><div class="step-content"><div class="step-title">Choisir le type de séance</div><div class="step-desc">EDC, Suivi, Gardiennage ou autre selon votre configuration</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Sélectionner le client et l'animal</div><div class="step-desc">Pour un EDC, l'animal est obligatoire. La liste d'animaux se filtre selon le client sélectionné.</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Date, heure, lieu</div><div class="step-desc">Le lieu peut être pré-rempli selon le type de séance (domicile client, cabinet...)</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Ajouter les lignes de prestation</div><div class="step-desc">Chaque ligne comprend un libellé, quantité, prix HT et taux TVA</div></div></div>
-      </div>
-
-      <h3>Générer un devis depuis une séance</h3>
-      <p>Depuis la fiche séance, le bouton <strong>"Générer devis"</strong> crée automatiquement un devis avec les lignes de la séance. Le numéro est généré automatiquement au format <code>DCE-YYMM-0001</code>.</p>
-
-      <div class="alert alert-warning">
-        <span class="alert-icon">⚠️</span>
-        <span class="alert-text">Un EDC ne peut exister qu'une seule fois par animal (séance unique par animal). Toute tentative de création d'un second EDC pour le même animal sera bloquée.</span>
-      </div>
-    </section>
-
-    <!-- DEVIS -->
-    <section class="section" id="devis">
-      <div class="section-header">
-        <span class="section-num">08</span>
-        <div class="section-icon icon-orange">📄</div>
-        <h2>Devis / Contrats</h2>
-      </div>
-      <p>Les devis sont numérotés automatiquement au format <code>DCE-YYMM-0001</code>. Ils peuvent être créés manuellement ou générés depuis une séance.</p>
-
-      <h3>Workflow devis</h3>
-      <div class="workflow">
-        <div class="wf-step"><strong>BROUILLON</strong>En cours de rédaction</div>
-        <div class="wf-arrow">→</div>
-        <div class="wf-step"><strong>ENVOYÉ</strong>Transmis au client</div>
-        <div class="wf-arrow">→</div>
-        <div class="wf-step"><strong>ACCEPTÉ</strong>Signé</div>
-        <div class="wf-arrow">ou</div>
-        <div class="wf-step"><strong>REFUSÉ</strong></div>
-      </div>
-
-      <h3>Transformer en facture</h3>
-      <p>Un devis accepté peut être converti en facture en un clic. Le lien est conservé dans <code>devis_facture_lien</code> pour la traçabilité.</p>
-    </section>
-
-    <!-- TEMPLATES -->
-    <section class="section" id="templates">
-      <div class="section-header">
-        <span class="section-num">09</span>
-        <div class="section-icon icon-orange">⚡</div>
-        <h2>Templates de devis</h2>
-      </div>
-      <p>Les templates permettent de créer un devis en 2 clics depuis un modèle prédéfini. Idéal pour les prestations récurrentes.</p>
-
-      <h3>Templates disponibles</h3>
-      <table>
-        <thead><tr><th>Template</th><th>Description</th><th>Total HT</th></tr></thead>
-        <tbody>
-          <tr><td><strong>EDC</strong></td><td>Étude de comportement — bilan complet + rapport</td><td>2 lignes</td></tr>
-          <tr><td><strong>EDC + Suivi 4 semaines</strong></td><td>Pack EDC + programme de suivi 4 semaines</td><td>7 lignes</td></tr>
-          <tr><td><strong>Gardiennage 1 semaine</strong></td><td>Pension comportementale 7 nuits</td><td>265 € HT</td></tr>
-          <tr><td><strong>Gardiennage Week-end</strong></td><td>Pension comportementale 2 nuits</td><td>70 € HT</td></tr>
-          <tr><td><strong>Suivi comportemental 8 séances</strong></td><td>Programme complet sur 8 semaines</td><td>580 € HT</td></tr>
-        </tbody>
-      </table>
-
-      <h3>Utiliser un template</h3>
-      <div class="steps">
-        <div class="step"><div class="step-content"><div class="step-title">Cliquez sur un template</div><div class="step-desc">La modale de création s'ouvre avec les lignes pré-remplies</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Sélectionnez le client, l'animal et le contact</div><div class="step-desc">Le contact est optionnel. La liste se filtre selon le client sélectionné.</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Modifiez les lignes si besoin</div><div class="step-desc">Quantités et prix sont modifiables avant création</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Cliquez sur "Créer le devis"</div><div class="step-desc">Le devis est créé en statut BROUILLON avec numéro automatique</div></div></div>
-      </div>
-    </section>
-
-    <!-- FACTURES -->
-    <section class="section" id="factures">
-      <div class="section-header">
-        <span class="section-num">10</span>
-        <div class="section-icon icon-orange">🧾</div>
-        <h2>Factures</h2>
-      </div>
-      <p>Les factures sont numérotées automatiquement au format <code>FAC-YYMM-0001</code>. La numérotation est séquentielle par mois.</p>
-
-      <h3>Statuts de facture</h3>
-      <div class="workflow">
-        <div class="wf-step"><strong>BROUILLON</strong></div>
-        <div class="wf-arrow">→</div>
-        <div class="wf-step"><strong>ÉMISE</strong></div>
-        <div class="wf-arrow">→</div>
-        <div class="wf-step"><strong>PAYÉE</strong></div>
-        <div class="wf-arrow">ou</div>
-        <div class="wf-step"><strong>ANNULÉE</strong></div>
-      </div>
-
-      <div class="alert alert-warning">
-        <span class="alert-icon">🔒</span>
-        <span class="alert-text">Toute modification ou suppression d'une facture appartenant à un exercice clôturé est bloquée automatiquement.</span>
-      </div>
-    </section>
-
-    <!-- RAPPELS -->
-    <section class="section" id="rappels">
-      <div class="section-header">
-        <span class="section-num">11</span>
-        <div class="section-icon icon-yellow">🔔</div>
-        <h2>Rappels impayés</h2>
-      </div>
-      <p>La page <strong>Rappels impayés</strong> liste toutes les factures dont le reste à payer est supérieur à zéro.</p>
-      <h3>Actions disponibles</h3>
-      <table>
-        <thead><tr><th>Action</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Envoyer email de rappel</strong></td><td>Envoie automatiquement un email de relance au client</td></tr>
-          <tr><td><strong>Changer le statut</strong></td><td>Marquer comme "en cours de traitement", "litigieux"...</td></tr>
-          <tr><td><strong>Voir la facture</strong></td><td>Accès direct à la fiche facture</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- COMPTA -->
-    <section class="section" id="compta">
-      <div class="section-header">
-        <span class="section-num">12</span>
-        <div class="section-icon icon-yellow">📒</div>
-        <h2>Comptabilité</h2>
-      </div>
-      <p>PetSuite intègre un module comptable couvrant les journaux de ventes et de banque, conforme au format FEC (Fichier d'Écriture Comptable) exigé par l'administration fiscale française.</p>
-
-      <h3>Journaux disponibles</h3>
-      <table>
-        <thead><tr><th>Journal</th><th>Code</th><th>Contenu</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Ventes</strong></td><td><code>VT</code></td><td>Factures clients (411, 706, 445710)</td></tr>
-          <tr><td><strong>Banque</strong></td><td><code>BQ</code></td><td>Règlements reçus (512, 411)</td></tr>
-        </tbody>
-      </table>
-
-      <h3>Export FEC</h3>
-      <p>L'export FEC génère un fichier conforme à l'article A47 A-1 du Livre des Procédures Fiscales. Chaque ligne est hashée (SHA-256) pour garantir l'intégrité.</p>
-      <div class="steps">
-        <div class="step"><div class="step-content"><div class="step-title">Aller dans Export FEC</div><div class="step-desc">Menu Gestion → Export FEC</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Sélectionner l'exercice</div><div class="step-desc">Ex: "2025" ou "2025-2026"</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Cliquer sur "Générer FEC"</div><div class="step-desc">Le fichier est créé et disponible en téléchargement</div></div></div>
-      </div>
-    </section>
-
-    <!-- GED -->
-    <section class="section" id="ged">
-      <div class="section-header">
-        <span class="section-num">13</span>
-        <div class="section-icon icon-blue">📁</div>
-        <h2>GED — Gestion Électronique de Documents</h2>
-      </div>
-      <p>La GED permet d'attacher des documents (PDF, images, Word...) à n'importe quel objet métier de PetSuite.</p>
-
-      <h3>Objets supportés</h3>
-      <div class="card-grid">
-        <div class="feature-card"><div class="fc-icon">🐾</div><div class="fc-title">Animal</div><div class="fc-desc">Photos, carnet de santé, certificats</div></div>
-        <div class="feature-card"><div class="fc-icon">🧾</div><div class="fc-title">Facture</div><div class="fc-desc">PDF facture, justificatifs</div></div>
-        <div class="feature-card"><div class="fc-icon">📄</div><div class="fc-title">Devis</div><div class="fc-desc">Devis signé, CGV</div></div>
-        <div class="feature-card"><div class="fc-icon">👥</div><div class="fc-title">Tiers/Contact</div><div class="fc-desc">KBIS, contrats</div></div>
-        <div class="feature-card"><div class="fc-icon">📅</div><div class="fc-title">Séance</div><div class="fc-desc">Compte-rendu, rapport EDC</div></div>
-        <div class="feature-card"><div class="fc-icon">💳</div><div class="fc-title">Règlement</div><div class="fc-desc">Reçu, virement</div></div>
-      </div>
-
-      <h3>Fonctionnalités</h3>
-      <table>
-        <thead><tr><th>Fonctionnalité</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Tags</strong></td><td>Étiquetez vos documents pour les retrouver facilement</td></tr>
-          <tr><td><strong>Versioning</strong></td><td>Conservez l'historique des versions d'un document</td></tr>
-          <tr><td><strong>Rôles</strong></td><td>PJ (pièce jointe), PHOTO, SIGNATURE, RAPPORT...</td></tr>
-          <tr><td><strong>Statuts</strong></td><td>ACTIF, ARCHIVÉ, SUPPRIMÉ</td></tr>
-          <tr><td><strong>Hash SHA-256</strong></td><td>Intégrité garantie pour chaque document</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- PARAMETRES -->
-    <section class="section" id="parametres">
-      <div class="section-header">
-        <span class="section-num">14</span>
-        <div class="section-icon icon-blue">⚙️</div>
-        <h2>Paramètres</h2>
-      </div>
-      <p>Les paramètres permettent de configurer PetSuite selon votre activité.</p>
-      <table>
-        <thead><tr><th>Section</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Mon entreprise</strong></td><td>Raison sociale, SIRET, logo, coordonnées affichés sur les documents</td></tr>
-          <tr><td><strong>Mon métier</strong></td><td>Type d'activité → adapte les libellés de l'interface (Séances / RDV / Cours...)</td></tr>
-          <tr><td><strong>TVA</strong></td><td>Taux de TVA applicables à vos prestations</td></tr>
-          <tr><td><strong>Modes de paiement</strong></td><td>CB, Virement, Chèque, Espèces...</td></tr>
-          <tr><td><strong>Conditions de paiement</strong></td><td>Comptant, 30j, 30j fin de mois...</td></tr>
-          <tr><td><strong>Comptes comptables</strong></td><td>Plan de comptes (client, TVA, banque, caisse)</td></tr>
-          <tr><td><strong>Exercices comptables</strong></td><td>Définition des exercices fiscaux</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- UTILISATEURS -->
-    <section class="section" id="utilisateurs">
-      <div class="section-header">
-        <span class="section-num">15</span>
-        <div class="section-icon icon-blue">👨‍💼</div>
-        <h2>Utilisateurs & Rôles</h2>
-      </div>
-      <p>La gestion des utilisateurs est accessible via <strong>Administration → Utilisateurs</strong>.</p>
-      <h3>Rôles disponibles</h3>
-      <table>
-        <thead><tr><th>Rôle</th><th>Accès</th></tr></thead>
-        <tbody>
-          <tr><td><strong>ADMIN</strong></td><td>Accès complet — gestion utilisateurs, paramètres, comptabilité</td></tr>
-          <tr><td><strong>USER</strong></td><td>Accès standard — clients, animaux, séances, facturation</td></tr>
-          <tr><td><strong>COMPTA</strong></td><td>Accès comptabilité, export FEC, règlements</td></tr>
-        </tbody>
-      </table>
-      <div class="alert alert-info">
-        <span class="alert-icon">ℹ️</span>
-        <span class="alert-text">Le journal d'audit enregistre toutes les actions importantes (connexions, créations, modifications, exports). Il est accessible via Administration → Audit.</span>
-      </div>
-    </section>
-
-    <!-- ELEVAGE -->
-    <section class="section" id="elevage">
-      <div class="section-header">
-        <span class="section-num">16</span>
-        <div class="section-icon icon-green">🐣</div>
-        <h2>Élevage</h2>
-      </div>
-      <p>Le module élevage permet de gérer l'intégralité du cycle de reproduction : saillies, gestations, portées et naissances individuelles, avec suivi automatique des déclarations officielles.</p>
-      <h3>Workflow</h3>
-      <div class="workflow">
-        <div class="wf-step"><strong>Saillie</strong>Femelle + mâle</div>
-        <div class="wf-arrow">→</div>
-        <div class="wf-step"><strong>Gestation</strong>Terme calculé auto</div>
-        <div class="wf-arrow">→</div>
-        <div class="wf-step"><strong>Portée</strong>Naissances</div>
-        <div class="wf-arrow">→</div>
-        <div class="wf-step"><strong>Cession</strong>Vente + ICAD</div>
-      </div>
-      <h3>Alertes automatiques</h3>
-      <p>Dès qu'une saillie est enregistrée, PetSuite crée automatiquement les rappels : déclaration SCC sous 8 semaines, LOOF sous 3 mois. À la naissance : déclaration obligatoire sous 15 jours.</p>
-      <div class="alert alert-warning">
-        <span class="alert-icon">⚠️</span>
-        <span class="alert-text">La page <strong>Démarches Éleveur</strong> (accessible via le menu Documentation) centralise tous les liens officiels SCC, LOOF et I-CAD avec les formulaires pré-remplis avec vos informations d'entreprise.</span>
-      </div>
-    </section>
-
-    <!-- ACHATS -->
-    <section class="section" id="achats">
-      <div class="section-header">
-        <span class="section-num">17</span>
-        <div class="section-icon icon-orange">🛒</div>
-        <h2>Achats fournisseurs</h2>
-      </div>
-      <p>La gestion des achats permet d'enregistrer vos factures fournisseurs et de les intégrer automatiquement dans la comptabilité (journal AC — comptes 401/607/445660).</p>
-      <table>
-        <thead><tr><th>Statut</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Brouillon</strong></td><td>En cours de saisie</td></tr>
-          <tr><td><strong>Reçu</strong></td><td>Marchandise/prestation reçue</td></tr>
-          <tr><td><strong>Validé</strong></td><td>Achat comptabilisé</td></tr>
-          <tr><td><strong>Annulé</strong></td><td>Annulé</td></tr>
-        </tbody>
-      </table>
-      <p>La numérotation est automatique au format <code>ACH-YYMM-0001</code>. Comme pour les factures, toute modification d'un achat sur un exercice clôturé est bloquée.</p>
-    </section>
-
-    <!-- INVENTAIRES -->
-    <section class="section" id="inventaires">
-      <div class="section-header">
-        <span class="section-num">18</span>
-        <div class="section-icon icon-blue">📦</div>
-        <h2>Inventaires</h2>
-      </div>
-      <p>Le module inventaires permet de valoriser votre stock à une date donnée en comparant les quantités théoriques aux quantités réelles comptées.</p>
-      <div class="steps">
-        <div class="step"><div class="step-content"><div class="step-title">Créer un inventaire</div><div class="step-desc">Donnez un libellé (ex: "Inventaire annuel 2026") et choisissez la date</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Ajouter les articles</div><div class="step-desc">Sélectionnez les articles depuis votre catalogue</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Saisir les quantités réelles</div><div class="step-desc">Pour chaque article, saisissez la quantité comptée. L'écart est calculé automatiquement.</div></div></div>
-        <div class="step"><div class="step-content"><div class="step-title">Valider</div><div class="step-desc">La valorisation est figée. L'écart de valeur apparaît dans le bilan.</div></div></div>
-      </div>
-    </section>
-
-    <!-- BILAN -->
-    <section class="section" id="bilan">
-      <div class="section-header">
-        <span class="section-num">19</span>
-        <div class="section-icon icon-yellow">📊</div>
-        <h2>Bilan / Pré-bilan</h2>
-      </div>
-      <p>La page Bilan offre une synthèse financière simplifiée de votre activité sur la période choisie.</p>
-      <table>
-        <thead><tr><th>Indicateur</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><strong>CA HT</strong></td><td>Chiffre d'affaires hors taxes (factures non annulées)</td></tr>
-          <tr><td><strong>Charges HT</strong></td><td>Total des achats fournisseurs validés</td></tr>
-          <tr><td><strong>Résultat brut</strong></td><td>CA − Charges (hors charges fixes, salaires, amortissements)</td></tr>
-          <tr><td><strong>Encours</strong></td><td>Total des factures impayées</td></tr>
-          <tr><td><strong>Top clients</strong></td><td>Classement par CA sur la période</td></tr>
-          <tr><td><strong>Top prestations</strong></td><td>Classement par CA des lignes de facturation</td></tr>
-          <tr><td><strong>CA mensuel</strong></td><td>Graphique des 12 derniers mois</td></tr>
-        </tbody>
-      </table>
-      <p>Sélecteur de période disponible : ce mois, ce trimestre, cette année, année précédente.</p>
-    </section>
-
-  </main>
-</div>
-
-<footer class="doc-footer">
-  <div><strong>PetSuite — micro_logiciel</strong> · Notice Utilisateur v3.1 · Sprint S29</div>
-  <div>Mars 2026 · Stack : Next.js 15 + NestJS + MariaDB</div>
+<footer>
+  PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel
 </footer>
-
-<button class="theme-toggle" onclick="toggleTheme()" title="Basculer thème clair/sombre">☀️</button>
-
-<script>
-  function toggleTheme() {
-    const html = document.documentElement;
-    const current = html.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    document.querySelector('.theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
-    localStorage.setItem('petsuite-theme', next);
-  }
-  // Restaurer le thème sauvegardé (dark par défaut)
-  const saved = localStorage.getItem('petsuite-theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.querySelector('.theme-toggle');
-    if (btn) btn.textContent = saved === 'dark' ? '☀️' : '🌙';
-  });
-</script>
 
 </body>
 </html>
