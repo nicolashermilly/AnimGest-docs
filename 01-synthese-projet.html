@@ -5,46 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite — Synthèse projet v4.0</title>
 <style>
-  :root { --bg:#0f1117; --surface:#1a1d27; --surface2:#22263a; --accent:#6366f1; --accent2:#818cf8; --text:#e2e8f0; --text2:#94a3b8; --border:#2d3348; --green:#10b981; --yellow:#f59e0b; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
-  .header { background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b); padding:48px 32px; text-align:center; border-bottom:1px solid var(--border); }
-  .header h1 { font-size:2.5rem; font-weight:800; color:#fff; }
-  .header p { color:var(--accent2); margin-top:8px; }
-  .badge { display:inline-block; background:var(--accent); color:#fff; padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:600; margin-top:12px; }
-  .container { max-width:1100px; margin:0 auto; padding:32px; }
-  .section { margin-bottom:40px; }
-  .section h2 { font-size:1.4rem; font-weight:700; color:#fff; padding-bottom:12px; border-bottom:2px solid var(--accent); margin-bottom:20px; }
-  .section h3 { font-size:1rem; font-weight:600; color:var(--accent2); margin:16px 0 8px; }
-  .section p { color:var(--text2); margin-bottom:10px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; margin:16px 0; }
-  .card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px; }
-  .card h4 { font-size:0.95rem; font-weight:600; color:#fff; margin-bottom:6px; }
-  .card p { font-size:0.85rem; color:var(--text2); }
-  .sprint-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px; }
-  .sprint { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px; }
-  .sprint h4 { font-size:0.875rem; font-weight:700; color:var(--accent2); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:10px; }
-  .sprint ul { list-style:none; }
-  .sprint li { font-size:0.85rem; color:var(--text2); padding:3px 0; display:flex; align-items:center; gap:8px; }
-  .sprint li::before { content:'✅'; font-size:0.75rem; }
-  table { width:100%; border-collapse:collapse; margin:16px 0; }
-  th { background:var(--surface2); color:var(--text2); font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; padding:10px 14px; text-align:left; }
-  td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--text2); font-size:0.875rem; }
-  .highlight { background:var(--surface2); border-left:3px solid var(--accent); padding:16px 20px; border-radius:0 8px 8px 0; margin:16px 0; }
-  .metier-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
-  .metier { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 16px; font-size:0.875rem; color:var(--text2); display:flex; align-items:center; gap:8px; }
-  footer { background:var(--surface); border-top:1px solid var(--border); padding:24px 32px; text-align:center; color:var(--text2); font-size:0.875rem; }
-  .new { background:var(--green); color:#fff; font-size:0.65rem; font-weight:700; padding:2px 6px; border-radius:4px; }
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.header h1{font-size:2.5rem;font-weight:800;color:#fff;}
+.header p{color:var(--accent2);margin-top:8px;}
+.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;}
+.nav a{color:var(--text2);text-decoration:none;font-size:.85rem;transition:color .2s;}
+.nav a:hover{color:var(--accent2);}
+.container{max-width:1100px;margin:0 auto;padding:32px;}
+.section{margin-bottom:40px;}
+.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
+.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
+.section p{color:var(--text2);margin-bottom:10px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:16px 0;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
+.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:6px;}
+.card p{font-size:.85rem;color:var(--text2);}
+.sprint-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.sprint{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;}
+.sprint h4{font-size:.875rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;}
+.sprint ul{list-style:none;}
+.sprint li{font-size:.85rem;color:var(--text2);padding:3px 0;display:flex;align-items:center;gap:8px;}
+.sprint li::before{content:'✅';font-size:.75rem;}
+table{width:100%;border-collapse:collapse;margin:16px 0;}
+th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:10px 14px;text-align:left;}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}
+.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+.metier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+.metier{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:.875rem;color:var(--text2);display:flex;align-items:center;gap:8px;}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
+.new{background:var(--green);color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;}
+.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
 </style>
 </head>
 <body>
-
 <div class="header">
   <h1>🐾 PetSuite — Synthèse projet</h1>
   <p>Architecture, stack technique et roadmap</p>
   <div class="badge">v4.0 — Sprint S30 — Mars 2026</div>
 </div>
-
+<nav class="nav">
+  <a href="index.html">← Accueil</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+  <a href="17-api-reference.html">API Référence</a>
+  <a href="20-pilotage-projet.html">Pilotage Projet</a>
+  <a href="23-Prise-en-compte-de-la-NF-525.html">NF 525</a>
+</nav>
 <div class="container">
 
   <div class="section">
@@ -98,19 +107,34 @@
         </ul>
       </div>
       <div class="sprint">
-        <h4>S30 — Consolidation <span class="new">NEW</span></h4>
+        <h4>S30 — Consolidation <span class="new">ACTUEL</span></h4>
         <ul>
           <li>Programmes de suivi</li>
           <li>Dashboard KPIs temps réel</li>
           <li>ReseauxSociaux fiche client</li>
           <li>Filtre animaux par client</li>
-          <li>Routes API consolidées</li>
+          <li>Routes API consolidées (24)</li>
           <li>Sauvegarde BDD v5</li>
           <li>Centre d'aide opérationnel</li>
-          <li>Rappels impayés corrigés</li>
+          <li>Races multi-espèces (392)</li>
+          <li>Module NF 525 <span class="new">NEW</span></li>
         </ul>
       </div>
     </div>
+  </div>
+
+  <div class="section">
+    <h2>🏛️ Conformité NF 525 — intégrée S30</h2>
+    <div class="warn">
+      <p><strong>Obligation légale :</strong> Art. 88 LF2016 — Amende 7 500 € par logiciel non conforme. Le module NF525 est intégré dans le sprint S30.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><h4>Journal inaltérable</h4><p>Table nf525_journal_caisse — SHA-256 chaîné — séquence sans trou — triggers UPDATE/DELETE bloqués</p></div>
+      <div class="card"><h4>Clôtures Z / X</h4><p>sp_nf525_cloture_z (journalière) + sp_nf525_cloture_x (intermédiaire) — détail TVA par taux</p></div>
+      <div class="card"><h4>Vues de contrôle</h4><p>6 vues : intégrité chaîne, trous séquence, journalier, modes paiement, clôtures, dashboard conformité</p></div>
+      <div class="card"><h4>Audit inaltérabilité</h4><p>4 triggers bloquant UPDATE/DELETE + table nf525_audit_tentative pour traçabilité des tentatives</p></div>
+    </div>
+    <p style="margin-top:12px;color:var(--text2);font-size:.875rem;">→ Documentation complète : <a href="23-Prise-en-compte-de-la-NF-525.html" style="color:var(--accent2);">23 — Prise en compte de la NF 525</a></p>
   </div>
 
   <div class="section">
@@ -141,19 +165,22 @@
         <tr><td>tiers</td><td>Clients / Fournisseurs</td><td>TIE_ID</td></tr>
         <tr><td>contact</td><td>Contacts rattachés aux tiers</td><td>CON_ID</td></tr>
         <tr><td>animal</td><td>Animaux des clients</td><td>ANI_ID</td></tr>
-        <tr><td>race</td><td>Référentiel races</td><td>RACE_ID</td></tr>
+        <tr><td>race</td><td>Référentiel races (392 — 8 espèces)</td><td>RACE_ID</td></tr>
         <tr><td>seance</td><td>RDV et prestations</td><td>SEA_ID (BIGINT)</td></tr>
         <tr><td>devis_contrat_entete</td><td>Devis et contrats</td><td>DCE_ID</td></tr>
         <tr><td>facture</td><td>Factures</td><td>FAC_ID</td></tr>
         <tr><td>reglement</td><td>Règlements factures</td><td>REG_ID</td></tr>
         <tr><td>avoir</td><td>Avoirs</td><td>AVO_ID</td></tr>
+        <tr><td>nf525_journal_caisse</td><td>Journal inaltérable NF525 — SHA-256 chaîné</td><td>JCA_ID</td></tr>
+        <tr><td>nf525_cloture</td><td>Clôtures Z (journalières) et X (intermédiaires)</td><td>CLO_ID</td></tr>
+        <tr><td>nf525_cloture_tva</td><td>Détail TVA par taux par clôture</td><td>CTX_ID</td></tr>
+        <tr><td>nf525_sequenceur</td><td>Séquenceur atomique (singleton)</td><td>ID</td></tr>
         <tr><td>programme_suivi</td><td>Programmes comportementaux</td><td>PRG_ID</td></tr>
-        <tr><td>programme_semaine</td><td>Semaines des programmes</td><td>SEW_ID</td></tr>
         <tr><td>achat_entete</td><td>Achats fournisseurs</td><td>ACH_ID</td></tr>
         <tr><td>crm_lead</td><td>Leads/prospects</td><td>LED_ID</td></tr>
         <tr><td>crm_opportunite</td><td>Pipeline commercial</td><td>OPP_ID</td></tr>
         <tr><td>utilisateur</td><td>Utilisateurs applicatifs</td><td>USR_ID</td></tr>
-        <tr><td>audit_log</td><td>Journal d'audit</td><td>AUD_ID</td></tr>
+        <tr><td>audit_log</td><td>Journal d'audit générique</td><td>AUD_ID</td></tr>
       </tbody>
     </table>
   </div>
@@ -162,16 +189,15 @@
     <h2>🚀 Roadmap S31/S32</h2>
     <h3>S31 — Priorités</h3>
     <div class="highlight">
-      <p>1. Tables SQL manquantes (programme_suivi, param_metier) • 2. Module Éditions (CGV, contrats, champs fusion) • 3. Carnet pension DDPP • 4. Extensions animal/tiers/seance pour les 14 métiers • 5. Internationalisation + devise</p>
+      <p>1. Intégration API NF525 (sp_nf525_enregistrer_encaissement post-règlement) • 2. Interface clôture Z (front caisse) • 3. Tables SQL manquantes (programme_suivi, param_metier) • 4. Module Éditions (CGV, contrats, champs fusion) • 5. Carnet pension DDPP • 6. Extensions animal/tiers/seance pour les 14 métiers • 7. Internationalisation + devise</p>
     </div>
     <h3>S32 — Vision</h3>
     <div class="highlight">
-      <p>Registre élevage DDPP/I-CAD • Suivi génétique reproducteurs • Réservations en ligne • Planning multi-ressources • Carnet santé électronique • Organisateur événements</p>
+      <p>Registre élevage DDPP/I-CAD • Suivi génétique reproducteurs • Réservations en ligne • Planning multi-ressources • Carnet santé électronique • Organisateur événements • Attestation de conformité NF525</p>
     </div>
   </div>
 
 </div>
-
-<footer>PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel</footer>
+<footer>PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:var(--accent2);text-decoration:none;">← Retour accueil</a></footer>
 </body>
 </html>
