@@ -5,109 +5,197 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite — Roadmap générale</title>
 <style>
-  :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
-  .header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
-  .header h1{font-size:2.5rem;font-weight:800;color:#fff;}
-  .header p{color:var(--accent2);margin-top:8px;}
-  .badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
-  .container{max-width:1100px;margin:0 auto;padding:32px;}
-  .section{margin-bottom:40px;}
-  .section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
-  .lane{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
-  .lane-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-  .lane-badge{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;}
-  .done-b{background:rgba(16,185,129,.2);color:#10b981;}
-  .next-b{background:rgba(99,102,241,.2);color:#818cf8;}
-  .future-b{background:rgba(148,163,184,.15);color:#94a3b8;}
-  .lane-title{font-size:1rem;font-weight:700;color:#fff;}
-  .lane-date{color:var(--text2);font-size:.85rem;margin-left:auto;}
-  ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px;}
-  li{padding:5px 0;color:var(--text2);font-size:.875rem;display:flex;gap:8px;align-items:flex-start;}
-  li.done::before{content:'✅';font-size:.75rem;flex-shrink:0;margin-top:2px;}
-  li.todo::before{content:'○';color:var(--text2);flex-shrink:0;}
-  .highlight{background:var(--surface2);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
-  footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.header h1{font-size:2.5rem;font-weight:800;color:#fff;}
+.header p{color:var(--accent2);margin-top:8px;}
+.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
+nav.topnav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;}
+nav.topnav a{color:var(--text2);text-decoration:none;font-size:.85rem;transition:color .2s;}
+nav.topnav a:hover{color:var(--accent2);}
+nav.topnav a.nf{color:#10b981;font-weight:600;}
+.container{max-width:1100px;margin:0 auto;padding:32px;}
+.section{margin-bottom:40px;}
+.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
+.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
+.roadmap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;}
+.rm-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.rm-card h4{font-size:.95rem;font-weight:700;color:var(--accent2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;}
+.rm-card ul{list-style:none;}
+.rm-card li{font-size:.875rem;color:var(--text2);padding:4px 0;display:flex;gap:8px;align-items:flex-start;}
+.rm-card li::before{content:'→';color:var(--accent);flex-shrink:0;}
+.done-card{border-color:#10b981;}
+.done-card h4{color:#10b981;}
+.next-card{border-color:var(--accent);}
+.vision-card{border-color:var(--text2);}
+.badge-done{background:rgba(16,185,129,.15);color:#10b981;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600;}
+.badge-next{background:rgba(99,102,241,.15);color:#818cf8;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600;}
+.badge-plan{background:rgba(148,163,184,.1);color:#94a3b8;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600;}
+.highlight{background:var(--surface2);border-left:3px solid var(--green);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
 </style>
 </head>
 <body>
 <div class="header">
   <h1>📅 PetSuite — Roadmap générale</h1>
-  <p>Fonctionnalités planifiées S31/S32</p>
+  <p>Fonctionnalités planifiées et vision produit</p>
   <div class="badge">v4.0 — Sprint S30 — Mars 2026</div>
 </div>
+<nav class="topnav">
+  <a href="index.html">← Accueil</a>
+  <a href="01-synthese-projet.html">Synthèse</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <a href="08-roadmap-metiers.html">14 Métiers</a>
+  <a href="23-Prise-en-compte-de-la-NF-525.html" class="nf">🏛️ NF 525</a>
+</nav>
 <div class="container">
 
   <div class="section">
     <h2>✅ Livré — S25 à S30</h2>
-    <div class="lane">
-      <div class="lane-header"><span class="lane-badge done-b">S25-S30</span><span class="lane-title">Socle + Extensions</span><span class="lane-date">Fév–Mars 2026</span></div>
-      <ul>
-        <li class="done">Clients, Contacts, Animaux, Races (392, 8 espèces)</li>
-        <li class="done">Séances EDC/Suivi/Gardiennage</li>
-        <li class="done">Devis/Contrats numérotés automatiquement</li>
-        <li class="done">Facturation + Règlements + Avoirs</li>
-        <li class="done">Export FEC conforme DGFiP</li>
-        <li class="done">CRM : Leads, Opportunités, Activités, Campagnes</li>
-        <li class="done">Module Élevage (saillies, portées)</li>
-        <li class="done">Achats fournisseurs + Inventaires</li>
-        <li class="done">Bilan financier multi-période</li>
-        <li class="done">Programmes de suivi comportemental</li>
-        <li class="done">Dashboard KPIs temps réel</li>
-        <li class="done">GED (micro_logiciel_ged)</li>
-        <li class="done">Admin : utilisateurs, rôles, audit</li>
-        <li class="done">Sauvegarde automatique v5</li>
-        <li class="done">58 pages frontend Next.js</li>
-        <li class="done">Filtres races par type/catégorie</li>
-      </ul>
+    <div class="roadmap-grid">
+      <div class="rm-card done-card">
+        <h4>Socle S25-S26 <span class="badge-done">Livré</span></h4>
+        <ul>
+          <li>Stack Next.js + NestJS + MariaDB + Docker</li>
+          <li>Tiers, Contacts, Animaux, Races</li>
+          <li>Séances, Devis, Facturation, Règlements, Avoirs</li>
+          <li>CRM complet (Leads, Opportunités, Activités)</li>
+          <li>Export FEC + GED polymorphe</li>
+          <li>Dashboard, Admin, Audit</li>
+        </ul>
+      </div>
+      <div class="rm-card done-card">
+        <h4>Extensions S27-S29 <span class="badge-done">Livré</span></h4>
+        <ul>
+          <li>Factures impayées + rappels email</li>
+          <li>Module élevage : saillies, portées</li>
+          <li>Achats fournisseurs + inventaires</li>
+          <li>Templates devis + génération depuis séance</li>
+          <li>FEC figé SHA-256 par exercice</li>
+          <li>Bilan financier multi-périodes</li>
+        </ul>
+      </div>
+      <div class="rm-card done-card">
+        <h4>Consolidation S30 <span class="badge-done">Livré</span></h4>
+        <ul>
+          <li>Programmes de suivi comportemental</li>
+          <li>Dashboard KPIs temps réel</li>
+          <li>Races multi-espèces (392 races — 8 espèces)</li>
+          <li>Sauvegarde BDD v5 (quotidienne 04h00)</li>
+          <li>Centre d'aide opérationnel</li>
+          <li>Module NF 525 complet (SQL + doc)</li>
+        </ul>
+      </div>
     </div>
   </div>
 
   <div class="section">
-    <h2>🔄 S31 — Avril 2026</h2>
-    <div class="lane">
-      <div class="lane-header"><span class="lane-badge next-b">S31</span><span class="lane-title">Documents & Extensions métier</span><span class="lane-date">Avril 2026</span></div>
-      <ul>
-        <li class="todo">Tables SQL programme_suivi, programme_semaine, param_metier</li>
-        <li class="todo">Module Éditions : CGV paramétrables dans Paramètres</li>
-        <li class="todo">Contrats prestation avec champs fusion (solution intégrée)</li>
-        <li class="todo">Annexes CGV/contrats en fin de Devis/Facture</li>
-        <li class="todo">Carnet pension DDPP (registre entrées/sorties)</li>
-        <li class="todo">Extension animal : alimentation, médicaments, habitudes, contact véto</li>
-        <li class="todo">Extension tiers : numéro urgence, instructions, RC Pro</li>
-        <li class="todo">Composant RaceSelector dans formulaires</li>
-        <li class="todo">Page paramètres métier (devise, langue, activité)</li>
-        <li class="todo">Rappels automatiques clients (fréquence par animal)</li>
-      </ul>
+    <h2>🏛️ NF 525 — Intégrée S30</h2>
+    <div class="warn">
+      <p><strong>Obligation légale Art. 88 LF2016</strong> — Amende 7 500 € par logiciel non conforme. Module livré en S30, intégration API et interface en S31.</p>
+    </div>
+    <div class="roadmap-grid">
+      <div class="rm-card done-card">
+        <h4>S30 — SQL livré <span class="badge-done">Livré</span></h4>
+        <ul>
+          <li>5 tables (journal, clôtures, TVA, séquenceur, audit)</li>
+          <li>4 procédures stockées</li>
+          <li>6 vues de contrôle conformité</li>
+          <li>4 triggers inaltérabilité SHA-256</li>
+          <li>Plan de conformité Word 10 chapitres</li>
+        </ul>
+      </div>
+      <div class="rm-card next-card">
+        <h4>S31 — Intégration <span class="badge-next">Planifié</span></h4>
+        <ul>
+          <li>Appel API post-règlement (US-23.2)</li>
+          <li>Interface clôture Z journalière (front)</li>
+          <li>Dashboard conformité back-office</li>
+          <li>Sauvegarde quotidienne tables NF525</li>
+        </ul>
+      </div>
+      <div class="rm-card vision-card">
+        <h4>S32 — Attestation <span class="badge-plan">Vision</span></h4>
+        <ul>
+          <li>Attestation de conformité NF525 signée</li>
+          <li>Monitoring automatique conformité</li>
+          <li>Export audit annuel</li>
+        </ul>
+      </div>
     </div>
   </div>
 
   <div class="section">
-    <h2>🗺️ S32 — Mai 2026</h2>
-    <div class="lane">
-      <div class="lane-header"><span class="lane-badge future-b">S32</span><span class="lane-title">14 métiers & Internationalisation</span><span class="lane-date">Mai 2026</span></div>
-      <ul>
-        <li class="todo">Internationalisation FR/EN/IT/DE/ES</li>
-        <li class="todo">Devise paramétrable (€, $, £, CHF)</li>
-        <li class="todo">Registre élevage DDPP/I-CAD/SCC</li>
-        <li class="todo">Suivi génétique reproducteurs</li>
-        <li class="todo">Carnet santé électronique</li>
-        <li class="todo">Réservations en ligne</li>
-        <li class="todo">Planning multi-ressources (moniteurs, chevaux, boxes)</li>
-        <li class="todo">Organisateur événements (inscriptions, catégories)</li>
-        <li class="todo">Centre équestre : gestion cours, cavaliers, licence FFE</li>
-        <li class="todo">Pension/Chenil : planning multi-espèces zones/boxes</li>
-        <li class="todo">Éleveur : contrats cession, certificats vétérinaires</li>
-        <li class="todo">Maréchal-ferrant : tournées + optimisation trajets</li>
-      </ul>
+    <h2>🔄 Sprint S31 — Planifié (Avril 2026)</h2>
+    <div class="roadmap-grid">
+      <div class="rm-card next-card">
+        <h4>NF525 Intégration <span class="badge-next">Priorité 1</span></h4>
+        <ul>
+          <li>API post-règlement → sp_nf525_enregistrer_encaissement</li>
+          <li>Interface clôture Z + fond de caisse</li>
+          <li>Dashboard conformité v_nf525_conformite</li>
+        </ul>
+      </div>
+      <div class="rm-card next-card">
+        <h4>Module Éditions <span class="badge-next">Priorité 2</span></h4>
+        <ul>
+          <li>CGV paramétrables</li>
+          <li>Contrats avec champs fusion automatique</li>
+          <li>Carnet pension DDPP (registre entrées/sorties)</li>
+        </ul>
+      </div>
+      <div class="rm-card next-card">
+        <h4>Extensions Métiers <span class="badge-next">Priorité 3</span></h4>
+        <ul>
+          <li>Extensions animal : alimentation, médicaments, photos</li>
+          <li>Extensions tiers : urgence, RC_Pro</li>
+          <li>Page paramètres métier (devise, langue, activité)</li>
+          <li>Composant RaceSelector réutilisable</li>
+        </ul>
+      </div>
     </div>
+  </div>
+
+  <div class="section">
+    <h2>🗺️ Sprint S32 — Vision (Mai 2026)</h2>
     <div class="highlight">
-      <p><strong>14 métiers cibles :</strong> Comportementaliste · Éleveur canin/félin · Éleveur animalier · Toiletteur · Pet-sitter · Naturopathe/Nutritionniste · Maréchal-ferrant · Centre équestre · Centre canin · Ostéopathe/Kiné animalier · Éducateur animalier · Pension animale · Chenil/Chatterie · Organisateur événements animaliers</p>
+      <p><strong>14 métiers pleinement couverts</strong> — Internationalisation — Réservations en ligne — Registre élevage DDPP/I-CAD — Attestation NF525</p>
+    </div>
+    <div class="roadmap-grid">
+      <div class="rm-card vision-card">
+        <h4>14 Métiers <span class="badge-plan">Vision</span></h4>
+        <ul>
+          <li>Comportementaliste · Éleveur · Toiletteur</li>
+          <li>Pet-sitter · Naturopathe · Maréchal-ferrant</li>
+          <li>Centre équestre · Centre canin · Ostéopathe</li>
+          <li>Éducateur · Pension · Chenil · Organisateur</li>
+        </ul>
+      </div>
+      <div class="rm-card vision-card">
+        <h4>International <span class="badge-plan">Vision</span></h4>
+        <ul>
+          <li>Langues : FR/EN/IT/DE/ES</li>
+          <li>Devise : €, $, £, CHF...</li>
+          <li>Registre élevage DDPP/I-CAD/SCC/LOOF</li>
+          <li>Suivi génétique reproducteurs</li>
+        </ul>
+      </div>
+      <div class="rm-card vision-card">
+        <h4>Réservations & Planning <span class="badge-plan">Vision</span></h4>
+        <ul>
+          <li>Réservations en ligne clients</li>
+          <li>Planning multi-ressources</li>
+          <li>Carnet santé électronique</li>
+          <li>Organisateur événements animaliers</li>
+        </ul>
+      </div>
     </div>
   </div>
 
 </div>
-<footer>PetSuite Roadmap v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel</footer>
+<footer>PetSuite Roadmap v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
 </body>
 </html>

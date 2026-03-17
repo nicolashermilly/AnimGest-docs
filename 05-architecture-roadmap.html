@@ -5,99 +5,95 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite — Architecture & Roadmap</title>
 <style>
-  :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
-  .header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
-  .header h1{font-size:2.5rem;font-weight:800;color:#fff;}
-  .header p{color:var(--accent2);margin-top:8px;}
-  .badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
-  .container{max-width:1100px;margin:0 auto;padding:32px;}
-  .section{margin-bottom:40px;}
-  .section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
-  .section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:16px 0;}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
-  .card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:6px;}
-  .card p{font-size:.85rem;color:var(--text2);}
-  code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);}
-  table{width:100%;border-collapse:collapse;margin:12px 0;}
-  th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
-  td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}
-  .highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
-  ul{list-style:none;padding:0;}
-  li{padding:4px 0;color:var(--text2);font-size:.875rem;display:flex;gap:8px;}
-  li::before{content:'→';color:var(--accent);flex-shrink:0;}
-  footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.header h1{font-size:2.5rem;font-weight:800;color:#fff;}
+.header p{color:var(--accent2);margin-top:8px;}
+.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
+nav.topnav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;}
+nav.topnav a{color:var(--text2);text-decoration:none;font-size:.85rem;}
+nav.topnav a:hover{color:var(--accent2);}
+nav.topnav a.nf{color:#10b981;font-weight:600;}
+.container{max-width:1100px;margin:0 auto;padding:32px;}
+.section{margin-bottom:40px;}
+.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
+.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:16px 0;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
+.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:8px;}
+.card p,.card li{font-size:.875rem;color:var(--text2);}
+ul{list-style:none;padding:0;}
+li{padding:3px 0;display:flex;gap:6px;}
+li::before{content:'→';color:var(--accent);flex-shrink:0;}
+.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);font-size:.875rem;}
+table{width:100%;border-collapse:collapse;margin:16px 0;}
+th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
 </style>
 </head>
 <body>
 <div class="header">
-  <h1>🗺️ PetSuite — Architecture & Roadmap</h1>
+  <h1>🗺️ PetSuite — Architecture &amp; Roadmap</h1>
   <p>Vision technique et feuille de route</p>
   <div class="badge">v4.0 — Sprint S30 — Mars 2026</div>
 </div>
+<nav class="topnav">
+  <a href="index.html">← Accueil</a>
+  <a href="01-synthese-projet.html">Synthèse projet</a>
+  <a href="06-roadmap.html">Roadmap</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <a href="23-Prise-en-compte-de-la-NF-525.html" class="nf">🏛️ NF 525</a>
+</nav>
 <div class="container">
 
   <div class="section">
-    <h2>🏗️ Architecture technique S30</h2>
+    <h2>🏗️ Stack technique</h2>
     <div class="grid">
-      <div class="card"><h4>Frontend</h4><p>Next.js 15 App Router — 58 pages — TypeScript — Tailwind CSS — Build statique</p></div>
-      <div class="card"><h4>API</h4><p>NestJS TypeScript — custom-routes.ts (290 lignes, 24 routes S30) — mysql2/promise</p></div>
-      <div class="card"><h4>Base de données</h4><p>MariaDB 11 HORS Docker — 192.168.1.62:3307 — 2 bases — 35+ tables — Triggers, procédures, vues</p></div>
-      <div class="card"><h4>Infrastructure</h4><p>Docker Compose — 3 conteneurs (frontend, api, nginx) — Reverse proxy :80</p></div>
-      <div class="card"><h4>Sauvegarde</h4><p>Script PS v5 — mariadb-dump.exe — ZIP 2 bases — Git push — Tâche planifiée 04h00</p></div>
-      <div class="card"><h4>GED</h4><p>Base séparée micro_logiciel_ged — Stockage URI externe — Liens polymorphes 13 types</p></div>
+      <div class="card"><h4>Frontend — Next.js 15</h4><ul><li>58 pages applicatives</li><li>Build statique + SSR</li><li>Tailwind CSS</li><li>TypeScript strict</li></ul></div>
+      <div class="card"><h4>API — NestJS</h4><ul><li>TypeScript</li><li>custom-routes.ts (290 lignes)</li><li>24 routes custom S27→S30</li><li>Prisma ORM + MariaDB</li></ul></div>
+      <div class="card"><h4>BDD — MariaDB 11</h4><ul><li>HORS Docker — 192.168.1.62:3307</li><li>micro_logiciel (métier)</li><li>micro_logiciel_ged (GED)</li><li>40+ tables · 6 vues NF525</li></ul></div>
+      <div class="card"><h4>Infrastructure</h4><ul><li>Docker Compose — 3 conteneurs</li><li>nginx reverse proxy :80</li><li>Sauvegarde PS v5 — 04h00</li><li>Git push quotidien</li></ul></div>
     </div>
   </div>
 
   <div class="section">
-    <h2>🗄️ Schéma BDD — Tables principales</h2>
-    <table>
-      <thead><tr><th>Table</th><th>Rôle</th><th>Clé</th><th>Sprint</th></tr></thead>
-      <tbody>
-        <tr><td><code>tiers</code></td><td>Clients / Fournisseurs</td><td>TIE_ID</td><td>S25</td></tr>
-        <tr><td><code>contact</code></td><td>Contacts rattachés aux tiers</td><td>CON_ID</td><td>S25</td></tr>
-        <tr><td><code>animal</code></td><td>Animaux des clients</td><td>ANI_ID</td><td>S25</td></tr>
-        <tr><td><code>race</code></td><td>392 races — RACE_TYPE + RACE_CATEGORIE</td><td>RACE_ID</td><td>S30</td></tr>
-        <tr><td><code>seance</code></td><td>RDV et prestations (EDC, Suivi, Garde)</td><td>SEA_ID BIGINT</td><td>S25</td></tr>
-        <tr><td><code>devis_contrat_entete</code></td><td>Devis / Contrats numérotés DCE-YYMM-0001</td><td>DCE_ID</td><td>S25</td></tr>
-        <tr><td><code>facture</code></td><td>Factures numérotées FAC-YYMM-0001</td><td>FAC_ID</td><td>S25</td></tr>
-        <tr><td><code>reglement</code></td><td>Règlements factures</td><td>REG_ID</td><td>S25</td></tr>
-        <tr><td><code>programme_suivi</code></td><td>Programmes comportementaux</td><td>PRG_ID</td><td>S30 ⚠️</td></tr>
-        <tr><td><code>programme_semaine</code></td><td>Semaines des programmes</td><td>SEW_ID</td><td>S30 ⚠️</td></tr>
-        <tr><td><code>param_metier</code></td><td>Paramètres métier (devise, langue)</td><td>ID=1</td><td>S30 ⚠️</td></tr>
-        <tr><td><code>crm_lead</code></td><td>Leads/prospects CRM</td><td>LED_ID</td><td>S26</td></tr>
-        <tr><td><code>crm_opportunite</code></td><td>Pipeline commercial</td><td>OPP_ID</td><td>S26</td></tr>
-        <tr><td><code>utilisateur</code></td><td>Utilisateurs applicatifs</td><td>USR_ID</td><td>S25</td></tr>
-        <tr><td><code>audit_log</code></td><td>Journal d'audit générique</td><td>AUD_ID BIGINT</td><td>S25</td></tr>
-      </tbody>
-    </table>
-    <div class="highlight"><p>⚠️ Tables marquées S30 à créer si absentes : <code>programme_suivi</code>, <code>programme_semaine</code>, <code>param_metier</code> — voir BRIEF_S31.md</p></div>
+    <h2>🏛️ Conformité NF 525 — S30</h2>
+    <div class="warn">
+      ⚠️ <strong>Obligation légale Art. 88 LF2016</strong> — Module SQL livré en S30. Intégration API et interface front en S31.
+    </div>
+    <div class="grid">
+      <div class="card"><h4>Journal inaltérable</h4><p>nf525_journal_caisse — SHA-256 chaîné — séquence sans trou — 4 triggers de protection</p></div>
+      <div class="card"><h4>Clôtures Z/X</h4><p>sp_nf525_cloture_z (journalière) + sp_nf525_cloture_x (intermédiaire) — détail TVA par taux</p></div>
+      <div class="card"><h4>Contrôle conformité</h4><p>6 vues SQL — v_nf525_conformite — sp_nf525_verifier_integrite — 0 anomalie cible</p></div>
+    </div>
   </div>
 
   <div class="section">
-    <h2>🚀 Roadmap S31/S32</h2>
-    <h3>S31 — Priorités</h3>
-    <ul>
-      <li>Tables SQL manquantes (programme_suivi, param_metier)</li>
-      <li>Module Éditions : CGV paramétrables, contrats avec champs fusion intégrés</li>
-      <li>Carnet pension DDPP (registre entrées/sorties animaux)</li>
-      <li>Extensions tables : animal (alimentation, médicaments), tiers (urgence, instructions)</li>
-      <li>Barre filtres pill races dans tous les formulaires</li>
-      <li>Page paramètres métier (devise, langue, activité)</li>
-    </ul>
-    <h3>S32 — Vision 14 métiers</h3>
-    <ul>
-      <li>Internationalisation FR/EN/IT/DE/ES + devise paramétrable</li>
-      <li>Registre élevage DDPP/I-CAD/SCC + suivi génétique</li>
-      <li>Réservations en ligne + planning multi-ressources</li>
-      <li>Carnet santé électronique + rappels vaccins/vermifuges</li>
-      <li>Organisateur événements (inscriptions, catégories, sponsors)</li>
-    </ul>
+    <h2>📐 Principes d'architecture</h2>
+    <div class="grid">
+      <div class="card"><h4>Séparation des responsabilités</h4><ul><li>Frontend : affichage uniquement</li><li>API : logique métier</li><li>BDD : triggers SQL (calculs, contraintes)</li><li>NF525 : couche inaltérable dédiée</li></ul></div>
+      <div class="card"><h4>Inaltérabilité NF525</h4><ul><li>Triggers BEFORE UPDATE/DELETE bloquants</li><li>Séquenceur atomique (singleton)</li><li>Hash SHA-256 ligne à ligne</li><li>Audit de toutes les tentatives</li></ul></div>
+      <div class="card"><h4>Scalabilité</h4><ul><li>MariaDB hors Docker (performances)</li><li>GED externe (URI/S3)</li><li>Multi-tenant ready (S32)</li><li>14 métiers paramétrables</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🚀 Roadmap synthétique</h2>
+    <table>
+      <thead><tr><th>Sprint</th><th>Thème principal</th><th>Statut</th></tr></thead>
+      <tbody>
+        <tr><td>S25-S30</td><td>Socle complet + NF525 SQL</td><td>✅ Livré</td></tr>
+        <tr><td>S31</td><td>NF525 API/Front + Module Éditions + Extensions métiers</td><td>🔄 Planifié</td></tr>
+        <tr><td>S32</td><td>14 métiers complets · International · Réservations en ligne · Attestation NF525</td><td>📋 Vision</td></tr>
+      </tbody>
+    </table>
   </div>
 
 </div>
-<footer>PetSuite Architecture & Roadmap v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel</footer>
+<footer>PetSuite Architecture v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
 </body>
 </html>

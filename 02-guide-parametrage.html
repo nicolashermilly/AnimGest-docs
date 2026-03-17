@@ -1,448 +1,93 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Guide de Paramétrage v3</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
-
-  :root {
-    --bg: #fafaf8;
-    --surface: #ffffff;
-    --surface2: #f4f3ef;
-    --border: #e8e6e0;
-    --accent: #2d5a27;
-    --accent2: #c8622a;
-    --accent3: #1a3a7a;
-    --text: #1a1a18;
-    --text-muted: #5a5a52;
-    --text-dim: #9a9a90;
-    --tag: #e8f4e4;
-    --tag-text: #2d5a27;
-    --warning-bg: #fff8e6;
-    --warning-border: #f0c040;
-    --info-bg: #e8f0ff;
-    --info-border: #3060c0;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    font-size: 14.5px;
-  }
-
-  /* HEADER */
-  .doc-header {
-    background: var(--accent);
-    color: #fff;
-    padding: 60px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-  .doc-header::before {
-    content: '⚙';
-    position: absolute;
-    right: 80px; top: 50%;
-    transform: translateY(-50%);
-    font-size: 180px;
-    opacity: 0.06;
-    line-height: 1;
-  }
-  .header-eyebrow {
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 16px;
-  }
-  .doc-header h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: 46px;
-    font-weight: 800;
-    line-height: 1.05;
-    color: #fff;
-  }
-  .doc-header h1 em { font-style: normal; color: rgba(255,255,255,0.5); }
-  .doc-header .subtitle {
-    font-size: 16px;
-    color: rgba(255,255,255,0.7);
-    margin-top: 14px;
-    font-weight: 300;
-  }
-  .header-tags {
-    display: flex;
-    gap: 10px;
-    margin-top: 28px;
-    flex-wrap: wrap;
-  }
-  .header-tag {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    color: rgba(255,255,255,0.85);
-  }
-
-  /* LAYOUT */
-  .doc-layout {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    min-height: calc(100vh - 200px);
-  }
-
-  /* NAV */
-  .doc-nav {
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    padding: 30px 0;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-  }
-  .nav-section {
-    font-family: 'Syne', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    padding: 20px 20px 6px;
-  }
-  .nav-link {
-    display: block;
-    padding: 8px 20px;
-    font-size: 13px;
-    color: var(--text-muted);
-    text-decoration: none;
-    border-left: 3px solid transparent;
-    transition: all 0.15s;
-  }
-  .nav-link:hover { color: var(--accent); border-left-color: var(--accent); background: var(--tag); }
-  .nav-link.active { color: var(--accent); border-left-color: var(--accent); font-weight: 500; }
-
-  /* CONTENT */
-  .doc-content {
-    padding: 55px 70px;
-    max-width: 860px;
-  }
-
-  /* SECTION */
-  .section { margin-bottom: 70px; scroll-margin-top: 30px; }
-
-  .section-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--tag);
-    color: var(--tag-text);
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 4px;
-    margin-bottom: 14px;
-  }
-
-  h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 30px;
-    font-weight: 800;
-    color: var(--text);
-    line-height: 1.1;
-    margin-bottom: 14px;
-  }
-  h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--text);
-    margin: 28px 0 10px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--border);
-  }
-  h4 {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin: 18px 0 6px;
-  }
-  p { color: var(--text-muted); margin-bottom: 12px; line-height: 1.75; }
-  strong { color: var(--text); font-weight: 600; }
-
-  .divider { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
-
-  /* CONFIG BLOCK */
-  .config-block {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 18px 0;
-  }
-  .config-header {
-    padding: 14px 18px;
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .config-header .cfg-icon { font-size: 18px; }
-  .config-header .cfg-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; }
-  .config-header .cfg-path { font-size: 12px; color: var(--text-dim); margin-left: auto; font-family: monospace; background: var(--border); padding: 2px 8px; border-radius: 4px; }
-  .config-body { padding: 16px 18px; }
-
-  /* TABLE */
-  table { width: 100%; border-collapse: collapse; margin: 14px 0; }
-  th {
-    text-align: left;
-    padding: 9px 12px;
-    font-size: 11px;
-    font-weight: 700;
-    font-family: 'Syne', sans-serif;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    background: var(--surface2);
-    border-bottom: 2px solid var(--border);
-  }
-  td {
-    padding: 10px 12px;
-    font-size: 13.5px;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-  }
-  tr:last-child td { border-bottom: none; }
-  td strong { color: var(--text); }
-
-  /* STEPS */
-  .steps { margin: 16px 0; }
-  .step {
-    display: flex;
-    gap: 14px;
-    margin-bottom: 14px;
-    padding: 14px 16px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    align-items: flex-start;
-  }
-  .step-num {
-    background: var(--accent);
-    color: #fff;
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700;
-    flex-shrink: 0; margin-top: 1px;
-  }
-  .step-content .step-title { font-weight: 600; color: var(--text); font-size: 14px; margin-bottom: 2px; }
-  .step-content .step-desc { font-size: 13px; color: var(--text-muted); }
-
-  /* ALERTS */
-  .alert {
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin: 14px 0;
-    border-left: 4px solid;
-    font-size: 13.5px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .alert-icon { flex-shrink: 0; margin-top: 1px; }
-  .alert-warning { background: var(--warning-bg); border-color: var(--warning-border); color: #7a5800; }
-  .alert-info { background: var(--info-bg); border-color: var(--info-border); color: #1a3a7a; }
-  .alert-success { background: var(--tag); border-color: var(--accent); color: var(--tag-text); }
-
-  /* CODE */
-  code {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1px 7px;
-    font-family: monospace;
-    font-size: 12.5px;
-    color: var(--accent3);
-  }
-
-  /* SEED TABLE */
-  .seed-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 10px;
-    margin: 14px 0;
-  }
-  .seed-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
-  }
-  .seed-card .sc-code { font-family: monospace; font-size: 12px; color: var(--accent3); background: var(--info-bg); padding: 2px 8px; border-radius: 4px; margin-bottom: 6px; display: inline-block; }
-  .seed-card .sc-label { font-size: 13px; font-weight: 500; color: var(--text); }
-  .seed-card .sc-meta { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
-
-  /* MÉTIER */
-  .metier-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin: 14px 0;
-  }
-  .metier-card {
-    background: var(--surface);
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    padding: 16px;
-    cursor: pointer;
-    transition: all 0.15s;
-    text-align: center;
-  }
-  .metier-card:hover { border-color: var(--accent); background: var(--tag); }
-  .metier-card .mc-icon { font-size: 28px; margin-bottom: 8px; }
-  .metier-card .mc-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); }
-  .metier-card .mc-seance { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
-
-  /* FOOTER */
-  .doc-footer {
-    background: var(--accent);
-    color: rgba(255,255,255,0.6);
-    padding: 24px 80px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-  }
-  .doc-footer strong { color: #fff; }
-
-  @media print {
-    .doc-nav { display: none; }
-    .doc-layout { grid-template-columns: 1fr; }
-  }
-</style>
-</head>
-<body>
-
+<!DOCTYPE html> <html lang="fr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>PetSuite — Guide de Paramétrage v3</title> <style> @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap'); :root { --bg: #fafaf8; --surface: #ffffff; --surface2: #f4f3ef; --border: #e8e6e0; --accent: #2d5a27; --accent2: #c8622a; --accent3: #1a3a7a; --text: #1a1a18; --text-muted: #5a5a52; --text-dim: #9a9a90; --tag: #e8f4e4; --tag-text: #2d5a27; --warning-bg: #fff8e6; --warning-border: #f0c040; --info-bg: #e8f0ff; --info-border: #3060c0; } * { margin: 0; padding: 0; box-sizing: border-box; } body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 14.5px; } .doc-header { background: var(--accent); color: #fff; padding: 60px 80px; position: relative; overflow: hidden; } .doc-header::before { content: '⚙'; position: absolute; right: 80px; top: 50%; transform: translateY(-50%); font-size: 180px; opacity: 0.06; line-height: 1; } .header-eyebrow { font-family: 'Syne', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 16px; } .doc-header h1 { font-family: 'Syne', sans-serif; font-size: 46px; font-weight: 800; line-height: 1.05; color: #fff; } .doc-header h1 em { font-style: normal; color: rgba(255,255,255,0.5); } .doc-header .subtitle { font-size: 16px; color: rgba(255,255,255,0.7); margin-top: 14px; font-weight: 300; } .header-tags { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; } .header-tag { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 12px; color: rgba(255,255,255,0.85); } .doc-layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 200px); } .doc-nav { background: var(--surface); border-right: 1px solid var(--border); padding: 30px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; } .nav-section { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); padding: 20px 20px 6px; } .nav-link { display: block; padding: 8px 20px; font-size: 13px; color: var(--text-muted); text-decoration: none; border-left: 3px solid transparent; transition: all 0.15s; } .nav-link:hover { color: var(--accent); border-left-color: var(--accent); background: var(--tag); } .nav-link.active { color: var(--accent); border-left-color: var(--accent); font-weight: 500; } .doc-content { padding: 55px 70px; max-width: 860px; } .section { margin-bottom: 70px; scroll-margin-top: 30px; } .section-label { display: inline-flex; align-items: center; gap: 8px; background: var(--tag); color: var(--tag-text); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 4px; margin-bottom: 14px; } h2 { font-family: 'Syne', sans-serif; font-size: 30px; font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 14px; } h3 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--text); margin: 28px 0 10px; padding-bottom: 8px; border-bottom: 2px solid var(--border); } h4 { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin: 18px 0 6px; } p { color: var(--text-muted); margin-bottom: 12px; line-height: 1.75; } strong { color: var(--text); font-weight: 600; } .config-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 18px 0; } .config-header { padding: 14px 18px; background: var(--surface2); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; } .config-header .cfg-icon { font-size: 18px; } .config-header .cfg-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; } .config-header .cfg-path { font-size: 12px; color: var(--text-dim); margin-left: auto; font-family: monospace; background: var(--border); padding: 2px 8px; border-radius: 4px; } .config-body { padding: 16px 18px; } table { width: 100%; border-collapse: collapse; margin: 14px 0; } th { text-align: left; padding: 9px 12px; font-size: 11px; font-weight: 700; font-family: 'Syne', sans-serif; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); background: var(--surface2); border-bottom: 2px solid var(--border); } td { padding: 10px 12px; font-size: 13.5px; color: var(--text-muted); border-bottom: 1px solid var(--border); vertical-align: top; } tr:last-child td { border-bottom: none; } td strong { color: var(--text); } .steps { margin: 16px 0; } .step { display: flex; gap: 14px; margin-bottom: 14px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; align-items: flex-start; } .step-num { background: var(--accent); color: #fff; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; } .step-content .step-title { font-weight: 600; color: var(--text); font-size: 14px; margin-bottom: 2px; } .step-content .step-desc { font-size: 13px; color: var(--text-muted); } .alert { padding: 12px 16px; border-radius: 8px; margin: 14px 0; border-left: 4px solid; font-size: 13.5px; display: flex; gap: 10px; align-items: flex-start; } .alert-icon { flex-shrink: 0; margin-top: 1px; } .alert-warning { background: var(--warning-bg); border-color: var(--warning-border); color: #7a5800; } .alert-info { background: var(--info-bg); border-color: var(--info-border); color: #1a3a7a; } .alert-success { background: var(--tag); border-color: var(--accent); color: var(--tag-text); } .alert-nf525 { background: #e8f7f0; border-color: #10b981; color: #065f46; } code { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 7px; font-family: monospace; font-size: 12.5px; color: var(--accent3); } .seed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 14px 0; } .seed-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; } .seed-card .sc-code { font-family: monospace; font-size: 12px; color: var(--accent3); background: var(--info-bg); padding: 2px 8px; border-radius: 4px; margin-bottom: 6px; display: inline-block; } .seed-card .sc-label { font-size: 13px; font-weight: 500; color: var(--text); } .seed-card .sc-meta { font-size: 12px; color: var(--text-dim); margin-top: 2px; } .metier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; } .metier-card { background: var(--surface); border: 2px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; } .metier-card .mc-icon { font-size: 28px; margin-bottom: 8px; } .metier-card .mc-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); } .metier-card .mc-seance { font-size: 11px; color: var(--text-muted); margin-top: 4px; } .doc-footer { background: var(--accent); color: rgba(255,255,255,0.6); padding: 24px 80px; display: flex; justify-content: space-between; font-size: 13px; flex-wrap: wrap; gap: 8px; } .doc-footer strong { color: #fff; } .doc-footer a { color: #818cf8; text-decoration: none; } </style> </head> <body>
 <div class="doc-header">
   <div class="header-eyebrow">PetSuite · micro_logiciel</div>
   <h1>Guide de<br><em>Paramétrage</em></h1>
-  <div class="subtitle">Configuration initiale et avancée · Version 3.0 · Sprint S27</div>
+  <div class="subtitle">Configuration initiale et avancée · Version 3.0 · Sprint S30</div>
   <div class="header-tags">
     <span class="header-tag">⚙️ Configuration</span>
     <span class="header-tag">🗄️ MariaDB</span>
-    <span class="header-tag">🚀 Sprint S27</span>
+    <span class="header-tag">🏛️ NF 525</span>
     <span class="header-tag">📅 Mars 2026</span>
   </div>
 </div>
-
+<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:10px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;">
+  <a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a>
+  <a href="03-notice-utilisateur.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Notice utilisateur</a>
+  <a href="20-pilotage-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Pilotage</a>
+  <a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a>
+</nav>
 <div class="doc-layout">
   <nav class="doc-nav">
     <div class="nav-section">Démarrage</div>
     <a class="nav-link active" href="#ordre">Ordre de configuration</a>
     <a class="nav-link" href="#metier">Mon métier</a>
-
     <div class="nav-section">Référentiels</div>
-    <a class="nav-link" href="#villes">Référentiel villes</a>
     <a class="nav-link" href="#tva">Taux de TVA</a>
     <a class="nav-link" href="#modes-paiement">Modes de paiement</a>
     <a class="nav-link" href="#conditions">Conditions de paiement</a>
-    <a class="nav-link" href="#races">Races</a>
-
+    <a class="nav-link" href="#races">Races (392)</a>
     <div class="nav-section">Comptabilité</div>
     <a class="nav-link" href="#comptes">Plan de comptes</a>
     <a class="nav-link" href="#param-compta">Paramètres compta</a>
     <a class="nav-link" href="#exercices">Exercices</a>
-
+    <div class="nav-section">NF 525</div>
+    <a class="nav-link" href="#nf525-config" style="color:#10b981;">🏛️ Config NF 525</a>
     <div class="nav-section">Catalogue</div>
     <a class="nav-link" href="#categories">Catégories</a>
     <a class="nav-link" href="#articles">Articles / Prestations</a>
-
     <div class="nav-section">CRM</div>
     <a class="nav-link" href="#crm-ref">Référentiels CRM</a>
-
     <div class="nav-section">Séances</div>
     <a class="nav-link" href="#seance-types">Types de séance</a>
-
     <div class="nav-section">Entreprise</div>
     <a class="nav-link" href="#entreprise">Mon entreprise</a>
-    <a class="nav-link" href="#utilisateurs">Utilisateurs & Rôles</a>
+    <a class="nav-link" href="#utilisateurs">Utilisateurs &amp; Rôles</a>
   </nav>
-
   <main class="doc-content">
 
-    <!-- ORDRE -->
     <section class="section" id="ordre">
       <div class="section-label">📋 Démarrage</div>
       <h2>Ordre de configuration recommandé</h2>
-      <p>Pour une mise en service optimale de PetSuite, respectez l'ordre suivant. Certaines étapes sont des prérequis d'autres.</p>
-
+      <p>Pour une mise en service optimale de PetSuite, respectez l'ordre suivant.</p>
       <div class="steps">
         <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Mon métier</div><div class="step-desc">Définir le type d'activité — adapte les libellés de toute l'interface</div></div></div>
         <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Mon entreprise</div><div class="step-desc">Raison sociale, SIRET, coordonnées — figurent sur tous les documents imprimés</div></div></div>
         <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Plan de comptes</div><div class="step-desc">Comptes comptables de base (411, 706, 445710, 512, 530)</div></div></div>
         <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Paramètres comptables</div><div class="step-desc">Lier les comptes par défaut (client, TVA, banque, caisse)</div></div></div>
         <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Taux de TVA</div><div class="step-desc">Créer les taux applicables (20%, 10%, 5.5%, exonéré...)</div></div></div>
-        <div class="step"><div class="step-num">6</div><div class="step-content"><div class="step-title">Catégories & Articles</div><div class="step-desc">Catalogue de prestations avec comptes de vente associés</div></div></div>
-        <div class="step"><div class="step-num">7</div><div class="step-content"><div class="step-title">Modes & Conditions de paiement</div><div class="step-desc">CB, Virement, Chèque + délais (comptant, 30j...)</div></div></div>
+        <div class="step"><div class="step-num">6</div><div class="step-content"><div class="step-title">Catégories &amp; Articles</div><div class="step-desc">Catalogue de prestations avec comptes de vente associés</div></div></div>
+        <div class="step"><div class="step-num">7</div><div class="step-content"><div class="step-title">Modes &amp; Conditions de paiement</div><div class="step-desc">CB, Virement, Chèque + délais (comptant, 30j...)</div></div></div>
         <div class="step"><div class="step-num">8</div><div class="step-content"><div class="step-title">Exercice comptable</div><div class="step-desc">Définir l'exercice en cours (ex: 2026)</div></div></div>
-        <div class="step"><div class="step-num">9</div><div class="step-content"><div class="step-title">Utilisateurs</div><div class="step-desc">Créer les comptes utilisateurs et affecter les rôles</div></div></div>
-        <div class="step"><div class="step-num">10</div><div class="step-content"><div class="step-title">Référentiel CRM</div><div class="step-desc">Sources, statuts leads, statuts opportunités, types d'activités</div></div></div>
+        <div class="step"><div class="step-num">9</div><div class="step-content"><div class="step-title">Module NF 525</div><div class="step-desc">Déployer Script_NF525_v1.sql — configurer droits SQL — tester v_nf525_conformite</div></div></div>
+        <div class="step"><div class="step-num">10</div><div class="step-content"><div class="step-title">Utilisateurs &amp; CRM</div><div class="step-desc">Créer les comptes utilisateurs, rôles et référentiels CRM</div></div></div>
       </div>
     </section>
 
-    <!-- METIER -->
     <section class="section" id="metier">
       <div class="section-label">🎯 Identité</div>
       <h2>Mon métier</h2>
-      <p>Le paramètre métier adapte l'ensemble des libellés de l'interface. Le mot "Séances" dans la sidebar devient le terme approprié à votre activité.</p>
-
+      <p>Le paramètre métier adapte l'ensemble des libellés de l'interface selon votre activité.</p>
       <div class="config-block">
-        <div class="config-header">
-          <span class="cfg-icon">🎯</span>
-          <span class="cfg-title">Configuration métier</span>
-          <span class="cfg-path">Paramètres → Mon métier</span>
-        </div>
+        <div class="config-header"><span class="cfg-icon">🎯</span><span class="cfg-title">Métiers disponibles</span><span class="cfg-path">Paramètres → Mon métier</span></div>
         <div class="config-body">
           <div class="metier-grid">
             <div class="metier-card"><div class="mc-icon">🧠</div><div class="mc-label">Comportementaliste</div><div class="mc-seance">→ "Séances"</div></div>
             <div class="metier-card"><div class="mc-icon">✂️</div><div class="mc-label">Toiletteur</div><div class="mc-seance">→ "Rendez-vous"</div></div>
             <div class="metier-card"><div class="mc-icon">🏠</div><div class="mc-label">Pet-sitter</div><div class="mc-seance">→ "Visites"</div></div>
-            <div class="metier-card"><div class="mc-icon">🏥</div><div class="mc-label">Vétérinaire</div><div class="mc-seance">→ "Consultations"</div></div>
             <div class="metier-card"><div class="mc-icon">🐴</div><div class="mc-label">Centre équestre</div><div class="mc-seance">→ "Cours"</div></div>
             <div class="metier-card"><div class="mc-icon">🏨</div><div class="mc-label">Pension / Chenil</div><div class="mc-seance">→ "Hébergements"</div></div>
-          </div>
-          <div class="alert alert-warning">
-            <span class="alert-icon">⚠️</span>
-            <div>La correction orthographique "Nutritionniste" (avec 2 n) est appliquée — ne pas confondre avec "Nutricioniste".</div>
+            <div class="metier-card"><div class="mc-icon">🔨</div><div class="mc-label">Maréchal-ferrant</div><div class="mc-seance">→ "Interventions"</div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TVA -->
     <section class="section" id="tva">
       <div class="section-label">📊 Référentiels</div>
       <h2>Taux de TVA</h2>
-      <p>Les taux de TVA sont utilisés sur les articles, lignes de devis, lignes de facture et lignes de séance. Un taux peut être affecté par défaut à un article.</p>
-
+      <p>Les taux de TVA sont utilisés sur les articles, lignes de devis, lignes de facture et lignes de séance.</p>
       <div class="config-block">
-        <div class="config-header">
-          <span class="cfg-icon">📊</span>
-          <span class="cfg-title">Taux de TVA recommandés</span>
-          <span class="cfg-path">Paramètres → TVA</span>
-        </div>
+        <div class="config-header"><span class="cfg-icon">📊</span><span class="cfg-title">Taux recommandés</span><span class="cfg-path">Paramètres → TVA</span></div>
         <div class="config-body">
           <table>
             <thead><tr><th>Code</th><th>Libellé</th><th>Taux</th><th>Cas d'usage</th></tr></thead>
@@ -453,24 +98,18 @@
               <tr><td><code>EXO</code></td><td>Exonéré</td><td><strong>0.00%</strong></td><td>Prestations médicales vétérinaires</td></tr>
             </tbody>
           </table>
+          <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div>Le taux TVA est "snapshot" sur chaque ligne : la modification d'un taux de référence n'affecte pas rétroactivement les lignes existantes.</div></div>
         </div>
-      </div>
-
-      <div class="alert alert-info">
-        <span class="alert-icon">ℹ️</span>
-        <div>Le taux TVA est "snapshot" sur chaque ligne : la modification d'un taux de référence n'affecte pas rétroactivement les lignes existantes.</div>
       </div>
     </section>
 
-    <!-- MODES PAIEMENT -->
     <section class="section" id="modes-paiement">
       <div class="section-label">💳 Paiements</div>
       <h2>Modes de paiement</h2>
-      <p>Chaque mode de paiement est lié à un compte comptable (banque ou caisse).</p>
-
+      <p>Chaque mode de paiement est lié à un compte comptable (banque ou caisse). Il est utilisé dans le journal NF525 pour chaque encaissement.</p>
       <div class="seed-grid">
         <div class="seed-card"><span class="sc-code">VIR</span><div class="sc-label">Virement bancaire</div><div class="sc-meta">Type: BANQUE · 512000</div></div>
-        <div class="seed-card"><span class="sc-code">CB</span><div class="sc-label">Carte bancaire</div><div class="sc-meta">Type: BANQUE · 512000</div></div>
+        <div class="seed-card"><span class="sc-code">CB</span><div class="sc-label">Carte bancaire / TPE</div><div class="sc-meta">Type: BANQUE · 512000</div></div>
         <div class="seed-card"><span class="sc-code">CHEQUE</span><div class="sc-label">Chèque</div><div class="sc-meta">Type: BANQUE · 512000</div></div>
         <div class="seed-card"><span class="sc-code">ESPECES</span><div class="sc-label">Espèces</div><div class="sc-meta">Type: CAISSE · 530000</div></div>
         <div class="seed-card"><span class="sc-code">PAYPAL</span><div class="sc-label">PayPal</div><div class="sc-meta">Type: BANQUE · 512000</div></div>
@@ -478,11 +117,9 @@
       </div>
     </section>
 
-    <!-- CONDITIONS -->
     <section class="section" id="conditions">
       <div class="section-label">📅 Paiements</div>
       <h2>Conditions de paiement</h2>
-      <p>Affectées par défaut à un client. Utilisées sur les devis et factures pour calculer la date d'échéance.</p>
       <table>
         <thead><tr><th>Libellé</th><th>Nb jours</th><th>Usage</th></tr></thead>
         <tbody>
@@ -495,53 +132,34 @@
       </table>
     </section>
 
-    <!-- PLAN DE COMPTES -->
     <section class="section" id="comptes">
       <div class="section-label">📒 Comptabilité</div>
       <h2>Plan de comptes</h2>
-      <p>Le plan de comptes minimal requis pour le fonctionnement de PetSuite. À saisir avant les paramètres comptables.</p>
-
       <div class="config-block">
-        <div class="config-header">
-          <span class="cfg-icon">📒</span>
-          <span class="cfg-title">Comptes minimaux requis</span>
-          <span class="cfg-path">Paramètres → Comptabilité → Plan de comptes</span>
-        </div>
+        <div class="config-header"><span class="cfg-icon">📒</span><span class="cfg-title">Comptes minimaux requis</span><span class="cfg-path">Paramètres → Comptabilité → Plan de comptes</span></div>
         <div class="config-body">
           <table>
             <thead><tr><th>Numéro</th><th>Libellé</th><th>Usage</th></tr></thead>
             <tbody>
               <tr><td><code>411000</code></td><td>Clients</td><td>Compte client (obligatoire)</td></tr>
               <tr><td><code>706000</code></td><td>Prestations de services</td><td>Ventes standard</td></tr>
-              <tr><td><code>707000</code></td><td>Ventes de marchandises</td><td>Produits revendus</td></tr>
               <tr><td><code>445710</code></td><td>TVA collectée</td><td>TVA sur ventes (obligatoire)</td></tr>
-              <tr><td><code>512000</code></td><td>Banque</td><td>Compte bancaire principal (obligatoire)</td></tr>
-              <tr><td><code>530000</code></td><td>Caisse</td><td>Règlements en espèces (obligatoire)</td></tr>
+              <tr><td><code>512000</code></td><td>Banque</td><td>Règlements bancaires (obligatoire)</td></tr>
+              <tr><td><code>530000</code></td><td>Caisse</td><td>Règlements espèces (obligatoire)</td></tr>
             </tbody>
           </table>
-          <div class="alert alert-warning">
-            <span class="alert-icon">⚠️</span>
-            <div>Les 4 comptes marqués "obligatoire" doivent exister avant de renseigner les Paramètres comptables. Sans eux, les exports FEC échoueront.</div>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- PARAM COMPTA -->
     <section class="section" id="param-compta">
       <div class="section-label">📒 Comptabilité</div>
       <h2>Paramètres comptables</h2>
-      <p>Configuration unique (singleton) — une seule ligne dans la base. Définit les comptes par défaut utilisés dans les journaux FEC.</p>
-
       <div class="config-block">
-        <div class="config-header">
-          <span class="cfg-icon">🔧</span>
-          <span class="cfg-title">Comptes par défaut</span>
-          <span class="cfg-path">Paramètres → Comptabilité → Paramètres</span>
-        </div>
+        <div class="config-header"><span class="cfg-icon">🔧</span><span class="cfg-title">Comptes par défaut</span><span class="cfg-path">Paramètres → Comptabilité → Paramètres</span></div>
         <div class="config-body">
           <table>
-            <thead><tr><th>Paramètre</th><th>Compte recommandé</th><th>Description</th></tr></thead>
+            <thead><tr><th>Paramètre</th><th>Compte</th><th>Description</th></tr></thead>
             <tbody>
               <tr><td><strong>CPT_CLIENT</strong></td><td><code>411000</code></td><td>Compte collectif clients</td></tr>
               <tr><td><strong>CPT_TVA_COLLECTEE</strong></td><td><code>445710</code></td><td>TVA à reverser</td></tr>
@@ -553,71 +171,58 @@
       </div>
     </section>
 
-    <!-- EXERCICES -->
     <section class="section" id="exercices">
       <div class="section-label">📅 Comptabilité</div>
       <h2>Exercices comptables</h2>
-      <p>Un exercice délimite une période fiscale. La clôture d'un exercice verrouille automatiquement toute modification des factures et règlements de cette période.</p>
+      <p>Un exercice délimite une période fiscale. La clôture verrouille toute modification des factures et règlements de cette période.</p>
+      <div class="alert alert-warning"><span class="alert-icon">🔒</span><div>La clôture d'un exercice est <strong>irréversible</strong> depuis l'interface. Toute facture ou règlement de la période devient en lecture seule.</div></div>
+    </section>
 
+    <section class="section" id="nf525-config">
+      <div class="section-label" style="background:#d1fae5;color:#065f46;">🏛️ NF 525</div>
+      <h2>Configuration module NF 525</h2>
+      <div class="alert alert-nf525"><span class="alert-icon">🏛️</span><div><strong>Obligation légale Art. 88 LF2016</strong> — Amende 7 500 € par logiciel non conforme. Ce module est livré en S30.</div></div>
       <div class="config-block">
-        <div class="config-header">
-          <span class="cfg-icon">📅</span>
-          <span class="cfg-title">Créer un exercice</span>
-          <span class="cfg-path">Paramètres → Exercices comptables</span>
-        </div>
+        <div class="config-header"><span class="cfg-icon">🗄️</span><span class="cfg-title">Déploiement SQL</span><span class="cfg-path">Script_NF525_v1.sql</span></div>
         <div class="config-body">
-          <table>
-            <thead><tr><th>Champ</th><th>Exemple</th><th>Règle</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Code exercice</strong></td><td><code>2026</code> ou <code>2025-2026</code></td><td>Unique, 9 caractères max</td></tr>
-              <tr><td><strong>Date début</strong></td><td><code>01/01/2026</code></td><td>Doit être ≤ date fin</td></tr>
-              <tr><td><strong>Date fin</strong></td><td><code>31/12/2026</code></td><td>–</td></tr>
-            </tbody>
-          </table>
-          <div class="alert alert-warning">
-            <span class="alert-icon">🔒</span>
-            <div>La clôture d'un exercice est <strong>irréversible</strong> depuis l'interface. Toute facture ou règlement de la période devient en lecture seule.</div>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Exécuter le script</div><div class="step-desc">Lancer <code>Script_NF525_v1.sql</code> sur la base <code>micro_logiciel</code> après la v3</div></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Vérifier la conformité</div><div class="step-desc">Exécuter <code>SELECT * FROM v_nf525_conformite</code> → doit afficher 0 anomalie</div></div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Intégration API (S31)</div><div class="step-desc">Appeler <code>sp_nf525_enregistrer_encaissement</code> après chaque INSERT dans reglement</div></div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Clôture Z quotidienne</div><div class="step-desc">Exécuter <code>CALL sp_nf525_cloture_z(usr_id, fond_caisse)</code> en fin de journée</div></div></div>
           </div>
         </div>
       </div>
+      <p>→ Documentation complète : <a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;">23 — Prise en compte de la NF 525</a></p>
     </section>
 
-    <!-- CATEGORIES -->
     <section class="section" id="categories">
       <div class="section-label">🗂️ Catalogue</div>
       <h2>Catégories</h2>
-      <p>Chaque catégorie est liée à un compte de vente du plan de comptes. Elle regroupe des articles/prestations de même nature comptable.</p>
       <table>
         <thead><tr><th>Exemple catégorie</th><th>Compte de vente</th></tr></thead>
         <tbody>
-          <tr><td><strong>Consultations / Séances</strong></td><td><code>706000</code> — Prestations de services</td></tr>
-          <tr><td><strong>Produits animalerie</strong></td><td><code>707000</code> — Ventes de marchandises</td></tr>
-          <tr><td><strong>Formations</strong></td><td><code>706000</code> ou compte spécifique</td></tr>
+          <tr><td><strong>Consultations / Séances</strong></td><td><code>706000</code></td></tr>
+          <tr><td><strong>Produits animalerie</strong></td><td><code>707000</code></td></tr>
+          <tr><td><strong>Formations</strong></td><td><code>706000</code></td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- ARTICLES -->
     <section class="section" id="articles">
       <div class="section-label">🗂️ Catalogue</div>
       <h2>Articles / Prestations</h2>
-      <p>Le catalogue d'articles est utilisé dans les lignes de devis, factures, séances et templates.</p>
-
       <div class="config-block">
-        <div class="config-header">
-          <span class="cfg-icon">📦</span>
-          <span class="cfg-title">Champs d'un article</span>
-          <span class="cfg-path">Paramètres → Catalogue → Articles</span>
-        </div>
+        <div class="config-header"><span class="cfg-icon">📦</span><span class="cfg-title">Champs d'un article</span><span class="cfg-path">Paramètres → Catalogue → Articles</span></div>
         <div class="config-body">
           <table>
             <thead><tr><th>Champ</th><th>Description</th><th>Obligatoire</th></tr></thead>
             <tbody>
-              <tr><td><strong>Référence</strong></td><td>Code unique (ex: EDC-01, GARDE-NUIT)</td><td>✅ Oui</td></tr>
+              <tr><td><strong>Référence</strong></td><td>Code unique (ex: EDC-01)</td><td>✅ Oui</td></tr>
               <tr><td><strong>Libellé</strong></td><td>Texte affiché sur les documents</td><td>✅ Oui</td></tr>
-              <tr><td><strong>Unité</strong></td><td>U (unité), H (heure), J (jour), N (nuit)...</td><td>✅ Oui</td></tr>
-              <tr><td><strong>Prix HT</strong></td><td>Tarif par défaut (modifiable sur chaque ligne)</td><td>✅ Oui</td></tr>
-              <tr><td><strong>TVA par défaut</strong></td><td>Pré-remplie lors de la saisie d'une ligne</td><td>Non</td></tr>
+              <tr><td><strong>Unité</strong></td><td>U, H, J, N...</td><td>✅ Oui</td></tr>
+              <tr><td><strong>Prix HT</strong></td><td>Tarif par défaut (modifiable sur ligne)</td><td>✅ Oui</td></tr>
+              <tr><td><strong>TVA par défaut</strong></td><td>Pré-remplie lors de la saisie</td><td>Non</td></tr>
               <tr><td><strong>Catégorie</strong></td><td>Détermine le compte de vente comptable</td><td>✅ Oui</td></tr>
             </tbody>
           </table>
@@ -625,12 +230,9 @@
       </div>
     </section>
 
-    <!-- CRM REF -->
     <section class="section" id="crm-ref">
       <div class="section-label">🎯 CRM</div>
       <h2>Référentiels CRM</h2>
-      <p>Avant d'utiliser le CRM (Leads &amp; Opportunités), configurez les référentiels suivants.</p>
-
       <h3>Sources de leads</h3>
       <div class="seed-grid">
         <div class="seed-card"><span class="sc-code">WEB</span><div class="sc-label">Site web</div></div>
@@ -640,67 +242,31 @@
         <div class="seed-card"><span class="sc-code">FACEBOOK</span><div class="sc-label">Facebook</div></div>
         <div class="seed-card"><span class="sc-code">INSTAGRAM</span><div class="sc-label">Instagram</div></div>
       </div>
-
-      <h3>Statuts de leads</h3>
-      <table>
-        <thead><tr><th>Code</th><th>Libellé</th><th>Final</th></tr></thead>
-        <tbody>
-          <tr><td><code>NOUVEAU</code></td><td>Nouveau</td><td>Non</td></tr>
-          <tr><td><code>QUALIFIE</code></td><td>Qualifié</td><td>Non</td></tr>
-          <tr><td><code>CONVERTI</code></td><td>Converti en client</td><td>Oui</td></tr>
-          <tr><td><code>PERDU</code></td><td>Perdu / Non qualifié</td><td>Oui</td></tr>
-        </tbody>
-      </table>
-
       <h3>Types d'activités CRM</h3>
       <div class="seed-grid">
         <div class="seed-card"><span class="sc-code">APPEL</span><div class="sc-label">Appel téléphonique</div></div>
         <div class="seed-card"><span class="sc-code">EMAIL</span><div class="sc-label">Email envoyé</div></div>
         <div class="seed-card"><span class="sc-code">RDV</span><div class="sc-label">Rendez-vous</div></div>
         <div class="seed-card"><span class="sc-code">NOTE</span><div class="sc-label">Note interne</div></div>
-        <div class="seed-card"><span class="sc-code">SMS</span><div class="sc-label">SMS envoyé</div></div>
       </div>
     </section>
 
-    <!-- TYPES SEANCE -->
     <section class="section" id="seance-types">
       <div class="section-label">📅 Séances</div>
       <h2>Types de séance</h2>
-      <p>Les types de séance sont pré-configurés. Vous pouvez en ajouter via l'administration base de données.</p>
-
-      <div class="config-block">
-        <div class="config-header">
-          <span class="cfg-icon">📅</span>
-          <span class="cfg-title">Types configurés par défaut</span>
-          <span class="cfg-path">BDD : seance_type (seeds)</span>
-        </div>
-        <div class="config-body">
-          <table>
-            <thead><tr><th>Code</th><th>Libellé</th><th>Durée déf.</th><th>Unique/animal</th></tr></thead>
-            <tbody>
-              <tr><td><code>EDC</code></td><td>Étude de comportement</td><td>90 min</td><td>✅ Oui</td></tr>
-              <tr><td><code>SEANCE</code></td><td>Séance de suivi</td><td>60 min</td><td>Non</td></tr>
-              <tr><td><code>GARDIENNAGE</code></td><td>Gardiennage</td><td>60 min</td><td>Non</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="alert alert-info">
-        <span class="alert-icon">ℹ️</span>
-        <div>La règle "Unique par animal" (EDC) est enforced par trigger MySQL : une tentative de créer un second EDC pour le même animal est bloquée au niveau base de données.</div>
-      </div>
+      <table>
+        <thead><tr><th>Code</th><th>Libellé</th><th>Durée déf.</th><th>Unique/animal</th></tr></thead>
+        <tbody>
+          <tr><td><code>EDC</code></td><td>Étude de comportement</td><td>90 min</td><td>✅ Oui (trigger SQL)</td></tr>
+          <tr><td><code>SEANCE</code></td><td>Séance de suivi</td><td>60 min</td><td>Non</td></tr>
+          <tr><td><code>GARDIENNAGE</code></td><td>Gardiennage</td><td>60 min</td><td>Non</td></tr>
+        </tbody>
+      </table>
     </section>
 
-    <!-- ENTREPRISE -->
     <section class="section" id="entreprise">
       <div class="section-label">🏢 Entreprise</div>
       <h2>Mon entreprise</h2>
-      <p>Ces informations apparaissent sur vos devis, factures et courriers.</p>
-      <div class="alert alert-warning">
-        <span class="alert-icon">⚠️</span>
-        <div>Le lien dans le menu Paramètres pointe vers <code>/parametres/entreprise</code> (et non <code>/parametres/mon-entreprise</code>). En cas d'erreur 404, vérifiez ce chemin.</div>
-      </div>
       <table>
         <thead><tr><th>Champ</th><th>Description</th></tr></thead>
         <tbody>
@@ -708,32 +274,13 @@
           <tr><td><strong>SIRET</strong></td><td>14 chiffres — obligatoire pour la conformité FEC</td></tr>
           <tr><td><strong>Adresse complète</strong></td><td>Apparaît sur tous les documents</td></tr>
           <tr><td><strong>IBAN / BIC</strong></td><td>Coordonnées bancaires sur les factures</td></tr>
-          <tr><td><strong>Logo</strong></td><td>Via la GED — attaché en type PHOTO sur l'utilisateur admin</td></tr>
         </tbody>
       </table>
     </section>
 
-    <!-- UTILISATEURS -->
     <section class="section" id="utilisateurs">
       <div class="section-label">👨‍💼 Accès</div>
-      <h2>Utilisateurs & Rôles</h2>
-
-      <div class="config-block">
-        <div class="config-header">
-          <span class="cfg-icon">🔐</span>
-          <span class="cfg-title">Utilisateur SQL technique</span>
-          <span class="cfg-path">MariaDB : @lgorithme@%</span>
-        </div>
-        <div class="config-body">
-          <p>Un seul utilisateur SQL est créé : <code>@lgorithme</code>. Il dispose des droits SELECT, INSERT, UPDATE, DELETE, EXECUTE, TRIGGER, EVENT sur <code>micro_logiciel</code>.</p>
-          <div class="alert alert-warning">
-            <span class="alert-icon">⚠️</span>
-            <div>Ne jamais partager les credentials SQL avec les utilisateurs finaux. L'accès applicatif passe uniquement par l'API NestJS.</div>
-          </div>
-        </div>
-      </div>
-
-      <h3>Rôles applicatifs</h3>
+      <h2>Utilisateurs &amp; Rôles</h2>
       <table>
         <thead><tr><th>Rôle</th><th>Accès</th><th>Usage</th></tr></thead>
         <tbody>
@@ -742,15 +289,13 @@
           <tr><td><code>COMPTA</code></td><td>Module comptable uniquement</td><td>Expert-comptable externe</td></tr>
         </tbody>
       </table>
+      <div class="alert alert-warning"><span class="alert-icon">⚠️</span><div>Ne jamais partager les credentials SQL avec les utilisateurs finaux. L'accès passe uniquement par l'API NestJS.</div></div>
     </section>
 
   </main>
 </div>
-
-<footer class="doc-footer">
-  <div><strong>PetSuite — micro_logiciel</strong> · Guide de Paramétrage v3.0 · Sprint S27</div>
-  <div>Mars 2026 · Base de données : MariaDB 192.168.1.62:3307</div>
-</footer>
-
-</body>
-</html>
+<div class="doc-footer">
+  <div><strong>PetSuite — micro_logiciel</strong> · Guide de Paramétrage v3.0 · Sprint S30 · Mars 2026</div>
+  <div><a href="index.html">← Retour accueil</a></div>
+</div>
+</body> </html>
