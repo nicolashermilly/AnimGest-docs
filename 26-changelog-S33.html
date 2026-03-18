@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Changelog Sprint S33</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f3;--bg2:#ffffff;--bg3:#f0ede8;
+  --border:#e2ddd6;--border2:#c8c2b8;
+  --ink:#1a1714;--ink2:#6b6560;--ink3:#a09b94;
+  --green:#2a7a5a;--green2:#e8f5ef;--green3:#c8e6d6;
+  --amber:#9a6820;--amber2:#fef3e2;
+  --blue:#1a5fa0;--blue2:#e8f0fb;
+  --red:#b83030;--red2:#fdeaea;
+  --purple:#5a3fa0;--purple2:#ede8fc;
+  --r:10px;--rs:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;}
+
+nav{background:var(--ink);padding:0 32px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'DM Serif Display',serif;font-size:17px;color:#fff;display:flex;align-items:center;gap:10px;}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:#5dca9e;}
+.nav-badge{font-family:'DM Mono',monospace;font-size:10px;background:var(--green2);color:var(--green);padding:3px 10px;border-radius:20px;border:1px solid var(--green3);}
+.nav-back{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.5);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.15);border-radius:20px;}
+.nav-back:hover{color:#fff;}
+
+.hero{background:var(--ink);padding:48px 48px 40px;border-bottom:3px solid var(--green);}
+.hero-tag{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:38px;color:#fff;line-height:1.1;margin-bottom:8px;}
+.hero h1 em{font-style:italic;color:#5dca9e;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:28px;}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;}
+.hero-meta-item{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);}
+.hero-meta-item strong{color:rgba(255,255,255,.8);}
+
+.main{max-width:960px;margin:0 auto;padding:40px 32px 80px;}
+
+.section{margin-bottom:44px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+.section-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.dot-red{background:var(--red);}
+.dot-amber{background:#c28820;}
+.dot-green{background:var(--green);}
+.dot-blue{background:var(--blue);}
+.section-title{font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:-.2px;}
+.section-badge{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;padding:3px 9px;border-radius:20px;margin-left:auto;}
+.badge-p1{background:var(--red2);color:var(--red);}
+.badge-p2{background:var(--amber2);color:var(--amber);}
+.badge-p3{background:var(--green2);color:var(--green);}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;}
+
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.card-title{font-size:13px;font-weight:500;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.icon-red{background:var(--red2);}
+.icon-amber{background:var(--amber2);}
+.icon-green{background:var(--green2);}
+.icon-blue{background:var(--blue2);}
+.icon-purple{background:var(--purple2);}
+.icon-teal{background:#d0f0f8;}
+
+.item-list{display:flex;flex-direction:column;gap:0;}
+.item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--bg3);}
+.item:last-child{border-bottom:none;padding-bottom:0;}
+.item-label{font-weight:500;color:var(--ink);min-width:140px;flex-shrink:0;font-size:12px;}
+.item-val{color:var(--ink2);font-size:12px;line-height:1.4;}
+
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.p-new{background:var(--green2);color:var(--green);}
+.p-fix{background:var(--blue2);color:var(--blue);}
+.p-upd{background:var(--amber2);color:var(--amber);}
+.p-doc{background:var(--purple2);color:var(--purple);}
+.p-wip{background:var(--red2);color:var(--red);}
+
+.check-list{display:flex;flex-direction:column;gap:5px;}
+.check-item{font-size:12px;color:var(--ink2);display:flex;gap:7px;align-items:flex-start;line-height:1.4;}
+.check-item::before{content:'→';color:var(--green);font-weight:700;flex-shrink:0;font-size:11px;margin-top:1px;}
+.check-item.done{color:var(--ink3);}
+.check-item.done::before{content:'✓';color:var(--green);}
+.check-item.wip::before{content:'⏳';font-size:11px;}
+
+.code-block{background:var(--ink);color:#e8e4de;border-radius:var(--rs);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:12px 0;}
+.code-block .cm{color:#616e88;font-style:italic;}
+.code-block .cv{color:#a3be8c;}
+.code-block .cs{color:#ebcb8b;}
+
+.alert{border-left:3px solid var(--green);background:var(--green2);padding:12px 16px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;margin:12px 0;}
+.alert.amber{border-color:var(--amber);background:var(--amber2);}
+.alert.blue{border-color:var(--blue);background:var(--blue2);}
+.alert.red{border-color:var(--red);background:var(--red2);}
+
+.bug-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:14px 16px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;}
+.bug-sev{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:1px;}
+.bug-high{background:var(--red2);color:var(--red);}
+.bug-med{background:var(--amber2);color:var(--amber);}
+.bug-low{background:var(--green2);color:var(--green);}
+.bug-title{font-size:12px;font-weight:500;margin-bottom:3px;}
+.bug-desc{font-size:11px;color:var(--ink2);line-height:1.4;}
+
+.stat-row{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;text-align:center;min-width:110px;}
+.stat-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);line-height:1;}
+.stat-lbl{font-size:10px;color:var(--ink3);margin-top:4px;}
+.stat.accent .stat-num{color:var(--green);}
+
+footer{background:var(--ink);color:rgba(255,255,255,.35);padding:18px 32px;font-size:11px;display:flex;justify-content:space-between;align-items:center;}
+footer strong{color:rgba(255,255,255,.7);}
+
+@media(max-width:768px){
+  .grid2,.grid3{grid-template-columns:1fr;}
+  .hero{padding:32px 20px;}
+  .main{padding:24px 16px 60px;}
+  nav{padding:0 16px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><div class="nav-dot"></div>PetSuite</div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <a href="index.html" class="nav-back">← Index</a>
+    <span class="nav-badge">S33 · 18/03/2026</span>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Release Notes</div>
+  <h1>Changelog <em>Sprint S33</em></h1>
+  <p class="hero-sub">18 mars 2026 — Documentation enrichie, NF525, templates devis, élevage portée/new</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><strong>Sprint</strong> S33</div>
+    <div class="hero-meta-item"><strong>Date</strong> 18/03/2026</div>
+    <div class="hero-meta-item"><strong>Précédent</strong> S32 (changelog-sprint-S32.html)</div>
+    <div class="hero-meta-item"><strong>Stack</strong> Next.js 15.5.12 · NestJS · MariaDB hors Docker</div>
+    <div class="hero-meta-item"><strong>BDD</strong> 137 animaux · 88 clients · 80 séances · 30 factures</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- STATS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot dot-blue"></div>
+      <div class="section-title">État en entrée de sprint</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat accent"><div class="stat-num">137</div><div class="stat-lbl">Animaux</div></div>
+      <div class="stat accent"><div class="stat-num">88</div><div class="stat-lbl">Clients</div></div>
+      <div class="stat accent"><div class="stat-num">80</div><div class="stat-lbl">Séances</div></div>
+      <div class="stat accent"><div class="stat-num">19 593 €</div><div class="stat-lbl">CA HT</div></div>
+      <div class="stat"><div class="stat-num">224</div><div class="stat-lbl">Articles</div></div>
+      <div class="stat"><div class="stat-num">392</div><div class="stat-lbl">Races (8 espèces)</div></div>
+      <div class="stat"><div class="stat-num">199</div><div class="stat-lbl">Articles aide</div></div>
+      <div class="stat"><div class="stat-num">15</div><div class="stat-lbl">Modules aide</div></div>
+      <div class="stat"><div class="stat-num">25</div><div class="stat-lbl">Pages docs</div></div>
+    </div>
+    <div class="alert blue">
+      <strong>Acquis S32 :</strong> Route <code style="font-family:'DM Mono',monospace;font-size:11px;">PUT /animaux/:id</code> opérationnelle (ANI_PHOTOS + 14 champs) · param_entreprise Algorithmia SAS configuré · EX2026 créé · Centre d'aide 199 articles / 15 modules · Agenda vue semaine + mois · Questionnaire multi-type (?type=equestre/pension/canin)
+    </div>
+  </div>
+
+  <!-- PRIORITÉ 1 — FONCTIONNEL -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot dot-red"></div>
+      <div class="section-title">Priorité 1 — Fonctionnel critique</div>
+      <span class="section-badge badge-p1">P1 · Reporté S32</span>
+    </div>
+
+    <div class="grid3">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">📋</div>Templates devis par métier</div>
+        <div class="check-list">
+          <div class="check-item wip">Page /app/devis/templates</div>
+          <div class="check-item wip">Séparateurs visuels par métier : Comportementaliste · Équestre · Toiletteur · Pet-sitter</div>
+          <div class="check-item wip">Sélection rapide → pré-remplissage lignes devis</div>
+          <div class="check-item wip">Route API : GET /api/templates?metier=comportementaliste</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">🔐</div>NF525 — Post-règlement</div>
+        <div class="check-list">
+          <div class="check-item wip">sp_nf525_enregistrer_encaissement après chaque règlement validé</div>
+          <div class="check-item wip">Interface clôture Z caisse dans /app/comptabilite</div>
+          <div class="check-item wip">Dashboard conformité : compteur tickets, hash chaîné, statut certification</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">🐾</div>Élevage — Portée/new</div>
+        <div class="check-list">
+          <div class="check-item wip">Page /app/elevage/portees/new</div>
+          <div class="check-item wip">Saisie individuelle des naissances</div>
+          <div class="check-item wip">Numéro de puce par chiot · date · sexe · couleur</div>
+          <div class="check-item wip">Lien automatique registre DDPP</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert amber">
+      <strong>Note :</strong> Ces 3 fonctionnalités étaient planifiées en S32 — reportées en S33 faute de temps. Priorité absolue de ce sprint.
+    </div>
+  </div>
+
+  <!-- PRIORITÉ 2 — DOCUMENTATION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot dot-amber"></div>
+      <div class="section-title">Priorité 2 — Documentation enrichie</div>
+      <span class="section-badge badge-p2">P2 · GitHub Pages</span>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-amber">📖</div>03-notice-utilisateur.html — v4.0</div>
+        <div class="check-list">
+          <div class="check-item done">Section 08 — Tableau de bord (CA HT, QR codes, EDC sans devis, factures impayées)</div>
+          <div class="check-item done">Section 09 — Fiche animal (photo upload JPG/PNG/WebP, puce xxx-xxx-xxx-xxx-xxx, 4 onglets)</div>
+          <div class="check-item done">Section 10 — Questionnaire public multi-type (?type=canin/equestre/pension/toiletteur)</div>
+          <div class="check-item done">Section 11 — Agenda vue semaine (grille 7h–20h, ligne maintenant) + vue mois</div>
+          <div class="check-item done">Section 12 — Centre d'aide (199 articles, 15 modules, Ctrl+K)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">📡</div>API + Stack + Roadmap</div>
+        <div class="check-list">
+          <div class="check-item done">17-api-reference — PUT /animaux/:id documenté (ANI_PHOTOS + 14 champs, liste blanche)</div>
+          <div class="check-item done">01-synthese-projet — COPIER_TOUTES_PAGES_v2.ps1, EX2026, param_entreprise, user Admin</div>
+          <div class="check-item done">07-audit-stack — PUT /animaux/:id S32, MariaDB hors Docker, user Admin</div>
+          <div class="check-item done">06-roadmap — S10→S32 COMPLET, S33 EN COURS avec 3 priorités détaillées</div>
+          <div class="check-item done">20-pilotage-projet — Kanban S33, stats BDD réelles, sprints 32 réalisés</div>
+          <div class="check-item done">11-carte-identite-animale — puce xxx-xxx-xxx-xxx-xxx, photo upload</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0;">
+      <div class="card-title"><div class="card-icon icon-teal">🔒</div>Sécurisation + navigation</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Mot de passe Super Admin</span><span class="item-val">@lgorithmePetSuite — 5 pages protégées : 04, 08, 13, 20, 99_Business_Plan</span></div>
+        <div class="item"><span class="item-label">Mot de passe Business Plan</span><span class="item-val">@lgorithmePetSuite (harmonisé — anciennement @lgorithme)</span></div>
+        <div class="item"><span class="item-label">Bouton ← Index</span><span class="item-val">Ajouté sur les 22 pages de documentation</span></div>
+        <div class="item"><span class="item-label">99_Business_Plan.html</span><span class="item-val">Business plan S33 complet — hors index, protégé</span></div>
+        <div class="item"><span class="item-label">Compteur index</span><span class="item-val">25 pages (bug 24 → 25 corrigé)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIORITÉ 3 — UX -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot dot-green"></div>
+      <div class="section-title">Priorité 3 — Améliorations UX</div>
+      <span class="section-badge badge-p3">P3</span>
+    </div>
+
+    <div class="grid3">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-teal">📜</div>Historique admin</div>
+        <div class="check-list">
+          <div class="check-item wip">Colonne AUD_COMMENTAIRE visible dans vue admin</div>
+          <div class="check-item wip">Filtres par action INSERT/UPDATE/DELETE/LOGIN</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-amber">🎨</div>Charte graphique</div>
+        <div class="check-list">
+          <div class="check-item wip">Upload logo dans app_charte_graphique</div>
+          <div class="check-item wip">Logo sur factures PDF et devis</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">🔀</div>Redirect</div>
+        <div class="check-list">
+          <div class="check-item wip">/app → /app/tableau-de-bord (signalé S31)</div>
+          <div class="check-item wip">Vérifier middleware Next.js</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUGS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot dot-red"></div>
+      <div class="section-title">Bugs actifs</div>
+    </div>
+
+    <div class="bug-item">
+      <span class="bug-sev bug-high">HAUTE</span>
+      <div>
+        <div class="bug-title">Compteur index.html — 24 au lieu de 25</div>
+        <div class="bug-desc">Le format <code style="font-family:'DM Mono',monospace;font-size:10px;">stat-num</code> affiche encore 24 pages. Fix PowerShell via git clone + patch + push.</div>
+      </div>
+    </div>
+
+    <div class="bug-item">
+      <span class="bug-sev bug-med">MOYENNE</span>
+      <div>
+        <div class="bug-title">Doublons animaux dans programmes de suivi</div>
+        <div class="bug-desc">Jointure SQL sans DISTINCT dans la modale "Nouveau programme". Fix : ajouter DISTINCT ou GROUP BY ANI_ID. Non urgent (table programmes vide).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RÈGLES TECHNIQUES S33 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot dot-blue"></div>
+      <div class="section-title">Règles techniques S33</div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">⚠️</div>Règles absolues</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">cd deploy</span><span class="item-val">AVANT toute commande docker compose</span></div>
+          <div class="item"><span class="item-label">COPIER_TOUTES_PAGES_v2.ps1</span><span class="item-val">AVANT chaque build frontend — vérifier "transferring context: ~1MB"</span></div>
+          <div class="item"><span class="item-label">MariaDB</span><span class="item-val">Hors Docker · 192.168.1.62:3307 · user Admin · --skip-ssl obligatoire</span></div>
+          <div class="item"><span class="item-label">custom-routes.ts</span><span class="item-val">Seule approche pour les routes supplémentaires</span></div>
+          <div class="item"><span class="item-label">Git petsuite-docs</span><span class="item-val">git pull --rebase AVANT git push (conflits possibles)</span></div>
+          <div class="item"><span class="item-label">useSearchParams()</span><span class="item-val">Next.js 15 → toujours wrapper dans &lt;Suspense&gt;</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">💻</div>Commandes démarrage</div>
+        <div class="code-block">
+<span class="cm"># Vérifier containers</span>
+<span class="cv">cd</span> <span class="cs">"$root\deploy"</span>
+docker ps --format <span class="cs">"table {{.Names}}\t{{.Status}}"</span>
+
+<span class="cm"># Vérifier API (doit afficher S32)</span>
+docker logs micro_api --tail 3
+<span class="cm"># Attendu : Routes S27/S28/.../S32 enregistrees</span>
+
+<span class="cm"># Dump BDD avant de commencer</span>
+& <span class="cs">"C:\ProgramData\OptimBTP\MariaDB\bin\mariadb-dump.exe"</span>
+  -u Admin -pAdmin -h localhost -P 3307 --skip-ssl
+  micro_logiciel > <span class="cs">"C:\Backup\backup_S33_$(Get-Date).sql"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div><strong>PetSuite</strong> — Changelog Sprint S33 · 18/03/2026</div>
+  <div>Document interne · Confidentiel</div>
+</footer>
+
+</body>
+</html>
