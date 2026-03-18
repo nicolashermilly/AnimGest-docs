@@ -1,95 +1,88 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Pilotage Projet</title>
-<style>
-:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
-.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
-.header h1{font-size:2.5rem;font-weight:800;color:#fff;}
-.header p{color:var(--accent2);margin-top:8px;}
-.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
-.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;}
-.nav a{color:var(--text2);text-decoration:none;font-size:.85rem;transition:color .2s;}
-.nav a:hover{color:var(--accent2);}
-.container{max-width:1100px;margin:0 auto;padding:32px;}
-.section{margin-bottom:40px;}
-.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
-.sprint-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
-.sprint-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
-.sprint-num{background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:700;}
-.sprint-date{color:var(--text2);font-size:.85rem;}
-.sprint-status{margin-left:auto;}
-.done{background:rgba(16,185,129,.15);color:#10b981;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;}
-.current{background:rgba(99,102,241,.15);color:#818cf8;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;}
-.planned{background:rgba(148,163,184,.1);color:#94a3b8;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;}
-ul{list-style:none;padding:0;}
-ul li{padding:4px 0;color:var(--text2);font-size:.875rem;display:flex;align-items:flex-start;gap:8px;}
-ul li::before{content:'✅';font-size:.75rem;flex-shrink:0;margin-top:2px;}
-ul.planned li::before{content:'○';color:var(--text2);}
-ul.inprog li::before{content:'🔄';font-size:.75rem;}
-table{width:100%;border-collapse:collapse;margin:12px 0;}
-th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
-td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}
-.highlight{background:var(--surface2);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
-.nf525-badge{display:inline-block;background:rgba(16,185,129,.15);color:#10b981;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:700;margin-left:6px;}
-footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
-</style>
-</head>
-<body>
-<div class="header">
-  <h1>📊 PetSuite — Pilotage Projet</h1>
-  <p>Historique des sprints et roadmap</p>
-  <div class="badge">v4.0 — Sprint S31 terminé — Mars 2026</div>
-</div>
+<!DOCTYPE html> <html lang="fr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>PetSuite — Pilotage Projet</title> <style> :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;} *{box-sizing:border-box;margin:0;padding:0;} body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;} .header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);} .header h1{font-size:2.5rem;font-weight:800;color:#fff;} .header p{color:var(--accent2);margin-top:8px;} .badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;} .nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;} .nav a{color:var(--text2);text-decoration:none;font-size:.85rem;transition:color .2s;} .nav a:hover{color:var(--accent2);} .container{max-width:1100px;margin:0 auto;padding:32px;} .section{margin-bottom:40px;} .section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;} .sprint-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;} .sprint-card.s31{border-color:#4ade80;background:rgba(74,222,128,.03);} .sprint-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;} .sprint-num{background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:700;} .sprint-num.s31{background:#16a34a;} .sprint-date{color:var(--text2);font-size:.85rem;} .sprint-status{margin-left:auto;} .done{background:rgba(16,185,129,.15);color:#10b981;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;} .done-s31{background:rgba(74,222,128,.15);color:#4ade80;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;} .current{background:rgba(99,102,241,.15);color:#818cf8;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;} .planned{background:rgba(148,163,184,.1);color:#94a3b8;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;} ul{list-style:none;padding:0;} ul li{padding:4px 0;color:var(--text2);font-size:.875rem;display:flex;align-items:flex-start;gap:8px;} ul li::before{content:'✅';font-size:.75rem;flex-shrink:0;margin-top:2px;} ul.planned li::before{content:'○';color:var(--text2);} ul.inprog li::before{content:'🔄';font-size:.75rem;} ul.reported li::before{content:'⏳';font-size:.75rem;} table{width:100%;border-collapse:collapse;margin:12px 0;} th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;} td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;} .highlight{background:var(--surface2);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;} .nf525-badge{display:inline-block;background:rgba(16,185,129,.15);color:#10b981;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:700;margin-left:6px;} .s31-badge{display:inline-block;background:rgba(74,222,128,.15);color:#4ade80;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:700;margin-left:6px;} footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;} </style> </head> <body>
+<div class="header"><h1>📊 PetSuite — Pilotage Projet</h1><p>Historique des sprints et roadmap</p><div class="badge">v4.0 — Sprint S31 livré — 17 Mars 2026</div></div>
 <nav class="nav">
   <a href="index.html">← Accueil</a>
   <a href="01-synthese-projet.html">Synthèse projet</a>
   <a href="06-roadmap.html">Roadmap</a>
-  <a href="23-Prise-en-compte-de-la-NF-525.html">NF 525</a> <a href="24-changelog-sprint-S31.html" style="color:#4ade80;font-weight:600;">Changelog S31 🆕</a>
-<a href="24-changelog-sprint-S31.html" style="color:#4ade80;font-weight:600;">Changelog S31 🆕</a>
+  <a href="23-Prise-en-compte-de-la-NF-525.html">NF 525</a>
+  <a href="24-changelog-sprint-S31.html" style="color:#4ade80;font-weight:600;">Changelog S31 🆕</a>
 </nav>
 <div class="container">
-
   <div class="section">
-    <h2>📈 Vue d'ensemble</h2>
+    <h2>📈 Vue d'ensemble — S25 → S31</h2>
     <table>
       <thead><tr><th>Sprint</th><th>Période</th><th>Thème</th><th>Statut</th></tr></thead>
       <tbody>
         <tr><td>S25-S26</td><td>Fév 2026</td><td>Socle métier : clients, animaux, séances, facturation, CRM, FEC</td><td><span class="done">✅ Livré</span></td></tr>
-        <tr><td>S27</td><td>Fév-Mars 2026</td><td>Impayés, admin, audit, FEC export figé</td><td><span class="done">✅ Livré</span></td></tr>
+        <tr><td>S27</td><td>Fév-Mars 2026</td><td>Impayés, admin, audit, FEC export figé SHA-256</td><td><span class="done">✅ Livré</span></td></tr>
         <tr><td>S28</td><td>Mars 2026</td><td>Élevage, achats, templates devis, génération devis depuis séance</td><td><span class="done">✅ Livré</span></td></tr>
         <tr><td>S29</td><td>Mars 2026</td><td>Bilan financier, inventaires, fiche achat</td><td><span class="done">✅ Livré</span></td></tr>
-        <tr><td>S30</td><td>17 Mars 2026</td><td>Consolidation : programmes, dashboard, sauvegarde, races multi-espèces + <strong style="color:#10b981">Module NF 525</strong></td><td><span class="done">✅ Livré</span></td></tr>
-        <tr><td>S31</td><td>Avril 2026</td><td>Intégration API NF525, interface clôture Z, Module Éditions, carnet pension DDPP, extensions tables</td><td><span class="planned">Planifié</span></td></tr>
-        <tr><td>S32</td><td>Mai 2026</td><td>14 métiers complets, internationalisation, réservations en ligne, attestation NF525</td><td><span class="planned">Planifié</span></td></tr>
+        <tr><td>S30</td><td>17 Mars 2026</td><td>Consolidation : programmes, dashboard, races multi-espèces + Module NF 525</td><td><span class="done">✅ Livré</span></td></tr>
+        <tr><td><strong style="color:#4ade80">S31</strong></td><td><strong style="color:#4ade80">17 Mars 2026</strong></td><td><strong style="color:#4ade80">QR Code, agenda grille, contacts modale, 7 questionnaires, 200 articles aide, 81 articles BDD</strong></td><td><span class="done-s31">✅ Livré</span></td></tr>
+        <tr><td>S32</td><td>Avril 2026</td><td>Upload photo animal, NF525 API, templates devis métiers, questionnaire public</td><td><span class="planned">Planifié</span></td></tr>
+        <tr><td>S33</td><td>Mai 2026</td><td>14 métiers complets, internationalisation, réservations en ligne, attestation NF525</td><td><span class="planned">Planifié</span></td></tr>
       </tbody>
     </table>
   </div>
 
   <div class="section">
-    <h2>✅ Sprint S31 — 17 Mars 2026</h2>
-    <div class="sprint-card">
+    <h2>🟢 Sprint S31 — Livré le 17 Mars 2026</h2>
+    <div class="sprint-card s31">
       <div class="sprint-header">
-        <span class="sprint-num">S30</span>
-        <span class="sprint-date">17 Mars 2026 — Session complète</span>
-        <span class="sprint-status"><span class="done">Terminé</span></span>
+        <span class="sprint-num s31">S31</span>
+        <span class="sprint-date">17 Mars 2026 — <a href="24-changelog-sprint-S31.html" style="color:#4ade80;">Changelog complet →</a></span>
+        <span class="sprint-status"><span class="done-s31">✅ Livré</span></span>
       </div>
       <ul>
+        <li>QR Code tableau de bord — persistant via route interne /api/qrcode (proxy qrserver) <span class="s31-badge">S31</span></li>
+        <li>Agenda vue semaine — grille horaire 7h-20h, RDV positionnés par heure, ligne "maintenant"</li>
+        <li>Fiche client — contacts en tuiles avec avatar initiales + réseaux sociaux (LinkedIn/FB/IG/WA)</li>
+        <li>Fiche client — modale créer/modifier/supprimer contact</li>
+        <li>Fix CA total fiche client (Number() cast — était concaténation string)</li>
+        <li>Fix route edit client (PUT au lieu de POST)</li>
+        <li>Liste animaux — filtres par espèce avec compteurs + format puce xxx-xxx-xxx</li>
+        <li>Photo Frimousse insérée en BDD (ANI_ID=22, miniature base64) <span class="s31-badge">BDD</span></li>
+        <li>7 modèles questionnaires : Comportementaliste, Centre équestre, Maréchal, Toiletteur, Pet-sitter, Suivi, Stage <span class="s31-badge">S31</span></li>
+        <li>Centre d'aide — 200 articles / 15 modules (Animaux, Clients, Séances, EDC/CAC, Facturation…)</li>
+        <li>Fix HelpButton : pointe vers /app/aide (était /docs/notice → 404)</li>
+        <li>Route API /ged-libelles-ec GET/PUT — 81 libellés EDC <span class="s31-badge">API</span></li>
+        <li>Route API /qrcode proxy — Cache-Control 24h <span class="s31-badge">API</span></li>
+        <li>81 articles BDD par métier — 6 métiers (Comportementaliste, Équestre, Toiletteur, Maréchal, Pet-sitter, Éducateur) <span class="s31-badge">BDD</span></li>
+        <li>16 nouvelles catégories métiers (CAT_ID 20-72) <span class="s31-badge">BDD</span></li>
+        <li>Redirect /app → /app/tableau-de-bord (QR Codes visibles depuis sidebar)</li>
+        <li>Dump BDD S31 — backup_S31_20260317.sql (5.28 MB) <span class="s31-badge">Archive</span></li>
+      </ul>
+    </div>
+    <div class="sprint-card" style="border-color:var(--yellow);">
+      <div class="sprint-header">
+        <span class="sprint-num" style="background:var(--yellow);color:#000;">Reporté S32</span>
+        <span class="sprint-date">Items non livrés en S31</span>
+      </div>
+      <ul class="reported">
+        <li>Encart photo upload fiche animal (ANI_PHOTOS)</li>
+        <li>Templates devis page avec séparateurs par métier</li>
+        <li>Page questionnaire publique (/questionnaire?type=equestre)</li>
+        <li>Historique admin — colonne commentaires</li>
+        <li>Config entreprise PetSuite (param_entreprise, app_charte_graphique)</li>
+        <li>Intégration API NF525 post-règlement</li>
+        <li>Interface clôture Z caisse</li>
+        <li>Bug doublons animaux dans programmes de suivi</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>✅ Sprint S30 — 17 Mars 2026</h2>
+    <div class="sprint-card">
+      <div class="sprint-header"><span class="sprint-num">S30</span><span class="sprint-date">17 Mars 2026</span><span class="sprint-status"><span class="done">Terminé</span></span></div>
+      <ul>
         <li>Programmes de suivi comportemental (8/12 semaines) — page + API GET/POST/PATCH</li>
-        <li>Dashboard KPIs temps réel (88 clients, 137 animaux, 80 séances, CA HT)</li>
+        <li>Dashboard KPIs temps réel (88 clients, 137 animaux, 80 séances)</li>
         <li>Composant ReseauxSociaux — LinkedIn, Facebook, Instagram, WhatsApp dans fiche client</li>
         <li>Fiche achat [id] — détail lignes + écritures comptables</li>
-        <li>Filtre animaux par client corrigé (API accepte ?client= ET ?clientId=)</li>
-        <li>24 routes custom-routes.ts S27→S30 opérationnelles (290 lignes)</li>
-        <li>Sauvegarde BDD v5 — mariadb-dump.exe + backup_AAAA-MM-JJ.zip + tâche planifiée</li>
-        <li>Centre d'aide opérationnel (rebuild frontend)</li>
+        <li>24 routes custom-routes.ts S27→S30 opérationnelles</li>
+        <li>Sauvegarde BDD v5 — mariadb-dump.exe + backup quotidien + tâche planifiée</li>
         <li>Races multi-espèces : RACE_TYPE + RACE_CATEGORIE + 392 races (8 espèces, FCI 1-10)</li>
-        <li>Routes API races : /animaux/races?type=, /races/types, /races/categories</li>
-        <li>Roadmap 14 métiers documentée (Comportementaliste → Organisateur événements)</li>
         <li><strong style="color:#10b981">Module NF 525</strong> — Script SQL complet (5 tables, 4 procédures, 6 vues, 4 triggers) <span class="nf525-badge">NF525</span></li>
         <li><strong style="color:#10b981">Plan de conformité NF 525</strong> — Document Word 10 chapitres + page wiki Git #23 <span class="nf525-badge">NF525</span></li>
       </ul>
@@ -97,88 +90,59 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:24px
   </div>
 
   <div class="section">
-    <h2>✅ Sprints antérieurs</h2>
+    <h2>✅ Sprints S25-S29</h2>
     <div class="sprint-card">
       <div class="sprint-header"><span class="sprint-num">S29</span><span class="sprint-date">Mars 2026</span><span class="sprint-status"><span class="done">Terminé</span></span></div>
-      <ul>
-        <li>Bilan financier avec filtres période (mois/trimestre/année/année précédente)</li>
-        <li>Inventaires et valorisation du stock</li>
-        <li>Fiche achat avec lignes détaillées</li>
-      </ul>
+      <ul><li>Bilan financier avec filtres période</li><li>Inventaires et valorisation du stock</li><li>Fiche achat avec lignes détaillées</li></ul>
     </div>
     <div class="sprint-card">
       <div class="sprint-header"><span class="sprint-num">S28</span><span class="sprint-date">Mars 2026</span><span class="sprint-status"><span class="done">Terminé</span></span></div>
-      <ul>
-        <li>Module élevage : saillies, portées, alertes gestation</li>
-        <li>Achats fournisseurs (entête + lignes)</li>
-        <li>5 templates de devis (EDC, Suivi, Gardiennage)</li>
-        <li>Génération devis depuis une séance (sp_dce_creer_depuis_seance)</li>
-        <li>Réseaux sociaux tiers</li>
-      </ul>
+      <ul><li>Module élevage : saillies, portées, alertes gestation</li><li>Achats fournisseurs (entête + lignes)</li><li>5 templates de devis (EDC, Suivi, Gardiennage)</li><li>Génération devis depuis une séance</li></ul>
     </div>
     <div class="sprint-card">
       <div class="sprint-header"><span class="sprint-num">S27</span><span class="sprint-date">Fév-Mars 2026</span><span class="sprint-status"><span class="done">Terminé</span></span></div>
-      <ul>
-        <li>Factures impayées + rappels email</li>
-        <li>Admin : utilisateurs, rôles, journal audit</li>
-        <li>Exercices comptables + Export FEC figé (SHA256)</li>
-        <li>Procédure sp_fec_generer_par_exercice</li>
-      </ul>
+      <ul><li>Factures impayées + rappels email</li><li>Admin : utilisateurs, rôles, journal audit</li><li>Exercices comptables + Export FEC figé SHA-256</li></ul>
     </div>
     <div class="sprint-card">
       <div class="sprint-header"><span class="sprint-num">S25-S26</span><span class="sprint-date">Fév 2026</span><span class="sprint-status"><span class="done">Terminé</span></span></div>
-      <ul>
-        <li>Stack complète : Next.js + NestJS + MariaDB + Docker + nginx</li>
-        <li>Tiers/Clients, Contacts, Animaux, Races</li>
-        <li>Séances (EDC unique par animal), Devis/Contrats, Facturation, Règlements, Avoirs</li>
-        <li>CRM complet : Leads, Opportunités, Activités, Campagnes</li>
-        <li>Export FEC temps réel (vues SQL)</li>
-        <li>GED (micro_logiciel_ged) — liens polymorphes</li>
-        <li>Paramètres : TVA, modes paiement, conditions paiement, types séance</li>
-      </ul>
+      <ul><li>Stack Next.js + NestJS + MariaDB + Docker + nginx</li><li>Tiers/Clients, Contacts, Animaux, Races</li><li>Séances, Devis, Facturation, Règlements, Avoirs</li><li>CRM complet : Leads, Opportunités, Activités</li><li>Export FEC + GED polymorphe</li></ul>
     </div>
   </div>
 
   <div class="section">
-    <h2>🚀 Sprint S31 — Planifié (Avril 2026)</h2>
+    <h2>🚀 Sprint S32 — Planifié (Avril 2026)</h2>
     <div class="sprint-card">
-      <div class="sprint-header"><span class="sprint-num">S31</span><span class="sprint-date">Avril 2026</span><span class="sprint-status"><span class="planned">Planifié</span></span></div>
+      <div class="sprint-header"><span class="sprint-num">S32</span><span class="sprint-date">Avril 2026</span><span class="sprint-status"><span class="planned">Planifié</span></span></div>
       <ul class="planned">
-        <li><strong style="color:#818cf8">NF525</strong> — Intégration API : appel sp_nf525_enregistrer_encaissement post-règlement (US-23.2)</li>
-        <li><strong style="color:#818cf8">NF525</strong> — Interface clôture Z journalière (front caisse + impression ticket)</li>
-        <li><strong style="color:#818cf8">NF525</strong> — Dashboard conformité back-office (vue v_nf525_conformite)</li>
-        <li><strong style="color:#818cf8">NF525</strong> — Sauvegarde quotidienne tables NF525 (rétention 6 ans)</li>
-        <li>Tables SQL manquantes : programme_suivi, programme_semaine, param_metier</li>
-        <li>Module Éditions : CGV paramétrables, contrats avec champs fusion</li>
-        <li>Carnet pension DDPP (registre entrées/sorties)</li>
-        <li>Extensions animal : alimentation, médicaments, habitudes, contact_veto, ferrure, photos</li>
-        <li>Extensions tiers : numéro urgence, instructions, RC_Pro</li>
-        <li>Page /app/mes-parametres/metier (devise, langue, activité)</li>
-        <li>Barre filtres pill races dans formulaires création animal</li>
-        <li>Composant RaceSelector réutilisable</li>
+        <li>Upload photo fiche animal → ANI_PHOTOS</li>
+        <li>Templates devis avec séparateurs par métier</li>
+        <li>Questionnaire public par type (/questionnaire?type=equestre)</li>
+        <li>Historique admin — colonne commentaires</li>
+        <li>Config entreprise PetSuite BDD + logo + filigrane</li>
+        <li><strong style="color:#818cf8">NF525</strong> — Appel API post-règlement sp_nf525_enregistrer_encaissement</li>
+        <li><strong style="color:#818cf8">NF525</strong> — Interface clôture Z journalière (front caisse)</li>
+        <li><strong style="color:#818cf8">NF525</strong> — Dashboard conformité back-office</li>
+        <li>Doublons animaux dans programmes — fix jointure SQL</li>
+        <li>Formulaire lead public — 20 leads de test</li>
       </ul>
     </div>
   </div>
 
   <div class="section">
-    <h2>🗺️ Sprint S32 — Vision (Mai 2026)</h2>
+    <h2>🗺️ Sprint S33 — Vision (Été 2026)</h2>
     <div class="highlight">
-      <p><strong>14 métiers couverts :</strong> Comportementaliste · Éleveur canin/félin · Éleveur animalier · Toiletteur · Pet-sitter · Naturopathe · Maréchal-ferrant · Centre équestre · Centre canin · Ostéopathe/Kiné · Éducateur animalier · Pension animale · Chenil/Chatterie · Organisateur événements animaliers</p>
+      <p><strong>14 métiers couverts :</strong> Comportementaliste · Éleveur · Toiletteur · Pet-sitter · Naturopathe · Maréchal-ferrant · Centre équestre · Centre canin · Ostéopathe/Kiné · Éducateur animalier · Pension animale · Chenil/Chatterie · Organisateur événements</p>
     </div>
     <ul class="planned" style="margin-top:16px">
       <li>Attestation de conformité NF525 signée par la direction</li>
       <li>Internationalisation FR/EN/IT/DE/ES</li>
-      <li>Devise paramétrable (€, $, £, CHF...)</li>
-      <li>Registre élevage DDPP/I-CAD/SCC</li>
-      <li>Suivi génétique reproducteurs</li>
-      <li>Réservations en ligne</li>
+      <li>Devise paramétrable (€, $, £, CHF)</li>
+      <li>Registre élevage DDPP/I-CAD/SCC/LOOF</li>
+      <li>Réservations en ligne clients</li>
       <li>Planning multi-ressources (moniteurs, chevaux, boxes)</li>
       <li>Carnet santé électronique</li>
-      <li>Organisateur événements (inscriptions, catégories, sponsors)</li>
     </ul>
   </div>
-
 </div>
-<footer>PetSuite Pilotage Projet v4.0 — Sprint S31 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:var(--accent2);text-decoration:none;">← Retour accueil</a></footer>
-</body>
-</html>
+<footer>PetSuite Pilotage Projet v4.0 — Sprint S31 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:var(--accent2);text-decoration:none;">← Retour accueil</a> | <a href="24-changelog-sprint-S31.html" style="color:#4ade80;text-decoration:none;">Changelog S31 🆕</a></footer>
+</body> </html>

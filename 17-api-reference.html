@@ -1,4 +1,126 @@
-<!DOCTYPE html> <html lang="fr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>PetSuite — Référence API v4.0</title> <style> :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;} *{box-sizing:border-box;margin:0;padding:0;} body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;} .header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);} .header h1{font-size:2.5rem;font-weight:800;color:#fff;} .header p{color:var(--accent2);margin-top:8px;} .badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;} .container{max-width:1200px;margin:0 auto;padding:32px;} .section{margin-bottom:40px;} .section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;} .section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:20px 0 10px;} table{width:100%;border-collapse:collapse;margin:12px 0;} th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:10px 14px;text-align:left;} td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;vertical-align:top;} tr:hover td{background:var(--surface);} .method{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:700;font-family:monospace;} .get{background:rgba(16,185,129,.2);color:#10b981;} .post{background:rgba(99,102,241,.2);color:#818cf8;} .put{background:rgba(245,158,11,.2);color:#f59e0b;} .patch{background:rgba(59,130,246,.2);color:#60a5fa;} .delete{background:rgba(239,68,68,.2);color:#ef4444;} code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);} .sprint{display:inline-block;background:var(--surface2);color:var(--text2);padding:1px 6px;border-radius:3px;font-size:.7rem;} .new{background:rgba(16,185,129,.2);color:#10b981;padding:1px 6px;border-radius:3px;font-size:.7rem;font-weight:600;} .highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;} footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;} </style> </head> <body>
-<div class="header"> <h1>🐾 PetSuite — Référence API</h1> <p>Documentation complète des endpoints — NestJS + custom-routes.ts</p> <div class="badge">v4.0 — Sprint S31 — Mars 2026</div> </div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="07-audit-stack.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Audit Stack</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a><a href="24-changelog-sprint-S31.html" style="color:#4ade80;font-weight:600;">Changelog S31 🆕</a>
-</nav><div class="container"> <div class="section"> <h2>🏗️ Architecture API</h2> <div class="highlight"> <p><strong>Base URL :</strong> <code>http://localhost/api</code> (via nginx) · <strong>Auth :</strong> JWT Bearer token · <strong>custom-routes.ts :</strong> 290 lignes, 24 routes S27→S30</p> </div> </div> <div class="section"> <h2>🔐 Auth</h2> <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th></tr></thead><tbody><tr><td><span class="method post">POST</span></td><td><code>/auth/login</code></td><td>Login → JWT token</td></tr><tr><td><span class="method get">GET</span></td><td><code>/auth/preferences</code></td><td>Préférences utilisateur</td></tr></tbody></table></div> <div class="section"> <h2>👥 Tiers / Clients</h2> <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody><tr><td><span class="method get">GET</span></td><td><code>/tiers</code></td><td>Liste — <code>?type=CLIENT</code></td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method post">POST</span></td><td><code>/tiers</code></td><td>Créer tiers</td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/tiers/:id</code></td><td>Fiche tiers</td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method put">PUT</span></td><td><code>/tiers/:id</code></td><td>Modifier tiers</td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/tiers/:id/animaux</code></td><td>Animaux du tiers</td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/tiers/:id/factures</code></td><td>Factures du tiers</td><td><span class="sprint">S25</span></td></tr></tbody></table></div> <div class="section"> <h2>🐾 Animaux & Races</h2> <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody><tr><td><span class="method get">GET</span></td><td><code>/animaux</code></td><td>Liste — <code>?client= ou ?clientId=</code></td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method post">POST</span></td><td><code>/animaux</code></td><td>Créer animal</td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/animaux/races</code></td><td>Races — <code>?type=CHIEN&categorie=</code></td><td><span class="new">S30</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/animaux/races/types</code></td><td>Compteurs par type</td><td><span class="new">S30</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/animaux/races/categories</code></td><td>Catégories — <code>?type=CHIEN</code></td><td><span class="new">S30</span></td></tr></tbody></table></div> <div class="section"> <h2>📅 Séances</h2> <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody><tr><td><span class="method get">GET</span></td><td><code>/seances</code></td><td>Liste séances</td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method post">POST</span></td><td><code>/seances</code></td><td>Créer séance</td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method post">POST</span></td><td><code>/seances/:id/generer-devis</code></td><td>Générer devis depuis séance</td><td><span class="sprint">S28</span></td></tr></tbody></table></div> <div class="section"> <h2>🧾 Facturation & Règlements</h2> <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody><tr><td><span class="method get">GET</span></td><td><code>/factures</code></td><td>Liste factures</td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method post">POST</span></td><td><code>/factures/:id/reglements</code></td><td>Ajouter règlement → déclenche NF525</td><td><span class="sprint">S25</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/ged-factures-impayees</code></td><td>Factures impayées</td><td><span class="sprint">S27</span></td></tr><tr><td><span class="method post">POST</span></td><td><code>/ged-factures-email</code></td><td>Rappel email</td><td><span class="new">S30</span></td></tr></tbody></table></div> <div class="section"> <h2>🏛️ NF 525 — S31</h2> <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody><tr><td><span class="method post">POST</span></td><td><code>/nf525/encaissement</code></td><td>Enregistrer encaissement (sp_nf525_enregistrer_encaissement)</td><td><span class="new">S31</span></td></tr><tr><td><span class="method post">POST</span></td><td><code>/nf525/cloture-z</code></td><td>Clôture Z journalière</td><td><span class="new">S31</span></td></tr><tr><td><span class="method post">POST</span></td><td><code>/nf525/cloture-x</code></td><td>Clôture X intermédiaire</td><td><span class="new">S31</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/nf525/conformite</code></td><td>Tableau de bord conformité (v_nf525_conformite)</td><td><span class="new">S31</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/nf525/journal</code></td><td>Journal de caisse (lecture seule)</td><td><span class="new">S31</span></td></tr></tbody></table></div> <div class="section"> <h2>📋 Programmes / Bilan / Autres</h2> <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody><tr><td><span class="method get">GET</span></td><td><code>/programmes</code></td><td>Programmes de suivi</td><td><span class="new">S30</span></td></tr><tr><td><span class="method patch">PATCH</span></td><td><code>/programmes/:id/semaines/:num</code></td><td>Mettre à jour semaine</td><td><span class="new">S30</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/dashboard/stats</code></td><td>KPIs temps réel</td><td><span class="new">S30</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/bilan</code></td><td>Bilan financier <code>?periode=</code></td><td><span class="sprint">S29</span></td></tr><tr><td><span class="method get">GET</span></td><td><code>/ged-compta-fec</code></td><td>Export FEC</td><td><span class="sprint">S27</span></td></tr><tr><td><span class="method post">POST</span></td><td><code>/ged-compta-fec-generer</code></td><td>Générer FEC figé</td><td><span class="sprint">S27</span></td></tr></tbody></table></div> </div> <footer>PetSuite API Reference v4.0 — Sprint S31 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer> </body> </html>
+<!DOCTYPE html> <html lang="fr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>PetSuite — Référence API v4.0</title> <style> :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;} *{box-sizing:border-box;margin:0;padding:0;} body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;} .header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);} .header h1{font-size:2.5rem;font-weight:800;color:#fff;} .header p{color:var(--accent2);margin-top:8px;} .badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;} .container{max-width:1200px;margin:0 auto;padding:32px;} .section{margin-bottom:40px;} .section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;} .section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:20px 0 10px;} table{width:100%;border-collapse:collapse;margin:12px 0;} th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:10px 14px;text-align:left;} td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;vertical-align:top;} tr:hover td{background:var(--surface);} .method{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:700;font-family:monospace;} .get{background:rgba(16,185,129,.2);color:#10b981;} .post{background:rgba(99,102,241,.2);color:#818cf8;} .put{background:rgba(245,158,11,.2);color:#f59e0b;} .patch{background:rgba(59,130,246,.2);color:#60a5fa;} .delete{background:rgba(239,68,68,.2);color:#ef4444;} code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);} .sprint{display:inline-block;background:var(--surface2);color:var(--text2);padding:1px 6px;border-radius:3px;font-size:.7rem;} .s31{background:rgba(74,222,128,.2);color:#4ade80;padding:1px 6px;border-radius:3px;font-size:.7rem;font-weight:600;} .new{background:rgba(16,185,129,.2);color:#10b981;padding:1px 6px;border-radius:3px;font-size:.7rem;font-weight:600;} .highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;} .highlight-s31{background:rgba(74,222,128,.05);border-left:3px solid #4ade80;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;} footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;} </style> </head> <body>
+<div class="header"><h1>🐾 PetSuite — Référence API</h1><p>Documentation complète des endpoints — NestJS + custom-routes.ts</p><div class="badge">v4.0 — Sprint S31 — Mars 2026</div></div>
+<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;">
+  <a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a>
+  <a href="07-audit-stack.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Audit Stack</a>
+  <a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a>
+  <a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a>
+  <a href="24-changelog-sprint-S31.html" style="color:#4ade80;font-weight:600;font-size:.85rem;">Changelog S31 🆕</a>
+</nav>
+<div class="container">
+
+  <div class="section">
+    <h2>🏗️ Architecture API</h2>
+    <div class="highlight">
+      <p><strong>Base URL :</strong> <code>http://localhost/api</code> (via nginx) · <strong>Auth :</strong> JWT Bearer token · <strong>custom-routes.ts :</strong> ~350 lignes, 28 routes custom S27→S31</p>
+    </div>
+    <div class="highlight-s31">
+      <p><strong>🆕 Nouveautés S31 :</strong> <code>/qrcode</code> proxy persistant · <code>/ged-libelles-ec</code> GET/PUT · <code>/questionnaires</code> GET/POST/PATCH · <code>/tiers/:id/contacts</code> GET/POST/PUT/DELETE avec réseaux sociaux</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🆕 Routes S31 — Nouvelles</h2>
+    <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody>
+      <tr><td><span class="method get">GET</span></td><td><code>/qrcode?url=&size=</code></td><td>Proxy QR Code → api.qrserver.com. Cache-Control 24h. Résout les blocages CSP/CORS</td><td><span class="s31">S31</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/ged-libelles-ec?groupe=</code></td><td>Libellés EDC filtrables. Groupes : CAC, COMPORTEMENT, ALIMENTATION, CONTACTS, EQUIDE, EQUIDE_SANTE, TERRITOIRE, GRILLE, ADMIN</td><td><span class="s31">S31</span></td></tr>
+      <tr><td><span class="method put">PUT</span></td><td><code>/ged-libelles-ec</code></td><td>Modifier un libellé EDC (PLE_LIBELLE, PLE_LIBELLE_COURT, PLE_AIDE)</td><td><span class="s31">S31</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/questionnaires</code></td><td>Liste questionnaires. Paramètres : <code>?type=&client_id=</code></td><td><span class="s31">S31</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/questionnaires</code></td><td>Créer questionnaire pré-consultation</td><td><span class="s31">S31</span></td></tr>
+      <tr><td><span class="method patch">PATCH</span></td><td><code>/questionnaires/:id</code></td><td>Mettre à jour questionnaire</td><td><span class="s31">S31</span></td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>👥 Tiers / Clients & Contacts</h2>
+    <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody>
+      <tr><td><span class="method get">GET</span></td><td><code>/tiers</code></td><td>Liste — <code>?type=CLIENT</code></td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/tiers</code></td><td>Créer tiers</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/tiers/:id</code></td><td>Fiche tiers complète</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method put">PUT</span></td><td><code>/tiers/:id</code></td><td>Modifier tiers</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/tiers/:id/contacts</code></td><td>Contacts du tiers</td><td><span class="sprint">S27</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/tiers/:id/contacts</code></td><td>Créer contact — inclut LinkedIn/Facebook/Instagram/WhatsApp</td><td><span class="s31">S31</span></td></tr>
+      <tr><td><span class="method put">PUT</span></td><td><code>/tiers/:id/contacts/:cid</code></td><td>Modifier contact + réseaux sociaux</td><td><span class="s31">S31</span></td></tr>
+      <tr><td><span class="method delete">DELETE</span></td><td><code>/tiers/:id/contacts/:cid</code></td><td>Supprimer contact</td><td><span class="s31">S31</span></td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>🐾 Animaux & Races</h2>
+    <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody>
+      <tr><td><span class="method get">GET</span></td><td><code>/animaux</code></td><td>Liste — <code>?client= ou ?clientId=</code> · inclut ANI_ESPECE S31</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/animaux</code></td><td>Créer animal</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/animaux/:id</code></td><td>Fiche animal — inclut ANI_PHOTOS (base64)</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/animaux/races</code></td><td>Races — <code>?type=CHIEN&categorie=</code></td><td><span class="new">S30</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/animaux/races/types</code></td><td>Compteurs par type (8 espèces)</td><td><span class="new">S30</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/animaux/races/categories</code></td><td>Catégories FCI — <code>?type=CHIEN</code></td><td><span class="new">S30</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/ged-cac/animal/:id/evolution</code></td><td>Évolution score CAC par séance</td><td><span class="sprint">S29</span></td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>📅 Séances & Agenda</h2>
+    <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody>
+      <tr><td><span class="method get">GET</span></td><td><code>/seances</code></td><td>Liste — <code>?client=&ani_id=&week=</code></td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/seances</code></td><td>Créer séance</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/seances/:id</code></td><td>Détail séance + lignes CAC</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/seances/:id/generer-devis</code></td><td>Générer devis depuis séance</td><td><span class="sprint">S28</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/ged-edc-sans-devis</code></td><td>EDC sans devis — tableau de bord</td><td><span class="sprint">S27</span></td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>🧾 Facturation & Règlements</h2>
+    <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody>
+      <tr><td><span class="method get">GET</span></td><td><code>/factures</code></td><td>Liste factures — <code>?client=&statut=</code></td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/factures/:id</code></td><td>Facture + lignes + règlements</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/factures/:id/reglements</code></td><td>Ajouter règlement</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/ged-factures-impayees</code></td><td>Factures impayées avec ResteAPayer</td><td><span class="sprint">S27</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/ged-factures-email</code></td><td>Envoyer rappel email</td><td><span class="new">S30</span></td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>📋 Devis / Contrats & Articles</h2>
+    <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody>
+      <tr><td><span class="method get">GET</span></td><td><code>/devis-contrats</code></td><td>Liste devis — <code>?client=&statut=</code></td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/articles</code></td><td>Bibliothèque articles — 224 articles S31</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/parametres/metier</code></td><td>Paramètres métier actifs</td><td><span class="new">S30</span></td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>📊 Dashboard & Programmes</h2>
+    <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody>
+      <tr><td><span class="method get">GET</span></td><td><code>/dashboard/stats</code></td><td>KPIs : nb_clients, nb_seances_a_venir, nb_impayes, ca_ttc</td><td><span class="new">S30</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/programmes</code></td><td>Programmes de suivi comportemental</td><td><span class="new">S30</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/programmes</code></td><td>Créer programme</td><td><span class="new">S30</span></td></tr>
+      <tr><td><span class="method patch">PATCH</span></td><td><code>/programmes/:id/semaines/:num</code></td><td>Mettre à jour semaine du programme</td><td><span class="new">S30</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/bilan</code></td><td>Bilan financier — <code>?periode=MOIS|TRIM|AN|AN_PREC</code></td><td><span class="sprint">S29</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/ged-compta-fec</code></td><td>Export FEC temps réel</td><td><span class="sprint">S27</span></td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>🏛️ NF 525 — S31/S32</h2>
+    <div class="highlight-s31"><p><strong>⚠️ Routes NF525 planifiées S32</strong> — Le SQL est livré (S30) mais l'intégration API est reportée en S32.</p></div>
+    <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody>
+      <tr><td><span class="method post">POST</span></td><td><code>/nf525/encaissement</code></td><td>→ sp_nf525_enregistrer_encaissement — À connecter post-règlement</td><td><span class="sprint">S32</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/nf525/cloture-z</code></td><td>Clôture Z journalière + fond de caisse</td><td><span class="sprint">S32</span></td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/nf525/cloture-x</code></td><td>Clôture X intermédiaire</td><td><span class="sprint">S32</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/nf525/conformite</code></td><td>Dashboard v_nf525_conformite — 0 anomalie requis</td><td><span class="sprint">S32</span></td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>🔐 Auth & Formulaire Lead</h2>
+    <table><thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead><tbody>
+      <tr><td><span class="method post">POST</span></td><td><code>/auth/login</code></td><td>Login → JWT token</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/auth/preferences</code></td><td>Préférences utilisateur (taille police, thème)</td><td><span class="sprint">S25</span></td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/ged-formulaire-lead</code></td><td>Formulaires lead actifs (LFO_TOKEN)</td><td><span class="sprint">S28</span></td></tr>
+    </tbody></table>
+  </div>
+
+</div>
+<footer>PetSuite API Reference v4.0 — Sprint S31 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a> | <a href="24-changelog-sprint-S31.html" style="color:#4ade80;text-decoration:none;">Changelog S31 🆕</a></footer>
+</body> </html>
