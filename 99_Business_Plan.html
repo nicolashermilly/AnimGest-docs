@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algorithmia — Business Plan 2025–2030 · Confidentiel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;0,800;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf9f7;
+  --bg2: #ffffff;
+  --bg3: #f3f1ed;
+  --border: #e5e1da;
+  --border2: #c8c2b6;
+  --ink: #1a1714;
+  --ink2: #5c5650;
+  --ink3: #9c9590;
+  --green: #1a6640;
+  --green2: #e8f5ef;
+  --green3: #c8e6d6;
+  --amber: #8a5c0a;
+  --amber2: #fef5e4;
+  --blue: #1a4fa0;
+  --blue2: #e8f0fb;
+  --red: #9a2020;
+  --red2: #fdeaea;
+  --gold: #7a5500;
+  --gold2: #fdf3d8;
+  --r: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.7; }
+
+/* NAV */
+.nav {
+  background: var(--ink); color: #fff;
+  padding: 0 48px; height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-brand { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; letter-spacing: .5px; }
+.nav-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,.45); }
+.nav-badge { font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: var(--green2); color: var(--green); }
+
+/* LAYOUT */
+.layout { display: flex; max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+.toc {
+  width: 220px; flex-shrink: 0;
+  position: sticky; top: 56px; height: calc(100vh - 56px);
+  overflow-y: auto; padding: 32px 0 32px 0;
+  border-right: 1px solid var(--border);
+}
+.toc-title { font-size: 9px; font-weight: 600; color: var(--ink3); text-transform: uppercase; letter-spacing: .1em; padding: 0 20px 10px; }
+.toc a { display: block; font-size: 11px; color: var(--ink2); padding: 4px 20px; text-decoration: none; border-left: 2px solid transparent; line-height: 1.4; }
+.toc a:hover { color: var(--ink); background: var(--bg3); }
+.toc a.h2 { font-weight: 600; margin-top: 8px; }
+.toc a.h3 { padding-left: 32px; font-size: 10px; }
+.main { flex: 1; padding: 40px 48px 100px; max-width: 880px; }
+
+/* COVER */
+.cover {
+  background: var(--ink); color: #fff;
+  padding: 60px 48px 50px; margin-bottom: 0;
+  border-bottom: 4px solid var(--green);
+}
+.cover-label { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,.4); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 16px; }
+.cover h1 { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 800; line-height: 1.1; margin-bottom: 8px; }
+.cover h1 em { font-style: italic; color: rgba(255,255,255,.5); }
+.cover-sub { font-size: 15px; color: rgba(255,255,255,.6); margin-bottom: 36px; }
+.cover-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.1); border-radius: var(--r); overflow: hidden; }
+.cover-kpi { background: rgba(255,255,255,.05); padding: 18px 20px; }
+.cover-kpi-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+.cover-kpi-lbl { font-size: 11px; color: rgba(255,255,255,.4); }
+.cover-kpi.accent .cover-kpi-num { color: #5dca9e; }
+.cover-confidential { margin-top: 32px; font-size: 11px; color: rgba(255,255,255,.3); font-style: italic; }
+
+/* SECTIONS */
+.section { margin-bottom: 52px; }
+.section-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.section-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink3); }
+.section-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; letter-spacing: -.3px; }
+.subsection { margin-bottom: 28px; }
+.subsection-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 14px; padding-left: 10px; border-left: 3px solid var(--green); }
+
+/* PILLS */
+.pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+.p-green { background: var(--green2); color: var(--green); }
+.p-amber { background: var(--amber2); color: var(--amber); }
+.p-blue { background: var(--blue2); color: var(--blue); }
+.p-red { background: var(--red2); color: var(--red); }
+.p-gold { background: var(--gold2); color: var(--gold); }
+.p-gray { background: var(--bg3); color: var(--ink2); border: 1px solid var(--border); }
+
+/* TABLES */
+.table-wrap { overflow-x: auto; margin-bottom: 20px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--ink3); padding: 8px 12px; border-bottom: 2px solid var(--border); background: var(--bg3); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.45; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg3); }
+td strong { color: var(--ink); }
+
+/* CALLOUT */
+.callout { border-left: 3px solid var(--green); background: var(--green2); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; font-size: 13px; }
+.callout.amber { border-color: var(--amber); background: var(--amber2); }
+.callout.blue { border-color: var(--blue); background: var(--blue2); }
+.callout strong { font-weight: 600; }
+
+/* MODULES GRID */
+.modules-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+.module-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 16px; border-top: 3px solid transparent; }
+.module-card.c-green { border-top-color: var(--green); }
+.module-card.c-blue { border-top-color: #3a7fd4; }
+.module-card.c-amber { border-top-color: #c28820; }
+.module-card.c-purple { border-top-color: #6a3faf; }
+.module-card.c-teal { border-top-color: #0f8080; }
+.module-card.c-red { border-top-color: var(--red); }
+.module-card.c-gold { border-top-color: var(--gold); }
+.module-card.c-gray { border-top-color: var(--ink3); }
+.module-title { font-size: 12px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.module-feat { font-size: 11px; color: var(--ink2); margin-bottom: 3px; display: flex; gap: 6px; align-items: flex-start; }
+.module-feat::before { content: '–'; color: var(--ink3); flex-shrink: 0; }
+
+/* ROADMAP */
+.roadmap-phase { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; margin-bottom: 12px; display: flex; gap: 18px; align-items: flex-start; }
+.phase-badge { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 10px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+.phase-done { background: var(--green2); color: var(--green); }
+.phase-current { background: var(--amber2); color: var(--amber); }
+.phase-planned { background: var(--bg3); color: var(--ink2); border: 1px solid var(--border); }
+.phase-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.phase-desc { font-size: 12px; color: var(--ink2); line-height: 1.5; }
+
+/* KPI CARDS */
+.kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 24px; }
+.kpi-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 14px 12px; text-align: center; }
+.kpi-year { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink3); margin-bottom: 6px; }
+.kpi-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); line-height: 1.1; margin-bottom: 2px; }
+.kpi-lbl { font-size: 10px; color: var(--ink3); }
+.kpi-card.highlight { background: var(--green2); border-color: var(--green3); }
+.kpi-card.highlight .kpi-num { color: var(--green); }
+
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+.plan-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 22px 18px; position: relative; }
+.plan-card.featured { border-color: var(--green); border-width: 2px; }
+.plan-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--ink3); margin-bottom: 8px; }
+.plan-price { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.plan-price span { font-size: 13px; font-weight: 400; color: var(--ink3); font-family: 'Inter', sans-serif; }
+.plan-target { font-size: 11px; color: var(--ink2); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.plan-feat { font-size: 11px; color: var(--ink2); padding: 4px 0; display: flex; gap: 6px; }
+.plan-feat::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+/* RISK TABLE */
+.risk-row-high td:first-child { border-left: 3px solid var(--red); }
+.risk-row-med td:first-child { border-left: 3px solid var(--amber); }
+.risk-row-low td:first-child { border-left: 3px solid var(--green); }
+
+/* NEW BADGE */
+.new-badge { display: inline-block; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 10px; background: var(--green); color: #fff; margin-left: 6px; vertical-align: middle; }
+.upd-badge { display: inline-block; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 10px; background: var(--blue2); color: var(--blue); margin-left: 6px; vertical-align: middle; border: 1px solid var(--blue); }
+
+/* FOOTER */
+footer { background: var(--ink); color: rgba(255,255,255,.4); padding: 20px 48px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; }
+footer strong { color: rgba(255,255,255,.7); font-family: 'Playfair Display', serif; }
+
+@media (max-width: 900px) {
+  .toc { display: none; }
+  .main { padding: 24px 20px 60px; }
+  .cover { padding: 40px 24px; }
+  .cover h1 { font-size: 36px; }
+  .cover-grid { grid-template-columns: repeat(2, 1fr); }
+  .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .modules-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<style>
+#pw-overlay{position:fixed;inset:0;z-index:9999;background:#0d0f14;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+#pw-overlay.hidden{display:none;}
+.pw-box{background:#1a1e29;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:40px 36px;width:340px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;}
+.pw-brand{font-size:20px;font-weight:700;color:#fff;}
+.pw-sub{font-size:11px;color:rgba(255,255,255,.35);}
+.pw-input{width:100%;padding:11px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:14px;font-family:'DM Mono',monospace;outline:none;text-align:center;letter-spacing:.15em;}
+.pw-input:focus{border-color:#5dca9e;}
+.pw-btn{width:100%;padding:11px;border-radius:8px;background:#1a6640;color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;}
+.pw-btn:hover{background:#1e7a4c;}
+.pw-error{font-size:12px;color:#f56565;min-height:16px;}
+</style>
+<div id="pw-overlay">
+  <div class="pw-box">
+    <div style="font-size:32px;">🔐</div>
+    <div class="pw-brand">Accès restreint</div>
+    <div class="pw-sub">Super Admin — document confidentiel</div>
+    <input class="pw-input" type="password" id="pw-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkPw()">
+    <button class="pw-btn" onclick="checkPw()">Accéder →</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
+<script>
+(function(){if(sessionStorage.getItem('auth_bp')==='1'){document.getElementById('pw-overlay').classList.add('hidden');}})();
+function checkPw(){
+  var v=document.getElementById('pw-input').value;
+  if(v==='@lgorithmePetSuite'){sessionStorage.setItem('auth_bp','1');document.getElementById('pw-overlay').classList.add('hidden');}
+  else{document.getElementById('pw-error').textContent='Mot de passe incorrect';document.getElementById('pw-input').value='';document.getElementById('pw-input').focus();setTimeout(function(){document.getElementById('pw-error').textContent='';},2500);}
+}
+</script>
+
+
+
+<nav class="nav">
+  <div class="nav-brand">Algorithmia</div>
+  <div class="nav-meta">Business Plan · Version S25 · Mars 2026</div>
+  <div class="nav-badge">Confidentiel</div>
+
+  <a href="index.html" style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.5);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.15);border-radius:20px;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.5)'">← Index</a>
+</nav>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label">Business Plan stratégique</div>
+  <h1>Algorithmia<br><em>2025 — 2030</em></h1>
+  <p class="cover-sub">SaaS vertical de gestion métier — Filière animaux de compagnie · France puis Europe</p>
+  <div class="cover-grid">
+    <div class="cover-kpi accent">
+      <div class="cover-kpi-num">2 000+</div>
+      <div class="cover-kpi-lbl">Abonnés cibles an 5</div>
+    </div>
+    <div class="cover-kpi accent">
+      <div class="cover-kpi-num">1,8 M€</div>
+      <div class="cover-kpi-lbl">ARR cible an 5</div>
+    </div>
+    <div class="cover-kpi accent">
+      <div class="cover-kpi-num">M28–30</div>
+      <div class="cover-kpi-lbl">Point mort</div>
+    </div>
+    <div class="cover-kpi">
+      <div class="cover-kpi-num">150 K€</div>
+      <div class="cover-kpi-lbl">Besoin levée phase 1</div>
+    </div>
+    <div class="cover-kpi">
+      <div class="cover-kpi-num">50 000+</div>
+      <div class="cover-kpi-lbl">Pros adressables France</div>
+    </div>
+    <div class="cover-kpi">
+      <div class="cover-kpi-num">S25</div>
+      <div class="cover-kpi-lbl">Sprint courant</div>
+    </div>
+  </div>
+  <p class="cover-confidential">Document confidentiel — toute reproduction sans accord écrit est interdite — mars 2026</p>
+</div>
+
+<div class="layout">
+
+<!-- TOC -->
+<nav class="toc">
+  <div class="toc-title">Sommaire</div>
+  <a class="h2" href="#s1">1. Executive Summary</a>
+  <a class="h2" href="#s2">2. Analyse de marché</a>
+  <a class="h3" href="#s2-1">2.1 La filière en France</a>
+  <a class="h3" href="#s2-2">2.2 Tendances structurelles</a>
+  <a class="h3" href="#s2-3">2.3 Analyse concurrentielle</a>
+  <a class="h2" href="#s3">3. Produit & technologie</a>
+  <a class="h3" href="#s3-1">3.1 Modules fonctionnels</a>
+  <a class="h3" href="#s3-2">3.2 Architecture technique</a>
+  <a class="h3" href="#s3-3">3.3 Roadmap produit</a>
+  <a class="h2" href="#s4">4. Stratégie commerciale</a>
+  <a class="h3" href="#s4-1">4.1 Tarification</a>
+  <a class="h3" href="#s4-2">4.2 Acquisition clients</a>
+  <a class="h3" href="#s4-3">4.3 Métriques cibles</a>
+  <a class="h2" href="#s5">5. Modèle financier</a>
+  <a class="h3" href="#s5-1">5.1 Hypothèses</a>
+  <a class="h3" href="#s5-2">5.2 Compte de résultats</a>
+  <a class="h3" href="#s5-3">5.3 Trésorerie & point mort</a>
+  <a class="h2" href="#s6">6. Stratégie de financement</a>
+  <a class="h2" href="#s7">7. Structure pitch deck</a>
+  <a class="h2" href="#s8">8. Risques & mitigation</a>
+  <a class="h2" href="#s9">9. Checklist investisseur</a>
+  <a class="h2" href="#s10">10. Conclusion & next steps</a>
+</nav>
+
+<div class="main">
+
+<!-- 1. EXECUTIVE SUMMARY -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-title">Executive Summary</span>
+  </div>
+
+  <p style="margin-bottom:16px;">Algorithmia est une solution SaaS verticale de gestion métier destinée aux professionnels de l'animal de compagnie en France. Elle centralise dans un seul outil l'ensemble du cycle opérationnel : prise de rendez-vous, devis et contrats, facturation conforme FEC, GED documentaire, suivi comportemental des animaux, CRM et acquisition leads.</p>
+
+  <div class="callout">
+    <strong>Opportunité :</strong> 12 000+ professionnels indépendants en France exercent sans outil adapté. Les solutions généralistes (Pennylane, Henrri) ne couvrent pas la logique métier spécifique ; les rares solutions verticales sont obsolètes ou à forte friction.
+  </div>
+
+  <div class="subsection" style="margin-top:24px;">
+    <div class="subsection-title">Avantages concurrentiels différenciants</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td><strong>Architecture multi-métier by design</strong></td><td>Le même modèle de données couvre comportementalistes, éducateurs, toiletteurs, pensions sans refactorisation</td></tr>
+          <tr><td><strong>Dossier animal complet</strong></td><td>Historique séances, EDC (Étude Comportementale), suivi CAC séance par séance, GED documentaire — actif de données unique en France</td></tr>
+          <tr><td><strong>Conformité comptable native</strong></td><td>Export FEC chaîné SHA-256, exercices, plan de comptes — conforme DGFiP</td></tr>
+          <tr><td><strong>CRM + lead acquisition intégré</strong></td><td>Formulaire public paramétrable (réseaux sociaux, site web) → création lead automatique dans le CRM</td></tr>
+          <tr><td><strong>Aide contextuelle intégrée</strong></td><td>58 articles d'aide par module, panneau contextuel par page, centre d'aide /app/aide — zéro friction d'onboarding</td></tr>
+          <tr><td><strong>Technologie moderne open source</strong></td><td>MariaDB / Next.js 15 / NestJS — coûts d'infrastructure maîtrisés, déploiement cloud rapide</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Indicateurs clés à 5 ans</div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-year">An 1</div><div class="kpi-num">80</div><div class="kpi-lbl">Abonnés</div></div>
+      <div class="kpi-card"><div class="kpi-year">An 2</div><div class="kpi-num">300</div><div class="kpi-lbl">Abonnés</div></div>
+      <div class="kpi-card"><div class="kpi-year">An 3</div><div class="kpi-num">700</div><div class="kpi-lbl">Abonnés</div></div>
+      <div class="kpi-card"><div class="kpi-year">An 4</div><div class="kpi-num">1 300</div><div class="kpi-lbl">Abonnés</div></div>
+      <div class="kpi-card highlight"><div class="kpi-year">An 5</div><div class="kpi-num">2 000+</div><div class="kpi-lbl">Abonnés</div></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Indicateur</th><th>An 1</th><th>An 2</th><th>An 3</th><th>An 4</th><th>An 5</th></tr></thead>
+        <tbody>
+          <tr><td><strong>MRR (€)</strong></td><td>4 800</td><td>22 500</td><td>56 000</td><td>104 000</td><td>150 000</td></tr>
+          <tr><td><strong>ARR (€)</strong></td><td>57 600</td><td>270 000</td><td>672 000</td><td>1 248 000</td><td>1 800 000</td></tr>
+          <tr><td><strong>Résultat net (€)</strong></td><td>-95 000</td><td>-40 000</td><td>+25 000</td><td>+195 000</td><td>+420 000</td></tr>
+          <tr><td><strong>Churn mensuel</strong></td><td>&lt; 4 %</td><td>&lt; 3 %</td><td>&lt; 2 %</td><td>&lt; 2 %</td><td>&lt; 1,5 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 2. MARCHE -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-title">Analyse de marché</span>
+  </div>
+
+  <div class="subsection" id="s2-1">
+    <div class="subsection-title">2.1 La filière animaux de compagnie en France</div>
+    <p style="margin-bottom:14px;">La France est le premier marché européen de l'animal de compagnie, avec 63 millions d'animaux domestiques dans les foyers (enquête FACCO 2023). La filière génère un chiffre d'affaires global de plus de 6 milliards d'euros, en croissance régulière de 4 à 6 % par an depuis 2018.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Segment</th><th>Nb professionnels FR</th><th>CA moyen / pro</th><th>Croissance / an</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Comportementalistes / éducateurs canins</strong></td><td>8 000 – 12 000</td><td>30 000 – 80 000 €</td><td>+8 %</td></tr>
+          <tr><td>Toiletteurs professionnels</td><td>15 000 – 20 000</td><td>40 000 – 120 000 €</td><td>+5 %</td></tr>
+          <tr><td>Pet-sitters / promeneurs</td><td>20 000 – 30 000</td><td>15 000 – 50 000 €</td><td>+12 %</td></tr>
+          <tr><td>Pensions canines / félines</td><td>5 000 – 7 000</td><td>60 000 – 200 000 €</td><td>+4 %</td></tr>
+          <tr><td>Dresseurs / agility / sport canin</td><td>3 000 – 5 000</td><td>20 000 – 60 000 €</td><td>+6 %</td></tr>
+          <tr><td><strong>TOTAL marché adressable (SAM)</strong></td><td><strong>&gt; 50 000 pros</strong></td><td>—</td><td><strong>+6 % moy.</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-2">
+    <div class="subsection-title">2.2 Tendances structurelles favorables</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td><strong>Professionnalisation accélérée</strong></td><td>Obligation de formation ACACED, certification CERTOVET, montée en gamme des prestations</td></tr>
+          <tr><td><strong>Numérisation des pratiques</strong></td><td>Les clients attendent des factures dématérialisées, des rappels SMS/email, un accès à leur historique animal en ligne</td></tr>
+          <tr><td><strong>Exigences réglementaires</strong></td><td>Conformité comptable FEC obligatoire au-delà du seuil TVA, RGPD sur les données de santé animale</td></tr>
+          <tr><td><strong>Marché non consolidé</strong></td><td>Aucun acteur dominant sur le SaaS vertical métier animal de compagnie en France</td></tr>
+          <tr><td><strong>Post-COVID</strong></td><td>Explosion du nombre d'animaux adoptés (+15 % en 2020–2021) = cohorte de propriétaires actifs sur 10–15 ans</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-3">
+    <div class="subsection-title">2.3 Analyse concurrentielle</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Concurrent</th><th>Positionnement</th><th>Faiblesse vs Algorithmia</th><th>Risque</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Pennylane / Henrri</strong></td><td>Facturation générique TPE</td><td>Pas de logique animal / séance / comportement</td><td><span class="pill p-green">Faible</span></td></tr>
+          <tr><td><strong>Vetup / Vetolib</strong></td><td>Vétérinaires (ordonnances, stocks)</td><td>Marché adjacent ; pas de CRM ni GED comportementale</td><td><span class="pill p-amber">Moyen</span></td></tr>
+          <tr><td><strong>Excel / papier</strong></td><td>Outil dominant chez les indépendants</td><td>Pas de suivi, risque erreur, non conforme FEC</td><td><span class="pill p-red">Fort (inertie)</span></td></tr>
+          <tr><td><strong>PetSoft / Groompro (US)</strong></td><td>SaaS vertical US toilettage</td><td>Pas localisé France ; pas de FEC ; pas de CRM</td><td><span class="pill p-green">Faible</span></td></tr>
+          <tr><td><strong>Entrant futur GAFAM</strong></td><td>Marketplace / agenda en ligne</td><td>Pas de gestion métier profonde</td><td><span class="pill p-gold">Long terme</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <strong>Conclusion :</strong> Algorithmia s'adresse à un marché fragmenté, sous-équipé en outils numériques, avec une propension à payer pour des solutions qui font gagner du temps et sécurisent la conformité comptable. La barrière à l'entrée est la profondeur métier, pas le prix.
+    </div>
+  </div>
+</div>
+
+<!-- 3. PRODUIT -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-title">Produit & technologie</span>
+  </div>
+
+  <div class="subsection" id="s3-1">
+    <div class="subsection-title">3.1 Modules fonctionnels — état mars 2026</div>
+    <div class="modules-grid">
+
+      <div class="module-card c-green">
+        <div class="module-title">🐾 Gestion animaux <span class="pill p-green">Déployé</span></div>
+        <div class="module-feat">Fiche animal, numéro de puce (15 chiffres), races principale + secondaire</div>
+        <div class="module-feat">Score CAC automatique mis à jour après chaque séance</div>
+        <div class="module-feat">Historique séances, GED documentaire, photo</div>
+        <div class="module-feat">Vue évolution CAC dans le temps</div>
+      </div>
+
+      <div class="module-card c-blue">
+        <div class="module-title">📅 Séances & RDV <span class="pill p-green">Déployé</span></div>
+        <div class="module-feat">Agenda visuel avec couleurs par type de séance (paramétrable)</div>
+        <div class="module-feat">Types : EDC, Suivi comportemental, Gardiennage + personnalisables</div>
+        <div class="module-feat">Compte-rendu, lignes de prestation, génération devis depuis séance</div>
+        <div class="module-feat">Statuts : Planifiée / Réalisée / Annulée / No-show</div>
+      </div>
+
+      <div class="module-card c-amber">
+        <div class="module-title">🧠 Étude Comportementale (EDC) <span class="new-badge">S25</span></div>
+        <div class="module-feat">Fiche structurée en 7 sections : Identité, Alimentation, Comportement, Mode de vie, Antécédents, Grille comportementale, Attentes</div>
+        <div class="module-feat">Grille multi-lignes de problèmes comportementaux (CRUD)</div>
+        <div class="module-feat">64 libellés paramétrables dont 14 critères CAC</div>
+        <div class="module-feat">Fiche unique par animal, accessible depuis toute séance EDC</div>
+      </div>
+
+      <div class="module-card c-amber">
+        <div class="module-title">📊 Suivi CAC <span class="new-badge">S25</span></div>
+        <div class="module-feat">14 Critères d'Aptitude au Contact cochables par séance</div>
+        <div class="module-feat">Pré-remplissage depuis la dernière séance de l'animal</div>
+        <div class="module-feat">Score temps réel + onglet Évolution (graphique + tableau comparatif)</div>
+        <div class="module-feat">Libellés des 14 critères entièrement personnalisables</div>
+      </div>
+
+      <div class="module-card c-purple">
+        <div class="module-title">💶 Devis & Facturation <span class="pill p-green">Déployé</span></div>
+        <div class="module-feat">Numérotation automatique DCE-YYMM / FAC-YYMM</div>
+        <div class="module-feat">Acomptes, remises, avoirs, règlements partiels, encours client</div>
+        <div class="module-feat">Transformation devis → facture en 1 clic</div>
+        <div class="module-feat">Export FEC chaîné SHA-256, conformité DGFiP</div>
+      </div>
+
+      <div class="module-card c-teal">
+        <div class="module-title">📁 GED documentaire <span class="pill p-green">Déployé</span></div>
+        <div class="module-feat">Archivage multi-objet : animal, facture, tiers, séance, contrat…</div>
+        <div class="module-feat">Versioning, tags, hash SHA-256 par document</div>
+        <div class="module-feat">Stockage externe URI (S3-compatible)</div>
+        <div class="module-feat">13 types d'objets métier supportés</div>
+      </div>
+
+      <div class="module-card c-red">
+        <div class="module-title">📊 CRM <span class="upd-badge">enrichi S25</span></div>
+        <div class="module-feat">Leads, opportunités, activités (appel/RDV/email), campagnes, notes, tags</div>
+        <div class="module-feat">Pipeline visuel avec historique des changements de statut</div>
+        <div class="module-feat">Conversion lead → client en 1 clic</div>
+        <div class="module-feat">Formulaire public pré-qualification lead (réseaux sociaux / site web) <span class="new-badge">S10</span></div>
+      </div>
+
+      <div class="module-card c-gold">
+        <div class="module-title">❓ Aide intégrée <span class="new-badge">S10</span></div>
+        <div class="module-feat">Panneau contextuel par page — 4–5 questions fréquentes</div>
+        <div class="module-feat">Centre d'aide /app/aide — recherche plein texte, 6 modules</div>
+        <div class="module-feat">58 articles rédigés, zéro backend (JSON statique)</div>
+        <div class="module-feat">Réduction friction onboarding — utilisateurs autonomes</div>
+      </div>
+
+      <div class="module-card c-gray">
+        <div class="module-title">⚙️ Paramètres & multi-utilisateurs <span class="pill p-green">Déployé</span></div>
+        <div class="module-feat">Rôles granulaires : Admin / Manager / Lecture seule</div>
+        <div class="module-feat">Audit log complet (chaque action tracée)</div>
+        <div class="module-feat">64 libellés EC paramétrables, types de séance configurables</div>
+        <div class="module-feat">SMTP, catalogue articles, conditions paiement, comptes comptables</div>
+      </div>
+
+      <div class="module-card c-gray">
+        <div class="module-title">📦 Achats / Stock / Tarification <span class="pill p-amber">S10</span></div>
+        <div class="module-feat">Achats fournisseurs — 6 sous-modules (demandes prix → réceptions)</div>
+        <div class="module-feat">Stock PMP/FIFO/LIFO — mouvements, inventaires, sorties</div>
+        <div class="module-feat">Tarification 3 méthodes — coefficients, boutons dans devis</div>
+        <div class="module-feat">BDD complète, scripts prêts — frontend S10</div>
+      </div>
+
+    </div>
+
+    <div class="subsection-title" style="margin-top:8px;">Tableau de disponibilité par plan</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Module</th><th>Starter</th><th>Pro</th><th>Business</th></tr></thead>
+        <tbody>
+          <tr><td>Gestion animaux + CAC + EDC</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Séances & agenda</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Facturation + règlements</td><td>✅</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Devis / Contrats</td><td>⚠️ limité</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Comptabilité & FEC</td><td>❌</td><td>✅</td><td>✅</td></tr>
+          <tr><td>GED documentaire</td><td>⚠️ 1 Go</td><td>✅ illimitée</td><td>✅</td></tr>
+          <tr><td>CRM + formulaire lead</td><td>❌</td><td>✅</td><td>✅</td></tr>
+          <tr><td>Achats / Stock / Tarification</td><td>❌</td><td>✅</td><td>✅</td></tr>
+          <tr><td>API ouverte + White-label</td><td>❌</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Multi-sites + gestionnaire dédié</td><td>❌</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Utilisateurs</td><td>1</td><td>5</td><td>Illimité</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-2">
+    <div class="subsection-title">3.2 Architecture technique</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td><strong>Backend</strong></td><td>NestJS (Node 20, TypeScript) — API REST documentée · Logique métier en couche BDD pour performance</td></tr>
+          <tr><td><strong>Frontend</strong></td><td>Next.js 15 App Router (SSR/SSG) — 58 pages compilées · TypeScript · Tailwind CSS</td></tr>
+          <tr><td><strong>Base de données</strong></td><td>MariaDB 10.11+ — 60+ tables métier + 5 tables GED · 18+ triggers · 7 vues · 3 procédures stockées</td></tr>
+          <tr><td><strong>GED</strong></td><td>Stockage externe URI (S3-compatible) — pas de BLOB en BDD · Versioning · Hash SHA-256</td></tr>
+          <tr><td><strong>Sécurité</strong></td><td>JWT Bearer (Redis TTL 15 min) · SHA-256 sur tous les exports FEC et documents · RGPD by design</td></tr>
+          <tr><td><strong>Déploiement</strong></td><td>Docker Compose (local) → Hetzner Cloud (production) · CI/CD GitHub Actions · Backup quotidien S3</td></tr>
+          <tr><td><strong>Multi-tenant cible</strong></td><td>1 schema MariaDB / tenant · 1 bucket S3 / tenant · Traefik routing {societe}.petsuite.fr · BDD plateforme petsuite_platform</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-3">
+    <div class="subsection-title">3.3 Roadmap produit — état mars 2026</div>
+
+    <div class="roadmap-phase">
+      <div class="phase-badge phase-done">COMPLET</div>
+      <div>
+        <div class="phase-title">Phase 0 — MVP (S1–S8 · 2025)</div>
+        <div class="phase-desc">BDD complète (60+ tables), GED, Facturation FEC, CRM, Next.js 15, agenda, portail client, statistiques, programmes suivi, PWA mobile, backup BDD, audit visuel</div>
+      </div>
+    </div>
+
+    <div class="roadmap-phase">
+      <div class="phase-badge phase-done">COMPLET</div>
+      <div>
+        <div class="phase-title">Phase 1 — Modules métier comportemental (S9 · sessions 23–25)</div>
+        <div class="phase-desc">Étude Comportementale EDC (7 sections, grille comportementale), Suivi CAC séance par séance (14 critères, évolution), 64 libellés paramétrables, fix API PATCH_ROUTES_S56, documentation GitHub Pages (21 docs)</div>
+      </div>
+    </div>
+
+    <div class="roadmap-phase">
+      <div class="phase-badge phase-current">EN COURS — S10</div>
+      <div>
+        <div class="phase-title">Phase 2 — Modules métier complémentaires + UX</div>
+        <div class="phase-desc">Frontend achats fournisseurs (6 sous-modules), stock PMP/FIFO/LIFO, tarification 3 méthodes, bilan PCG 2025, Yousign signature · Formulaire pré-qualification lead CRM (lien public paramétrable) · Aide intégrée HelpPanel + centre d'aide (58 articles)</div>
+      </div>
+    </div>
+
+    <div class="roadmap-phase">
+      <div class="phase-badge phase-planned">PLANIFIÉ — S11</div>
+      <div>
+        <div class="phase-title">Phase 3 — PDF, mobile & notifications</div>
+        <div class="phase-desc">PDF tous types (EDC, CAC, devis, facture) · Responsive mobile complet · PWA notifications push · Carte identité animale (partage RGPD propriétaire) · Portail client magic link</div>
+      </div>
+    </div>
+
+    <div class="roadmap-phase">
+      <div class="phase-badge phase-planned">PLANIFIÉ — S12+</div>
+      <div>
+        <div class="phase-title">Phase 4 — SaaS multi-tenant & production</div>
+        <div class="phase-desc">Provisionnement automatique tenant · Prélèvement SEPA mensuel (GoCardless) · Portail super admin MRR · CI/CD GitHub Actions → Hetzner · Wildcard SSL *.petsuite.fr</div>
+      </div>
+    </div>
+
+    <div class="roadmap-phase">
+      <div class="phase-badge phase-planned">2027–2028</div>
+      <div>
+        <div class="phase-title">Phase 5 — Scale & IA</div>
+        <div class="phase-desc">IA recommandations comportementales · Scoring client · Prévisions CA · Marketplace modules · API ouverte · Intégration Planity / Doctolib</div>
+      </div>
+    </div>
+
+    <div class="roadmap-phase">
+      <div class="phase-badge phase-planned">2029–2030</div>
+      <div>
+        <div class="phase-title">Phase 6 — Expansion européenne</div>
+        <div class="phase-desc">Internationalisation (Belgique, Suisse, Espagne) · White-label Fédérations · Acquisition ou partenariat stratégique acteur vétérinaire</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. STRATEGIE COMMERCIALE -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-title">Stratégie commerciale & marketing</span>
+  </div>
+
+  <div class="subsection" id="s4-1">
+    <div class="subsection-title">4.1 Modèle de tarification</div>
+    <div class="pricing-grid">
+      <div class="plan-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">39 € <span>HT / mois</span></div>
+        <div class="plan-target">Indépendant débutant · 1 utilisateur</div>
+        <div class="plan-feat">Animaux + séances + EDC + CAC</div>
+        <div class="plan-feat">Facturation basique</div>
+        <div class="plan-feat">1 Go GED</div>
+        <div class="plan-feat">Aide intégrée complète</div>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-name">Pro ★ Recommandé</div>
+        <div class="plan-price">69 € <span>HT / mois</span></div>
+        <div class="plan-target">Pro confirmé, structure · 5 utilisateurs</div>
+        <div class="plan-feat">Tout Starter</div>
+        <div class="plan-feat">Devis / Contrats + FEC + CRM</div>
+        <div class="plan-feat">Formulaire lead public</div>
+        <div class="plan-feat">GED illimitée + support prioritaire</div>
+        <div class="plan-feat">Achats / Stock / Tarification</div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Business</div>
+        <div class="plan-price">119 € <span>HT / mois</span></div>
+        <div class="plan-target">Centre dressage, pension multi-sites</div>
+        <div class="plan-feat">Tout Pro</div>
+        <div class="plan-feat">Multi-sites + API ouverte</div>
+        <div class="plan-feat">White-label</div>
+        <div class="plan-feat">Gestionnaire de compte dédié</div>
+        <div class="plan-feat">Utilisateurs illimités</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--ink2);">Options payantes (add-ons MRR) : SMS pack 200 à 9 €/mois · Stockage GED +10 Go à 5 € · Module IA à 19 €/mois</p>
+  </div>
+
+  <div class="subsection" id="s4-2">
+    <div class="subsection-title">4.2 Stratégie d'acquisition clients</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Canal</th><th>Description</th><th>Objectif an 1</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Fédérations professionnelles</strong></td><td>SNPCC, FFSE, CEPN, SNFD — code promo, présentation en formation initiale, newsletter</td><td>3 partenariats signés</td></tr>
+          <tr><td><strong>Contenu SEO inbound</strong></td><td>Blog technique (conformité FEC, ACACED, gestion clientèle animale) — intention d'achat ciblée</td><td>3 000 visites / mois an 2</td></tr>
+          <tr><td><strong>Formulaire lead web</strong> <span class="new-badge">nouveau</span></td><td>Lien public paramétrable partagé sur réseaux sociaux — prospect remplit ses infos + données animal → lead CRM automatique</td><td>50+ leads qualifiés / mois</td></tr>
+          <tr><td><strong>Prescription & referral</strong></td><td>Programme parrainage : 2 mois offerts par client signé — bouche à oreille dans les réseaux professionnels</td><td>20 % des abonnés an 1</td></tr>
+          <tr><td><strong>Présence événementielle</strong></td><td>Animalis, Salon du Chien de Paris, journées SNPCC — démos live, coût contact 15–25 €</td><td>2–3 salons / an</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s4-3">
+    <div class="subsection-title">4.3 Métriques d'acquisition et de rétention cibles</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Métrique</th><th>An 1</th><th>An 2–3</th><th>Objectif long terme</th></tr></thead>
+        <tbody>
+          <tr><td>CAC (coût acquisition client)</td><td>&lt; 250 €</td><td>&lt; 150 €</td><td>&lt; 100 €</td></tr>
+          <tr><td>LTV (valeur vie client)</td><td>1 200 €</td><td>2 000 €</td><td>&gt; 3 500 €</td></tr>
+          <tr><td>Ratio LTV/CAC</td><td>4,8x</td><td>13x</td><td>&gt; 35x</td></tr>
+          <tr><td>Churn mensuel</td><td>&lt; 4 %</td><td>&lt; 3 %</td><td>&lt; 1,5 %</td></tr>
+          <tr><td>NPS satisfaction</td><td>&gt; 30</td><td>&gt; 45</td><td>&gt; 60</td></tr>
+          <tr><td>Taux upsell Starter → Pro</td><td>15 %</td><td>25 %</td><td>35 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 5. FINANCIER -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <span class="section-title">Modèle financier 5 ans</span>
+  </div>
+
+  <div class="subsection" id="s5-1">
+    <div class="subsection-title">5.1 Hypothèses de base</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td>Ticket moyen mensuel</td><td>60 € HT (mix Starter 50 % / Pro 40 % / Business 10 % = 60,50 €)</td></tr>
+          <tr><td>Croissance abonnés</td><td>+25/mois en an 1, +40/mois en an 2, puis accélération par effets réseau</td></tr>
+          <tr><td>Churn base</td><td>3,5 % en an 1, décroissant à 1,5 % en an 5 (benchmark SaaS vertical PME)</td></tr>
+          <tr><td>Coûts hébergement cloud</td><td>0,80 € / abonné / mois (Hetzner) — économies d'échelle à partir de 500 abonnés</td></tr>
+          <tr><td>Équipe an 1</td><td>1 fondateur-tech + 1 commercial (partiel) + 1 support (partiel) — masse salariale 85 000 €</td></tr>
+          <tr><td>Équipe an 3</td><td>2 devs + 1 commercial + 1 CSM + 1 comptable partiel — masse salariale 260 000 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s5-2">
+    <div class="subsection-title">5.2 Compte de résultats prévisionnel</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Poste (€)</th><th>An 1</th><th>An 2</th><th>An 3</th><th>An 4</th><th>An 5</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Chiffre d'affaires</strong></td><td><strong>57 600</strong></td><td><strong>270 000</strong></td><td><strong>672 000</strong></td><td><strong>1 248 000</strong></td><td><strong>1 800 000</strong></td></tr>
+          <tr><td>Abonnements récurrents</td><td>52 000</td><td>245 000</td><td>620 000</td><td>1 180 000</td><td>1 700 000</td></tr>
+          <tr><td>Services & options (SMS, IA, stockage)</td><td>5 600</td><td>25 000</td><td>52 000</td><td>68 000</td><td>100 000</td></tr>
+          <tr><td>Coûts directs (hosting, SMS, Stripe)</td><td>-8 000</td><td>-22 000</td><td>-48 000</td><td>-80 000</td><td>-108 000</td></tr>
+          <tr><td><strong>Marge brute</strong></td><td><strong>49 600</strong></td><td><strong>248 000</strong></td><td><strong>624 000</strong></td><td><strong>1 168 000</strong></td><td><strong>1 692 000</strong></td></tr>
+          <tr><td>Taux marge brute</td><td>86 %</td><td>92 %</td><td>93 %</td><td>94 %</td><td>94 %</td></tr>
+          <tr><td>Charges personnel</td><td>-85 000</td><td>-180 000</td><td>-260 000</td><td>-380 000</td><td>-520 000</td></tr>
+          <tr><td>Marketing & commercial</td><td>-35 000</td><td>-60 000</td><td>-80 000</td><td>-120 000</td><td>-180 000</td></tr>
+          <tr><td>Frais généraux</td><td>-24 600</td><td>-48 000</td><td>-259 000</td><td>-473 000</td><td>-572 000</td></tr>
+          <tr><td><strong>Résultat net</strong></td><td><strong>-95 000</strong></td><td><strong>-40 000</strong></td><td><strong>+25 000</strong></td><td><strong>+195 000</strong></td><td><strong>+420 000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s5-3">
+    <div class="subsection-title">5.3 Trésorerie & point mort</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Flux (€)</th><th>An 1</th><th>An 2</th><th>An 3</th><th>An 4</th></tr></thead>
+        <tbody>
+          <tr><td>Trésorerie début période</td><td>150 000</td><td>55 000</td><td>15 000</td><td>40 000</td></tr>
+          <tr><td>Cash-flow opérationnel</td><td>-95 000</td><td>-40 000</td><td>+25 000</td><td>+195 000</td></tr>
+          <tr><td><strong>Trésorerie fin période</strong></td><td><strong>55 000</strong></td><td><strong>15 000</strong></td><td><strong>40 000</strong></td><td><strong>235 000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <strong>Point mort atteint entre le mois 28 et 30 (an 3)</strong>, avec une trésorerie minimum de 15 000 € — marge de sécurité suffisante si le financement initial de 150 000 € est sécurisé en intégralité avant le lancement commercial.
+    </div>
+  </div>
+</div>
+
+<!-- 6. FINANCEMENT -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <span class="section-title">Stratégie de financement</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Phase</th><th>Période</th><th>Montant</th><th>Usage</th><th>Source recommandée</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Amorçage</strong></td><td>T2–T4 2025</td><td>50 000 – 80 000 €</td><td>Finalisation produit, 1ers clients, marketing initial</td><td><span class="pill p-green">BPI + Love money</span></td></tr>
+        <tr><td><strong>Seed</strong></td><td>T1 2026</td><td>70 000 – 120 000 €</td><td>Recrutement commercial + CSM, marketing</td><td><span class="pill p-blue">Business Angels + dette BPI</span></td></tr>
+        <tr><td><strong>Croissance</strong></td><td>2026–2027</td><td>200 000 – 500 000 €</td><td>Tech IA, expansion sectorielle, 1er CSM</td><td><span class="pill p-gold">Banque + BA série A</span></td></tr>
+        <tr><td><strong>Scale</strong></td><td>2028–2030</td><td>0 – 500 000 €</td><td>Internationalisation, white-label, acquisition</td><td><span class="pill p-gray">Autofinancement ou Série A VC</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection" style="margin-top:20px;">
+    <div class="subsection-title">Voie C recommandée : Hybride dette + capital</div>
+    <div class="callout blue">
+      <strong>Ne pas choisir entre banque et fonds privés — combiner les deux.</strong> La dette finance les actifs tangibles et le BFR ; les fonds privés financent la croissance et apportent du réseau. Les deux se légitimisent mutuellement.
+    </div>
+    <div class="table-wrap" style="margin-top:14px;">
+      <table>
+        <thead><tr><th>Étape</th><th>Action</th><th>Montant</th><th>Dilution</th></tr></thead>
+        <tbody>
+          <tr><td>T2–T3 2025</td><td>Prêt d'honneur BPI (réseau Initiative) + love money</td><td>50–80 K€</td><td>0 %</td></tr>
+          <tr><td>T4 2025</td><td>30+ abonnés, MRR 2 000+€, approche 2–3 BA</td><td>—</td><td>—</td></tr>
+          <tr><td>T1 2026</td><td>Closing seed BA + prêt numérique BPI</td><td>150–230 K€</td><td>12–15 %</td></tr>
+          <tr><td>2027</td><td>ARR &gt; 500 K€ → prêt bancaire développement</td><td>200 K€</td><td>0 %</td></tr>
+          <tr><td>2028–2029</td><td>Décision Série A (ambition EU) ou croissance organique</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 7. PITCH DECK -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <span class="section-title">Structure du pitch deck</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Slide</th><th>Message clé</th><th>Argument Algorithmia</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Le problème</strong></td><td>12 000 pros gèrent avec Excel et la peur du contrôle fiscal</td><td>3 captures Excel de comportementalistes réels</td></tr>
+        <tr><td>2</td><td><strong>La solution</strong></td><td>Le seul SaaS qui connaît votre métier — de la séance à la liasse FEC</td><td>Démo live séance → EDC → devis → facture en 90 secondes</td></tr>
+        <tr><td>3</td><td><strong>Le marché</strong></td><td>SAM 50 000 pros × 60 €/mois = 36 M€/an atteignables</td><td>Croissance filière +6 %/an, ACACED obligatoire = professionnalisation forcée</td></tr>
+        <tr><td>4</td><td><strong>Différenciateurs</strong></td><td>Pourquoi nous gagnons et pourquoi c'est impossible à copier en 6 mois</td><td>BDD multi-métier + EDC comportementale + CAC + GED : 2 ans de dev qu'aucun concurrent n'a</td></tr>
+        <tr><td>5</td><td><strong>Traction</strong></td><td>X clients payants, Y€ MRR, NPS Z, 0 % churn sur 3 premiers mois</td><td>Témoignages vidéo 20 sec de 2–3 beta utilisateurs</td></tr>
+        <tr><td>6</td><td><strong>Modèle économique</strong></td><td>SaaS simple : 39/69/119 €/mois. LTV/CAC = 4,8x an 1 → 35x an 5</td><td>ARPU croissant grâce aux add-ons (SMS, IA, stockage)</td></tr>
+        <tr><td>7</td><td><strong>Roadmap</strong></td><td>4 phases claires, jalons mesurables</td><td>Phase IA recommandations comportementales = moat futur impossible à répliquer</td></tr>
+        <tr><td>8</td><td><strong>Finances</strong></td><td>Point mort mois 28–30. Cash burn &lt; 10 K€/mois. Besoin 150 K€</td><td>Marge brute 93 % — meilleure que la moyenne SaaS (85–88 %)</td></tr>
+        <tr><td>9</td><td><strong>Équipe</strong></td><td>Qui êtes-vous et pourquoi vous allez gagner</td><td>Double compétence tech + métier animal — partenaire secteur si applicable</td></tr>
+        <tr><td>10</td><td><strong>L'offre</strong></td><td>150 K€ pour quoi, en combien de temps, quelle contrepartie</td><td>Détail trimestre par trimestre de l'usage des fonds</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 8. RISQUES -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <span class="section-title">Risques & plan de mitigation</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Risque</th><th>Proba</th><th>Impact</th><th>Scénario pessimiste</th><th>Plan de mitigation</th></tr></thead>
+      <tbody>
+        <tr class="risk-row-high"><td><strong>Adoption lente (inertie Excel)</strong></td><td><span class="pill p-red">Haute</span></td><td><span class="pill p-red">Haut</span></td><td>&lt; 40 abonnés an 1, trésorerie &lt; 10 K€</td><td>Freemium 30 jours + onboarding assisté + formulaire lead CRM + partenariat fédération</td></tr>
+        <tr class="risk-row-med"><td><strong>Entrée concurrent généraliste</strong></td><td><span class="pill p-green">Faible</span></td><td><span class="pill p-amber">Moyen</span></td><td>Pression prix, érosion parts de marché</td><td>Accélérer profondeur métier (EDC, IA comportementale) impossible à répliquer en 18 mois</td></tr>
+        <tr class="risk-row-med"><td><strong>Churn élevé (mauvaise rétention)</strong></td><td><span class="pill p-amber">Moyen</span></td><td><span class="pill p-red">Haut</span></td><td>Churn &gt; 6 %, MRR stagne</td><td>Aide intégrée (58 articles) + programme CSM dès 50 clients + NPS mensuel + feature requests priorisées</td></tr>
+        <tr class="risk-row-med"><td><strong>Défaut technique (bug critique)</strong></td><td><span class="pill p-amber">Moyen</span></td><td><span class="pill p-red">Haut</span></td><td>Perte de données, réputationnel, churns en masse</td><td>Backups quotidiens GPG S3 (7j/4sem/12mois) + SLA 99,5 % + assurance RC Pro</td></tr>
+        <tr class="risk-row-low"><td><strong>Évolution réglementaire (FEC, RGPD)</strong></td><td><span class="pill p-green">Faible</span></td><td><span class="pill p-amber">Moyen</span></td><td>Mise à jour urgente, coûts dev non anticipés</td><td>Veille réglementaire trimestrielle + architecture modulaire pour mise à jour rapide</td></tr>
+        <tr class="risk-row-med"><td><strong>Difficulté de recrutement tech</strong></td><td><span class="pill p-amber">Moyen</span></td><td><span class="pill p-amber">Moyen</span></td><td>Ralentissement roadmap, burn plus long</td><td>Remote-first + freelance pour pics + écoles d'ingénieurs (Polytech, Epitech) en stage</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 9. CHECKLIST INVESTISSEUR -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <span class="section-title">Checklist dossier investisseur</span>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">9.1 Dossier BPI / Banque</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td>Pitch deck 10 slides (version allégée 7 slides pour BPI)</td><td><span class="pill p-amber">À préparer</span></td></tr>
+          <tr><td>Business plan écrit avec modèle financier 3 ans minimum (ce document)</td><td><span class="pill p-green">✓ Prêt</span></td></tr>
+          <tr><td>CV détaillé du/des fondateurs (parcours pro, compétences techniques, connaissance secteur animal)</td><td><span class="pill p-amber">À préparer</span></td></tr>
+          <tr><td>Kbis / statuts de la société ou attestation de création</td><td><span class="pill p-amber">À préparer</span></td></tr>
+          <tr><td>Tableau de flux de trésorerie mensuel sur 18 mois</td><td><span class="pill p-green">✓ Inclus section 5</span></td></tr>
+          <tr><td>Devis fournisseurs principaux (hébergement, outils, prestations)</td><td><span class="pill p-amber">À préparer</span></td></tr>
+          <tr><td>Lettres d'intention ou contrats premiers clients</td><td><span class="pill p-amber">À préparer</span></td></tr>
+          <tr><td>Prototype fonctionnel ou démo vidéo (5 minutes max)</td><td><span class="pill p-green">✓ Logiciel déployé S25</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">9.2 Dossier Business Angels</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td>Pitch deck 10 slides premium (design soigné, chiffres visibles, démo embarquée)</td><td><span class="pill p-amber">À préparer</span></td></tr>
+          <tr><td>Data room structurée : financials, cap table, contrats, code source (accès restreint NDA)</td><td><span class="pill p-amber">À préparer</span></td></tr>
+          <tr><td>Modèle financier interactif (Google Sheets) avec scénarios optimiste / base / pessimiste</td><td><span class="pill p-amber">À préparer</span></td></tr>
+          <tr><td>Traction prouvée : KPIs réels, captures écran dashboard MRR</td><td><span class="pill p-amber">À constituer (beta clients)</span></td></tr>
+          <tr><td>Références clients : 2–3 témoignages écrits ou vidéo</td><td><span class="pill p-amber">À constituer</span></td></tr>
+          <tr><td>Termes de l'offre : montant, valorisation pre-money, instrument (BSA, BSAAR, OC)</td><td><span class="pill p-amber">À définir</span></td></tr>
+          <tr><td>Pacte d'actionnaires projet (anti-dilution, droit de suite, sortie)</td><td><span class="pill p-amber">À préparer</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">9.3 Questions auxquelles répondre parfaitement</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td><strong>Pourquoi vous ?</strong></td><td>Track record tech + 2 ans de dev comportemental métier — profondeur impossible à acquérir rapidement</td></tr>
+          <tr><td><strong>Pourquoi maintenant ?</strong></td><td>ACACED obligatoire, numérisation accélérée post-COVID, boom adoptions 2020–2021 = cohorte active 10–15 ans</td></tr>
+          <tr><td><strong>Pourquoi ça ne peut pas être copié en 6 mois ?</strong></td><td>BDD métier (60+ tables, 18 triggers), EDC comportementale, CAC séance par séance, GED — 2 ans de dev qu'aucun concurrent n'a</td></tr>
+          <tr><td><strong>Et si vous n'atteignez pas les 80 abonnés en an 1 ?</strong></td><td>Plan B : pivot toiletteurs (20 000 pros), montée gamme, focus formulaire lead pour accélérer la génération prospects</td></tr>
+          <tr><td><strong>Comment sortir dans 5–7 ans ?</strong></td><td>Rachat par acteur vétérinaire (Ceva, Virbac), fédération professionnelle, éditeur ERP animal — ou IPO si ambition EU</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 10. CONCLUSION -->
+<div class="section" id="s10">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <span class="section-title">Conclusion & next steps</span>
+  </div>
+
+  <p style="margin-bottom:16px;">Algorithmia se positionne sur un marché non adressé, avec un produit dont la profondeur technique est le principal moat. La combinaison architecture multi-métier + conformité FEC + GED documentaire + suivi comportemental EDC/CAC constitue une proposition de valeur impossible à répliquer rapidement par un acteur généraliste.</p>
+
+  <p style="margin-bottom:20px;">Le plan de financement recommandé est délibérément conservateur : commencer par les instruments non dilutifs (BPI, love money), prouver la traction, puis négocier en position de force avec des Business Angels sélectionnés pour leur réseau sectoriel plus que pour leur ticket.</p>
+
+  <div class="callout amber">
+    <strong>Objectif immédiat :</strong> Sécuriser 50–80 K€ en 90 jours pour atteindre les 30 premiers abonnés payants et constituer la preuve sociale nécessaire aux prochains financements.
+  </div>
+
+  <div class="subsection" style="margin-top:24px;">
+    <div class="subsection-title">Actions prioritaires — 90 jours</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Délai</th><th>Action</th><th>Livrable attendu</th></tr></thead>
+        <tbody>
+          <tr><td><strong>J+0</strong></td><td>Déposer dossier prêt d'honneur BPI / réseau Initiative local</td><td>Dossier complet soumis</td></tr>
+          <tr><td><strong>J+15</strong></td><td>Contacter 3 fédérations professionnelles (SNPCC, FFSE, CEPN) pour partenariat pilote</td><td>1 accord de principe signé</td></tr>
+          <tr><td><strong>J+30</strong></td><td>Recruter 10 beta testeurs (0 €) parmi comportementalistes contacts — déployer formulaire lead public</td><td>10 comptes actifs, premiers retours NPS</td></tr>
+          <tr><td><strong>J+45</strong></td><td>Pitch deck finalisé + data room structurée</td><td>Deck 10 slides validé par 3 personnes externes</td></tr>
+          <tr><td><strong>J+60</strong></td><td>Premiers clients payants : passer de beta à Starter 39 €/mois</td><td>MRR &gt; 1 000 €</td></tr>
+          <tr><td><strong>J+90</strong></td><td>1ers RDV investisseurs BA avec traction démontrable</td><td>3 RDV BA planifiés, 1 LOI en négociation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<footer>
+  <div><strong>Algorithmia</strong> — Document confidentiel — mars 2026 — Version S25</div>
+  <div>Toute reproduction ou diffusion sans accord écrit de l'auteur est interdite.</div>
+</footer>
+
+</body>
+</html>

@@ -6,310 +6,194 @@
 <title>PetSuite — Documentation</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0f0e17; --bg2: #1a1830; --bg3: #232140;
-  --accent: #6c63ff; --accent2: #a78bfa; --accent3: #2d2b55;
-  --text: #e2e0f0; --text2: #9d9bbf; --text3: #5c5a7a;
-  --green: #4ade80; --gold: #fbbf24; --red: #f87171;
-  --r: 12px; --rs: 8px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; min-height: 100vh; }
-
-/* HERO */
-.hero {
-  background: linear-gradient(135deg, #1a1060 0%, #0f0e17 60%);
-  padding: 80px 48px 60px; text-align: center;
-  border-bottom: 1px solid rgba(108,99,255,0.2);
-  position: relative; overflow: hidden;
-}
-.hero::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(108,99,255,0.15) 0%, transparent 70%);
-}
-.paw { font-size: 36px; margin-bottom: 16px; display: block; }
-.hero h1 {
-  font-family: 'DM Serif Display', serif; font-size: 52px; font-weight: 400;
-  color: #fff; margin-bottom: 12px; position: relative;
-}
-.hero h1 span { color: var(--accent2); }
-.hero-sub { color: var(--text2); font-size: 16px; max-width: 560px; margin: 0 auto 28px; position: relative; }
-.badge {
-  display: inline-block; background: rgba(108,99,255,0.2);
-  border: 1px solid rgba(108,99,255,0.4); color: var(--accent2);
-  padding: 6px 18px; border-radius: 20px; font-size: 12px; font-weight: 500;
-  position: relative;
-}
-
-/* STATS */
-.stats {
-  display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
-  background: var(--bg2); border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.stat {
-  padding: 24px 36px; text-align: center;
-  border-right: 1px solid rgba(255,255,255,0.06);
-}
-.stat:last-child { border-right: none; }
-.stat-num {
-  font-family: 'DM Serif Display', serif; font-size: 32px; color: #fff;
-  display: block; line-height: 1;
-}
-.stat-lbl { font-size: 11px; color: var(--text3); margin-top: 4px; letter-spacing: .04em; }
-
-/* SECTIONS */
-.container { max-width: 1200px; margin: 0 auto; padding: 48px; }
-.section-title {
-  font-size: 11px; font-weight: 600; letter-spacing: .1em;
-  color: var(--text3); text-transform: uppercase; margin-bottom: 20px;
-  display: flex; align-items: center; gap: 10px;
-}
-.section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
-
-/* GRID */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 48px; }
-
-/* CARDS */
-.card {
-  background: var(--bg2); border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--r); padding: 20px 22px; text-decoration: none;
-  display: flex; flex-direction: column; gap: 8px;
-  transition: all .2s; cursor: pointer; position: relative; overflow: hidden;
-}
-.card:hover {
-  border-color: rgba(108,99,255,0.4); background: var(--bg3);
-  transform: translateY(-2px);
-}
-.card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  opacity: 0; transition: opacity .2s;
-}
-.card:hover::before { opacity: 1; }
-.card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-.card-icon { font-size: 22px; flex-shrink: 0; }
-.card-num { font-size: 11px; color: var(--text3); font-weight: 500; }
-.card-title { font-size: 15px; font-weight: 600; color: var(--text); }
-.card-desc { font-size: 12px; color: var(--text2); line-height: 1.5; flex: 1; }
-.card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
-.tag {
-  font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px;
-  letter-spacing: .03em;
-}
-.tag-s31 { background: rgba(74,222,128,0.15); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
-.tag-s30 { background: rgba(108,99,255,0.15); color: var(--accent2); border: 1px solid rgba(108,99,255,0.3); }
-.tag-new { background: rgba(251,191,36,0.15); color: var(--gold); border: 1px solid rgba(251,191,36,0.3); }
-
-/* CHANGELOG HIGHLIGHT */
-.card-highlight {
-  background: linear-gradient(135deg, rgba(74,222,128,0.08), rgba(108,99,255,0.08));
-  border-color: rgba(74,222,128,0.3);
-}
-.card-highlight:hover { border-color: rgba(74,222,128,0.6); }
-
-footer {
-  text-align: center; padding: 24px;
-  color: var(--text3); font-size: 11px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-footer a { color: var(--accent2); text-decoration: none; }
+:root{--ink:#1a1a2e;--ink2:#3d3d5c;--ink3:#8888aa;--paper:#f7f6f1;--paper2:#eeecea;--paper3:#e2e0da;--accent:#2d6a4f;--accent2:#40916c;--accent3:#d8f3dc;--gold:#a07030;--gold2:#fdf3e0;--blue:#1d4e8f;--blue2:#dbeafe;--red:#9b2335;--red2:#fdecea;--purple:#5b3fa0;--purple2:#ede8fc;--r:12px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);font-size:14px;min-height:100vh;display:flex;flex-direction:column;}
+.hero{background:var(--ink);color:#fff;padding:72px 48px;text-align:center;}
+.logo{font-family:'DM Serif Display',serif;font-size:52px;color:#fff;margin-bottom:12px;}
+.logo span{color:#74c69d;}
+.tagline{color:rgba(255,255,255,0.5);font-size:15px;max-width:480px;margin:0 auto 28px;}
+.version{display:inline-block;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);font-size:11px;padding:4px 14px;border-radius:20px;}
+.section-label{max-width:960px;margin:40px auto 12px;padding:0 48px;font-size:11px;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;}
+.container{max-width:960px;margin:0 auto;padding:0 48px 52px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+.doc-card{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:24px;text-decoration:none;color:var(--ink);display:block;transition:all .2s;position:relative;overflow:hidden;}
+.doc-card:hover{border-color:var(--accent2);transform:translateY(-2px);}
+.doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;}
+.c1::before{background:var(--accent2);}
+.c2::before{background:var(--blue);}
+.c3::before{background:var(--gold);}
+.c4::before{background:#40a0c0;}
+.c5::before{background:var(--red);}
+.c6::before{background:var(--purple);}
+.doc-num{font-size:10px;color:var(--ink3);font-weight:500;margin-bottom:8px;letter-spacing:.06em;}
+.doc-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px;line-height:1.2;}
+.doc-desc{font-size:11px;color:var(--ink3);line-height:1.55;margin-bottom:14px;}
+.doc-tag{display:inline-block;font-size:10px;font-weight:500;padding:2px 9px;border-radius:20px;}
+.tag-green{background:var(--accent3);color:var(--accent);}
+.tag-blue{background:var(--blue2);color:var(--blue);}
+.tag-gold{background:var(--gold2);color:var(--gold);}
+.tag-teal{background:#d0f0f8;color:#0f6e8f;}
+.tag-red{background:var(--red2);color:var(--red);}
+.tag-purple{background:var(--purple2);color:var(--purple);}
+.arrow{position:absolute;bottom:20px;right:20px;font-size:16px;color:var(--paper3);transition:all .2s;}
+.doc-card:hover .arrow{color:var(--accent2);}
+.updated{text-align:center;color:var(--ink3);font-size:11px;margin-top:32px;padding-bottom:8px;}
+.updated span{background:var(--paper2);padding:4px 12px;border-radius:20px;border:1px solid var(--paper3);}
+footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:20px 48px;font-size:12px;display:flex;justify-content:space-between;align-items:center;margin-top:auto;}
+footer strong{color:rgba(255,255,255,0.7);}
+@media(max-width:600px){.hero{padding:48px 24px;}.logo{font-size:38px;}.container,.section-label{padding-left:20px;padding-right:20px;}footer{padding:16px 20px;flex-direction:column;gap:8px;text-align:center;}}
 </style>
 </head>
 <body>
-
 <div class="hero">
-  <span class="paw">🐾</span>
-  <h1>Pet<span>Suite</span></h1>
-  <p class="hero-sub">Documentation complète — Logiciel de gestion pour professionnels animaliers</p>
-  <div class="badge">v4.0 — Sprint S31 — Mars 2026</div>
+  <div class="logo">Pet<span>Suite</span></div>
+  <p class="tagline">Documentation officielle — Logiciel SaaS de gestion pour professionnels des animaux de compagnie</p>
+  <span class="version">Nom provisoire · Session 24 · 14/03/2026</span>
 </div>
 
-<div class="stats">
-  <div class="stat"><span class="stat-num">59</span><div class="stat-lbl">Pages frontend</div></div>
-  <div class="stat"><span class="stat-num">24</span><div class="stat-lbl">Routes API S31</div></div>
-  <div class="stat"><span class="stat-num">392</span><div class="stat-lbl">Races (8 espèces)</div></div>
-  <div class="stat"><span class="stat-num">14</span><div class="stat-lbl">Métiers couverts</div></div>
-  <div class="stat"><span class="stat-num">40+</span><div class="stat-lbl">Tables SQL</div></div>
-  <div class="stat"><span class="stat-num">24</span><div class="stat-lbl">Pages documentation</div></div>
-</div>
-
+<div class="section-label">Documents utilisateurs</div>
 <div class="container">
-
-  <!-- DOCUMENTATION TECHNIQUE -->
-  <div class="section-title">📐 Documentation technique</div>
   <div class="grid">
-    <a href="01-synthese-projet.html" class="card">
-      <div class="card-header"><div class="card-icon">📋</div><div class="card-num">01</div></div>
-      <div class="card-title">Synthèse projet</div>
-      <div class="card-desc">Architecture technique, stack, modules disponibles, 14 métiers, NF525</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
+    <a class="doc-card c1" href="01-synthese-projet.html">
+      <div class="doc-num">01 — INTERNE</div>
+      <div class="doc-title">Synthèse projet</div>
+      <div class="doc-desc">Vision globale — architecture, modules, modèle commercial, scalabilité 5 000–20 000 clients.</div>
+      <span class="doc-tag tag-green">Document vivant</span><div class="arrow">→</div>
     </a>
-    <a href="07-audit-stack.html" class="card">
-      <div class="card-header"><div class="card-icon">🔍</div><div class="card-num">07</div></div>
-      <div class="card-title">Audit Stack</div>
-      <div class="card-desc">Conteneurs, chemins, règles absolues, custom-routes.ts, sauvegarde v5</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
+    <a class="doc-card c4" href="02-guide-parametrage.html">
+      <div class="doc-num">02 — ADMIN SOCIÉTÉ</div>
+      <div class="doc-title">Guide de paramétrage</div>
+      <div class="doc-desc">Configuration initiale — TVA, catalogue, utilisateurs, GED, exercice comptable.</div>
+      <span class="doc-tag tag-gold">Administrateurs</span><div class="arrow">→</div>
     </a>
-    <a href="12-infrastructure.html" class="card">
-      <div class="card-header"><div class="card-icon">🏗️</div><div class="card-num">12</div></div>
-      <div class="card-title">Infrastructure</div>
-      <div class="card-desc">Docker Compose, nginx, MariaDB hors Docker, déploiement</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
+    <a class="doc-card c4" href="03-notice-utilisateur.html">
+      <div class="doc-num">03 — TOUS UTILISATEURS</div>
+      <div class="doc-title">Notice d'utilisation</div>
+      <div class="doc-desc">Guide pratique — animaux, séances, devis, facturation, GED, CRM, FAQ.</div>
+      <span class="doc-tag tag-teal">Tous utilisateurs</span><div class="arrow">→</div>
     </a>
-    <a href="17-api-reference.html" class="card">
-      <div class="card-header"><div class="card-icon">⚡</div><div class="card-num">17</div></div>
-      <div class="card-title">Référence API</div>
-      <div class="card-desc">Endpoints NestJS + custom-routes, paramètres, réponses, erreurs</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-    <a href="08-projet-reference.html" class="card">
-      <div class="card-header"><div class="card-icon">📖</div><div class="card-num">08</div></div>
-      <div class="card-title">Projet référence</div>
-      <div class="card-desc">Cahier des charges, périmètre fonctionnel, user stories</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-    <a href="04-super-admin.html" class="card">
-      <div class="card-header"><div class="card-icon">🔐</div><div class="card-num">04</div></div>
-      <div class="card-title">Super Admin</div>
-      <div class="card-desc">Interface d'administration, gestion utilisateurs, journal d'audit</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-    <a href="13-portail-super-admin.html" class="card">
-      <div class="card-header"><div class="card-icon">🛡️</div><div class="card-num">13</div></div>
-      <div class="card-title">Portail Super Admin</div>
-      <div class="card-desc">Accès SUPERADMIN, gestion multi-instances, monitoring</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-    <a href="15-rgpd-conformite.html" class="card">
-      <div class="card-header"><div class="card-icon">🔒</div><div class="card-num">15</div></div>
-      <div class="card-title">RGPD & Conformité</div>
-      <div class="card-desc">Gestion des données personnelles, consentements, droits utilisateurs</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-    <a href="23-Prise-en-compte-de-la-NF-525.html" class="card">
-      <div class="card-header"><div class="card-icon">🏅</div><div class="card-num">23</div></div>
-      <div class="card-title">NF525 — Conformité</div>
-      <div class="card-desc">Journal inaltérable SHA-256, clôtures Z/X, triggers inaltérabilité, plan déploiement</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
+    <a class="doc-card c5" href="04-super-admin.html">
+      <div class="doc-num">04 — ACCÈS RESTREINT</div>
+      <div class="doc-title">Espace super admin</div>
+      <div class="doc-desc">Pilotage plateforme — contrats, tenants, supervision, données post-résiliation.</div>
+      <span class="doc-tag tag-red">Super admin</span><div class="arrow">→</div>
     </a>
   </div>
+</div>
 
-  <!-- ROADMAP & PILOTAGE -->
-  <div class="section-title">🗺️ Roadmap & Pilotage</div>
+<div class="section-label">Documents techniques</div>
+<div class="container">
   <div class="grid">
-    <a href="05-architecture-roadmap.html" class="card">
-      <div class="card-header"><div class="card-icon">🗺️</div><div class="card-num">05</div></div>
-      <div class="card-title">Architecture & Roadmap</div>
-      <div class="card-desc">Vision technique, évolutions prévues, dépendances</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
+    <a class="doc-card c2" href="05-architecture-roadmap.html">
+      <div class="doc-num">05 — TECHNIQUE</div>
+      <div class="doc-title">Architecture &amp; Roadmap</div>
+      <div class="doc-desc">Stack, BDD 60+ tables, API S24, multi-tenant SaaS, modèle SEPA, sprints.</div>
+      <span class="doc-tag tag-blue">Session 24</span><div class="arrow">→</div>
     </a>
-    <a href="06-roadmap.html" class="card">
-      <div class="card-header"><div class="card-icon">📅</div><div class="card-num">06</div></div>
-      <div class="card-title">Roadmap Sprints</div>
-      <div class="card-desc">Planning des sprints S25→S35, features par sprint</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
+    <a class="doc-card c2" href="06-roadmap.html">
+      <div class="doc-num">06 — TECHNIQUE</div>
+      <div class="doc-title">Roadmap sprints</div>
+      <div class="doc-desc">Feuille de route complète S1→S24 + S10, S11, S12+ planifiés. Bugs et backlog.</div>
+      <span class="doc-tag tag-blue">S1→S12+</span><div class="arrow">→</div>
     </a>
-    <a href="08-roadmap-metiers.html" class="card">
-      <div class="card-header"><div class="card-icon">🏢</div><div class="card-num">08</div></div>
-      <div class="card-title">Roadmap Métiers</div>
-      <div class="card-desc">Fonctionnalités par métier : comportementaliste, équestre, toiletteur...</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
+    <a class="doc-card c2" href="07-audit-stack.html">
+      <div class="doc-num">07 — TECHNIQUE</div>
+      <div class="doc-title">Audit Stack</div>
+      <div class="doc-desc">Infrastructure Docker, état BDD, triggers, vues, API S24, patches volatils, règles critiques.</div>
+      <span class="doc-tag tag-blue">Session 24</span><div class="arrow">→</div>
     </a>
-    <a href="20-pilotage-projet.html" class="card">
-      <div class="card-header"><div class="card-icon">📊</div><div class="card-num">20</div></div>
-      <div class="card-title">Pilotage Projet</div>
-      <div class="card-desc">KPIs, avancement sprints, vélocité, burndown chart</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
+    <a class="doc-card c2" href="08-projet-reference.html">
+      <div class="doc-num">08 — TECHNIQUE</div>
+      <div class="doc-title">Référence projet</div>
+      <div class="doc-desc">Stack, accès, variables PS, numérotation docs, architecture BDD complète, historique sessions.</div>
+      <span class="doc-tag tag-blue">Référence</span><div class="arrow">→</div>
     </a>
-    <a href="09-scenario-video.html" class="card">
-      <div class="card-header"><div class="card-icon">🎬</div><div class="card-num">09</div></div>
-      <div class="card-title">Scénario Vidéo</div>
-      <div class="card-desc">Script de démonstration produit, parcours utilisateur filmé</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
+    <a class="doc-card c3" href="10-modele-commercial.html">
+      <div class="doc-num">10 — COMMERCIAL</div>
+      <div class="doc-title">Licences &amp; SEPA</div>
+      <div class="doc-desc">BDD plateforme, workflow souscription, GoCardless vs Stripe, cycle contrat, provisionnement, CGV, post-résiliation.</div>
+      <span class="doc-tag tag-gold">Super admin</span><div class="arrow">→</div>
+    </a>
+    <a class="doc-card c1" href="11-carte-identite-animale.html">
+      <div class="doc-num">11 — FONCTIONNEL</div>
+      <div class="doc-title">Carte d'identité animale</div>
+      <div class="doc-desc">Puce = clé universelle. PDF à la demande, partage RGPD, URL signée, cross-tenant, CAC et historique séances.</div>
+      <span class="doc-tag tag-green">Sprint 10</span><div class="arrow">→</div>
+    </a>
+        <a class="doc-card c2" href="12-infrastructure.html">
+      <div class="doc-num">12 — TECHNIQUE</div>
+      <div class="doc-title">Infrastructure</div>
+      <div class="doc-desc">Hébergeur, Docker prod, CI/CD GitHub Actions, SSL wildcard, monitoring, backup, scalabilité 20k tenants.</div>
+      <span class="doc-tag tag-blue">Sprint 12+</span><div class="arrow">→</div>
+    </a>
+        <a class="doc-card c5" href="13-portail-super-admin.html">
+      <div class="doc-num">13 — ACCÈS RESTREINT</div>
+      <div class="doc-title">Portail super admin</div>
+      <div class="doc-desc">Dashboard MRR, gestion tenants, contrats SEPA, provisionnement, CGV, supervision technique, journal d'audit.</div>
+      <span class="doc-tag tag-red">Super admin</span><div class="arrow">→</div>
+    </a>
+        <a class="doc-card c4" href="14-portail-client.html">
+      <div class="doc-num">14 — FONCTIONNEL</div>
+      <div class="doc-title">Portail client</div>
+      <div class="doc-desc">Espace propriétaire — magic link, dossier animal, CAC, séances, carte identité, documents partagés, paiement Stripe.</div>
+      <span class="doc-tag tag-teal">Sprint 11</span><div class="arrow">→</div>
+    </a>
+        <a class="doc-card c1" href="15-rgpd-conformite.html">
+      <div class="doc-num">15 — CONFORMITÉ</div>
+      <div class="doc-title">RGPD & Conformité</div>
+      <div class="doc-desc">Registre des traitements, rôles RT/ST, DPA, droits des personnes, durées conservation, violations, mentions légales.</div>
+      <span class="doc-tag tag-green">Avant go-live</span><div class="arrow">→</div>
+    </a>
+        <a class="doc-card c6" href="16-landing-page.html">
+      <div class="doc-num">16 — COMMERCIAL</div>
+      <div class="doc-title">Site vitrine</div>
+      <div class="doc-desc">Landing page complète — hero, fonctionnalités, CAC showcase, pricing 3 plans, témoignages, FAQ, footer. Prête à déployer.</div>
+      <span class="doc-tag tag-purple">Production</span><div class="arrow">→</div>
+    </a>
+        <a class="doc-card c2" href="17-api-reference.html">
+      <div class="doc-num">17 — TECHNIQUE</div>
+      <div class="doc-title">API Reference</div>
+      <div class="doc-desc">80+ endpoints documentés — Auth, Animaux, EDC, CAC, Séances, Factures, GED, Portail, Super admin. Corps, réponses, codes erreur.</div>
+      <span class="doc-tag tag-blue">Développeurs</span><div class="arrow">→</div>
+    </a>
+        <a class="doc-card c1" href="18-questionnaires.html">
+      <div class="doc-num">18 — FONCTIONNEL</div>
+      <div class="doc-title">Questionnaires</div>
+      <div class="doc-desc">Moteur dynamique — pré-EDC, suivi intermédiaire, satisfaction NPS. BDD 4 tables, 22 questions pré-EDC, pré-remplissage EDC automatique.</div>
+      <span class="doc-tag tag-green">Sprint 11</span><div class="arrow">→</div>
+    </a>
+        <a class="doc-card c3" href="19-onboarding.html">
+      <div class="doc-num">19 — EXPÉRIENCE CLIENT</div>
+      <div class="doc-title">Onboarding</div>
+      <div class="doc-desc">Parcours J0→J30, email bienvenue, checklist 5 étapes, import CSV, première séance guidée, aide in-app, métriques activation.</div>
+      <span class="doc-tag tag-gold">Go-live</span><div class="arrow">→</div>
+    </a>
+    <a class="doc-card c2" href="20-pilotage-projet.html">
+      <div class="doc-num">20 — PILOTAGE</div>
+      <div class="doc-title">Tableau de bord projet</div>
+      <div class="doc-desc">KPIs, kanban actions prioritaires, détail Sprint 9, roadmap S10→S12+, infrastructure, commercial &amp; juridique.</div>
+      <span class="doc-tag tag-blue">Session 25</span><div class="arrow">→</div>
+    </a>
+    <a class="doc-card c4" href="21-aide-integree.html">
+      <div class="doc-num">21 — UX</div>
+      <div class="doc-title">Aide intégrée</div>
+      <div class="doc-desc">Système d'aide contextuelle — architecture HelpPanel + centre d'aide /app/aide, 58 articles rédigés, 6 modules, prototype interactif.</div>
+      <span class="doc-tag tag-teal">S10</span><div class="arrow">→</div>
+    </a>
+    <a class="doc-card c6" href="09-scenario-video.html">
+      <div class="doc-num">09 — PRODUCTION</div>
+      <div class="doc-title">Scénario vidéo</div>
+      <div class="doc-desc">Script complet 7 min — 12 séquences, données démo, narrations, conseils tournage.</div>
+      <span class="doc-tag tag-purple">Commercial</span><div class="arrow">→</div>
     </a>
   </div>
-
-  <!-- MÉTIERS & FONCTIONNEL -->
-  <div class="section-title">🐾 Métiers & Fonctionnel</div>
-  <div class="grid">
-    <a href="11-carte-identite-animale.html" class="card">
-      <div class="card-header"><div class="card-icon">🐕</div><div class="card-num">11</div></div>
-      <div class="card-title">Carte Identité Animale</div>
-      <div class="card-desc">Fiche animal, puce, races, CAC, EDC, espèces supportées</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-    <a href="10-modele-commercial.html" class="card">
-      <div class="card-header"><div class="card-icon">💼</div><div class="card-num">10</div></div>
-      <div class="card-title">Modèle Commercial</div>
-      <div class="card-desc">Pricing, devis, facturation, templates par métier</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-    <a href="18-questionnaires.html" class="card">
-      <div class="card-header"><div class="card-icon">📋</div><div class="card-num">18</div></div>
-      <div class="card-title">Questionnaires</div>
-      <div class="card-desc">7 modèles : comportementaliste, équestre, maréchal, toiletteur, pet-sitter, suivi, stage</div>
-      <div class="card-tags"><span class="tag tag-s31">S31</span></div>
-    </a>
-    <a href="19-onboarding.html" class="card">
-      <div class="card-header"><div class="card-icon">🚀</div><div class="card-num">19</div></div>
-      <div class="card-title">Onboarding</div>
-      <div class="card-desc">Parcours d'intégration client, configuration initiale, paramétrage métier</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-    <a href="22-demarches-eleveur.html" class="card">
-      <div class="card-header"><div class="card-icon">🐣</div><div class="card-num">22</div></div>
-      <div class="card-title">Démarches Éleveur</div>
-      <div class="card-desc">Registre DDPP, portées, saillies, certificats de cession</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-  </div>
-
-  <!-- UTILISATEUR & COMMERCIAL -->
-  <div class="section-title">👥 Utilisateur & Commercial</div>
-  <div class="grid">
-    <a href="02-guide-parametrage.html" class="card">
-      <div class="card-header"><div class="card-icon">⚙️</div><div class="card-num">02</div></div>
-      <div class="card-title">Guide Paramétrage</div>
-      <div class="card-desc">Configuration complète : entreprise, SMTP, types séances, CAC, paiements</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-    <a href="03-notice-utilisateur.html" class="card">
-      <div class="card-header"><div class="card-icon">📘</div><div class="card-num">03</div></div>
-      <div class="card-title">Notice Utilisateur</div>
-      <div class="card-desc">Guide complet d'utilisation, 200 articles, 15 modules</div>
-      <div class="card-tags"><span class="tag tag-s31">S31</span></div>
-    </a>
-    <a href="16-landing-page.html" class="card">
-      <div class="card-header"><div class="card-icon">🌐</div><div class="card-num">16</div></div>
-      <div class="card-title">Landing Page</div>
-      <div class="card-desc">Page commerciale PetSuite, fonctionnalités, tarifs, CTA</div>
-      <div class="card-tags"><span class="tag tag-s30">S30</span></div>
-    </a>
-    <a href="21-aide-integree.html" class="card">
-      <div class="card-header"><div class="card-icon">❓</div><div class="card-num">21</div></div>
-      <div class="card-title">Aide Intégrée</div>
-      <div class="card-desc">Centre d'aide in-app, 200 articles, HelpButton contextuel</div>
-      <div class="card-tags"><span class="tag tag-s31">S31</span></div>
-    </a>
-  </div>
-
-  <!-- CHANGELOGS — NOUVEAU S31 -->
-  <div class="section-title">📋 Changelogs & Releases</div>
-  <div class="grid">
-    <a href="24-changelog-sprint-S31.html" class="card card-highlight">
-      <div class="card-header"><div class="card-icon">🆕</div><div class="card-num">24</div></div>
-      <div class="card-title">Changelog Sprint S31</div>
-      <div class="card-desc">Release notes 17/03/2026 — QR Code, agenda grille horaire, contacts modale, 7 questionnaires, 200 articles aide, 81 articles métiers BDD</div>
-      <div class="card-tags"><span class="tag tag-s31">S31</span><span class="tag tag-new">NOUVEAU</span></div>
-    </a>
-  </div>
-
+  <div class="updated"><span>Session 25 · 14/03/2026 · 21 documents · Format 100% HTML</span></div>
 </div>
 
 <footer>
-  PetSuite v4.0 · Sprint S31 · 17/03/2026 ·
-  <a href="https://github.com/nicolashermilly/petsuite-docs" target="_blank">GitHub</a>
+  <div><strong>PetSuite</strong> — Documentation interne</div>
+  <div>Confidentiel — ne pas diffuser</div>
 </footer>
-
 </body>
 </html>
