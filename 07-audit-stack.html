@@ -1,5 +1,582 @@
-<!DOCTYPE html> <html lang="fr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>PetSuite — Audit Stack v4.0</title> <style> :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;} *{box-sizing:border-box;margin:0;padding:0;} body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;} .header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);} .header h1{font-size:2.5rem;font-weight:800;color:#fff;} .header p{color:var(--accent2);margin-top:8px;} .badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;} .container{max-width:1100px;margin:0 auto;padding:32px;} .section{margin-bottom:40px;} .section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;} .section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;} .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;} .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;} .card h4{font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px;} .card p{font-size:.875rem;color:var(--text2);} table{width:100%;border-collapse:collapse;margin:12px 0;} th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;} td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;} .ok{color:var(--green);font-weight:700;} .highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;} code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);} pre{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;font-size:.8rem;color:var(--text2);margin:12px 0;} footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;} </style> </head> <body>
-<div class="header"> <h1>🔍 PetSuite — Audit Stack</h1> <p>État de la stack technique, chemins, règles absolues</p> <div class="badge">v4.0 — Sprint S31 — Mars 2026</div> </div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="12-infrastructure.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Infrastructure</a><a href="17-api-reference.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">API</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a><a href="24-changelog-sprint-S31.html" style="color:#4ade80;font-weight:600;">Changelog S31 🆕</a>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Audit Stack</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a2e;--ink2:#3d3d5c;--ink3:#8888aa;--paper:#f7f6f1;--paper2:#eeecea;--paper3:#e2e0da;--accent:#2d6a4f;--accent2:#40916c;--accent3:#d8f3dc;--gold:#a07030;--gold2:#fdf3e0;--blue:#1d4e8f;--blue2:#dbeafe;--red:#9b2335;--red2:#fdecea;--purple:#5b3fa0;--purple2:#ede8fc;--r:10px;--rs:6px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);font-size:14px;line-height:1.65;}
+nav{background:var(--ink);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;text-decoration:none;}
+.nav-logo span{color:#74c69d;}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap;}
+.nav-links a{color:rgba(255,255,255,0.55);font-size:11px;font-weight:500;text-decoration:none;padding:5px 12px;border-radius:20px;transition:all .2s;white-space:nowrap;}
+.nav-links a:hover{background:rgba(255,255,255,0.1);color:#fff;}
+.nav-links a.active{background:rgba(116,198,157,0.2);color:#74c69d;}
+.nav-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.45);font-size:10px;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.hero{background:var(--ink);color:#fff;padding:52px 48px 44px;}
+.hero-tag{display:inline-block;background:rgba(116,198,157,0.15);border:1px solid rgba(116,198,157,0.3);color:#74c69d;font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;margin-bottom:18px;letter-spacing:.04em;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:40px;line-height:1.1;margin-bottom:12px;}
+.hero h1 em{font-style:italic;color:#74c69d;}
+.hero-sub{color:rgba(255,255,255,0.5);font-size:14px;max-width:680px;margin-bottom:28px;}
+.hero-kpis{display:flex;gap:10px;flex-wrap:wrap;}
+.kpi{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r);padding:12px 18px;min-width:110px;}
+.kpi-num{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;line-height:1.1;}
+.kpi-lbl{font-size:10px;color:rgba(255,255,255,0.4);margin-top:3px;}
+.layout{display:flex;gap:0;max-width:1200px;margin:0 auto;}
+.toc{width:220px;flex-shrink:0;padding:32px 24px;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;border-right:1px solid var(--paper3);}
+.toc-title{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;}
+.toc a{display:block;font-size:12px;color:var(--ink3);text-decoration:none;padding:5px 0;border-left:2px solid transparent;padding-left:10px;transition:all .15s;line-height:1.4;}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent2);}
+.toc a.toc-h2{font-weight:500;color:var(--ink2);margin-top:8px;}
+.toc a.toc-h3{font-size:11px;padding-left:18px;}
+.main{flex:1;padding:40px 48px;min-width:0;}
+.section{margin-bottom:52px;scroll-margin-top:80px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--paper3);}
+.section-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);background:var(--paper2);padding:3px 8px;border-radius:var(--rs);}
+.section-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);}
+.subsection{margin-bottom:28px;}
+.subsection-title{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.subsection-title::before{content:'';display:inline-block;width:3px;height:14px;background:var(--accent2);border-radius:2px;flex-shrink:0;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+.card{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:18px 20px;}
+.card-title{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.card-icon{width:24px;height:24px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+.icon-green{background:var(--accent3);}
+.icon-blue{background:var(--blue2);}
+.icon-gold{background:var(--gold2);}
+.icon-red{background:var(--red2);}
+.icon-purple{background:var(--purple2);}
+.pill{display:inline-block;font-size:10px;font-weight:500;padding:2px 9px;border-radius:20px;white-space:nowrap;}
+.pill-green{background:var(--accent3);color:var(--accent);}
+.pill-blue{background:var(--blue2);color:var(--blue);}
+.pill-gold{background:var(--gold2);color:var(--gold);}
+.pill-red{background:var(--red2);color:var(--red);}
+.pill-purple{background:var(--purple2);color:var(--purple);}
+.pill-gray{background:var(--paper2);color:var(--ink2);}
+.pill-ok{background:#d8f3dc;color:#2d6a4f;}
+.pill-wip{background:#fdf3e0;color:#a07030;}
+.pill-todo{background:#fdecea;color:#9b2335;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl th{text-align:left;font-weight:500;font-size:10px;letter-spacing:.05em;color:var(--ink3);padding:7px 10px;border-bottom:1px solid var(--paper3);background:var(--paper2);white-space:nowrap;}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--paper2);color:var(--ink2);vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{font-weight:500;color:var(--ink);}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--paper3);border-radius:var(--r);}
+.code{background:#0d0d1a;border-radius:var(--r);padding:16px 20px;font-family:'DM Mono',monospace;font-size:12px;color:#a0e0c0;line-height:1.9;overflow-x:auto;margin:10px 0;}
+.code .cm{color:#4a7a6a;}
+.code .ck{color:#74c69d;}
+.code .cv{color:#f0c080;}
+.item-list{display:flex;flex-direction:column;}
+.item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--paper2);font-size:12px;}
+.item:last-child{border-bottom:none;}
+.item-label{font-weight:500;color:var(--ink);min-width:160px;flex-shrink:0;}
+.item-val{color:var(--ink2);}
+.alert{border-radius:var(--rs);padding:11px 14px;font-size:12px;margin:10px 0;}
+.alert-warn{background:#fffbeb;border:1px solid #f0d070;color:#805010;}
+.alert-info{background:var(--blue2);border:1px solid #90b8e8;color:var(--blue);}
+.alert-danger{background:var(--red2);border:1px solid rgba(155,35,53,0.3);color:var(--red);}
+.alert-ok{background:var(--accent3);border:1px solid #80c09a;color:var(--accent);}
+.div{height:1px;background:var(--paper3);margin:14px 0;}
+footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:20px 48px;font-size:12px;display:flex;justify-content:space-between;align-items:center;}
+footer strong{color:rgba(255,255,255,0.7);}
+.toc::-webkit-scrollbar{width:4px;}
+.toc::-webkit-scrollbar-thumb{background:var(--paper3);border-radius:2px;}
+@media(max-width:768px){.layout{flex-direction:column;}.toc{display:none;}.main{padding:24px 20px;}nav{padding:12px 20px;}.hero{padding:36px 20px 32px;}footer{padding:16px 20px;flex-direction:column;gap:8px;text-align:center;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Pet<span>Suite</span></a>
+  <div class="nav-links">
+    <a href="05-architecture-roadmap.html">Architecture</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="07-audit-stack.html" class="active">Audit Stack</a>
+    <a href="08-projet-reference.html">Référence</a>
+    <a href="09-scenario-video.html">Vidéo</a>
+  </div>
+  <span class="nav-badge">Session 24 · 14/03/2026</span>
 </nav>
-<div class="container"> <div class="section"> <h2>🐳 Conteneurs Docker — S30</h2> <table> <thead><tr><th>Conteneur</th><th>Image</th><th>Port</th><th>État</th><th>Rôle</th></tr></thead> <tbody> <tr><td><code>micro_frontend</code></td><td>node:20-alpine</td><td>3000</td><td class="ok">✅ UP</td><td>Next.js 15 — 58 pages</td></tr> <tr><td><code>micro_nginx</code></td><td>nginx:alpine</td><td>80</td><td class="ok">✅ UP</td><td>Reverse proxy</td></tr> <tr><td><code>micro_api</code></td><td>node:20-alpine</td><td>3001</td><td class="ok">✅ UP</td><td>NestJS — custom-routes.ts 290 lignes</td></tr> <tr><td><code>MariaDB</code></td><td>MariaDB 11</td><td>3307</td><td class="ok">✅ UP (HORS Docker)</td><td>192.168.1.62:3307</td></tr> </tbody> </table> <div class="highlight"><p>⚠️ RÈGLE ABSOLUE : MariaDB HORS Docker. Connexion via <code>192.168.1.62:3307</code> avec <code>--skip-ssl</code>.</p></div> </div> <div class="section"> <h2>📁 Chemins importants</h2> <table> <thead><tr><th>Ressource</th><th>Chemin</th></tr></thead> <tbody> <tr><td>Frontend src</td><td><code>D:\...\micro_logiciel_frontend_nextjs\src</code></td></tr> <tr><td>custom-routes.ts</td><td><code>...\api\src\custom-routes.ts</code></td></tr> <tr><td>docker-compose.yml</td><td><code>...\deploy\docker-compose.yml</code></td></tr> <tr><td>Sauvegarde</td><td><code>G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1</code></td></tr> <tr><td>mariadb-dump.exe</td><td><code>C:\ProgramData\OptimBTP\MariaDB\bin\mariadb-dump.exe</code></td></tr> <tr><td>Git docs</td><td><code>C:\petsuite-docs</code></td></tr> </tbody> </table> </div> <div class="section"> <h2>⚙️ custom-routes.ts — 24 routes S27→S30</h2> <table> <thead><tr><th>Route</th><th>Méthode</th><th>Sprint</th></tr></thead> <tbody> <tr><td><code>/dashboard/stats</code></td><td>GET</td><td>S30</td></tr> <tr><td><code>/programmes</code></td><td>GET/POST</td><td>S30</td></tr> <tr><td><code>/animaux/races</code></td><td>GET</td><td>S30</td></tr> <tr><td><code>/animaux/races/types</code></td><td>GET</td><td>S30</td></tr> <tr><td><code>/animaux/races/categories</code></td><td>GET</td><td>S30</td></tr> <tr><td><code>/ged-edc-sans-devis</code></td><td>GET</td><td>S30</td></tr> <tr><td><code>/ged-factures-email</code></td><td>POST</td><td>S30</td></tr> <tr><td><code>/bilan</code></td><td>GET</td><td>S29</td></tr> <tr><td><code>/inventaires</code></td><td>GET/POST</td><td>S29</td></tr> <tr><td><code>/elevage/alertes</code></td><td>GET</td><td>S28</td></tr> <tr><td><code>/seances/:id/generer-devis</code></td><td>POST</td><td>S28</td></tr> <tr><td><code>/ged-factures-impayees</code></td><td>GET</td><td>S27</td></tr> <tr><td><code>/ged-admin-audit</code></td><td>GET</td><td>S27</td></tr> <tr><td><code>/ged-compta-fec-generer</code></td><td>POST</td><td>S27</td></tr> </tbody> </table> </div> <div class="section"> <h2>🚨 Règles absolues</h2> <table> <thead><tr><th>#</th><th>Règle</th></tr></thead> <tbody> <tr><td>1</td><td><code>cd deploy</code> AVANT toute commande docker compose</td></tr> <tr><td>2</td><td>MariaDB HORS Docker — jamais <code>docker exec mysql</code></td></tr> <tr><td>3</td><td><code>--skip-ssl</code> obligatoire pour toute connexion MariaDB</td></tr> <tr><td>4</td><td>Supprimer <code>.next</code> ET <code>deploy/.next</code> avant npm run build</td></tr> <tr><td>5</td><td>custom-routes.ts = approche définitive pour les routes supplémentaires</td></tr> <tr><td>6</td><td>NE JAMAIS utiliser inject_v4_final.js</td></tr> <tr><td>7</td><td>Dump BDD : user=optimbtp host=localhost port=3307 --skip-ssl</td></tr> <tr><td>8</td><td>Token GitHub expire → renouveler sur github.com/settings/tokens</td></tr> </tbody> </table> </div> </div> <footer>PetSuite Audit Stack v4.0 — Sprint S31 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer> </body> </html>
+
+<div class="hero">
+  <div class="hero-tag">Audit technique — Document vivant</div>
+  <h1>Audit <em>Stack</em></h1>
+  <p class="hero-sub">État complet de l'infrastructure Docker, de la base de données, de l'API et des patches actifs — référence technique de session en session.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-num">3</div><div class="kpi-lbl">Conteneurs Docker</div></div>
+    <div class="kpi"><div class="kpi-num">60+</div><div class="kpi-lbl">Tables BDD</div></div>
+    <div class="kpi"><div class="kpi-num">18+</div><div class="kpi-lbl">Triggers actifs</div></div>
+    <div class="kpi"><div class="kpi-num">5</div><div class="kpi-lbl">Patches volatils</div></div>
+  </div>
+</div>
+
+<div class="layout">
+<nav class="toc">
+  <div class="toc-title">Sommaire</div>
+  <a href="#s1" class="toc-h2">01. Infrastructure Docker</a>
+  <a href="#s1-nginx" class="toc-h3">Nginx routage</a>
+  <a href="#s1-ps" class="toc-h3">Variables PowerShell</a>
+  <a href="#s2" class="toc-h2">02. Base de données</a>
+  <a href="#s2-vol" class="toc-h3">Volume données</a>
+  <a href="#s2-tables" class="toc-h3">Tables S24</a>
+  <a href="#s2-triggers" class="toc-h3">Triggers</a>
+  <a href="#s2-vues" class="toc-h3">Vues & procédures</a>
+  <a href="#s3" class="toc-h2">03. État API S24</a>
+  <a href="#s3-patch" class="toc-h3">PATCH_ROUTES_S56</a>
+  <a href="#s3-endpoints" class="toc-h3">Endpoints</a>
+  <a href="#s4" class="toc-h2">04. Patches volatils</a>
+  <a href="#s5" class="toc-h2">05. Documentation</a>
+  <a href="#s6" class="toc-h2">06. Audit visuel</a>
+  <a href="#s7" class="toc-h2">07. Règles critiques</a>
+</nav>
+
+<div class="main">
+
+<!-- 01 DOCKER -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">Infrastructure Docker</span></div>
+  <div class="subsection">
+    <div class="subsection-title">Conteneurs</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Container</th><th>Service</th><th>Description</th><th>Port</th></tr></thead>
+        <tbody>
+          <tr><td>micro_api</td><td>api</td><td>NestJS compilé JS + smtp_server Express 8081</td><td>interne</td></tr>
+          <tr><td>micro_frontend</td><td>frontend</td><td>Next.js 15 App Router</td><td>3000 interne</td></tr>
+          <tr><td>micro_nginx</td><td>nginx</td><td>nginx:1.27-alpine — reverse proxy</td><td>80:80, 8443:443</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-info" style="margin-top:8px;">Volume nommé : deploy_uploads_data — micro_api → /app/uploads (rw) · micro_nginx → /uploads (ro) · micro_nginx → /docs (ro)</div>
+  </div>
+
+  <div class="subsection" id="s1-nginx">
+    <div class="subsection-title">Routage Nginx</div>
+    <div class="code">
+<span class="cm"># Routage principal</span>
+/api/                <span class="ck">-></span> proxy micro_api:8080
+/                    <span class="ck">-></span> proxy micro_frontend:3000
+/api/parametres/smtp <span class="ck">-></span> micro_api:8081 (smtp_server)
+/api/ged/animal      <span class="ck">-></span> micro_api:8081
+
+<span class="cm"># Documentation statique (public/docs Next.js)</span>
+/docs/guide_parametrage.html   <span class="ck">-></span> tous utilisateurs connectés
+/docs/notice_utilisateur.html  <span class="ck">-></span> tous utilisateurs connectés
+/docs/doc_supervision.html     <span class="ck">-></span> SuperAdmin uniquement
+    </div>
+  </div>
+
+  <div class="subsection" id="s1-ps">
+    <div class="subsection-title">Variables PowerShell projet</div>
+    <div class="code">
+<span class="cv">$root</span> = <span class="ck">"D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs"</span>
+<span class="cv">$app</span>  = <span class="ck">"$root\src\app\app"</span>
+<span class="cv">$comp</span> = <span class="ck">"$root\src\components"</span>
+<span class="cv">$pub</span>  = <span class="ck">"$root\public\docs"</span>
+    </div>
+  </div>
+</div>
+
+<!-- 02 BDD -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">Base de données</span></div>
+  <div class="alert alert-info" style="margin-bottom:16px;">Host : 192.168.1.62:3307 (MariaDB hors Docker, --skip-ssl) · BDD : micro_logiciel + micro_logiciel_ged · Charset : utf8mb4_unicode_ci / InnoDB · User : Admin (hors Docker, --skip-ssl obligatoire)</div>
+
+  <div class="subsection" id="s2-vol">
+    <div class="subsection-title">Volume des données (session 24)</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Table</th><th>Lignes</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>tiers</td><td>15+</td><td>Clients</td></tr>
+          <tr><td>contact</td><td>20+</td><td>—</td></tr>
+          <tr><td>animal</td><td>29+</td><td>Puces 15 chiffres, races</td></tr>
+          <tr><td>seance</td><td>59+</td><td>EC / SEANCE / GARDIENNAGE</td></tr>
+          <tr><td>devis_contrat_entete</td><td>9+</td><td>—</td></tr>
+          <tr><td>facture</td><td>30+</td><td>—</td></tr>
+          <tr><td>reglement</td><td>5+</td><td>—</td></tr>
+          <tr><td>article_prestation</td><td>15+</td><td>—</td></tr>
+          <tr><td>race</td><td>200+</td><td>—</td></tr>
+          <tr><td>utilisateur</td><td>2</td><td>admin + SuperAdmin</td></tr>
+          <tr><td>param_libelles_ec</td><td>60</td><td>S24 — libellés paramétrables EC</td></tr>
+          <tr><td>edc_fiche</td><td>—</td><td>S24 — fiches Étude Comportementale</td></tr>
+          <tr><td>edc_probleme</td><td>—</td><td>S24 — grille comportementale</td></tr>
+          <tr><td>seance_suivi_cac</td><td>—</td><td>S24 — CAC par séance</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-tables">
+    <div class="subsection-title">Tables & colonnes ajoutées session 24</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">📋</div>Nouvelles tables</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">edc_fiche</span><span class="item-val">Fiche EC complète — 60+ champs</span></div>
+          <div class="item"><span class="item-label">edc_probleme</span><span class="item-val">Grille comportementale multi-lignes</span></div>
+          <div class="item"><span class="item-label">seance_suivi_cac</span><span class="item-val">CAC par séance avec propagation</span></div>
+          <div class="item"><span class="item-label">param_libelles_ec</span><span class="item-val">60 libellés paramétrables dont 14 CAC</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🔧</div>Colonnes ajoutées</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">ANI_SCORE_CAC</span><span class="item-val">Score CAC actuel (0..14)</span></div>
+          <div class="item"><span class="item-label">ANI_DERNIERE_SEA_ID</span><span class="item-val">ID dernière séance avec CAC</span></div>
+          <div class="item"><span class="item-label">ANI_DERNIERE_SEA_DATE</span><span class="item-val">Date dernière séance avec CAC</span></div>
+          <div class="item"><span class="item-label">STY_COULEUR</span><span class="item-val">Couleur hex agenda (S22)</span></div>
+          <div class="item"><span class="item-label">STY_LIBELLE</span><span class="item-val">'Etude Comportementale' (renommé depuis EDC)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-triggers">
+    <div class="subsection-title">Triggers actifs — session 24</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Trigger</th><th>Table cible</th><th>Rôle</th></tr></thead>
+        <tbody>
+          <tr><td>trg_facture_num</td><td>facture</td><td>Numéro FAC-YYMM-0001 auto</td></tr>
+          <tr><td>trg_reglement_check</td><td>reglement</td><td>Bloque dépassement TTC</td></tr>
+          <tr><td>trg_dcl_calc_insert/update</td><td>devis_contrat_ligne</td><td>Calcul HT/TVA/TTC</td></tr>
+          <tr><td>trg_fli_calc_insert/update</td><td>facture_ligne</td><td>Calcul HT/TVA/TTC</td></tr>
+          <tr><td>trg_facture_no_*_if_closed</td><td>facture</td><td>Verrou exercice clôturé</td></tr>
+          <tr><td>trg_reglement_no_*_if_closed</td><td>reglement</td><td>Verrou exercice clôturé</td></tr>
+          <tr><td>trg_dce_num</td><td>devis_contrat_entete</td><td>Numéro DEV-YYMM-0001 auto</td></tr>
+          <tr><td>trg_sel_calc_*</td><td>seance_ligne</td><td>Calcul lignes séance</td></tr>
+          <tr><td>trg_sel_after_*</td><td>seance_ligne</td><td>MAJ totaux séance</td></tr>
+          <tr><td>trg_sea_unique_par_animal_*</td><td>seance</td><td>EC unique par animal</td></tr>
+          <tr><td>trg_ssc_score_insert/update</td><td>seance_suivi_cac</td><td>Score CAC auto (S24)</td></tr>
+          <tr><td>trg_ssc_remonte_animal</td><td>seance_suivi_cac</td><td>MAJ fiche animal (S24)</td></tr>
+          <tr><td>trg_ssc_remonte_animal_upd</td><td>seance_suivi_cac</td><td>MAJ fiche animal update (S24)</td></tr>
+          <tr><td>bi_ged_document_lien_*</td><td>ged_document_lien</td><td>Validation inter-base GED</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-vues">
+    <div class="subsection-title">Vues & procédures</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">👁</div>Vues utiles</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">v_facture_totaux</span><span class="item-val">HT/TVA/TTC par facture</span></div>
+          <div class="item"><span class="item-label">v_facture_suivi</span><span class="item-val">Reste à payer par facture</span></div>
+          <div class="item"><span class="item-label">v_encours_client</span><span class="item-val">Encours total par client</span></div>
+          <div class="item"><span class="item-label">v_edc_sans_devis</span><span class="item-val">EC sans devis lié (widget dashboard)</span></div>
+          <div class="item"><span class="item-label">v_fec_complet</span><span class="item-val">FEC dynamique complet</span></div>
+          <div class="item"><span class="item-label">v_fec_export_non_equilibre</span><span class="item-val">Écritures non équilibrées</span></div>
+          <div class="item"><span class="item-label">v_ged_pj_animal</span><span class="item-val">PJ d'un animal</span></div>
+          <div class="item"><span class="item-label">v_animal_evolution_cac</span><span class="item-val">Évolution CAC par séance (S24)</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">⚙️</div>Procédures stockées</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">sp_fec_generer_par_exercice</span><span class="item-val">Génère export FEC figé</span></div>
+          <div class="item"><span class="item-label">sp_exercice_cloturer</span><span class="item-val">Clôture exercice comptable</span></div>
+          <div class="item"><span class="item-label">sp_dce_creer_depuis_seance</span><span class="item-val">Crée devis depuis séance</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 API -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">État API — Session 24</span></div>
+
+  <div class="alert alert-warn" style="margin-bottom:14px;">Historique crashes : S19 regex /png → corrigé · S22 PUT /seances/types avant _h56 → corrigé S24 par fix_main_s24.ps1</div>
+
+  <div class="subsection" id="s3-patch">
+    <div class="subsection-title">Structure PATCH_ROUTES_S56</div>
+    <div class="code">
+await app.listen(port, <span class="ck">"0.0.0.0"</span>);
+
+<span class="cm">// PATCH_ROUTES_S56 — toutes les routes injectées ICI</span>
+try {
+  const <span class="cv">_h56</span> = app.getHttpAdapter().getInstance();
+  const <span class="cv">_db56</span> = app.get(require(<span class="ck">'./common/db.service'</span>).DbService);
+
+  <span class="cv">_h56</span>.put(<span class="ck">'/seances/types/:id'</span>, ...)
+  <span class="cv">_h56</span>.use(<span class="ck">'/ged-libelles-ec'</span>, ...)    <span class="cm">// S24 — GET/PUT 64 libellés EC</span>
+  <span class="cv">_h56</span>.use(<span class="ck">'/ged-edc'</span>, ...)            <span class="cm">// S25 — CRUD fiche EDC</span>
+  <span class="cv">_h56</span>.use(<span class="ck">'/ged-cac'</span>, ...)            <span class="cm">// S25 — CAC par séance + initial</span>
+  <span class="cv">_h56</span>.use(<span class="ck">'/ged-evolution-cac'</span>, ...)   <span class="cm">// S25 — Historique CAC animal</span>
+  <span class="cm">// Chargé via : const _injectEdc = require('./patch_edc_cac_s25'); _injectEdc(_h56);</span>
+
+} catch(<span class="cv">_e56</span>) { console.warn(<span class="ck">'PATCH_ROUTES_S56 error:'</span>, <span class="cv">_e56</span>.message); }
+    </div>
+    <div class="alert alert-danger">Les routes DOIVENT être dans le bloc try { const _h56 = ... } — jamais entre await app.listen et ce bloc.</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Découverte critique S24 — Injection routes NestJS</div>
+    <div class="alert alert-danger" style="margin-bottom:10px;">
+      <strong>_h56.get/post/put() → 404 systématique</strong> — le filtre NestJS intercepte avant d'atteindre la route injectée.
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">🔴</div>Problème identifié</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">_h56.get/post/put()</span><span class="item-val">404 systématique — filtre NestJS intercepte en amont</span></div>
+          <div class="item"><span class="item-label">app.get(DbService)</span><span class="item-val">Ne fonctionne pas dans ce contexte — retourne undefined</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">✅</div>Solution validée</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">_h56.use()</span><span class="item-val">S'exécute AVANT le filtre 404 NestJS — fonctionne</span></div>
+          <div class="item"><span class="item-label">mysql2/promise</span><span class="item-val">Accès BDD direct via _q() — pas app.get(DbService)</span></div>
+          <div class="item"><span class="item-label">Préfixe /ged-*</span><span class="item-val">Convention pour éviter les conflits NestJS</span></div>
+          <div class="item"><span class="item-label">Nginx strip /api/</span><span class="item-val">Routes internes enregistrées SANS le préfixe /api/</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="subsection-title" style="margin-top:14px;">Pattern correct pour routes injectées S24+</div>
+    <div class="code">
+<span class="cm">// ✅ CORRECT — _h56.use() s'exécute avant le filtre 404 NestJS</span>
+<span class="cm">// Nginx strip /api/ → routes internes enregistrées SANS /api/</span>
+<span class="cv">_h56</span>.use(<span class="ck">'/ged-libelles-ec'</span>, async (req, res) => {
+  <span class="cm">// BDD : mysql2/promise directement via _q(), pas app.get(DbService)</span>
+  const rows = await <span class="cv">_q</span>(<span class="ck">'SELECT * FROM param_libelles_ec'</span>);
+  res.json(rows);
+});
+
+<span class="cm">// Routes actives S25 (préfixe /ged-* par convention)</span>
+<span class="cv">_h56</span>.use(<span class="ck">'/ged-libelles-ec'</span>, ...)      <span class="cm">// → GET/PUT /api/ged-libelles-ec</span>
+<span class="cv">_h56</span>.use(<span class="ck">'/ged-edc'</span>, ...)              <span class="cm">// → GET/POST/PUT /api/ged-edc/* + problèmes</span>
+<span class="cv">_h56</span>.use(<span class="ck">'/ged-cac'</span>, ...)              <span class="cm">// → GET/POST /api/ged-cac/:id + initial</span>
+<span class="cv">_h56</span>.use(<span class="ck">'/ged-evolution-cac'</span>, ...)   <span class="cm">// → GET /api/ged-evolution-cac/:ani_id</span>
+
+<span class="cm">// ❌ NE PLUS UTILISER pour nouvelles routes</span>
+<span class="cm">// _h56.get('/edc', ...) → 404 systématique</span>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-endpoints">
+    <div class="subsection-title">Endpoints</div>
+    <div class="grid2">
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:8px;">Confirmés OK</div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Méthode</th><th>Route</th></tr></thead>
+            <tbody>
+              <tr><td>GET</td><td>/api/tiers, /api/tiers?type=CLIENT</td></tr>
+              <tr><td>GET/POST/PATCH</td><td>/api/animaux, /api/animaux/:id, /api/animaux/races</td></tr>
+              <tr><td>GET/PUT</td><td>/api/seances, /api/seances/types, /api/seances/types/:id</td></tr>
+              <tr><td>GET</td><td>/api/devis, /api/factures (FAC_TOTAL_HT S21)</td></tr>
+              <tr><td>GET</td><td>/api/reglements, /api/articles</td></tr>
+              <tr><td>GET</td><td>/api/crm/leads, /api/crm/opportunites, /api/crm/activites</td></tr>
+              <tr><td>GET/POST</td><td>/api/ged/documents, /api/ged/animal/:id/photo</td></tr>
+              <tr><td>GET</td><td>/api/parametres/*, /api/dashboard/stats, /api/admin/*</td></tr>
+              <tr><td>PUT</td><td>/api/animaux/:id — MAJ partielle animal (ANI_PHOTOS + 14 champs) (S32)</td></tr>
+              <tr><td>GET/PUT</td><td>/api/ged-libelles-ec — 64 libellés EC paramétrables (S24)</td></tr>
+              <tr><td>GET/POST/PUT</td><td>/api/ged-edc — CRUD fiche Étude Comportementale (S25)</td></tr>
+              <tr><td>GET/POST/PUT/DELETE</td><td>/api/ged-edc/:id/problemes — Grille comportementale (S25)</td></tr>
+              <tr><td>GET/POST</td><td>/api/ged-cac/:id — CAC séance (S25)</td></tr>
+              <tr><td>GET</td><td>/api/ged-cac/:id/initial — CAC pré-remplis (S25)</td></tr>
+              <tr><td>GET</td><td>/api/ged-evolution-cac/:ani_id — Historique CAC animal (S25)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:8px;">À implanter S24+</div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Route</th><th>Méthode</th><th>État</th></tr></thead>
+            <tbody>
+              <tr><td>/api/ged-edc/:id/problemes</td><td>_h56.use</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>/api/ged-cac/:sea_id</td><td>_h56.use</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>/api/ged-cac/:sea_id/initial</td><td>_h56.use</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>/api/ged-evolution-cac/:ani_id</td><td>_h56.use</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>/api/stock/*, /api/achats/*</td><td>—</td><td><span class="pill pill-todo">S10</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 PATCHES -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">Patches actifs — /app/dist/ (volatils)</span></div>
+  <div class="alert alert-danger" style="margin-bottom:14px;">Perdus si rebuild image api. Sauvegarder AVANT tout docker compose up --build api.</div>
+
+  <div class="tbl-wrap" style="margin-bottom:16px;">
+    <table class="tbl">
+      <thead><tr><th>Fichier</th><th>Contenu</th></tr></thead>
+      <tbody>
+        <tr><td>main.js</td><td>Bootstrap NestJS + PATCH_ROUTES_S56 (reconstruit S24)</td></tr>
+        <tr><td>patch_edc_cac_s25.js</td><td>CRUD EDC, CAC séance, évolution CAC (S25 — require depuis main.js)</td></tr>
+        <tr><td>patch_animaux_v2.js</td><td>PATCH /api/animaux/:id</td></tr>
+        <tr><td>patch_rappels.js</td><td>Routes rappels impayés</td></tr>
+        <tr><td>smtp_server.js</td><td>Express port 8081 — SMTP + photo animal</td></tr>
+        <tr><td>factures/factures.service.js</td><td>FAC_TOTAL_HT dans findAll</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection-title">Commande sauvegarde patches</div>
+  <div class="code">
+<span class="cv">$bk</span> = <span class="ck">"C:\Backup\micro_logiciel\$(Get-Date -Format 'yyyyMMdd_HHmm')"</span>
+New-Item -ItemType Directory -Force -Path <span class="cv">$bk</span>
+docker cp micro_api:/app/dist/main.js              <span class="ck">"$bk\main.js"</span>
+docker cp micro_api:/app/dist/patch_animaux_v2.js  <span class="ck">"$bk\patch_animaux_v2.js"</span>
+docker cp micro_api:/app/dist/smtp_server.js       <span class="ck">"$bk\smtp_server.js"</span>
+docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\factures"</span>
+  </div>
+</div>
+
+<!-- 05 DOCS -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">Documentation</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📄</div>Fichiers HTML locaux ($root\public\docs\)</div>
+      <div class="tbl-wrap" style="margin-top:8px;">
+        <table class="tbl">
+          <thead><tr><th>Fichier</th><th>Accès</th></tr></thead>
+          <tbody>
+            <tr><td>guide_parametrage.html</td><td>Tous utilisateurs connectés</td></tr>
+            <tr><td>notice_utilisateur.html</td><td>Tous utilisateurs connectés</td></tr>
+            <tr><td>doc_supervision.html</td><td>SuperAdmin uniquement</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🌐</div>GitHub Pages — petsuite-docs</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Accueil</span><span class="item-val"><a href="https://nicolashermilly.github.io/petsuite-docs/" style="color:var(--blue);">petsuite-docs/</a></span></div>
+        <div class="item"><span class="item-label">Architecture</span><span class="item-val"><a href="https://nicolashermilly.github.io/petsuite-docs/05-architecture-roadmap.html" style="color:var(--blue);">05-architecture-roadmap.html</a></span></div>
+        <div class="item"><span class="item-label">Roadmap</span><span class="item-val"><a href="https://nicolashermilly.github.io/petsuite-docs/06-roadmap.html" style="color:var(--blue);">06-roadmap.html</a></span></div>
+        <div class="item"><span class="item-label">Audit Stack</span><span class="item-val"><a href="https://nicolashermilly.github.io/petsuite-docs/07-audit-stack.html" style="color:var(--blue);">07-audit-stack.html</a></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="subsection" style="margin-top:14px;">
+    <div class="subsection-title">Aide contextuelle HelpButton</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Page</th><th>Ancre</th></tr></thead>
+        <tbody>
+          <tr><td>/app/animaux</td><td>#client-animal</td></tr>
+          <tr><td>/app/seances</td><td>#seances</td></tr>
+          <tr><td>/app/seances/[id]/etude-comportementale</td><td>#etude-comport</td></tr>
+          <tr><td>/app/seances/[id]/suivi-cac</td><td>#suivi-cac</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 06 AUDIT VISUEL -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">Audit visuel</span></div>
+  <div class="grid2">
+    <div>
+      <div class="subsection-title">Pages validées OK (S19–S25)</div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Page</th><th>État</th></tr></thead>
+          <tbody>
+            <tr><td>/login</td><td><span class="pill pill-ok">OK</span></td></tr>
+            <tr><td>/app (dashboard)</td><td><span class="pill pill-ok">OK</span></td></tr>
+            <tr><td>/app/clients</td><td><span class="pill pill-ok">OK</span> 15 clients</td></tr>
+            <tr><td>/app/animaux</td><td><span class="pill pill-ok">OK</span> 29 animaux</td></tr>
+            <tr><td>/app/seances</td><td><span class="pill pill-ok">OK</span> 59 séances, couleurs</td></tr>
+            <tr><td>/app/devis</td><td><span class="pill pill-ok">OK</span></td></tr>
+            <tr><td>/app/factures</td><td><span class="pill pill-ok">OK</span> FAC_TOTAL_HT</td></tr>
+            <tr><td>/app/statistiques</td><td><span class="pill pill-ok">OK</span> CA HT corrigé S21</td></tr>
+            <tr><td>/app/agenda</td><td><span class="pill pill-ok">OK</span> couleurs STY_COULEUR</td></tr>
+            <tr><td>/app/crm</td><td><span class="pill pill-ok">OK</span></td></tr>
+            <tr><td>/app/parametres</td><td><span class="pill pill-ok">V2 S24</span> 14 tuiles</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="subsection-title">Pages ajoutées S24</div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Page</th><th>État</th></tr></thead>
+          <tbody>
+            <tr><td>/app/parametres/libelles-ec</td><td><span class="pill pill-ok">Frontend OK</span></td></tr>
+            <tr><td>/app/seances/[id]/etude-comportementale</td><td><span class="pill pill-wip">En cours</span></td></tr>
+            <tr><td>/app/seances/[id]/suivi-cac</td><td><span class="pill pill-wip">En cours</span></td></tr>
+            <tr><td>/app/animaux/[id] onglet CAC V2</td><td><span class="pill pill-todo">Spec prête</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="div"></div>
+      <div class="subsection-title">Anomalies</div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>#</th><th>Sév.</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>B1</td><td><span class="pill pill-ok">Fix S24</span></td><td>Restart loop API — corrigé</td></tr>
+            <tr><td>B2</td><td><span class="pill pill-gold">MOYENNE</span></td><td>Labels CAC génériques — à corriger S24</td></tr>
+            <tr><td>B3</td><td><span class="pill pill-ok">Corrigé</span></td><td>Titre "Mes paramètres"</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 REGLES -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Règles critiques</span></div>
+  <div class="alert alert-danger" style="margin-bottom:14px;">À respecter impérativement à chaque session pour éviter les régressions.</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-red">⚠️</div>Docker</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Patches volatils</span><span class="item-val">Perdus si rebuild image api — sauvegarder AVANT</span></div>
+        <div class="item"><span class="item-label">Rebuild frontend</span><span class="item-val">docker compose restart nginx obligatoire après</span></div>
+        <div class="item"><span class="item-label">docker cp</span><span class="item-val">Fonctionne sur container ARRÊTÉ uniquement</span></div>
+        <div class="item"><span class="item-label">docker exec</span><span class="item-val">Nom container (micro_api), pas le service</span></div>
+        <div class="item"><span class="item-label">docker compose</span><span class="item-val">cd "$root\deploy" AVANT toute commande</span></div>
+        <div class="item"><span class="item-label">COPIER_TOUTES_PAGES_v2.ps1</span><span class="item-val">AVANT chaque build frontend — 101 fichiers + OneDrive · Vérifier "transferring context: ~1MB"</span></div>
+        <div class="item"><span class="item-label">PATCH_ROUTES_S56</span><span class="item-val">Routes DANS le bloc try { const _h56 = ... }</span></div>
+        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Règle 13 ★</span><span class="item-val"><strong>Routes injectées → _h56.use() uniquement</strong> + préfixe /ged-* — _h56.get/post/put() → 404 systématique (filtre NestJS)</span></div>
+        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Règle 14 ★</span><span class="item-val"><strong>Nginx strip /api/</strong> → routes internes enregistrées SANS le préfixe /api/</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">⚙️</div>Code & PowerShell</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">DECIMAL MariaDB</span><span class="item-val">parseFloat(val || 0) avant .toFixed() en JS</span></div>
+        <div class="item"><span class="item-label">Scripts PS</span><span class="item-val">ASCII pur — pas d'accents ni emojis</span></div>
+        <div class="item"><span class="item-label">Chemins PS</span><span class="item-val">C:\Users\AdminPC\ (pas $env:USERPROFILE)</span></div>
+        <div class="item"><span class="item-label">Regex JS</span><span class="item-val">Échapper / → \/png (crash Node.js sinon)</span></div>
+        <div class="item"><span class="item-label">-LiteralPath</span><span class="item-val">Pour chemins PS avec [id] dans le nom</span></div>
+        <div class="item"><span class="item-label">require() nodes</span><span class="item-val">Chemin absolu /app/node_modules/xxx</span></div>
+        <div class="item"><span class="item-label">BDD injectée</span><span class="item-val">mysql2/promise via _q() directement — pas app.get(DbService)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<footer>
+  <div><strong>PetSuite</strong> — Audit Stack · Document vivant</div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.3);">Session 24 · 14/03/2026 · v0.1</div>
+  <div>Confidentiel — usage interne</div>
+</footer>
+</body>
+</html>

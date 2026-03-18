@@ -1,175 +1,572 @@
-<!DOCTYPE html> <html lang="fr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>PetSuite — Notice utilisateur v4.0</title> <style> :root { --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --accent: #6366f1; --accent2: #818cf8; --text: #e2e8f0; --text2: #94a3b8; --border: #2d3348; --green: #10b981; --yellow: #f59e0b; --red: #ef4444; } * { box-sizing: border-box; margin: 0; padding: 0; } body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; } .header { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%); padding: 48px 32px; text-align: center; border-bottom: 1px solid var(--border); } .header h1 { font-size: 2.5rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; } .header p { color: var(--accent2); margin-top: 8px; font-size: 1.1rem; } .badge { display: inline-block; background: var(--accent); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-top: 12px; } .container { max-width: 1100px; margin: 0 auto; padding: 32px; } .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 32px; } .toc h2 { font-size: 1rem; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; } .toc ul { list-style: none; columns: 2; gap: 8px; } .toc li { padding: 4px 0; } .toc a { color: var(--text2); text-decoration: none; font-size: 0.9rem; } .toc a:hover { color: var(--accent2); } .section { margin-bottom: 40px; } .section h2 { font-size: 1.4rem; font-weight: 700; color: #fff; padding-bottom: 12px; border-bottom: 2px solid var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; } .section h3 { font-size: 1.1rem; font-weight: 600; color: var(--accent2); margin: 20px 0 10px; } .section p { color: var(--text2); margin-bottom: 12px; } .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 16px 0; } .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; } .card h4 { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 8px; } .card p { font-size: 0.875rem; color: var(--text2); } .new-badge { background: var(--green); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 8px; } table { width: 100%; border-collapse: collapse; margin: 16px 0; } th { background: var(--surface2); color: var(--text2); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 14px; text-align: left; } td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text2); font-size: 0.875rem; } tr:hover td { background: var(--surface); } .highlight { background: var(--surface2); border-left: 3px solid var(--accent); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; } .highlight p { color: var(--text); margin: 0; } .nf525-box { background: rgba(16,185,129,.08); border-left: 3px solid #10b981; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; } footer { background: var(--surface); border-top: 1px solid var(--border); padding: 24px 32px; text-align: center; color: var(--text2); font-size: 0.875rem; } </style> </head> <body>
-<div class="header">
-  <h1>🐾 PetSuite</h1>
-  <p>Logiciel de gestion pour professionnels animaliers</p>
-  <div class="badge">Notice utilisateur — v4.0 — S30 — Mars 2026</div>
-</div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;">
-  <a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a>
-  <a href="02-guide-parametrage.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Paramétrage</a>
-  <a href="19-onboarding.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Onboarding</a>
-  <a href="21-aide-integree.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Aide intégrée</a>
-  <a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a>
-<a href="24-changelog-sprint-S31.html" style="color:#4ade80;font-weight:600;">Changelog S31 🆕</a>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Notice utilisateur</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a2e;--ink2:#3d3d5c;--ink3:#8888aa;--paper:#f7f6f1;--paper2:#eeecea;--paper3:#e2e0da;--accent:#2d6a4f;--accent2:#40916c;--accent3:#d8f3dc;--gold:#a07030;--gold2:#fdf3e0;--blue:#1d4e8f;--blue2:#dbeafe;--red:#9b2335;--red2:#fdecea;--purple:#5b3fa0;--purple2:#ede8fc;--r:10px;--rs:6px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);font-size:14px;line-height:1.65;}
+nav{background:var(--ink);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;text-decoration:none;}
+.nav-logo span{color:#74c69d;}
+.nav-links{display:flex;gap:4px;}
+.nav-links a{color:rgba(255,255,255,0.6);font-size:12px;font-weight:500;text-decoration:none;padding:6px 14px;border-radius:20px;transition:all .2s;}
+.nav-links a:hover{background:rgba(255,255,255,0.1);color:#fff;}
+.nav-links a.active{background:rgba(116,198,157,0.2);color:#74c69d;}
+.nav-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.5);font-size:10px;padding:3px 10px;border-radius:20px;}
+.hero{background:var(--ink);color:#fff;padding:48px 48px 40px;}
+.hero-tag{display:inline-block;background:rgba(116,198,157,0.15);border:1px solid rgba(116,198,157,0.3);color:#74c69d;font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;margin-bottom:16px;letter-spacing:.04em;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:36px;line-height:1.1;margin-bottom:12px;}
+.hero h1 em{font-style:italic;color:#74c69d;}
+.hero-sub{color:rgba(255,255,255,0.55);font-size:14px;max-width:580px;}
+.container{max-width:1100px;margin:0 auto;padding:40px 48px;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+.section{margin-bottom:44px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.section-dot{width:10px;height:10px;border-radius:50%;background:var(--accent2);flex-shrink:0;}
+.section-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);}
+.section-num{font-size:11px;color:var(--ink3);font-weight:500;margin-left:auto;}
+.card{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:20px 22px;}
+.card-title{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-icon{width:28px;height:28px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.icon-green{background:var(--accent3);}
+.icon-blue{background:var(--blue2);}
+.icon-gold{background:var(--gold2);}
+.icon-red{background:var(--red2);}
+.icon-purple{background:var(--purple2);}
+.pill{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.pill-green{background:var(--accent3);color:var(--accent);}
+.pill-blue{background:var(--blue2);color:var(--blue);}
+.pill-gold{background:var(--gold2);color:var(--gold);}
+.pill-red{background:var(--red2);color:var(--red);}
+.pill-gray{background:var(--paper2);color:var(--ink2);}
+.pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.data-table{width:100%;border-collapse:collapse;font-size:13px;}
+.data-table th{text-align:left;font-weight:500;font-size:11px;letter-spacing:.04em;color:var(--ink3);padding:8px 12px;border-bottom:1px solid var(--paper3);background:var(--paper2);}
+.data-table td{padding:10px 12px;border-bottom:1px solid var(--paper2);color:var(--ink2);vertical-align:top;}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table td:first-child{font-weight:500;color:var(--ink);}
+.divider{height:1px;background:var(--paper3);margin:10px 0 14px;}
+.item-list{display:flex;flex-direction:column;}
+.item{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--paper2);font-size:13px;}
+.item:last-child{border-bottom:none;}
+.item-label{font-weight:500;color:var(--ink);min-width:150px;flex-shrink:0;}
+.item-val{color:var(--ink2);}
+.step-list{display:flex;flex-direction:column;gap:12px;}
+.step{display:flex;gap:14px;align-items:flex-start;}
+.step-num{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-content{flex:1;}
+.step-title{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px;}
+.step-desc{font-size:12px;color:var(--ink3);line-height:1.5;}
+.warn-box{background:#fffbeb;border:1px solid #f0d070;border-radius:var(--rs);padding:12px 16px;font-size:12px;color:#805010;margin-top:10px;}
+.info-box{background:var(--blue2);border:1px solid #90b8e8;border-radius:var(--rs);padding:12px 16px;font-size:12px;color:var(--blue);margin-top:10px;}
+.tip-box{background:var(--accent3);border:1px solid #80c09a;border-radius:var(--rs);padding:12px 16px;font-size:12px;color:var(--accent);margin-top:10px;}
+.flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin:10px 0;}
+.flow-box{font-size:12px;font-weight:500;padding:7px 14px;border-radius:var(--rs);border:1px solid var(--paper3);background:var(--paper2);color:var(--ink2);white-space:nowrap;}
+.flow-box.hi{background:var(--accent3);border-color:var(--accent2);color:var(--accent);}
+.flow-arrow{color:var(--ink3);padding:0 8px;font-size:14px;}
+footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:24px 48px;font-size:12px;display:flex;justify-content:space-between;align-items:center;}
+footer strong{color:rgba(255,255,255,0.7);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Pet<span>Suite</span></a>
+  <div class="nav-links">
+    <a href="01-synthese-projet.html">Synthèse projet</a>
+    <a href="02-guide-parametrage.html">Guide paramétrage</a>
+    <a href="03-notice-utilisateur.html" class="active">Notice utilisateur</a>
+  </div>
+  <span class="nav-badge">v4.0 — S33</span>
+  <a href="#tableau-de-bord" style="display:block;font-size:11px;color:var(--ink2);padding:3px 12px;text-decoration:none;">08. Tableau de bord</a>
+  <a href="#fiche-animal" style="display:block;font-size:11px;color:var(--ink2);padding:3px 12px;text-decoration:none;">09. Fiche animal</a>
+  <a href="#questionnaire-public" style="display:block;font-size:11px;color:var(--ink2);padding:3px 12px;text-decoration:none;">10. Questionnaire public</a>
+  <a href="#agenda" style="display:block;font-size:11px;color:var(--ink2);padding:3px 12px;text-decoration:none;">11. Agenda</a>
+  <a href="#suivi-cac" style="display:block;font-size:11px;color:var(--ink2);padding:3px 12px;text-decoration:none;">12. Centre d'aide</a>
 </nav>
-<div class="container">
-  <div class="toc">
-    <h2>Sommaire</h2>
-    <ul>
-      <li><a href="#tableau-bord">Tableau de bord</a></li>
-      <li><a href="#clients">Clients &amp; Animaux</a></li>
-      <li><a href="#seances">Séances</a></li>
-      <li><a href="#devis">Devis / Contrats</a></li>
-      <li><a href="#factures">Facturation</a></li>
-      <li><a href="#nf525">Caisse NF 525</a></li>
-      <li><a href="#programmes">Programmes suivi</a></li>
-      <li><a href="#elevage">Élevage</a></li>
-      <li><a href="#achats">Achats</a></li>
-      <li><a href="#inventaires">Inventaires</a></li>
-      <li><a href="#bilan">Bilan</a></li>
-      <li><a href="#crm">CRM</a></li>
-      <li><a href="#comptabilite">Comptabilité / FEC</a></li>
-      <li><a href="#parametres">Paramètres</a></li>
-    </ul>
-  </div>
 
-  <div class="section" id="tableau-bord">
-    <h2>📊 Tableau de bord</h2>
-    <p>Vue d'ensemble de votre activité en temps réel.</p>
-    <div class="grid">
-      <div class="card"><h4>KPIs temps réel</h4><p>Nombre de clients, animaux, séances et CA HT de l'année en cours.</p></div>
-      <div class="card"><h4>QR Code site PetSuite</h4><p>Partagez le site commercial via WhatsApp, Email, SMS ou lien copié.</p></div>
-      <div class="card"><h4>Formulaire de contact</h4><p>QR Code personnalisé pour recevoir des demandes dans le CRM.</p></div>
-      <div class="card"><h4>EDC sans devis <span class="new-badge">S30</span></h4><p>Alerte sur les études de comportement réalisées sans devis associé.</p></div>
-    </div>
-  </div>
-
-  <div class="section" id="clients">
-    <h2>👥 Clients &amp; Animaux</h2>
-    <h3>Fiche client</h3>
-    <p>5 onglets : Informations, Contacts, Animaux, Séances, Factures. KPIs CA, encours, séances réalisées.</p>
-    <div class="highlight"><p><strong>Nouveau S30 :</strong> Réseaux sociaux (LinkedIn, Facebook, Instagram, WhatsApp) affichés avec boutons cliquables.</p></div>
-    <h3>Fiche animal</h3>
-    <p>Puce (15 chiffres), races, date de naissance, CAC (14 cases), commentaire, dashboard séances/factures.</p>
-    <div class="highlight"><p><strong>Nouveau S30 :</strong> Filtre animaux par client corrigé — affiche uniquement les animaux du client sélectionné.</p></div>
-  </div>
-
-  <div class="section" id="seances">
-    <h2>📅 Séances</h2>
-    <p>Gestion complète des rendez-vous et prestations : EDC, séances de suivi, gardiennage.</p>
-    <div class="grid">
-      <div class="card"><h4>Fiche séance</h4><p>Compte-rendu éditable, changement de statut, génération de devis depuis la séance.</p></div>
-      <div class="card"><h4>Règle EDC unique</h4><p>Une seule EDC non annulée par animal. Le trigger SQL vérifie automatiquement.</p></div>
-    </div>
-  </div>
-
-  <div class="section" id="devis">
-    <h2>📄 Devis / Contrats</h2>
-    <p>Numérotation automatique DCE-YYMM-0001. Statuts : Brouillon, Envoyé, Accepté, Refusé, Annulé.</p>
-    <h3>Templates de devis</h3>
-    <p>5 modèles prédéfinis : EDC, EDC+Suivi 4 semaines, Gardiennage 1 semaine, Suivi 8 séances, Gardiennage week-end.</p>
-  </div>
-
-  <div class="section" id="factures">
-    <h2>🧾 Facturation</h2>
-    <p>Numérotation FAC-YYMM-0001. Impression PDF, envoi par email, suivi règlements.</p>
-    <h3>Rappels impayés <span class="new-badge">S30</span></h3>
-    <p>Liste de toutes les factures avec reste à payer. Envoi de rappels par email directement depuis la liste.</p>
-    <h3>Avoirs</h3>
-    <p>Création d'avoirs rattachés à une facture d'origine.</p>
-  </div>
-
-  <div class="section" id="nf525">
-    <h2>🏛️ Caisse &amp; Conformité NF 525 <span class="new-badge">S30</span></h2>
-    <div class="nf525-box">
-      <p><strong>Obligation légale Art. 88 LF2016</strong> — PetSuite intègre un module NF525 complet depuis S30. Chaque encaissement est enregistré dans un journal inaltérable chaîné par SHA-256.</p>
-    </div>
-    <div class="grid">
-      <div class="card"><h4>Encaissements</h4><p>Chaque règlement est tracé automatiquement dans le journal NF525 inaltérable.</p></div>
-      <div class="card"><h4>Clôture Z journalière</h4><p>À effectuer en fin de journée : bilan complet des encaissements avec détail TVA par taux.</p></div>
-      <div class="card"><h4>Clôture X intermédiaire</h4><p>État instantané en cours de journée sans réinitialisation des compteurs.</p></div>
-      <div class="card"><h4>Dashboard conformité</h4><p>Vue v_nf525_conformite — 4 indicateurs — doit afficher 0 anomalie.</p></div>
-    </div>
-    <p style="margin-top:12px;">→ Documentation complète : <a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;">23 — Prise en compte de la NF 525</a></p>
-  </div>
-
-  <div class="section" id="programmes">
-    <h2>📋 Programmes de suivi <span class="new-badge">S30</span></h2>
-    <p>Plans comportementaux semaine par semaine pour chaque animal suivi.</p>
-    <div class="grid">
-      <div class="card"><h4>Création</h4><p>2 templates : Suivi 8 semaines standard, Programme agressivité 12 semaines.</p></div>
-      <div class="card"><h4>Suivi semaine par semaine</h4><p>Objectifs, exercices, notes, statut (À faire / En cours / Réalisé). Barre de progression.</p></div>
-    </div>
-  </div>
-
-  <div class="section" id="elevage">
-    <h2>🐕 Élevage</h2>
-    <div class="grid">
-      <div class="card"><h4>Dashboard éleveur</h4><p>Alertes gestation, gestations en cours, suivi des portées.</p></div>
-      <div class="card"><h4>Saillies</h4><p>Enregistrement saillie (femelle, mâle, date, type, vétérinaire).</p></div>
-      <div class="card"><h4>Portées</h4><p>Fiche portée avec suivi des naissances.</p></div>
-    </div>
-  </div>
-
-  <div class="section" id="achats">
-    <h2>🛒 Achats</h2>
-    <p>Gestion des achats fournisseurs avec lignes, statuts et écritures FEC automatiques.</p>
-    <div class="highlight"><p><strong>Nouveau S30 :</strong> Fiche achat avec détail des lignes, montants HT/TVA/TTC et écritures comptables.</p></div>
-  </div>
-
-  <div class="section" id="inventaires">
-    <h2>📦 Inventaires</h2>
-    <p>Création d'inventaires avec saisie des quantités réelles et valorisation automatique.</p>
-  </div>
-
-  <div class="section" id="bilan">
-    <h2>📈 Bilan</h2>
-    <p>Tableau de bord financier avec filtres par période (mois, trimestre, année, année précédente).</p>
-    <table>
-      <thead><tr><th>Indicateur</th><th>Description</th></tr></thead>
-      <tbody>
-        <tr><td>CA HT / TTC</td><td>Chiffre d'affaires de la période</td></tr>
-        <tr><td>Charges HT</td><td>Total achats de la période</td></tr>
-        <tr><td>Résultat brut</td><td>CA HT - Charges HT</td></tr>
-        <tr><td>Encours</td><td>Total factures impayées</td></tr>
-        <tr><td>Top 10 clients</td><td>Classement par CA TTC</td></tr>
-        <tr><td>CA par mois</td><td>Évolution sur 12 mois glissants</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="section" id="crm">
-    <h2>🎯 CRM</h2>
-    <div class="grid">
-      <div class="card"><h4>Leads</h4><p>Qualification, score 0-100, conversion en tiers/contact.</p></div>
-      <div class="card"><h4>Opportunités</h4><p>Pipeline avec probabilité et montant estimé.</p></div>
-      <div class="card"><h4>Activités</h4><p>Appels, emails, RDV, notes rattachés aux leads/opportunités.</p></div>
-      <div class="card"><h4>Campagnes</h4><p>Ciblage leads/tiers, suivi statuts (Ciblée → Convertie).</p></div>
-    </div>
-  </div>
-
-  <div class="section" id="comptabilite">
-    <h2>📒 Comptabilité / FEC</h2>
-    <p>Export FEC conforme DGFiP. Génération des journaux ventes et banque.</p>
-    <div class="highlight"><p>Procédure : Comptabilité → Exercices → Créer exercice → Générer FEC → Télécharger le fichier .txt pour transmission à l'expert-comptable.</p></div>
-  </div>
-
-  <div class="section" id="parametres">
-    <h2>⚙️ Paramètres</h2>
-    <table>
-      <thead><tr><th>Section</th><th>Contenu</th></tr></thead>
-      <tbody>
-        <tr><td>Entreprise</td><td>Raison sociale, adresse, SIRET</td></tr>
-        <tr><td>TVA</td><td>Taux de TVA applicables</td></tr>
-        <tr><td>Modes de paiement</td><td>CB, virement, chèque, espèces</td></tr>
-        <tr><td>Conditions de paiement</td><td>30j fin de mois, comptant...</td></tr>
-        <tr><td>Types de séance</td><td>EDC, Séance suivi, Gardiennage</td></tr>
-        <tr><td>Statuts de séance</td><td>Planifiée, Réalisée, Annulée, No-show</td></tr>
-        <tr><td>Charte graphique</td><td>Couleurs et style de l'interface</td></tr>
-        <tr><td>Mon métier</td><td>Activité, devise, langue (S31)</td></tr>
-      </tbody>
-    </table>
-  </div>
+<div class="hero">
+  <div class="hero-tag">Pour tous les utilisateurs de la solution</div>
+  <h1>Notice <em>d'utilisation</em></h1>
+  <p class="hero-sub">Guide pratique au quotidien — de la création d'un animal à l'émission d'une facture, en passant par le tableau de bord, l'EDC, le CAC, l'agenda, les questionnaires publics et le centre d'aide. Version v4.0 · S33.</p>
 </div>
-<footer>PetSuite v4.0 — Sprint S31 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
-</body> </html>
+
+<div class="container">
+
+  <!-- 1. CONNEXION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Se connecter</div>
+      <div class="section-num">01</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🔐</div>Accès à l'application</div>
+        <div class="step-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Ouvrez votre navigateur</div>
+              <div class="step-desc">Accédez à l'URL de votre société : votre-société.petsuite.fr. Compatible Chrome, Firefox, Edge, Safari.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Saisissez vos identifiants</div>
+              <div class="step-desc">Votre email professionnel et votre mot de passe. En cas d'oubli, cliquez "Mot de passe oublié".</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Code MFA si requis</div>
+              <div class="step-desc">Si votre administrateur a activé le MFA, saisissez le code à 6 chiffres de votre application d'authentification.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tip-box">Pensez à ajouter votre URL en favori pour y accéder rapidement depuis votre bureau ou smartphone.</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">🖥</div>Tableau de bord</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Agenda du jour</span><span class="item-val">Séances planifiées et rendez-vous</span></div>
+          <div class="item"><span class="item-label">Alertes</span><span class="item-val">Factures impayées, séances sans devis</span></div>
+          <div class="item"><span class="item-label">Dernières actions</span><span class="item-val">Historique de vos dernières opérations</span></div>
+          <div class="item"><span class="item-label">Accès rapide</span><span class="item-val">Création animal, nouvelle séance, nouveau devis</span></div>
+          <div class="item"><span class="item-label">Encours clients</span><span class="item-val">Montant total restant à encaisser</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ANIMAUX -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Gérer les animaux</div>
+      <div class="section-num">02</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">🐾</div>Créer un animal</div>
+        <div class="step-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Numéro de puce (obligatoire)</div>
+              <div class="step-desc">15 chiffres — identifiant universel unique de l'animal. Vérifiez-le sur le carnet de santé ou chez le vétérinaire.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Nom et propriétaire</div>
+              <div class="step-desc">Sélectionnez le client propriétaire dans la liste des tiers. S'il n'existe pas encore, créez-le d'abord.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Race et naissance</div>
+              <div class="step-desc">Race principale (et secondaire si croisé). Date de naissance pour le suivi de l'âge.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Commentaire</div>
+              <div class="step-desc">Observations initiales, particularités comportementales, informations vétérinaires importantes.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">📄</div>Carte d'identité animale</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Accès</span><span class="item-val">Fiche animal → bouton "Carte d'identité PDF"</span></div>
+          <div class="item"><span class="item-label">Contenu</span><span class="item-val">Puce, nom, race, naissance, propriétaire, suivi CAC, photos</span></div>
+          <div class="item"><span class="item-label">Partage</span><span class="item-val">Lien sécurisé valable 15 min — partageable avec un vétérinaire</span></div>
+          <div class="item"><span class="item-label">Export PDF</span><span class="item-val">Téléchargeable et imprimable</span></div>
+          <div class="item"><span class="item-label">Avancement</span><span class="item-val">Suivi des séances et bilans comportementaux</span></div>
+        </div>
+        <div class="info-box">Le partage requiert votre confirmation et reste traçable. Le destinataire accède en lecture seule uniquement.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SEANCES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Gérer les séances</div>
+      <div class="section-num">03</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">📅</div>Créer une séance</div>
+        <div class="step-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Type de séance</div>
+              <div class="step-desc">EDC (Étude de comportement), Séance de suivi, Gardiennage ou tout type créé par votre administrateur.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Client et animal</div>
+              <div class="step-desc">Sélectionnez le client puis l'animal concerné. Pour un EDC, l'animal est obligatoire et unique par animal.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Date, heure et lieu</div>
+              <div class="step-desc">Date et heure de début, durée estimée, lieu d'intervention (domicile, cabinet…).</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Lignes de prestation</div>
+              <div class="step-desc">Ajoutez les prestations depuis votre catalogue. Les totaux HT/TVA/TTC sont calculés automatiquement.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">⚡</div>Workflow séance → devis → facture</div>
+        <div class="flow" style="flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:14px;">
+          <div class="flow-box hi">1. Séance créée (PLANIFIÉE)</div>
+          <div class="flow-arrow" style="padding:0 0 0 14px;">↓</div>
+          <div class="flow-box hi">2. Séance réalisée → compte rendu</div>
+          <div class="flow-arrow" style="padding:0 0 0 14px;">↓</div>
+          <div class="flow-box hi">3. Générer devis depuis séance</div>
+          <div class="flow-arrow" style="padding:0 0 0 14px;">↓</div>
+          <div class="flow-box hi">4. Devis accepté → transformer en facture</div>
+          <div class="flow-arrow" style="padding:0 0 0 14px;">↓</div>
+          <div class="flow-box hi">5. Saisir le règlement</div>
+        </div>
+        <div class="tip-box">Le bouton "Générer devis" copie automatiquement toutes les lignes de la séance dans le devis. Gain de temps garanti.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. DEVIS & FACTURATION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Devis & facturation</div>
+      <div class="section-num">04</div>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">📝</div>Devis</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Numérotation</span><span class="item-val">Auto : DCE-2503-0001</span></div>
+          <div class="item"><span class="item-label">Statuts</span><span class="item-val">Brouillon → Envoyé → Accepté / Refusé</span></div>
+          <div class="item"><span class="item-label">Validité</span><span class="item-val">Date d'expiration paramétrable</span></div>
+          <div class="item"><span class="item-label">PDF</span><span class="item-val">Génération et envoi par email</span></div>
+          <div class="item"><span class="item-label">→ Facture</span><span class="item-val">Transformation en 1 clic</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">🧾</div>Factures</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Numérotation</span><span class="item-val">Auto : FAC-2503-0001</span></div>
+          <div class="item"><span class="item-label">Statuts</span><span class="item-val">Brouillon → Émise → Payée / Annulée</span></div>
+          <div class="item"><span class="item-label">Remises</span><span class="item-val">En % ou montant fixe</span></div>
+          <div class="item"><span class="item-label">Acomptes</span><span class="item-val">Saisie partielle possible</span></div>
+          <div class="item"><span class="item-label">Avoir</span><span class="item-val">Génération avoir si annulation partielle</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">💶</div>Règlements</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Saisie</span><span class="item-val">Depuis la facture → Ajouter règlement</span></div>
+          <div class="item"><span class="item-label">Mode</span><span class="item-val">CB, virement, chèque, espèces…</span></div>
+          <div class="item"><span class="item-label">Contrôle</span><span class="item-val">Impossible de dépasser le total TTC</span></div>
+          <div class="item"><span class="item-label">Suivi</span><span class="item-val">Reste à payer calculé en temps réel</span></div>
+          <div class="item"><span class="item-label">Encours</span><span class="item-val">Vue globale par client disponible</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. GED -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Gestion documentaire (GED)</div>
+      <div class="section-num">05</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">📎</div>Déposer un document</div>
+        <div class="step-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Depuis la fiche concernée</div>
+              <div class="step-desc">Ouvrez la fiche animal, facture, séance… et cliquez sur l'onglet "Documents".</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Glisser-déposer ou sélectionner</div>
+              <div class="step-desc">Déposez le fichier ou cliquez "Parcourir". Formats acceptés : PDF, JPG, PNG, DOCX, XLSX.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Rôle et tags</div>
+              <div class="step-desc">Précisez le rôle (PJ, PHOTO, SIGNATURE, RAPPORT) et ajoutez des tags pour faciliter la recherche ultérieure.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🔍</div>Rechercher et consulter</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Recherche globale</span><span class="item-val">Depuis GED → Rechercher par nom, tag, type, date</span></div>
+          <div class="item"><span class="item-label">Par fiche</span><span class="item-val">Onglet Documents sur chaque fiche métier</span></div>
+          <div class="item"><span class="item-label">Téléchargement</span><span class="item-val">Cliquez sur le document → Télécharger</span></div>
+          <div class="item"><span class="item-label">Versioning</span><span class="item-val">Historique des versions disponible</span></div>
+          <div class="item"><span class="item-label">Archivage</span><span class="item-val">Archiver sans supprimer — document conservé</span></div>
+        </div>
+        <div class="warn-box">Un document supprimé est irrécupérable. Préférez l'archivage en cas de doute.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. CRM -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">CRM — Suivi commercial</div>
+      <div class="section-num">06</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">🎯</div>Leads & opportunités</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Lead</span><span class="item-val">Prospect non encore client — saisir coordonnées et source</span></div>
+          <div class="item"><span class="item-label">Score</span><span class="item-val">Évaluez la maturité du lead (0 à 100)</span></div>
+          <div class="item"><span class="item-label">Opportunité</span><span class="item-val">Projet concret avec montant estimé et probabilité</span></div>
+          <div class="item"><span class="item-label">Pipeline</span><span class="item-val">Vue Kanban des opportunités par statut</span></div>
+          <div class="item"><span class="item-label">Conversion</span><span class="item-val">Lead → Tiers + Contact en 1 clic</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">📞</div>Activités & notes</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Types</span><span class="item-val">Appel, email, RDV, SMS, note libre</span></div>
+          <div class="item"><span class="item-label">Planification</span><span class="item-val">Date et heure, responsable, statut</span></div>
+          <div class="item"><span class="item-label">Historique</span><span class="item-val">Toutes les interactions sur la fiche client</span></div>
+          <div class="item"><span class="item-label">Notes CRM</span><span class="item-val">Notes libres rattachées à un lead, client ou opportunité</span></div>
+          <div class="item"><span class="item-label">Campagnes</span><span class="item-val">Ciblage de clients pour relances ou promotions</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. FAQ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Questions fréquentes</div>
+      <div class="section-num">07</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Problèmes courants</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Mot de passe oublié</span><span class="item-val">Page de connexion → "Mot de passe oublié" → email de réinitialisation</span></div>
+          <div class="item"><span class="item-label">Puce déjà existante</span><span class="item-val">Un animal avec cette puce existe déjà — vérifiez dans la liste ou contactez votre admin</span></div>
+          <div class="item"><span class="item-label">Facture verrouillée</span><span class="item-val">L'exercice comptable est clôturé — contactez votre administrateur</span></div>
+          <div class="item"><span class="item-label">Document illisible</span><span class="item-val">Vérifiez le format et la taille du fichier. Max selon votre plan.</span></div>
+          <div class="item"><span class="item-label">Séance EDC refusée</span><span class="item-val">Une EDC existe déjà pour cet animal (non annulée) — vérifiez la liste des séances</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Bonnes pratiques</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Créer le client d'abord</span><span class="item-val">Toujours créer le tiers avant l'animal ou la séance</span></div>
+          <div class="item"><span class="item-label">Puce vérifiée</span><span class="item-val">Vérifiez le numéro de puce avant création — non modifiable après</span></div>
+          <div class="item"><span class="item-label">Tags cohérents</span><span class="item-val">Utilisez les tags définis par votre administrateur pour la GED</span></div>
+          <div class="item"><span class="item-label">Compte rendu</span><span class="item-val">Rédigez le compte rendu de séance avant de générer le devis</span></div>
+          <div class="item"><span class="item-label">Règlement immédiat</span><span class="item-val">Saisissez le règlement dès réception pour un suivi d'encours fiable</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+  <!-- 8. TABLEAU DE BORD -->
+  <div class="section" id="tableau-de-bord">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Tableau de bord</div>
+      <div class="section-num">08</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">📊</div>Indicateurs en temps réel</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">CA HT du mois</span><span class="item-val">Chiffre d'affaires hors taxes des 30 derniers jours — cliquable → liste factures filtrées</span></div>
+          <div class="item"><span class="item-label">Factures impayées</span><span class="item-val">Encours client non réglé — badge rouge si &gt; 0 — clic → liste filtrée statut EMISE</span></div>
+          <div class="item"><span class="item-label">EDC sans devis</span><span class="item-val">Séances EDC réalisées sans devis lié — widget d'alerte pour ne pas perdre de facturation</span></div>
+          <div class="item"><span class="item-label">QR codes</span><span class="item-val">Accès rapide aux liens portail client et formulaire lead — à partager sur réseaux sociaux</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">💡</div>Conseils d'utilisation</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Priorité matin</span><span class="item-val">Vérifier les EDC sans devis et les factures impayées en début de journée</span></div>
+          <div class="item"><span class="item-label">QR code portail</span><span class="item-val">Afficher le QR code en salle d'attente pour que les propriétaires accèdent à leur dossier</span></div>
+          <div class="item"><span class="item-label">CA HT</span><span class="item-val">Le CA affiché est calculé sur les factures émises du mois courant (hors avoirs)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. FICHE ANIMAL ENRICHIE -->
+  <div class="section" id="fiche-animal">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Fiche animal — onglets</div>
+      <div class="section-num">09</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">🐾</div>Photo & identification</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Upload photo</span><span class="item-val">Cliquer sur la zone photo → sélectionner JPG/PNG/WebP (max 5 Mo) → la photo est stockée en GED</span></div>
+          <div class="item"><span class="item-label">Format puce</span><span class="item-val">Exactement 15 chiffres, affiché formaté xxx-xxx-xxx-xxx-xxx — non modifiable après création</span></div>
+          <div class="item"><span class="item-label">Onglet Santé</span><span class="item-val">Vaccinations, traitements, antécédents médicaux — saisie libre</span></div>
+          <div class="item"><span class="item-label">Onglet CAC</span><span class="item-val">Score CAC actuel + graphique d'évolution + tableau comparatif par séance</span></div>
+          <div class="item"><span class="item-label">Onglet Historique</span><span class="item-val">Toutes les séances liées à cet animal — triées par date décroissante</span></div>
+          <div class="item"><span class="item-label">Onglet Documents</span><span class="item-val">PJ GED associées à l'animal (comptes-rendus, photos, certificats)</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">📋</div>Étude Comportementale (EDC)</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Accès</span><span class="item-val">Depuis la fiche d'une séance EDC → bouton "Étude Comportementale"</span></div>
+          <div class="item"><span class="item-label">7 sections</span><span class="item-val">Identité · Alimentation · Comportement · Mode de vie · Antécédents · Grille comportementale · Attentes</span></div>
+          <div class="item"><span class="item-label">Sauvegarde</span><span class="item-val">Partielle possible — revenir compléter à n'importe quelle séance suivante</span></div>
+          <div class="item"><span class="item-label">Unicité</span><span class="item-val">Une seule fiche EDC par animal — partagée entre toutes les séances EDC</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. QUESTIONNAIRE PUBLIC -->
+  <div class="section" id="questionnaire-public">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Questionnaire public multi-type</div>
+      <div class="section-num">10</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🔗</div>Lien public paramétrable</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">URL</span><span class="item-val">petsuite.fr/questionnaire?type=canin · ?type=equestre · ?type=pension · ?type=toiletteur</span></div>
+          <div class="item"><span class="item-label">Accès</span><span class="item-val">Sans connexion — à partager sur réseaux sociaux, site web, email, QR code</span></div>
+          <div class="item"><span class="item-label">Résultat</span><span class="item-val">Création automatique d'un lead dans le CRM avec les coordonnées et données animal</span></div>
+          <div class="item"><span class="item-label">Champs fixes</span><span class="item-val">Nom · Prénom · Téléphone · Email · Nom animal · Race · Âge · Commentaire</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">⚙️</div>Configuration</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Paramétrer</span><span class="item-val">Paramètres → Formulaire lead — ajouter/modifier/réordonner les questions</span></div>
+          <div class="item"><span class="item-label">Types questions</span><span class="item-val">Texte libre · Choix multiple · Échelle 1→5 · Obligatoire ou optionnel</span></div>
+          <div class="item"><span class="item-label">Voir les réponses</span><span class="item-val">CRM → Leads — les réponses s'affichent dans l'onglet "Réponse formulaire" du lead</span></div>
+          <div class="item"><span class="item-label">RGPD</span><span class="item-val">Checkbox consentement obligatoire — IP tracée automatiquement</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. AGENDA VUE SEMAINE -->
+  <div class="section" id="agenda">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Agenda — Vue semaine</div>
+      <div class="section-num">11</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">📅</div>Navigation et affichage</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Grille horaire</span><span class="item-val">Affichage 7h00 → 20h00 — chaque créneau = 30 minutes</span></div>
+          <div class="item"><span class="item-label">Ligne maintenant</span><span class="item-val">Trait rouge horizontal indiquant l'heure courante — mis à jour automatiquement</span></div>
+          <div class="item"><span class="item-label">Couleurs</span><span class="item-val">Chaque type de séance a sa couleur — configurable dans Paramètres → Types de séance</span></div>
+          <div class="item"><span class="item-label">Créer une séance</span><span class="item-val">Cliquer sur un créneau libre → formulaire de création pré-rempli avec la date/heure</span></div>
+          <div class="item"><span class="item-label">Déplacer</span><span class="item-val">Drag & drop pour déplacer une séance planifiée</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🔍</div>Filtres et raccourcis</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Filtrer par type</span><span class="item-val">Boutons de filtre en haut → afficher/masquer EDC, Suivi, Gardiennage</span></div>
+          <div class="item"><span class="item-label">Semaine courante</span><span class="item-val">Bouton "Aujourd'hui" pour revenir à la semaine en cours</span></div>
+          <div class="item"><span class="item-label">Navigation</span><span class="item-val">Flèches ← → pour passer à la semaine précédente/suivante</span></div>
+          <div class="item"><span class="item-label">Vue mois</span><span class="item-val">Bouton "Mois" pour basculer en calendrier mensuel — toutes les séances en un coup d'œil</span></div>
+          <div class="item"><span class="item-label">Clic sur séance</span><span class="item-val">Ouvre la fiche de la séance directement</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. CENTRE D'AIDE -->
+  <div class="section" id="suivi-cac">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Centre d'aide intégré</div>
+      <div class="section-num">12</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-teal">❓</div>Accès et navigation</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Bouton ?</span><span class="item-val">Présent en bas à droite de chaque page — ouvre le panneau contextuel de la page courante</span></div>
+          <div class="item"><span class="item-label">Panneau contextuel</span><span class="item-val">4–5 questions fréquentes relatives à la page en cours — recherche locale intégrée</span></div>
+          <div class="item"><span class="item-label">Centre d'aide complet</span><span class="item-val">Menu → Aide ou lien "Toute l'aide →" dans le panneau — 199 articles, 15 modules</span></div>
+          <div class="item"><span class="item-label">Recherche rapide</span><span class="item-val">Ctrl+K depuis n'importe quelle page — recherche plein texte dans les 199 articles</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">📚</div>15 modules disponibles</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Modules couverts</span><span class="item-val">Animaux · Séances · EDC/CAC · Facturation · Paramètres · CRM · Élevage · Agenda · Questionnaires · Achats · Stock · Tarification · Bilan · GED · Utilisateurs</span></div>
+          <div class="item"><span class="item-label">Articles</span><span class="item-val">199 articles rédigés — réponses directes en 2–5 lignes maximum</span></div>
+          <div class="item"><span class="item-label">URL ancrable</span><span class="item-val">/app/aide#identifiant-article — partageable avec un collaborateur</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<footer>
+  <div><strong>PetSuite</strong> — Notice utilisateur · Document vivant</div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.35);">Pour tous les utilisateurs · v4.0</div>
+  <div>Confidentiel — usage interne</div>
+</footer>
+
+</body>
+</html>
