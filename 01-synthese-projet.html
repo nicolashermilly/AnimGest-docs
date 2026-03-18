@@ -3,564 +3,201 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Synthèse Projet</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<title>PetSuite — Synthèse projet v4.0</title>
 <style>
-:root {
-  --ink: #1a1a2e; --ink2: #3d3d5c; --ink3: #8888aa;
-  --paper: #f7f6f1; --paper2: #eeecea; --paper3: #e2e0da;
-  --accent: #2d6a4f; --accent2: #40916c; --accent3: #d8f3dc;
-  --gold: #a07030; --gold2: #fdf3e0;
-  --blue: #1d4e8f; --blue2: #dbeafe;
-  --red: #9b2335; --red2: #fdecea;
-  --purple: #5b3fa0; --purple2: #ede8fc;
-  --r: 10px; --rs: 6px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); font-size: 14px; line-height: 1.65; }
-
-/* NAV */
-nav {
-  background: var(--ink); padding: 14px 48px;
-  display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 100;
-}
-.nav-logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: #fff; text-decoration: none; }
-.nav-logo span { color: #74c69d; }
-.nav-links { display: flex; gap: 4px; }
-.nav-links a {
-  color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 500;
-  text-decoration: none; padding: 6px 14px; border-radius: 20px;
-  transition: all .2s;
-}
-.nav-links a:hover { background: rgba(255,255,255,0.1); color: #fff; }
-.nav-links a.active { background: rgba(116,198,157,0.2); color: #74c69d; }
-.nav-badge {
-  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.5); font-size: 10px; padding: 3px 10px; border-radius: 20px;
-}
-
-/* HERO */
-.hero {
-  background: var(--ink); color: #fff;
-  padding: 56px 48px 48px; border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.hero-tag {
-  display: inline-block; background: rgba(116,198,157,0.15);
-  border: 1px solid rgba(116,198,157,0.3); color: #74c69d;
-  font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 20px;
-  margin-bottom: 20px; letter-spacing: .04em;
-}
-.hero h1 { font-family: 'DM Serif Display', serif; font-size: 42px; line-height: 1.1; margin-bottom: 14px; }
-.hero h1 em { font-style: italic; color: #74c69d; }
-.hero-sub { color: rgba(255,255,255,0.55); font-size: 15px; max-width: 620px; margin-bottom: 32px; }
-.hero-kpis { display: flex; gap: 12px; flex-wrap: wrap; }
-.kpi {
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: var(--r); padding: 14px 20px; min-width: 130px;
-}
-.kpi-num { font-family: 'DM Serif Display', serif; font-size: 26px; color: #fff; }
-.kpi-lbl { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
-
-/* LAYOUT */
-.container { max-width: 1100px; margin: 0 auto; padding: 48px 48px; }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 16px; }
-.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 14px; }
-
-/* SECTIONS */
-.section { margin-bottom: 48px; }
-.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-.section-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent2); flex-shrink: 0; }
-.section-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); }
-.section-num { font-size: 11px; color: var(--ink3); font-weight: 500; margin-left: auto; }
-
-/* CARDS */
-.card {
-  background: #fff; border: 1px solid var(--paper3);
-  border-radius: var(--r); padding: 20px 22px;
-}
-.card-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-.card-icon {
-  width: 28px; height: 28px; border-radius: var(--rs);
-  display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
-}
-.icon-green { background: var(--accent3); }
-.icon-blue { background: var(--blue2); }
-.icon-gold { background: var(--gold2); }
-.icon-red { background: var(--red2); }
-.icon-purple { background: var(--purple2); }
-
-/* PILLS */
-.pill {
-  display: inline-block; font-size: 11px; font-weight: 500;
-  padding: 3px 10px; border-radius: 20px; white-space: nowrap;
-}
-.pill-green { background: var(--accent3); color: var(--accent); }
-.pill-blue { background: var(--blue2); color: var(--blue); }
-.pill-gold { background: var(--gold2); color: var(--gold); }
-.pill-red { background: var(--red2); color: var(--red); }
-.pill-purple { background: var(--purple2); color: var(--purple); }
-.pill-gray { background: var(--paper2); color: var(--ink2); }
-.pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-
-/* TABLE */
-.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.data-table th {
-  text-align: left; font-weight: 500; font-size: 11px; letter-spacing: .04em;
-  color: var(--ink3); padding: 8px 12px; border-bottom: 1px solid var(--paper3);
-  background: var(--paper2);
-}
-.data-table td { padding: 10px 12px; border-bottom: 1px solid var(--paper2); color: var(--ink2); vertical-align: top; }
-.data-table tr:last-child td { border-bottom: none; }
-.data-table td:first-child { font-weight: 500; color: var(--ink); }
-
-/* FLOW */
-.flow { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin: 12px 0; }
-.flow-box {
-  font-size: 12px; font-weight: 500; padding: 7px 14px;
-  border-radius: var(--rs); border: 1px solid var(--paper3);
-  background: var(--paper2); color: var(--ink2); white-space: nowrap;
-}
-.flow-box.hi { background: var(--accent3); border-color: var(--accent2); color: var(--accent); }
-.flow-box.med { background: var(--gold2); border-color: #d4a85a; color: var(--gold); }
-.flow-box.lo { background: var(--red2); border-color: #e07070; color: var(--red); }
-.flow-arrow { color: var(--ink3); padding: 0 8px; font-size: 14px; }
-
-/* TIER STORAGE */
-.tier-row { display: flex; gap: 12px; flex-wrap: wrap; }
-.tier {
-  flex: 1; min-width: 160px; border-radius: var(--r);
-  padding: 16px; border: 1px solid var(--paper3);
-}
-.tier-hot { background: #fff8f0; border-color: #f0c080; }
-.tier-warm { background: #f0f8f0; border-color: #80c080; }
-.tier-cold { background: var(--paper2); border-color: var(--paper3); }
-.tier-label { font-size: 12px; font-weight: 500; margin-bottom: 6px; }
-.tier-hot .tier-label { color: #a06020; }
-.tier-warm .tier-label { color: var(--accent); }
-.tier-cold .tier-label { color: var(--ink2); }
-.tier-desc { font-size: 11px; color: var(--ink3); line-height: 1.6; }
-
-/* DIVIDER */
-.divider { height: 1px; background: var(--paper3); margin: 8px 0 14px; }
-
-/* ITEM LIST */
-.item-list { display: flex; flex-direction: column; gap: 0; }
-.item {
-  display: flex; gap: 12px; padding: 9px 0;
-  border-bottom: 1px solid var(--paper2); font-size: 13px;
-}
-.item:last-child { border-bottom: none; }
-.item-label { font-weight: 500; color: var(--ink); min-width: 160px; flex-shrink: 0; }
-.item-val { color: var(--ink2); }
-
-/* ARCH BOX */
-.arch {
-  background: var(--paper2); border: 1px solid var(--paper3);
-  border-radius: var(--r); padding: 20px;
-}
-.arch-layer {
-  border-radius: var(--rs); padding: 10px 16px; margin-bottom: 8px;
-  font-size: 12px; font-weight: 500;
-}
-.arch-layer:last-child { margin-bottom: 0; }
-.arch-layer .sub { font-weight: 400; color: inherit; opacity: .75; font-size: 11px; margin-top: 2px; }
-.layer-purple { background: var(--purple2); color: var(--purple); border: 1px solid #c4b0f0; }
-.layer-blue { background: var(--blue2); color: var(--blue); border: 1px solid #90baf0; }
-.layer-green { background: var(--accent3); color: var(--accent); border: 1px solid #80c09a; }
-.layer-gold { background: var(--gold2); color: var(--gold); border: 1px solid #d4a860; }
-.layer-gray { background: #fff; color: var(--ink2); border: 1px solid var(--paper3); }
-
-/* FOOTER */
-footer {
-  background: var(--ink); color: rgba(255,255,255,0.4);
-  padding: 24px 48px; font-size: 12px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-footer strong { color: rgba(255,255,255,0.7); }
-
-/* UPDATED TAG */
-.updated {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; color: var(--ink3); background: var(--paper2);
-  padding: 4px 10px; border-radius: 20px; border: 1px solid var(--paper3);
-}
-.updated-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); }
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.header h1{font-size:2.5rem;font-weight:800;color:#fff;}
+.header p{color:var(--accent2);margin-top:8px;}
+.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;}
+.nav a{color:var(--text2);text-decoration:none;font-size:.85rem;transition:color .2s;}
+.nav a:hover{color:var(--accent2);}
+.container{max-width:1100px;margin:0 auto;padding:32px;}
+.section{margin-bottom:40px;}
+.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
+.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
+.section p{color:var(--text2);margin-bottom:10px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:16px 0;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
+.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:6px;}
+.card p{font-size:.85rem;color:var(--text2);}
+.sprint-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.sprint{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;}
+.sprint h4{font-size:.875rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;}
+.sprint ul{list-style:none;}
+.sprint li{font-size:.85rem;color:var(--text2);padding:3px 0;display:flex;align-items:center;gap:8px;}
+.sprint li::before{content:'✅';font-size:.75rem;}
+table{width:100%;border-collapse:collapse;margin:16px 0;}
+th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:10px 14px;text-align:left;}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}
+.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+.metier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+.metier{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:.875rem;color:var(--text2);display:flex;align-items:center;gap:8px;}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
+.new{background:var(--green);color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;}
+.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
 </style>
 </head>
 <body>
-
-<nav>
-  <a class="nav-logo" href="index.html">Pet<span>Suite</span></a>
-  <div class="nav-links">
-    <a href="01-synthese-projet.html" class="active">Synthèse projet</a>
-    <a href="02-guide-parametrage.html">Guide paramétrage</a>
-    <a href="03-notice-utilisateur.html">Notice utilisateur</a>
-  </div>
-  <span class="nav-badge">S33 · Mars 2026</span>
-</nav>
-
-<div class="hero">
-  <div class="hero-tag">Synthèse projet — Document vivant</div>
-  <h1>PetSuite<br><em>Vision fin de projet</em></h1>
-  <p class="hero-sub">Logiciel SaaS multi-tenant de gestion pour professionnels des animaux de compagnie — comportementalistes, vétérinaires, éleveurs, garderies.</p>
-  <div class="hero-kpis">
-    <div class="kpi"><div class="kpi-num">65+</div><div class="kpi-lbl">Tables métier</div></div>
-    <div class="kpi"><div class="kpi-num">5</div><div class="kpi-lbl">Tables GED</div></div>
-    <div class="kpi"><div class="kpi-num">20+</div><div class="kpi-lbl">Triggers SQL</div></div>
-    <div class="kpi"><div class="kpi-num">13</div><div class="kpi-lbl">Types objets GED</div></div>
-    <div class="kpi"><div class="kpi-num">5–20k</div><div class="kpi-lbl">Clients cibles (10 ans)</div></div>
-  </div>
+<div class="header">
+  <h1>🐾 PetSuite — Synthèse projet</h1>
+  <p>Architecture, stack technique et roadmap</p>
+  <div class="badge">v4.0 — Sprint S30 — Mars 2026</div>
 </div>
-
+<nav class="nav">
+  <a href="index.html">← Accueil</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+  <a href="17-api-reference.html">API Référence</a>
+  <a href="20-pilotage-projet.html">Pilotage Projet</a>
+  <a href="23-Prise-en-compte-de-la-NF-525.html">NF 525</a>
+</nav>
 <div class="container">
 
-  <!-- 1. MODULES METIER -->
   <div class="section">
-    <div class="section-header">
-      <div class="section-dot"></div>
-      <div class="section-title">Modules métier</div>
-      <div class="section-num">01</div>
-    </div>
-    <div class="grid3">
-
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">🐾</div>Animaux & clients</div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">Puce</span><span class="item-val">15 chiffres — clé universelle unique</span></div>
-          <div class="item"><span class="item-label">Propriétaire</span><span class="item-val">Lien tiers (client)</span></div>
-          <div class="item"><span class="item-label">Races</span><span class="item-val">Principale + secondaire</span></div>
-          <div class="item"><span class="item-label">CAC</span><span class="item-val">14 Critères d'Aptitude au Contact — suivi comportemental par séance</span></div>
-        </div>
-        <div class="pill-row">
-          <span class="pill pill-green">animal</span>
-          <span class="pill pill-green">elevage</span>
-          <span class="pill pill-green">race</span>
-          <span class="pill pill-green">tiers</span>
-          <span class="pill pill-green">contact</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-gold">📋</div>Cycle commercial</div>
-        <div class="flow" style="flex-direction:column;align-items:flex-start;gap:4px;">
-          <div class="flow-box hi">Séance</div>
-          <div class="flow-arrow" style="padding:0 0 0 14px;">↓</div>
-          <div class="flow-box hi">Devis / Contrat</div>
-          <div class="flow-arrow" style="padding:0 0 0 14px;">↓</div>
-          <div class="flow-box hi">Facture</div>
-          <div class="flow-arrow" style="padding:0 0 0 14px;">↓</div>
-          <div class="flow-box hi">Règlement / Avoir</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-purple">📊</div>Comptabilité & FEC</div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">Export FEC</span><span class="item-val">Conforme DGFiP</span></div>
-          <div class="item"><span class="item-label">Hash SHA-256</span><span class="item-val">Par ligne + global</span></div>
-          <div class="item"><span class="item-label">Exercices</span><span class="item-val">Clôture avec verrouillage — EX2026 créé S32</span></div>
-          <div class="item"><span class="item-label">param_entreprise</span><span class="item-val">Algorithmia SAS, Lyon 69006 — configuré S32</span></div>
-          <div class="item"><span class="item-label">Comptes</span><span class="item-val">Plan comptable intégré</span></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-blue">🎯</div>CRM intégré</div>
-        <div class="flow" style="flex-wrap:wrap;gap:6px;">
-          <div class="flow-box">Lead</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box">Opportunité</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box">Converti</div>
-        </div>
-        <div class="pill-row">
-          <span class="pill pill-blue">Activités</span>
-          <span class="pill pill-blue">Notes</span>
-          <span class="pill pill-blue">Campagnes</span>
-          <span class="pill pill-blue">Tags</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">📁</div>GED documentaire</div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">Stockage</span><span class="item-val">URI / S3 — pas de BLOB</span></div>
-          <div class="item"><span class="item-label">Versioning</span><span class="item-val">Historique des versions</span></div>
-          <div class="item"><span class="item-label">Tags</span><span class="item-val">Recherche multi-critères</span></div>
-          <div class="item"><span class="item-label">Objets liés</span><span class="item-val">13 types (animal, facture…)</span></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-red">🔐</div>Sécurité & audit</div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">Utilisateurs</span><span class="item-val">Rôles granulaires par module</span></div>
-          <div class="item"><span class="item-label">Audit log</span><span class="item-val">Toutes actions tracées JSON</span></div>
-          <div class="item"><span class="item-label">Accès SQL</span><span class="item-val">1 seul user : Admin (MariaDB hors Docker)</span></div>
-          <div class="item"><span class="item-label">COPIER_TOUTES_PAGES_v2.ps1</span><span class="item-val">À lancer AVANT chaque build frontend — touche 101 fichiers + hydratation OneDrive · Vérifier "transferring context: ~1MB"</span></div>
-          <div class="item"><span class="item-label">MFA</span><span class="item-val">Obligatoire admin + super admin</span></div>
-        </div>
-      </div>
-
+    <h2>🏗️ Architecture technique</h2>
+    <div class="grid">
+      <div class="card"><h4>Frontend</h4><p>Next.js 15 — 58 pages — Build statique + SSR — Tailwind CSS</p></div>
+      <div class="card"><h4>API</h4><p>NestJS TypeScript — custom-routes.ts — 24 routes custom S27→S30</p></div>
+      <div class="card"><h4>Base de données</h4><p>MariaDB 11 — HORS Docker — 192.168.1.62:3307 — 2 bases : micro_logiciel + micro_logiciel_ged</p></div>
+      <div class="card"><h4>Infrastructure</h4><p>Docker Compose — nginx reverse proxy :80 — 3 conteneurs</p></div>
+      <div class="card"><h4>Sauvegarde</h4><p>Script PS v5 — mariadb-dump.exe — ZIP BDD + Projet — Git push — 04h00 quotidien</p></div>
+      <div class="card"><h4>GED</h4><p>Base dédiée micro_logiciel_ged — stockage URI externe — liens polymorphes</p></div>
     </div>
   </div>
 
-  <!-- 2. ARCHITECTURE MULTI-TENANT -->
   <div class="section">
-    <div class="section-header">
-      <div class="section-dot"></div>
-      <div class="section-title">Architecture multi-tenant</div>
-      <div class="section-num">02</div>
-    </div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title">Couches d'infrastructure</div>
-        <div class="arch">
-          <div class="arch-layer layer-purple">
-            Reverse proxy / Load balancer
-            <div class="sub">Nginx ou Traefik — routage par sous-domaine société.petsuite.fr</div>
-          </div>
-          <div class="arch-layer layer-blue">
-            API Gateway + Auth JWT (tenant_id)
-            <div class="sub">Chaque requête porte le tenant_id — zéro fuite inter-société</div>
-          </div>
-          <div class="arch-layer layer-green">
-            Schema MariaDB par société (shard)
-            <div class="sub">micro_logiciel_{tenant_id} — isolation totale RGPD</div>
-          </div>
-          <div class="arch-layer layer-gold">
-            Bucket S3 GED par société
-            <div class="sub">/{tenant_id}/{type}/{YYYY}/{MM}/fichier</div>
-          </div>
-          <div class="arch-layer layer-gray">
-            BDD plateforme (super admin)
-            <div class="sub">contrats · licences · mandats SEPA · CGV · audit global</div>
-          </div>
-        </div>
+    <h2>📦 Modules disponibles S30</h2>
+    <div class="sprint-grid">
+      <div class="sprint">
+        <h4>S25-S26 — Socle</h4>
+        <ul>
+          <li>Clients / Tiers / Contacts</li>
+          <li>Animaux / Races</li>
+          <li>Séances (EDC, Suivi, Garde)</li>
+          <li>Devis / Contrats</li>
+          <li>Facturation + Règlements</li>
+          <li>Export FEC / Comptabilité</li>
+          <li>CRM complet</li>
+          <li>GED documents</li>
+          <li>Tableau de bord</li>
+          <li>Admin / Audit</li>
+        </ul>
       </div>
-
-      <div class="card">
-        <div class="card-title">Principes clés</div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">Isolation</span><span class="item-val">Un schema par société — jamais de table globale avec tenant_id</span></div>
-          <div class="item"><span class="item-label">Scalabilité</span><span class="item-val">Ajout de serveurs MariaDB sans toucher aux tenants existants</span></div>
-          <div class="item"><span class="item-label">Shard registry</span><span class="item-val">Table centrale : tenant_id → host + port + schema</span></div>
-          <div class="item"><span class="item-label">Migrations</span><span class="item-val">Flyway ou Liquibase — appliqué sur tous les schemas</span></div>
-          <div class="item"><span class="item-label">Cache</span><span class="item-val">Redis — sessions, JWT, droits (TTL 15 min)</span></div>
-          <div class="item"><span class="item-label">File d'attente</span><span class="item-val">RabbitMQ / SQS — PDF, emails, prélèvements SEPA</span></div>
-          <div class="item"><span class="item-label">Performance</span><span class="item-val">Read replicas pour exports et rapports</span></div>
-          <div class="item"><span class="item-label">CDN</span><span class="item-val">Cloudflare — assets statiques + vidéos GIF modules</span></div>
-        </div>
+      <div class="sprint">
+        <h4>S27-S28 — Extensions</h4>
+        <ul>
+          <li>Factures impayées + Rappels</li>
+          <li>Achats fournisseurs</li>
+          <li>Module élevage</li>
+          <li>Saillies / Portées</li>
+          <li>Réseaux sociaux tiers</li>
+          <li>Génération devis depuis séance</li>
+          <li>Templates de devis</li>
+        </ul>
+      </div>
+      <div class="sprint">
+        <h4>S29 — Gestion</h4>
+        <ul>
+          <li>Bilan financier</li>
+          <li>Inventaires / Valorisation</li>
+          <li>Fiche achat [id]</li>
+        </ul>
+      </div>
+      <div class="sprint">
+        <h4>S30 — Consolidation <span class="new">ACTUEL</span></h4>
+        <ul>
+          <li>Programmes de suivi</li>
+          <li>Dashboard KPIs temps réel</li>
+          <li>ReseauxSociaux fiche client</li>
+          <li>Filtre animaux par client</li>
+          <li>Routes API consolidées (24)</li>
+          <li>Sauvegarde BDD v5</li>
+          <li>Centre d'aide opérationnel</li>
+          <li>Races multi-espèces (392)</li>
+          <li>Module NF 525 <span class="new">NEW</span></li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <!-- 3. MODELE COMMERCIAL -->
   <div class="section">
-    <div class="section-header">
-      <div class="section-dot"></div>
-      <div class="section-title">Modèle commercial & licences</div>
-      <div class="section-num">03</div>
+    <h2>🏛️ Conformité NF 525 — intégrée S30</h2>
+    <div class="warn">
+      <p><strong>Obligation légale :</strong> Art. 88 LF2016 — Amende 7 500 € par logiciel non conforme. Le module NF525 est intégré dans le sprint S30.</p>
     </div>
-    <div class="grid2">
+    <div class="grid">
+      <div class="card"><h4>Journal inaltérable</h4><p>Table nf525_journal_caisse — SHA-256 chaîné — séquence sans trou — triggers UPDATE/DELETE bloqués</p></div>
+      <div class="card"><h4>Clôtures Z / X</h4><p>sp_nf525_cloture_z (journalière) + sp_nf525_cloture_x (intermédiaire) — détail TVA par taux</p></div>
+      <div class="card"><h4>Vues de contrôle</h4><p>6 vues : intégrité chaîne, trous séquence, journalier, modes paiement, clôtures, dashboard conformité</p></div>
+      <div class="card"><h4>Audit inaltérabilité</h4><p>4 triggers bloquant UPDATE/DELETE + table nf525_audit_tentative pour traçabilité des tentatives</p></div>
+    </div>
+    <p style="margin-top:12px;color:var(--text2);font-size:.875rem;">→ Documentation complète : <a href="23-Prise-en-compte-de-la-NF-525.html" style="color:var(--accent2);">23 — Prise en compte de la NF 525</a></p>
+  </div>
 
-      <div class="card">
-        <div class="card-title">Conditions d'abonnement</div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">Tarification</span><span class="item-val">Prélèvement mensuel automatique SEPA</span></div>
-          <div class="item"><span class="item-label">Engagement minimum</span><span class="item-val">6 mois — non résiliable avant terme</span></div>
-          <div class="item"><span class="item-label">Après engagement</span><span class="item-val">Résiliable à tout moment (préavis 1 mois)</span></div>
-          <div class="item"><span class="item-label">CGV</span><span class="item-val">Snapshot versionné au moment de la signature</span></div>
-          <div class="item"><span class="item-label">Suspension</span><span class="item-val">Accès bloqué après 2 prélèvements échoués</span></div>
-          <div class="item"><span class="item-label">Modules</span><span class="item-val">Socle obligatoire + options (CRM, GED étendue…)</span></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Cycle de vie contrat</div>
-        <div class="flow" style="flex-wrap:wrap;gap:6px;margin-bottom:14px;">
-          <div class="flow-box">Prospect</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box hi">Souscription</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box hi">Actif</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box med">Résiliation</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box lo">Archivé 5 ans</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box">Purgé</div>
-        </div>
-        <div class="divider"></div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">Après résiliation</span><span class="item-val">Export PDF/CSV en lecture seule (3 mois)</span></div>
-          <div class="item"><span class="item-label">Rétention légale</span><span class="item-val">5 ans (obligation comptable)</span></div>
-          <div class="item"><span class="item-label">GED archivée</span><span class="item-val">Cold storage S3 Glacier</span></div>
-          <div class="item"><span class="item-label">Purge auto</span><span class="item-val">Script planifié à J+5 ans depuis résiliation</span></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Droits utilisateurs par société</div>
-        <table class="data-table">
-          <thead><tr><th>Rôle</th><th>Périmètre</th><th>MFA</th></tr></thead>
-          <tbody>
-            <tr><td>Super admin</td><td>Toutes sociétés — plateforme complète</td><td><span class="pill pill-red">Obligatoire</span></td></tr>
-            <tr><td>Admin société</td><td>Sa société — paramétrage complet</td><td><span class="pill pill-red">Obligatoire</span></td></tr>
-            <tr><td>Manager</td><td>Modules attribués — lecture/écriture</td><td><span class="pill pill-gray">Recommandé</span></td></tr>
-            <tr><td>Salarié</td><td>Modules attribués — usage standard</td><td><span class="pill pill-gray">Optionnel</span></td></tr>
-            <tr><td>Lecture seule</td><td>Consultation uniquement</td><td><span class="pill pill-gray">Non requis</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Vidéos commerciales par module</div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">Format</span><span class="item-val">GIF animé ou MP4 — max 1 min 30</span></div>
-          <div class="item"><span class="item-label">Objectif</span><span class="item-val">Démonstration visuelle de chaque module</span></div>
-          <div class="item"><span class="item-label">Hébergement</span><span class="item-val">CDN Cloudflare — URL référencée dans table plan</span></div>
-          <div class="item"><span class="item-label">Mise à jour</span><span class="item-val">Remplacement URL sans mise à jour applicative</span></div>
-          <div class="item"><span class="item-label">Modules prévus</span><span class="item-val">Animal, Séance, Devis, Facture, CRM, GED, Paramétrage</span></div>
-        </div>
-      </div>
-
+  <div class="section">
+    <h2>🎯 14 métiers couverts — Roadmap S31/S32</h2>
+    <div class="metier-grid">
+      <div class="metier">🧠 Comportementaliste</div>
+      <div class="metier">🐕 Éleveur canin/félin</div>
+      <div class="metier">🐾 Éleveur animalier</div>
+      <div class="metier">✂️ Toiletteur</div>
+      <div class="metier">🏠 Pet-sitter</div>
+      <div class="metier">🌿 Naturopathe</div>
+      <div class="metier">🔨 Maréchal-ferrant</div>
+      <div class="metier">🐎 Centre équestre</div>
+      <div class="metier">🐩 Centre canin</div>
+      <div class="metier">💆 Ostéopathe/Kiné</div>
+      <div class="metier">📚 Éducateur animalier</div>
+      <div class="metier">🏨 Pension animale</div>
+      <div class="metier">🐱 Chenil/Chatterie</div>
+      <div class="metier">🏆 Organisateur événements</div>
     </div>
   </div>
 
-  <!-- 4. DONNEES & SCALABILITE -->
   <div class="section">
-    <div class="section-header">
-      <div class="section-dot"></div>
-      <div class="section-title">Données & scalabilité (5 000–20 000 sociétés)</div>
-      <div class="section-num">04</div>
-    </div>
-
-    <div class="grid3" style="margin-bottom:16px;">
-      <div class="card" style="text-align:center;">
-        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);">~5 Go</div>
-        <div style="font-size:11px;color:var(--ink3);margin-top:4px;">BDD métier / tenant / an</div>
-      </div>
-      <div class="card" style="text-align:center;">
-        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);">~500 To</div>
-        <div style="font-size:11px;color:var(--ink3);margin-top:4px;">BDD totale à 20 000 clients</div>
-      </div>
-      <div class="card" style="text-align:center;">
-        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);">&gt; 1 Po</div>
-        <div style="font-size:11px;color:var(--ink3);margin-top:4px;">GED fichiers à 20 000 clients</div>
-      </div>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title">Stratégie GED — arborescence par tenant</div>
-        <div style="background:var(--paper2);border-radius:var(--rs);padding:12px 16px;font-family:monospace;font-size:12px;color:var(--ink2);line-height:1.8;margin-bottom:12px;">
-          /{tenant_id}/{type}/{YYYY}/{MM}/fichier<br><br>
-          Ex : /tenant_0042/factures/2025/03/uuid.pdf<br>
-          Ex : /tenant_0042/animaux/2025/06/uuid.jpg<br>
-          Ex : /tenant_0042/seances/2025/09/uuid.pdf
-        </div>
-        <div class="tier-row">
-          <div class="tier tier-hot">
-            <div class="tier-label">Hot (0–12 mois)</div>
-            <div class="tier-desc">S3 Standard<br>Accès &lt;100ms<br>Tenant actif</div>
-          </div>
-          <div class="tier tier-warm">
-            <div class="tier-label">Warm (1–5 ans)</div>
-            <div class="tier-desc">S3 Infrequent<br>Coût ÷2<br>Docs anciens</div>
-          </div>
-          <div class="tier tier-cold">
-            <div class="tier-label">Cold (archivage)</div>
-            <div class="tier-desc">S3 Glacier<br>Restauration 3–12h<br>Légal 5 ans</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Carte d'identité animale</div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">Clé universelle</span><span class="item-val">Numéro de puce (15 chiffres) — unique mondial</span></div>
-          <div class="item"><span class="item-label">Données mutualisables</span><span class="item-val">Nom, race, naissance, photos, CAC, rapports comportementaux</span></div>
-          <div class="item"><span class="item-label">Export PDF</span><span class="item-val">Rapport généré à la demande — champs sélectionnables</span></div>
-          <div class="item"><span class="item-label">Partage cross-tenant</span><span class="item-val">URL signée éphémère (15 min) + consentement propriétaire</span></div>
-          <div class="item"><span class="item-label">RGPD</span><span class="item-val">Consentement explicite requis avant tout partage</span></div>
-        </div>
-      </div>
-    </div>
+    <h2>🗄️ Schéma base de données</h2>
+    <table>
+      <thead><tr><th>Table</th><th>Rôle</th><th>Clé</th></tr></thead>
+      <tbody>
+        <tr><td>tiers</td><td>Clients / Fournisseurs</td><td>TIE_ID</td></tr>
+        <tr><td>contact</td><td>Contacts rattachés aux tiers</td><td>CON_ID</td></tr>
+        <tr><td>animal</td><td>Animaux des clients</td><td>ANI_ID</td></tr>
+        <tr><td>race</td><td>Référentiel races (392 — 8 espèces)</td><td>RACE_ID</td></tr>
+        <tr><td>seance</td><td>RDV et prestations</td><td>SEA_ID (BIGINT)</td></tr>
+        <tr><td>devis_contrat_entete</td><td>Devis et contrats</td><td>DCE_ID</td></tr>
+        <tr><td>facture</td><td>Factures</td><td>FAC_ID</td></tr>
+        <tr><td>reglement</td><td>Règlements factures</td><td>REG_ID</td></tr>
+        <tr><td>avoir</td><td>Avoirs</td><td>AVO_ID</td></tr>
+        <tr><td>nf525_journal_caisse</td><td>Journal inaltérable NF525 — SHA-256 chaîné</td><td>JCA_ID</td></tr>
+        <tr><td>nf525_cloture</td><td>Clôtures Z (journalières) et X (intermédiaires)</td><td>CLO_ID</td></tr>
+        <tr><td>nf525_cloture_tva</td><td>Détail TVA par taux par clôture</td><td>CTX_ID</td></tr>
+        <tr><td>nf525_sequenceur</td><td>Séquenceur atomique (singleton)</td><td>ID</td></tr>
+        <tr><td>programme_suivi</td><td>Programmes comportementaux</td><td>PRG_ID</td></tr>
+        <tr><td>achat_entete</td><td>Achats fournisseurs</td><td>ACH_ID</td></tr>
+        <tr><td>crm_lead</td><td>Leads/prospects</td><td>LED_ID</td></tr>
+        <tr><td>crm_opportunite</td><td>Pipeline commercial</td><td>OPP_ID</td></tr>
+        <tr><td>utilisateur</td><td>Utilisateurs applicatifs</td><td>USR_ID</td></tr>
+        <tr><td>audit_log</td><td>Journal d'audit générique</td><td>AUD_ID</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <!-- 5. TRIGGERS -->
   <div class="section">
-    <div class="section-header">
-      <div class="section-dot"></div>
-      <div class="section-title">Automatismes SQL (triggers)</div>
-      <div class="section-num">05</div>
+    <h2>🚀 Roadmap S31/S32</h2>
+    <h3>S31 — Priorités</h3>
+    <div class="highlight">
+      <p>1. Intégration API NF525 (sp_nf525_enregistrer_encaissement post-règlement) • 2. Interface clôture Z (front caisse) • 3. Tables SQL manquantes (programme_suivi, param_metier) • 4. Module Éditions (CGV, contrats, champs fusion) • 5. Carnet pension DDPP • 6. Extensions animal/tiers/seance pour les 14 métiers • 7. Internationalisation + devise</p>
     </div>
-    <div class="card">
-      <table class="data-table">
-        <thead><tr><th>Déclencheur</th><th>Table</th><th>Action automatique</th></tr></thead>
-        <tbody>
-          <tr><td>trg_facture_num</td><td>facture</td><td>Numérotation auto FAC-YYMM-0001 via compteur mensuel</td></tr>
-          <tr><td>trg_dce_num</td><td>devis_contrat_entete</td><td>Numérotation auto DCE-YYMM-0001</td></tr>
-          <tr><td>trg_fli_calc_*</td><td>facture_ligne</td><td>Calcul HT = QTE × PU, TVA, TTC (INSERT + UPDATE)</td></tr>
-          <tr><td>trg_dcl_calc_*</td><td>devis_contrat_ligne</td><td>Idem pour lignes devis</td></tr>
-          <tr><td>trg_sel_calc_*</td><td>seance_ligne</td><td>Idem pour lignes séance + propagation totaux séance</td></tr>
-          <tr><td>trg_reglement_check</td><td>reglement</td><td>Contrôle : total règlements ≤ FAC_TOTAL_TTC</td></tr>
-          <tr><td>trg_facture_no_*</td><td>facture</td><td>Verrouillage UPDATE/DELETE si exercice clôturé</td></tr>
-          <tr><td>trg_sea_unique_*</td><td>seance</td><td>Unicité séance EDC par animal (STY_UNIQUE_PAR_ANIMAL)</td></tr>
-          <tr><td>trg_ssc_score_*</td><td>seance_suivi_cac</td><td>Score CAC automatique (S24)</td></tr>
-          <tr><td>bi_ged_document_lien_*</td><td>ged_document_lien</td><td>Validation inter-base de l'objet métier cible</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- 6. ROADMAP -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-dot"></div>
-      <div class="section-title">Prochaines étapes</div>
-      <div class="section-num">06</div>
-    </div>
-    <div class="grid3">
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-blue">🏗</div>Infrastructure</div>
-        <div class="pill-row" style="flex-direction:column;gap:8px;">
-          <span class="pill pill-blue" style="width:fit-content;">Choix hébergeur (OVH / AWS / Hetzner)</span>
-          <span class="pill pill-blue" style="width:fit-content;">Mise en place shard registry</span>
-          <span class="pill pill-blue" style="width:fit-content;">Pipeline CI/CD GitHub Actions</span>
-          <span class="pill pill-blue" style="width:fit-content;">Monitoring Prometheus + Grafana</span>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-gold">💼</div>Commercial</div>
-        <div class="pill-row" style="flex-direction:column;gap:8px;">
-          <span class="pill pill-gold" style="width:fit-content;">Finalisation nom produit</span>
-          <span class="pill pill-gold" style="width:fit-content;">Rédaction CGV</span>
-          <span class="pill pill-gold" style="width:fit-content;">Intégration paiement SEPA (GoCardless / Stripe)</span>
-          <span class="pill pill-gold" style="width:fit-content;">Production vidéos GIF par module</span>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">📱</div>Produit</div>
-        <div class="pill-row" style="flex-direction:column;gap:8px;">
-          <span class="pill pill-green" style="width:fit-content;">Carte d'identité animale PDF</span>
-          <span class="pill pill-green" style="width:fit-content;">Espace super admin</span>
-          <span class="pill pill-green" style="width:fit-content;">Guide paramétrage intégré</span>
-          <span class="pill pill-green" style="width:fit-content;">Formulaires CAC complets</span>
-        </div>
-      </div>
+    <h3>S32 — Vision</h3>
+    <div class="highlight">
+      <p>Registre élevage DDPP/I-CAD • Suivi génétique reproducteurs • Réservations en ligne • Planning multi-ressources • Carnet santé électronique • Organisateur événements • Attestation de conformité NF525</p>
     </div>
   </div>
 
 </div>
-
-<footer>
-  <div><strong>PetSuite</strong> — Synthèse projet · Document vivant</div>
-  <div class="updated"><div class="updated-dot"></div>Nom provisoire — à définir · Version 0.1</div>
-  <div>Confidentiel — usage interne</div>
-</footer>
-
+<footer>PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:var(--accent2);text-decoration:none;">← Retour accueil</a></footer>
 </body>
 </html>

@@ -3,584 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Roadmap</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>PetSuite — Roadmap générale</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#3d3d5c;--ink3:#8888aa;--paper:#f7f6f1;--paper2:#eeecea;--paper3:#e2e0da;--accent:#2d6a4f;--accent2:#40916c;--accent3:#d8f3dc;--gold:#a07030;--gold2:#fdf3e0;--blue:#1d4e8f;--blue2:#dbeafe;--red:#9b2335;--red2:#fdecea;--purple:#5b3fa0;--purple2:#ede8fc;--r:10px;--rs:6px;}
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);font-size:14px;line-height:1.65;}
-nav{background:var(--ink);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-.nav-logo{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;text-decoration:none;}
-.nav-logo span{color:#74c69d;}
-.nav-links{display:flex;gap:4px;flex-wrap:wrap;}
-.nav-links a{color:rgba(255,255,255,0.55);font-size:11px;font-weight:500;text-decoration:none;padding:5px 12px;border-radius:20px;transition:all .2s;white-space:nowrap;}
-.nav-links a:hover{background:rgba(255,255,255,0.1);color:#fff;}
-.nav-links a.active{background:rgba(116,198,157,0.2);color:#74c69d;}
-.nav-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.45);font-size:10px;padding:3px 10px;border-radius:20px;white-space:nowrap;}
-.hero{background:var(--ink);color:#fff;padding:52px 48px 44px;}
-.hero-tag{display:inline-block;background:rgba(116,198,157,0.15);border:1px solid rgba(116,198,157,0.3);color:#74c69d;font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;margin-bottom:18px;letter-spacing:.04em;}
-.hero h1{font-family:'DM Serif Display',serif;font-size:40px;line-height:1.1;margin-bottom:12px;}
-.hero h1 em{font-style:italic;color:#74c69d;}
-.hero-sub{color:rgba(255,255,255,0.5);font-size:14px;max-width:680px;margin-bottom:28px;}
-.hero-kpis{display:flex;gap:10px;flex-wrap:wrap;}
-.kpi{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r);padding:12px 18px;min-width:110px;}
-.kpi-num{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;line-height:1.1;}
-.kpi-lbl{font-size:10px;color:rgba(255,255,255,0.4);margin-top:3px;}
-.layout{display:flex;gap:0;max-width:1200px;margin:0 auto;}
-.toc{width:220px;flex-shrink:0;padding:32px 24px;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;border-right:1px solid var(--paper3);}
-.toc-title{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;}
-.toc a{display:block;font-size:12px;color:var(--ink3);text-decoration:none;padding:5px 0;border-left:2px solid transparent;padding-left:10px;transition:all .15s;line-height:1.4;}
-.toc a:hover{color:var(--ink);border-left-color:var(--accent2);}
-.toc a.toc-h2{font-weight:500;color:var(--ink2);margin-top:8px;}
-.toc a.toc-h3{font-size:11px;padding-left:18px;}
-.main{flex:1;padding:40px 48px;min-width:0;}
-.section{margin-bottom:52px;scroll-margin-top:80px;}
-.section-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--paper3);}
-.section-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);background:var(--paper2);padding:3px 8px;border-radius:var(--rs);}
-.section-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);}
-.subsection{margin-bottom:28px;}
-.subsection-title{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-.subsection-title::before{content:'';display:inline-block;width:3px;height:14px;background:var(--accent2);border-radius:2px;flex-shrink:0;}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
-.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
-.card{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:18px 20px;}
-.card-title{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:7px;}
-.card-icon{width:24px;height:24px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
-.icon-green{background:var(--accent3);}
-.icon-blue{background:var(--blue2);}
-.icon-gold{background:var(--gold2);}
-.icon-red{background:var(--red2);}
-.icon-purple{background:var(--purple2);}
-.pill{display:inline-block;font-size:10px;font-weight:500;padding:2px 9px;border-radius:20px;white-space:nowrap;}
-.pill-green{background:var(--accent3);color:var(--accent);}
-.pill-blue{background:var(--blue2);color:var(--blue);}
-.pill-gold{background:var(--gold2);color:var(--gold);}
-.pill-red{background:var(--red2);color:var(--red);}
-.pill-purple{background:var(--purple2);color:var(--purple);}
-.pill-gray{background:var(--paper2);color:var(--ink2);}
-.pill-ok{background:#d8f3dc;color:#2d6a4f;}
-.pill-wip{background:#fdf3e0;color:#a07030;}
-.pill-todo{background:#fdecea;color:#9b2335;}
-.pill-spec{background:#ede8fc;color:#5b3fa0;}
-.pill-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
-.tbl{width:100%;border-collapse:collapse;font-size:12px;}
-.tbl th{text-align:left;font-weight:500;font-size:10px;letter-spacing:.05em;color:var(--ink3);padding:7px 10px;border-bottom:1px solid var(--paper3);background:var(--paper2);white-space:nowrap;}
-.tbl td{padding:8px 10px;border-bottom:1px solid var(--paper2);color:var(--ink2);vertical-align:top;}
-.tbl tr:last-child td{border-bottom:none;}
-.tbl td:first-child{font-weight:500;color:var(--ink);}
-.tbl-wrap{overflow-x:auto;border:1px solid var(--paper3);border-radius:var(--r);}
-.code{background:#0d0d1a;border-radius:var(--r);padding:16px 20px;font-family:'DM Mono',monospace;font-size:12px;color:#a0e0c0;line-height:1.9;overflow-x:auto;margin:10px 0;}
-.code .cm{color:#4a7a6a;}
-.code .ck{color:#74c69d;}
-.code .cv{color:#f0c080;}
-.item-list{display:flex;flex-direction:column;}
-.item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--paper2);font-size:12px;}
-.item:last-child{border-bottom:none;}
-.item-label{font-weight:500;color:var(--ink);min-width:150px;flex-shrink:0;}
-.item-val{color:var(--ink2);}
-.alert{border-radius:var(--rs);padding:11px 14px;font-size:12px;margin:10px 0;}
-.alert-warn{background:#fffbeb;border:1px solid #f0d070;color:#805010;}
-.alert-info{background:var(--blue2);border:1px solid #90b8e8;color:var(--blue);}
-.alert-danger{background:var(--red2);border:1px solid rgba(155,35,53,0.3);color:var(--red);}
-.alert-ok{background:var(--accent3);border:1px solid #80c09a;color:var(--accent);}
-.sprint-row{display:flex;flex-direction:column;gap:10px;}
-.sprint{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:14px 18px;display:flex;gap:14px;align-items:flex-start;}
-.sprint-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:#fff;padding:4px 10px;border-radius:var(--rs);flex-shrink:0;margin-top:2px;}
-.sprint-content{flex:1;}
-.sprint-title{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:4px;}
-.sprint-desc{font-size:11px;color:var(--ink3);line-height:1.6;}
-.check-list{display:flex;flex-direction:column;gap:6px;margin-top:6px;}
-.check-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--ink2);}
-.check-item::before{content:'☐';font-size:13px;color:var(--ink3);flex-shrink:0;line-height:1.4;}
-.check-item.done::before{content:'☑';color:var(--accent2);}
-.div{height:1px;background:var(--paper3);margin:14px 0;}
-footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:20px 48px;font-size:12px;display:flex;justify-content:space-between;align-items:center;}
-footer strong{color:rgba(255,255,255,0.7);}
-.toc::-webkit-scrollbar{width:4px;}
-.toc::-webkit-scrollbar-thumb{background:var(--paper3);border-radius:2px;}
-@media(max-width:768px){.layout{flex-direction:column;}.toc{display:none;}.main{padding:24px 20px;}nav{padding:12px 20px;}.hero{padding:36px 20px 32px;}footer{padding:16px 20px;flex-direction:column;gap:8px;text-align:center;}}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.header h1{font-size:2.5rem;font-weight:800;color:#fff;}
+.header p{color:var(--accent2);margin-top:8px;}
+.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
+nav.topnav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;}
+nav.topnav a{color:var(--text2);text-decoration:none;font-size:.85rem;transition:color .2s;}
+nav.topnav a:hover{color:var(--accent2);}
+nav.topnav a.nf{color:#10b981;font-weight:600;}
+.container{max-width:1100px;margin:0 auto;padding:32px;}
+.section{margin-bottom:40px;}
+.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
+.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
+.roadmap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;}
+.rm-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.rm-card h4{font-size:.95rem;font-weight:700;color:var(--accent2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;}
+.rm-card ul{list-style:none;}
+.rm-card li{font-size:.875rem;color:var(--text2);padding:4px 0;display:flex;gap:8px;align-items:flex-start;}
+.rm-card li::before{content:'→';color:var(--accent);flex-shrink:0;}
+.done-card{border-color:#10b981;}
+.done-card h4{color:#10b981;}
+.next-card{border-color:var(--accent);}
+.vision-card{border-color:var(--text2);}
+.badge-done{background:rgba(16,185,129,.15);color:#10b981;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600;}
+.badge-next{background:rgba(99,102,241,.15);color:#818cf8;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600;}
+.badge-plan{background:rgba(148,163,184,.1);color:#94a3b8;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600;}
+.highlight{background:var(--surface2);border-left:3px solid var(--green);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
 </style>
 </head>
 <body>
-
-<nav>
-  <a class="nav-logo" href="index.html">Pet<span>Suite</span></a>
-  <div class="nav-links">
-    <a href="01-synthese-projet.html">Synthèse</a>
-    <a href="05-architecture-roadmap.html">Architecture</a>
-    <a href="06-roadmap.html" class="active">Roadmap</a>
-    <a href="07-audit-stack.html">Audit Stack</a>
-    <a href="08-projet-reference.html">Référence</a>
-    <a href="09-scenario-video.html">Vidéo</a>
-  </div>
-  <span class="nav-badge">Session 24 · 14/03/2026</span>
+<div class="header">
+  <h1>📅 PetSuite — Roadmap générale</h1>
+  <p>Fonctionnalités planifiées et vision produit</p>
+  <div class="badge">v4.0 — Sprint S30 — Mars 2026</div>
+</div>
+<nav class="topnav">
+  <a href="index.html">← Accueil</a>
+  <a href="01-synthese-projet.html">Synthèse</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <a href="08-roadmap-metiers.html">14 Métiers</a>
+  <a href="23-Prise-en-compte-de-la-NF-525.html" class="nf">🏛️ NF 525</a>
 </nav>
+<div class="container">
 
-<div class="hero">
-  <div class="hero-tag">Feuille de route — Document vivant</div>
-  <h1>Roadmap <em>sprints</em></h1>
-  <p class="hero-sub">Feuille de route complète du projet — état des sprints réalisés, en cours et planifiés jusqu'au passage en production SaaS multi-tenant.</p>
-  <div class="hero-kpis">
-    <div class="kpi"><div class="kpi-num">S33</div><div class="kpi-lbl">Sprint courant</div></div>
-    <div class="kpi"><div class="kpi-num">9</div><div class="kpi-lbl">Sprints réalisés</div></div>
-    <div class="kpi"><div class="kpi-num">3</div><div class="kpi-lbl">Sprints planifiés</div></div>
-    <div class="kpi"><div class="kpi-num">S12+</div><div class="kpi-lbl">Cible SaaS prod</div></div>
-  </div>
-</div>
-
-<div class="layout">
-<nav class="toc">
-  <div class="toc-title">Sommaire</div>
-  <a href="#s1" class="toc-h2">État global</a>
-  <a href="#s2" class="toc-h2">Sprint 9 — Complet ✓</a>
-  <a href="#s2-tables" class="toc-h3">Tables ajoutées S24</a>
-  <a href="#s3" class="toc-h2">Sprint 10 — Planifié</a>
-  <a href="#s3-ec" class="toc-h3">Étude Comportementale</a>
-  <a href="#s3-modules" class="toc-h3">Autres modules</a>
-  <a href="#s4" class="toc-h2">Sprint 11 — Planifié</a>
-  <a href="#s5" class="toc-h2">Sprint 12+ — SaaS prod</a>
-  <a href="#s5-tenant" class="toc-h3">Multi-tenant</a>
-  <a href="#s5-commercial" class="toc-h3">Commercial SEPA</a>
-  <a href="#s5-infra" class="toc-h3">Infrastructure</a>
-  <a href="#s6" class="toc-h2">Bugs connus</a>
-  <a href="#s7" class="toc-h2">Backlog technique</a>
-  <a href="#s8" class="toc-h2">Documentation en ligne</a>
-</nav>
-
-<div class="main">
-
-<div class="section" id="s1">
-  <div class="section-header"><span class="section-num">01</span><span class="section-title">État global des sprints</span></div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Sprint</th><th>Contenu</th><th>État</th><th>Sessions</th></tr></thead>
-      <tbody>
-        <tr><td>S1</td><td>Setup BDD, Auth, CRUD tiers/animaux</td><td><span class="pill pill-ok">COMPLET</span></td><td>1–3</td></tr>
-        <tr><td>S2</td><td>PDF factures/devis, Upload photos</td><td><span class="pill pill-ok">COMPLET</span></td><td>4–5</td></tr>
-        <tr><td>S3</td><td>Agenda visuel, Rappels impayés, Templates devis</td><td><span class="pill pill-ok">COMPLET</span></td><td>6–7</td></tr>
-        <tr><td>S4</td><td>Portail client + signature + Stripe</td><td><span class="pill pill-ok">COMPLET</span></td><td>8–9</td></tr>
-        <tr><td>S5</td><td>Programmes suivi comportemental, SMS Twilio</td><td><span class="pill pill-ok">COMPLET</span></td><td>10–11</td></tr>
-        <tr><td>S6</td><td>Statistiques avancées, Questionnaires, CRM</td><td><span class="pill pill-ok">COMPLET</span></td><td>12–13</td></tr>
-        <tr><td>S7</td><td>PWA mobile, Backup BDD, Animal V2+V3, Fix éditions</td><td><span class="pill pill-ok">COMPLET</span></td><td>16–17</td></tr>
-        <tr><td>S8</td><td>Fix crashes, audit visuel, PATCH animaux, couleurs agenda</td><td><span class="pill pill-ok">COMPLET</span></td><td>18–22</td></tr>
-        <tr><td>S9</td><td>EC, CAC, param_libelles_ec, achats, stock, tarif, bilan</td><td><span class="pill pill-ok">COMPLET</span></td><td>23–25</td></tr>
-        <tr><td>S10→S32</td><td>Frontend modules, achats, stock, tarification, NF525, élevage, questionnaires, aide intégrée (199 articles), formulaire lead CRM, PUT /animaux/:id</td><td><span class="pill pill-ok">COMPLET</span></td><td>26–32</td></tr>
-        <tr><td>S33</td><td>Templates devis par métier · NF525 clôture Z · Élevage portée/new · Documentation enrichie v4.0 · Historique admin commentaires · Charte graphique logo</td><td><span class="pill pill-wip">EN COURS</span></td><td>33→</td></tr>
-        <tr><td>S11</td><td>PDF tous types, responsive mobile, PWA notifications</td><td><span class="pill pill-todo">PLANIFIÉ</span></td><td>—</td></tr>
-        <tr><td>S12+</td><td>SaaS multi-tenant, provisionnement, SEPA, production</td><td><span class="pill pill-spec">SaaS PROD</span></td><td>—</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="section" id="s2">
-  <div class="section-header"><span class="section-num">02</span><span class="section-title">Sprint 9 — Complet (sessions 23–25)</span></div>
-
-  <div class="subsection">
-    <div class="subsection-title">Modules spécifiés et scripts prêts</div>
-    <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>Module</th><th>BDD</th><th>API</th><th>Frontend</th></tr></thead>
-        <tbody>
-          <tr><td>Achats fournisseurs</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">Script prêt</span></td><td><span class="pill pill-todo">À faire</span></td></tr>
-          <tr><td>Stock PMP/FIFO/LIFO</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">Script prêt</span></td><td><span class="pill pill-spec">Spec prête</span></td></tr>
-          <tr><td>Tarification 3 méthodes</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">Script prêt</span></td><td><span class="pill pill-todo">À faire</span></td></tr>
-          <tr><td>Bilan PCG 2025</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">Script prêt</span></td><td><span class="pill pill-todo">À faire</span></td></tr>
-          <tr><td>Signature Yousign</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">Script prêt</span></td><td><span class="pill pill-spec">Spec prête</span></td></tr>
-          <tr><td>Étude Comportementale</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">Déployé S25</span></td></tr>
-          <tr><td>CAC par séance</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">Déployé S25</span></td></tr>
-          <tr><td>Cycles + chrono docs</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-todo">À faire</span></td><td><span class="pill pill-todo">À faire</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="subsection" id="s2-tables">
-    <div class="subsection-title">Tables ajoutées session 24</div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">🧠</div>Étude Comportementale</div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">edc_fiche</span><span class="item-val">Fiche EC complète — 60+ champs</span></div>
-          <div class="item"><span class="item-label">edc_probleme</span><span class="item-val">Grille comportementale page 2 — multi-lignes</span></div>
-          <div class="item"><span class="item-label">seance_suivi_cac</span><span class="item-val">CAC par séance avec propagation</span></div>
-          <div class="item"><span class="item-label">param_libelles_ec</span><span class="item-val">60 libellés paramétrables dont 14 CAC</span></div>
-        </div>
+  <div class="section">
+    <h2>✅ Livré — S25 à S30</h2>
+    <div class="roadmap-grid">
+      <div class="rm-card done-card">
+        <h4>Socle S25-S26 <span class="badge-done">Livré</span></h4>
+        <ul>
+          <li>Stack Next.js + NestJS + MariaDB + Docker</li>
+          <li>Tiers, Contacts, Animaux, Races</li>
+          <li>Séances, Devis, Facturation, Règlements, Avoirs</li>
+          <li>CRM complet (Leads, Opportunités, Activités)</li>
+          <li>Export FEC + GED polymorphe</li>
+          <li>Dashboard, Admin, Audit</li>
+        </ul>
       </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-blue">🔧</div>Colonnes ajoutées</div>
-        <div class="item-list">
-          <div class="item"><span class="item-label">ANI_SCORE_CAC</span><span class="item-val">Score CAC actuel (0..14) sur animal</span></div>
-          <div class="item"><span class="item-label">ANI_DERNIERE_SEA_ID</span><span class="item-val">ID dernière séance avec CAC</span></div>
-          <div class="item"><span class="item-label">ANI_DERNIERE_SEA_DATE</span><span class="item-val">Date dernière séance avec CAC</span></div>
-          <div class="item"><span class="item-label">STY_COULEUR</span><span class="item-val">Couleur hex agenda (S22)</span></div>
-        </div>
+      <div class="rm-card done-card">
+        <h4>Extensions S27-S29 <span class="badge-done">Livré</span></h4>
+        <ul>
+          <li>Factures impayées + rappels email</li>
+          <li>Module élevage : saillies, portées</li>
+          <li>Achats fournisseurs + inventaires</li>
+          <li>Templates devis + génération depuis séance</li>
+          <li>FEC figé SHA-256 par exercice</li>
+          <li>Bilan financier multi-périodes</li>
+        </ul>
+      </div>
+      <div class="rm-card done-card">
+        <h4>Consolidation S30 <span class="badge-done">Livré</span></h4>
+        <ul>
+          <li>Programmes de suivi comportemental</li>
+          <li>Dashboard KPIs temps réel</li>
+          <li>Races multi-espèces (392 races — 8 espèces)</li>
+          <li>Sauvegarde BDD v5 (quotidienne 04h00)</li>
+          <li>Centre d'aide opérationnel</li>
+          <li>Module NF 525 complet (SQL + doc)</li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <div class="subsection">
-    <div class="subsection-title">Installation BDD (une fois API OK)</div>
-    <div class="code">
-<span class="cm"># Dans l'ordre</span>
-docker exec micro_api node /tmp/create_stock.js
-docker exec micro_api node /tmp/create_audit_stock_complement.js
-docker exec micro_api node /tmp/create_signature_electronique.js
-docker cp <span class="cv">"C:\Users\AdminPC\Downloads\create_bilan.js"</span> micro_api:/tmp/
-docker cp <span class="cv">"C:\Users\AdminPC\Downloads\create_tarification.js"</span> micro_api:/tmp/
-docker cp <span class="cv">"C:\Users\AdminPC\Downloads\create_cycles_complets.js"</span> micro_api:/tmp/
-docker cp <span class="cv">"C:\Users\AdminPC\Downloads\create_etude_comportementale.js"</span> micro_api:/tmp/
-docker exec micro_api node /tmp/create_bilan.js
-docker exec micro_api node /tmp/create_tarification.js
-docker exec micro_api node /tmp/create_cycles_complets.js
-docker exec micro_api node /tmp/create_etude_comportementale.js
+  <div class="section">
+    <h2>🏛️ NF 525 — Intégrée S30</h2>
+    <div class="warn">
+      <p><strong>Obligation légale Art. 88 LF2016</strong> — Amende 7 500 € par logiciel non conforme. Module livré en S30, intégration API et interface en S31.</p>
     </div>
-  </div>
-</div>
-
-<div class="section" id="s3">
-  <div class="section-header"><span class="section-num">03</span><span class="section-title">Sprint 10 — Planifié</span></div>
-
-  <div class="subsection" id="s3-ec">
-    <div class="subsection-title">Étude Comportementale — frontend complet</div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">📋</div>Page /app/seances/[id]/etude-comportementale</div>
-        <div class="check-list">
-          <div class="check-item">Section 1 : Identité client + animal (pré-remplie depuis BDD)</div>
-          <div class="check-item">Section 2 : Comportement / Alimentation / Contacts / Territoire</div>
-          <div class="check-item">Section 3 : Grille comportementale multi-lignes</div>
-          <div class="check-item">Section 4 : CAC initiaux</div>
-          <div class="check-item">Section 5 : Documents GED attachés</div>
-          <div class="check-item">Export PDF (même layout que Word)</div>
-        </div>
+    <div class="roadmap-grid">
+      <div class="rm-card done-card">
+        <h4>S30 — SQL livré <span class="badge-done">Livré</span></h4>
+        <ul>
+          <li>5 tables (journal, clôtures, TVA, séquenceur, audit)</li>
+          <li>4 procédures stockées</li>
+          <li>6 vues de contrôle conformité</li>
+          <li>4 triggers inaltérabilité SHA-256</li>
+          <li>Plan de conformité Word 10 chapitres</li>
+        </ul>
       </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-blue">📊</div>Page /app/seances/[id]/suivi-cac</div>
-        <div class="check-list">
-          <div class="check-item">Grille 14 CAC avec libellés param_libelles_ec</div>
-          <div class="check-item">Pré-remplissage depuis dernière séance réalisée</div>
-          <div class="check-item">Commentaires par critère</div>
-          <div class="check-item">Visualisation progression score</div>
-        </div>
-        <div class="div"></div>
-        <div class="card-title" style="margin-bottom:6px;"><div class="card-icon icon-gold">🐾</div>Fiche animal onglet CAC V2</div>
-        <div class="check-list">
-          <div class="check-item">Tableau comparatif par séance</div>
-          <div class="check-item">Graphique évolution score</div>
-          <div class="check-item">Fix B2 : labels génériques → param_libelles_ec</div>
-        </div>
+      <div class="rm-card next-card">
+        <h4>S31 — Intégration <span class="badge-next">Planifié</span></h4>
+        <ul>
+          <li>Appel API post-règlement (US-23.2)</li>
+          <li>Interface clôture Z journalière (front)</li>
+          <li>Dashboard conformité back-office</li>
+          <li>Sauvegarde quotidienne tables NF525</li>
+        </ul>
+      </div>
+      <div class="rm-card vision-card">
+        <h4>S32 — Attestation <span class="badge-plan">Vision</span></h4>
+        <ul>
+          <li>Attestation de conformité NF525 signée</li>
+          <li>Monitoring automatique conformité</li>
+          <li>Export audit annuel</li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <div class="subsection" id="s3-crm">
-    <div class="subsection-title">CRM — Formulaire pré-qualification lead</div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-blue">📋</div>Fonctionnalité</div>
-        <div class="check-list">
-          <div class="check-item">Lien public paramétrable par tenant : /formulaire/[token]</div>
-          <div class="check-item">Accessible sans connexion — réseaux sociaux, site web, email</div>
-          <div class="check-item">Soumission → création automatique lead dans le CRM</div>
-          <div class="check-item">Coordonnées : nom, prénom, téléphone, email</div>
-          <div class="check-item">Animal : nom, race, âge/naissance, sexe</div>
-          <div class="check-item">Questions paramétrables + commentaire libre</div>
-        </div>
+  <div class="section">
+    <h2>🔄 Sprint S31 — Planifié (Avril 2026)</h2>
+    <div class="roadmap-grid">
+      <div class="rm-card next-card">
+        <h4>NF525 Intégration <span class="badge-next">Priorité 1</span></h4>
+        <ul>
+          <li>API post-règlement → sp_nf525_enregistrer_encaissement</li>
+          <li>Interface clôture Z + fond de caisse</li>
+          <li>Dashboard conformité v_nf525_conformite</li>
+        </ul>
       </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">🗄️</div>Architecture BDD + API</div>
-        <div class="check-list">
-          <div class="check-item">lead_formulaire — modèle paramétrable par tenant</div>
-          <div class="check-item">lead_formulaire_question — questions ordonnées (texte, choix, échelle)</div>
-          <div class="check-item">lead_formulaire_reponse — réponses prospect</div>
-          <div class="check-item">GET /public/formulaire/:token — récupère le formulaire</div>
-          <div class="check-item">POST /public/formulaire/:token — soumet + crée lead CRM</div>
-          <div class="check-item">/app/parametres/formulaire-lead — configuration questions</div>
-        </div>
+      <div class="rm-card next-card">
+        <h4>Module Éditions <span class="badge-next">Priorité 2</span></h4>
+        <ul>
+          <li>CGV paramétrables</li>
+          <li>Contrats avec champs fusion automatique</li>
+          <li>Carnet pension DDPP (registre entrées/sorties)</li>
+        </ul>
       </div>
-    </div>
-  </div>
-
-  <div class="subsection" id="s3-modules">
-    <div class="subsection-title">Autres modules</div>
-    <div class="grid3">
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-gold">💹</div>Tarification</div>
-        <div class="check-list">
-          <div class="check-item">/app/parametres/tarification — 3 méthodes</div>
-          <div class="check-item">Coefficients + historique</div>
-          <div class="check-item">Boutons méthode dans devis</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-blue">🛒</div>Achats fournisseurs</div>
-        <div class="check-list">
-          <div class="check-item">/app/achats/demandes-prix</div>
-          <div class="check-item">/app/achats/commandes-fournisseurs</div>
-          <div class="check-item">/app/achats/receptions</div>
-          <div class="check-item">/app/achats/factures-fournisseurs</div>
-          <div class="check-item">/app/achats/avoirs-fournisseurs</div>
-          <div class="check-item">/app/achats/retours</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">📦</div>Stock</div>
-        <div class="check-list">
-          <div class="check-item">/app/stock (liste)</div>
-          <div class="check-item">/app/stock/mouvements</div>
-          <div class="check-item">/app/stock/inventaires</div>
-          <div class="check-item">/app/stock/sorties</div>
-          <div class="check-item">/app/stock/correction-pmp/:id</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-purple">📈</div>Bilan & Signature</div>
-        <div class="check-list">
-          <div class="check-item">/app/comptabilite/bilan</div>
-          <div class="check-item">/app/comptabilite/ecritures-cloture</div>
-          <div class="check-item">/app/parametres/yousign</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section" id="s33">
-  <div class="section-header"><span class="section-num">S33</span><span class="section-title">Sprint S33 — En cours · 18/03/2026</span></div>
-
-  <div class="subsection" id="s33-p1">
-    <div class="subsection-title">Priorité 1 — Fonctionnel critique</div>
-    <div class="grid3">
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-blue">📋</div>Templates devis par métier</div>
-        <div class="check-list">
-          <div class="check-item">/app/devis/templates — séparateurs visuels par métier</div>
-          <div class="check-item">Comportementaliste / Équestre / Toiletteur / Pet-sitter</div>
-          <div class="check-item">Sélection rapide → pré-remplissage lignes devis</div>
-          <div class="check-item">GET /api/templates?metier=comportementaliste</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-purple">🔐</div>NF525 — Post-règlement</div>
-        <div class="check-list">
-          <div class="check-item">sp_nf525_enregistrer_encaissement après chaque règlement</div>
-          <div class="check-item">Interface clôture Z caisse dans /app/comptabilite</div>
-          <div class="check-item">Dashboard conformité : compteur tickets, hash chaîné</div>
-          <div class="check-item">Statut certification NF525</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-green">🐾</div>Élevage — Portée/new</div>
-        <div class="check-list">
-          <div class="check-item">/app/elevage/portees/new — saisie individuelle naissances</div>
-          <div class="check-item">Numéro de puce par chiot, date naissance, sexe, couleur</div>
-          <div class="check-item">Lien automatique vers registre DDPP</div>
-        </div>
+      <div class="rm-card next-card">
+        <h4>Extensions Métiers <span class="badge-next">Priorité 3</span></h4>
+        <ul>
+          <li>Extensions animal : alimentation, médicaments, photos</li>
+          <li>Extensions tiers : urgence, RC_Pro</li>
+          <li>Page paramètres métier (devise, langue, activité)</li>
+          <li>Composant RaceSelector réutilisable</li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <div class="subsection" id="s33-p2">
-    <div class="subsection-title">Priorité 2 — Documentation enrichie</div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-gold">📖</div>Notice utilisateur v4.0</div>
-        <div class="check-list">
-          <div class="check-item">Tableau de bord — CA HT, QR codes, EDC sans devis</div>
-          <div class="check-item">Fiche animal — photo upload, puce formatée, 4 onglets</div>
-          <div class="check-item">Questionnaire public multi-type (?type=canin/equestre)</div>
-          <div class="check-item">Agenda vue semaine + mois (grille 7h–20h)</div>
-          <div class="check-item">Centre d'aide 199 articles, 15 modules, Ctrl+K</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-blue">📡</div>API Reference + Synthèse</div>
-        <div class="check-list">
-          <div class="check-item">PUT /animaux/:id documenté (ANI_PHOTOS + 14 champs)</div>
-          <div class="check-item">Synthèse projet — COPIER_TOUTES_PAGES_v2.ps1 documenté</div>
-          <div class="check-item">EX2026 + param_entreprise configurés</div>
-          <div class="check-item">Audit stack — user Admin, MariaDB hors Docker</div>
-        </div>
-      </div>
+  <div class="section">
+    <h2>🗺️ Sprint S32 — Vision (Mai 2026)</h2>
+    <div class="highlight">
+      <p><strong>14 métiers pleinement couverts</strong> — Internationalisation — Réservations en ligne — Registre élevage DDPP/I-CAD — Attestation NF525</p>
     </div>
-  </div>
-
-  <div class="subsection" id="s33-p3">
-    <div class="subsection-title">Priorité 3 — UX & configuration</div>
-    <div class="grid3">
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-teal">📜</div>Historique admin</div>
-        <div class="check-list">
-          <div class="check-item">Table audit_log — colonne AUD_COMMENTAIRE visible</div>
-          <div class="check-item">Filtres par action INSERT/UPDATE/DELETE/LOGIN</div>
-        </div>
+    <div class="roadmap-grid">
+      <div class="rm-card vision-card">
+        <h4>14 Métiers <span class="badge-plan">Vision</span></h4>
+        <ul>
+          <li>Comportementaliste · Éleveur · Toiletteur</li>
+          <li>Pet-sitter · Naturopathe · Maréchal-ferrant</li>
+          <li>Centre équestre · Centre canin · Ostéopathe</li>
+          <li>Éducateur · Pension · Chenil · Organisateur</li>
+        </ul>
       </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-gold">🎨</div>Charte graphique</div>
-        <div class="check-list">
-          <div class="check-item">Upload logo dans app_charte_graphique</div>
-          <div class="check-item">Logo sur factures PDF et devis</div>
-        </div>
+      <div class="rm-card vision-card">
+        <h4>International <span class="badge-plan">Vision</span></h4>
+        <ul>
+          <li>Langues : FR/EN/IT/DE/ES</li>
+          <li>Devise : €, $, £, CHF...</li>
+          <li>Registre élevage DDPP/I-CAD/SCC/LOOF</li>
+          <li>Suivi génétique reproducteurs</li>
+        </ul>
       </div>
-      <div class="card">
-        <div class="card-title"><div class="card-icon icon-red">🔀</div>Redirect</div>
-        <div class="check-list">
-          <div class="check-item">/app → /app/tableau-de-bord (signalé S31)</div>
-          <div class="check-item">Vérifier middleware Next.js</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="subsection">
-    <div class="subsection-title">Bugs actifs S33</div>
-    <div class="card" style="max-width:600px;">
-      <div class="item-list">
-        <div class="item"><span class="item-label">Compteur index 24→25</span><span class="item-val">stat-num non patché — fix script PowerShell git</span></div>
-        <div class="item"><span class="item-label">Doublons animaux programmes</span><span class="item-val">Jointure sans DISTINCT — ajouter GROUP BY ANI_ID</span></div>
+      <div class="rm-card vision-card">
+        <h4>Réservations & Planning <span class="badge-plan">Vision</span></h4>
+        <ul>
+          <li>Réservations en ligne clients</li>
+          <li>Planning multi-ressources</li>
+          <li>Carnet santé électronique</li>
+          <li>Organisateur événements animaliers</li>
+        </ul>
       </div>
     </div>
   </div>
 
 </div>
-
-<div class="section" id="s4">
-  <div class="section-header"><span class="section-num">04</span><span class="section-title">Sprint 11 — Planifié</span></div>
-  <div class="grid2">
-    <div class="card">
-      <div class="card-title"><div class="card-icon icon-gold">📄</div>Éditions PDF</div>
-      <div class="check-list">
-        <div class="check-item">PDF pour DMP, BLIV, BRET, DMAVF</div>
-        <div class="check-item">PDF pour CMD, AVR, AVF</div>
-        <div class="check-item">PDF Étude Comportementale (layout Word)</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-icon icon-blue">📱</div>Mobile & Export</div>
-      <div class="check-list">
-        <div class="check-item">Responsive mobile complet</div>
-        <div class="check-item">PWA notifications push séances du jour</div>
-        <div class="check-item">Export CSV tous modules</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section" id="s5">
-  <div class="section-header"><span class="section-num">05</span><span class="section-title">Sprint 12+ — SaaS production</span></div>
-
-  <div class="subsection" id="s5-tenant">
-    <div class="subsection-title">Multi-tenant</div>
-    <div class="check-list">
-      <div class="check-item">Architecture schemas MariaDB par tenant</div>
-      <div class="check-item">Shard registry (BDD plateforme)</div>
-      <div class="check-item">Provisionnement automatique tenant (scripts + API)</div>
-      <div class="check-item">Bucket S3 GED par tenant avec arborescence /{tenant_id}/{type}/{YYYY}/{MM}/</div>
-      <div class="check-item">DNS sous-domaine automatique + SSL Let's Encrypt</div>
-    </div>
-  </div>
-
-  <div class="subsection" id="s5-commercial">
-    <div class="subsection-title">Modèle commercial SEPA</div>
-    <div class="check-list">
-      <div class="check-item">BDD plateforme : tenant, contrat, plan, mandat_sepa, prelevement, cgv_version</div>
-      <div class="check-item">Intégration paiement SEPA (GoCardless ou Stripe SEPA)</div>
-      <div class="check-item">Portail super admin complet</div>
-      <div class="check-item">Gestion CGV versionnées avec snapshot horodaté</div>
-      <div class="check-item">Notifications email J-7 avant renouvellement</div>
-      <div class="check-item">Rétention 5 ans post-résiliation (cold storage S3 Glacier)</div>
-    </div>
-  </div>
-
-  <div class="subsection" id="s5-infra">
-    <div class="subsection-title">Infrastructure production</div>
-    <div class="check-list">
-      <div class="check-item">Choix hébergeur (OVH / Hetzner / AWS)</div>
-      <div class="check-item">CI/CD GitHub Actions</div>
-      <div class="check-item">Monitoring Prometheus + Grafana</div>
-      <div class="check-item">Backup BDD automatique chiffré par tenant</div>
-      <div class="check-item">HTTPS production — wildcard cert</div>
-      <div class="check-item">Read replicas pour exports et rapports</div>
-    </div>
-    <div class="div"></div>
-    <div class="subsection-title">Vidéos commerciales GIF</div>
-    <div class="check-list">
-      <div class="check-item">Correction B2 (labels CAC) avant tournage</div>
-      <div class="check-item">Préparation données démo (SQL_DEMO_VIDEO.sql)</div>
-      <div class="check-item">Tournage 12 séquences (voir document Scénario Vidéo)</div>
-      <div class="check-item">Hébergement CDN — URLs dans table plan (BDD plateforme)</div>
-    </div>
-  </div>
-</div>
-
-<div class="section" id="s6">
-  <div class="section-header"><span class="section-num">06</span><span class="section-title">Bugs connus</span></div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>#</th><th>Sévérité</th><th>Page</th><th>Description</th><th>Sprint</th></tr></thead>
-      <tbody>
-        <tr><td>B1</td><td><span class="pill pill-red">HAUTE</span></td><td>API main.js</td><td>Restart loop PUT /seances/types — fix appliqué S24 via fix_main_s24.ps1</td><td><span class="pill pill-ok">Fix S24</span></td></tr>
-        <tr><td>B2</td><td><span class="pill pill-gray">MOYENNE</span></td><td>Fiche animal</td><td>Labels CAC "CAC 1"..."CAC 14" génériques — corrigé S25 via param_libelles_ec dans page-cac.tsx</td><td><span class="pill pill-ok">Corrigé S25</span></td></tr>
-        <tr><td>B3</td><td><span class="pill pill-gray">BASSE</span></td><td>Paramètres</td><td>Titre "Mes paramètres" → "Paramètres" corrigé S24</td><td><span class="pill pill-ok">Corrigé</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="section" id="s7">
-  <div class="section-header"><span class="section-num">07</span><span class="section-title">Backlog technique</span></div>
-  <div class="grid2">
-    <div class="card">
-      <div class="card-title"><div class="card-icon icon-red">⚠️</div>Prioritaire</div>
-      <div class="check-list">
-        <div class="check-item">Intégrer patches dans sources NestJS (ne plus les perdre au rebuild)</div>
-        <div class="check-item">Tests E2E Cypress basiques</div>
-        <div class="check-item">CI/CD minimal GitHub Actions</div>
-        <div class="check-item">Documentation API Swagger</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-icon icon-blue">🔧</div>Amélioration</div>
-      <div class="check-list">
-        <div class="check-item">Backup BDD automatique</div>
-        <div class="check-item">HTTPS production</div>
-        <div class="check-item">Monitoring healthcheck</div>
-        <div class="check-item">Recherche globale multi-entités</div>
-        <div class="check-item">Notifications temps réel</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section" id="s8">
-  <div class="section-header"><span class="section-num">08</span><span class="section-title">Documentation en ligne — GitHub Pages</span></div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Document</th><th>URL</th></tr></thead>
-      <tbody>
-        <tr><td>Accueil</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/" style="color:var(--blue);">nicolashermilly.github.io/petsuite-docs/</a></td></tr>
-        <tr><td>Synthèse projet</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/01-synthese-projet.html" style="color:var(--blue);">01-synthese-projet.html</a></td></tr>
-        <tr><td>Guide paramétrage</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/02-guide-parametrage.html" style="color:var(--blue);">02-guide-parametrage.html</a></td></tr>
-        <tr><td>Notice utilisateur</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/03-notice-utilisateur.html" style="color:var(--blue);">03-notice-utilisateur.html</a></td></tr>
-        <tr><td>Super admin</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/04-super-admin.html" style="color:var(--blue);">04-super-admin.html</a></td></tr>
-        <tr><td>Architecture Roadmap</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/05-architecture-roadmap.html" style="color:var(--blue);">05-architecture-roadmap.html</a></td></tr>
-        <tr><td>Roadmap sprints</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/06-roadmap.html" style="color:var(--blue);">06-roadmap.html</a></td></tr>
-        <tr><td>Audit Stack</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/07-audit-stack.html" style="color:var(--blue);">07-audit-stack.html</a></td></tr>
-        <tr><td>Référence projet</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/08-projet-reference.html" style="color:var(--blue);">08-projet-reference.html</a></td></tr>
-        <tr><td>Scénario vidéo</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/09-scenario-video.html" style="color:var(--blue);">09-scenario-video.html</a></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-</div>
-</div>
-
-<footer>
-  <div><strong>PetSuite</strong> — Roadmap · Document vivant</div>
-  <div style="font-size:11px;color:rgba(255,255,255,0.3);">Session 24 · 14/03/2026 · v0.1</div>
-  <div>Confidentiel — usage interne</div>
-</footer>
+<footer>PetSuite Roadmap v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
 </body>
 </html>

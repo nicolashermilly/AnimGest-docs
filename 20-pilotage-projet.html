@@ -3,1067 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Pilotage Projet Dev</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<title>PetSuite — Pilotage Projet</title>
 <style>
-  :root {
-    --bg: #0d0f14;
-    --bg2: #13161e;
-    --bg3: #1a1e29;
-    --bg4: #20253300;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.12);
-    --ink: #f0f2f8;
-    --ink2: #8b92a8;
-    --ink3: #555d74;
-    --green: #22d3a0;
-    --green2: rgba(34,211,160,0.12);
-    --green3: rgba(34,211,160,0.06);
-    --amber: #f5a623;
-    --amber2: rgba(245,166,35,0.12);
-    --red: #f56565;
-    --red2: rgba(245,101,101,0.12);
-    --blue: #60a5fa;
-    --blue2: rgba(96,165,250,0.12);
-    --purple: #a78bfa;
-    --purple2: rgba(167,139,250,0.12);
-    --gray2: rgba(255,255,255,0.05);
-    --r: 10px;
-    --rs: 6px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    line-height: 1.5;
-    min-height: 100vh;
-  }
-
-  /* NAV */
-  .nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(13,15,20,0.92);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 32px;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 52px;
-  }
-  .nav-brand {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700; font-size: 17px;
-    letter-spacing: -.3px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
-  .nav-links { display: flex; gap: 4px; }
-  .nav-link {
-    font-size: 12px; color: var(--ink2); padding: 5px 12px;
-    border-radius: var(--rs); text-decoration: none;
-    transition: all .15s;
-  }
-  .nav-link:hover { color: var(--ink); background: var(--gray2); }
-  .nav-badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; padding: 3px 10px;
-    border-radius: 20px;
-    background: var(--green2); color: var(--green);
-    border: 1px solid rgba(34,211,160,0.2);
-  }
-
-  /* MAIN */
-  .main { max-width: 1200px; margin: 0 auto; padding: 36px 32px 80px; }
-
-  /* HERO */
-  .hero { margin-bottom: 40px; }
-  .hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: 36px; font-weight: 800;
-    letter-spacing: -1px;
-    line-height: 1.15;
-    margin-bottom: 8px;
-  }
-  .hero h1 em { font-style: normal; color: var(--green); }
-  .hero-sub { font-size: 13px; color: var(--ink2); }
-
-  /* SECTION */
-  .section { margin-bottom: 44px; }
-  .section-header {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 18px;
-  }
-  .section-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; font-weight: 500;
-    color: var(--ink3);
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 3px 8px; border-radius: 4px;
-  }
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 16px; font-weight: 600;
-    letter-spacing: -.2px;
-  }
-  .section-line { flex: 1; height: 1px; background: var(--border); }
-
-  /* KPI GRID */
-  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 32px; }
-  .kpi {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 18px 16px;
-    position: relative; overflow: hidden;
-  }
-  .kpi::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--green), transparent);
-  }
-  .kpi-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 28px; font-weight: 800;
-    letter-spacing: -1px;
-    color: var(--ink);
-    margin-bottom: 2px;
-  }
-  .kpi-lbl { font-size: 11px; color: var(--ink3); }
-  .kpi.accent { background: var(--green3); border-color: rgba(34,211,160,0.2); }
-  .kpi.accent .kpi-num { color: var(--green); }
-  .kpi.accent::before { background: linear-gradient(90deg, var(--green), var(--green)); opacity: .8; }
-
-  /* PILLS */
-  .pill {
-    display: inline-block; font-size: 10px; font-weight: 500;
-    padding: 2px 8px; border-radius: 20px; white-space: nowrap;
-  }
-  .pill-ok { background: var(--green2); color: var(--green); }
-  .pill-wip { background: var(--amber2); color: var(--amber); }
-  .pill-todo { background: var(--red2); color: var(--red); }
-  .pill-spec { background: var(--purple2); color: var(--purple); }
-  .pill-later { background: var(--gray2); color: var(--ink2); border: 1px solid var(--border); }
-  .pill-urgent { background: var(--red2); color: var(--red); border: 1px solid rgba(245,101,101,.2); }
-  .pill-blue { background: var(--blue2); color: var(--blue); }
-
-  /* PROGRESS BAR */
-  .progress-wrap { margin-bottom: 28px; }
-  .progress-label { display: flex; justify-content: space-between; margin-bottom: 8px; }
-  .progress-label span { font-size: 12px; color: var(--ink2); }
-  .progress-label strong { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--green); }
-  .progress-track {
-    height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden;
-    display: flex; gap: 2px;
-  }
-  .progress-seg { height: 100%; border-radius: 2px; }
-  .seg-ok { background: var(--green); }
-  .seg-wip { background: var(--amber); }
-  .seg-todo { background: var(--bg3); border: 1px solid var(--border); }
-
-  /* SPRINT TABLE */
-  .sprint-table { width: 100%; border-collapse: collapse; }
-  .sprint-table th {
-    text-align: left; font-size: 10px; font-weight: 500;
-    color: var(--ink3); text-transform: uppercase; letter-spacing: .06em;
-    padding: 0 12px 10px;
-    border-bottom: 1px solid var(--border);
-  }
-  .sprint-table td {
-    padding: 11px 12px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-  }
-  .sprint-table tr:last-child td { border-bottom: none; }
-  .sprint-table tr:hover td { background: var(--gray2); }
-  .sprint-table .s-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px; font-weight: 500;
-    color: var(--green);
-  }
-  .sprint-table .s-desc { color: var(--ink2); font-size: 12px; }
-  .sprint-table .s-sess {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px; color: var(--ink3);
-  }
-
-  /* KANBAN */
-  .kanban { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  .kanban-col {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 16px;
-    min-height: 300px;
-  }
-  .kanban-col-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 14px; padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  .kanban-col-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 12px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: .08em;
-    display: flex; align-items: center; gap: 7px;
-  }
-  .kanban-dot { width: 6px; height: 6px; border-radius: 50%; }
-  .kanban-count {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; color: var(--ink3);
-    background: var(--bg3); padding: 2px 7px; border-radius: 20px;
-  }
-  .kanban-card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: var(--rs);
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    transition: border-color .15s;
-  }
-  .kanban-card:hover { border-color: var(--border2); }
-  .kanban-card-title { font-size: 12px; font-weight: 500; margin-bottom: 5px; }
-  .kanban-card-sub { font-size: 11px; color: var(--ink3); margin-bottom: 7px; line-height: 1.4; }
-  .kanban-card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-  .kanban-card.urgent { border-left: 2px solid var(--red); }
-  .kanban-card.green-border { border-left: 2px solid var(--green); }
-
-  /* SPRINT DETAIL */
-  .sprint-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .detail-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 18px;
-  }
-  .detail-card-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px; font-weight: 600;
-    margin-bottom: 14px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .detail-row {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 8px; padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .detail-row:last-child { border-bottom: none; padding-bottom: 0; }
-  .detail-row-label { font-size: 12px; color: var(--ink2); flex: 1; }
-  .detail-row-sub { font-size: 11px; color: var(--ink3); margin-top: 2px; }
-
-  /* ROADMAP TIMELINE */
-  .timeline { position: relative; padding-left: 24px; }
-  .timeline::before {
-    content: '';
-    position: absolute; left: 7px; top: 8px; bottom: 8px;
-    width: 1px; background: var(--border2);
-  }
-  .tl-item { position: relative; margin-bottom: 20px; }
-  .tl-dot {
-    position: absolute; left: -21px; top: 4px;
-    width: 10px; height: 10px; border-radius: 50%;
-    border: 2px solid var(--bg);
-  }
-  .tl-dot.ok { background: var(--green); box-shadow: 0 0 6px rgba(34,211,160,.4); }
-  .tl-dot.wip { background: var(--amber); }
-  .tl-dot.todo { background: var(--border2); }
-  .tl-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-  .tl-sprint {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px; font-weight: 500; color: var(--green);
-  }
-  .tl-title { font-size: 13px; font-weight: 500; }
-  .tl-desc { font-size: 12px; color: var(--ink3); line-height: 1.5; }
-
-  /* INFRA GRID */
-  .infra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .infra-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 16px;
-  }
-  .infra-card-icon {
-    font-size: 20px; margin-bottom: 10px;
-    display: block;
-  }
-  .infra-card-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px; font-weight: 600;
-    margin-bottom: 10px;
-  }
-  .infra-item { font-size: 11px; color: var(--ink2); margin-bottom: 5px; display: flex; gap: 6px; align-items: flex-start; }
-  .infra-item::before { content: '→'; color: var(--ink3); flex-shrink: 0; }
-
-  /* COMMERCIAL */
-  .commercial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .com-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 18px;
-  }
-  .com-card-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px; font-weight: 600;
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 8px;
-  }
-  .com-item {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 8px; padding: 7px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .com-item:last-child { border-bottom: none; }
-  .com-label { font-size: 12px; color: var(--ink2); }
-  .com-val { font-size: 12px; color: var(--ink); font-family: 'DM Mono', monospace; }
-
-  /* FOOTER */
-  .page-footer {
-    margin-top: 60px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .footer-brand {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px; font-weight: 700; color: var(--ink3);
-  }
-  .footer-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink3); }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
-    .kanban { grid-template-columns: 1fr; }
-    .sprint-detail-grid { grid-template-columns: 1fr; }
-    .infra-grid { grid-template-columns: 1fr 1fr; }
-    .commercial-grid { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 600px) {
-    .main { padding: 24px 16px 60px; }
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    .infra-grid { grid-template-columns: 1fr; }
-  }
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.header h1{font-size:2.5rem;font-weight:800;color:#fff;}
+.header p{color:var(--accent2);margin-top:8px;}
+.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;}
+.nav a{color:var(--text2);text-decoration:none;font-size:.85rem;transition:color .2s;}
+.nav a:hover{color:var(--accent2);}
+.container{max-width:1100px;margin:0 auto;padding:32px;}
+.section{margin-bottom:40px;}
+.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
+.sprint-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
+.sprint-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.sprint-num{background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:700;}
+.sprint-date{color:var(--text2);font-size:.85rem;}
+.sprint-status{margin-left:auto;}
+.done{background:rgba(16,185,129,.15);color:#10b981;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;}
+.current{background:rgba(99,102,241,.15);color:#818cf8;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;}
+.planned{background:rgba(148,163,184,.1);color:#94a3b8;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:600;}
+ul{list-style:none;padding:0;}
+ul li{padding:4px 0;color:var(--text2);font-size:.875rem;display:flex;align-items:flex-start;gap:8px;}
+ul li::before{content:'✅';font-size:.75rem;flex-shrink:0;margin-top:2px;}
+ul.planned li::before{content:'○';color:var(--text2);}
+ul.inprog li::before{content:'🔄';font-size:.75rem;}
+table{width:100%;border-collapse:collapse;margin:12px 0;}
+th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}
+.highlight{background:var(--surface2);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
+.nf525-badge{display:inline-block;background:rgba(16,185,129,.15);color:#10b981;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:700;margin-left:6px;}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
 </style>
 </head>
 <body>
-<style>
-#pw-overlay{position:fixed;inset:0;z-index:9999;background:#0d0f14;display:flex;align-items:center;justify-content:center;}
-#pw-overlay.hidden{display:none;}
-.pw-box{background:#1a1e29;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:40px 36px;width:320px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;}
-.pw-input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:14px;font-family:monospace;outline:none;text-align:center;letter-spacing:.2em;}
-.pw-input:focus{border-color:#22d3a0;}
-.pw-btn{width:100%;padding:10px;border-radius:8px;background:#1a6640;color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;}
-.pw-btn:hover{background:#1e7a4c;}
-.pw-error{font-size:12px;color:#f87171;min-height:14px;}
-</style>
-<div id="pw-overlay">
-  <div class="pw-box">
-    <div style="font-size:28px;">🔒</div>
-    <div style="font-size:16px;font-weight:700;color:#fff;">Accès restreint</div>
-    <div style="font-size:11px;color:rgba(255,255,255,.35);">Document confidentiel</div>
-    <input class="pw-input" type="password" id="pw-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkPw()">
-    <button class="pw-btn" onclick="checkPw()">Accéder →</button>
-    <div class="pw-error" id="pw-error"></div>
-  </div>
+<div class="header">
+  <h1>📊 PetSuite — Pilotage Projet</h1>
+  <p>Historique des sprints et roadmap</p>
+  <div class="badge">v4.0 — Sprint S30 terminé — Mars 2026</div>
 </div>
-<script>
-(function(){if(sessionStorage.getItem('auth_20')==='1')document.getElementById('pw-overlay').classList.add('hidden');})();
-function checkPw(){
-  if(document.getElementById('pw-input').value==='@lgorithme'){
-    sessionStorage.setItem('auth_20','1');
-    document.getElementById('pw-overlay').classList.add('hidden');
-  }else{
-    document.getElementById('pw-error').textContent='Mot de passe incorrect';
-    document.getElementById('pw-input').value='';
-    setTimeout(function(){document.getElementById('pw-error').textContent='';},2500);
-  }
-}
-</script>
-
-
-
-<!-- NAV -->
 <nav class="nav">
-  <div class="nav-brand">
-    <div class="nav-dot"></div>
-    PetSuite <span style="color:var(--ink3);font-weight:400;margin-left:2px;">/ pilotage</span>
-  </div>
-  <div class="nav-links">
-    <a href="#kpis" class="nav-link">KPIs</a>
-    <a href="#actions" class="nav-link">Actions</a>
-    <a href="#s9" class="nav-link">Sprint 9</a>
-    <a href="#roadmap" class="nav-link">Roadmap</a>
-    <a href="#infra" class="nav-link">Infra</a>
-    <a href="#commercial" class="nav-link">Commercial</a>
-  </div>
-  <div class="nav-badge">S33 · 18/03/2026</div>
-
-  <a href="index.html" style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.5);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.15);border-radius:20px;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.5)'">← Index</a>
+  <a href="index.html">← Accueil</a>
+  <a href="01-synthese-projet.html">Synthèse projet</a>
+  <a href="06-roadmap.html">Roadmap</a>
+  <a href="23-Prise-en-compte-de-la-NF-525.html">NF 525</a>
 </nav>
+<div class="container">
 
-<div class="main">
-
-  <!-- HERO -->
-  <div class="hero">
-    <h1>Pilotage<br><em>projet dev</em></h1>
-    <p class="hero-sub">Vue de synthèse — session S25 · Stack NestJS + Next.js 15 + MariaDB · Multi-tenant SaaS cible</p>
+  <div class="section">
+    <h2>📈 Vue d'ensemble</h2>
+    <table>
+      <thead><tr><th>Sprint</th><th>Période</th><th>Thème</th><th>Statut</th></tr></thead>
+      <tbody>
+        <tr><td>S25-S26</td><td>Fév 2026</td><td>Socle métier : clients, animaux, séances, facturation, CRM, FEC</td><td><span class="done">✅ Livré</span></td></tr>
+        <tr><td>S27</td><td>Fév-Mars 2026</td><td>Impayés, admin, audit, FEC export figé</td><td><span class="done">✅ Livré</span></td></tr>
+        <tr><td>S28</td><td>Mars 2026</td><td>Élevage, achats, templates devis, génération devis depuis séance</td><td><span class="done">✅ Livré</span></td></tr>
+        <tr><td>S29</td><td>Mars 2026</td><td>Bilan financier, inventaires, fiche achat</td><td><span class="done">✅ Livré</span></td></tr>
+        <tr><td>S30</td><td>17 Mars 2026</td><td>Consolidation : programmes, dashboard, sauvegarde, races multi-espèces + <strong style="color:#10b981">Module NF 525</strong></td><td><span class="done">✅ Livré</span></td></tr>
+        <tr><td>S31</td><td>Avril 2026</td><td>Intégration API NF525, interface clôture Z, Module Éditions, carnet pension DDPP, extensions tables</td><td><span class="planned">Planifié</span></td></tr>
+        <tr><td>S32</td><td>Mai 2026</td><td>14 métiers complets, internationalisation, réservations en ligne, attestation NF525</td><td><span class="planned">Planifié</span></td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <!-- KPIs -->
-  <div id="kpis" class="section">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <span class="section-title">Indicateurs clés</span>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="kpi-grid">
-      <div class="kpi accent">
-        <div class="kpi-num">S33</div>
-        <div class="kpi-lbl">Sprint courant</div>
+  <div class="section">
+    <h2>✅ Sprint S30 — 17 Mars 2026</h2>
+    <div class="sprint-card">
+      <div class="sprint-header">
+        <span class="sprint-num">S30</span>
+        <span class="sprint-date">17 Mars 2026 — Session complète</span>
+        <span class="sprint-status"><span class="done">Terminé</span></span>
       </div>
-      <div class="kpi">
-        <div class="kpi-num">32</div>
-        <div class="kpi-lbl">Sprints réalisés</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-num">3</div>
-        <div class="kpi-lbl">Sprints planifiés</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-num">65+</div>
-        <div class="kpi-lbl">Tables BDD</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-num">18+</div>
-        <div class="kpi-lbl">Triggers SQL</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-num">90+</div>
-        <div class="kpi-lbl">Endpoints API</div>
-      </div>
-    </div>
-
-    <!-- BARRE AVANCEMENT GLOBALE -->
-    <div class="progress-wrap">
-      <div class="progress-label">
-        <span>Avancement global — S1 → S12+</span>
-        <strong>S33 en cours</strong>
-      </div>
-      <div class="progress-track">
-        <!-- S1-S9 complets : 9/12 = 75% -->
-        <div class="progress-seg seg-ok" style="width:75%;"></div>
-        <!-- S10-S11 planifiés -->
-        <div class="progress-seg seg-wip" style="width:12%;background:var(--amber);opacity:.5;"></div>
-        <!-- S12+ SaaS -->
-        <div class="progress-seg seg-todo" style="width:13%;"></div>
-      </div>
-    </div>
-
-    <!-- TABLEAU SPRINTS S1→S12 -->
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;">
-      <table class="sprint-table">
-        <thead>
-          <tr>
-            <th style="width:60px;">Sprint</th>
-            <th>Contenu</th>
-            <th style="width:100px;">État</th>
-            <th style="width:80px;">Sessions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="s-num">S1</td><td class="s-desc">Setup BDD, Auth, CRUD tiers/animaux</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">1–3</td></tr>
-          <tr><td class="s-num">S2</td><td class="s-desc">PDF factures/devis, Upload photos</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">4–5</td></tr>
-          <tr><td class="s-num">S3</td><td class="s-desc">Agenda visuel, Rappels impayés, Templates devis</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">6–7</td></tr>
-          <tr><td class="s-num">S4</td><td class="s-desc">Portail client + signature Yousign + Stripe</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">8–9</td></tr>
-          <tr><td class="s-num">S5</td><td class="s-desc">Programmes suivi comportemental, SMS Twilio</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">10–11</td></tr>
-          <tr><td class="s-num">S6</td><td class="s-desc">Statistiques avancées, Questionnaires, CRM</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">12–13</td></tr>
-          <tr><td class="s-num">S7</td><td class="s-desc">PWA mobile, Backup BDD, Animal V2+V3</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">16–17</td></tr>
-          <tr><td class="s-num">S8</td><td class="s-desc">Fix crashes, audit visuel, PATCH animaux, couleurs agenda</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">18–22</td></tr>
-          <tr><td class="s-num">S9</td><td class="s-desc">EC, CAC, param_libelles_ec, achats, stock, tarif, bilan</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">23–25</td></tr>
-          <tr><td class="s-num">S10→S32</td><td class="s-desc">Frontend achats, stock, tarification, NF525, élevage, aide intégrée (199 articles/15 modules), formulaire lead CRM, PUT /animaux/:id, questionnaires multi-type, agenda semaine/mois</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">26–32</td></tr>
-          <tr><td class="s-num" style="color:var(--amber);">S33</td><td class="s-desc">Templates devis métier · NF525 clôture Z · Élevage portée/new · Documentation v4.0 · Historique admin · Charte graphique</td><td><span class="pill pill-wip">EN COURS</span></td><td class="s-sess">33→</td></tr>
-          <tr><td class="s-num" style="color:var(--purple);">S12+</td><td class="s-desc">SaaS multi-tenant, provisionnement, SEPA, production</td><td><span class="pill pill-spec">SaaS PROD</span></td><td class="s-sess">—</td></tr>
-        </tbody>
-      </table>
+      <ul>
+        <li>Programmes de suivi comportemental (8/12 semaines) — page + API GET/POST/PATCH</li>
+        <li>Dashboard KPIs temps réel (88 clients, 137 animaux, 80 séances, CA HT)</li>
+        <li>Composant ReseauxSociaux — LinkedIn, Facebook, Instagram, WhatsApp dans fiche client</li>
+        <li>Fiche achat [id] — détail lignes + écritures comptables</li>
+        <li>Filtre animaux par client corrigé (API accepte ?client= ET ?clientId=)</li>
+        <li>24 routes custom-routes.ts S27→S30 opérationnelles (290 lignes)</li>
+        <li>Sauvegarde BDD v5 — mariadb-dump.exe + backup_AAAA-MM-JJ.zip + tâche planifiée</li>
+        <li>Centre d'aide opérationnel (rebuild frontend)</li>
+        <li>Races multi-espèces : RACE_TYPE + RACE_CATEGORIE + 392 races (8 espèces, FCI 1-10)</li>
+        <li>Routes API races : /animaux/races?type=, /races/types, /races/categories</li>
+        <li>Roadmap 14 métiers documentée (Comportementaliste → Organisateur événements)</li>
+        <li><strong style="color:#10b981">Module NF 525</strong> — Script SQL complet (5 tables, 4 procédures, 6 vues, 4 triggers) <span class="nf525-badge">NF525</span></li>
+        <li><strong style="color:#10b981">Plan de conformité NF 525</strong> — Document Word 10 chapitres + page wiki Git #23 <span class="nf525-badge">NF525</span></li>
+      </ul>
     </div>
   </div>
 
-  <!-- KANBAN ACTIONS PRIORITAIRES -->
-  <div id="actions" class="section">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <span class="section-title">Actions prioritaires — S25</span>
-      <div class="section-line"></div>
+  <div class="section">
+    <h2>✅ Sprints antérieurs</h2>
+    <div class="sprint-card">
+      <div class="sprint-header"><span class="sprint-num">S29</span><span class="sprint-date">Mars 2026</span><span class="sprint-status"><span class="done">Terminé</span></span></div>
+      <ul>
+        <li>Bilan financier avec filtres période (mois/trimestre/année/année précédente)</li>
+        <li>Inventaires et valorisation du stock</li>
+        <li>Fiche achat avec lignes détaillées</li>
+      </ul>
     </div>
-
-    <div class="kanban">
-
-      <!-- COL 1 : URGENT -->
-      <div class="kanban-col" style="border-top:2px solid var(--red);">
-        <div class="kanban-col-header">
-          <div class="kanban-col-title">
-            <div class="kanban-dot" style="background:var(--red);"></div>
-            Priorité immédiate
-          </div>
-          <span class="kanban-count">4</span>
-        </div>
-
-        <div class="kanban-card urgent">
-          <div class="kanban-card-title">Templates devis par métier</div>
-          <div class="kanban-card-sub">/app/devis/templates — séparateurs Comportementaliste / Équestre / Toiletteur / Pet-sitter</div>
-          <div class="kanban-card-tags">
-            <span class="pill pill-urgent">Frontend</span>
-            <span class="pill pill-later">API</span>
-          </div>
-        </div>
-
-        <div class="kanban-card urgent">
-          <div class="kanban-card-title">NF525 — Clôture Z caisse</div>
-          <div class="kanban-card-sub">sp_nf525_enregistrer_encaissement + interface /app/comptabilite + dashboard conformité</div>
-          <div class="kanban-card-tags">
-            <span class="pill pill-urgent">BDD</span>
-            <span class="pill pill-urgent">Frontend</span>
-          </div>
-        </div>
-
-        <div class="kanban-card urgent">
-          <div class="kanban-card-title">Élevage — Portée/new</div>
-          <div class="kanban-card-sub">/app/elevage/portees/new — saisie individuelle naissances, puce chiot, lien DDPP</div>
-          <div class="kanban-card-tags">
-            <span class="pill pill-urgent">Frontend</span>
-            <span class="pill pill-later">BDD</span>
-          </div>
-        </div>
-
-        <div class="kanban-card urgent">
-          <div class="kanban-card-title">Uploader HTML S33 sur GitHub Pages</div>
-          <div class="kanban-card-sub">03, 01, 06, 07, 17, 20, 11, 26, index — docs mis à jour S33</div>
-          <div class="kanban-card-tags">
-            <span class="pill pill-urgent">Docs</span>
-            <span class="pill pill-later">GitHub</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="kanban-col" style="border-top:2px solid var(--amber);">
-        <div class="kanban-col-header">
-          <div class="kanban-col-title">
-            <div class="kanban-dot" style="background:var(--amber);"></div>
-            À faire
-          </div>
-          <span class="kanban-count">6</span>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Historique admin — colonne commentaires</div>
-          <div class="kanban-card-sub">audit_log.AUD_COMMENTAIRE + filtres INSERT/UPDATE/DELETE/LOGIN</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">Frontend</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Charte graphique — upload logo</div>
-          <div class="kanban-card-sub">app_charte_graphique + apparition sur factures PDF et devis</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">Frontend</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Redirect /app → /app/tableau-de-bord</div>
-          <div class="kanban-card-sub">Vérifier middleware Next.js — signalé S31</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">Frontend</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Fix doublons animaux programmes</div>
-          <div class="kanban-card-sub">Ajouter DISTINCT / GROUP BY ANI_ID dans la requête</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">BDD</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Créer table partage_carte</div>
-          <div class="kanban-card-sub">Carte identité animale — partage RGPD propriétaire</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">BDD</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Créer table portail_magic_link</div>
-          <div class="kanban-card-sub">Portail client accès sans mot de passe</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">BDD</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Ajouter colonnes portail</div>
-          <div class="kanban-card-sub">sea_partager_cr · doc_partage_client · tie_email_portail</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">BDD</span><span class="pill pill-later">ALTER</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Finaliser nom commercial</div>
-          <div class="kanban-card-sub">Provisoire : PetSuite — dépôt INPI à prévoir</div>
-          <div class="kanban-card-tags"><span class="pill pill-spec">Commercial</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Rédiger CGV v1.0</div>
-          <div class="kanban-card-sub">Engagement 6 mois · résiliation · rétention 5 ans · tarifs plans</div>
-          <div class="kanban-card-tags"><span class="pill pill-spec">Juridique</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Ouvrir compte GoCardless + choisir hébergeur</div>
-          <div class="kanban-card-sub">SEPA mensuel · Hetzner recommandé ~35€/mois phase 1</div>
-          <div class="kanban-card-tags"><span class="pill pill-spec">SaaS</span><span class="pill pill-later">Infra</span></div>
-        </div>
-      </div>
-
-      <!-- COL 3 : SPRINT SUIVANT -->
-      <div class="kanban-col" style="border-top:2px solid var(--ink3);">
-        <div class="kanban-col-header">
-          <div class="kanban-col-title">
-            <div class="kanban-dot" style="background:var(--ink3);"></div>
-            Sprint suivant (S10+)
-          </div>
-          <span class="kanban-count">5</span>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Tables questionnaires (4 tables)</div>
-          <div class="kanban-card-sub">questionnaire · qst_question · qst_reponse · qst_session</div>
-          <div class="kanban-card-tags"><span class="pill pill-later">S10</span><span class="pill pill-blue">BDD</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Frontend achats fournisseurs</div>
-          <div class="kanban-card-sub">Script BDD prêt — frontend à implémenter</div>
-          <div class="kanban-card-tags"><span class="pill pill-later">S10</span><span class="pill pill-later">Frontend</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Vidéos GIF commerciales</div>
-          <div class="kanban-card-sub">Après déploiement S25 complet — labels CAC corrigés</div>
-          <div class="kanban-card-tags"><span class="pill pill-later">post-S25</span><span class="pill pill-spec">Marketing</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Table onboarding_step</div>
-          <div class="kanban-card-sub">BDD plateforme — parcours J0→J30 tenant</div>
-          <div class="kanban-card-tags"><span class="pill pill-later">S12+</span><span class="pill pill-blue">BDD</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Infrastructure Hetzner + CI/CD</div>
-          <div class="kanban-card-sub">GitHub Actions · Docker prod · Backup quotidien S3</div>
-          <div class="kanban-card-tags"><span class="pill pill-later">S12+</span><span class="pill pill-later">DevOps</span></div>
-        </div>
-      </div>
-
+    <div class="sprint-card">
+      <div class="sprint-header"><span class="sprint-num">S28</span><span class="sprint-date">Mars 2026</span><span class="sprint-status"><span class="done">Terminé</span></span></div>
+      <ul>
+        <li>Module élevage : saillies, portées, alertes gestation</li>
+        <li>Achats fournisseurs (entête + lignes)</li>
+        <li>5 templates de devis (EDC, Suivi, Gardiennage)</li>
+        <li>Génération devis depuis une séance (sp_dce_creer_depuis_seance)</li>
+        <li>Réseaux sociaux tiers</li>
+      </ul>
+    </div>
+    <div class="sprint-card">
+      <div class="sprint-header"><span class="sprint-num">S27</span><span class="sprint-date">Fév-Mars 2026</span><span class="sprint-status"><span class="done">Terminé</span></span></div>
+      <ul>
+        <li>Factures impayées + rappels email</li>
+        <li>Admin : utilisateurs, rôles, journal audit</li>
+        <li>Exercices comptables + Export FEC figé (SHA256)</li>
+        <li>Procédure sp_fec_generer_par_exercice</li>
+      </ul>
+    </div>
+    <div class="sprint-card">
+      <div class="sprint-header"><span class="sprint-num">S25-S26</span><span class="sprint-date">Fév 2026</span><span class="sprint-status"><span class="done">Terminé</span></span></div>
+      <ul>
+        <li>Stack complète : Next.js + NestJS + MariaDB + Docker + nginx</li>
+        <li>Tiers/Clients, Contacts, Animaux, Races</li>
+        <li>Séances (EDC unique par animal), Devis/Contrats, Facturation, Règlements, Avoirs</li>
+        <li>CRM complet : Leads, Opportunités, Activités, Campagnes</li>
+        <li>Export FEC temps réel (vues SQL)</li>
+        <li>GED (micro_logiciel_ged) — liens polymorphes</li>
+        <li>Paramètres : TVA, modes paiement, conditions paiement, types séance</li>
+      </ul>
     </div>
   </div>
 
-  <!-- SPRINT 9 DETAIL -->
-  <div id="s9" class="section">
-    <div class="section-header">
-      <span class="section-num">03</span>
-      <span class="section-title">Sprint S33 — En cours · 18/03/2026</span>
-      <div class="section-line"></div>
-      <span class="pill pill-ok">COMPLET</span>
-    </div>
-
-    <div class="sprint-detail-grid">
-
-      <div class="detail-card">
-        <div class="detail-card-title">
-          <span style="color:var(--green);">◆</span> BDD — Tables créées
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">edc_fiche</div><div class="detail-row-sub">Fiche Étude Comportementale — 60+ champs</div></div>
-          <span class="pill pill-ok">S24</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">edc_probleme</div><div class="detail-row-sub">Grille comportementale — multi-lignes par fiche</div></div>
-          <span class="pill pill-ok">S24</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">seance_suivi_cac</div><div class="detail-row-sub">14 Critères d'Aptitude au Contact par séance</div></div>
-          <span class="pill pill-ok">S24</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">param_libelles_ec</div><div class="detail-row-sub">64 libellés paramétrables — dont 14 CAC</div></div>
-          <span class="pill pill-ok">S24</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">v_animal_evolution_cac</div><div class="detail-row-sub">Vue évolution CAC par séance</div></div>
-          <span class="pill pill-ok">S24</span>
-        </div>
-      </div>
-
-      <div class="detail-card">
-        <div class="detail-card-title">
-          <span style="color:var(--amber);">◆</span> API — Routes injectées (patch_edc_cac_s25.js)
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET/PUT /api/ged-libelles-ec</div><div class="detail-row-sub">64 libellés EC paramétrables</div></div>
-          <span class="pill pill-ok">S24 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET/POST/PUT /api/ged-edc</div><div class="detail-row-sub">CRUD fiche Étude Comportementale</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET/POST/PUT/DELETE /api/ged-edc/:id/problemes</div><div class="detail-row-sub">Grille comportementale</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET/POST /api/ged-cac/:id</div><div class="detail-row-sub">CAC séance — upsert</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET /api/ged-cac/:id/initial</div><div class="detail-row-sub">Pré-remplissage depuis dernière séance</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET /api/ged-evolution-cac/:ani_id</div><div class="detail-row-sub">Historique CAC toutes séances</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-      </div>
-
-      <div class="detail-card">
-        <div class="detail-card-title">
-          <span style="color:var(--blue);">◆</span> Frontend — Pages déployées S25
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">page-edc.tsx</div><div class="detail-row-sub">7 sections · ScaleInput · RadioGroup · CRUD problèmes inline</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">page-cac.tsx</div><div class="detail-row-sub">14 critères toggle · score temps réel · onglet Évolution</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Paramètres libellés EC</div><div class="detail-row-sub">/app/parametres/libelles-ec — 64 libellés modifiables</div></div>
-          <span class="pill pill-ok">S24 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Bug B2 corrigé</div><div class="detail-row-sub">Labels CAC "CAC 1..."→ param_libelles_ec via page-cac.tsx</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-      </div>
-
-      <div class="detail-card">
-        <div class="detail-card-title">
-          <span style="color:var(--ink3);">◆</span> Modules S9 restants (S10)
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Achats fournisseurs</div><div class="detail-row-sub">Script BDD prêt — frontend à faire S10</div></div>
-          <span class="pill pill-wip">S10</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Stock PMP/FIFO/LIFO</div><div class="detail-row-sub">Script BDD prêt — spec frontend prête</div></div>
-          <span class="pill pill-wip">S10</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Tarification 3 méthodes</div><div class="detail-row-sub">Script BDD prêt — frontend à faire</div></div>
-          <span class="pill pill-wip">S10</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Bilan PCG 2025</div><div class="detail-row-sub">Script BDD prêt — frontend à faire</div></div>
-          <span class="pill pill-wip">S10</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Signature Yousign</div><div class="detail-row-sub">Script BDD prêt — spec frontend prête</div></div>
-          <span class="pill pill-wip">S10</span>
-        </div>
-      </div>
-
+  <div class="section">
+    <h2>🚀 Sprint S31 — Planifié (Avril 2026)</h2>
+    <div class="sprint-card">
+      <div class="sprint-header"><span class="sprint-num">S31</span><span class="sprint-date">Avril 2026</span><span class="sprint-status"><span class="planned">Planifié</span></span></div>
+      <ul class="planned">
+        <li><strong style="color:#818cf8">NF525</strong> — Intégration API : appel sp_nf525_enregistrer_encaissement post-règlement (US-23.2)</li>
+        <li><strong style="color:#818cf8">NF525</strong> — Interface clôture Z journalière (front caisse + impression ticket)</li>
+        <li><strong style="color:#818cf8">NF525</strong> — Dashboard conformité back-office (vue v_nf525_conformite)</li>
+        <li><strong style="color:#818cf8">NF525</strong> — Sauvegarde quotidienne tables NF525 (rétention 6 ans)</li>
+        <li>Tables SQL manquantes : programme_suivi, programme_semaine, param_metier</li>
+        <li>Module Éditions : CGV paramétrables, contrats avec champs fusion</li>
+        <li>Carnet pension DDPP (registre entrées/sorties)</li>
+        <li>Extensions animal : alimentation, médicaments, habitudes, contact_veto, ferrure, photos</li>
+        <li>Extensions tiers : numéro urgence, instructions, RC_Pro</li>
+        <li>Page /app/mes-parametres/metier (devise, langue, activité)</li>
+        <li>Barre filtres pill races dans formulaires création animal</li>
+        <li>Composant RaceSelector réutilisable</li>
+      </ul>
     </div>
   </div>
 
-  <!-- ROADMAP S10 → S12+ -->
-  <div id="roadmap" class="section">
-    <div class="section-header">
-      <span class="section-num">04</span>
-      <span class="section-title">Roadmap — Sprints planifiés</span>
-      <div class="section-line"></div>
+  <div class="section">
+    <h2>🗺️ Sprint S32 — Vision (Mai 2026)</h2>
+    <div class="highlight">
+      <p><strong>14 métiers couverts :</strong> Comportementaliste · Éleveur canin/félin · Éleveur animalier · Toiletteur · Pet-sitter · Naturopathe · Maréchal-ferrant · Centre équestre · Centre canin · Ostéopathe/Kiné · Éducateur animalier · Pension animale · Chenil/Chatterie · Organisateur événements animaliers</p>
     </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot wip"></div>
-          <div class="tl-header">
-            <span class="tl-sprint" style="color:var(--amber);">S10</span>
-            <span class="tl-title">Frontend modules S9</span>
-            <span class="pill pill-wip">PLANIFIÉ</span>
-          </div>
-          <div class="tl-desc">Achats fournisseurs · Stock PMP/FIFO · Tarification · Bilan PCG · Yousign signature · Questionnaires BDD + frontend</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot wip"></div>
-          <div class="tl-header">
-            <span class="tl-sprint" style="color:var(--amber);">S11</span>
-            <span class="tl-title">PDF & mobile</span>
-            <span class="pill pill-wip">PLANIFIÉ</span>
-          </div>
-          <div class="tl-desc">PDF tous types (EDC, CAC, devis, facture) · Responsive mobile complet · PWA notifications push · Carte identité animale</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot todo"></div>
-          <div class="tl-header">
-            <span class="tl-sprint" style="color:var(--purple);">S12+</span>
-            <span class="tl-title">SaaS production</span>
-            <span class="pill pill-spec">SaaS PROD</span>
-          </div>
-          <div class="tl-desc">Multi-tenant MariaDB · Provisionnement automatique · Prélèvement SEPA · Portail super admin MRR · CI/CD GitHub Actions · Hetzner Cloud</div>
-        </div>
-      </div>
-
-      <!-- BUGS & TECH DEBT -->
-      <div>
-        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px;">
-          <div class="detail-card-title" style="margin-bottom:12px;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;">
-            <span style="color:var(--green);">◆</span> Bugs résolus
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">B1 — Restart loop API</div><div class="detail-row-sub">PUT /seances/types — fix_main_s24.ps1</div></div>
-            <span class="pill pill-ok">Fix S24</span>
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">B2 — Labels CAC génériques</div><div class="detail-row-sub">page-cac.tsx utilise param_libelles_ec</div></div>
-            <span class="pill pill-ok">Fix S25</span>
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">B3 — Titre "Mes paramètres"</div><div class="detail-row-sub">Renommé "Paramètres" en S24</div></div>
-            <span class="pill pill-ok">Fix S24</span>
-          </div>
-        </div>
-        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;">
-          <div class="detail-card-title" style="margin-bottom:12px;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;">
-            <span style="color:var(--amber);">◆</span> Patches actifs (volatils)
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">main.js</div><div class="detail-row-sub">Bootstrap NestJS + PATCH_ROUTES_S56</div></div>
-            <span class="pill pill-ok">actif</span>
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">patch_edc_cac_s25.js</div><div class="detail-row-sub">CRUD EDC + CAC + évolution — S25</div></div>
-            <span class="pill pill-urgent">à déployer</span>
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">patch_animaux_v2.js</div><div class="detail-row-sub">PATCH /api/animaux/:id</div></div>
-            <span class="pill pill-ok">actif</span>
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">smtp_server.js</div><div class="detail-row-sub">Express port 8081 — SMTP + photo animal</div></div>
-            <span class="pill pill-ok">actif</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INFRASTRUCTURE -->
-  <div id="infra" class="section">
-    <div class="section-header">
-      <span class="section-num">05</span>
-      <span class="section-title">Infrastructure</span>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="infra-grid">
-      <div class="infra-card">
-        <span class="infra-card-icon">🐳</span>
-        <div class="infra-card-title">Stack locale (actuelle)</div>
-        <div class="infra-item">NestJS compilé CommonJS — dist/main.js</div>
-        <div class="infra-item">Next.js 15 App Router + TypeScript</div>
-        <div class="infra-item">MariaDB 192.168.1.62:3307</div>
-        <div class="infra-item">Nginx 1.27-alpine (proxy + strip /api/)</div>
-        <div class="infra-item">Docker Compose — 3 containers</div>
-        <div class="infra-item">smtp_server Express port 8081</div>
-      </div>
-      <div class="infra-card">
-        <span class="infra-card-icon">☁️</span>
-        <div class="infra-card-title">Cible SaaS (Hetzner — S12+)</div>
-        <div class="infra-item">srv-app-01 CX32 — Next.js + NestJS</div>
-        <div class="infra-item">srv-db-01 CX32 — MariaDB + volume</div>
-        <div class="infra-item">srv-cache-01 CX22 — Redis + RabbitMQ</div>
-        <div class="infra-item">Load Balancer + Object Storage S3</div>
-        <div class="infra-item">~35€/mois — 500 premiers clients</div>
-        <div class="infra-item">Wildcard SSL *.petsuite.fr (Let's Encrypt)</div>
-      </div>
-      <div class="infra-card">
-        <span class="infra-card-icon">⚙️</span>
-        <div class="infra-card-title">CI/CD & Monitoring (S12+)</div>
-        <div class="infra-item">GitHub Actions → build GHCR → SSH deploy</div>
-        <div class="infra-item">Prometheus + Grafana + Uptime Kuma</div>
-        <div class="infra-item">Backup mysqldump 02h00 UTC → S3 GPG</div>
-        <div class="infra-item">Rétention 7j / 4sem / 12mois</div>
-        <div class="infra-item">Traefik — routage {societe}.petsuite.fr</div>
-        <div class="infra-item">Un schema MariaDB + un bucket S3 par tenant</div>
-      </div>
-      <div class="infra-card">
-        <span class="infra-card-icon">🗄️</span>
-        <div class="infra-card-title">BDD — État actuel</div>
-        <div class="infra-item">micro_logiciel — 60+ tables métier</div>
-        <div class="infra-item">micro_logiciel_ged — 5 tables GED</div>
-        <div class="infra-item">18+ triggers SQL actifs</div>
-        <div class="infra-item">3 procédures stockées (FEC, clôture, devis)</div>
-        <div class="infra-item">7 vues utilitaires</div>
-        <div class="infra-item">petsuite_platform — BDD SaaS (S12+)</div>
-      </div>
-      <div class="infra-card">
-        <span class="infra-card-icon">🔐</span>
-        <div class="infra-card-title">Sécurité & RGPD</div>
-        <div class="infra-item">JWT Bearer — TTL 15 min (Redis)</div>
-        <div class="infra-item">Hash SHA-256 lignes FEC + global</div>
-        <div class="infra-item">Audit log générique (audit_log)</div>
-        <div class="infra-item">Registre traitements 6 types de données</div>
-        <div class="infra-item">DPA sous-traitants à signer</div>
-        <div class="infra-item">Rétention 5 ans post-résiliation (L123-22)</div>
-      </div>
-      <div class="infra-card">
-        <span class="infra-card-icon">📡</span>
-        <div class="infra-card-title">Règles critiques dev</div>
-        <div class="infra-item">Patches volatils — sauvegarder avant rebuild</div>
-        <div class="infra-item">DECIMAL MariaDB → parseFloat() avant .toFixed()</div>
-        <div class="infra-item">Routes → _h56.use() uniquement (jamais .get/.post)</div>
-        <div class="infra-item">Nginx strip /api/ — routes sans ce préfixe en interne</div>
-        <div class="infra-item">Rebuild frontend → restart nginx obligatoire</div>
-        <div class="infra-item">Chemins PS avec [id] → -LiteralPath</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- COMMERCIAL & JURIDIQUE -->
-  <div id="commercial" class="section">
-    <div class="section-header">
-      <span class="section-num">06</span>
-      <span class="section-title">Commercial & juridique</span>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="commercial-grid">
-
-      <div class="com-card">
-        <div class="com-card-title">
-          <span style="color:var(--green);">●</span> Modèle commercial
-        </div>
-        <div class="com-item">
-          <span class="com-label">Prélèvement</span>
-          <span class="com-val">SEPA mensuel (GoCardless)</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Engagement</span>
-          <span class="com-val">6 mois minimum</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Suspension</span>
-          <span class="com-val">2 prélèvements échoués</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Rétention données</span>
-          <span class="com-val">5 ans post-résiliation</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Plans</span>
-          <span class="com-val">SOLO / CABINET / MULTI</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">CGV</span>
-          <div style="text-align:right;"><span class="com-val">v1.0</span> <span class="pill pill-urgent">à rédiger</span></div>
-        </div>
-      </div>
-
-      <div class="com-card">
-        <div class="com-card-title">
-          <span style="color:var(--amber);">●</span> Actions commerciales en cours
-        </div>
-        <div class="com-item">
-          <span class="com-label">Nom commercial</span>
-          <div style="text-align:right;"><span class="com-val">PetSuite</span> <span class="pill pill-urgent">INPI à faire</span></div>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Compte GoCardless</span>
-          <span class="pill pill-urgent">à ouvrir</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Hébergeur</span>
-          <div style="text-align:right;"><span class="com-val">Hetzner</span> <span class="pill pill-urgent">à choisir</span></div>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Vidéos GIF modules</span>
-          <span class="pill pill-later">post-S25</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Landing page</span>
-          <span class="pill pill-ok">16-landing-page.html ✓</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Cible clients (10 ans)</span>
-          <span class="com-val">5 000 – 20 000</span>
-        </div>
-      </div>
-
-      <div class="com-card">
-        <div class="com-card-title">
-          <span style="color:var(--blue);">●</span> Documentation GitHub Pages (19 docs)
-        </div>
-        <div class="com-item"><span class="com-label">Synthèse projet</span><span class="pill pill-ok">01 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">Architecture + roadmap</span><span class="pill pill-ok">05 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">Roadmap sprints</span><span class="pill pill-ok">06 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">Audit stack</span><span class="pill pill-ok">07 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">Projet référence</span><span class="pill pill-ok">08 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">Scénario vidéo</span><span class="pill pill-ok">09 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">API Reference</span><span class="pill pill-ok">17 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">À uploader sur GitHub</span><span class="pill pill-urgent">7 fichiers</span></div>
-      </div>
-
-      <div class="com-card">
-        <div class="com-card-title">
-          <span style="color:var(--purple);">●</span> Architecture SaaS cible
-        </div>
-        <div class="com-item">
-          <span class="com-label">Multi-tenant</span>
-          <span class="com-val">1 schema MariaDB / tenant</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">GED</span>
-          <span class="com-val">1 bucket S3 / tenant</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Routing</span>
-          <span class="com-val">{societe}.petsuite.fr</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Shard registry</span>
-          <span class="com-val">tenant_id → host+port+schema</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">BDD plateforme</span>
-          <span class="com-val">petsuite_platform</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Sprint cible</span>
-          <span class="pill pill-spec">S12+</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <div class="page-footer">
-    <div class="footer-brand">PetSuite</div>
-    <div class="footer-meta">pilotage-projet · session S33 · 18/03/2026 · petsuite-docs/20-pilotage-projet.html</div>
+    <ul class="planned" style="margin-top:16px">
+      <li>Attestation de conformité NF525 signée par la direction</li>
+      <li>Internationalisation FR/EN/IT/DE/ES</li>
+      <li>Devise paramétrable (€, $, £, CHF...)</li>
+      <li>Registre élevage DDPP/I-CAD/SCC</li>
+      <li>Suivi génétique reproducteurs</li>
+      <li>Réservations en ligne</li>
+      <li>Planning multi-ressources (moniteurs, chevaux, boxes)</li>
+      <li>Carnet santé électronique</li>
+      <li>Organisateur événements (inscriptions, catégories, sponsors)</li>
+    </ul>
   </div>
 
 </div>
+<footer>PetSuite Pilotage Projet v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:var(--accent2);text-decoration:none;">← Retour accueil</a></footer>
 </body>
 </html>

@@ -1,407 +1,58 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Référence Projet</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{--ink:#1a1a2e;--ink2:#3d3d5c;--ink3:#8888aa;--paper:#f7f6f1;--paper2:#eeecea;--paper3:#e2e0da;--accent:#2d6a4f;--accent2:#40916c;--accent3:#d8f3dc;--gold:#a07030;--gold2:#fdf3e0;--blue:#1d4e8f;--blue2:#dbeafe;--red:#9b2335;--red2:#fdecea;--purple:#5b3fa0;--purple2:#ede8fc;--r:10px;--rs:6px;}
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Référence Projet</title><style>:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);font-size:14px;line-height:1.65;}
-nav{background:var(--ink);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-.nav-logo{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;text-decoration:none;}
-.nav-logo span{color:#74c69d;}
-.nav-links{display:flex;gap:4px;flex-wrap:wrap;}
-.nav-links a{color:rgba(255,255,255,0.55);font-size:11px;font-weight:500;text-decoration:none;padding:5px 12px;border-radius:20px;transition:all .2s;white-space:nowrap;}
-.nav-links a:hover{background:rgba(255,255,255,0.1);color:#fff;}
-.nav-links a.active{background:rgba(116,198,157,0.2);color:#74c69d;}
-.nav-badge{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.45);font-size:10px;padding:3px 10px;border-radius:20px;white-space:nowrap;}
-.hero{background:var(--ink);color:#fff;padding:52px 48px 44px;}
-.hero-tag{display:inline-block;background:rgba(116,198,157,0.15);border:1px solid rgba(116,198,157,0.3);color:#74c69d;font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;margin-bottom:18px;letter-spacing:.04em;}
-.hero h1{font-family:'DM Serif Display',serif;font-size:40px;line-height:1.1;margin-bottom:12px;}
-.hero h1 em{font-style:italic;color:#74c69d;}
-.hero-sub{color:rgba(255,255,255,0.5);font-size:14px;max-width:680px;margin-bottom:28px;}
-.hero-kpis{display:flex;gap:10px;flex-wrap:wrap;}
-.kpi{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r);padding:12px 18px;min-width:110px;}
-.kpi-num{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;line-height:1.1;}
-.kpi-lbl{font-size:10px;color:rgba(255,255,255,0.4);margin-top:3px;}
-.layout{display:flex;gap:0;max-width:1200px;margin:0 auto;}
-.toc{width:220px;flex-shrink:0;padding:32px 24px;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;border-right:1px solid var(--paper3);}
-.toc-title{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;}
-.toc a{display:block;font-size:12px;color:var(--ink3);text-decoration:none;padding:5px 0;border-left:2px solid transparent;padding-left:10px;transition:all .15s;line-height:1.4;}
-.toc a:hover{color:var(--ink);border-left-color:var(--accent2);}
-.toc a.toc-h2{font-weight:500;color:var(--ink2);margin-top:8px;}
-.toc a.toc-h3{font-size:11px;padding-left:18px;}
-.main{flex:1;padding:40px 48px;min-width:0;}
-.section{margin-bottom:52px;scroll-margin-top:80px;}
-.section-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--paper3);}
-.section-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);background:var(--paper2);padding:3px 8px;border-radius:var(--rs);}
-.section-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);}
-.subsection{margin-bottom:28px;}
-.subsection-title{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-.subsection-title::before{content:'';display:inline-block;width:3px;height:14px;background:var(--accent2);border-radius:2px;flex-shrink:0;}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
-.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
-.card{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:18px 20px;}
-.card-title{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:7px;}
-.card-icon{width:24px;height:24px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
-.icon-green{background:var(--accent3);}
-.icon-blue{background:var(--blue2);}
-.icon-gold{background:var(--gold2);}
-.icon-red{background:var(--red2);}
-.icon-purple{background:var(--purple2);}
-.pill{display:inline-block;font-size:10px;font-weight:500;padding:2px 9px;border-radius:20px;white-space:nowrap;}
-.pill-ok{background:#d8f3dc;color:#2d6a4f;}
-.pill-wip{background:#fdf3e0;color:#a07030;}
-.pill-todo{background:#fdecea;color:#9b2335;}
-.pill-spec{background:#ede8fc;color:#5b3fa0;}
-.pill-gray{background:var(--paper2);color:var(--ink2);}
-.tbl{width:100%;border-collapse:collapse;font-size:12px;}
-.tbl th{text-align:left;font-weight:500;font-size:10px;letter-spacing:.05em;color:var(--ink3);padding:7px 10px;border-bottom:1px solid var(--paper3);background:var(--paper2);white-space:nowrap;}
-.tbl td{padding:8px 10px;border-bottom:1px solid var(--paper2);color:var(--ink2);vertical-align:top;}
-.tbl tr:last-child td{border-bottom:none;}
-.tbl td:first-child{font-weight:500;color:var(--ink);}
-.tbl-wrap{overflow-x:auto;border:1px solid var(--paper3);border-radius:var(--r);}
-.code{background:#0d0d1a;border-radius:var(--r);padding:16px 20px;font-family:'DM Mono',monospace;font-size:12px;color:#a0e0c0;line-height:1.9;overflow-x:auto;margin:10px 0;}
-.code .cm{color:#4a7a6a;}
-.code .ck{color:#74c69d;}
-.code .cv{color:#f0c080;}
-.item-list{display:flex;flex-direction:column;}
-.item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--paper2);font-size:12px;}
-.item:last-child{border-bottom:none;}
-.item-label{font-weight:500;color:var(--ink);min-width:150px;flex-shrink:0;}
-.item-val{color:var(--ink2);}
-.alert{border-radius:var(--rs);padding:11px 14px;font-size:12px;margin:10px 0;}
-.alert-warn{background:#fffbeb;border:1px solid #f0d070;color:#805010;}
-.alert-info{background:var(--blue2);border:1px solid #90b8e8;color:var(--blue);}
-.alert-danger{background:var(--red2);border:1px solid rgba(155,35,53,0.3);color:var(--red);}
-.bdd-group{margin-bottom:16px;}
-.bdd-group-title{font-size:11px;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;padding:4px 0;border-bottom:1px solid var(--paper3);}
-.bdd-tables{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink2);line-height:1.8;padding:6px 0;}
-.div{height:1px;background:var(--paper3);margin:14px 0;}
-footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:20px 48px;font-size:12px;display:flex;justify-content:space-between;align-items:center;}
-footer strong{color:rgba(255,255,255,0.7);}
-.toc::-webkit-scrollbar{width:4px;}
-.toc::-webkit-scrollbar-thumb{background:var(--paper3);border-radius:2px;}
-@media(max-width:768px){.layout{flex-direction:column;}.toc{display:none;}.main{padding:24px 20px;}nav{padding:12px 20px;}.hero{padding:36px 20px 32px;}footer{padding:16px 20px;flex-direction:column;gap:8px;text-align:center;}}
-</style>
-</head>
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.header h1{font-size:2.5rem;font-weight:800;color:#fff;}.header p{color:var(--accent2);margin-top:8px;}
+.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
+.container{max-width:1100px;margin:0 auto;padding:32px;}.section{margin-bottom:40px;}
+.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
+.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
+.section p{color:var(--text2);margin-bottom:10px;}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
+.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:8px;}.card p,.card li{font-size:.875rem;color:var(--text2);}
+ul{list-style:none;padding:0;}li{padding:3px 0;display:flex;gap:6px;}li::before{content:'→';color:var(--accent);flex-shrink:0;}
+table{width:100%;border-collapse:collapse;margin:12px 0;}
+th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}tr:hover td{background:var(--surface);}
+.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
+.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
+.nf-box{background:rgba(16,185,129,.08);border-left:3px solid #10b981;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
+code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);}
+.new{background:var(--green);color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;vertical-align:middle;}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}</style></head>
 <body>
-<style>
-#pw-overlay{position:fixed;inset:0;z-index:9999;background:#0d0f14;display:flex;align-items:center;justify-content:center;}
-#pw-overlay.hidden{display:none;}
-.pw-box{background:#1a1e29;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:40px 36px;width:320px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;}
-.pw-input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:14px;font-family:monospace;outline:none;text-align:center;letter-spacing:.2em;}
-.pw-input:focus{border-color:#22d3a0;}
-.pw-btn{width:100%;padding:10px;border-radius:8px;background:#1a6640;color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;}
-.pw-btn:hover{background:#1e7a4c;}
-.pw-error{font-size:12px;color:#f87171;min-height:14px;}
-</style>
-<div id="pw-overlay">
-  <div class="pw-box">
-    <div style="font-size:28px;">🔒</div>
-    <div style="font-size:16px;font-weight:700;color:#fff;">Accès restreint</div>
-    <div style="font-size:11px;color:rgba(255,255,255,.35);">Document confidentiel</div>
-    <input class="pw-input" type="password" id="pw-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkPw()">
-    <button class="pw-btn" onclick="checkPw()">Accéder →</button>
-    <div class="pw-error" id="pw-error"></div>
-  </div>
-</div>
-<script>
-(function(){if(sessionStorage.getItem('auth_08')==='1')document.getElementById('pw-overlay').classList.add('hidden');})();
-function checkPw(){
-  if(document.getElementById('pw-input').value==='@lgorithme'){
-    sessionStorage.setItem('auth_08','1');
-    document.getElementById('pw-overlay').classList.add('hidden');
-  }else{
-    document.getElementById('pw-error').textContent='Mot de passe incorrect';
-    document.getElementById('pw-input').value='';
-    setTimeout(function(){document.getElementById('pw-error').textContent='';},2500);
-  }
-}
-</script>
-
-
-
-<nav>
-  <a class="nav-logo" href="index.html">Pet<span>Suite</span></a>
-  <div class="nav-links">
-    <a href="05-architecture-roadmap.html">Architecture</a>
-    <a href="06-roadmap.html">Roadmap</a>
-    <a href="07-audit-stack.html">Audit Stack</a>
-    <a href="08-projet-reference.html" class="active">Référence</a>
-    <a href="09-scenario-video.html">Vidéo</a>
-  </div>
-  <span class="nav-badge">Session 24 · 14/03/2026</span>
-</nav>
-
-<div class="hero">
-  <div class="hero-tag">Référence technique — Document vivant</div>
-  <h1>Référence <em>projet</em></h1>
-  <p class="hero-sub">Document de référence complet — description, stack, accès, règles critiques, architecture BDD complète et historique des sessions.</p>
-  <div class="hero-kpis">
-    <div class="kpi"><div class="kpi-num">S24</div><div class="kpi-lbl">Session courante</div></div>
-    <div class="kpi"><div class="kpi-num">Next.js 15</div><div class="kpi-lbl">Frontend</div></div>
-    <div class="kpi"><div class="kpi-num">NestJS</div><div class="kpi-lbl">Backend</div></div>
-    <div class="kpi"><div class="kpi-num">MariaDB</div><div class="kpi-lbl">Base de données</div></div>
-  </div>
-</div>
-
-<div class="layout">
-<nav class="toc">
-  <div class="toc-title">Sommaire</div>
-  <a href="#s1" class="toc-h2">01. Description projet</a>
-  <a href="#s2" class="toc-h2">02. Stack technique</a>
-  <a href="#s3" class="toc-h2">03. Accès</a>
-  <a href="#s4" class="toc-h2">04. Variables PowerShell</a>
-  <a href="#s5" class="toc-h2">05. Règles critiques</a>
-  <a href="#s6" class="toc-h2">06. Numérotation docs</a>
-  <a href="#s7" class="toc-h2">07. Architecture BDD</a>
-  <a href="#s7-metier" class="toc-h3">micro_logiciel</a>
-  <a href="#s7-ged" class="toc-h3">micro_logiciel_ged</a>
-  <a href="#s8" class="toc-h2">08. Modules fonctionnels</a>
-  <a href="#s9" class="toc-h2">09. Historique sessions</a>
-  <a href="#s10" class="toc-h2">10. Liens utiles</a>
-</nav>
-
-<div class="main">
-
-<div class="section" id="s1">
-  <div class="section-header"><span class="section-num">01</span><span class="section-title">Description projet</span></div>
-  <div class="card">
-    <div class="item-list">
-      <div class="item"><span class="item-label">Application</span><span class="item-val">Logiciel de gestion métier pour comportementaliste canin — extensible tous animaux de compagnie</span></div>
-      <div class="item"><span class="item-label">Périmètre</span><span class="item-val">Clients, animaux, études comportementales, séances, devis, factures, règlements, FEC, CRM, GED, statistiques, portail client, questionnaires, programmes suivi, stock, achats, signature électronique, bilan PCG 2025</span></div>
-      <div class="item"><span class="item-label">Nom provisoire</span><span class="item-val">PetSuite</span></div>
-      <div class="item"><span class="item-label">Modèle cible</span><span class="item-val">SaaS B2B multi-tenant — abonnement mensuel SEPA — 5 000 à 20 000 clients (10 ans)</span></div>
-      <div class="item"><span class="item-label">Périmètre animal</span><span class="item-val">Tous animaux de compagnie (canin, félin, NAC)</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="section" id="s2">
-  <div class="section-header"><span class="section-num">02</span><span class="section-title">Stack technique</span></div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Couche</th><th>Technologie</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td>Frontend</td><td>Next.js 15 App Router · React · TypeScript · Tailwind CSS</td><td>PWA manifest.json + sw.js</td></tr>
-        <tr><td>Backend</td><td>NestJS compilé CommonJS (dist/main.js)</td><td>Patches volatils dans /app/dist/</td></tr>
-        <tr><td>BDD</td><td>MariaDB</td><td>192.168.1.62:3307 — utf8mb4_unicode_ci</td></tr>
-        <tr><td>Reverse proxy</td><td>Nginx 1.27-alpine</td><td>80:80, 8443:443</td></tr>
-        <tr><td>Conteneurs</td><td>Docker Compose</td><td>3 services : api, frontend, nginx</td></tr>
-        <tr><td>PDF / SMTP</td><td>Express smtp_server.js</td><td>Port 8081 — standalone</td></tr>
-        <tr><td>SMS</td><td>Twilio</td><td>Rappels impayés</td></tr>
-        <tr><td>Paiement</td><td>Stripe</td><td>Portail client</td></tr>
-        <tr><td>Signature</td><td>Yousign API v3</td><td>SPEC en cours S10</td></tr>
-        <tr><td>PWA</td><td>manifest.json + sw.js</td><td>Notifications push planifiées S11</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="section" id="s3">
-  <div class="section-header"><span class="section-num">03</span><span class="section-title">Accès</span></div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Accès</th><th>Valeur</th></tr></thead>
-      <tbody>
-        <tr><td>Application</td><td>http://localhost</td></tr>
-        <tr><td>Login admin</td><td>admin / admin123!</td></tr>
-        <tr><td>BDD host</td><td>192.168.1.62:3307</td></tr>
-        <tr><td>BDD user</td><td>Compte technique applicatif (voir .env.prod)</td></tr>
-        <tr><td>BDD métier</td><td>micro_logiciel</td></tr>
-        <tr><td>BDD GED</td><td>micro_logiciel_ged</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="section" id="s4">
-  <div class="section-header"><span class="section-num">04</span><span class="section-title">Variables PowerShell</span></div>
-  <div class="code">
-<span class="cv">$root</span> = <span class="ck">"D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs"</span>
-<span class="cv">$app</span>  = <span class="ck">"$root\src\app\app"</span>
-<span class="cv">$comp</span> = <span class="ck">"$root\src\components"</span>
-<span class="cv">$pub</span>  = <span class="ck">"$root\public\docs"</span>
-  </div>
-</div>
-
-<div class="section" id="s5">
-  <div class="section-header"><span class="section-num">05</span><span class="section-title">Règles critiques</span></div>
-  <div class="alert alert-danger" style="margin-bottom:14px;">À respecter impérativement à chaque session.</div>
-  <div class="grid2">
-    <div class="card">
-      <div class="card-title"><div class="card-icon icon-red">⚠️</div>Docker & patches</div>
-      <div class="item-list">
-        <div class="item"><span class="item-label">Patches volatils</span><span class="item-val">Perdus si rebuild image api — sauvegarder AVANT</span></div>
-        <div class="item"><span class="item-label">Rebuild frontend</span><span class="item-val">docker compose restart nginx obligatoire après</span></div>
-        <div class="item"><span class="item-label">docker cp</span><span class="item-val">Fonctionne sur container ARRÊTÉ uniquement</span></div>
-        <div class="item"><span class="item-label">docker exec</span><span class="item-val">Nom container (micro_api), pas service</span></div>
-        <div class="item"><span class="item-label">docker compose</span><span class="item-val">cd "$root\deploy" AVANT toute commande</span></div>
-        <div class="item"><span class="item-label">PATCH_ROUTES_S56</span><span class="item-val">Routes DANS le bloc try { const _h56 = ... }</span></div>
-        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Règle 13 ★</span><span class="item-val"><strong>Routes injectées → _h56.use() uniquement</strong> + préfixe /ged-* — _h56.get/post/put() → 404 systématique (filtre NestJS intercepte en amont)</span></div>
-        <div class="item"><span class="item-label" style="color:var(--red);font-weight:600;">Règle 14 ★</span><span class="item-val"><strong>Nginx strip /api/</strong> → routes internes enregistrées SANS le préfixe /api/ dans _h56.use()</span></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="card-icon icon-gold">⚙️</div>Code & PowerShell</div>
-      <div class="item-list">
-        <div class="item"><span class="item-label">DECIMAL MariaDB</span><span class="item-val">parseFloat(val || 0) avant .toFixed() en JS</span></div>
-        <div class="item"><span class="item-label">Scripts PS</span><span class="item-val">ASCII pur — pas d'accents ni emojis</span></div>
-        <div class="item"><span class="item-label">Chemins PS</span><span class="item-val">C:\Users\AdminPC\ (pas $env:USERPROFILE)</span></div>
-        <div class="item"><span class="item-label">Regex JS</span><span class="item-val">Échapper / → \/png (crash Node.js sinon)</span></div>
-        <div class="item"><span class="item-label">-LiteralPath</span><span class="item-val">Pour chemins PS avec [id] dans le nom</span></div>
-        <div class="item"><span class="item-label">head PS</span><span class="item-val">N'existe pas → Select-Object -First N</span></div>
-        <div class="item"><span class="item-label">BDD injectée</span><span class="item-val">mysql2/promise via _q() — jamais app.get(DbService) dans les routes _h56.use()</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section" id="s6">
-  <div class="section-header"><span class="section-num">06</span><span class="section-title">Numérotation documents</span></div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Préfixe</th><th>Document</th><th>Table</th></tr></thead>
-      <tbody>
-        <tr><td>FAC-</td><td>Facture vente</td><td>facture</td></tr>
-        <tr><td>DEV-</td><td>Devis (ex DCE-)</td><td>devis_contrat_entete</td></tr>
-        <tr><td>AVR-</td><td>Avoir vente</td><td>avoir</td></tr>
-        <tr><td>CMD-</td><td>Commande client</td><td>commande_client</td></tr>
-        <tr><td>FAF-</td><td>Facture fournisseur</td><td>facture_fournisseur</td></tr>
-        <tr><td>CMF-</td><td>Commande fournisseur</td><td>commande_fournisseur</td></tr>
-        <tr><td>AVF-</td><td>Avoir fournisseur</td><td>avoir_fournisseur</td></tr>
-        <tr><td>DMP-</td><td>Demande de prix</td><td>demande_prix</td></tr>
-        <tr><td>BLIV-</td><td>Bon livraison fournisseur</td><td>bon_livraison_fourn</td></tr>
-        <tr><td>BRET-</td><td>Bon de retour</td><td>bon_retour</td></tr>
-        <tr><td>DMAVF-</td><td>Demande avoir fournisseur</td><td>demande_avoir_fourn</td></tr>
-        <tr><td>SOS-</td><td>Sortie de stock</td><td>sortie_stock</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="section" id="s7">
-  <div class="section-header"><span class="section-num">07</span><span class="section-title">Architecture BDD complète — session 24</span></div>
-
-  <div class="subsection" id="s7-metier">
-    <div class="subsection-title">micro_logiciel</div>
-    <div class="grid2">
-      <div>
-        <div class="bdd-group"><div class="bdd-group-title">Référentiels</div><div class="bdd-tables">ville · condition_paiement · tva_taux · categorie · compte_compta<br>mode_paiement · role · seance_type (+STY_COULEUR) · seance_statut · race</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Tiers & Contacts</div><div class="bdd-tables">tiers · contact</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Animaux</div><div class="bdd-tables">animal (+ANI_SCORE_CAC · ANI_DERNIERE_SEA_ID · ANI_DERNIERE_SEA_DATE)</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Étude Comportementale (S24)</div><div class="bdd-tables">edc_fiche (60+ champs) · edc_probleme (grille multi-lignes)</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Suivi CAC (S24)</div><div class="bdd-tables">seance_suivi_cac · param_libelles_ec (60 libellés dont 14 CAC)</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Commercial ventes</div><div class="bdd-tables">article_prestation (+tarification, stock)<br>devis_contrat_entete/ligne · facture/ligne · reglement<br>facture_acompte · facture_remise · avoir/ligne · devis_facture_lien<br>commande_client/ligne</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Achats fournisseurs</div><div class="bdd-tables">demande_prix/ligne · commande_fournisseur/ligne<br>bon_livraison_fourn/ligne · facture_fournisseur/ligne<br>bon_retour/ligne · demande_avoir_fourn<br>avoir_fournisseur/ligne · reglement_fournisseur</div></div>
-      </div>
-      <div>
-        <div class="bdd-group"><div class="bdd-group-title">Stock</div><div class="bdd-tables">param_stock · stock_lot · stock_mouvement<br>inventaire/ligne · sortie_stock/ligne · stock_correction_pmp</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Tarification</div><div class="bdd-tables">param_tarification · article_prix_historique · tarif_historique_coef</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Séances</div><div class="bdd-tables">seance · seance_ligne</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Utilisateurs</div><div class="bdd-tables">utilisateur · role · utilisateur_role · audit_log</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">CRM</div><div class="bdd-tables">crm_source · crm_lead_statut · crm_opp_statut · crm_activite_type<br>crm_lead · crm_opportunite · crm_opportunite_histo<br>crm_activite · crm_note · crm_campagne · crm_campagne_cible<br>crm_tag · crm_tag_lien</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Comptabilité</div><div class="bdd-tables">param_compta · exercice_comptable · fec_export · fec_export_ligne<br>bilan_session · bilan_poste · balance_compte · ecriture_cloture<br>fac_compteur_mois · dce_compteur_mois</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Signature électronique</div><div class="bdd-tables">param_yousign · signature_demande · signature_demande_doc</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Audit & Programmes</div><div class="bdd-tables">audit_achats · audit_ventes · audit_stock<br>programme_suivi · programme_semaine</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="subsection" id="s7-ged">
-    <div class="subsection-title">micro_logiciel_ged</div>
-    <div class="card">
-      <div class="bdd-group" style="margin:0;"><div class="bdd-group-title">Tables GED</div><div class="bdd-tables">ged_objet_type (13 types : ANIMAL · FACTURE · SEANCE · TIERS · CONTACT · RACE · ARTICLE_PRESTATION · UTILISATEUR · DEVIS_CONTRAT · AVOIR · REGLEMENT · EDC_FICHE · SEANCE_SUIVI)<br>ged_document · ged_document_lien (polymorphe) · ged_tag · ged_document_tag · ged_document_version</div></div>
-    </div>
-  </div>
-</div>
-
-<div class="section" id="s8">
-  <div class="section-header"><span class="section-num">08</span><span class="section-title">Modules fonctionnels — session 24</span></div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Module</th><th>BDD</th><th>API</th><th>Frontend</th><th>État</th></tr></thead>
-      <tbody>
-        <tr><td>Tiers / Clients</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Animaux</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Étude Comportementale</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-wip">S24</span></td><td><span class="pill pill-wip">EN COURS</span></td><td><span class="pill pill-wip">S24</span></td></tr>
-        <tr><td>Suivi CAC par séance</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-wip">S24</span></td><td><span class="pill pill-wip">EN COURS</span></td><td><span class="pill pill-wip">S24</span></td></tr>
-        <tr><td>Séances / Agenda</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Devis / Contrats</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Factures vente</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Règlements</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>CRM</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>GED</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Export FEC</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Statistiques</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Programmes suivi</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Achats fournisseurs</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-todo">S10</span></td><td><span class="pill pill-spec">S10</span></td></tr>
-        <tr><td>Stock PMP/FIFO/LIFO</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-spec">S10</span></td></tr>
-        <tr><td>Tarification 3 méthodes</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-todo">S10</span></td><td><span class="pill pill-spec">S10</span></td></tr>
-        <tr><td>Bilan PCG 2025</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-todo">S10</span></td><td><span class="pill pill-spec">S10</span></td></tr>
-        <tr><td>Signature Yousign</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-spec">S10</span></td></tr>
-        <tr><td>Multi-tenant SaaS</td><td><span class="pill pill-todo">S12+</span></td><td><span class="pill pill-todo">S12+</span></td><td><span class="pill pill-todo">S12+</span></td><td><span class="pill pill-todo">S12+</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="section" id="s9">
-  <div class="section-header"><span class="section-num">09</span><span class="section-title">Historique des sessions</span></div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Sessions</th><th>Réalisations clés</th></tr></thead>
-      <tbody>
-        <tr><td>S1–3</td><td>Setup BDD, Auth, CRUD de base tiers/animaux</td></tr>
-        <tr><td>S4–6</td><td>PDF, SMTP, agenda, rappels, templates devis</td></tr>
-        <tr><td>S7–9</td><td>Portail client, Stripe, SMS Twilio, programmes suivi</td></tr>
-        <tr><td>S10–12</td><td>Statistiques avancées, questionnaires, CRM, GED</td></tr>
-        <tr><td>S13–15</td><td>Export FEC, comptabilité, admin, données démo</td></tr>
-        <tr><td>S16–17</td><td>Sprint 7 complet (44 pages), fiche animal V3, PWA</td></tr>
-        <tr><td>S18</td><td>Diagnostic crash loop API</td></tr>
-        <tr><td>S19</td><td>Fix crash loop regex /png, audit visuel complet</td></tr>
-        <tr><td>S20</td><td>PATCH animaux v2, couleurs agenda, types séance</td></tr>
-        <tr><td>S21</td><td>Stats CA HT, patch FAC_TOTAL_HT dans findAll</td></tr>
-        <tr><td>S22</td><td>Couleurs agenda dynamiques STY_COULEUR, rebuild propre</td></tr>
-        <tr><td>S23</td><td>Spec modules majeurs : stock, achats, tarif, bilan, Yousign, cycles docs, EC</td></tr>
-        <tr><td>S24</td><td>EC + CAC BDD (edc_fiche, seance_suivi_cac, param_libelles_ec), fix API PATCH_ROUTES_S56, libellés EC frontend</td></tr>
-              <tr><td>S25</td><td>Frontend EDC complet (7 sections, grille comportementale), frontend CAC (14 critères, évolution), patch API patch_edc_cac_s25.js, nettoyage docs</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="section" id="s10">
-  <div class="section-header"><span class="section-num">10</span><span class="section-title">Liens utiles</span></div>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Document</th><th>URL GitHub Pages</th></tr></thead>
-      <tbody>
-        <tr><td>Accueil documentation</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/" style="color:var(--blue);">nicolashermilly.github.io/petsuite-docs/</a></td></tr>
-        <tr><td>Synthèse projet</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/01-synthese-projet.html" style="color:var(--blue);">01-synthese-projet.html</a></td></tr>
-        <tr><td>Guide paramétrage</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/02-guide-parametrage.html" style="color:var(--blue);">02-guide-parametrage.html</a></td></tr>
-        <tr><td>Notice utilisateur</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/03-notice-utilisateur.html" style="color:var(--blue);">03-notice-utilisateur.html</a></td></tr>
-        <tr><td>Super admin</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/04-super-admin.html" style="color:var(--blue);">04-super-admin.html</a></td></tr>
-        <tr><td>Architecture Roadmap</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/05-architecture-roadmap.html" style="color:var(--blue);">05-architecture-roadmap.html</a></td></tr>
-        <tr><td>Roadmap sprints</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/06-roadmap.html" style="color:var(--blue);">06-roadmap.html</a></td></tr>
-        <tr><td>Audit Stack</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/07-audit-stack.html" style="color:var(--blue);">07-audit-stack.html</a></td></tr>
-        <tr><td>Référence projet</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/08-projet-reference.html" style="color:var(--blue);">08-projet-reference.html</a></td></tr>
-        <tr><td>Scénario vidéo</td><td><a href="https://nicolashermilly.github.io/petsuite-docs/09-scenario-video.html" style="color:var(--blue);">09-scenario-video.html</a></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-</div>
-</div>
-
-<footer>
-  <div><strong>PetSuite</strong> — Référence projet · Document vivant</div>
-  <div style="font-size:11px;color:rgba(255,255,255,0.3);">Session 24 · 14/03/2026 · v0.1</div>
-  <div>Confidentiel — usage interne</div>
-</footer>
-</body>
-</html>
+<div class="header"><h1>📚 Référence Projet</h1><p>Documentation de référence technique complète</p><div class="badge">v4.0 — Sprint S30 — Mars 2026</div></div>
+<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="20-pilotage-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Pilotage</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a></nav>
+<div class="container">
+<div class="section"><h2>📁 Structure du projet</h2>
+<div class="grid">
+  <div class="card"><h4>Frontend — Next.js 15</h4><ul><li>src/app/ — pages applicatives</li><li>src/components/ — composants réutilisables</li><li>src/lib/api.ts — client HTTP</li><li>public/ — assets statiques</li></ul></div>
+  <div class="card"><h4>API — NestJS</h4><ul><li>api/src/custom-routes.ts — 290 lignes, 24 routes</li><li>api/src/app.module.ts — module principal</li><li>api/src/prisma/ — schéma ORM</li><li>api/src/main.ts — bootstrap</li></ul></div>
+  <div class="card"><h4>Deploy</h4><ul><li>deploy/docker-compose.yml — 3 services</li><li>deploy/nginx.conf — reverse proxy</li><li>deploy/.env — variables d'environnement</li></ul></div>
+  <div class="card"><h4>Scripts</h4><ul><li>G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1</li><li>C:\PetSuite\START_PETSUITE.bat</li><li>Script_NF525_v1.sql <span class="new">S30</span></li></ul></div>
+</div></div>
+<div class="section"><h2>🗄️ Base de données</h2>
+<table><thead><tr><th>Base</th><th>Tables clés</th><th>Notes</th></tr></thead><tbody>
+<tr><td><code>micro_logiciel</code></td><td>tiers, animal, seance, facture, reglement, crm_*, nf525_*</td><td>Base métier principale</td></tr>
+<tr><td><code>micro_logiciel_ged</code></td><td>ged_document, ged_document_lien, ged_tag</td><td>GED séparée — liens polymorphes</td></tr>
+</tbody></table></div>
+<div class="section"><h2>🏛️ Module NF 525 <span class="new">S30</span></h2>
+<div class="nf-box"><p>Script : <code>Script_NF525_v1.sql</code> — 5 tables, 4 procédures, 6 vues, 4 triggers — à déployer après <code>Script_micro_logiciel_v3.sql</code></p></div>
+<table><thead><tr><th>Objet</th><th>Nom</th><th>Rôle</th></tr></thead><tbody>
+<tr><td>Table</td><td><code>nf525_journal_caisse</code></td><td>Journal inaltérable SHA-256</td></tr>
+<tr><td>Table</td><td><code>nf525_cloture</code></td><td>Clôtures Z et X</td></tr>
+<tr><td>Procédure</td><td><code>sp_nf525_enregistrer_encaissement</code></td><td>Point d'entrée encaissement</td></tr>
+<tr><td>Procédure</td><td><code>sp_nf525_cloture_z</code></td><td>Clôture Z journalière</td></tr>
+<tr><td>Vue</td><td><code>v_nf525_conformite</code></td><td>Dashboard 4 indicateurs</td></tr>
+</tbody></table></div>
+<div class="section"><h2>🔑 Variables d'environnement</h2>
+<table><thead><tr><th>Variable</th><th>Valeur</th></tr></thead><tbody>
+<tr><td><code>DATABASE_URL</code></td><td><code>mysql://@lgorithme:...@192.168.1.62:3307/micro_logiciel</code></td></tr>
+<tr><td><code>JWT_SECRET</code></td><td>Configuré dans deploy/.env</td></tr>
+<tr><td><code>NEXT_PUBLIC_API_URL</code></td><td><code>http://localhost/api</code></td></tr>
+</tbody></table></div></div>
+<footer>PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
+</body></html>
