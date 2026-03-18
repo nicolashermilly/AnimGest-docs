@@ -170,37 +170,40 @@ footer strong{color:var(--ink2);font-family:'Playfair Display',serif;}
 </style>
 </head>
 <body>
-
 <style>
-#pw-overlay{position:fixed;inset:0;z-index:9999;background:#0a0c10;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+#pw-overlay{position:fixed;inset:0;z-index:9999;background:#0d0f14;display:flex;align-items:center;justify-content:center;}
 #pw-overlay.hidden{display:none;}
-.pw-box{background:#181c24;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:40px 36px;width:340px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;}
-.pw-brand{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;}
-.pw-sub{font-size:11px;color:rgba(255,255,255,.35);}
-.pw-input{width:100%;padding:11px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:14px;font-family:'DM Mono',monospace;outline:none;text-align:center;letter-spacing:.15em;}
+.pw-box{background:#1a1e29;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:40px 36px;width:320px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;}
+.pw-input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:14px;font-family:monospace;outline:none;text-align:center;letter-spacing:.2em;}
 .pw-input:focus{border-color:#22d3a0;}
-.pw-btn{width:100%;padding:11px;border-radius:8px;background:#1a6640;color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;}
+.pw-btn{width:100%;padding:10px;border-radius:8px;background:#1a6640;color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;}
 .pw-btn:hover{background:#1e7a4c;}
-.pw-error{font-size:12px;color:#f87171;min-height:16px;}
+.pw-error{font-size:12px;color:#f87171;min-height:14px;}
 </style>
 <div id="pw-overlay">
   <div class="pw-box">
-    <div style="font-size:32px;">🔐</div>
-    <div class="pw-brand">Algorithmia</div>
-    <div class="pw-sub">Dossier investisseurs — accès restreint</div>
+    <div style="font-size:28px;">🔒</div>
+    <div style="font-size:16px;font-weight:700;color:#fff;">Accès restreint</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.35);">Document confidentiel</div>
     <input class="pw-input" type="password" id="pw-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkPw()">
     <button class="pw-btn" onclick="checkPw()">Accéder →</button>
     <div class="pw-error" id="pw-error"></div>
   </div>
 </div>
 <script>
-(function(){if(sessionStorage.getItem('auth_inv')==='1'){document.getElementById('pw-overlay').classList.add('hidden');}})();
+(function(){if(sessionStorage.getItem('auth_27')==='1')document.getElementById('pw-overlay').classList.add('hidden');})();
 function checkPw(){
-  var v=document.getElementById('pw-input').value;
-  if(v==='@lgorithme'){sessionStorage.setItem('auth_inv','1');document.getElementById('pw-overlay').classList.add('hidden');}
-  else{document.getElementById('pw-error').textContent='Mot de passe incorrect';document.getElementById('pw-input').value='';document.getElementById('pw-input').focus();setTimeout(function(){document.getElementById('pw-error').textContent='';},2500);}
+  if(document.getElementById('pw-input').value==='@lgorithme'){
+    sessionStorage.setItem('auth_27','1');
+    document.getElementById('pw-overlay').classList.add('hidden');
+  }else{
+    document.getElementById('pw-error').textContent='Mot de passe incorrect';
+    document.getElementById('pw-input').value='';
+    setTimeout(function(){document.getElementById('pw-error').textContent='';},2500);
+  }
 }
 </script>
+
 
 
 <nav>
