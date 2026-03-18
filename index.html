@@ -43,37 +43,44 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
 footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:20px 48px;font-size:12px;display:flex;justify-content:space-between;align-items:center;margin-top:auto;}
 footer strong{color:rgba(255,255,255,0.7);}
 @media(max-width:600px){.hero{padding:48px 24px;}.logo{font-size:38px;}.container,.section-label{padding-left:20px;padding-right:20px;}footer{padding:16px 20px;flex-direction:column;gap:8px;text-align:center;}}
+
+.kpi-badge{position:absolute;top:14px;right:14px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;color:var(--ink3);background:var(--paper2);border:1px solid var(--paper3);padding:3px 8px;border-radius:20px;line-height:1.3;text-align:right;}
+.kpi-badge strong{display:block;font-size:11px;color:var(--ink);font-weight:600;font-family:'DM Serif Display',serif;}
 </style>
 </head>
 <body>
 <div class="hero">
   <div class="logo">Pet<span>Suite</span></div>
   <p class="tagline">Documentation officielle — Logiciel SaaS de gestion pour professionnels des animaux de compagnie</p>
-  <span class="version">Nom provisoire · Session 24 · 14/03/2026</span>
+  <span class="version">Sprint S33 · 18/03/2026</span>
 </div>
 
 <div class="section-label">Documents utilisateurs</div>
 <div class="container">
   <div class="grid">
     <a class="doc-card c1" href="01-synthese-projet.html">
+      <div class="kpi-badge"><strong>50 000+</strong>pros adressables</div>
       <div class="doc-num">01 — INTERNE</div>
       <div class="doc-title">Synthèse projet</div>
       <div class="doc-desc">Vision globale — architecture, modules, modèle commercial, scalabilité 5 000–20 000 clients.</div>
       <span class="doc-tag tag-green">Document vivant</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c4" href="02-guide-parametrage.html">
+      <div class="kpi-badge"><strong>5 min</strong>config initiale</div>
       <div class="doc-num">02 — ADMIN SOCIÉTÉ</div>
       <div class="doc-title">Guide de paramétrage</div>
       <div class="doc-desc">Configuration initiale — TVA, catalogue, utilisateurs, GED, exercice comptable.</div>
       <span class="doc-tag tag-gold">Administrateurs</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c4" href="03-notice-utilisateur.html">
+      <div class="kpi-badge"><strong>199 articles</strong>15 modules</div>
       <div class="doc-num">03 — TOUS UTILISATEURS</div>
       <div class="doc-title">Notice d'utilisation</div>
       <div class="doc-desc">Guide pratique — animaux, séances, devis, facturation, GED, CRM, FAQ.</div>
       <span class="doc-tag tag-teal">Tous utilisateurs</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c5" href="04-super-admin.html">
+      <div class="kpi-badge"><strong>Multi-tenant</strong>1 schema/tenant</div>
       <div class="doc-num">04 — ACCÈS RESTREINT</div>
       <div class="doc-title">Espace super admin</div>
       <div class="doc-desc">Pilotage plateforme — contrats, tenants, supervision, données post-résiliation.</div>
@@ -86,115 +93,140 @@ footer strong{color:rgba(255,255,255,0.7);}
 <div class="container">
   <div class="grid">
     <a class="doc-card c2" href="05-architecture-roadmap.html">
+      <div class="kpi-badge"><strong>65+ tables</strong>BDD métier</div>
       <div class="doc-num">05 — TECHNIQUE</div>
       <div class="doc-title">Architecture &amp; Roadmap</div>
-      <div class="doc-desc">Stack, BDD 60+ tables, API S24, multi-tenant SaaS, modèle SEPA, sprints.</div>
-      <span class="doc-tag tag-blue">Session 24</span><div class="arrow">→</div>
+      <div class="doc-desc">Stack, BDD 65+ tables, API S33, multi-tenant SaaS cible, custom-routes.ts, sprints S33.</div>
+      <span class="doc-tag tag-blue">S33</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c2" href="06-roadmap.html">
+      <div class="kpi-badge"><strong>S33</strong>sprint courant</div>
       <div class="doc-num">06 — TECHNIQUE</div>
       <div class="doc-title">Roadmap sprints</div>
-      <div class="doc-desc">Feuille de route complète S1→S24 + S10, S11, S12+ planifiés. Bugs et backlog.</div>
-      <span class="doc-tag tag-blue">S1→S12+</span><div class="arrow">→</div>
+      <div class="doc-desc">Feuille de route S1→S32 complets · S33 en cours · Templates devis, NF525, élevage, documentation v4.0.</div>
+      <span class="doc-tag tag-blue">S33</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c2" href="07-audit-stack.html">
+      <div class="kpi-badge"><strong>90+ routes</strong>API active</div>
       <div class="doc-num">07 — TECHNIQUE</div>
       <div class="doc-title">Audit Stack</div>
-      <div class="doc-desc">Infrastructure Docker, état BDD, triggers, vues, API S24, patches volatils, règles critiques.</div>
-      <span class="doc-tag tag-blue">Session 24</span><div class="arrow">→</div>
+      <div class="doc-desc">Infrastructure Docker, BDD 65+ tables, custom-routes.ts S33, règles absolues, MariaDB hors Docker.</div>
+      <span class="doc-tag tag-blue">S33</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c2" href="08-projet-reference.html">
+      <div class="kpi-badge"><strong>32 sprints</strong>livrés</div>
       <div class="doc-num">08 — TECHNIQUE</div>
       <div class="doc-title">Référence projet</div>
       <div class="doc-desc">Stack, accès, variables PS, numérotation docs, architecture BDD complète, historique sessions.</div>
       <span class="doc-tag tag-blue">Référence</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c3" href="10-modele-commercial.html">
+      <div class="kpi-badge"><strong>39/69/119€</strong>HT/mois</div>
       <div class="doc-num">10 — COMMERCIAL</div>
       <div class="doc-title">Licences &amp; SEPA</div>
       <div class="doc-desc">BDD plateforme, workflow souscription, GoCardless vs Stripe, cycle contrat, provisionnement, CGV, post-résiliation.</div>
       <span class="doc-tag tag-gold">Super admin</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c1" href="11-carte-identite-animale.html">
+      <div class="kpi-badge"><strong>392 races</strong>8 espèces</div>
       <div class="doc-num">11 — FONCTIONNEL</div>
       <div class="doc-title">Carte d'identité animale</div>
       <div class="doc-desc">Puce = clé universelle. PDF à la demande, partage RGPD, URL signée, cross-tenant, CAC et historique séances.</div>
-      <span class="doc-tag tag-green">Sprint 10</span><div class="arrow">→</div>
+      <span class="doc-tag tag-green">S33</span><div class="arrow">→</div>
     </a>
         <a class="doc-card c2" href="12-infrastructure.html">
+      <div class="kpi-badge"><strong>0,80€</strong>/abonné/mois</div>
       <div class="doc-num">12 — TECHNIQUE</div>
       <div class="doc-title">Infrastructure</div>
       <div class="doc-desc">Hébergeur, Docker prod, CI/CD GitHub Actions, SSL wildcard, monitoring, backup, scalabilité 20k tenants.</div>
-      <span class="doc-tag tag-blue">Sprint 12+</span><div class="arrow">→</div>
+      <span class="doc-tag tag-blue">S33</span><div class="arrow">→</div>
     </a>
         <a class="doc-card c5" href="13-portail-super-admin.html">
+      <div class="kpi-badge"><strong>MRR</strong>temps réel</div>
       <div class="doc-num">13 — ACCÈS RESTREINT</div>
       <div class="doc-title">Portail super admin</div>
       <div class="doc-desc">Dashboard MRR, gestion tenants, contrats SEPA, provisionnement, CGV, supervision technique, journal d'audit.</div>
       <span class="doc-tag tag-red">Super admin</span><div class="arrow">→</div>
     </a>
         <a class="doc-card c4" href="14-portail-client.html">
+      <div class="kpi-badge"><strong>Magic link</strong>0 mot de passe</div>
       <div class="doc-num">14 — FONCTIONNEL</div>
       <div class="doc-title">Portail client</div>
       <div class="doc-desc">Espace propriétaire — magic link, dossier animal, CAC, séances, carte identité, documents partagés, paiement Stripe.</div>
       <span class="doc-tag tag-teal">Sprint 11</span><div class="arrow">→</div>
     </a>
         <a class="doc-card c1" href="15-rgpd-conformite.html">
+      <div class="kpi-badge"><strong>RGPD</strong>by design</div>
       <div class="doc-num">15 — CONFORMITÉ</div>
       <div class="doc-title">RGPD & Conformité</div>
       <div class="doc-desc">Registre des traitements, rôles RT/ST, DPA, droits des personnes, durées conservation, violations, mentions légales.</div>
       <span class="doc-tag tag-green">Avant go-live</span><div class="arrow">→</div>
     </a>
         <a class="doc-card c6" href="16-landing-page.html">
+      <div class="kpi-badge"><strong>SAM 36M€</strong>/an</div>
       <div class="doc-num">16 — COMMERCIAL</div>
       <div class="doc-title">Site vitrine</div>
       <div class="doc-desc">Landing page complète — hero, fonctionnalités, CAC showcase, pricing 3 plans, témoignages, FAQ, footer. Prête à déployer.</div>
       <span class="doc-tag tag-purple">Production</span><div class="arrow">→</div>
     </a>
         <a class="doc-card c2" href="17-api-reference.html">
+      <div class="kpi-badge"><strong>90+ endpoints</strong>documentés</div>
       <div class="doc-num">17 — TECHNIQUE</div>
       <div class="doc-title">API Reference</div>
       <div class="doc-desc">80+ endpoints documentés — Auth, Animaux, EDC, CAC, Séances, Factures, GED, Portail, Super admin. Corps, réponses, codes erreur.</div>
       <span class="doc-tag tag-blue">Développeurs</span><div class="arrow">→</div>
     </a>
         <a class="doc-card c1" href="18-questionnaires.html">
+      <div class="kpi-badge"><strong>Multi-type</strong>4 métiers</div>
       <div class="doc-num">18 — FONCTIONNEL</div>
       <div class="doc-title">Questionnaires</div>
       <div class="doc-desc">Moteur dynamique — pré-EDC, suivi intermédiaire, satisfaction NPS. BDD 4 tables, 22 questions pré-EDC, pré-remplissage EDC automatique.</div>
       <span class="doc-tag tag-green">Sprint 11</span><div class="arrow">→</div>
     </a>
         <a class="doc-card c3" href="19-onboarding.html">
+      <div class="kpi-badge"><strong>J0→J30</strong>activation</div>
       <div class="doc-num">19 — EXPÉRIENCE CLIENT</div>
       <div class="doc-title">Onboarding</div>
       <div class="doc-desc">Parcours J0→J30, email bienvenue, checklist 5 étapes, import CSV, première séance guidée, aide in-app, métriques activation.</div>
       <span class="doc-tag tag-gold">Go-live</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c2" href="20-pilotage-projet.html">
+      <div class="kpi-badge"><strong>S33</strong>18/03/2026</div>
       <div class="doc-num">20 — PILOTAGE</div>
       <div class="doc-title">Tableau de bord projet</div>
       <div class="doc-desc">KPIs, kanban actions prioritaires, détail Sprint 9, roadmap S10→S12+, infrastructure, commercial &amp; juridique.</div>
-      <span class="doc-tag tag-blue">Session 25</span><div class="arrow">→</div>
+      <span class="doc-tag tag-blue">S33</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c4" href="21-aide-integree.html">
+      <div class="kpi-badge"><strong>199 articles</strong>Ctrl+K</div>
       <div class="doc-num">21 — UX</div>
       <div class="doc-title">Aide intégrée</div>
       <div class="doc-desc">Système d'aide contextuelle — architecture HelpPanel + centre d'aide /app/aide, 58 articles rédigés, 6 modules, prototype interactif.</div>
-      <span class="doc-tag tag-teal">S10</span><div class="arrow">→</div>
+      <span class="doc-tag tag-teal">S33</span><div class="arrow">→</div>
     </a>
     <a class="doc-card c2" href="26-changelog-S33.html">
+      <div class="kpi-badge"><strong>S33</strong>18/03/2026</div>
       <div class="doc-num">26 — CHANGELOG</div>
       <div class="doc-title">Sprint S33</div>
       <div class="doc-desc">Release notes S33 — templates devis métier, NF525 clôture Z, élevage portée/new, documentation v4.0, bugs, règles techniques.</div>
       <span class="doc-tag tag-blue">18/03/2026</span><div class="arrow">→</div>
     </a>
+    <a class="doc-card c3" href="27-investisseurs.html">
+      <div class="kpi-badge"><strong>1,8M€</strong>ARR an 5</div>
+      <div class="doc-num">27 — INVESTISSEURS</div>
+      <div class="doc-title">Dossier investisseurs</div>
+      <div class="doc-desc">Opportunité marché, produit, modèle financier 5 ans, ROI prévisionnel, stratégie financement, démarche commerciale, risques.</div>
+      <span class="doc-tag tag-gold">Confidentiel</span><div class="arrow">→</div>
+    </a>
     <a class="doc-card c6" href="09-scenario-video.html">
+      <div class="kpi-badge"><strong>7 min</strong>12 séquences</div>
       <div class="doc-num">09 — PRODUCTION</div>
       <div class="doc-title">Scénario vidéo</div>
       <div class="doc-desc">Script complet 7 min — 12 séquences, données démo, narrations, conseils tournage.</div>
       <span class="doc-tag tag-purple">Commercial</span><div class="arrow">→</div>
     </a>
   </div>
-  <div class="updated"><span>Sprint S33 · 18/03/2026 · 26 documents · Format 100% HTML</span></div>
+  <div class="updated"><span>Sprint S33 · 18/03/2026 · 27 documents · Format 100% HTML</span></div>
 </div>
 
 <footer>
