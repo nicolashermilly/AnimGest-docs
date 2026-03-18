@@ -1,52 +1,1019 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Scénario Vidéo</title><style>:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Scénarios vidéo par métier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f3;--bg2:#fff;--bg3:#f0ede8;
+  --border:#e2ddd6;--border2:#c8c2b8;
+  --ink:#1a1714;--ink2:#6b6560;--ink3:#a09b94;
+  --accent:#2a7a5a;--accent2:#3a9a6a;--accent3:#e8f5ef;
+  --blue:#1a5fa0;--blue2:#e8f0fb;
+  --gold:#9a6820;--gold2:#fef3e2;
+  --purple:#5a3fa0;--purple2:#ede8fc;
+  --red:#b83030;--red2:#fdeaea;
+  --teal:#0f6e8f;--teal2:#d0f0f8;
+  --r:10px;--rs:6px;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
-.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
-.header h1{font-size:2.5rem;font-weight:800;color:#fff;}.header p{color:var(--accent2);margin-top:8px;}
-.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
-.container{max-width:1100px;margin:0 auto;padding:32px;}.section{margin-bottom:40px;}
-.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
-.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
-.section p{color:var(--text2);margin-bottom:10px;}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
-.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:8px;}.card p,.card li{font-size:.875rem;color:var(--text2);}
-ul{list-style:none;padding:0;}li{padding:3px 0;display:flex;gap:6px;}li::before{content:'→';color:var(--accent);flex-shrink:0;}
-table{width:100%;border-collapse:collapse;margin:12px 0;}
-th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
-td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}tr:hover td{background:var(--surface);}
-.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.nf-box{background:rgba(16,185,129,.08);border-left:3px solid #10b981;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);}
-.new{background:var(--green);color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;vertical-align:middle;}
-footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}</style></head>
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;}
+
+nav{background:var(--ink);padding:0 32px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'DM Serif Display',serif;font-size:17px;color:#fff;display:flex;align-items:center;gap:10px;}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:#5dca9e;}
+.nav-links{display:flex;gap:2px;}
+.nav-link{font-size:11px;color:rgba(255,255,255,.5);padding:5px 10px;border-radius:5px;text-decoration:none;transition:all .15s;}
+.nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,.1);}
+.nav-badge{font-family:'DM Mono',monospace;font-size:10px;background:var(--accent3);color:var(--accent);padding:3px 10px;border-radius:20px;border:1px solid var(--accent2);opacity:.9;}
+.nav-back{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.5);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.15);border-radius:20px;}
+.nav-back:hover{color:#fff;}
+
+.hero{background:var(--ink);padding:48px 48px 40px;border-bottom:3px solid var(--accent2);}
+.hero-tag{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:38px;color:#fff;line-height:1.1;margin-bottom:8px;}
+.hero h1 em{font-style:italic;color:#5dca9e;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:28px;max-width:560px;}
+.hero-metiers{display:flex;gap:10px;flex-wrap:wrap;}
+.hero-metier{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 14px;font-size:12px;color:rgba(255,255,255,.7);cursor:pointer;text-decoration:none;transition:all .15s;}
+.hero-metier:hover{background:rgba(255,255,255,.12);color:#fff;}
+.hero-metier .em{font-size:18px;}
+
+.main{max-width:1000px;margin:0 auto;padding:40px 32px 80px;}
+
+/* TABS */
+.metier-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:32px;overflow-x:auto;}
+.metier-tab{display:flex;align-items:center;gap:7px;padding:12px 20px;font-size:12px;font-weight:500;color:var(--ink2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;text-decoration:none;transition:all .15s;}
+.metier-tab:hover{color:var(--ink);background:var(--bg3);}
+.metier-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600;}
+.tab-icon{font-size:16px;}
+
+/* METIER PANEL */
+.metier-panel{display:none;}
+.metier-panel.active{display:block;}
+
+/* SECTION */
+.section{margin-bottom:36px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.section-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.section-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);background:var(--bg3);border:1px solid var(--border);padding:3px 8px;border-radius:4px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:20px;}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.card-title{font-size:13px;font-weight:500;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.icon-green{background:var(--accent3);}
+.icon-blue{background:var(--blue2);}
+.icon-gold{background:var(--gold2);}
+.icon-purple{background:var(--purple2);}
+.icon-red{background:var(--red2);}
+.icon-teal{background:var(--teal2);}
+
+.item-list{display:flex;flex-direction:column;}
+.item{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--bg3);}
+.item:last-child{border-bottom:none;}
+.item-label{font-weight:500;color:var(--ink);min-width:100px;flex-shrink:0;font-size:12px;}
+.item-val{color:var(--ink2);font-size:12px;}
+
+/* SEQUENCES */
+.seq{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:10px;}
+.seq-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.seq-time{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;background:var(--ink);color:#fff;padding:5px 12px;border-radius:var(--rs);flex-shrink:0;}
+.seq-title{font-size:14px;font-weight:500;color:var(--ink);}
+.seq-dur{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);margin-left:auto;}
+.seq-body{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.seq-col-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:8px;}
+.seq-actions{display:flex;flex-direction:column;gap:5px;}
+.seq-action{font-size:12px;color:var(--ink2);padding:4px 0;display:flex;gap:6px;align-items:flex-start;line-height:1.4;}
+.seq-action::before{content:'→';color:var(--accent);font-weight:700;flex-shrink:0;font-size:11px;margin-top:1px;}
+.seq-narration{font-size:12px;color:var(--ink2);font-style:italic;line-height:1.6;background:var(--bg3);padding:10px 12px;border-radius:var(--rs);border-left:3px solid var(--accent);}
+
+.alert{border-left:3px solid var(--accent);background:var(--accent3);padding:10px 14px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;color:var(--ink2);margin:10px 0;}
+.alert.warn{border-color:var(--gold);background:var(--gold2);}
+.alert.info{border-color:var(--blue);background:var(--blue2);}
+.alert strong{color:var(--ink);}
+
+/* RECAP TABLE */
+.recap-table{width:100%;border-collapse:collapse;font-size:12px;}
+.recap-table th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);padding:7px 10px;border-bottom:2px solid var(--border);background:var(--bg3);}
+.recap-table td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+.recap-table tr:last-child td{border-bottom:none;}
+
+/* SPECIFICITE BADGE */
+.spec-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;margin-left:6px;}
+.sb-canin{background:var(--accent3);color:var(--accent);}
+.sb-equestre{background:var(--blue2);color:var(--blue);}
+.sb-toiletteur{background:var(--gold2);color:var(--gold);}
+.sb-pension{background:var(--purple2);color:var(--purple);}
+
+footer{background:var(--ink);color:rgba(255,255,255,.35);padding:18px 32px;font-size:11px;display:flex;justify-content:space-between;}
+footer strong{color:rgba(255,255,255,.7);}
+
+@media(max-width:768px){
+  .seq-body{grid-template-columns:1fr;}
+  .grid2,.grid3{grid-template-columns:1fr;}
+  .hero{padding:32px 20px;}
+  .main{padding:24px 16px 60px;}
+  nav{padding:0 16px;}
+}
+</style>
+</head>
 <body>
-<div class="header"><h1>🎬 Scénario Vidéo</h1><p>Script de démonstration produit PetSuite</p><div class="badge">v4.0 — Sprint S31 — Mars 2026</div></div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="20-pilotage-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Pilotage</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a><a href="24-changelog-sprint-S31.html" style="color:#4ade80;font-weight:600;">Changelog S31 🆕</a>
+
+<nav>
+  <div class="nav-brand"><div class="nav-dot"></div>PetSuite</div>
+  <div class="nav-links">
+    <a href="#canin" class="nav-link active" onclick="showMetier('canin',this)">🐕 Canin</a>
+    <a href="#equestre" class="nav-link" onclick="showMetier('equestre',this)">🐴 Équestre</a>
+    <a href="#toiletteur" class="nav-link" onclick="showMetier('toiletteur',this)">✂️ Toiletteur</a>
+    <a href="#pension" class="nav-link" onclick="showMetier('pension',this)">🏠 Pension</a>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="index.html" class="nav-back">← Index</a>
+    <span class="nav-badge">4 métiers · S33</span>
+  </div>
 </nav>
-<div class="container">
-<div class="section"><h2>🎬 Objectif de la vidéo</h2>
-<p>Démonstration commerciale de 3 à 5 minutes montrant les fonctionnalités clés de PetSuite pour un comportementaliste canin. Public cible : professionnels animaliers cherchant un logiciel de gestion.</p></div>
-<div class="section"><h2>📋 Scénario — 5 actes</h2>
-<div class="grid">
-  <div class="card"><h4>Acte 1 — Accueil (30s)</h4><p>Dashboard KPIs temps réel. 88 clients, 137 animaux, CA mensuel. Présentation de l'interface épurée.</p></div>
-  <div class="card"><h4>Acte 2 — Nouveau client (45s)</h4><p>Création fiche client. Ajout d'un animal (puce, race CHIEN/Labrador, date naissance). Filtre animaux par client.</p></div>
-  <div class="card"><h4>Acte 3 — Séance et devis (60s)</h4><p>Créer une EDC. Générer un devis depuis la séance. Montrer les 5 templates. Accepter le devis.</p></div>
-  <div class="card"><h4>Acte 4 — Facturation (45s)</h4><p>Transformer le devis en facture. Enregistrer un règlement. Montrer le suivi impayés et les rappels email.</p></div>
-  <div class="card"><h4>Acte 5 — Conformité NF525 (30s)</h4><p>Montrer le journal de caisse inaltérable. Afficher v_nf525_conformite = 0 anomalie. Message de conformité légale.</p></div>
-</div></div>
-<div class="section"><h2>💬 Messages clés à faire passer</h2>
-<ul>
-  <li>Interface pensée pour les professionnels animaliers — pas un logiciel générique</li>
-  <li>Conforme NF 525 (caisse) et FEC (comptabilité) — zéro amende fiscale</li>
-  <li>14 métiers couverts : comportementaliste, éleveur, toiletteur, pet-sitter...</li>
-  <li>Sauvegarde automatique quotidienne — vos données sont en sécurité</li>
-  <li>Développé en France — support réactif</li>
-</ul></div>
-<div class="section"><h2>🛠️ Setup technique pour la capture</h2>
-<div class="highlight"><p>URL : <code>http://localhost</code> · Résolution recommandée : 1920×1080 · Navigateur : Edge/Chrome en mode plein écran · Désactiver les notifications Windows avant la capture.</p></div></div></div>
-<footer>PetSuite v4.0 — Sprint S31 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
-</body></html>
+
+<div class="hero">
+  <div class="hero-tag">Scripts de démonstration commerciale</div>
+  <h1>Scénarios vidéo<br><em>par métier</em></h1>
+  <p class="hero-sub">4 scripts adaptés à chaque segment de clientèle — données de démo, narrations, séquences chronométrées. Durée cible : 7 minutes par métier.</p>
+  <div class="hero-metiers">
+    <a href="#" class="hero-metier" onclick="showMetier('canin',null);return false;"><span class="em">🐕</span>Comportementaliste canin</a>
+    <a href="#" class="hero-metier" onclick="showMetier('equestre',null);return false;"><span class="em">🐴</span>Professionnel équestre</a>
+    <a href="#" class="hero-metier" onclick="showMetier('toiletteur',null);return false;"><span class="em">✂️</span>Toiletteur</a>
+    <a href="#" class="hero-metier" onclick="showMetier('pension',null);return false;"><span class="em">🏠</span>Pension / Pet-sitter</a>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- TABS -->
+<div class="metier-tabs">
+  <a class="metier-tab active" id="tab-canin" onclick="showMetier('canin',this);return false;" href="#">
+    <span class="tab-icon">🐕</span>Comportementaliste canin
+  </a>
+  <a class="metier-tab" id="tab-equestre" onclick="showMetier('equestre',this);return false;" href="#">
+    <span class="tab-icon">🐴</span>Professionnel équestre
+  </a>
+  <a class="metier-tab" id="tab-toiletteur" onclick="showMetier('toiletteur',this);return false;" href="#">
+    <span class="tab-icon">✂️</span>Toiletteur
+  </a>
+  <a class="metier-tab" id="tab-pension" onclick="showMetier('pension',this);return false;" href="#">
+    <span class="tab-icon">🏠</span>Pension / Pet-sitter
+  </a>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MÉTIER 1 — COMPORTEMENTALISTE CANIN
+     ══════════════════════════════════════════════════════ -->
+<div class="metier-panel active" id="panel-canin">
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">00</span><span class="section-title">Prérequis avant tournage</span></div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">⚠️</div>Configuration requise</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Compte</span><span class="item-val">demo_canin / Demo2026!</span></div>
+          <div class="item"><span class="item-label">Métier configuré</span><span class="item-val">Comportementaliste canin · ACACED=1</span></div>
+          <div class="item"><span class="item-label">Libellés CAC</span><span class="item-val">Sociabilisation chiens · Marche en laisse · Rappel · Mordillement · Position assise</span></div>
+          <div class="item"><span class="item-label">Résolution</span><span class="item-val">1920×1080 — zoom 100% — mode sombre</span></div>
+          <div class="item"><span class="item-label">SQL démo</span><span class="item-val">SQL_DEMO_CANIN.sql à charger avant tournage</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">🐕</div>Données de démo</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Cabinet</span><span class="item-val">Sophie Martin — Cabinet Canin Harmonie</span></div>
+          <div class="item"><span class="item-label">Client principal</span><span class="item-val">Famille Rousseau · Titan — Berger Allemand · né 15/06/2022 · puce 250-269-811-500-001</span></div>
+          <div class="item"><span class="item-label">Client secondaire</span><span class="item-val">Emma Blanc · Luna — Border Collie · née 03/03/2021</span></div>
+          <div class="item"><span class="item-label">Prestation phare</span><span class="item-val">EDC 350€ HT + suivi 6 séances 85€/séance</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="alert warn" style="margin-top:12px;">Vider le cache · Désactiver notifications Windows · Fermer tous les autres onglets · Tester l'audio avant de démarrer.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">01</span><span class="section-title">Séquences — 7 min</span></div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">0:00</span><span class="seq-title">Intro · Connexion · Dashboard</span><span class="seq-dur">25 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Ouvrir localhost · page de connexion</div>
+          <div class="seq-action">Login demo_canin / Demo2026!</div>
+          <div class="seq-action">Dashboard : CA HT 19 593€ · 88 clients · EDC sans devis · QR code</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Bienvenue dans PetSuite — le logiciel conçu spécifiquement pour les comportementalistes canins. De la première consultation jusqu'à l'export comptable FEC, tout est centralisé en un seul outil. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">0:25</span><span class="seq-title">Paramétrage initial</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Paramètres → Libellés EC → 14 critères CAC</div>
+          <div class="seq-action">Montrer : Sociabilisation chiens · Marche en laisse · Rappel · Mordillement</div>
+          <div class="seq-action">Paramètres → Types de séance → EDC / Suivi / Gardiennage + couleurs</div>
+          <div class="seq-action">Catalogue articles : EDC 350€ · Suivi 85€</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« En 5 minutes, le cabinet est configuré : les 14 critères comportementaux — ici Sociabilisation, Marche en laisse, Rappel — sont personnalisés selon votre méthode. Les types de séance et le catalogue de prestations sont prêts. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">1:00</span><span class="seq-title">Création client + animal</span><span class="seq-dur">45 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Clients → Nouveau client → Famille Rousseau</div>
+          <div class="seq-action">Animaux → Nouvel animal → Titan · Berger Allemand · puce 250-269-811-500-001</div>
+          <div class="seq-action">Montrer format puce : 250-269-811-500-001</div>
+          <div class="seq-action">Upload photo de Titan depuis la fiche animal</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La puce électronique à 15 chiffres est la clé universelle de l'animal dans tout le système. On associe le client, on ajoute une photo — le dossier de Titan est créé en 30 secondes. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">1:45</span><span class="seq-title">Planification séance EDC</span><span class="seq-dur">45 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Agenda → clic sur créneau → Nouvelle séance</div>
+          <div class="seq-action">Type : Étude de Comportement · Client : Rousseau · Animal : Titan</div>
+          <div class="seq-action">Durée 1h30 · Lieu : domicile client</div>
+          <div class="seq-action">Montrer la vue semaine avec la séance colorée en vert</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La séance EDC est planifiée directement depuis l'agenda — vue semaine avec grille horaire 7h à 20h. La couleur verte identifie immédiatement les Études de Comportement. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">2:30</span><span class="seq-title">Devis + signature</span><span class="seq-dur">40 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Fiche séance → Générer un devis</div>
+          <div class="seq-action">Devis DCE-2603-0001 · 1 ligne EDC 350€ HT + TVA 20% = 420€ TTC</div>
+          <div class="seq-action">Envoyer par email · Accepté par le client</div>
+          <div class="seq-action">Statut → Accepté</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Depuis la séance, un devis est généré en un clic — numéroté automatiquement, pré-rempli avec les tarifs. Il est envoyé par email, le client l'accepte. Tout est tracé. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">3:10</span><span class="seq-title">Fiche EDC + CAC</span><span class="seq-dur">60 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Fiche séance → bouton Étude Comportementale</div>
+          <div class="seq-action">Remplir section Comportement : problème principal · intensité 7/10</div>
+          <div class="seq-action">Section Grille : ajouter problème "Agressivité en laisse" · fréquence quotidienne</div>
+          <div class="seq-action">Sauvegarder → message vert ✓</div>
+          <div class="seq-action">Bouton Suivi CAC → cocher 3 critères · score 3/14 temps réel</div>
+          <div class="seq-action">Onglet Évolution → graphique progression</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La fiche EDC en 7 sections documente toute la consultation — comportement, alimentation, antécédents, attentes. Le suivi CAC : on coche les critères acquis, le score se met à jour en temps réel. L'onglet Évolution affiche la progression séance après séance. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">4:10</span><span class="seq-title">Programme de suivi</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Programmes → Nouveau programme → Titan · 6 séances</div>
+          <div class="seq-action">Planifier les 6 séances de suivi depuis l'agenda</div>
+          <div class="seq-action">Montrer le calendrier des séances planifiées</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le programme de suivi sur 6 séances est créé en 2 clics. Chaque séance est planifiée dans l'agenda — le propriétaire reçoit ses rappels automatiquement. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">4:45</span><span class="seq-title">Facturation + règlement</span><span class="seq-dur">40 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Devis → Générer facture → FAC-2603-0001</div>
+          <div class="seq-action">Factures → Ajouter règlement → 420€ · CB · 14/03/2026</div>
+          <div class="seq-action">Statut → Payée · Reste à payer : 0€</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La facture est générée depuis le devis accepté — numérotation automatique FAC-YYMM. Le règlement est saisi, la facture passe en Payée. L'encours client se met à jour instantanément. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">5:25</span><span class="seq-title">CRM + formulaire lead</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Tableau de bord → QR code → lien formulaire public</div>
+          <div class="seq-action">Ouvrir /questionnaire?type=canin sur mobile</div>
+          <div class="seq-action">Remplir : prospect · chien · problème · envoyer</div>
+          <div class="seq-action">CRM → Leads → nouveau lead apparu automatiquement</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Ce QR code est à afficher en salle d'attente ou sur Instagram. Le prospect remplit ses coordonnées et décrit son chien — un lead apparaît automatiquement dans le CRM, prêt à être traité. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">6:00</span><span class="seq-title">Export FEC + conformité</span><span class="seq-dur">30 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Comptabilité → Export FEC → Exercice 2026</div>
+          <div class="seq-action">Montrer : fichier généré · hash SHA-256 · lignes chaînées</div>
+          <div class="seq-action">Télécharger le fichier TXT</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« L'export FEC est généré en un clic — conforme DGFiP, chaîné avec hash SHA-256 par ligne. Votre comptable reçoit un fichier irréprochable. Fini la peur du contrôle fiscal. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">6:30</span><span class="seq-title">Outro</span><span class="seq-dur">30 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Revenir sur le tableau de bord</div>
+          <div class="seq-action">Montrer le CA HT mis à jour · logo cabinet</div>
+          <div class="seq-action">Afficher le site petsuite.fr</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« PetSuite — conçu par et pour les comportementalistes canins. Essai gratuit 30 jours sur petsuite.fr »</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">02</span><span class="section-title">Récapitulatif minutage</span></div>
+    <table class="recap-table">
+      <thead><tr><th>#</th><th>Séquence</th><th>Durée</th><th>Cumulé</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Intro · Dashboard</td><td>0:25</td><td>0:25</td></tr>
+        <tr><td>2</td><td>Paramétrage (CAC + types séance)</td><td>0:35</td><td>1:00</td></tr>
+        <tr><td>3</td><td>Client + animal + photo</td><td>0:45</td><td>1:45</td></tr>
+        <tr><td>4</td><td>Agenda + séance EDC</td><td>0:45</td><td>2:30</td></tr>
+        <tr><td>5</td><td>Devis + signature</td><td>0:40</td><td>3:10</td></tr>
+        <tr><td>6</td><td>Fiche EDC + CAC + évolution</td><td>1:00</td><td>4:10</td></tr>
+        <tr><td>7</td><td>Programme de suivi</td><td>0:35</td><td>4:45</td></tr>
+        <tr><td>8</td><td>Facturation + règlement</td><td>0:40</td><td>5:25</td></tr>
+        <tr><td>9</td><td>CRM + formulaire lead QR</td><td>0:35</td><td>6:00</td></tr>
+        <tr><td>10</td><td>Export FEC</td><td>0:30</td><td>6:30</td></tr>
+        <tr><td>11</td><td>Outro</td><td>0:30</td><td>7:00</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /panel-canin -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     MÉTIER 2 — PROFESSIONNEL ÉQUESTRE
+     ══════════════════════════════════════════════════════ -->
+<div class="metier-panel" id="panel-equestre">
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">00</span><span class="section-title">Prérequis avant tournage</span></div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">⚠️</div>Configuration requise</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Compte</span><span class="item-val">demo_equestre / Demo2026!</span></div>
+          <div class="item"><span class="item-label">Métier configuré</span><span class="item-val">Professionnel équestre · type=equestre</span></div>
+          <div class="item"><span class="item-label">Types séance</span><span class="item-val">Bilan comportemental équin · Débourrage · Travail à pied · Concours</span></div>
+          <div class="item"><span class="item-label">Espèces BDD</span><span class="item-val">Équidé activé · races : Selle Français · Quarter Horse · KWPB · Lusitanien</span></div>
+          <div class="item"><span class="item-label">SQL démo</span><span class="item-val">SQL_DEMO_EQUESTRE.sql à charger avant tournage</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🐴</div>Données de démo</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Cabinet</span><span class="item-val">Pierre Dumont — Équi-Comportement Grand-Est</span></div>
+          <div class="item"><span class="item-label">Client principal</span><span class="item-val">Haras de Villeneuve (Claire Moreau) · Apollo — Selle Français · né 12/04/2019 · puce 250-269-811-600-001</span></div>
+          <div class="item"><span class="item-label">Client secondaire</span><span class="item-val">Thomas Laurent · Étoile — KWPB · née 08/08/2020</span></div>
+          <div class="item"><span class="item-label">Prestation phare</span><span class="item-val">Bilan comportemental équin 450€ HT + suivi 4 séances 120€/séance</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="alert warn" style="margin-top:12px;">Vider le cache · Vérifier que le questionnaire ?type=equestre est fonctionnel · Préparer les captures d'écran de l'agenda semaine.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">01</span><span class="section-title">Séquences — 7 min</span></div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">0:00</span><span class="seq-title">Intro · Dashboard équestre</span><span class="seq-dur">25 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Connexion demo_equestre · Dashboard</div>
+          <div class="seq-action">Montrer : CA HT · clients haras + propriétaires · agenda chargé</div>
+          <div class="seq-action">QR code formulaire ?type=equestre</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« PetSuite s'adapte à votre métier équestre — bilan comportemental, débourrage, travail à pied, suivi de concours. Tout votre activité, de la première consultation à la facture, dans un seul outil. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">0:25</span><span class="seq-title">Paramétrage métier équestre</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Paramètres → Libellés EC → critères adaptés équin</div>
+          <div class="seq-action">Montrer : Acceptance du licol · Chargement van · Travail à pied · Contact vétérinaire · Ferrure</div>
+          <div class="seq-action">Types séance : Bilan (bleu) · Débourrage (orange) · Travail à pied (vert)</div>
+          <div class="seq-action">Catalogue : Bilan comportemental 450€ · Suivi 120€</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Les 14 critères comportementaux sont personnalisés pour l'équin — Acceptance du licol, Chargement van, Travail à pied. Chaque métier a ses propres critères d'évaluation. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">1:00</span><span class="seq-title">Création haras + cheval</span><span class="seq-dur">45 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Clients → Nouveau → Haras de Villeneuve (type : structure)</div>
+          <div class="seq-action">Contact : Claire Moreau · responsable des chevaux</div>
+          <div class="seq-action">Animaux → Nouvel animal → Apollo · Selle Français · Équidé</div>
+          <div class="seq-action">Puce transponder : 250-269-811-600-001 · né 12/04/2019</div>
+          <div class="seq-action">Photo d'Apollo depuis la fiche</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le haras est créé comme client structure — avec ses contacts. Apollo, Selle Français 5 ans, est enregistré avec son transpondeur. La fiche animal équin fonctionne exactement comme pour les chiens — même dossier, même historique. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">1:45</span><span class="seq-title">Planification bilan comportemental</span><span class="seq-dur">40 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Agenda → Nouvelle séance → Bilan comportemental équin</div>
+          <div class="seq-action">Client : Haras de Villeneuve · Animal : Apollo · Durée 2h</div>
+          <div class="seq-action">Lieu : Haras · box 12</div>
+          <div class="seq-action">Vue semaine : séance bleue visible</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le bilan comportemental est planifié au haras, box 12, durée 2h. L'agenda hebdomadaire donne une vision claire de vos déplacements sur la semaine. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">2:25</span><span class="seq-title">Devis haras</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Templates devis → Métier équestre → sélectionner "Bilan + suivi 4 séances"</div>
+          <div class="seq-action">Pré-remplissage : Bilan 450€ + 4 × 120€ = 930€ HT</div>
+          <div class="seq-action">Envoyer au haras · Accepté</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le template devis équestre est pré-configuré — bilan + programme de suivi. En quelques secondes, le devis est envoyé au haras et accepté. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">3:00</span><span class="seq-title">Bilan comportemental + CAC équin</span><span class="seq-dur">60 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Fiche séance → Étude Comportementale</div>
+          <div class="seq-action">Section Identité : haras · box · paddock disponible</div>
+          <div class="seq-action">Section Comportement : problème "Résistance au van" · intensité 8/10</div>
+          <div class="seq-action">Grille : ajouter problème "Refus ferrage" · fréquence hebdomadaire</div>
+          <div class="seq-action">Suivi CAC équin : cocher Acceptance licol ✓ · Travail à pied ✓ · score 2/14</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La fiche comportementale s'adapte à l'équin — résistance au van, refus ferrure, contact vétérinaire. Les critères CAC sont ceux que vous avez définis pour votre pratique équestre. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">4:00</span><span class="seq-title">Suivi programme + agenda haras</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Programme → 4 séances suivi → planifier sur 2 mois</div>
+          <div class="seq-action">Différents chevaux du haras dans l'agenda</div>
+          <div class="seq-action">Vue mois : densité interventions visible</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le programme de 4 séances est planifié sur 2 mois au haras. La vue mensuelle montre l'ensemble de vos interventions — vous gérez plusieurs haras et propriétaires en parallèle sans rien perdre. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">4:35</span><span class="seq-title">Facturation structure</span><span class="seq-dur">40 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Facture → FAC-2603-0002 · Haras de Villeneuve · 930€ HT + TVA</div>
+          <div class="seq-action">Condition paiement : 30 jours · acompte 30%</div>
+          <div class="seq-action">Saisir acompte 279€ · reste à payer 837€</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La facture au haras respecte les conditions de paiement à 30 jours avec acompte. Le suivi des encours par structure est automatique — vous savez toujours ce qui reste à facturer. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">5:15</span><span class="seq-title">Formulaire lead équestre</span><span class="seq-dur">30 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Ouvrir /questionnaire?type=equestre sur mobile</div>
+          <div class="seq-action">Formulaire adapté : race · discipline · problème comportemental</div>
+          <div class="seq-action">CRM → Lead apparu : haras + cheval + problème décrit</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le formulaire équestre est adapté — race, discipline, description du problème. Partagé sur votre site ou les groupes Facebook équestres, il génère des leads qualifiés directement dans votre CRM. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">5:45</span><span class="seq-title">Export FEC + Outro</span><span class="seq-dur">75 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Comptabilité → Export FEC → Exercice 2026</div>
+          <div class="seq-action">Dashboard : CA HT mis à jour · statistiques</div>
+          <div class="seq-action">Afficher petsuite.fr</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« L'export FEC est identique quel que soit votre métier — conforme DGFiP, hash SHA-256. PetSuite — pour tous les professionnels du comportement animal. Essai gratuit 30 jours sur petsuite.fr »</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">02</span><span class="section-title">Récapitulatif minutage</span></div>
+    <table class="recap-table">
+      <thead><tr><th>#</th><th>Séquence</th><th>Durée</th><th>Cumulé</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Intro · Dashboard équestre</td><td>0:25</td><td>0:25</td></tr>
+        <tr><td>2</td><td>Paramétrage critères équins</td><td>0:35</td><td>1:00</td></tr>
+        <tr><td>3</td><td>Haras + cheval + transpondeur</td><td>0:45</td><td>1:45</td></tr>
+        <tr><td>4</td><td>Agenda + bilan planifié</td><td>0:40</td><td>2:25</td></tr>
+        <tr><td>5</td><td>Template devis équestre</td><td>0:35</td><td>3:00</td></tr>
+        <tr><td>6</td><td>Fiche comportementale + CAC équin</td><td>1:00</td><td>4:00</td></tr>
+        <tr><td>7</td><td>Programme + vue mois agenda</td><td>0:35</td><td>4:35</td></tr>
+        <tr><td>8</td><td>Facturation structure acompte</td><td>0:40</td><td>5:15</td></tr>
+        <tr><td>9</td><td>Formulaire lead ?type=equestre</td><td>0:30</td><td>5:45</td></tr>
+        <tr><td>10</td><td>FEC + Outro</td><td>1:15</td><td>7:00</td></tr>
+      </tbody>
+    </table>
+    <div class="alert info" style="margin-top:12px;"><strong>Spécificité équestre :</strong> Insister sur la gestion multi-haras · les structures vs les propriétaires individuels · le suivi par cheval sur plusieurs disciplines.</div>
+  </div>
+
+</div><!-- /panel-equestre -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     MÉTIER 3 — TOILETTEUR
+     ══════════════════════════════════════════════════════ -->
+<div class="metier-panel" id="panel-toiletteur">
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">00</span><span class="section-title">Prérequis avant tournage</span></div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">⚠️</div>Configuration requise</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Compte</span><span class="item-val">demo_toiletteur / Demo2026!</span></div>
+          <div class="item"><span class="item-label">Métier configuré</span><span class="item-val">Toiletteur professionnel · type=toiletteur</span></div>
+          <div class="item"><span class="item-label">Types séance</span><span class="item-val">Toilettage complet · Tonte · Bain-séchage · Première fois</span></div>
+          <div class="item"><span class="item-label">Catalogue articles</span><span class="item-val">Toilettage complet S 35€ · M 45€ · L 60€ · XL 80€ · Tonte 25€</span></div>
+          <div class="item"><span class="item-label">SQL démo</span><span class="item-val">SQL_DEMO_TOILETTEUR.sql à charger avant tournage</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">✂️</div>Données de démo</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Salon</span><span class="item-val">Nathalie Petit — Toilettage & Co · Lyon 7e</span></div>
+          <div class="item"><span class="item-label">Client principal</span><span class="item-val">Marc Dupont · Filou — Bichon Frisé · né 20/01/2020 · puce 250-269-811-700-001</span></div>
+          <div class="item"><span class="item-label">Client secondaire</span><span class="item-val">Julie Bernard · Caramel — Golden Retriever · née 05/05/2019</span></div>
+          <div class="item"><span class="item-label">Prestation phare</span><span class="item-val">Toilettage complet S (Bichon) 35€ · rendez-vous toutes les 6 semaines</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="alert warn" style="margin-top:12px;">Insister sur la récurrence des RDV · la gestion de la clientèle fidèle · la rapidité de saisie entre deux clients.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">01</span><span class="section-title">Séquences — 7 min</span></div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">0:00</span><span class="seq-title">Intro · Salon de toilettage</span><span class="seq-dur">25 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Connexion · Dashboard : CA HT du jour · RDV du jour · clients en attente</div>
+          <div class="seq-action">Agenda du jour : vue semaine chargée</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« PetSuite pour les toiletteurs — agenda, fiches clients, facturation, tout en un. Ce matin : 6 RDV planifiés, le CA du jour affiché en direct. Pas d'Excel, pas de carnet papier. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">0:25</span><span class="seq-title">Nouveau client + chien</span><span class="seq-dur">40 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Clients → Nouveau → Marc Dupont · tel · email</div>
+          <div class="seq-action">Animal → Filou · Bichon Frisé · né 20/01/2020</div>
+          <div class="seq-action">Commentaire : "Craintif aux ciseaux · brossage bi-hebdomadaire"</div>
+          <div class="seq-action">Photo de Filou uploadée</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le dossier client est créé en 30 secondes. La fiche de Filou note qu'il est craintif aux ciseaux — cette info apparaîtra à chaque rendez-vous. Plus besoin de reposer les mêmes questions. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">1:05</span><span class="seq-title">Planification RDV récurrent</span><span class="seq-dur">40 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Agenda → clic créneau 9h00 → Toilettage complet · Filou</div>
+          <div class="seq-action">Durée 1h · Note : "Bichon craintif — prévoir 15min adaptation"</div>
+          <div class="seq-action">Planifier le RDV suivant dans 6 semaines</div>
+          <div class="seq-action">Rappel SMS automatique J-1</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le RDV est planifié avec une note spécifique à Filou. Le prochain rendez-vous dans 6 semaines est déjà programmé — et le client reçoit un rappel automatique la veille. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">1:45</span><span class="seq-title">Fiche animal — suivi toilettage</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Fiche Filou → onglet Historique → toutes les séances passées</div>
+          <div class="seq-action">Compte-rendu : "Toilettage complet · tonte 1cm · oreilles nettoyées"</div>
+          <div class="seq-action">Onglet Documents : ajouter photo avant/après</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« L'historique complet de Filou : chaque toilettage, chaque observation. Les photos avant/après sont stockées dans le dossier GED — utile en cas de litige ou pour montrer la progression aux propriétaires. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">2:20</span><span class="seq-title">Facturation rapide</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Séance terminée → Générer facture directement</div>
+          <div class="seq-action">FAC-2603-0003 · Toilettage Bichon 35€ TTC</div>
+          <div class="seq-action">Règlement CB immédiat · NF525 · ticket de caisse</div>
+          <div class="seq-action">Statut → Payée en 10 secondes</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le paiement est encaissé en 10 secondes — conforme NF525, ticket de caisse généré. Entre deux toilettages, la facturation ne vous prend plus de temps. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">2:55</span><span class="seq-title">Gestion de la journée</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Agenda vue jour : 6 séances · filtrer par statut</div>
+          <div class="seq-action">Marquer Caramel comme Réalisée · compte-rendu rapide</div>
+          <div class="seq-action">Dashboard : CA du jour mis à jour en temps réel</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La vue journée montre l'enchaînement des RDV. À chaque toilettage terminé, on valide la séance — le CA du jour se met à jour. En fin de journée, tout est tracé sans effort supplémentaire. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">3:30</span><span class="seq-title">Template devis toiletteur</span><span class="seq-dur">30 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Devis → Templates → Métier toiletteur</div>
+          <div class="seq-action">Sélectionner "Pack découverte : 3 toilettages" 105€</div>
+          <div class="seq-action">Envoyer par email · code de fidélité</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le pack découverte 3 toilettages est envoyé par email en un clic. Les templates métier sont prêts à l'emploi — vous n'avez qu'à sélectionner et envoyer. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">4:00</span><span class="seq-title">CRM fidélisation</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">CRM → Clients · filtrer : dernier RDV &gt; 8 semaines</div>
+          <div class="seq-action">Envoyer rappel groupé : "Filou a besoin de vous !"</div>
+          <div class="seq-action">Formulaire lead ?type=toiletteur : nouveau prospect</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le CRM identifie les clients qui n'ont pas repris rendez-vous depuis 8 semaines — une campagne de rappel ciblée en 2 clics. Et le formulaire sur votre site génère de nouveaux clients en automatique. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">4:35</span><span class="seq-title">Stocks & fournitures</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Stock → liste fournitures salon → shampoing, lames, tondeuses</div>
+          <div class="seq-action">Alerte stock bas : shampoing démêlant 2 flacons restants</div>
+          <div class="seq-action">Achats → Commande fournisseur → Pro-Grooming Supply</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le module stock signale automatiquement les articles en rupture imminente. La commande fournisseur est passée depuis PetSuite — tout dans le même outil, plus rien n'est oublié. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">5:10</span><span class="seq-title">Clôture Z caisse + FEC + Outro</span><span class="seq-dur">110 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Comptabilité → Clôture Z · récapitulatif de la journée</div>
+          <div class="seq-action">Montrer : total encaissé · tickets NF525 · hash chaîné</div>
+          <div class="seq-action">Export FEC mensuel · télécharger</div>
+          <div class="seq-action">Dashboard statistiques · CA semaine</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La clôture Z de caisse est conforme NF525 — obligatoire pour les pros encaissant. L'export FEC mensuel est prêt pour votre comptable. PetSuite — pour les toiletteurs qui veulent se concentrer sur leur métier, pas sur leur paperasse. Essai gratuit sur petsuite.fr »</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">02</span><span class="section-title">Récapitulatif minutage</span></div>
+    <table class="recap-table">
+      <thead><tr><th>#</th><th>Séquence</th><th>Durée</th><th>Cumulé</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Intro · agenda du jour</td><td>0:25</td><td>0:25</td></tr>
+        <tr><td>2</td><td>Nouveau client + chien + commentaire</td><td>0:40</td><td>1:05</td></tr>
+        <tr><td>3</td><td>RDV récurrent + rappel SMS</td><td>0:40</td><td>1:45</td></tr>
+        <tr><td>4</td><td>Fiche animal · historique · photos</td><td>0:35</td><td>2:20</td></tr>
+        <tr><td>5</td><td>Facturation NF525 en 10 secondes</td><td>0:35</td><td>2:55</td></tr>
+        <tr><td>6</td><td>Gestion journée · CA temps réel</td><td>0:35</td><td>3:30</td></tr>
+        <tr><td>7</td><td>Template devis pack découverte</td><td>0:30</td><td>4:00</td></tr>
+        <tr><td>8</td><td>CRM fidélisation · rappels</td><td>0:35</td><td>4:35</td></tr>
+        <tr><td>9</td><td>Stocks · alerte rupture · commande</td><td>0:35</td><td>5:10</td></tr>
+        <tr><td>10</td><td>Clôture Z · FEC · Outro</td><td>1:50</td><td>7:00</td></tr>
+      </tbody>
+    </table>
+    <div class="alert info" style="margin-top:12px;"><strong>Spécificité toiletteur :</strong> Insister sur la rapidité entre deux RDV · NF525 obligatoire · gestion des stocks fournitures · fidélisation clientèle récurrente.</div>
+  </div>
+
+</div><!-- /panel-toiletteur -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     MÉTIER 4 — PENSION / PET-SITTER
+     ══════════════════════════════════════════════════════ -->
+<div class="metier-panel" id="panel-pension">
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">00</span><span class="section-title">Prérequis avant tournage</span></div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">⚠️</div>Configuration requise</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Compte</span><span class="item-val">demo_pension / Demo2026!</span></div>
+          <div class="item"><span class="item-label">Métier configuré</span><span class="item-val">Pension / Pet-sitting · type=pension</span></div>
+          <div class="item"><span class="item-label">Types séance</span><span class="item-val">Pension (nuit) · Garde journée · Visite à domicile · Promenade · Transport</span></div>
+          <div class="item"><span class="item-label">Catalogue articles</span><span class="item-val">Pension nuit 25€ · Garde journée 18€ · Visite domicile 12€ · Promenade 15€</span></div>
+          <div class="item"><span class="item-label">SQL démo</span><span class="item-val">SQL_DEMO_PENSION.sql à charger avant tournage</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">🏠</div>Données de démo</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Structure</span><span class="item-val">Anne Girard — Les Pattes Dorées · Annecy</span></div>
+          <div class="item"><span class="item-label">Client principal</span><span class="item-val">Famille Martin · Oscar — Labrador · né 10/03/2021 · puce 250-269-811-800-001</span></div>
+          <div class="item"><span class="item-label">Client secondaire</span><span class="item-val">Paul Leroy · Mila — Beagle · née 22/07/2022</span></div>
+          <div class="item"><span class="item-label">Prestation phare</span><span class="item-val">Pension 7 nuits 175€ + visite vétérinaire incluse si besoin</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="alert warn" style="margin-top:12px;">Insister sur la gestion multi-animaux simultanés · les photos envoyées aux propriétaires · le contrat de garde · la facturation à la nuit.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">01</span><span class="section-title">Séquences — 7 min</span></div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">0:00</span><span class="seq-title">Intro · Pension en pleine activité</span><span class="seq-dur">25 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Dashboard : 8 animaux en pension aujourd'hui · CA semaine · planning</div>
+          <div class="seq-action">Agenda semaine : séances pension · gardes · visites colorées</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Ce lundi matin : 8 animaux en pension, 3 visites à domicile planifiées, 2 promenades. PetSuite gère tout — le planning, les contrats, la facturation à la nuit. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">0:25</span><span class="seq-title">Nouveau client + fiche santé animale</span><span class="seq-dur">45 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Clients → Famille Martin · urgence vétérinaire : Dr Fournier 04 50 XX XX XX</div>
+          <div class="seq-action">Animal → Oscar · Labrador · puce 250-269-811-800-001</div>
+          <div class="seq-action">Onglet Santé : allergique au poulet · médicament matin · vaccins à jour</div>
+          <div class="seq-action">Commentaire : "Dort dans sa caisse · jouet préféré : ball"</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« L'onglet Santé d'Oscar est crucial en pension — allergie au poulet, médicament le matin, contact vétérinaire d'urgence. Ces informations sont visibles à chaque séance. Aucun risque d'oubli. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">1:10</span><span class="seq-title">Contrat de garde + devis</span><span class="seq-dur">40 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Templates devis → Métier pension → "Pension 7 nuits"</div>
+          <div class="seq-action">7 nuits × 25€ = 175€ HT · dates 15/07 → 22/07/2026</div>
+          <div class="seq-action">Envoyer par email · signature Yousign</div>
+          <div class="seq-action">Contrat signé électroniquement</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le contrat de pension est généré depuis le template — dates, tarifs, conditions. Il est signé électroniquement par le propriétaire depuis son téléphone. Tout est légalement opposable. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">1:50</span><span class="seq-title">Planification séjour pension</span><span class="seq-dur">40 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Agenda → créer 7 séances "Pension nuit" · Oscar · du 15 au 22/07</div>
+          <div class="seq-action">Vue semaine : blocs pension visibles sur toute la semaine</div>
+          <div class="seq-action">Simultanément : Mila en garde journée les mêmes jours</div>
+          <div class="seq-action">Montrer la densité de l'agenda : 8 animaux gérés en parallèle</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La pension de 7 nuits d'Oscar est planifiée d'un coup. En parallèle, Mila est en garde journée — l'agenda gère plusieurs animaux simultanément, avec une vue claire de la capacité disponible. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">2:30</span><span class="seq-title">Compte-rendu quotidien + photos</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Séance pension J2 → compte-rendu : "Oscar a bien mangé · 2 promenades · très joueur"</div>
+          <div class="seq-action">GED → ajouter 2 photos d'Oscar dans le jardin</div>
+          <div class="seq-action">Portail client → propriétaire voit les photos et le compte-rendu</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Chaque jour, un compte-rendu avec les photos d'Oscar est accessible aux propriétaires via le portail client — sans appels, sans WhatsApp. Ils voient que leur chien est heureux. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">3:05</span><span class="seq-title">Visites à domicile + promenades</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Séances → Visite domicile Paul Leroy · Mila · 12€</div>
+          <div class="seq-action">Promenade Mila 45 min · compte-rendu rapide</div>
+          <div class="seq-action">Facturation à la séance · groupement mensuel possible</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Les visites à domicile et promenades sont gérées comme des séances — tracées, facturées. En fin de mois, une facture groupée est générée automatiquement pour chaque propriétaire. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">3:40</span><span class="seq-title">Formulaire lead pension</span><span class="seq-dur">30 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">QR code → /questionnaire?type=pension</div>
+          <div class="seq-action">Formulaire : race · dates souhaitées · allergies · médicaments</div>
+          <div class="seq-action">Lead CRM : toutes les infos pré-remplies pour la prise de contact</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Le formulaire pension demande les infos essentielles — dates, race, allergies, médicaments. Vous recevez un lead CRM complet, prêt à être converti en contrat de garde. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">4:10</span><span class="seq-title">Facturation fin de séjour</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Facture séjour Oscar : 7 nuits × 25€ = 175€ TTC</div>
+          <div class="seq-action">Ajoute promenade supplémentaire +15€ → 190€ TTC</div>
+          <div class="seq-action">Règlement CB · NF525 · quittance envoyée par email</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La facture du séjour est générée au retour d'Oscar — 7 nuits plus une promenade supplémentaire. Le règlement est encaissé, la quittance envoyée par email. Conforme NF525. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">4:45</span><span class="seq-title">Statistiques & remplissage</span><span class="seq-dur">35 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Statistiques → taux remplissage par semaine · revenus par prestation</div>
+          <div class="seq-action">Pension : 68% · Garde journée : 45% · Promenade : 82%</div>
+          <div class="seq-action">Identifier les créneaux sous-utilisés</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« Les statistiques montrent le taux de remplissage par type de prestation. Les promenades sont à 82% — les gardes journée peuvent être développées. Ces données guident vos décisions commerciales. »</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq">
+      <div class="seq-header"><span class="seq-time">5:20</span><span class="seq-title">FEC + Clôture + Outro</span><span class="seq-dur">100 sec</span></div>
+      <div class="seq-body">
+        <div><div class="seq-col-title">Actions</div><div class="seq-actions">
+          <div class="seq-action">Comptabilité → Clôture Z · total juillet</div>
+          <div class="seq-action">Export FEC · télécharger</div>
+          <div class="seq-action">Dashboard : CA mensuel · nombre d'animaux accueillis</div>
+        </div></div>
+        <div><div class="seq-col-title">Narration</div>
+          <div class="seq-narration">« La clôture de caisse mensuelle en un clic — conforme NF525. L'export FEC pour votre comptable est prêt. PetSuite — pour les pensions et pet-sitters qui veulent gérer leur activité en professionnel. Essai gratuit 30 jours sur petsuite.fr »</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">02</span><span class="section-title">Récapitulatif minutage</span></div>
+    <table class="recap-table">
+      <thead><tr><th>#</th><th>Séquence</th><th>Durée</th><th>Cumulé</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Intro · 8 animaux en pension</td><td>0:25</td><td>0:25</td></tr>
+        <tr><td>2</td><td>Client + fiche santé (allergies, médicaments)</td><td>0:45</td><td>1:10</td></tr>
+        <tr><td>3</td><td>Contrat de garde + signature Yousign</td><td>0:40</td><td>1:50</td></tr>
+        <tr><td>4</td><td>Planification séjour 7 nuits</td><td>0:40</td><td>2:30</td></tr>
+        <tr><td>5</td><td>Compte-rendu quotidien + photos portail</td><td>0:35</td><td>3:05</td></tr>
+        <tr><td>6</td><td>Visites domicile + promenades</td><td>0:35</td><td>3:40</td></tr>
+        <tr><td>7</td><td>Formulaire lead ?type=pension</td><td>0:30</td><td>4:10</td></tr>
+        <tr><td>8</td><td>Facturation fin de séjour NF525</td><td>0:35</td><td>4:45</td></tr>
+        <tr><td>9</td><td>Statistiques taux remplissage</td><td>0:35</td><td>5:20</td></tr>
+        <tr><td>10</td><td>FEC · Clôture · Outro</td><td>1:40</td><td>7:00</td></tr>
+      </tbody>
+    </table>
+    <div class="alert info" style="margin-top:12px;"><strong>Spécificité pension :</strong> Insister sur la gestion multi-animaux simultanés · l'onglet Santé (allergies, médicaments) · les photos quotidiennes portail client · la facturation à la nuit.</div>
+  </div>
+
+</div><!-- /panel-pension -->
+
+</div><!-- /main -->
+
+<footer>
+  <div><strong>PetSuite</strong> — Scénarios vidéo par métier · S33 · 18/03/2026</div>
+  <div>4 métiers · 7 min chacun · Confidentiel usage interne</div>
+</footer>
+
+<script>
+function showMetier(id, el) {
+  // Masquer tous les panels
+  document.querySelectorAll('.metier-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.metier-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  // Afficher le panel sélectionné
+  document.getElementById('panel-' + id).classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+
+</body>
+</html>
