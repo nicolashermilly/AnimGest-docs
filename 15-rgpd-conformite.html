@@ -1,52 +1,608 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — RGPD & Conformité</title><style>:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — RGPD & Conformité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f2;--bg2:#ffffff;--bg3:#eeebe6;--bg4:#e5e1da;
+  --border:#dedad3;--border2:#c8c3bb;
+  --ink:#1a1714;--ink2:#5c5650;--ink3:#9c9590;
+  --green:#1a6640;--green2:#e8f5ef;--green3:#c5e8d5;
+  --amber:#8a5c0a;--amber2:#fef3e2;
+  --blue:#1a4fa0;--blue2:#e8f0fb;
+  --red:#9a2020;--red2:#fdeaea;
+  --purple:#5a3fa0;--purple2:#ede8fc;
+  --gold:#7a5500;--gold2:#fdf3d8;
+  --r:10px;--rs:6px;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
-.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
-.header h1{font-size:2.5rem;font-weight:800;color:#fff;}.header p{color:var(--accent2);margin-top:8px;}
-.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
-.container{max-width:1100px;margin:0 auto;padding:32px;}.section{margin-bottom:40px;}
-.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
-.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
-.section p{color:var(--text2);margin-bottom:10px;}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
-.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:8px;}.card p,.card li{font-size:.875rem;color:var(--text2);}
-ul{list-style:none;padding:0;}li{padding:3px 0;display:flex;gap:6px;}li::before{content:'→';color:var(--accent);flex-shrink:0;}
-table{width:100%;border-collapse:collapse;margin:12px 0;}
-th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
-td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}tr:hover td{background:var(--surface);}
-.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.nf-box{background:rgba(16,185,129,.08);border-left:3px solid #10b981;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);}
-.new{background:var(--green);color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;vertical-align:middle;}
-footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}</style></head>
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;}
+nav{background:#12151c;padding:0 36px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.06);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:#22d3a0;flex-shrink:0;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.nav-badge{font-family:'DM Mono',monospace;font-size:10px;background:#e8f5ef;color:#1a6640;padding:3px 10px;border-radius:20px;border:1px solid #c5e8d5;}
+.nav-back{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.12);border-radius:20px;transition:all .15s;}
+.nav-back:hover{color:#fff;border-color:rgba(255,255,255,.3);}
+.hero{background:#12151c;padding:52px 40px 44px;border-bottom:3px solid #1a6640;}
+.hero-label{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:8px;}
+.hero h1 em{font-style:italic;color:#22d3a0;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);max-width:600px;line-height:1.6;}
+.container{max-width:1000px;margin:0 auto;padding:36px 36px 80px;}
+.section{margin-bottom:44px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+.section-dot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:-.2px;}
+.section-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;}
+.card-title{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.ci-green{background:var(--green2);}
+.ci-amber{background:var(--amber2);}
+.ci-blue{background:var(--blue2);}
+.ci-red{background:var(--red2);}
+.ci-purple{background:var(--purple2);}
+.ci-gold{background:var(--gold2);}
+.ci-teal{background:#d0f0f0;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--bg3);}
+.item:last-child{border-bottom:none;padding-bottom:0;}
+.item-label{font-size:12px;font-weight:500;color:var(--ink);min-width:150px;flex-shrink:0;}
+.item-val{font-size:12px;color:var(--ink2);line-height:1.4;}
+.item-list{display:flex;flex-direction:column;}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.p-green{background:var(--green2);color:var(--green);}
+.p-amber{background:var(--amber2);color:var(--amber);}
+.p-blue{background:var(--blue2);color:var(--blue);}
+.p-red{background:var(--red2);color:var(--red);}
+.p-purple{background:var(--purple2);color:var(--purple);}
+.p-gold{background:var(--gold2);color:var(--gold);}
+.p-gray{background:var(--bg3);color:var(--ink2);border:1px solid var(--border);}
+.callout{border-left:3px solid var(--green);background:var(--green2);padding:13px 17px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;color:var(--ink2);margin:12px 0;}
+.callout.amber{border-color:var(--amber);background:var(--amber2);}
+.callout.blue{border-color:var(--blue);background:var(--blue2);}
+.callout.red{border-color:var(--red);background:var(--red2);}
+.alert{border-left:3px solid var(--green);background:var(--green2);padding:12px 16px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;margin:10px 0;}
+.alert.alert-info{border-color:var(--blue);background:var(--blue2);}
+.alert.alert-warn{border-color:var(--amber);background:var(--amber2);}
+.alert.alert-danger{border-color:var(--red);background:var(--red2);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);padding:8px 12px;border-bottom:2px solid var(--border);background:var(--bg3);}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg3);}
+.tw{overflow-x:auto;margin-bottom:4px;}
+code,.code{font-family:'DM Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 6px;border-radius:3px;color:var(--ink);}
+.code-block{background:#1a1d26;color:#e2ddd8;border-radius:var(--rs);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+footer{background:#12151c;color:rgba(255,255,255,.3);padding:18px 36px;font-size:11px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+footer strong{color:rgba(255,255,255,.6);font-family:'Playfair Display',serif;}
+@media(max-width:768px){
+  .hero{padding:36px 20px 28px;}.hero h1{font-size:28px;}
+  .container{padding:24px 16px 60px;}
+  nav{padding:0 16px;}
+  .grid2,.grid3{grid-template-columns:1fr;}
+}
+</style>
+</head>
 <body>
-<div class="header"><h1>🔒 RGPD & Conformité</h1><p>Protection des données, droits utilisateurs et conformités légales</p><div class="badge">v4.0 — Sprint S30 — Mars 2026</div></div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="20-pilotage-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Pilotage</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a></nav>
-<div class="container">
-<div class="section"><h2>🔒 RGPD — Principes appliqués</h2>
-<div class="grid">
-  <div class="card"><h4>Minimisation des données</h4><p>Seules les données nécessaires au fonctionnement sont collectées. Pas de données de tracking publicitaire.</p></div>
-  <div class="card"><h4>Droit d'accès et rectification</h4><p>Les utilisateurs peuvent consulter et modifier leurs données via l'interface. Export disponible sur demande.</p></div>
-  <div class="card"><h4>Droit à l'effacement</h4><p>Suppression possible des données client sous réserve des obligations légales de conservation (6 ans FEC, NF525).</p></div>
-  <div class="card"><h4>Sécurité des données</h4><p>Mots de passe hachés (bcrypt). JWT expirant. MariaDB sur réseau interne. Sauvegardes chiffrées.</p></div>
-</div></div>
-<div class="section"><h2>📋 Registre de traitement</h2>
-<table><thead><tr><th>Traitement</th><th>Base légale</th><th>Durée de conservation</th></tr></thead><tbody>
-<tr><td>Données clients (tiers, contacts)</td><td>Contrat</td><td>Durée de la relation + 5 ans</td></tr>
-<tr><td>Données animaux</td><td>Contrat</td><td>Durée de la relation + 5 ans</td></tr>
-<tr><td>Factures et règlements</td><td>Obligation légale</td><td>10 ans (Code de commerce)</td></tr>
-<tr><td>Journal NF525</td><td>Obligation légale</td><td>6 ans (Art. 88 LF2016)</td></tr>
-<tr><td>Export FEC</td><td>Obligation légale</td><td>6 ans (Code des impôts)</td></tr>
-<tr><td>Journal d'audit</td><td>Intérêt légitime</td><td>2 ans</td></tr>
-<tr><td>Données CRM / Leads</td><td>Intérêt légitime</td><td>3 ans depuis dernier contact</td></tr>
-</tbody></table></div>
-<div class="section"><h2>🏛️ Conformité NF 525 <span class="new">S30</span></h2>
-<div class="nf-box"><p><strong>Art. 88 LF2016</strong> — PetSuite est conforme NF525 depuis S30. Le journal de caisse inaltérable SHA-256 garantit la traçabilité de tous les encaissements. Conservation 6 ans obligatoire dans les tables <code>nf525_journal_caisse</code> et <code>nf525_cloture</code>.</p></div></div>
-<div class="section"><h2>📒 Conformité FEC</h2>
-<p>L'export FEC (Fichier des Écritures Comptables) est conforme au format DGFiP. Il inclut les journaux Ventes (VT) et Banque (BQ) avec chaînage SHA-256 par exercice. Accessible via Comptabilité → Exercices → Générer FEC.</p></div></div>
-<footer>PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
-</body></html>
+<nav>
+  <a class="nav-brand" href="index.html"><div class="nav-dot"></div>PetSuite</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">← Index</a>
+    <span class="nav-badge">S33 · 18/03/2026</span>
+  </div>
+</nav>
+
+
+<div class="hero">
+  <div class="hero-tag">Conformité légale — Document vivant</div>
+  <h1>RGPD & <em>conformité</em></h1>
+  <p class="hero-sub">Registre des traitements, rôles responsable/sous-traitant, DPA, droits des personnes, durées de conservation, sécurité des données et plan de gestion des violations — pour PetSuite et ses clients professionnels.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-num">72h</div><div class="kpi-lbl">Délai notification CNIL</div></div>
+    <div class="kpi"><div class="kpi-num">30j</div><div class="kpi-lbl">Délai réponse droits</div></div>
+    <div class="kpi"><div class="kpi-num">5 ans</div><div class="kpi-lbl">Rétention comptable</div></div>
+    <div class="kpi"><div class="kpi-num">Art. 30</div><div class="kpi-lbl">Registre RGPD</div></div>
+  </div>
+</div>
+
+<div class="layout">
+<nav class="toc">
+  <div class="toc-title">Sommaire</div>
+  <a href="#s1" class="toc-h2">01. Rôles & responsabilités</a>
+  <a href="#s1-rt" class="toc-h3">Responsable traitement</a>
+  <a href="#s1-st" class="toc-h3">Sous-traitant</a>
+  <a href="#s1-chaine" class="toc-h3">Chaîne complète</a>
+  <a href="#s2" class="toc-h2">02. Registre des traitements</a>
+  <a href="#s2-petsuite" class="toc-h3">Traitements PetSuite</a>
+  <a href="#s2-pro" class="toc-h3">Traitements des pros</a>
+  <a href="#s3" class="toc-h2">03. DPA — Contrat ST</a>
+  <a href="#s3-clauses" class="toc-h3">Clauses obligatoires</a>
+  <a href="#s3-soustraitants" class="toc-h3">Sous-traitants ultérieurs</a>
+  <a href="#s4" class="toc-h2">04. Droits des personnes</a>
+  <a href="#s5" class="toc-h2">05. Durées de conservation</a>
+  <a href="#s6" class="toc-h2">06. Mesures de sécurité</a>
+  <a href="#s7" class="toc-h2">07. Violations de données</a>
+  <a href="#s8" class="toc-h2">08. Mentions légales</a>
+  <a href="#s8-ml" class="toc-h3">Mentions légales</a>
+  <a href="#s8-pc" class="toc-h3">Politique confidentialité</a>
+  <a href="#s9" class="toc-h2">09. Checklist conformité</a>
+</nav>
+
+<div class="main">
+
+<!-- 01 ROLES -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">Rôles & responsabilités</span></div>
+
+  <div class="alert alert-info">Le RGPD distingue deux rôles fondamentaux. Les confondre expose à des sanctions. Dans le modèle SaaS PetSuite, <strong>la chaîne comporte trois niveaux</strong>.</div>
+
+  <div class="subsection" id="s1-rt">
+    <div class="subsection-title">Responsable de traitement (RT)</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">👤</div>Définition</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Qui décide</span><span class="item-val">Les finalités ET les moyens du traitement</span></div>
+          <div class="item"><span class="item-label">Obligation</span><span class="item-val">Informer les personnes, garantir leurs droits, tenir le registre</span></div>
+          <div class="item"><span class="item-label">Responsabilité</span><span class="item-val">Première ligne vis-à-vis des personnes concernées et de la CNIL</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">🏢</div>RT dans PetSuite</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Données clients pros</span><span class="item-val"><span class="role-badge role-rt">PetSuite / SuperAdmin</span> — gère les comptes sociétés</span></div>
+          <div class="item"><span class="item-label">Données propriétaires</span><span class="item-val"><span class="role-badge role-rt">Le professionnel</span> — cabinet, comportementaliste</span></div>
+          <div class="item"><span class="item-label">Données animaux</span><span class="item-val"><span class="role-badge role-rt">Le professionnel</span> — décide du traitement</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s1-st">
+    <div class="subsection-title">Sous-traitant (ST)</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">⚙️</div>Définition</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Qui exécute</span><span class="item-val">Traite les données pour le compte du RT</span></div>
+          <div class="item"><span class="item-label">Obligation</span><span class="item-val">Agir uniquement sur instruction documentée du RT</span></div>
+          <div class="item"><span class="item-label">Contrat</span><span class="item-val">DPA (Data Processing Agreement) obligatoire avec chaque RT</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🔧</div>ST dans PetSuite</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">PetSuite vis-à-vis des pros</span><span class="item-val"><span class="role-badge role-st">Sous-traitant</span> — héberge et traite les données métier des pros</span></div>
+          <div class="item"><span class="item-label">Hetzner vis-à-vis de PetSuite</span><span class="item-val"><span class="role-badge role-st">Sous-traitant</span> — hébergeur physique des serveurs</span></div>
+          <div class="item"><span class="item-label">GoCardless</span><span class="item-val"><span class="role-badge role-st">Sous-traitant</span> — traite les données bancaires SEPA</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s1-chaine">
+    <div class="subsection-title">Chaîne complète des rôles</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Niveau</th><th>Entité</th><th>Rôle</th><th>Données concernées</th><th>DPA requis avec</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Propriétaire animal / Client pro</td><td><span class="role-badge role-rt">Personne concernée</span></td><td>Ses propres données</td><td>—</td></tr>
+          <tr><td>2</td><td>Cabinet comportementaliste</td><td><span class="role-badge role-rt">Responsable de traitement</span></td><td>Données propriétaires, animaux, séances</td><td>Signer DPA avec PetSuite</td></tr>
+          <tr><td>3</td><td>PetSuite / SuperAdmin</td><td><span class="role-badge role-both">RT (ses données) + ST (données pros)</span></td><td>Données d'abonnement + toutes données hébergées</td><td>DPA Hetzner, GoCardless, Mailgun</td></tr>
+          <tr><td>4</td><td>Hetzner Cloud</td><td><span class="role-badge role-st">Sous-traitant ultérieur</span></td><td>Toutes données physiquement hébergées</td><td>Contrat Hetzner (DPA EU inclus)</td></tr>
+          <tr><td>4</td><td>GoCardless</td><td><span class="role-badge role-st">Sous-traitant ultérieur</span></td><td>IBAN, données bancaires</td><td>Contrat GoCardless (DPA EU inclus)</td></tr>
+          <tr><td>4</td><td>Mailgun / Twilio</td><td><span class="role-badge role-st">Sous-traitant ultérieur</span></td><td>Emails, numéros de téléphone</td><td>DPA Mailgun / Twilio</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-warn">PetSuite a la double casquette : <strong>RT</strong> pour ses propres données clients (abonnements, facturation) et <strong>ST</strong> pour les données métier hébergées pour le compte des pros. Cette dualité est courante dans le SaaS B2B.</div>
+  </div>
+</div>
+
+<!-- 02 REGISTRE -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">Registre des traitements (Art. 30 RGPD)</span></div>
+  <div class="alert alert-info" style="margin-bottom:20px;">Obligatoire pour toute organisation traitant des données personnelles. PetSuite tient deux registres : l'un en tant que RT (ses propres données clients), l'autre en tant que ST (données des tenants).</div>
+
+  <div class="subsection" id="s2-petsuite">
+    <div class="subsection-title">Registre PetSuite — en tant que Responsable de traitement</div>
+
+    <div class="traitement-card">
+      <div class="traitement-header"><span class="traitement-title">T01 — Gestion des abonnements clients professionnels</span><span class="traitement-id">RT-PTS-001</span></div>
+      <div class="traitement-body">
+        <div class="traitement-cell"><div class="traitement-key">Finalité</div><div class="traitement-val">Gestion des contrats, facturation, SEPA</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Base légale</div><div class="traitement-val">Art. 6.1.b — Exécution du contrat</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Catégories de données</div><div class="traitement-val">Nom, email, SIRET, IBAN chiffré, données de facturation</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Personnes concernées</div><div class="traitement-val">Administrateurs des sociétés clientes</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Durée conservation</div><div class="traitement-val">Durée contrat + 5 ans (comptabilité)</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Destinataires</div><div class="traitement-val">GoCardless (SEPA), Hetzner (hébergement)</div></div>
+        <div class="traitement-full"><div class="traitement-key">Transferts hors UE</div><div class="traitement-val">Aucun — GoCardless EU, Hetzner EU (Allemagne)</div></div>
+      </div>
+    </div>
+
+    <div class="traitement-card">
+      <div class="traitement-header"><span class="traitement-title">T02 — Portail super admin & audit plateforme</span><span class="traitement-id">RT-PTS-002</span></div>
+      <div class="traitement-body">
+        <div class="traitement-cell"><div class="traitement-key">Finalité</div><div class="traitement-val">Supervision technique, sécurité, anti-fraude</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Base légale</div><div class="traitement-val">Art. 6.1.f — Intérêt légitime (sécurité)</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Catégories de données</div><div class="traitement-val">Logs d'accès, adresses IP, actions administratives</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Personnes concernées</div><div class="traitement-val">Super admin, admins sociétés</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Durée conservation</div><div class="traitement-val">12 mois pour logs d'accès — illimité pour audit critique</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Destinataires</div><div class="traitement-val">Hetzner (hébergement logs)</div></div>
+      </div>
+    </div>
+
+    <div class="traitement-card">
+      <div class="traitement-header"><span class="traitement-title">T03 — Communications commerciales & support</span><span class="traitement-id">RT-PTS-003</span></div>
+      <div class="traitement-body">
+        <div class="traitement-cell"><div class="traitement-key">Finalité</div><div class="traitement-val">Emails transactionnels, support, notifications SEPA</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Base légale</div><div class="traitement-val">Art. 6.1.b — Contrat (transactionnel) / 6.1.a — Consentement (marketing)</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Catégories de données</div><div class="traitement-val">Email, nom, historique interactions</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Personnes concernées</div><div class="traitement-val">Admins sociétés clientes</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Durée conservation</div><div class="traitement-val">Durée contrat + 3 ans (prospection)</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Destinataires</div><div class="traitement-val">Mailgun (routage emails)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-pro">
+    <div class="subsection-title">Registre PetSuite — en tant que Sous-traitant (données des pros)</div>
+    <div class="alert alert-info" style="margin-bottom:14px;">En tant que ST, PetSuite tient également un registre des catégories de traitements effectués pour le compte des responsables (art. 30.2). Chaque professionnel client doit lui-même tenir son propre registre RT.</div>
+
+    <div class="traitement-card">
+      <div class="traitement-header"><span class="traitement-title">ST01 — Hébergement données métier des professionnels</span><span class="traitement-id">ST-PTS-001</span></div>
+      <div class="traitement-body">
+        <div class="traitement-cell"><div class="traitement-key">Catégories de traitements</div><div class="traitement-val">Gestion clients, animaux, séances, facturation, GED, CRM</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Responsables de traitement</div><div class="traitement-val">Chaque professionnel client (cabinet, éleveur, comportementaliste)</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Catégories de personnes</div><div class="traitement-val">Propriétaires d'animaux, contacts, tiers fournisseurs</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Catégories de données</div><div class="traitement-val">Identité, coordonnées, données comportementales animaux, données financières</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Transferts hors UE</div><div class="traitement-val">Aucun — tout hébergé Hetzner EU</div></div>
+        <div class="traitement-cell"><div class="traitement-key">Mesures sécurité</div><div class="traitement-val">Isolation par schema, chiffrement TLS, backup chiffré, accès SSH clé</div></div>
+      </div>
+    </div>
+
+    <div class="subsection-title" style="margin-top:16px;">Registre type pour les professionnels clients</div>
+    <div class="alert alert-warn">Chaque professionnel utilisant PetSuite doit tenir son propre registre RT. PetSuite peut leur fournir un modèle (valeur ajoutée du service).</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Traitement</th><th>Finalité</th><th>Base légale</th><th>Durée</th></tr></thead>
+        <tbody>
+          <tr><td>Gestion clientèle propriétaires</td><td>Suivi commercial, facturation, relation client</td><td>Art. 6.1.b — Contrat de service</td><td>Durée relation + 5 ans</td></tr>
+          <tr><td>Suivi comportemental animaux</td><td>Prestation comportementaliste — dossier EC, CAC</td><td>Art. 6.1.b — Contrat de service</td><td>Durée relation + 3 ans</td></tr>
+          <tr><td>Facturation & comptabilité</td><td>Obligations comptables et fiscales</td><td>Art. 6.1.c — Obligation légale</td><td>10 ans (Code commerce)</td></tr>
+          <tr><td>GED — documents clients</td><td>Archivage des pièces justificatives</td><td>Art. 6.1.b — Contrat</td><td>Durée relation + 5 ans</td></tr>
+          <tr><td>CRM & prospection</td><td>Suivi commercial prospects/leads</td><td>Art. 6.1.f — Intérêt légitime</td><td>3 ans sans contact</td></tr>
+          <tr><td>Portail client (partage dossier)</td><td>Accès propriétaire à son dossier animal</td><td>Art. 6.1.a — Consentement</td><td>Durée relation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 03 DPA -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">DPA — Accord de traitement des données</span></div>
+  <div class="alert alert-info" style="margin-bottom:16px;">Le DPA (Data Processing Agreement) est le contrat obligatoire entre PetSuite (ST) et chaque professionnel client (RT), exigé par l'art. 28 RGPD. Il doit être signé avant tout traitement.</div>
+
+  <div class="subsection" id="s3-clauses">
+    <div class="subsection-title">Clauses obligatoires (art. 28.3 RGPD)</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Clause</th><th>Contenu requis</th><th>Statut PetSuite</th></tr></thead>
+        <tbody>
+          <tr><td>Objet & durée</td><td>Description du traitement, durée alignée sur le contrat commercial</td><td><span class="pill pill-todo">À rédiger</span></td></tr>
+          <tr><td>Instructions documentées</td><td>ST traite uniquement sur instruction du RT — instructions incluses dans les CGV</td><td><span class="pill pill-todo">À rédiger</span></td></tr>
+          <tr><td>Confidentialité</td><td>Personnel autorisé soumis à obligation de confidentialité</td><td><span class="pill pill-todo">À rédiger</span></td></tr>
+          <tr><td>Mesures de sécurité</td><td>Référence aux mesures techniques (art. 32) — voir section 06</td><td><span class="pill pill-todo">À rédiger</span></td></tr>
+          <tr><td>Sous-traitants ultérieurs</td><td>Liste des ST (Hetzner, GoCardless…) + autorisation générale ou spécifique</td><td><span class="pill pill-todo">À rédiger</span></td></tr>
+          <tr><td>Assistance au RT</td><td>Aide pour répondre aux droits des personnes et aux demandes CNIL</td><td><span class="pill pill-todo">À rédiger</span></td></tr>
+          <tr><td>Sort des données</td><td>Restitution ou suppression en fin de contrat — délais définis</td><td><span class="pill pill-ok">Dans CGV</span></td></tr>
+          <tr><td>Audit</td><td>Droit d'audit du RT — modalités pratiques définies</td><td><span class="pill pill-todo">À rédiger</span></td></tr>
+          <tr><td>Violation de données</td><td>Notification au RT dans les 24h d'une violation détectée</td><td><span class="pill pill-todo">À rédiger</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-warn">Le DPA peut être intégré directement dans les CGV (Annexe DPA) ou constituer un document séparé. L'intégrer dans les CGV simplifie la gestion à l'échelle SaaS — à valider avec un juriste.</div>
+  </div>
+
+  <div class="subsection" id="s3-soustraitants">
+    <div class="subsection-title">Liste des sous-traitants ultérieurs à déclarer</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Prestataire</th><th>Pays</th><th>Traitement</th><th>DPA disponible</th></tr></thead>
+        <tbody>
+          <tr><td>Hetzner Cloud</td><td>🇩🇪 Allemagne (UE)</td><td>Hébergement serveurs, stockage</td><td><span class="pill pill-ok">Oui — contrat standard</span></td></tr>
+          <tr><td>GoCardless</td><td>🇬🇧 UK / 🇪🇺 UE</td><td>Traitement mandats SEPA, prélèvements</td><td><span class="pill pill-ok">Oui — certifié</span></td></tr>
+          <tr><td>Mailgun (Sinch)</td><td>🇺🇸 USA → SCC</td><td>Routage emails transactionnels</td><td><span class="pill pill-ok">Oui — SCC incluses</span></td></tr>
+          <tr><td>Twilio</td><td>🇺🇸 USA → SCC</td><td>SMS rappels</td><td><span class="pill pill-ok">Oui — SCC incluses</span></td></tr>
+          <tr><td>Stripe</td><td>🇮🇪 Irlande (UE)</td><td>Paiement CB portail client</td><td><span class="pill pill-ok">Oui — certifié</span></td></tr>
+          <tr><td>Yousign</td><td>🇫🇷 France (UE)</td><td>Signature électronique</td><td><span class="pill pill-ok">Oui — eIDAS</span></td></tr>
+          <tr><td>GitHub (Microsoft)</td><td>🇺🇸 USA → SCC</td><td>Code source + CI/CD</td><td><span class="pill pill-ok">Oui — SCC</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-info">SCC = Standard Contractual Clauses — mécanisme légal permettant les transferts hors UE post-Schrems II. Mailgun, Twilio et GitHub en USA sont couverts par ces clauses.</div>
+  </div>
+</div>
+
+<!-- 04 DROITS -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">Droits des personnes concernées</span></div>
+  <div class="alert alert-info" style="margin-bottom:16px;">Les personnes concernées par les données des professionnels (propriétaires d'animaux, contacts) doivent exercer leurs droits directement auprès du professionnel (RT). PetSuite (ST) assiste le professionnel dans ce traitement.</div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">⚖️</div>Droits des propriétaires (vis-à-vis du pro)</div>
+      <div class="droit-row">
+        <div class="droit-icon" style="background:var(--blue2);">ℹ️</div>
+        <div><div class="droit-title">Droit d'information</div><div class="droit-desc">Informé via mentions légales dans le portail client. Le pro est responsable de cette information.</div><div class="droit-delai">Immédiat — à la collecte</div></div>
+      </div>
+      <div class="droit-row">
+        <div class="droit-icon" style="background:var(--accent3);">👁</div>
+        <div><div class="droit-title">Droit d'accès</div><div class="droit-desc">Le portail client est l'outil d'accès natif. Le propriétaire voit ses données directement.</div><div class="droit-delai">30 jours maximum</div></div>
+      </div>
+      <div class="droit-row">
+        <div class="droit-icon" style="background:var(--gold2);">✏️</div>
+        <div><div class="droit-title">Droit de rectification</div><div class="droit-desc">Le propriétaire contacte le pro — le pro corrige dans l'application. Pas d'accès direct en écriture.</div><div class="droit-delai">30 jours maximum</div></div>
+      </div>
+      <div class="droit-row">
+        <div class="droit-icon" style="background:var(--red2);">🗑</div>
+        <div><div class="droit-title">Droit à l'effacement</div><div class="droit-desc">Le pro peut supprimer le dossier. Attention aux obligations de conservation comptable (5 ans).</div><div class="droit-delai">30 jours — sauf exceptions légales</div></div>
+      </div>
+      <div class="droit-row">
+        <div class="droit-icon" style="background:var(--purple2);">📦</div>
+        <div><div class="droit-title">Droit à la portabilité</div><div class="droit-desc">Export CSV/PDF du dossier animal disponible via le portail ou sur demande au pro.</div><div class="droit-delai">30 jours maximum</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🏢</div>Droits des pros (vis-à-vis de PetSuite)</div>
+      <div class="droit-row">
+        <div class="droit-icon" style="background:var(--accent3);">👁</div>
+        <div><div class="droit-title">Droit d'accès à leurs données</div><div class="droit-desc">Le professionnel accède à toutes ses données via l'application. Export complet disponible sur demande.</div><div class="droit-delai">30 jours</div></div>
+      </div>
+      <div class="droit-row">
+        <div class="droit-icon" style="background:var(--red2);">🗑</div>
+        <div><div class="droit-title">Droit à l'effacement</div><div class="droit-desc">Déclenche la procédure de résiliation + archivage. Données conservées 5 ans (comptabilité) en cold storage.</div><div class="droit-delai">Délai résiliation + 5 ans</div></div>
+      </div>
+      <div class="droit-row">
+        <div class="droit-icon" style="background:var(--purple2);">📦</div>
+        <div><div class="droit-title">Droit à la portabilité</div><div class="droit-desc">Export complet en CSV + archive GED ZIP dans les 30 jours suivant la résiliation.</div><div class="droit-delai">30 jours après résiliation</div></div>
+      </div>
+      <div class="droit-row">
+        <div class="droit-icon" style="background:var(--gold2);">🔎</div>
+        <div><div class="droit-title">Droit d'audit</div><div class="droit-desc">Le pro peut demander un audit des mesures de sécurité — PetSuite fournit un rapport écrit ou accepte un audit tiers.</div><div class="droit-delai">À définir dans le DPA</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" style="margin-top:16px;">
+    <div class="subsection-title">Procédure de traitement des demandes</div>
+    <div class="card">
+      <div class="flow-step" style="padding-top:0;">
+        <div class="flow-step-num">1</div>
+        <div class="flow-step-body"><div class="flow-step-title">Réception de la demande</div><div class="flow-step-desc">Email à <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd8d8f948b9c9e84bd8d98898e88948998d39b8f">[email&#160;protected]</a> ou via formulaire de contact. Vérification d'identité obligatoire avant traitement.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <div class="flow-step-body"><div class="flow-step-title">Vérification identité</div><div class="flow-step-desc">Pièce d'identité si doute. Pour les pros : email admin du contrat suffit. Pour les personnes concernées par les données des pros : PetSuite redirige vers le pro (RT).</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <div class="flow-step-body"><div class="flow-step-title">Traitement dans les délais</div><div class="flow-step-desc">30 jours calendaires. Prorogation de 2 mois possible si complexité — notifier dans les 30 jours.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <div class="flow-step-body"><div class="flow-step-title">Réponse & archivage</div><div class="flow-step-desc">Réponse écrite par email. Archivage de la demande + réponse 5 ans (preuve de conformité).</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 CONSERVATION -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">Durées de conservation</span></div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Type de données</th><th>Durée active</th><th>Durée archivage</th><th>Base légale</th><th>Stockage</th></tr></thead>
+      <tbody>
+        <tr><td>Données d'abonnement (contrat, SIRET)</td><td>Durée contrat</td><td>5 ans post-résiliation</td><td>L123-22 Code commerce</td><td>BDD plateforme → cold storage</td></tr>
+        <tr><td>Données bancaires IBAN (chiffré)</td><td>Durée contrat</td><td>13 mois post-résiliation</td><td>Règles SEPA</td><td>BDD chiffrée AES-256</td></tr>
+        <tr><td>Factures & règlements (pros)</td><td>Exercice + 1 an</td><td>10 ans (comptabilité)</td><td>Art. L123-22 + L102B CGI</td><td>BDD → S3 Glacier</td></tr>
+        <tr><td>Données métier (animaux, séances)</td><td>Durée contrat pro</td><td>5 ans post-résiliation</td><td>Art. 6.1.b RGPD</td><td>Schema BDD → S3 Glacier</td></tr>
+        <tr><td>GED — documents métier</td><td>Durée contrat pro</td><td>5 ans post-résiliation</td><td>Art. 6.1.b RGPD</td><td>S3 hot → warm → cold</td></tr>
+        <tr><td>Logs d'accès serveurs</td><td>12 mois</td><td>—</td><td>Art. 6.1.f — Sécurité</td><td>Serveur → purge auto</td></tr>
+        <tr><td>Audit log plateforme</td><td>Illimité</td><td>Illimité</td><td>Art. 6.1.f — Sécurité + preuve</td><td>BDD plateforme</td></tr>
+        <tr><td>Emails transactionnels (logs)</td><td>3 mois</td><td>—</td><td>Art. 6.1.f — Sécurité</td><td>Mailgun → purge</td></tr>
+        <tr><td>Magic links portail client</td><td>7 jours (validité)</td><td>30 jours (hash)</td><td>Art. 6.1.b — Sécurité</td><td>BDD → purge cron</td></tr>
+        <tr><td>Données CRM prospects (leads)</td><td>3 ans sans contact</td><td>—</td><td>Art. 6.1.f — Intérêt légitime</td><td>BDD → purge cron</td></tr>
+        <tr><td>Partages carte identité (tokens)</td><td>15 min à 24h</td><td>5 ans (RGPD traçabilité)</td><td>Art. 6.1.a — Consentement</td><td>BDD (hash) → archive</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 06 SECURITE -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">Mesures de sécurité (Art. 32 RGPD)</span></div>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🔐</div>Chiffrement</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Transit</span><span class="item-val">TLS 1.3 obligatoire — HTTPS force</span></div>
+        <div class="item"><span class="item-label">Repos — BDD</span><span class="item-val">Volume chiffré Hetzner (AES-256)</span></div>
+        <div class="item"><span class="item-label">Repos — S3</span><span class="item-val">SSE-S3 AES-256 côté serveur</span></div>
+        <div class="item"><span class="item-label">IBAN</span><span class="item-val">Chiffrement applicatif AES-256 + KMS</span></div>
+        <div class="item"><span class="item-label">Backups</span><span class="item-val">GPG AES-256 avant upload S3</span></div>
+        <div class="item"><span class="item-label">Tokens</span><span class="item-val">Hash SHA-256 — jamais en clair en BDD</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-red">🛡</div>Contrôle d'accès</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Super admin</span><span class="item-val">MFA TOTP obligatoire</span></div>
+        <div class="item"><span class="item-label">SSH serveurs</span><span class="item-val">Clé uniquement — port non standard</span></div>
+        <div class="item"><span class="item-label">Isolation tenants</span><span class="item-val">Schema BDD séparé — pas d'accès croisé</span></div>
+        <div class="item"><span class="item-label">JWT</span><span class="item-val">Expiration 15 min — rotation refresh</span></div>
+        <div class="item"><span class="item-label">RBAC</span><span class="item-val">Rôles SUPERADMIN / ADMIN / USER / CLIENT</span></div>
+        <div class="item"><span class="item-label">Fail2ban</span><span class="item-val">Banissement après 5 échecs SSH</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🔍</div>Traçabilité & monitoring</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Audit log</span><span class="item-val">Toutes actions critiques (BDD immuable)</span></div>
+        <div class="item"><span class="item-label">Logs accès API</span><span class="item-val">Traefik access logs — 12 mois</span></div>
+        <div class="item"><span class="item-label">Alertes sécurité</span><span class="item-val">Prometheus + Grafana — anomalies en temps réel</span></div>
+        <div class="item"><span class="item-label">Uptime monitoring</span><span class="item-val">Uptime Kuma — status.petsuite.fr</span></div>
+        <div class="item"><span class="item-label">Sentry</span><span class="item-val">Erreurs applicatives — pas de données personnelles dans les stacks</span></div>
+        <div class="item"><span class="item-label">PIA (DPIA)</span><span class="item-val">À réaliser pour les traitements à risque élevé</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 VIOLATIONS -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Violations de données — Plan de réponse</span></div>
+  <div class="alert alert-danger" style="margin-bottom:16px;"><strong>Délai légal :</strong> notification à la CNIL dans les <strong>72 heures</strong> si la violation est susceptible d'engendrer un risque pour les droits des personnes (art. 33 RGPD). En cas de risque élevé : notification aussi aux personnes concernées (art. 34).</div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-red">🚨</div>Procédure en cas de violation</div>
+      <div class="flow-step" style="padding-top:0;">
+        <div class="flow-step-num">H+0</div>
+        <div class="flow-step-body"><div class="flow-step-title">Détection & containment</div><div class="flow-step-desc">Isoler le système compromis. Couper l'accès si nécessaire. Documenter l'incident (heure, source, données affectées).</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">H+4</div>
+        <div class="flow-step-body"><div class="flow-step-title">Évaluation du risque</div><div class="flow-step-desc">Nature des données affectées ? Combien de personnes ? Probabilité de dommage ? Gravité estimée (faible / élevée) ?</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">H+24</div>
+        <div class="flow-step-body"><div class="flow-step-title">Notification aux pros (RT)</div><div class="flow-step-desc">Email aux admins des tenants concernés — description incident + données affectées + mesures prises.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">H+72</div>
+        <div class="flow-step-body"><div class="flow-step-title">Notification CNIL</div><div class="flow-step-desc">Via notifications.cnil.fr — formulaire en ligne. Si délai impossible, envoyer notification partielle et compléter ensuite.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">Si risque élevé</div>
+        <div class="flow-step-body"><div class="flow-step-title">Notification aux personnes</div><div class="flow-step-desc">Email direct aux personnes concernées (propriétaires d'animaux) — description claire, recommandations, contact.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">Post</div>
+        <div class="flow-step-body"><div class="flow-step-title">Rapport post-mortem</div><div class="flow-step-desc">Documentation complète dans le registre des violations. Mesures correctives mises en place. Conservation 5 ans.</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">📝</div>Registre interne des violations</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Obligatoire</span><span class="item-val">Toutes violations documentées — même si non notifiées (art. 33.5)</span></div>
+        <div class="item"><span class="item-label">Contenu</span><span class="item-val">Nature, données, personnes, causes, conséquences, mesures</span></div>
+        <div class="item"><span class="item-label">Conservation</span><span class="item-val">5 ans minimum</span></div>
+      </div>
+      <div class="div"></div>
+      <div class="card-title" style="margin-bottom:8px;"><div class="card-icon icon-purple">📞</div>Contact CNIL</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Notifications</span><span class="item-val">notifications.cnil.fr</span></div>
+        <div class="item"><span class="item-label">Plaintes</span><span class="item-val">cnil.fr — formulaire en ligne</span></div>
+        <div class="item"><span class="item-label">Téléphone</span><span class="item-val">01 53 73 22 22</span></div>
+        <div class="item"><span class="item-label">DPO requis</span><span class="item-val">Pas obligatoire pour une TPE — mais recommandé à partir de 50 clients</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 MENTIONS -->
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">Mentions légales & politique de confidentialité</span></div>
+
+  <div class="subsection" id="s8-ml">
+    <div class="subsection-title">Mentions légales — éléments obligatoires</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🏢</div>Pour petsuite.fr (site vitrine)</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Éditeur</span><span class="item-val">Nom, prénom ou raison sociale, adresse, SIRET</span></div>
+          <div class="item"><span class="item-label">Hébergeur</span><span class="item-val">Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen, DE</span></div>
+          <div class="item"><span class="item-label">Responsable publication</span><span class="item-val">Identité du représentant légal</span></div>
+          <div class="item"><span class="item-label">Contact</span><span class="item-val">Email + téléphone de contact</span></div>
+          <div class="item"><span class="item-label">N° TVA intracommunautaire</span><span class="item-val">Si assujetti</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">🐾</div>Pour l'application *.petsuite.fr</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Double mention</span><span class="item-val">PetSuite (ST) + Professionnel (RT) clairement identifiés</span></div>
+          <div class="item"><span class="item-label">Données traitées</span><span class="item-val">Liste des catégories + finalités</span></div>
+          <div class="item"><span class="item-label">Droits</span><span class="item-val">Comment exercer les droits + contact DPO/responsable</span></div>
+          <div class="item"><span class="item-label">Cookies</span><span class="item-val">Bannière consentement cookies analytiques (si utilisés)</span></div>
+          <div class="item"><span class="item-label">Lien</span><span class="item-val">Vers politique de confidentialité complète</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s8-pc">
+    <div class="subsection-title">Politique de confidentialité — structure recommandée</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Section</th><th>Contenu clé</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Qui sommes-nous ?</td><td>Identité RT + ST, rôles expliqués simplement</td></tr>
+          <tr><td>2</td><td>Données collectées</td><td>Par catégorie : identification, coordonnées, données animaux, paiement, navigation</td></tr>
+          <tr><td>3</td><td>Pourquoi nous traitons vos données</td><td>Finalités + base légale pour chacune (tableau clair)</td></tr>
+          <tr><td>4</td><td>Qui accède à vos données</td><td>Équipe interne + sous-traitants listés + pas de vente à des tiers</td></tr>
+          <tr><td>5</td><td>Transferts hors UE</td><td>Mailgun/Twilio USA — SCC en place — liste complète</td></tr>
+          <tr><td>6</td><td>Durée de conservation</td><td>Tableau par catégorie (voir section 05 ci-dessus)</td></tr>
+          <tr><td>7</td><td>Vos droits</td><td>Liste des droits + comment les exercer + délais de réponse</td></tr>
+          <tr><td>8</td><td>Sécurité</td><td>Mesures techniques résumées (sans détails exploitables)</td></tr>
+          <tr><td>9</td><td>Cookies</td><td>Types, durée, opt-out</td></tr>
+          <tr><td>10</td><td>Modifications</td><td>Notification des mises à jour — date dernière révision</td></tr>
+          <tr><td>11</td><td>Contact</td><td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1a6a68736c7b79635a6a7f6e696f736e7f347c68">[email&#160;protected]</a> + adresse postale</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 09 CHECKLIST -->
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><span class="section-title">Checklist conformité RGPD</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">📋</div>Documents à produire</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Registre des traitements</span><span class="item-val"><span class="pill pill-wip">ÉBAUCHE</span> Ce document — à finaliser + dater</span></div>
+        <div class="item"><span class="item-label">DPA (Annexe CGV)</span><span class="item-val"><span class="pill pill-todo">TODO</span> Rédiger — validation juriste recommandée</span></div>
+        <div class="item"><span class="item-label">Mentions légales</span><span class="item-val"><span class="pill pill-todo">TODO</span> Site vitrine + application</span></div>
+        <div class="item"><span class="item-label">Politique confidentialité</span><span class="item-val"><span class="pill pill-todo">TODO</span> 11 sections + mise en ligne</span></div>
+        <div class="item"><span class="item-label">Registre des violations</span><span class="item-val"><span class="pill pill-todo">TODO</span> Modèle de fiche à créer</span></div>
+        <div class="item"><span class="item-label">Modèle registre RT (pros)</span><span class="item-val"><span class="pill pill-todo">TODO</span> À fournir aux clients comme service</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">⚙️</div>Mesures techniques</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Chiffrement IBAN</span><span class="item-val"><span class="pill pill-todo">TODO</span> AES-256 + KMS avant go-live</span></div>
+        <div class="item"><span class="item-label">Bannière cookies</span><span class="item-val"><span class="pill pill-todo">TODO</span> Si analytics utilisés</span></div>
+        <div class="item"><span class="item-label">Purge cron leads 3 ans</span><span class="item-val"><span class="pill pill-todo">TODO</span> Script automatique CRM</span></div>
+        <div class="item"><span class="item-label">Purge cron logs 12 mois</span><span class="item-val"><span class="pill pill-todo">TODO</span> Rotation Traefik logs</span></div>
+        <div class="item"><span class="item-label"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6b3b19021d0a08122b1b0e1f181e021f0e450d19">[email&#160;protected]</a></span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer boîte email dédiée</span></div>
+        <div class="item"><span class="item-label">DPA Hetzner signé</span><span class="item-val"><span class="pill pill-ok">OK</span> Inclus dans contrat standard</span></div>
+        <div class="item"><span class="item-label">DPA GoCardless signé</span><span class="item-val"><span class="pill pill-todo">TODO</span> À l'ouverture du compte</span></div>
+        <div class="item"><span class="item-label">DPA Mailgun signé</span><span class="item-val"><span class="pill pill-todo">TODO</span> SCC à accepter explicitement</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-warn" style="margin-top:14px;"><strong>Recommandation :</strong> faire relire le DPA et la politique de confidentialité par un avocat spécialisé RGPD avant le lancement commercial. Budget estimé : 1 000 à 3 000€ pour un cabinet spécialisé TPE/SaaS. Alternative : utilis

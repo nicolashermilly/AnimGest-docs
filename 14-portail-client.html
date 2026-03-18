@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Portail client propriétaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f2;--bg2:#ffffff;--bg3:#eeebe6;--bg4:#e5e1da;
+  --border:#dedad3;--border2:#c8c3bb;
+  --ink:#1a1714;--ink2:#5c5650;--ink3:#9c9590;
+  --green:#1a6640;--green2:#e8f5ef;--green3:#c5e8d5;
+  --amber:#8a5c0a;--amber2:#fef3e2;
+  --blue:#1a4fa0;--blue2:#e8f0fb;
+  --red:#9a2020;--red2:#fdeaea;
+  --purple:#5a3fa0;--purple2:#ede8fc;
+  --gold:#7a5500;--gold2:#fdf3d8;
+  --r:10px;--rs:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;}
+nav{background:#12151c;padding:0 36px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.06);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:#22d3a0;flex-shrink:0;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.nav-badge{font-family:'DM Mono',monospace;font-size:10px;background:#e8f5ef;color:#1a6640;padding:3px 10px;border-radius:20px;border:1px solid #c5e8d5;}
+.nav-back{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.12);border-radius:20px;transition:all .15s;}
+.nav-back:hover{color:#fff;border-color:rgba(255,255,255,.3);}
+.hero{background:#12151c;padding:52px 40px 44px;border-bottom:3px solid #1a6640;}
+.hero-label{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:8px;}
+.hero h1 em{font-style:italic;color:#22d3a0;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);max-width:600px;line-height:1.6;}
+.container{max-width:1000px;margin:0 auto;padding:36px 36px 80px;}
+.section{margin-bottom:44px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+.section-dot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:-.2px;}
+.section-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;}
+.card-title{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.ci-green{background:var(--green2);}
+.ci-amber{background:var(--amber2);}
+.ci-blue{background:var(--blue2);}
+.ci-red{background:var(--red2);}
+.ci-purple{background:var(--purple2);}
+.ci-gold{background:var(--gold2);}
+.ci-teal{background:#d0f0f0;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--bg3);}
+.item:last-child{border-bottom:none;padding-bottom:0;}
+.item-label{font-size:12px;font-weight:500;color:var(--ink);min-width:150px;flex-shrink:0;}
+.item-val{font-size:12px;color:var(--ink2);line-height:1.4;}
+.item-list{display:flex;flex-direction:column;}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.p-green{background:var(--green2);color:var(--green);}
+.p-amber{background:var(--amber2);color:var(--amber);}
+.p-blue{background:var(--blue2);color:var(--blue);}
+.p-red{background:var(--red2);color:var(--red);}
+.p-purple{background:var(--purple2);color:var(--purple);}
+.p-gold{background:var(--gold2);color:var(--gold);}
+.p-gray{background:var(--bg3);color:var(--ink2);border:1px solid var(--border);}
+.callout{border-left:3px solid var(--green);background:var(--green2);padding:13px 17px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;color:var(--ink2);margin:12px 0;}
+.callout.amber{border-color:var(--amber);background:var(--amber2);}
+.callout.blue{border-color:var(--blue);background:var(--blue2);}
+.callout.red{border-color:var(--red);background:var(--red2);}
+.alert{border-left:3px solid var(--green);background:var(--green2);padding:12px 16px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;margin:10px 0;}
+.alert.alert-info{border-color:var(--blue);background:var(--blue2);}
+.alert.alert-warn{border-color:var(--amber);background:var(--amber2);}
+.alert.alert-danger{border-color:var(--red);background:var(--red2);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);padding:8px 12px;border-bottom:2px solid var(--border);background:var(--bg3);}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg3);}
+.tw{overflow-x:auto;margin-bottom:4px;}
+code,.code{font-family:'DM Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 6px;border-radius:3px;color:var(--ink);}
+.code-block{background:#1a1d26;color:#e2ddd8;border-radius:var(--rs);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+footer{background:#12151c;color:rgba(255,255,255,.3);padding:18px 36px;font-size:11px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+footer strong{color:rgba(255,255,255,.6);font-family:'Playfair Display',serif;}
+@media(max-width:768px){
+  .hero{padding:36px 20px 28px;}.hero h1{font-size:28px;}
+  .container{padding:24px 16px 60px;}
+  nav{padding:0 16px;}
+  .grid2,.grid3{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="index.html"><div class="nav-dot"></div>PetSuite</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">← Index</a>
+    <span class="nav-badge">S33 · 18/03/2026</span>
+  </div>
+</nav>
+
+
+<div class="hero">
+  <div class="hero-tag">Spécification fonctionnelle — Document vivant</div>
+  <h1>Portail <em>propriétaire</em></h1>
+  <p class="hero-sub">Espace client dédié au propriétaire d'animal — consultation du dossier, suivi comportemental CAC, historique des séances, carte d'identité, documents et factures. Accessible sans installation, depuis mobile ou tablette.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-num">PWA</div><div class="kpi-lbl">Mobile first</div></div>
+    <div class="kpi"><div class="kpi-num">Lien</div><div class="kpi-lbl">Accès par email</div></div>
+    <div class="kpi"><div class="kpi-num">Lecture</div><div class="kpi-lbl">Seule — jamais d'écriture</div></div>
+    <div class="kpi"><div class="kpi-num">RGPD</div><div class="kpi-lbl">Consentement tracé</div></div>
+  </div>
+</div>
+
+<div class="layout">
+<nav class="toc">
+  <div class="toc-title">Sommaire</div>
+  <a href="#s1" class="toc-h2">01. Concept & périmètre</a>
+  <a href="#s2" class="toc-h2">02. Authentification</a>
+  <a href="#s2-magic" class="toc-h3">Magic link</a>
+  <a href="#s2-stripe" class="toc-h3">Stripe existant</a>
+  <a href="#s3" class="toc-h2">03. Pages & fonctionnalités</a>
+  <a href="#s3-accueil" class="toc-h3">Accueil</a>
+  <a href="#s3-animal" class="toc-h3">Dossier animal</a>
+  <a href="#s3-cac" class="toc-h3">Suivi CAC</a>
+  <a href="#s3-seances" class="toc-h3">Séances</a>
+  <a href="#s3-carte" class="toc-h3">Carte identité</a>
+  <a href="#s3-docs" class="toc-h3">Documents</a>
+  <a href="#s3-factures" class="toc-h3">Factures</a>
+  <a href="#s4" class="toc-h2">04. Maquettes écrans</a>
+  <a href="#s5" class="toc-h2">05. Notifications</a>
+  <a href="#s6" class="toc-h2">06. Architecture technique</a>
+  <a href="#s6-routes" class="toc-h3">Routes & API</a>
+  <a href="#s6-securite" class="toc-h3">Sécurité</a>
+  <a href="#s7" class="toc-h2">07. RGPD</a>
+  <a href="#s8" class="toc-h2">08. Checklist</a>
+</nav>
+
+<div class="main">
+
+<!-- 01 CONCEPT -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">Concept & périmètre</span></div>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🎯</div>Objectifs</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Transparence</span><span class="item-val">Le propriétaire voit l'avancement du travail sur son animal</span></div>
+        <div class="item"><span class="item-label">Engagement</span><span class="item-val">Valoriser le suivi comportemental — renforcer la fidélité</span></div>
+        <div class="item"><span class="item-label">Praticité</span><span class="item-val">Accès aux documents, factures et carte d'identité en un clic</span></div>
+        <div class="item"><span class="item-label">Différenciation</span><span class="item-val">Argument commercial pour le professionnel face à ses concurrents</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📋</div>Ce que le propriétaire peut faire</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Consulter</span><span class="item-val">Fiche de son animal, races, historique</span></div>
+        <div class="item"><span class="item-label">Suivre le CAC</span><span class="item-val">Score actuel, 14 critères, progression</span></div>
+        <div class="item"><span class="item-label">Voir les séances</span><span class="item-val">Dates, types, comptes-rendus partagés</span></div>
+        <div class="item"><span class="item-label">Télécharger</span><span class="item-val">Carte d'identité PDF, factures, documents partagés</span></div>
+        <div class="item"><span class="item-label">Payer</span><span class="item-val">Factures en attente via Stripe (déjà implémenté)</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-red">🚫</div>Ce qu'il ne peut PAS faire</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Modifier</span><span class="item-val">Aucune écriture — lecture seule stricte</span></div>
+        <div class="item"><span class="item-label">Voir les prix internes</span><span class="item-val">Tarifs HT, marges non exposés</span></div>
+        <div class="item"><span class="item-label">Voir d'autres clients</span><span class="item-val">Isolation totale — uniquement ses animaux</span></div>
+        <div class="item"><span class="item-label">Accéder à l'app métier</span><span class="item-val">Portail séparé — pas d'accès aux outils pro</span></div>
+        <div class="item"><span class="item-label">Modifier ses infos</span><span class="item-val">Coordonnées modifiables uniquement par le pro</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 AUTHENTIFICATION -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">Authentification</span></div>
+
+  <div class="subsection" id="s2-magic">
+    <div class="subsection-title">Magic link — accès sans mot de passe</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">✉️</div>Principe du magic link</div>
+        <div class="flow-step" style="padding-top:0;">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-body"><div class="flow-step-title">Le professionnel envoie l'invitation</div><div class="flow-step-desc">Depuis la fiche client dans l'app : bouton "Inviter au portail". Email envoyé au propriétaire avec lien unique.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-body"><div class="flow-step-title">Clic sur le lien</div><div class="flow-step-desc">Lien valable 7 jours. Redirige vers portail.{sous-domaine}.petsuite.fr — authentification automatique.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-body"><div class="flow-step-title">Session créée</div><div class="flow-step-desc">JWT client (rôle CLIENT) stocké en localStorage. Durée 30 jours. Renouvellement automatique si actif.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-body"><div class="flow-step-title">Reconnexion ultérieure</div><div class="flow-step-desc">L'email du propriétaire suffit — nouveau magic link envoyé en 1 clic depuis la page de connexion.</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🔐</div>Sécurité du magic link</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Token</span><span class="item-val">UUID v4 aléatoire — 128 bits d'entropie</span></div>
+          <div class="item"><span class="item-label">Stockage</span><span class="item-val">Hash SHA-256 en BDD — pas le token brut</span></div>
+          <div class="item"><span class="item-label">Validité</span><span class="item-val">7 jours maximum — usage unique (invalidé après clic)</span></div>
+          <div class="item"><span class="item-label">Scope</span><span class="item-val">Lié au TIE_ID du propriétaire + tenant_id</span></div>
+          <div class="item"><span class="item-label">HTTPS</span><span class="item-val">Obligatoire — jamais en HTTP</span></div>
+          <div class="item"><span class="item-label">Rate limit</span><span class="item-val">3 demandes/heure par email — anti-spam</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-stripe">
+    <div class="subsection-title">Intégration Stripe existante</div>
+    <div class="alert alert-ok">Stripe est déjà intégré dans le projet (Sprint 4). Le portail client réutilise ce module pour le paiement des factures — pas de nouveau développement requis.</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">💳</div>Flux de paiement</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Déclencheur</span><span class="item-val">Bouton "Payer" sur une facture ÉMISE</span></div>
+          <div class="item"><span class="item-label">Redirection</span><span class="item-val">Stripe Checkout — page hébergée Stripe</span></div>
+          <div class="item"><span class="item-label">Moyens</span><span class="item-val">CB, Apple Pay, Google Pay — selon config Stripe</span></div>
+          <div class="item"><span class="item-label">Retour</span><span class="item-val">Webhook Stripe → INSERT reglement + statut FAC → PAYÉE</span></div>
+          <div class="item"><span class="item-label">Confirmation</span><span class="item-val">Email automatique propriétaire + professionnel</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">✅</div>Ce qui est déjà fait</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Stripe SDK</span><span class="item-val">Intégré Sprint 4 dans smtp_server.js</span></div>
+          <div class="item"><span class="item-label">Portail client S4</span><span class="item-val">Base existante — à enrichir avec les nouvelles sections</span></div>
+          <div class="item"><span class="item-label">Webhooks</span><span class="item-val">payment_intent.succeeded déjà géré</span></div>
+        </div>
+        <div class="alert alert-info" style="margin-top:8px;">Le portail S4 existe mais est basique. Ce document spécifie son enrichissement complet.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 PAGES -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">Pages & fonctionnalités détaillées</span></div>
+
+  <div class="subsection" id="s3-accueil">
+    <div class="subsection-title">Page d'accueil portail</div>
+    <div class="card">
+      <div class="item-list">
+        <div class="item"><span class="item-label">Greeting</span><span class="item-val">"Bonjour [Prénom]" + nom du cabinet comportementaliste</span></div>
+        <div class="item"><span class="item-label">Mes animaux</span><span class="item-val">Cartes cliquables pour chaque animal du propriétaire — photo + nom + score CAC</span></div>
+        <div class="item"><span class="item-label">Prochaine séance</span><span class="item-val">Date et type de la prochaine séance planifiée (si partagée)</span></div>
+        <div class="item"><span class="item-label">Facture en attente</span><span class="item-val">Bandeau si facture ÉMISE non payée — bouton "Payer"</span></div>
+        <div class="item"><span class="item-label">Dernière mise à jour</span><span class="item-val">Date de la dernière modification du dossier</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-animal">
+    <div class="subsection-title">Dossier animal</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">🐾</div>Données affichées</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Photo</span><span class="item-val">Dernière photo GED — grande taille</span></div>
+          <div class="item"><span class="item-label">Identité</span><span class="item-val">Nom, races, date de naissance, âge calculé</span></div>
+          <div class="item"><span class="item-label">Puce</span><span class="item-val">Numéro affiché (identifiant universel)</span></div>
+          <div class="item"><span class="item-label">Comportementaliste</span><span class="item-val">Nom du professionnel référent + cabinet</span></div>
+          <div class="item"><span class="item-label">Score CAC</span><span class="item-val">N/14 avec barre de progression visuelle</span></div>
+          <div class="item"><span class="item-label">Commentaire partagé</span><span class="item-val">Observations que le pro choisit de partager</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🧭</div>Navigation onglets</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Onglet CAC</span><span class="item-val">Grille 14 critères + progression</span></div>
+          <div class="item"><span class="item-label">Onglet Séances</span><span class="item-val">Historique toutes séances</span></div>
+          <div class="item"><span class="item-label">Onglet Documents</span><span class="item-val">Fichiers partagés par le pro</span></div>
+          <div class="item"><span class="item-label">Onglet Carte ID</span><span class="item-val">Téléchargement carte identité PDF</span></div>
+        </div>
+        <div class="alert alert-info" style="margin-top:8px;">Si le propriétaire a plusieurs animaux, la navigation entre fiches se fait via le menu "Mes animaux" en haut.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-cac">
+    <div class="subsection-title">Suivi comportemental CAC</div>
+    <div class="card">
+      <div class="grid2" style="gap:20px;">
+        <div>
+          <div class="card-title" style="margin-bottom:10px;">Grille 14 critères</div>
+          <div class="item-list">
+            <div class="item"><span class="item-label">Affichage</span><span class="item-val">Libellés paramétrables (param_libelles_ec) — pas "CAC 1"</span></div>
+            <div class="item"><span class="item-label">Statut</span><span class="item-val">Acquis (vert ✓) / Non acquis (gris —)</span></div>
+            <div class="item"><span class="item-label">Score global</span><span class="item-val">N/14 en grand + barre de progression colorée</span></div>
+            <div class="item"><span class="item-label">Date</span><span class="item-val">Dernière mise à jour du CAC</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="card-title" style="margin-bottom:10px;">Graphique de progression</div>
+          <div class="item-list">
+            <div class="item"><span class="item-label">Type</span><span class="item-val">Courbe simple — score par séance dans le temps</span></div>
+            <div class="item"><span class="item-label">Source</span><span class="item-val">v_animal_evolution_cac</span></div>
+            <div class="item"><span class="item-label">Message</span><span class="item-val">Texte d'encouragement si progression positive</span></div>
+            <div class="item"><span class="item-label">Partage</span><span class="item-val">Bouton "Partager ce suivi" → génère URL signée carte ID</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-seances">
+    <div class="subsection-title">Historique des séances</div>
+    <div class="card">
+      <div class="item-list">
+        <div class="item"><span class="item-label">Séances affichées</span><span class="item-val">Uniquement les séances RÉALISÉES liées à cet animal</span></div>
+        <div class="item"><span class="item-label">Données visibles</span><span class="item-val">Date · Type · Lieu · Score CAC séance</span></div>
+        <div class="item"><span class="item-label">Compte-rendu</span><span class="item-val">Affiché uniquement si le pro a coché "Partager le CR" — sinon "Résumé non partagé"</span></div>
+        <div class="item"><span class="item-label">Prochaine séance</span><span class="item-val">Badge "À venir" si séance PLANIFIÉE dans le futur</span></div>
+        <div class="item"><span class="item-label">Données masquées</span><span class="item-val">Montants, règlements, commentaires internes professionnels</span></div>
+      </div>
+      <div class="alert alert-warn" style="margin-top:10px;">Le champ SEA_COMPTE_RENDU n'est visible côté client que si un flag <code>sea_partager_cr TINYINT(1)</code> est coché par le professionnel. À ajouter sur la table seance.</div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-carte">
+    <div class="subsection-title">Carte d'identité animale</div>
+    <div class="card">
+      <div class="item-list">
+        <div class="item"><span class="item-label">Accès</span><span class="item-val">Onglet "Carte ID" sur la fiche animal</span></div>
+        <div class="item"><span class="item-label">Prévisualisation</span><span class="item-val">Aperçu miniature de la carte avant téléchargement</span></div>
+        <div class="item"><span class="item-label">Téléchargement</span><span class="item-val">Bouton "Télécharger PDF" — génère la carte complète</span></div>
+        <div class="item"><span class="item-label">Partage</span><span class="item-val">Bouton "Copier lien de partage" → URL signée 15 min</span></div>
+        <div class="item"><span class="item-label">Consentement</span><span class="item-val">Confirmation avant partage : "Vous partagez les informations de [Nom animal]"</span></div>
+        <div class="item"><span class="item-label">Contenu</span><span class="item-val">Identité + CAC + 5 dernières séances (sans montants)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-docs">
+    <div class="subsection-title">Documents partagés</div>
+    <div class="card">
+      <div class="item-list">
+        <div class="item"><span class="item-label">Source</span><span class="item-val">Fichiers GED avec flag doc_partage_client = 1 (à ajouter sur ged_document_lien)</span></div>
+        <div class="item"><span class="item-label">Types</span><span class="item-val">Bilans PDF, photos, programmes d'exercices, attestations</span></div>
+        <div class="item"><span class="item-label">Téléchargement</span><span class="item-val">URL signée S3 — 15 min — générée à la demande</span></div>
+        <div class="item"><span class="item-label">Affichage</span><span class="item-val">Nom fichier + date dépôt + type (icône)</span></div>
+        <div class="item"><span class="item-label">Documents masqués</span><span class="item-val">Tout document sans flag partage — invisible côté client</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-factures">
+    <div class="subsection-title">Espace facturation</div>
+    <div class="card">
+      <div class="grid2" style="gap:20px;">
+        <div>
+          <div class="card-title" style="margin-bottom:8px;">Factures visibles</div>
+          <div class="item-list">
+            <div class="item"><span class="item-label">Statut ÉMISE</span><span class="item-val">Bouton "Payer" → Stripe Checkout</span></div>
+            <div class="item"><span class="item-label">Statut PAYÉE</span><span class="item-val">Badge vert + bouton "Télécharger PDF"</span></div>
+            <div class="item"><span class="item-label">Statut ANNULÉE</span><span class="item-val">Affichée grisée — pas de téléchargement</span></div>
+            <div class="item"><span class="item-label">Données affichées</span><span class="item-val">Numéro · Date · Total TTC · Statut</span></div>
+            <div class="item"><span class="item-label">Données masquées</span><span class="item-val">Détail lignes HT, TVA, marges</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="card-title" style="margin-bottom:8px;">Acomptes & avoirs</div>
+          <div class="item-list">
+            <div class="item"><span class="item-label">Acomptes</span><span class="item-val">Affichés si liés à une facture visible</span></div>
+            <div class="item"><span class="item-label">Avoirs</span><span class="item-val">Affichés avec montant — téléchargement PDF</span></div>
+            <div class="item"><span class="item-label">Total payé</span><span class="item-val">Récapitulatif en bas de page</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 MAQUETTES -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">Maquettes écrans mobile</span></div>
+  <div class="phone-wrap">
+
+    <!-- Accueil -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-hero">
+            <div class="phone-hero-logo">Pet<span>Suite</span></div>
+            <div class="phone-hero-sub">Cabinet Canin Harmonie</div>
+          </div>
+          <div class="phone-content">
+            <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:8px;">Bonjour Luc 👋</div>
+            <div class="phone-section-title">Mes animaux</div>
+            <div class="phone-animal-card">
+              <div class="phone-animal-photo">🐕</div>
+              <div style="flex:1;">
+                <div class="phone-animal-name">Titan</div>
+                <div class="phone-animal-sub">Berger Allemand · 3 ans</div>
+                <div class="phone-cac-bar"><div class="phone-cac-fill" style="width:21%;"></div></div>
+                <div style="font-size:9px;color:var(--ink3);margin-top:2px;">CAC : 3/14</div>
+              </div>
+            </div>
+            <div class="phone-section-title">Prochaine séance</div>
+            <div style="font-size:11px;background:var(--accent3);border-radius:var(--rs);padding:8px;color:var(--accent);">
+              <strong>Séance de suivi</strong><br>
+              <span style="font-size:10px;">28/03/2026 · 10h00 · Cabinet</span>
+            </div>
+            <div style="margin-top:8px;background:var(--gold2);border-radius:var(--rs);padding:8px;border:1px solid #d4a860;">
+              <div style="font-size:10px;color:var(--gold);font-weight:500;">1 facture en attente — 420€</div>
+              <div class="phone-btn" style="margin-top:6px;background:var(--gold);font-size:10px;padding:6px;">Payer maintenant</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">Accueil portail</div>
+    </div>
+
+    <!-- Dossier Titan -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-bar">
+            <div class="phone-bar-back">← Accueil</div>
+            <div class="phone-bar-title">Titan</div>
+            <div></div>
+          </div>
+          <div style="background:var(--ink);padding:12px;text-align:center;">
+            <div style="width:60px;height:60px;border-radius:10px;background:var(--blue2);margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:30px;">🐕</div>
+            <div style="font-size:13px;font-weight:500;color:#fff;">Titan</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.5);">Berger Allemand · né 15/06/2022</div>
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:#74c69d;margin-top:4px;">250269811500001</div>
+          </div>
+          <div style="display:flex;border-bottom:1px solid var(--paper3);background:#fff;">
+            <div style="flex:1;text-align:center;padding:8px;font-size:10px;font-weight:500;color:var(--accent);border-bottom:2px solid var(--accent2);">CAC</div>
+            <div style="flex:1;text-align:center;padding:8px;font-size:10px;color:var(--ink3);">Séances</div>
+            <div style="flex:1;text-align:center;padding:8px;font-size:10px;color:var(--ink3);">Docs</div>
+            <div style="flex:1;text-align:center;padding:8px;font-size:10px;color:var(--ink3);">Carte</div>
+          </div>
+          <div class="phone-content">
+            <div style="text-align:center;margin-bottom:10px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);">3/14</div>
+              <div style="font-size:10px;color:var(--ink3);">Critères acquis</div>
+              <div style="height:8px;background:var(--paper3);border-radius:4px;margin-top:8px;overflow:hidden;">
+                <div style="height:100%;width:21%;background:var(--accent2);border-radius:4px;"></div>
+              </div>
+            </div>
+            <div class="phone-section-title">Critères acquis ✓</div>
+            <div style="font-size:11px;color:var(--accent);padding:3px 0;">✓ Sociabilisation chiens</div>
+            <div style="font-size:11px;color:var(--accent);padding:3px 0;">✓ Marche en laisse</div>
+            <div style="font-size:11px;color:var(--accent);padding:3px 0;">✓ Rappel</div>
+            <div style="font-size:10px;color:var(--ink3);margin-top:4px;">+ 11 en cours de travail…</div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">Dossier animal — CAC</div>
+    </div>
+
+    <!-- Séances -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-bar">
+            <div class="phone-bar-back">← Titan</div>
+            <div class="phone-bar-title">Séances</div>
+            <div></div>
+          </div>
+          <div class="phone-content">
+            <div style="background:var(--accent3);border-radius:var(--rs);padding:8px;margin-bottom:8px;">
+              <div style="font-size:10px;font-weight:500;color:var(--accent);">À venir · 28/03/2026</div>
+              <div style="font-size:11px;color:var(--ink);">Séance de suivi · Cabinet</div>
+            </div>
+            <div class="phone-section-title">Réalisées</div>
+            <div class="phone-seance-row">
+              <div class="phone-seance-type">Étude Comportementale</div>
+              <div class="phone-seance-date">14/03/2026 · Domicile · Score 3/14</div>
+              <div style="font-size:10px;color:var(--blue);margin-top:2px;">Voir compte-rendu →</div>
+            </div>
+            <div class="phone-seance-row">
+              <div class="phone-seance-type">Séance de suivi</div>
+              <div class="phone-seance-date">28/02/2026 · Cabinet</div>
+              <div style="font-size:10px;color:var(--ink3);margin-top:2px;">Résumé non partagé</div>
+            </div>
+            <div class="phone-section-title" style="margin-top:10px;">Documents partagés</div>
+            <div class="phone-doc-row">
+              <div class="phone-doc-icon">📄</div>
+              <div><div class="phone-doc-name">Bilan EC - Titan.pdf</div><div class="phone-doc-sub">14/03/2026 · 245 Ko</div></div>
+            </div>
+            <div class="phone-doc-row">
+              <div class="phone-doc-icon">📋</div>
+              <div><div class="phone-doc-name">Programme exercices S1.pdf</div><div class="phone-doc-sub">14/03/2026 · 89 Ko</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">Séances & documents</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 05 NOTIFICATIONS -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">Notifications automatiques</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">📬</div>Emails déclenchés automatiquement</div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Événement</th><th>Destinataire</th><th>Délai</th></tr></thead>
+          <tbody>
+            <tr><td>Invitation portail</td><td>Propriétaire</td><td>Immédiat (pro déclenche)</td></tr>
+            <tr><td>Nouvelle séance planifiée</td><td>Propriétaire</td><td>Immédiat</td></tr>
+            <tr><td>Rappel séance J-1</td><td>Propriétaire</td><td>J-1 à 18h</td></tr>
+            <tr><td>Compte-rendu disponible</td><td>Propriétaire</td><td>Quand pro partage le CR</td></tr>
+            <tr><td>Carte identité mise à jour</td><td>Propriétaire</td><td>Après chaque séance avec CAC</td></tr>
+            <tr><td>Nouveau document partagé</td><td>Propriétaire</td><td>Immédiat</td></tr>
+            <tr><td>Facture émise</td><td>Propriétaire</td><td>Immédiat</td></tr>
+            <tr><td>Paiement confirmé</td><td>Propriétaire + Pro</td><td>Après webhook Stripe</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">✉️</div>Exemple email — séance réalisée</div>
+      <div class="email-mockup">
+        <div class="email-header">
+          <div class="email-logo">Pet<span>Suite</span></div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.4);">Cabinet Canin Harmonie</div>
+        </div>
+        <div class="email-body">
+          <div class="email-greeting">Bonjour Luc,</div>
+          <div class="email-text">La séance d'<strong>Étude Comportementale</strong> de <strong>Titan</strong> a été réalisée le 14/03/2026. Un compte-rendu est disponible dans son espace en ligne.</div>
+          <div class="email-text" style="background:var(--accent3);padding:10px;border-radius:var(--rs);color:var(--accent);">Score CAC actuel : <strong>3/14</strong> — progression depuis la dernière séance : +3 critères</div>
+          <a class="email-cta" href="#">Consulter le dossier de Titan →</a>
+          <div class="email-footer-text">Cet email vous a été envoyé par Cabinet Canin Harmonie via PetSuite. Pour ne plus recevoir ces notifications, contactez votre comportementaliste.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 ARCHITECTURE -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">Architecture technique</span></div>
+
+  <div class="subsection" id="s6-routes">
+    <div class="subsection-title">Routes & endpoints API</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Auth</th></tr></thead>
+        <tbody>
+          <tr><td>POST</td><td>/api/portail/magic-link</td><td>Demande magic link par email</td><td>Public</td></tr>
+          <tr><td>GET</td><td>/api/portail/auth/:token</td><td>Valide token → retourne JWT client</td><td>Public</td></tr>
+          <tr><td>GET</td><td>/api/portail/me</td><td>Profil propriétaire + liste animaux</td><td>JWT client</td></tr>
+          <tr><td>GET</td><td>/api/portail/animaux/:id</td><td>Fiche animal (données filtrées client)</td><td>JWT client</td></tr>
+          <tr><td>GET</td><td>/api/portail/animaux/:id/cac</td><td>Grille CAC + libellés + progression</td><td>JWT client</td></tr>
+          <tr><td>GET</td><td>/api/portail/animaux/:id/seances</td><td>Séances avec flag partage CR</td><td>JWT client</td></tr>
+          <tr><td>GET</td><td>/api/portail/animaux/:id/carte-pdf</td><td>Génère carte identité PDF</td><td>JWT client</td></tr>
+          <tr><td>GET</td><td>/api/portail/animaux/:id/documents</td><td>Docs GED avec flag partage client</td><td>JWT client</td></tr>
+          <tr><td>GET</td><td>/api/portail/factures</td><td>Factures du propriétaire</td><td>JWT client</td></tr>
+          <tr><td>POST</td><td>/api/portail/factures/:id/payer</td><td>Crée session Stripe Checkout</td><td>JWT client</td></tr>
+          <tr><td>GET</td><td>/api/portail/documents/:id/download</td><td>URL signée S3 — 15 min</td><td>JWT client</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection-title" style="margin-top:16px;">URL du portail</div>
+    <div class="card">
+      <div class="item-list">
+        <div class="item"><span class="item-label">Domaine</span><span class="item-val">portail.{sous-domaine}.petsuite.fr — séparé de l'app métier</span></div>
+        <div class="item"><span class="item-label">Exemple</span><span class="item-val">portail.cabinetmartin.petsuite.fr</span></div>
+        <div class="item"><span class="item-label">Couvert SSL</span><span class="item-val">Oui — wildcard *.petsuite.fr couvre portail.*</span></div>
+        <div class="item"><span class="item-label">Routing Traefik</span><span class="item-val">HostRegexp({sub:[a-z0-9-]+}.petsuite.fr) → détecte portail. vs app principale</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s6-securite">
+    <div class="subsection-title">Sécurité & isolation</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">🔒</div>Isolation des données</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">JWT client</span><span class="item-val">Contient : TIE_ID + tenant_id + rôle CLIENT</span></div>
+          <div class="item"><span class="item-label">Vérification</span><span class="item-val">Chaque requête vérifie que l'animal appartient au TIE_ID du JWT</span></div>
+          <div class="item"><span class="item-label">Pas de croisement</span><span class="item-val">Impossible d'accéder aux animaux d'un autre propriétaire</span></div>
+          <div class="item"><span class="item-label">Pas de données métier</span><span class="item-val">Montants HT, marges, commentaires internes masqués en requête SQL</span></div>
+          <div class="item"><span class="item-label">Lecture seule</span><span class="item-val">Aucun endpoint de modification — méthode GET/POST paiement uniquement</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🆕</div>Champs à ajouter en BDD</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">seance.sea_partager_cr</span><span class="item-val">TINYINT(1) DEFAULT 0 — pro décide de partager le CR</span></div>
+          <div class="item"><span class="item-label">ged_document_lien.doc_partage_client</span><span class="item-val">TINYINT(1) DEFAULT 0 — pro décide de partager le doc</span></div>
+          <div class="item"><span class="item-label">tiers.tie_email_portail</span><span class="item-val">VARCHAR(150) NULL — email pour magic link (peut diff. de TIE_EMAIL)</span></div>
+          <div class="item"><span class="item-label">portail_magic_link</span><span class="item-val">Nouvelle table : TIE_ID, token_hash, exp, used_at</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 RGPD -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">RGPD & données personnelles</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">⚖️</div>Base légale & traitements</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Base légale</span><span class="item-val">Exécution du contrat (art. 6.1.b RGPD) — le pro a un contrat de service avec le propriétaire</span></div>
+        <div class="item"><span class="item-label">Données traitées</span><span class="item-val">Nom, email, téléphone propriétaire + données animal</span></div>
+        <div class="item"><span class="item-label">Durée conservation</span><span class="item-val">Liée au contrat entre pro et propriétaire</span></div>
+        <div class="item"><span class="item-label">Droit d'accès</span><span class="item-val">Portail = exercice du droit d'accès natif</span></div>
+        <div class="item"><span class="item-label">Droit suppression</span><span class="item-val">Demande au professionnel — pas directement en portail</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">📋</div>Mentions à afficher dans le portail</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">En-tête portail</span><span class="item-val">"Cet espace est géré par [Nom cabinet] — PetSuite est l'outil utilisé"</span></div>
+        <div class="item"><span class="item-label">Pied de page</span><span class="item-val">Lien Politique de confidentialité + Contact DPO</span></div>
+        <div class="item"><span class="item-label">Partage carte ID</span><span class="item-val">Rappel que l'URL expire dans X min + qui peut y accéder</span></div>
+        <div class="item"><span class="item-label">Email magic link</span><span class="item-val">Mention : "Si vous n'avez pas demandé ce lien, ignorez cet email"</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 CHECKLIST -->
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">Checklist implémentation</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🗄</div>BDD</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">portail_magic_link</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer table (TIE_ID, token_hash, exp, used_at)</span></div>
+        <div class="item"><span class="item-label">sea_partager_cr</span><span class="item-val"><span class="pill pill-todo">TODO</span> ALTER TABLE seance ADD COLUMN</span></div>
+        <div class="item"><span class="item-label">doc_partage_client</span><span class="item-val"><span class="pill pill-todo">TODO</span> ALTER TABLE ged_document_lien ADD COLUMN</span></div>
+        <div class="item"><span class="item-label">tie_email_portail</span><span class="item-val"><span class="pill pill-todo">TODO</span> ALTER TABLE tiers ADD COLUMN</span></div>
+        <div class="item"><span class="item-label">Stripe portail S4</span><span class="item-val"><span class="pill pill-ok">Existant</span> À réutiliser et enrichir</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">⚙️</div>API & Frontend</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Endpoints /portail/*</span><span class="item-val"><span class="pill pill-todo">TODO</span> 11 routes via _h56.use + préfixe portail-</span></div>
+        <div class="item"><span class="item-label">Magic link email</span><span class="item-val"><span class="pill pill-todo">TODO</span> Template + envoi via smtp_server.js</span></div>
+        <div class="item"><span class="item-label">Page Next.js portail</span><span class="item-val"><span class="pill pill-todo">TODO</span> /portail/* — routes séparées de /app/*</span></div>
+        <div class="item"><span class="item-label">UI accueil + dossier</span><span class="item-val"><span class="pill pill-todo">TODO</span> Mobile first — Tailwind responsive</span></div>
+        <div class="item"><span class="item-label">Notifications emails</span><span class="item-val"><span class="pill pill-todo">TODO</span> 8 templates × événements</span></div>
+        <div class="item"><span class="item-label">Flag partage CR/doc</span><span class="item-val"><span class="pill pill-todo">TODO</span> UI côté pro (checkbox sur fiche séance)</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-info" style="margin-top:14px;">Le portail existant (Sprint 4) couvre déjà Stripe et la structure de base. L'effort principal porte sur les nouvelles sections : CAC, carte identité, documents partagés, magic link et notifications.</div>
+</div>
+
+</div>
+</div>
+
+<footer>
+  <strong>PetSuite</strong>
+  <div>Algorithmia · Sprint S33 · 18/03/2026 · Document interne</div>
+</footer>
+</body>
+</html>

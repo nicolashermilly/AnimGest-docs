@@ -1,3 +1,855 @@
-<!DOCTYPE html> <html lang="fr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>PetSuite — Infrastructure</title> <style> :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;} *{box-sizing:border-box;margin:0;padding:0;} body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;} .header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);} .header h1{font-size:2.5rem;font-weight:800;color:#fff;} .header p{color:var(--accent2);margin-top:8px;} .badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;} .container{max-width:1100px;margin:0 auto;padding:32px;} .section{margin-bottom:40px;} .section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;} .section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;} table{width:100%;border-collapse:collapse;margin:12px 0;} th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;} td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;} code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);} pre{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;font-size:.8rem;color:var(--text2);margin:12px 0;line-height:1.8;} .highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;} .warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;} footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;} </style> </head> <body> <div class="header"> <h1>🐳 PetSuite — Infrastructure</h1> <p>Docker Compose, nginx, MariaDB, déploiement</p> <div class="badge">v4.0 — Sprint S30 — Mars 2026</div> </div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="07-audit-stack.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Audit Stack</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a></nav>
-<div class="container"> <div class="section"> <h2>🐳 Docker Compose — 3 conteneurs</h2> <div class="warn"><p>⚠️ RÈGLE ABSOLUE : <code>cd deploy</code> AVANT toute commande <code>docker compose</code>. Le fichier docker-compose.yml est dans le dossier deploy/.</p></div> <table> <thead><tr><th>Service</th><th>Image</th><th>Port</th><th>Rôle</th></tr></thead> <tbody> <tr><td><code>micro_frontend</code></td><td>node:20-alpine</td><td>3000</td><td>Next.js — 58 pages</td></tr> <tr><td><code>micro_api</code></td><td>node:20-alpine</td><td>3001</td><td>API NestJS — custom-routes.ts</td></tr> <tr><td><code>micro_nginx</code></td><td>nginx:alpine</td><td>80 (public)</td><td>Reverse proxy /api → :3001, / → :3000</td></tr> </tbody> </table> </div> <div class="section"> <h2>🗄️ MariaDB — HORS Docker</h2> <div class="highlight"><p>MariaDB 11 tourne sur la machine hôte Windows. Connexion depuis les conteneurs via IP réseau. Bases : <code>micro_logiciel</code> + <code>micro_logiciel_ged</code>.</p></div> <table> <thead><tr><th>Paramètre</th><th>Valeur</th></tr></thead> <tbody> <tr><td>Host</td><td><code>192.168.1.62</code></td></tr> <tr><td>Port</td><td><code>3307</code></td></tr> <tr><td>User applicatif</td><td><code>@lgorithme</code></td></tr> <tr><td>SSL</td><td><code>--skip-ssl</code> obligatoire</td></tr> <tr><td>mariadb-dump.exe</td><td><code>C:\ProgramData\OptimBTP\MariaDB\bin\mariadb-dump.exe</code></td></tr> </tbody> </table> </div> <div class="section"> <h2>💾 Sauvegarde automatique v5</h2> <table> <thead><tr><th>Composant</th><th>Détail</th></tr></thead> <tbody> <tr><td>Script</td><td><code>G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1</code></td></tr> <tr><td>Tâche planifiée</td><td>PetSuite_Sauvegarde — 04h00 quotidien</td></tr> <tr><td>Dump BDD</td><td><code>backup_AAAA-MM-JJ.zip</code> — 2 bases</td></tr> <tr><td>Rétention</td><td>30j BDD · 14j ZIP · 60j Logs</td></tr> <tr><td>Git</td><td>Push automatique vers github.com/nicolashermilly</td></tr> </tbody> </table> </div> <div class="section"> <h2>🌐 URLs d'accès</h2> <table> <thead><tr><th>URL</th><th>Cible</th></tr></thead> <tbody> <tr><td><code>http://localhost/</code></td><td>Application PetSuite (Next.js)</td></tr> <tr><td><code>http://localhost/api/</code></td><td>API NestJS</td></tr> <tr><td><code>http://localhost/api/dashboard/stats</code></td><td>KPIs temps réel</td></tr> <tr><td><code>http://localhost/api/animaux/races/types</code></td><td>Compteurs races par espèce</td></tr> </tbody> </table> </div> </div> <footer>PetSuite Infrastructure v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer> </body> </html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Infrastructure & Hébergement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f2;--bg2:#ffffff;--bg3:#eeebe6;--bg4:#e5e1da;
+  --border:#dedad3;--border2:#c8c3bb;
+  --ink:#1a1714;--ink2:#5c5650;--ink3:#9c9590;
+  --green:#1a6640;--green2:#e8f5ef;--green3:#c5e8d5;
+  --amber:#8a5c0a;--amber2:#fef3e2;
+  --blue:#1a4fa0;--blue2:#e8f0fb;
+  --red:#9a2020;--red2:#fdeaea;
+  --purple:#5a3fa0;--purple2:#ede8fc;
+  --gold:#7a5500;--gold2:#fdf3d8;
+  --r:10px;--rs:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;}
+nav{background:#12151c;padding:0 36px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.06);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:#22d3a0;flex-shrink:0;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.nav-badge{font-family:'DM Mono',monospace;font-size:10px;background:#e8f5ef;color:#1a6640;padding:3px 10px;border-radius:20px;border:1px solid #c5e8d5;}
+.nav-back{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.12);border-radius:20px;transition:all .15s;}
+.nav-back:hover{color:#fff;border-color:rgba(255,255,255,.3);}
+.hero{background:#12151c;padding:52px 40px 44px;border-bottom:3px solid #1a6640;}
+.hero-label{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:8px;}
+.hero h1 em{font-style:italic;color:#22d3a0;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);max-width:600px;line-height:1.6;}
+.container{max-width:1000px;margin:0 auto;padding:36px 36px 80px;}
+.section{margin-bottom:44px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+.section-dot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:-.2px;}
+.section-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;}
+.card-title{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.ci-green{background:var(--green2);}
+.ci-amber{background:var(--amber2);}
+.ci-blue{background:var(--blue2);}
+.ci-red{background:var(--red2);}
+.ci-purple{background:var(--purple2);}
+.ci-gold{background:var(--gold2);}
+.ci-teal{background:#d0f0f0;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--bg3);}
+.item:last-child{border-bottom:none;padding-bottom:0;}
+.item-label{font-size:12px;font-weight:500;color:var(--ink);min-width:150px;flex-shrink:0;}
+.item-val{font-size:12px;color:var(--ink2);line-height:1.4;}
+.item-list{display:flex;flex-direction:column;}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.p-green{background:var(--green2);color:var(--green);}
+.p-amber{background:var(--amber2);color:var(--amber);}
+.p-blue{background:var(--blue2);color:var(--blue);}
+.p-red{background:var(--red2);color:var(--red);}
+.p-purple{background:var(--purple2);color:var(--purple);}
+.p-gold{background:var(--gold2);color:var(--gold);}
+.p-gray{background:var(--bg3);color:var(--ink2);border:1px solid var(--border);}
+.callout{border-left:3px solid var(--green);background:var(--green2);padding:13px 17px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;color:var(--ink2);margin:12px 0;}
+.callout.amber{border-color:var(--amber);background:var(--amber2);}
+.callout.blue{border-color:var(--blue);background:var(--blue2);}
+.callout.red{border-color:var(--red);background:var(--red2);}
+.alert{border-left:3px solid var(--green);background:var(--green2);padding:12px 16px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;margin:10px 0;}
+.alert.alert-info{border-color:var(--blue);background:var(--blue2);}
+.alert.alert-warn{border-color:var(--amber);background:var(--amber2);}
+.alert.alert-danger{border-color:var(--red);background:var(--red2);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);padding:8px 12px;border-bottom:2px solid var(--border);background:var(--bg3);}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg3);}
+.tw{overflow-x:auto;margin-bottom:4px;}
+code,.code{font-family:'DM Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 6px;border-radius:3px;color:var(--ink);}
+.code-block{background:#1a1d26;color:#e2ddd8;border-radius:var(--rs);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+footer{background:#12151c;color:rgba(255,255,255,.3);padding:18px 36px;font-size:11px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+footer strong{color:rgba(255,255,255,.6);font-family:'Playfair Display',serif;}
+@media(max-width:768px){
+  .hero{padding:36px 20px 28px;}.hero h1{font-size:28px;}
+  .container{padding:24px 16px 60px;}
+  nav{padding:0 16px;}
+  .grid2,.grid3{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="index.html"><div class="nav-dot"></div>PetSuite</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">← Index</a>
+    <span class="nav-badge">S33 · 18/03/2026</span>
+  </div>
+</nav>
+
+
+<div class="hero">
+  <div class="hero-tag">Infrastructure & hébergement — Document vivant</div>
+  <h1>Infrastructure <em>& déploiement</em></h1>
+  <p class="hero-sub">Choix d'hébergeur, architecture serveurs en production, Docker Compose prod, CI/CD GitHub Actions, SSL automatique, monitoring, backup et scalabilité horizontale pour 5 000 à 20 000 tenants.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-num">France</div><div class="kpi-lbl">Données hébergées</div></div>
+    <div class="kpi"><div class="kpi-num">99.9%</div><div class="kpi-lbl">SLA cible</div></div>
+    <div class="kpi"><div class="kpi-num">GitHub</div><div class="kpi-lbl">CI/CD Actions</div></div>
+    <div class="kpi"><div class="kpi-num">Traefik</div><div class="kpi-lbl">Reverse proxy</div></div>
+    <div class="kpi"><div class="kpi-num">S3</div><div class="kpi-lbl">Stockage GED</div></div>
+  </div>
+</div>
+
+<div class="layout">
+<nav class="toc">
+  <div class="toc-title">Sommaire</div>
+  <a href="#s1" class="toc-h2">01. Choix hébergeur</a>
+  <a href="#s2" class="toc-h2">02. Architecture prod</a>
+  <a href="#s2-serveurs" class="toc-h3">Serveurs</a>
+  <a href="#s2-reseau" class="toc-h3">Réseau & DNS</a>
+  <a href="#s3" class="toc-h2">03. Docker prod</a>
+  <a href="#s3-compose" class="toc-h3">Compose prod</a>
+  <a href="#s3-traefik" class="toc-h3">Traefik config</a>
+  <a href="#s4" class="toc-h2">04. CI/CD GitHub Actions</a>
+  <a href="#s4-workflows" class="toc-h3">Workflows</a>
+  <a href="#s4-pipeline" class="toc-h3">Pipeline complet</a>
+  <a href="#s5" class="toc-h2">05. SSL & sécurité</a>
+  <a href="#s6" class="toc-h2">06. Stockage S3 GED</a>
+  <a href="#s7" class="toc-h2">07. Monitoring</a>
+  <a href="#s8" class="toc-h2">08. Backup & restauration</a>
+  <a href="#s9" class="toc-h2">09. Scalabilité</a>
+  <a href="#s10" class="toc-h2">10. Variables d'environnement</a>
+  <a href="#s11" class="toc-h2">11. Checklist mise en prod</a>
+</nav>
+
+<div class="main">
+
+<!-- 01 HEBERGEUR -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">Choix de l'hébergeur</span></div>
+
+  <div class="compare-grid">
+    <div class="compare-card recommended">
+      <div class="compare-badge">Recommandé phase 1</div>
+      <div class="compare-title">Hetzner Cloud</div>
+      <div class="compare-sub">Allemagne / Finlande — RGPD EU</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Prix</span><span class="item-val">CX22 : 4€/mois · CX32 : 9€/mois · CX52 : 22€/mois</span></div>
+        <div class="item"><span class="item-label">Stockage</span><span class="item-val">Volumes bloc + Object Storage S3-compatible</span></div>
+        <div class="item"><span class="item-label">Réseau</span><span class="item-val">20 To trafic inclus — très généreux</span></div>
+        <div class="item"><span class="item-label">Load balancer</span><span class="item-val">6€/mois — simple et efficace</span></div>
+        <div class="item"><span class="item-label">Datacenter FR</span><span class="item-val">Non (DE/FI) — RGPD EU ✓</span></div>
+        <div class="item"><span class="item-label">API</span><span class="item-val">Excellente — Terraform provider officiel</span></div>
+        <div class="item"><span class="item-label">SLA</span><span class="item-val">99.9% garanti</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-ok">Meilleur rapport qualité/prix</span></div>
+    </div>
+
+    <div class="compare-card">
+      <div class="compare-title">OVHcloud</div>
+      <div class="compare-sub">France — souveraineté données FR</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Prix</span><span class="item-val">VPS Starter : 4€/mois · VPS Value : 8€/mois</span></div>
+        <div class="item"><span class="item-label">Stockage</span><span class="item-val">Object Storage S3 — 0.01€/Go/mois</span></div>
+        <div class="item"><span class="item-label">Réseau</span><span class="item-val">Bandwidth limitée selon plan</span></div>
+        <div class="item"><span class="item-label">Load balancer</span><span class="item-val">Disponible via Loadbalancer OVH</span></div>
+        <div class="item"><span class="item-label">Datacenter FR</span><span class="item-val">Oui (Roubaix, Gravelines, Strasbourg)</span></div>
+        <div class="item"><span class="item-label">API</span><span class="item-val">API OVH + OpenStack</span></div>
+        <div class="item"><span class="item-label">SLA</span><span class="item-val">99.9% garanti</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-blue">Données en France</span></div>
+    </div>
+
+    <div class="compare-card">
+      <div class="compare-title">AWS (eu-west-3 Paris)</div>
+      <div class="compare-sub">Paris — scalabilité maximale</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Prix</span><span class="item-val">EC2 t3.small : ~18€/mois · t3.medium : ~37€/mois</span></div>
+        <div class="item"><span class="item-label">Stockage</span><span class="item-val">S3 natif — référence mondiale</span></div>
+        <div class="item"><span class="item-label">Réseau</span><span class="item-val">Payant au Go sortant — peut être coûteux</span></div>
+        <div class="item"><span class="item-label">Load balancer</span><span class="item-val">ALB ~20€/mois</span></div>
+        <div class="item"><span class="item-label">Datacenter FR</span><span class="item-val">Oui (Paris)</span></div>
+        <div class="item"><span class="item-label">API</span><span class="item-val">Écosystème très riche — RDS, ElastiCache…</span></div>
+        <div class="item"><span class="item-label">SLA</span><span class="item-val">99.99% sur services managés</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-purple">Pour 5 000+ tenants</span></div>
+    </div>
+  </div>
+
+  <div class="alert alert-info" style="margin-top:16px;"><strong>Stratégie recommandée :</strong> Démarrer sur Hetzner (coût minimal, performance excellente) pour les 500 premiers clients. Migrer vers OVH si la souveraineté des données FR devient un argument commercial clé, ou AWS à partir de 5 000 tenants pour la scalabilité managée.</div>
+
+  <div class="subsection" style="margin-top:20px;">
+    <div class="subsection-title">Configuration serveurs initiale Hetzner (phase 1 — 0 à 500 clients)</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Serveur</th><th>Type Hetzner</th><th>CPU / RAM</th><th>Rôle</th><th>Prix/mois</th></tr></thead>
+        <tbody>
+          <tr><td>srv-app-01</td><td>CX32</td><td>4 vCPU / 8 Go</td><td>Frontend Next.js + API NestJS</td><td>~9€</td></tr>
+          <tr><td>srv-db-01</td><td>CX32</td><td>4 vCPU / 8 Go</td><td>MariaDB master (tous les tenants phase 1)</td><td>~9€</td></tr>
+          <tr><td>srv-cache-01</td><td>CX22</td><td>2 vCPU / 4 Go</td><td>Redis + RabbitMQ</td><td>~4€</td></tr>
+          <tr><td>vol-db-01</td><td>Volume bloc</td><td>—</td><td>Données MariaDB persistent</td><td>~5€ (50 Go)</td></tr>
+          <tr><td>lb-01</td><td>Load Balancer</td><td>—</td><td>Entrée trafic + SSL termination</td><td>~6€</td></tr>
+          <tr><td>object-storage</td><td>Object Storage</td><td>—</td><td>GED S3-compatible</td><td>~1€/To</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:12px;color:var(--ink3);margin-top:8px;"><strong>Total phase 1 ≈ 35€/mois</strong> pour les 100 premiers tenants. À comparer aux revenus MRR dès le 1er client.</div>
+  </div>
+</div>
+
+<!-- 02 ARCHITECTURE PROD -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">Architecture serveurs production</span></div>
+
+  <div class="subsection" id="s2-serveurs">
+    <div class="subsection-title">Couches d'infrastructure</div>
+    <div class="grid2">
+      <div>
+        <div class="arch-layer l-purple">
+          Clients — navigateur / tablette / mobile
+          <div class="arch-sub">societe.petsuite.fr → Load Balancer Hetzner</div>
+        </div>
+        <div class="arch-layer l-blue">
+          Traefik reverse proxy (srv-app-01)
+          <div class="arch-sub">Routage par sous-domaine · SSL Let's Encrypt auto · Rate limiting</div>
+        </div>
+        <div class="arch-layer l-blue">
+          Next.js 15 + NestJS API (srv-app-01)
+          <div class="arch-sub">Conteneurs Docker · multi-tenant via tenant_id JWT</div>
+        </div>
+        <div class="arch-layer l-teal">
+          Redis + RabbitMQ (srv-cache-01)
+          <div class="arch-sub">Sessions · JWT cache · Queue PDF / emails / SEPA</div>
+        </div>
+        <div class="arch-layer l-green">
+          MariaDB master (srv-db-01 + volume persistant)
+          <div class="arch-sub">Un schema par tenant · Flyway migrations · Backups quotidiens</div>
+        </div>
+        <div class="arch-layer l-gold">
+          Object Storage S3 (Hetzner)
+          <div class="arch-sub">GED par tenant · Cycle de vie hot/warm/cold</div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-title"><div class="card-icon icon-blue">🌐</div>Réseau interne Hetzner</div>
+          <div class="item-list">
+            <div class="item"><span class="item-label">Réseau privé</span><span class="item-val">10.0.0.0/16 — communication inter-serveurs sans exposition</span></div>
+            <div class="item"><span class="item-label">srv-app-01</span><span class="item-val">10.0.1.1 — seul exposé via Load Balancer</span></div>
+            <div class="item"><span class="item-label">srv-db-01</span><span class="item-val">10.0.2.1 — accessible uniquement depuis 10.0.1.0/24</span></div>
+            <div class="item"><span class="item-label">srv-cache-01</span><span class="item-val">10.0.3.1 — Redis/RabbitMQ en réseau privé</span></div>
+            <div class="item"><span class="item-label">Firewall</span><span class="item-val">Hetzner Firewall : ports 80/443 uniquement publics</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><div class="card-icon icon-green">🔒</div>Accès SSH</div>
+          <div class="item-list">
+            <div class="item"><span class="item-label">Authentification</span><span class="item-val">Clés SSH uniquement — mot de passe désactivé</span></div>
+            <div class="item"><span class="item-label">Port SSH</span><span class="item-val">Port non standard (ex: 2222) + Fail2ban</span></div>
+            <div class="item"><span class="item-label">Accès DB</span><span class="item-val">Uniquement depuis srv-app-01 via réseau privé</span></div>
+            <div class="item"><span class="item-label">Déploiement</span><span class="item-val">GitHub Actions → SSH deploy key dédiée (read-only)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-reseau">
+    <div class="subsection-title">DNS & sous-domaines</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Entrée DNS</th><th>Type</th><th>Cible</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td>petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>Site vitrine</td></tr>
+          <tr><td>*.petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>Wildcard tenants</td></tr>
+          <tr><td>app.petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>Portail super admin</td></tr>
+          <tr><td>api.petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>API plateforme</td></tr>
+          <tr><td>docs.petsuite.fr</td><td>CNAME</td><td>nicolashermilly.github.io</td><td>Documentation (GitHub Pages)</td></tr>
+          <tr><td>cabinetmartin.petsuite.fr</td><td>Wildcard résolu</td><td>IP Load Balancer</td><td>Exemple tenant</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-warn">Le certificat SSL wildcard *.petsuite.fr est obligatoire pour couvrir tous les sous-domaines tenants dynamiques. Let's Encrypt le supporte via challenge DNS-01.</div>
+  </div>
+</div>
+
+<!-- 03 DOCKER PROD -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">Docker Compose production</span></div>
+
+  <div class="subsection" id="s3-compose">
+    <div class="subsection-title">docker-compose.prod.yml</div>
+    <div class="code">
+<span class="cs">version:</span> <span class="ck">'3.9'</span>
+
+<span class="cs">services:</span>
+
+  <span class="cm"># Reverse proxy + SSL automatique</span>
+  traefik:
+    image: <span class="ck">traefik:v3.0</span>
+    restart: unless-stopped
+    ports:
+      - <span class="ck">"80:80"</span>
+      - <span class="ck">"443:443"</span>
+    volumes:
+      - <span class="cv">/var/run/docker.sock:/var/run/docker.sock:ro</span>
+      - <span class="cv">./traefik/traefik.yml:/traefik.yml:ro</span>
+      - <span class="cv">./traefik/acme.json:/acme.json</span>  <span class="cm"># chmod 600</span>
+    networks: [proxy]
+
+  <span class="cm"># Frontend Next.js</span>
+  frontend:
+    image: <span class="ck">ghcr.io/nicolashermilly/petsuite-frontend:${TAG}</span>
+    restart: unless-stopped
+    environment:
+      - <span class="cv">NEXT_PUBLIC_API_URL=https://api.petsuite.fr</span>
+      - <span class="cv">NODE_ENV=production</span>
+    labels:
+      - <span class="ck">"traefik.enable=true"</span>
+      - <span class="ck">"traefik.http.routers.frontend.rule=HostRegexp(`{subdomain:[a-z0-9-]+}.petsuite.fr`)"</span>
+      - <span class="ck">"traefik.http.routers.frontend.tls.certresolver=letsencrypt"</span>
+    networks: [proxy, internal]
+
+  <span class="cm"># API NestJS</span>
+  api:
+    image: <span class="ck">ghcr.io/nicolashermilly/petsuite-api:${TAG}</span>
+    restart: unless-stopped
+    environment:
+      - <span class="cv">NODE_ENV=production</span>
+      - <span class="cv">DB_HOST=10.0.2.1</span>
+      - <span class="cv">REDIS_URL=redis://10.0.3.1:6379</span>
+      - <span class="cv">RABBITMQ_URL=amqp://10.0.3.1</span>
+      - <span class="cv">JWT_SECRET=${JWT_SECRET}</span>
+      - <span class="cv">S3_ENDPOINT=${S3_ENDPOINT}</span>
+      - <span class="cv">S3_ACCESS_KEY=${S3_ACCESS_KEY}</span>
+      - <span class="cv">S3_SECRET_KEY=${S3_SECRET_KEY}</span>
+    labels:
+      - <span class="ck">"traefik.enable=true"</span>
+      - <span class="ck">"traefik.http.routers.api.rule=Host(`api.petsuite.fr`)"</span>
+      - <span class="ck">"traefik.http.routers.api.tls.certresolver=letsencrypt"</span>
+    networks: [proxy, internal]
+    depends_on: [redis]
+
+  <span class="cm"># Redis cache</span>
+  redis:
+    image: <span class="ck">redis:7-alpine</span>
+    restart: unless-stopped
+    volumes: [redis_data:/data]
+    networks: [internal]
+    command: <span class="ck">redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}</span>
+
+  <span class="cm"># Worker queues (PDF, emails, SEPA)</span>
+  worker:
+    image: <span class="ck">ghcr.io/nicolashermilly/petsuite-api:${TAG}</span>
+    restart: unless-stopped
+    command: <span class="ck">node dist/worker.js</span>
+    environment:
+      - <span class="cv">NODE_ENV=production</span>
+      - <span class="cv">RABBITMQ_URL=amqp://10.0.3.1</span>
+    networks: [internal]
+
+<span class="cs">volumes:</span>
+  redis_data:
+
+<span class="cs">networks:</span>
+  proxy:
+    external: true
+  internal:
+    driver: bridge
+    internal: true  <span class="cm"># pas d'accès internet direct</span>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-traefik">
+    <div class="subsection-title">traefik.yml — configuration SSL wildcard</div>
+    <div class="code">
+<span class="cs">entryPoints:</span>
+  web:
+    address: <span class="ck">":80"</span>
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https  <span class="cm"># Force HTTPS</span>
+  websecure:
+    address: <span class="ck">":443"</span>
+
+<span class="cs">certificatesResolvers:</span>
+  letsencrypt:
+    acme:
+      email: <span class="ck"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e5f5a5357507e4e5b4a4d4b574a5b10584c">[email&#160;protected]</a></span>
+      storage: <span class="ck">/acme.json</span>
+      dnsChallenge:          <span class="cm"># DNS-01 pour wildcard *.petsuite.fr</span>
+        provider: <span class="ck">hetzner</span>  <span class="cm"># ou ovh selon hébergeur</span>
+        delayBeforeCheck: <span class="cv">30</span>
+
+<span class="cs">providers:</span>
+  docker:
+    exposedByDefault: false
+    network: proxy
+
+<span class="cs">api:</span>
+  dashboard: true
+  insecure: false  <span class="cm"># Dashboard sécurisé</span>
+
+<span class="cs">log:</span>
+  level: <span class="ck">INFO</span>
+
+<span class="cs">accessLog: {}</span>  <span class="cm"># Logs d'accès pour monitoring</span>
+    </div>
+  </div>
+</div>
+
+<!-- 04 CI/CD -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">CI/CD — GitHub Actions</span></div>
+
+  <div class="subsection" id="s4-workflows">
+    <div class="subsection-title">Structure des workflows</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Fichier workflow</th><th>Déclencheur</th><th>Actions</th></tr></thead>
+        <tbody>
+          <tr><td>.github/workflows/ci.yml</td><td>Push sur toute branche + PR</td><td>Lint · Tests · Build images Docker</td></tr>
+          <tr><td>.github/workflows/deploy-staging.yml</td><td>Push sur branche develop</td><td>Build + push GHCR + deploy staging</td></tr>
+          <tr><td>.github/workflows/deploy-prod.yml</td><td>Tag vX.Y.Z sur main</td><td>Build + push GHCR + deploy production</td></tr>
+          <tr><td>.github/workflows/migrate.yml</td><td>Manuel (workflow_dispatch)</td><td>Flyway migrate tous les tenants</td></tr>
+          <tr><td>.github/workflows/backup.yml</td><td>Cron 02:00 UTC</td><td>Backup BDD + upload S3</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s4-pipeline">
+    <div class="subsection-title">Pipeline de déploiement production</div>
+    <div class="code">
+<span class="cm"># .github/workflows/deploy-prod.yml</span>
+<span class="cs">name:</span> Deploy Production
+
+<span class="cs">on:</span>
+  push:
+    tags: [<span class="ck">'v*.*.*'</span>]
+
+<span class="cs">jobs:</span>
+  <span class="cs">build-and-push:</span>
+    runs-on: ubuntu-latest
+    steps:
+      - uses: <span class="ck">actions/checkout@v4</span>
+
+      - <span class="cs">name:</span> Login GHCR
+        uses: <span class="ck">docker/login-action@v3</span>
+        with:
+          registry: <span class="cv">ghcr.io</span>
+          username: <span class="cv">${{ github.actor }}</span>
+          password: <span class="cv">${{ secrets.GITHUB_TOKEN }}</span>
+
+      - <span class="cs">name:</span> Build & push API
+        uses: <span class="ck">docker/build-push-action@v5</span>
+        with:
+          context: <span class="cv">./api</span>
+          push: true
+          tags: <span class="cv">ghcr.io/nicolashermilly/petsuite-api:${{ github.ref_name }}</span>
+
+      - <span class="cs">name:</span> Build & push Frontend
+        uses: <span class="ck">docker/build-push-action@v5</span>
+        with:
+          context: <span class="cv">./frontend</span>
+          push: true
+          tags: <span class="cv">ghcr.io/nicolashermilly/petsuite-frontend:${{ github.ref_name }}</span>
+
+  <span class="cs">deploy:</span>
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - <span class="cs">name:</span> Deploy via SSH
+        uses: <span class="ck">appleboy/ssh-action@v1</span>
+        with:
+          host: <span class="cv">${{ secrets.PROD_HOST }}</span>
+          username: <span class="cv">deploy</span>
+          key: <span class="cv">${{ secrets.PROD_SSH_KEY }}</span>
+          script: |
+            cd /opt/petsuite
+            export TAG=<span class="cv">${{ github.ref_name }}</span>
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml up -d --no-deps api frontend worker
+            docker image prune -f
+            echo <span class="ck">"Deployed $TAG at $(date)"</span>
+    </div>
+
+    <div class="alert alert-info" style="margin-top:10px;">Le déploiement utilise <code>--no-deps</code> pour ne redémarrer que les conteneurs mis à jour. MariaDB et Redis ne sont jamais redémarrés par le pipeline.</div>
+
+    <div class="subsection-title" style="margin-top:16px;">Secrets GitHub à configurer</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Secret</th><th>Valeur</th></tr></thead>
+        <tbody>
+          <tr><td>PROD_HOST</td><td>IP du srv-app-01</td></tr>
+          <tr><td>PROD_SSH_KEY</td><td>Clé privée SSH du compte deploy</td></tr>
+          <tr><td>JWT_SECRET</td><td>Clé secrète JWT (min 64 chars aléatoires)</td></tr>
+          <tr><td>S3_ENDPOINT</td><td>URL endpoint Object Storage</td></tr>
+          <tr><td>S3_ACCESS_KEY</td><td>Clé d'accès S3</td></tr>
+          <tr><td>S3_SECRET_KEY</td><td>Clé secrète S3</td></tr>
+          <tr><td>REDIS_PASSWORD</td><td>Mot de passe Redis</td></tr>
+          <tr><td>DB_PASSWORD</td><td>Mot de passe MariaDB (user technique)</td></tr>
+          <tr><td>GOCARDLESS_TOKEN</td><td>Token API GoCardless</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 05 SSL -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">SSL & sécurité réseau</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🔒</div>SSL wildcard automatique</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Provider</span><span class="item-val">Let's Encrypt via Traefik — challenge DNS-01</span></div>
+        <div class="item"><span class="item-label">Certificat</span><span class="item-val">*.petsuite.fr — couvre tous les sous-domaines tenants</span></div>
+        <div class="item"><span class="item-label">Renouvellement</span><span class="item-val">Automatique tous les 60 jours (expiration à 90)</span></div>
+        <div class="item"><span class="item-label">Stockage</span><span class="item-val">acme.json (chmod 600) — volume persistant Docker</span></div>
+        <div class="item"><span class="item-label">Nouveau tenant</span><span class="item-val">Sous-domaine couvert instantanément par le wildcard</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-red">🛡</div>Sécurité applicative</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Rate limiting</span><span class="item-val">Traefik : 100 req/min par IP sur /api/auth</span></div>
+        <div class="item"><span class="item-label">Headers sécurité</span><span class="item-val">HSTS · X-Frame-Options · CSP via middleware Traefik</span></div>
+        <div class="item"><span class="item-label">CORS</span><span class="item-val">Origines autorisées : *.petsuite.fr uniquement</span></div>
+        <div class="item"><span class="item-label">JWT</span><span class="item-val">Expiration 15 min · Refresh token 7 jours · Rotation</span></div>
+        <div class="item"><span class="item-label">Fail2ban</span><span class="item-val">Banissement auto après 5 tentatives SSH échouées</span></div>
+        <div class="item"><span class="item-label">Audit log</span><span class="item-val">Toutes actions critiques loggées en BDD</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 S3 GED -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">Stockage S3 — GED</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🪣</div>Structure buckets</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Bucket unique</span><span class="item-val">petsuite-ged — préfixe tenant_id dans le chemin</span></div>
+        <div class="item"><span class="item-label">Arborescence</span><span class="item-val">/{tenant_id}/{type}/{YYYY}/{MM}/{uuid}.ext</span></div>
+        <div class="item"><span class="item-label">Chiffrement</span><span class="item-val">SSE-S3 côté serveur — AES-256</span></div>
+        <div class="item"><span class="item-label">Accès</span><span class="item-val">Privé — URLs signées 15 min pour accès client</span></div>
+        <div class="item"><span class="item-label">Versionning</span><span class="item-val">Activé — conserve les versions précédentes</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🔄</div>Politique cycle de vie</div>
+      <div class="code" style="margin:0;font-size:11px;">
+<span class="cm"># Règles lifecycle S3 (JSON)</span>
+{
+  <span class="ck">"Rules"</span>: [
+    {
+      <span class="cm">// Tenants actifs — transition warm après 1 an</span>
+      <span class="ck">"Prefix"</span>: <span class="cv">""</span>,
+      <span class="ck">"Transitions"</span>: [
+        { <span class="ck">"Days"</span>: <span class="cv">365</span>, <span class="ck">"Class"</span>: <span class="cv">"ONEZONE_IA"</span> },
+        { <span class="ck">"Days"</span>: <span class="cv">1095</span>, <span class="ck">"Class"</span>: <span class="cv">"GLACIER"</span> }
+      ]
+    }
+  ]
+}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 MONITORING -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Monitoring & alertes</span></div>
+
+  <div class="subsection">
+    <div class="subsection-title">Stack de monitoring</div>
+    <div class="grid3">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">📊</div>Prometheus + Grafana</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Métriques</span><span class="item-val">CPU · RAM · disque · requêtes/sec · latence P95</span></div>
+          <div class="item"><span class="item-label">Exporters</span><span class="item-val">node_exporter · mariadb_exporter · redis_exporter</span></div>
+          <div class="item"><span class="item-label">Dashboards</span><span class="item-val">Vue globale + vue par tenant (quota BDD/GED)</span></div>
+        </div>
+        <div class="pill-row"><span class="pill pill-ok">Gratuit auto-hébergé</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">🔔</div>Alertes</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Canal</span><span class="item-val">Email + Slack (webhook)</span></div>
+          <div class="item"><span class="item-label">CPU &gt; 80%</span><span class="item-val">Alerte warning pendant 5 min</span></div>
+          <div class="item"><span class="item-label">Disque &gt; 85%</span><span class="item-val">Alerte critique</span></div>
+          <div class="item"><span class="item-label">API latence &gt;500ms</span><span class="item-val">Alerte P95</span></div>
+          <div class="item"><span class="item-label">Échec prélèvement</span><span class="item-val">Alerte immédiate super admin</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">✅</div>Uptime Kuma</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Surveillance</span><span class="item-val">Ping chaque endpoint public toutes les 60s</span></div>
+          <div class="item"><span class="item-label">Page statut</span><span class="item-val">status.petsuite.fr — accessible clients</span></div>
+          <div class="item"><span class="item-label">Notification</span><span class="item-val">Email + SMS si downtime &gt; 2 min</span></div>
+        </div>
+        <div class="pill-row"><span class="pill pill-ok">Gratuit auto-hébergé</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Métriques business à suivre</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Métrique</th><th>Source</th><th>Alerte si</th></tr></thead>
+        <tbody>
+          <tr><td>Tenants actifs</td><td>BDD plateforme</td><td>Baisse soudaine &gt; 5%</td></tr>
+          <tr><td>MRR</td><td>table prelevement</td><td>—</td></tr>
+          <tr><td>Prélèvements échoués</td><td>webhook SEPA</td><td>Dès le 1er</td></tr>
+          <tr><td>Volume GED par tenant</td><td>S3 metrics</td><td>Quota dépassé à 90%</td></tr>
+          <tr><td>Taille schema BDD</td><td>MariaDB information_schema</td><td>Shard &gt; 80% capacité</td></tr>
+          <tr><td>Erreurs API 500</td><td>Logs NestJS</td><td>&gt; 10 erreurs/min</td></tr>
+          <tr><td>Latence PDF génération</td><td>Métriques worker</td><td>&gt; 10 secondes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 08 BACKUP -->
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">Backup & restauration</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">💾</div>Stratégie backup BDD</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Fréquence</span><span class="item-val">Quotidien à 02h00 UTC (cron GitHub Actions)</span></div>
+        <div class="item"><span class="item-label">Méthode</span><span class="item-val">mysqldump par schema tenant + compression gzip</span></div>
+        <div class="item"><span class="item-label">Chiffrement</span><span class="item-val">GPG AES-256 avant upload S3</span></div>
+        <div class="item"><span class="item-label">Destination</span><span class="item-val">Bucket S3 dédié backups (région différente)</span></div>
+        <div class="item"><span class="item-label">Rétention</span><span class="item-val">7 jours quotidiens · 4 semaines hebdomadaires · 12 mois mensuels</span></div>
+        <div class="item"><span class="item-label">Test restauration</span><span class="item-val">Mensuel automatique sur environnement de test</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🔁</div>Script backup (cron)</div>
+      <div class="code" style="margin:0;font-size:11px;">
+<span class="cm">#!/bin/bash — backup-all-tenants.sh</span>
+DATE=$(date +%Y%m%d_%H%M)
+BACKUP_DIR=<span class="cv">/tmp/backups/$DATE</span>
+mkdir -p <span class="cv">$BACKUP_DIR</span>
+
+<span class="cm"># Lister tous les schemas tenants</span>
+TENANTS=$(mysql -u <span class="cm"># user_technique</span> -p<span class="cv">$DB_PASS</span> \
+  -e <span class="ck">"SHOW DATABASES LIKE 'micro_logiciel_%'"</span> \
+  -s --skip-column-names)
+
+for DB in <span class="cv">$TENANTS</span>; do
+  mysqldump -u <span class="cm"># user_technique</span> -p<span class="cv">$DB_PASS</span> \
+    --single-transaction --quick \
+    <span class="cv">$DB</span> | gzip | gpg --symmetric \
+    --cipher-algo AES256 \
+    -o <span class="cv">$BACKUP_DIR/$DB.sql.gz.gpg</span>
+done
+
+<span class="cm"># Upload vers S3</span>
+aws s3 sync <span class="cv">$BACKUP_DIR</span> \
+  s3://petsuite-backups/<span class="cv">$DATE</span>/ \
+  --storage-class STANDARD_IA
+
+rm -rf <span class="cv">$BACKUP_DIR</span>
+echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenants"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" style="margin-top:14px;">
+    <div class="subsection-title">Procédure de restauration d'urgence</div>
+    <div class="card">
+      <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <div class="flow-step-body"><div class="flow-step-title">Identifier le backup</div><div class="flow-step-desc">aws s3 ls s3://petsuite-backups/ → choisir la date/heure du backup souhaité.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <div class="flow-step-body"><div class="flow-step-title">Télécharger et déchiffrer</div><div class="flow-step-desc">aws s3 cp s3://petsuite-backups/{date}/{schema}.sql.gz.gpg . → gpg --decrypt → gunzip.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <div class="flow-step-body"><div class="flow-step-title">Restaurer le schema</div><div class="flow-step-desc">mysql -u [user_technique] -p {schema} &lt; {schema}.sql — Sur environnement isolé d'abord pour vérification.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <div class="flow-step-body"><div class="flow-step-title">Vérifier et basculer</div><div class="flow-step-desc">Contrôle intégrité des données → mise à jour tenant_shard si basculement de serveur → notification client.</div></div>
+      </div>
+    </div>
+    <div class="alert alert-warn">RTO (Recovery Time Objective) cible : &lt; 4h. RPO (Recovery Point Objective) cible : &lt; 24h (backup quotidien). Pour un SLA plus exigeant : binlog MariaDB en temps réel.</div>
+  </div>
+</div>
+
+<!-- 09 SCALABILITE -->
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><span class="section-title">Scalabilité horizontale</span></div>
+  <div class="tbl-wrap" style="margin-bottom:16px;">
+    <table class="tbl">
+      <thead><tr><th>Phase</th><th>Clients</th><th>Architecture</th><th>Action requise</th></tr></thead>
+      <tbody>
+        <tr><td>Phase 1</td><td>0 → 500</td><td>1 srv-app + 1 srv-db + 1 srv-cache</td><td>Setup initial (~35€/mois)</td></tr>
+        <tr><td>Phase 2</td><td>500 → 2 000</td><td>2 srv-app (load balanced) + 1 srv-db upgradé + read replica</td><td>Ajout srv-app-02 + upgrade CX52</td></tr>
+        <tr><td>Phase 3</td><td>2 000 → 5 000</td><td>3+ srv-app + 2 srv-db (shard A/B) + Redis cluster</td><td>Sharding BDD — migration partielle des tenants</td></tr>
+        <tr><td>Phase 4</td><td>5 000 → 20 000</td><td>Auto-scaling + K8s ou AWS ECS + RDS Multi-AZ</td><td>Migration vers infrastructure managée (AWS/GCP)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📈</div>Ajout d'un shard BDD (phase 3)</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Nouveau serveur</span><span class="item-val">Provisionner srv-db-02 (CX52 ou dédié)</span></div>
+        <div class="item"><span class="item-label">Migration tenants</span><span class="item-val">Script de déplacement schema par schema avec downtime minimal</span></div>
+        <div class="item"><span class="item-label">Shard registry</span><span class="item-val">UPDATE tenant_shard SET shard_host = 'srv-db-02' pour les tenants migrés</span></div>
+        <div class="item"><span class="item-label">Nouveaux tenants</span><span class="item-val">Provisionnés automatiquement sur le shard le moins chargé</span></div>
+        <div class="item"><span class="item-label">Transparence</span><span class="item-val">Zéro impact client — l'API résout le bon shard à chaque requête</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">⚡</div>Optimisations performance</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Read replica</span><span class="item-val">Exports FEC et rapports sur replica — pas sur primary</span></div>
+        <div class="item"><span class="item-label">Redis cache</span><span class="item-val">JWT + droits utilisateurs (TTL 15 min) + données statiques (TTL 1h)</span></div>
+        <div class="item"><span class="item-label">CDN Cloudflare</span><span class="item-val">Assets Next.js + vidéos GIF commerciales — edge caching mondial</span></div>
+        <div class="item"><span class="item-label">Queue workers</span><span class="item-val">PDF, emails, SEPA en arrière-plan — pas de blocage API</span></div>
+        <div class="item"><span class="item-label">Index BDD</span><span class="item-val">Tous les champs de filtrage fréquent indexés (dates, statuts, FKs)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 10 ENV VARS -->
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">10</span><span class="section-title">Variables d'environnement production</span></div>
+  <div class="code">
+<span class="cm"># /opt/petsuite/.env.prod — NE PAS COMMITTER</span>
+
+<span class="cm"># Application</span>
+<span class="cv">NODE_ENV</span>=<span class="ck">production</span>
+<span class="cv">TAG</span>=<span class="ck">v1.0.0</span>  <span class="cm"># version déployée</span>
+
+<span class="cm"># BDD plateforme</span>
+<span class="cv">PLATFORM_DB_HOST</span>=<span class="ck">10.0.2.1</span>
+<span class="cv">PLATFORM_DB_NAME</span>=<span class="ck">petsuite_platform</span>
+<span class="cv">PLATFORM_DB_USER</span>=<span class="ck">[user_technique_applicatif]</span>
+<span class="cv">PLATFORM_DB_PASS</span>=<span class="ck">@lgoritHme+2025+977_73300</span>
+
+<span class="cm"># JWT</span>
+<span class="cv">JWT_SECRET</span>=<span class="ck">[64 caractères aléatoires générés avec openssl rand -hex 32]</span>
+<span class="cv">JWT_EXPIRY</span>=<span class="ck">15m</span>
+<span class="cv">REFRESH_TOKEN_EXPIRY</span>=<span class="ck">7d</span>
+
+<span class="cm"># Redis</span>
+<span class="cv">REDIS_URL</span>=<span class="ck">redis://:${REDIS_PASSWORD}@10.0.3.1:6379</span>
+<span class="cv">REDIS_PASSWORD</span>=<span class="ck">[généré]</span>
+
+<span class="cm"># S3 GED (Hetzner Object Storage)</span>
+<span class="cv">S3_ENDPOINT</span>=<span class="ck">https://fsn1.your-objectstorage.com</span>
+<span class="cv">S3_REGION</span>=<span class="ck">eu-central-1</span>
+<span class="cv">S3_BUCKET</span>=<span class="ck">petsuite-ged</span>
+<span class="cv">S3_ACCESS_KEY</span>=<span class="ck">[clé Hetzner]</span>
+<span class="cv">S3_SECRET_KEY</span>=<span class="ck">[secret Hetzner]</span>
+
+<span class="cm"># SEPA (GoCardless)</span>
+<span class="cv">GOCARDLESS_ENV</span>=<span class="ck">live</span>  <span class="cm"># ou sandbox pour tests</span>
+<span class="cv">GOCARDLESS_TOKEN</span>=<span class="ck">[token GoCardless live]</span>
+<span class="cv">GOCARDLESS_WEBHOOK_SECRET</span>=<span class="ck">[secret validation webhooks]</span>
+
+<span class="cm"># Email (transactionnel)</span>
+<span class="cv">SMTP_HOST</span>=<span class="ck">smtp.mailgun.org</span>
+<span class="cv">SMTP_PORT</span>=<span class="ck">587</span>
+<span class="cv">SMTP_USER</span>=<span class="ck"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e38d8cce9186938f9aa393869790968a9786cd8591">[email&#160;protected]</a></span>
+<span class="cv">SMTP_PASS</span>=<span class="ck">[clé Mailgun]</span>
+
+<span class="cm"># Monitoring</span>
+<span class="cv">SENTRY_DSN</span>=<span class="ck">[DSN Sentry pour erreurs prod]</span>
+  </div>
+  <div class="alert alert-danger">Ce fichier ne doit jamais être versionné. Ajouter .env.prod dans .gitignore. Les valeurs sensibles transitent uniquement via GitHub Secrets → SSH deploy.</div>
+</div>
+
+<!-- 11 CHECKLIST -->
+<div class="section" id="s11">
+  <div class="section-header"><span class="section-num">11</span><span class="section-title">Checklist mise en production</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🖥</div>Serveurs & réseau</div>
+      <div class="check-list">
+        <div class="check-item">Créer les 3 serveurs Hetzner (srv-app, srv-db, srv-cache)</div>
+        <div class="check-item">Configurer le réseau privé 10.0.0.0/16</div>
+        <div class="check-item">Créer le Load Balancer et attacher srv-app-01</div>
+        <div class="check-item">Configurer le Firewall (ports 80/443 publics uniquement)</div>
+        <div class="check-item">Configurer SSH clé uniquement + port non standard</div>
+        <div class="check-item">Installer Fail2ban sur tous les serveurs</div>
+        <div class="check-item">Créer le volume bloc persistant pour MariaDB</div>
+        <div class="check-item">Configurer les entrées DNS (A + wildcard *.petsuite.fr)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🐳</div>Docker & déploiement</div>
+      <div class="check-list">
+        <div class="check-item">Installer Docker + Docker Compose sur srv-app-01</div>
+        <div class="check-item">Créer le réseau Docker proxy externe</div>
+        <div class="check-item">Configurer traefik.yml + acme.json (chmod 600)</div>
+        <div class="check-item">Créer .env.prod avec toutes les variables</div>
+        <div class="check-item">Premier déploiement manuel pour validation</div>
+        <div class="check-item">Configurer GitHub Secrets (tous les tokens)</div>
+        <div class="check-item">Tester le pipeline CI/CD sur un tag v0.1.0-test</div>
+        <div class="check-item">Vérifier SSL wildcard actif sur *.petsuite.fr</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🗄</div>BDD & données</div>
+      <div class="check-list">
+        <div class="check-item">Installer MariaDB 10.11+ sur srv-db-01</div>
+        <div class="check-item">Créer la BDD plateforme petsuite_platform</div>
+        <div class="check-item">Appliquer les migrations Flyway</div>
+        <div class="check-item">Tester la création d'un premier tenant</div>
+        <div class="check-item">Configurer le backup quotidien (cron workflow)</div>
+        <div class="check-item">Tester une restauration depuis backup</div>
+        <div class="check-item">Configurer Object Storage S3 + politique lifecycle</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">📊</div>Monitoring & go-live</div>
+      <div class="check-list">
+        <div class="check-item">Déployer Prometheus + Grafana + node_exporter</div>
+        <div class="check-item">Déployer Uptime Kuma + configurer status.petsuite.fr</div>
+        <div class="check-item">Configurer les alertes email/Slack</div>
+        <div class="check-item">Intégrer Sentry pour les erreurs prod</div>
+        <div class="check-item">Test de charge (k6 ou Locust) avant ouverture</div>
+        <div class="check-item">Vérifier RGPD : mentions légales + CGV en ligne</div>
+        <div class="check-item">Premier tenant beta — validation end-to-end</div>
+        <div class="check-item">Go-live 🚀</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<footer>
+  <div><strong>Pe

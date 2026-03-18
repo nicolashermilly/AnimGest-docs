@@ -1,46 +1,581 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Landing Page</title><style>:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Le logiciel des comportementalistes canins</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f2;--bg2:#ffffff;--bg3:#eeebe6;--bg4:#e5e1da;
+  --border:#dedad3;--border2:#c8c3bb;
+  --ink:#1a1714;--ink2:#5c5650;--ink3:#9c9590;
+  --green:#1a6640;--green2:#e8f5ef;--green3:#c5e8d5;
+  --amber:#8a5c0a;--amber2:#fef3e2;
+  --blue:#1a4fa0;--blue2:#e8f0fb;
+  --red:#9a2020;--red2:#fdeaea;
+  --purple:#5a3fa0;--purple2:#ede8fc;
+  --gold:#7a5500;--gold2:#fdf3d8;
+  --r:10px;--rs:6px;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
-.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
-.header h1{font-size:2.5rem;font-weight:800;color:#fff;}.header p{color:var(--accent2);margin-top:8px;}
-.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
-.container{max-width:1100px;margin:0 auto;padding:32px;}.section{margin-bottom:40px;}
-.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
-.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
-.section p{color:var(--text2);margin-bottom:10px;}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
-.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:8px;}.card p,.card li{font-size:.875rem;color:var(--text2);}
-ul{list-style:none;padding:0;}li{padding:3px 0;display:flex;gap:6px;}li::before{content:'→';color:var(--accent);flex-shrink:0;}
-table{width:100%;border-collapse:collapse;margin:12px 0;}
-th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
-td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}tr:hover td{background:var(--surface);}
-.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.nf-box{background:rgba(16,185,129,.08);border-left:3px solid #10b981;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);}
-.new{background:var(--green);color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;vertical-align:middle;}
-footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}</style></head>
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;}
+nav{background:#12151c;padding:0 36px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.06);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:#22d3a0;flex-shrink:0;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.nav-badge{font-family:'DM Mono',monospace;font-size:10px;background:#e8f5ef;color:#1a6640;padding:3px 10px;border-radius:20px;border:1px solid #c5e8d5;}
+.nav-back{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.12);border-radius:20px;transition:all .15s;}
+.nav-back:hover{color:#fff;border-color:rgba(255,255,255,.3);}
+.hero{background:#12151c;padding:52px 40px 44px;border-bottom:3px solid #1a6640;}
+.hero-label{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:8px;}
+.hero h1 em{font-style:italic;color:#22d3a0;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);max-width:600px;line-height:1.6;}
+.container{max-width:1000px;margin:0 auto;padding:36px 36px 80px;}
+.section{margin-bottom:44px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+.section-dot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:-.2px;}
+.section-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;}
+.card-title{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.ci-green{background:var(--green2);}
+.ci-amber{background:var(--amber2);}
+.ci-blue{background:var(--blue2);}
+.ci-red{background:var(--red2);}
+.ci-purple{background:var(--purple2);}
+.ci-gold{background:var(--gold2);}
+.ci-teal{background:#d0f0f0;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--bg3);}
+.item:last-child{border-bottom:none;padding-bottom:0;}
+.item-label{font-size:12px;font-weight:500;color:var(--ink);min-width:150px;flex-shrink:0;}
+.item-val{font-size:12px;color:var(--ink2);line-height:1.4;}
+.item-list{display:flex;flex-direction:column;}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.p-green{background:var(--green2);color:var(--green);}
+.p-amber{background:var(--amber2);color:var(--amber);}
+.p-blue{background:var(--blue2);color:var(--blue);}
+.p-red{background:var(--red2);color:var(--red);}
+.p-purple{background:var(--purple2);color:var(--purple);}
+.p-gold{background:var(--gold2);color:var(--gold);}
+.p-gray{background:var(--bg3);color:var(--ink2);border:1px solid var(--border);}
+.callout{border-left:3px solid var(--green);background:var(--green2);padding:13px 17px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;color:var(--ink2);margin:12px 0;}
+.callout.amber{border-color:var(--amber);background:var(--amber2);}
+.callout.blue{border-color:var(--blue);background:var(--blue2);}
+.callout.red{border-color:var(--red);background:var(--red2);}
+.alert{border-left:3px solid var(--green);background:var(--green2);padding:12px 16px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;margin:10px 0;}
+.alert.alert-info{border-color:var(--blue);background:var(--blue2);}
+.alert.alert-warn{border-color:var(--amber);background:var(--amber2);}
+.alert.alert-danger{border-color:var(--red);background:var(--red2);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);padding:8px 12px;border-bottom:2px solid var(--border);background:var(--bg3);}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg3);}
+.tw{overflow-x:auto;margin-bottom:4px;}
+code,.code{font-family:'DM Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 6px;border-radius:3px;color:var(--ink);}
+.code-block{background:#1a1d26;color:#e2ddd8;border-radius:var(--rs);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+footer{background:#12151c;color:rgba(255,255,255,.3);padding:18px 36px;font-size:11px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+footer strong{color:rgba(255,255,255,.6);font-family:'Playfair Display',serif;}
+@media(max-width:768px){
+  .hero{padding:36px 20px 28px;}.hero h1{font-size:28px;}
+  .container{padding:24px 16px 60px;}
+  nav{padding:0 16px;}
+  .grid2,.grid3{grid-template-columns:1fr;}
+}
+</style>
+</head>
 <body>
-<div class="header"><h1>🌐 Landing Page</h1><p>Site commercial PetSuite — positionnement et contenu</p><div class="badge">v4.0 — Sprint S30 — Mars 2026</div></div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="20-pilotage-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Pilotage</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a></nav>
-<div class="container">
-<div class="section"><h2>🌐 Objectif du site</h2>
-<p>La landing page PetSuite est un site commercial one-page présentant la solution aux professionnels animaliers. Elle intègre un formulaire de contact qui alimente directement le CRM (leads entrants).</p></div>
-<div class="section"><h2>📄 Structure de la page</h2>
-<div class="grid">
-  <div class="card"><h4>Hero</h4><p>"Le logiciel pensé pour les professionnels animaliers." CTA : Demander une démo. QR Code partage.</p></div>
-  <div class="card"><h4>14 métiers</h4><p>Grille des 14 métiers couverts avec icônes. Message : "Votre activité, notre logiciel."</p></div>
-  <div class="card"><h4>Fonctionnalités clés</h4><p>Clients &amp; Animaux, Séances &amp; Programmes, Facturation &amp; NF525, CRM, FEC.</p></div>
-  <div class="card"><h4>Conformité</h4><p>Section dédiée NF525 + FEC + RGPD. Rassurance légale pour les prospects.</p></div>
-  <div class="card"><h4>Formulaire contact</h4><p>Nom, email, téléphone, métier, message. Envoi → CRM (crm_lead via API).</p></div>
-  <div class="card"><h4>Footer</h4><p>Liens RGPD, mentions légales, © micro_logiciel.</p></div>
-</div></div>
-<div class="section"><h2>🔗 Intégration CRM</h2>
-<div class="highlight"><p>Le formulaire de contact de la landing page est connecté à l'API via <code>POST /ged-formulaire-lead</code>. Chaque soumission crée un lead dans <code>crm_lead</code> avec source = WEB et statut = NOUVEAU.</p></div></div>
-<div class="section"><h2>🏛️ Section NF 525 sur la landing page</h2>
-<div class="nf-box"><p>Message recommandé : "PetSuite est conforme NF 525 (Art. 88 LF2016) — Journal de caisse inaltérable SHA-256, clôtures Z journalières, 0 amende possible." Logo ou badge de conformité à ajouter.</p></div></div></div>
-<footer>PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
-</body></html>
+<nav>
+  <a class="nav-brand" href="index.html"><div class="nav-dot"></div>PetSuite</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">← Index</a>
+    <span class="nav-badge">S33 · 18/03/2026</span>
+  </div>
+</nav>
+
+
+<!-- NAV -->
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">Conçu pour les comportementalistes canins</div>
+      <h1>Votre cabinet,<br><em>organisé.</em></h1>
+      <p class="hero-sub">PetSuite centralise vos clients, animaux, études comportementales, séances, devis et factures en un seul outil. Fini les tableurs.</p>
+      <div class="hero-ctas">
+        <a href="#essai" class="btn-primary">Commencer l'essai gratuit →</a>
+        <a href="#fonctionnalites" class="btn-ghost">Voir les fonctionnalités</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">14</div>
+          <div class="hero-stat-lbl">Critères CAC</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-lbl">Export FEC certifié</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">5 min</div>
+          <div class="hero-stat-lbl">Pour démarrer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APP MOCKUP -->
+    <div class="hero-mockup">
+      <div class="mockup-window">
+        <div class="mockup-titlebar">
+          <div class="mockup-dot mockup-dot-r"></div>
+          <div class="mockup-dot mockup-dot-y"></div>
+          <div class="mockup-dot mockup-dot-g"></div>
+          <div class="mockup-url">cabinetmartin.petsuite.fr</div>
+        </div>
+        <div class="mockup-body">
+          <div class="mockup-kpis">
+            <div class="mockup-kpi">
+              <div class="mockup-kpi-num">29</div>
+              <div class="mockup-kpi-lbl">Animaux</div>
+              <div class="mockup-kpi-delta">+3 ce mois</div>
+            </div>
+            <div class="mockup-kpi">
+              <div class="mockup-kpi-num">4 200€</div>
+              <div class="mockup-kpi-lbl">CA mars</div>
+              <div class="mockup-kpi-delta">+12%</div>
+            </div>
+            <div class="mockup-kpi">
+              <div class="mockup-kpi-num">59</div>
+              <div class="mockup-kpi-lbl">Séances</div>
+              <div class="mockup-kpi-delta">+7</div>
+            </div>
+            <div class="mockup-kpi">
+              <div class="mockup-kpi-num">3</div>
+              <div class="mockup-kpi-lbl">Devis attente</div>
+              <div class="mockup-kpi-delta" style="color:#f0c040;">À relancer</div>
+            </div>
+          </div>
+          <div class="mockup-row">
+            <div class="mockup-card">
+              <div class="mockup-card-title">ANIMAUX RÉCENTS</div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot"></div>
+                <div><div class="mockup-animal-name">Titan</div><div class="mockup-animal-sub">CAC 3/14</div><div class="mockup-bar"><div class="mockup-bar-fill" style="width:21%"></div></div></div>
+              </div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot"></div>
+                <div><div class="mockup-animal-name">Luna</div><div class="mockup-animal-sub">CAC 8/14</div><div class="mockup-bar"><div class="mockup-bar-fill" style="width:57%"></div></div></div>
+              </div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot warn"></div>
+                <div><div class="mockup-animal-name">Rex</div><div class="mockup-animal-sub">EC sans devis</div><div class="mockup-bar"><div class="mockup-bar-fill" style="width:0%"></div></div></div>
+              </div>
+            </div>
+            <div class="mockup-card">
+              <div class="mockup-card-title">PROCHAINES SÉANCES</div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot" style="background:#74c69d"></div>
+                <div><div class="mockup-animal-name">Séance suivi · Titan</div><div class="mockup-animal-sub">28/03 · 10h00</div></div>
+              </div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot" style="background:#74c69d"></div>
+                <div><div class="mockup-animal-name">EDC · Bella</div><div class="mockup-animal-sub">29/03 · 14h30</div></div>
+              </div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot" style="background:#6080c0"></div>
+                <div><div class="mockup-animal-name">Gardiennage · Luna</div><div class="mockup-animal-sub">01/04 · 09h00</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-icon">📄</div>
+        <div class="hero-badge-text"><strong>FEC généré en 1 clic</strong>Certifié DGFiP · SHA-256</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEME -->
+<section class="section problem-section">
+  <div class="section-inner">
+    <div class="section-tag">Le quotidien du comportementaliste</div>
+    <h2 class="section-title" style="color:#fff;">Vous gérez votre cabinet<br><em>avec les mauvais outils.</em></h2>
+    <p class="section-sub">Excel pour les clients, Word pour les devis, email pour les documents, et un carnet pour les notes comportementales. Résultat : du temps perdu et des informations éparpillées.</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">📋</div>
+        <div class="pain-title">Dossiers éparpillés</div>
+        <div class="pain-desc">Fiches EC dans Word, historique CAC dans Excel, photos dans WhatsApp, factures dans un autre logiciel…</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">⏱</div>
+        <div class="pain-title">Tâches administratives chronophages</div>
+        <div class="pain-desc">Rédiger un devis, envoyer une facture, relancer un impayé — des heures par semaine volées sur le terrain.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🔢</div>
+        <div class="pain-title">Comptabilité artisanale</div>
+        <div class="pain-desc">Export FEC laborieux en fin d'année, TVA à calculer à la main, registre incomplet pour votre comptable.</div>
+      </div>
+    </div>
+    <div class="pain-arrow">↓</div>
+    <div class="solution-highlight">
+      <div class="solution-highlight-icon">🐾</div>
+      <div>
+        <div class="solution-highlight-title">PetSuite centralise tout en un seul endroit</div>
+        <div class="solution-highlight-text">Clients, animaux, études comportementales, CAC, séances, devis, factures, GED et export comptable. Un outil conçu spécifiquement pour votre métier — pas un CRM générique à adapter.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="fonctionnalites">
+  <div class="section-inner">
+    <div class="section-tag">Fonctionnalités</div>
+    <h2 class="section-title">Tout ce dont vous avez besoin,<br><em>rien de superflu.</em></h2>
+    <p class="section-sub">Conçu avec des comportementalistes canins, PetSuite couvre l'intégralité du cycle — du premier contact au bilan comptable.</p>
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🐕</div>
+        <div class="feature-title">Dossiers animaux complets</div>
+        <div class="feature-desc">Fiche animal avec puce (identifiant universel), races, historique, photo, commentaires. Tout rattaché au bon client.</div>
+        <span class="feature-badge">Puce = clé universelle</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">Étude Comportementale</div>
+        <div class="feature-desc">Formulaire structuré en 60+ champs pour vos EDC. Grille comportementale, anamnèse, problématiques — tout en un.</div>
+        <span class="feature-badge">Spécifique comportemental</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Suivi CAC</div>
+        <div class="feature-desc">14 critères d'aptitude au contact entièrement paramétrables. Score automatique et évolution graphique séance par séance.</div>
+        <span class="feature-badge">Libellés personnalisables</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📅</div>
+        <div class="feature-title">Agenda & séances</div>
+        <div class="feature-desc">Planifiez EDC, séances de suivi, gardiennage. Vue semaine avec couleurs par type. Compte-rendu directement dans la fiche.</div>
+        <span class="feature-badge">Types paramétrables</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">💶</div>
+        <div class="feature-title">Devis & facturation</div>
+        <div class="feature-desc">Générez devis et factures en un clic depuis une séance. PDF professionnel. Paiement en ligne Stripe. Export FEC certifié.</div>
+        <span class="feature-badge">Numérotation auto</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📁</div>
+        <div class="feature-title">GED & documents</div>
+        <div class="feature-desc">Stockage illimité de documents par animal, séance ou client. Carte d'identité animale PDF partageable. Partage sécurisé.</div>
+        <span class="feature-badge">Partage propriétaire</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAC SHOWCASE -->
+<section class="section cac-section" id="cac">
+  <div class="section-inner">
+    <div class="cac-inner">
+      <div>
+        <div class="section-tag">Le cœur du suivi comportemental</div>
+        <h2 class="section-title">Les 14 critères CAC,<br><em>enfin digitaux.</em></h2>
+        <p class="section-sub">Vos Critères d'Aptitude au Contact sont entièrement paramétrables. Le score est calculé automatiquement et évolue séance par séance. Partageable avec le propriétaire en un clic.</p>
+        <div class="cac-score-display">
+          <div class="cac-score-num">3<span>/14</span></div>
+          <div class="cac-score-lbl">Score actuel de Titan · Berger Allemand</div>
+          <div class="cac-progress"><div class="cac-progress-fill"></div></div>
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;">
+          <div style="font-size:13px;color:var(--fog);"><strong style="color:var(--leaf2);">✓</strong> Score calculé automatiquement</div>
+          <div style="font-size:13px;color:var(--fog);"><strong style="color:var(--leaf2);">✓</strong> Évolution graphique</div>
+          <div style="font-size:13px;color:var(--fog);"><strong style="color:var(--leaf2);">✓</strong> Libellés paramétrables</div>
+        </div>
+      </div>
+      <div>
+        <div class="cac-grid-display">
+          <div class="cac-cell ok"><div class="cac-cell-num">01</div><div class="cac-cell-check">✓</div><div class="cac-cell-label">Sociabilisation chiens</div></div>
+          <div class="cac-cell ok"><div class="cac-cell-num">02</div><div class="cac-cell-check">✓</div><div class="cac-cell-label">Marche en laisse</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">03</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Social. humains</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">04</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Mordillement</div></div>
+          <div class="cac-cell ok"><div class="cac-cell-num">05</div><div class="cac-cell-check">✓</div><div class="cac-cell-label">Rappel</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">06</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Position assise</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">07</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Couché</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">08</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Reste</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">09</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Aboiement</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">10</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Véhicule</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">11</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Seul domicile</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">12</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Propreté</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">13</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Jeu sans mordre</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">14</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Câlins</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing-section" id="pricing">
+  <div class="section-inner">
+    <div class="section-tag">Tarifs</div>
+    <h2 class="section-title">Choisissez votre formule.</h2>
+    <p class="section-sub">Engagement de 6 mois puis résiliable à tout moment. Prélèvement mensuel automatique. Données hébergées en Europe.</p>
+    <div class="pricing-grid">
+
+      <!-- SOLO -->
+      <div class="pricing-card fade-in">
+        <div class="pricing-plan">Solo</div>
+        <div class="pricing-price"><sup>€</sup>À définir<sub>/mois TTC</sub></div>
+        <div class="pricing-cadence">Prélèvement mensuel SEPA</div>
+        <div class="pricing-engagement">Engagement 6 mois · 1 utilisateur</div>
+        <div class="pricing-features">
+          <div class="pricing-feature">Clients & animaux illimités</div>
+          <div class="pricing-feature">Étude comportementale complète</div>
+          <div class="pricing-feature">Suivi CAC 14 critères</div>
+          <div class="pricing-feature">Devis & factures PDF</div>
+          <div class="pricing-feature">Export FEC certifié</div>
+          <div class="pricing-feature">GED 5 Go inclus</div>
+          <div class="pricing-feature">Portail propriétaire</div>
+          <div class="pricing-feature dim">CRM & agenda avancé</div>
+          <div class="pricing-feature dim">Utilisateurs supplémentaires</div>
+        </div>
+        <a href="#essai" class="pricing-cta">Commencer →</a>
+      </div>
+
+      <!-- CABINET -->
+      <div class="pricing-card featured fade-in">
+        <div class="pricing-popular">Le plus choisi</div>
+        <div class="pricing-plan">Cabinet</div>
+        <div class="pricing-price"><sup>€</sup>À définir<sub>/mois TTC</sub></div>
+        <div class="pricing-cadence">Prélèvement mensuel SEPA</div>
+        <div class="pricing-engagement">Engagement 6 mois · Jusqu'à 5 utilisateurs</div>
+        <div class="pricing-features">
+          <div class="pricing-feature">Tout le plan Solo</div>
+          <div class="pricing-feature">5 utilisateurs inclus</div>
+          <div class="pricing-feature">CRM complet (leads, opps, campagnes)</div>
+          <div class="pricing-feature">Programmes de suivi</div>
+          <div class="pricing-feature">GED 20 Go inclus</div>
+          <div class="pricing-feature">Agenda partagé multi-utilisateurs</div>
+          <div class="pricing-feature">Questionnaires comportementaux</div>
+          <div class="pricing-feature dim">Stock & achats fournisseurs</div>
+        </div>
+        <a href="#essai" class="pricing-cta featured">Commencer →</a>
+      </div>
+
+      <!-- MULTI -->
+      <div class="pricing-card fade-in">
+        <div class="pricing-plan">Multi</div>
+        <div class="pricing-price"><sup>€</sup>À définir<sub>/mois TTC</sub></div>
+        <div class="pricing-cadence">Prélèvement mensuel SEPA</div>
+        <div class="pricing-engagement">Engagement 6 mois · Utilisateurs illimités</div>
+        <div class="pricing-features">
+          <div class="pricing-feature">Tout le plan Cabinet</div>
+          <div class="pricing-feature">Utilisateurs illimités</div>
+          <div class="pricing-feature">Stock & achats fournisseurs</div>
+          <div class="pricing-feature">Tarification 3 méthodes</div>
+          <div class="pricing-feature">Bilan comptable PCG 2025</div>
+          <div class="pricing-feature">GED 100 Go inclus</div>
+          <div class="pricing-feature">Signature électronique Yousign</div>
+          <div class="pricing-feature">Support prioritaire</div>
+        </div>
+        <a href="#essai" class="pricing-cta">Commencer →</a>
+      </div>
+    </div>
+    <div class="pricing-note">Tous les plans incluent l'hébergement en Europe · Backup quotidien · SSL inclus · Sans engagement après 6 mois</div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section class="section" id="temoignages">
+  <div class="section-inner">
+    <div class="section-tag">Témoignages</div>
+    <h2 class="section-title">Ce qu'en disent<br><em>nos utilisateurs.</em></h2>
+    <p class="section-sub">Comportementalistes canins, éleveurs et dresseurs nous font confiance au quotidien.</p>
+    <div class="temoignages-grid">
+      <div class="temoignage fade-in">
+        <div class="temoignage-stars">★★★★★</div>
+        <div class="temoignage-text">Avant PetSuite, je passais 4 heures par semaine en administratif. Maintenant, une heure suffit. Le suivi CAC est exactement ce dont j'avais besoin pour montrer la progression à mes clients.</div>
+        <div class="temoignage-author">
+          <div class="temoignage-avatar" style="background:#2a6b44;">SM</div>
+          <div>
+            <div class="temoignage-name">Sophie M.</div>
+            <div class="temoignage-role">Comportementaliste canin — Lyon</div>
+          </div>
+        </div>
+      </div>
+      <div class="temoignage fade-in">
+        <div class="temoignage-stars">★★★★★</div>
+        <div class="temoignage-text">L'export FEC m'a économisé 3 jours de travail avec mon comptable. Toutes les écritures sont déjà dans le bon format. Et la carte d'identité animale, les propriétaires adorent.</div>
+        <div class="temoignage-author">
+          <div class="temoignage-avatar" style="background:#1d4e8f;">LR</div>
+          <div>
+            <div class="temoignage-name">Laurent R.</div>
+            <div class="temoignage-role">École canine — Bordeaux</div>
+          </div>
+        </div>
+      </div>
+      <div class="temoignage fade-in">
+        <div class="temoignage-stars">★★★★☆</div>
+        <div class="temoignage-text">J'ai tout migré depuis Excel en une journée. Le formulaire d'étude comportementale reproduit exactement ma méthode de travail. Je ne reviendrais pas en arrière.</div>
+        <div class="temoignage-author">
+          <div class="temoignage-avatar" style="background:#5b3fa0;">CB</div>
+          <div>
+            <div class="temoignage-name">Claire B.</div>
+            <div class="temoignage-role">Comportementaliste indépendante — Nantes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-section" id="faq">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="section-tag" style="display:inline-block;">Questions fréquentes</div>
+      <h2 class="section-title">Tout ce que vous<br><em>voulez savoir.</em></h2>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          PetSuite est-il réservé aux comportementalistes canins ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">PetSuite a été conçu spécifiquement pour les comportementalistes canins, mais convient à tous les professionnels du monde animal : dresseurs, éleveurs, vétérinaires comportementalistes, toiletteurs. Le module de suivi CAC est paramétrable et peut être adapté à n'importe quelle grille d'évaluation.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Mes données sont-elles en sécurité ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">Vos données sont hébergées en Europe (Allemagne) sur des serveurs dédiés, chiffrées en transit (TLS 1.3) et au repos (AES-256). Un backup chiffré est effectué chaque nuit. PetSuite est conforme au RGPD — vous restez responsable de vos données, PetSuite est votre sous-traitant. Vous pouvez exporter toutes vos données à tout moment.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Comment fonctionne l'engagement de 6 mois ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">À la souscription, vous vous engagez sur 6 mois minimum. Passé cette période, votre abonnement se renouvelle automatiquement mois par mois et est résiliable à tout moment sans frais. Le prélèvement est effectué chaque mois par virement SEPA automatique.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Puis-je migrer mes données existantes (Excel, autre logiciel) ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">Oui. PetSuite accepte l'import CSV pour les clients, animaux et articles. Pour des migrations complexes depuis un autre logiciel, contactez notre support — nous pouvons vous aider à préparer les fichiers d'import.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          L'export FEC est-il vraiment certifié ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">L'export FEC de PetSuite respecte le format DGFiP (Direction Générale des Finances Publiques) avec chaîne de hachage SHA-256 sur chaque ligne pour garantir l'intégrité. Le fichier est directement utilisable par votre comptable ou transmissible à l'administration en cas de contrôle fiscal.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Le portail client propriétaire est-il inclus ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">Oui, tous les plans incluent le portail propriétaire. Les propriétaires de vos clients peuvent consulter le dossier de leur animal, suivre la progression CAC, télécharger la carte d'identité animale PDF et payer leurs factures en ligne. Accès par lien email sécurisé, sans création de compte.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section" id="essai">
+  <div class="cta-inner">
+    <h2 class="cta-title">Prêt à simplifier<br><em>votre cabinet ?</em></h2>
+    <p class="cta-sub">Rejoignez les comportementalistes qui ont repris le contrôle de leur administratif. Démarrez dès aujourd'hui — sans engagement immédiat.</p>
+    <div class="cta-btns">
+      <a href="/cdn-cgi/l/email-protection#84e7ebeaf0e5e7f0c4f4e1f0f7f1edf0e1aae2f6bbf7f1e6eee1e7f0b9c0e1e9e5eae0e1a4e0a3e1f7f7e5eda4d4e1f0d7f1edf0e1" class="btn-white">Demander un accès →</a>
+      <a href="/cdn-cgi/l/email-protection#d5b6babba1b4b6a195a5b0a1a6a0bca1b0fbb3a7" class="btn-outline-white">Nous contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="#" class="footer-logo">Pet<em>Suite</em></a>
+        <p class="footer-desc">Le logiciel de gestion conçu spécifiquement pour les comportementalistes canins et les professionnels des animaux de compagnie.</p>
+        <div class="footer-social">
+          <a href="#">✉</a>
+          <a href="#">in</a>
+          <a href="#">𝕏</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Produit</div>
+        <div class="footer-col-links">
+          <a href="#fonctionnalites">Fonctionnalités</a>
+          <a href="#cac">Suivi CAC</a>
+          <a href="#pricing">Tarifs</a>
+          <a href="#">Roadmap</a>
+          <a href="https://nicolashermilly.github.io/petsuite-docs/" target="_blank">Documentation</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">À propos</div>
+        <div class="footer-col-links">
+          <a href="#">À propos</a>
+          <a href="#temoignages">Témoignages</a>
+          <a href="#faq">FAQ</a>
+          <a href="/cdn-cgi/l/email-protection#31525e5f455052457141544542445845541f5743">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Légal</div>
+        <div class="footer-col-links">
+          <a href="#">Mentions légales</a>
+          <a href="#">CGV</a>
+          <a href="#">Politique de confidentialité</a>
+          <a href="#">DPA</a>
+          <a href="#">RGPD</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 PetSuite. Tous droits réservés. Hébergé en Europe.</div>
+      <div class="footer-legal">
+        <a href="#">Mentions légales</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">CGV</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Scroll animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAl

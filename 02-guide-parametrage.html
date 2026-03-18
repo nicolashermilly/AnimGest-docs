@@ -1,301 +1,446 @@
-<!DOCTYPE html> <html lang="fr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>PetSuite — Guide de Paramétrage v3</title> <style> @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap'); :root { --bg: #fafaf8; --surface: #ffffff; --surface2: #f4f3ef; --border: #e8e6e0; --accent: #2d5a27; --accent2: #c8622a; --accent3: #1a3a7a; --text: #1a1a18; --text-muted: #5a5a52; --text-dim: #9a9a90; --tag: #e8f4e4; --tag-text: #2d5a27; --warning-bg: #fff8e6; --warning-border: #f0c040; --info-bg: #e8f0ff; --info-border: #3060c0; } * { margin: 0; padding: 0; box-sizing: border-box; } body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 14.5px; } .doc-header { background: var(--accent); color: #fff; padding: 60px 80px; position: relative; overflow: hidden; } .doc-header::before { content: '⚙'; position: absolute; right: 80px; top: 50%; transform: translateY(-50%); font-size: 180px; opacity: 0.06; line-height: 1; } .header-eyebrow { font-family: 'Syne', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 16px; } .doc-header h1 { font-family: 'Syne', sans-serif; font-size: 46px; font-weight: 800; line-height: 1.05; color: #fff; } .doc-header h1 em { font-style: normal; color: rgba(255,255,255,0.5); } .doc-header .subtitle { font-size: 16px; color: rgba(255,255,255,0.7); margin-top: 14px; font-weight: 300; } .header-tags { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; } .header-tag { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 12px; color: rgba(255,255,255,0.85); } .doc-layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 200px); } .doc-nav { background: var(--surface); border-right: 1px solid var(--border); padding: 30px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; } .nav-section { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); padding: 20px 20px 6px; } .nav-link { display: block; padding: 8px 20px; font-size: 13px; color: var(--text-muted); text-decoration: none; border-left: 3px solid transparent; transition: all 0.15s; } .nav-link:hover { color: var(--accent); border-left-color: var(--accent); background: var(--tag); } .nav-link.active { color: var(--accent); border-left-color: var(--accent); font-weight: 500; } .doc-content { padding: 55px 70px; max-width: 860px; } .section { margin-bottom: 70px; scroll-margin-top: 30px; } .section-label { display: inline-flex; align-items: center; gap: 8px; background: var(--tag); color: var(--tag-text); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 4px; margin-bottom: 14px; } h2 { font-family: 'Syne', sans-serif; font-size: 30px; font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 14px; } h3 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--text); margin: 28px 0 10px; padding-bottom: 8px; border-bottom: 2px solid var(--border); } h4 { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin: 18px 0 6px; } p { color: var(--text-muted); margin-bottom: 12px; line-height: 1.75; } strong { color: var(--text); font-weight: 600; } .config-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 18px 0; } .config-header { padding: 14px 18px; background: var(--surface2); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; } .config-header .cfg-icon { font-size: 18px; } .config-header .cfg-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; } .config-header .cfg-path { font-size: 12px; color: var(--text-dim); margin-left: auto; font-family: monospace; background: var(--border); padding: 2px 8px; border-radius: 4px; } .config-body { padding: 16px 18px; } table { width: 100%; border-collapse: collapse; margin: 14px 0; } th { text-align: left; padding: 9px 12px; font-size: 11px; font-weight: 700; font-family: 'Syne', sans-serif; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); background: var(--surface2); border-bottom: 2px solid var(--border); } td { padding: 10px 12px; font-size: 13.5px; color: var(--text-muted); border-bottom: 1px solid var(--border); vertical-align: top; } tr:last-child td { border-bottom: none; } td strong { color: var(--text); } .steps { margin: 16px 0; } .step { display: flex; gap: 14px; margin-bottom: 14px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; align-items: flex-start; } .step-num { background: var(--accent); color: #fff; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; } .step-content .step-title { font-weight: 600; color: var(--text); font-size: 14px; margin-bottom: 2px; } .step-content .step-desc { font-size: 13px; color: var(--text-muted); } .alert { padding: 12px 16px; border-radius: 8px; margin: 14px 0; border-left: 4px solid; font-size: 13.5px; display: flex; gap: 10px; align-items: flex-start; } .alert-icon { flex-shrink: 0; margin-top: 1px; } .alert-warning { background: var(--warning-bg); border-color: var(--warning-border); color: #7a5800; } .alert-info { background: var(--info-bg); border-color: var(--info-border); color: #1a3a7a; } .alert-success { background: var(--tag); border-color: var(--accent); color: var(--tag-text); } .alert-nf525 { background: #e8f7f0; border-color: #10b981; color: #065f46; } code { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 7px; font-family: monospace; font-size: 12.5px; color: var(--accent3); } .seed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 14px 0; } .seed-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; } .seed-card .sc-code { font-family: monospace; font-size: 12px; color: var(--accent3); background: var(--info-bg); padding: 2px 8px; border-radius: 4px; margin-bottom: 6px; display: inline-block; } .seed-card .sc-label { font-size: 13px; font-weight: 500; color: var(--text); } .seed-card .sc-meta { font-size: 12px; color: var(--text-dim); margin-top: 2px; } .metier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; } .metier-card { background: var(--surface); border: 2px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; } .metier-card .mc-icon { font-size: 28px; margin-bottom: 8px; } .metier-card .mc-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); } .metier-card .mc-seance { font-size: 11px; color: var(--text-muted); margin-top: 4px; } .doc-footer { background: var(--accent); color: rgba(255,255,255,0.6); padding: 24px 80px; display: flex; justify-content: space-between; font-size: 13px; flex-wrap: wrap; gap: 8px; } .doc-footer strong { color: #fff; } .doc-footer a { color: #818cf8; text-decoration: none; } </style> </head> <body>
-<div class="doc-header">
-  <div class="header-eyebrow">PetSuite · micro_logiciel</div>
-  <h1>Guide de<br><em>Paramétrage</em></h1>
-  <div class="subtitle">Configuration initiale et avancée · Version 3.0 · Sprint S30</div>
-  <div class="header-tags">
-    <span class="header-tag">⚙️ Configuration</span>
-    <span class="header-tag">🗄️ MariaDB</span>
-    <span class="header-tag">🏛️ NF 525</span>
-    <span class="header-tag">📅 Mars 2026</span>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Guide de paramétrage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f2;--bg2:#ffffff;--bg3:#eeebe6;--bg4:#e5e1da;
+  --border:#dedad3;--border2:#c8c3bb;
+  --ink:#1a1714;--ink2:#5c5650;--ink3:#9c9590;
+  --green:#1a6640;--green2:#e8f5ef;--green3:#c5e8d5;
+  --amber:#8a5c0a;--amber2:#fef3e2;
+  --blue:#1a4fa0;--blue2:#e8f0fb;
+  --red:#9a2020;--red2:#fdeaea;
+  --purple:#5a3fa0;--purple2:#ede8fc;
+  --gold:#7a5500;--gold2:#fdf3d8;
+  --r:10px;--rs:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;}
+nav{background:#12151c;padding:0 36px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.06);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:#22d3a0;flex-shrink:0;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.nav-badge{font-family:'DM Mono',monospace;font-size:10px;background:#e8f5ef;color:#1a6640;padding:3px 10px;border-radius:20px;border:1px solid #c5e8d5;}
+.nav-back{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.12);border-radius:20px;transition:all .15s;}
+.nav-back:hover{color:#fff;border-color:rgba(255,255,255,.3);}
+.hero{background:#12151c;padding:52px 40px 44px;border-bottom:3px solid #1a6640;}
+.hero-label{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:8px;}
+.hero h1 em{font-style:italic;color:#22d3a0;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);max-width:600px;line-height:1.6;}
+.container{max-width:1000px;margin:0 auto;padding:36px 36px 80px;}
+.section{margin-bottom:44px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+.section-dot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:-.2px;}
+.section-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;}
+.card-title{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.ci-green{background:var(--green2);}
+.ci-amber{background:var(--amber2);}
+.ci-blue{background:var(--blue2);}
+.ci-red{background:var(--red2);}
+.ci-purple{background:var(--purple2);}
+.ci-gold{background:var(--gold2);}
+.ci-teal{background:#d0f0f0;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--bg3);}
+.item:last-child{border-bottom:none;padding-bottom:0;}
+.item-label{font-size:12px;font-weight:500;color:var(--ink);min-width:150px;flex-shrink:0;}
+.item-val{font-size:12px;color:var(--ink2);line-height:1.4;}
+.item-list{display:flex;flex-direction:column;}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.p-green{background:var(--green2);color:var(--green);}
+.p-amber{background:var(--amber2);color:var(--amber);}
+.p-blue{background:var(--blue2);color:var(--blue);}
+.p-red{background:var(--red2);color:var(--red);}
+.p-purple{background:var(--purple2);color:var(--purple);}
+.p-gold{background:var(--gold2);color:var(--gold);}
+.p-gray{background:var(--bg3);color:var(--ink2);border:1px solid var(--border);}
+.callout{border-left:3px solid var(--green);background:var(--green2);padding:13px 17px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;color:var(--ink2);margin:12px 0;}
+.callout.amber{border-color:var(--amber);background:var(--amber2);}
+.callout.blue{border-color:var(--blue);background:var(--blue2);}
+.callout.red{border-color:var(--red);background:var(--red2);}
+.alert{border-left:3px solid var(--green);background:var(--green2);padding:12px 16px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;margin:10px 0;}
+.alert.alert-info{border-color:var(--blue);background:var(--blue2);}
+.alert.alert-warn{border-color:var(--amber);background:var(--amber2);}
+.alert.alert-danger{border-color:var(--red);background:var(--red2);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);padding:8px 12px;border-bottom:2px solid var(--border);background:var(--bg3);}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg3);}
+.tw{overflow-x:auto;margin-bottom:4px;}
+code,.code{font-family:'DM Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 6px;border-radius:3px;color:var(--ink);}
+.code-block{background:#1a1d26;color:#e2ddd8;border-radius:var(--rs);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+footer{background:#12151c;color:rgba(255,255,255,.3);padding:18px 36px;font-size:11px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+footer strong{color:rgba(255,255,255,.6);font-family:'Playfair Display',serif;}
+@media(max-width:768px){
+  .hero{padding:36px 20px 28px;}.hero h1{font-size:28px;}
+  .container{padding:24px 16px 60px;}
+  nav{padding:0 16px;}
+  .grid2,.grid3{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="index.html"><div class="nav-dot"></div>PetSuite</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">← Index</a>
+    <span class="nav-badge">S33 · 18/03/2026</span>
   </div>
-</div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:10px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;">
-  <a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a>
-  <a href="03-notice-utilisateur.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Notice utilisateur</a>
-  <a href="20-pilotage-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Pilotage</a>
-  <a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a>
 </nav>
-<div class="doc-layout">
-  <nav class="doc-nav">
-    <div class="nav-section">Démarrage</div>
-    <a class="nav-link active" href="#ordre">Ordre de configuration</a>
-    <a class="nav-link" href="#metier">Mon métier</a>
-    <div class="nav-section">Référentiels</div>
-    <a class="nav-link" href="#tva">Taux de TVA</a>
-    <a class="nav-link" href="#modes-paiement">Modes de paiement</a>
-    <a class="nav-link" href="#conditions">Conditions de paiement</a>
-    <a class="nav-link" href="#races">Races (392)</a>
-    <div class="nav-section">Comptabilité</div>
-    <a class="nav-link" href="#comptes">Plan de comptes</a>
-    <a class="nav-link" href="#param-compta">Paramètres compta</a>
-    <a class="nav-link" href="#exercices">Exercices</a>
-    <div class="nav-section">NF 525</div>
-    <a class="nav-link" href="#nf525-config" style="color:#10b981;">🏛️ Config NF 525</a>
-    <div class="nav-section">Catalogue</div>
-    <a class="nav-link" href="#categories">Catégories</a>
-    <a class="nav-link" href="#articles">Articles / Prestations</a>
-    <div class="nav-section">CRM</div>
-    <a class="nav-link" href="#crm-ref">Référentiels CRM</a>
-    <div class="nav-section">Séances</div>
-    <a class="nav-link" href="#seance-types">Types de séance</a>
-    <div class="nav-section">Entreprise</div>
-    <a class="nav-link" href="#entreprise">Mon entreprise</a>
-    <a class="nav-link" href="#utilisateurs">Utilisateurs &amp; Rôles</a>
-  </nav>
-  <main class="doc-content">
 
-    <section class="section" id="ordre">
-      <div class="section-label">📋 Démarrage</div>
-      <h2>Ordre de configuration recommandé</h2>
-      <p>Pour une mise en service optimale de PetSuite, respectez l'ordre suivant.</p>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Mon métier</div><div class="step-desc">Définir le type d'activité — adapte les libellés de toute l'interface</div></div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Mon entreprise</div><div class="step-desc">Raison sociale, SIRET, coordonnées — figurent sur tous les documents imprimés</div></div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Plan de comptes</div><div class="step-desc">Comptes comptables de base (411, 706, 445710, 512, 530)</div></div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Paramètres comptables</div><div class="step-desc">Lier les comptes par défaut (client, TVA, banque, caisse)</div></div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Taux de TVA</div><div class="step-desc">Créer les taux applicables (20%, 10%, 5.5%, exonéré...)</div></div></div>
-        <div class="step"><div class="step-num">6</div><div class="step-content"><div class="step-title">Catégories &amp; Articles</div><div class="step-desc">Catalogue de prestations avec comptes de vente associés</div></div></div>
-        <div class="step"><div class="step-num">7</div><div class="step-content"><div class="step-title">Modes &amp; Conditions de paiement</div><div class="step-desc">CB, Virement, Chèque + délais (comptant, 30j...)</div></div></div>
-        <div class="step"><div class="step-num">8</div><div class="step-content"><div class="step-title">Exercice comptable</div><div class="step-desc">Définir l'exercice en cours (ex: 2026)</div></div></div>
-        <div class="step"><div class="step-num">9</div><div class="step-content"><div class="step-title">Module NF 525</div><div class="step-desc">Déployer Script_NF525_v1.sql — configurer droits SQL — tester v_nf525_conformite</div></div></div>
-        <div class="step"><div class="step-num">10</div><div class="step-content"><div class="step-title">Utilisateurs &amp; CRM</div><div class="step-desc">Créer les comptes utilisateurs, rôles et référentiels CRM</div></div></div>
-      </div>
-    </section>
 
-    <section class="section" id="metier">
-      <div class="section-label">🎯 Identité</div>
-      <h2>Mon métier</h2>
-      <p>Le paramètre métier adapte l'ensemble des libellés de l'interface selon votre activité.</p>
-      <div class="config-block">
-        <div class="config-header"><span class="cfg-icon">🎯</span><span class="cfg-title">Métiers disponibles</span><span class="cfg-path">Paramètres → Mon métier</span></div>
-        <div class="config-body">
-          <div class="metier-grid">
-            <div class="metier-card"><div class="mc-icon">🧠</div><div class="mc-label">Comportementaliste</div><div class="mc-seance">→ "Séances"</div></div>
-            <div class="metier-card"><div class="mc-icon">✂️</div><div class="mc-label">Toiletteur</div><div class="mc-seance">→ "Rendez-vous"</div></div>
-            <div class="metier-card"><div class="mc-icon">🏠</div><div class="mc-label">Pet-sitter</div><div class="mc-seance">→ "Visites"</div></div>
-            <div class="metier-card"><div class="mc-icon">🐴</div><div class="mc-label">Centre équestre</div><div class="mc-seance">→ "Cours"</div></div>
-            <div class="metier-card"><div class="mc-icon">🏨</div><div class="mc-label">Pension / Chenil</div><div class="mc-seance">→ "Hébergements"</div></div>
-            <div class="metier-card"><div class="mc-icon">🔨</div><div class="mc-label">Maréchal-ferrant</div><div class="mc-seance">→ "Interventions"</div></div>
+<div class="hero">
+  <div class="hero-tag">Réservé aux administrateurs société</div>
+  <h1>Guide de <em>paramétrage</em></h1>
+  <p class="hero-sub">Configuration initiale et gestion de votre espace PetSuite. Ce guide est à réaliser une seule fois à la souscription, puis mis à jour selon l'évolution de votre activité.</p>
+</div>
+
+<div class="container">
+
+  <!-- ETAPE 1 : PREMIERE CONNEXION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Première connexion</div>
+      <div class="section-num">01</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">🔑</div>Accès initial</div>
+        <div class="step-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Réception email de bienvenue</div>
+              <div class="step-desc">Contient votre URL personnalisée (votre-société.petsuite.fr), votre identifiant administrateur et un lien de création de mot de passe valable 24h.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Création mot de passe</div>
+              <div class="step-desc">Minimum 12 caractères, 1 majuscule, 1 chiffre, 1 caractère spécial. Le mot de passe n'est jamais stocké en clair.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Activation MFA obligatoire</div>
+              <div class="step-desc">Scannez le QR code avec Google Authenticator ou Authy. Le MFA est obligatoire pour le compte administrateur.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Acceptation CGV</div>
+              <div class="step-desc">Les conditions générales de vente sont présentées à la première connexion. Votre acceptation est horodatée et conservée.</div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">⚙️</div>Paramètres généraux société</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Raison sociale</span><span class="item-val">Nom officiel affiché sur les documents</span></div>
+          <div class="item"><span class="item-label">SIRET</span><span class="item-val">14 chiffres — vérifié au format</span></div>
+          <div class="item"><span class="item-label">Adresse</span><span class="item-val">Adresse complète + ville (référentiel INSEE)</span></div>
+          <div class="item"><span class="item-label">Téléphone / Email</span><span class="item-val">Coordonnées affichées sur factures</span></div>
+          <div class="item"><span class="item-label">Logo</span><span class="item-val">Format PNG/JPG — affiché sur PDF et factures</span></div>
+          <div class="item"><span class="item-label">IBAN / BIC</span><span class="item-val">Pour mentions légales factures</span></div>
+        </div>
+        <div class="warn-box">Ces informations apparaissent sur tous vos documents légaux (devis, factures, avoirs). Vérifiez-les soigneusement avant validation.</div>
+      </div>
+    </div>
+  </div>
 
-    <section class="section" id="tva">
-      <div class="section-label">📊 Référentiels</div>
-      <h2>Taux de TVA</h2>
-      <p>Les taux de TVA sont utilisés sur les articles, lignes de devis, lignes de facture et lignes de séance.</p>
-      <div class="config-block">
-        <div class="config-header"><span class="cfg-icon">📊</span><span class="cfg-title">Taux recommandés</span><span class="cfg-path">Paramètres → TVA</span></div>
-        <div class="config-body">
-          <table>
-            <thead><tr><th>Code</th><th>Libellé</th><th>Taux</th><th>Cas d'usage</th></tr></thead>
-            <tbody>
-              <tr><td><code>FR_20</code></td><td>TVA 20%</td><td><strong>20.00%</strong></td><td>Prestation standard</td></tr>
-              <tr><td><code>FR_10</code></td><td>TVA 10%</td><td><strong>10.00%</strong></td><td>Certains services</td></tr>
-              <tr><td><code>FR_055</code></td><td>TVA 5.5%</td><td><strong>5.50%</strong></td><td>Alimentation animale</td></tr>
-              <tr><td><code>EXO</code></td><td>Exonéré</td><td><strong>0.00%</strong></td><td>Prestations médicales vétérinaires</td></tr>
-            </tbody>
-          </table>
-          <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div>Le taux TVA est "snapshot" sur chaque ligne : la modification d'un taux de référence n'affecte pas rétroactivement les lignes existantes.</div></div>
+  <!-- ETAPE 2 : REFERENTIELS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Configuration des référentiels</div>
+      <div class="section-num">02</div>
+    </div>
+    <div class="grid2">
+
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">💰</div>TVA et comptabilité</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Taux TVA</span><span class="item-val">Configurez vos taux applicables (20%, 10%, 5,5%, exonéré…)</span></div>
+          <div class="item"><span class="item-label">Comptes vente</span><span class="item-val">706xxx par catégorie de prestation</span></div>
+          <div class="item"><span class="item-label">Compte client</span><span class="item-val">411000 par défaut</span></div>
+          <div class="item"><span class="item-label">Compte TVA</span><span class="item-val">445710 par défaut</span></div>
+          <div class="item"><span class="item-label">Compte banque</span><span class="item-val">512000 — à adapter selon votre banque</span></div>
+        </div>
+        <div class="info-box">En cas de doute, rapprochez-vous de votre expert-comptable pour la configuration des comptes.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">📅</div>Conditions de paiement</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Comptant</span><span class="item-val">0 jour — paiement immédiat</span></div>
+          <div class="item"><span class="item-label">30 jours</span><span class="item-val">Délai standard B2B</span></div>
+          <div class="item"><span class="item-label">30j fin de mois</span><span class="item-val">Courant dans les professions libérales</span></div>
+          <div class="item"><span class="item-label">Personnalisé</span><span class="item-val">Créez vos propres conditions</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="card-title" style="margin-bottom:8px;"><div class="card-icon icon-gold">💳</div>Modes de paiement</div>
+        <div class="pill-row">
+          <span class="pill pill-gray">Virement</span>
+          <span class="pill pill-gray">Chèque</span>
+          <span class="pill pill-gray">Espèces</span>
+          <span class="pill pill-gray">Carte bancaire</span>
+          <span class="pill pill-gray">Prélèvement</span>
         </div>
       </div>
-    </section>
 
-    <section class="section" id="modes-paiement">
-      <div class="section-label">💳 Paiements</div>
-      <h2>Modes de paiement</h2>
-      <p>Chaque mode de paiement est lié à un compte comptable (banque ou caisse). Il est utilisé dans le journal NF525 pour chaque encaissement.</p>
-      <div class="seed-grid">
-        <div class="seed-card"><span class="sc-code">VIR</span><div class="sc-label">Virement bancaire</div><div class="sc-meta">Type: BANQUE · 512000</div></div>
-        <div class="seed-card"><span class="sc-code">CB</span><div class="sc-label">Carte bancaire / TPE</div><div class="sc-meta">Type: BANQUE · 512000</div></div>
-        <div class="seed-card"><span class="sc-code">CHEQUE</span><div class="sc-label">Chèque</div><div class="sc-meta">Type: BANQUE · 512000</div></div>
-        <div class="seed-card"><span class="sc-code">ESPECES</span><div class="sc-label">Espèces</div><div class="sc-meta">Type: CAISSE · 530000</div></div>
-        <div class="seed-card"><span class="sc-code">PAYPAL</span><div class="sc-label">PayPal</div><div class="sc-meta">Type: BANQUE · 512000</div></div>
-        <div class="seed-card"><span class="sc-code">PRELEVEMENT</span><div class="sc-label">Prélèvement</div><div class="sc-meta">Type: BANQUE · 512000</div></div>
-      </div>
-    </section>
-
-    <section class="section" id="conditions">
-      <div class="section-label">📅 Paiements</div>
-      <h2>Conditions de paiement</h2>
-      <table>
-        <thead><tr><th>Libellé</th><th>Nb jours</th><th>Usage</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Comptant</strong></td><td>0</td><td>Paiement à la séance</td></tr>
-          <tr><td><strong>30 jours</strong></td><td>30</td><td>Facturation mensuelle</td></tr>
-          <tr><td><strong>30 jours fin de mois</strong></td><td>30</td><td>Fin de mois calendaire</td></tr>
-          <tr><td><strong>45 jours fin de mois</strong></td><td>45</td><td>Clients professionnels</td></tr>
-          <tr><td><strong>60 jours</strong></td><td>60</td><td>Délai légal max B2B</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="section" id="comptes">
-      <div class="section-label">📒 Comptabilité</div>
-      <h2>Plan de comptes</h2>
-      <div class="config-block">
-        <div class="config-header"><span class="cfg-icon">📒</span><span class="cfg-title">Comptes minimaux requis</span><span class="cfg-path">Paramètres → Comptabilité → Plan de comptes</span></div>
-        <div class="config-body">
-          <table>
-            <thead><tr><th>Numéro</th><th>Libellé</th><th>Usage</th></tr></thead>
-            <tbody>
-              <tr><td><code>411000</code></td><td>Clients</td><td>Compte client (obligatoire)</td></tr>
-              <tr><td><code>706000</code></td><td>Prestations de services</td><td>Ventes standard</td></tr>
-              <tr><td><code>445710</code></td><td>TVA collectée</td><td>TVA sur ventes (obligatoire)</td></tr>
-              <tr><td><code>512000</code></td><td>Banque</td><td>Règlements bancaires (obligatoire)</td></tr>
-              <tr><td><code>530000</code></td><td>Caisse</td><td>Règlements espèces (obligatoire)</td></tr>
-            </tbody>
-          </table>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">🐾</div>Races animales</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Référentiel</span><span class="item-val">Base de données races pré-chargée (canin, félin, NAC…)</span></div>
+          <div class="item"><span class="item-label">Ajout custom</span><span class="item-val">Possibilité d'ajouter des races spécifiques à votre activité</span></div>
+          <div class="item"><span class="item-label">Groupe</span><span class="item-val">Classification par groupe (FCI ou personnalisée)</span></div>
+          <div class="item"><span class="item-label">Standard</span><span class="item-val">Numéro de standard optionnel</span></div>
         </div>
       </div>
-    </section>
 
-    <section class="section" id="param-compta">
-      <div class="section-label">📒 Comptabilité</div>
-      <h2>Paramètres comptables</h2>
-      <div class="config-block">
-        <div class="config-header"><span class="cfg-icon">🔧</span><span class="cfg-title">Comptes par défaut</span><span class="cfg-path">Paramètres → Comptabilité → Paramètres</span></div>
-        <div class="config-body">
-          <table>
-            <thead><tr><th>Paramètre</th><th>Compte</th><th>Description</th></tr></thead>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">📋</div>Types de séances</div>
+        <div class="data-table" style="font-size:12px;">
+          <table class="data-table">
+            <thead><tr><th>Code</th><th>Libellé</th><th>Durée déf.</th><th>Unique/animal</th></tr></thead>
             <tbody>
-              <tr><td><strong>CPT_CLIENT</strong></td><td><code>411000</code></td><td>Compte collectif clients</td></tr>
-              <tr><td><strong>CPT_TVA_COLLECTEE</strong></td><td><code>445710</code></td><td>TVA à reverser</td></tr>
-              <tr><td><strong>CPT_BANQUE</strong></td><td><code>512000</code></td><td>Règlements bancaires</td></tr>
-              <tr><td><strong>CPT_CAISSE</strong></td><td><code>530000</code></td><td>Règlements espèces</td></tr>
+              <tr><td>EDC</td><td>Étude de comportement</td><td>90 min</td><td><span class="pill pill-red">Oui</span></td></tr>
+              <tr><td>SEANCE</td><td>Séance de suivi</td><td>60 min</td><td><span class="pill pill-gray">Non</span></td></tr>
+              <tr><td>GARDIENNAGE</td><td>Gardiennage</td><td>60 min</td><td><span class="pill pill-gray">Non</span></td></tr>
             </tbody>
           </table>
         </div>
+        <div class="info-box" style="margin-top:10px;">Vous pouvez créer vos propres types de séances dans Mes paramètres → Types de séances.</div>
       </div>
-    </section>
 
-    <section class="section" id="exercices">
-      <div class="section-label">📅 Comptabilité</div>
-      <h2>Exercices comptables</h2>
-      <p>Un exercice délimite une période fiscale. La clôture verrouille toute modification des factures et règlements de cette période.</p>
-      <div class="alert alert-warning"><span class="alert-icon">🔒</span><div>La clôture d'un exercice est <strong>irréversible</strong> depuis l'interface. Toute facture ou règlement de la période devient en lecture seule.</div></div>
-    </section>
+    </div>
+  </div>
 
-    <section class="section" id="nf525-config">
-      <div class="section-label" style="background:#d1fae5;color:#065f46;">🏛️ NF 525</div>
-      <h2>Configuration module NF 525</h2>
-      <div class="alert alert-nf525"><span class="alert-icon">🏛️</span><div><strong>Obligation légale Art. 88 LF2016</strong> — Amende 7 500 € par logiciel non conforme. Ce module est livré en S30.</div></div>
-      <div class="config-block">
-        <div class="config-header"><span class="cfg-icon">🗄️</span><span class="cfg-title">Déploiement SQL</span><span class="cfg-path">Script_NF525_v1.sql</span></div>
-        <div class="config-body">
-          <div class="steps">
-            <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Exécuter le script</div><div class="step-desc">Lancer <code>Script_NF525_v1.sql</code> sur la base <code>micro_logiciel</code> après la v3</div></div></div>
-            <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Vérifier la conformité</div><div class="step-desc">Exécuter <code>SELECT * FROM v_nf525_conformite</code> → doit afficher 0 anomalie</div></div></div>
-            <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Intégration API (S31)</div><div class="step-desc">Appeler <code>sp_nf525_enregistrer_encaissement</code> après chaque INSERT dans reglement</div></div></div>
-            <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Clôture Z quotidienne</div><div class="step-desc">Exécuter <code>CALL sp_nf525_cloture_z(usr_id, fond_caisse)</code> en fin de journée</div></div></div>
+  <!-- ETAPE 3 : CATALOGUE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Catalogue articles & prestations</div>
+      <div class="section-num">03</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">📦</div>Création d'un article</div>
+        <div class="step-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Référence unique</div>
+              <div class="step-desc">Code court sans espaces (ex : EDC-COMP, SUIVI-60, GARDE-J). Utilisé dans les exports comptables.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Libellé et unité</div>
+              <div class="step-desc">Libellé affiché sur les devis et factures. Unité : H (heure), J (jour), U (unité), FORFAIT…</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Prix HT et TVA</div>
+              <div class="step-desc">Prix unitaire hors taxes. Sélectionnez le taux de TVA applicable parmi vos référentiels configurés.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Catégorie et compte vente</div>
+              <div class="step-desc">La catégorie détermine le compte comptable de vente utilisé dans les exports FEC.</div>
+            </div>
           </div>
         </div>
       </div>
-      <p>→ Documentation complète : <a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;">23 — Prise en compte de la NF 525</a></p>
-    </section>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">💡</div>Exemples de prestations types</div>
+        <table class="data-table">
+          <thead><tr><th>Référence</th><th>Libellé</th><th>Prix HT</th></tr></thead>
+          <tbody>
+            <tr><td>EDC-STD</td><td>Étude de comportement standard</td><td>À définir</td></tr>
+            <tr><td>SUIVI-60</td><td>Séance de suivi 60 min</td><td>À définir</td></tr>
+            <tr><td>SUIVI-90</td><td>Séance de suivi 90 min</td><td>À définir</td></tr>
+            <tr><td>GARDE-J</td><td>Gardiennage à la journée</td><td>À définir</td></tr>
+            <tr><td>GARDE-N</td><td>Gardiennage nuit incluse</td><td>À définir</td></tr>
+            <tr><td>BILAN-PDF</td><td>Bilan comportemental PDF</td><td>À définir</td></tr>
+          </tbody>
+        </table>
+        <div class="warn-box">Remplissez vos tarifs réels. Ces exemples sont fournis à titre indicatif uniquement.</div>
+      </div>
+    </div>
+  </div>
 
-    <section class="section" id="categories">
-      <div class="section-label">🗂️ Catalogue</div>
-      <h2>Catégories</h2>
-      <table>
-        <thead><tr><th>Exemple catégorie</th><th>Compte de vente</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Consultations / Séances</strong></td><td><code>706000</code></td></tr>
-          <tr><td><strong>Produits animalerie</strong></td><td><code>707000</code></td></tr>
-          <tr><td><strong>Formations</strong></td><td><code>706000</code></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="section" id="articles">
-      <div class="section-label">🗂️ Catalogue</div>
-      <h2>Articles / Prestations</h2>
-      <div class="config-block">
-        <div class="config-header"><span class="cfg-icon">📦</span><span class="cfg-title">Champs d'un article</span><span class="cfg-path">Paramètres → Catalogue → Articles</span></div>
-        <div class="config-body">
-          <table>
-            <thead><tr><th>Champ</th><th>Description</th><th>Obligatoire</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Référence</strong></td><td>Code unique (ex: EDC-01)</td><td>✅ Oui</td></tr>
-              <tr><td><strong>Libellé</strong></td><td>Texte affiché sur les documents</td><td>✅ Oui</td></tr>
-              <tr><td><strong>Unité</strong></td><td>U, H, J, N...</td><td>✅ Oui</td></tr>
-              <tr><td><strong>Prix HT</strong></td><td>Tarif par défaut (modifiable sur ligne)</td><td>✅ Oui</td></tr>
-              <tr><td><strong>TVA par défaut</strong></td><td>Pré-remplie lors de la saisie</td><td>Non</td></tr>
-              <tr><td><strong>Catégorie</strong></td><td>Détermine le compte de vente comptable</td><td>✅ Oui</td></tr>
-            </tbody>
-          </table>
+  <!-- ETAPE 4 : UTILISATEURS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Gestion des utilisateurs & droits</div>
+      <div class="section-num">04</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-red">👥</div>Création d'un compte salarié</div>
+        <div class="step-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Identité</div>
+              <div class="step-desc">Nom, prénom, email professionnel. L'email sert d'identifiant de connexion.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Attribution du rôle</div>
+              <div class="step-desc">Manager, Salarié standard ou Lecture seule. Le rôle détermine les accès par défaut.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Droits par module</div>
+              <div class="step-desc">Affinez les droits module par module : Animaux, Séances, Facturation, CRM, GED, Paramétrage.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Invitation par email</div>
+              <div class="step-desc">Le salarié reçoit un email d'invitation avec lien de création de mot de passe valable 48h.</div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
-
-    <section class="section" id="crm-ref">
-      <div class="section-label">🎯 CRM</div>
-      <h2>Référentiels CRM</h2>
-      <h3>Sources de leads</h3>
-      <div class="seed-grid">
-        <div class="seed-card"><span class="sc-code">WEB</span><div class="sc-label">Site web</div></div>
-        <div class="seed-card"><span class="sc-code">TEL</span><div class="sc-label">Téléphone</div></div>
-        <div class="seed-card"><span class="sc-code">REF</span><div class="sc-label">Recommandation</div></div>
-        <div class="seed-card"><span class="sc-code">SALON</span><div class="sc-label">Salon / Événement</div></div>
-        <div class="seed-card"><span class="sc-code">FACEBOOK</span><div class="sc-label">Facebook</div></div>
-        <div class="seed-card"><span class="sc-code">INSTAGRAM</span><div class="sc-label">Instagram</div></div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">🔒</div>Matrice des droits</div>
+        <table class="data-table">
+          <thead><tr><th>Module</th><th>Manager</th><th>Salarié</th><th>Lecture</th></tr></thead>
+          <tbody>
+            <tr><td>Animaux</td><td><span class="pill pill-green">Complet</span></td><td><span class="pill pill-green">Complet</span></td><td><span class="pill pill-blue">Lecture</span></td></tr>
+            <tr><td>Séances</td><td><span class="pill pill-green">Complet</span></td><td><span class="pill pill-green">Complet</span></td><td><span class="pill pill-blue">Lecture</span></td></tr>
+            <tr><td>Devis</td><td><span class="pill pill-green">Complet</span></td><td><span class="pill pill-gold">Création</span></td><td><span class="pill pill-blue">Lecture</span></td></tr>
+            <tr><td>Facturation</td><td><span class="pill pill-green">Complet</span></td><td><span class="pill pill-gray">Non</span></td><td><span class="pill pill-gray">Non</span></td></tr>
+            <tr><td>CRM</td><td><span class="pill pill-green">Complet</span></td><td><span class="pill pill-green">Complet</span></td><td><span class="pill pill-blue">Lecture</span></td></tr>
+            <tr><td>GED</td><td><span class="pill pill-green">Complet</span></td><td><span class="pill pill-gold">Upload</span></td><td><span class="pill pill-blue">Lecture</span></td></tr>
+            <tr><td>Paramétrage</td><td><span class="pill pill-gray">Non</span></td><td><span class="pill pill-gray">Non</span></td><td><span class="pill pill-gray">Non</span></td></tr>
+          </tbody>
+        </table>
+        <div class="info-box">Le paramétrage est réservé exclusivement à l'administrateur société. Les droits peuvent être affinés individuellement.</div>
       </div>
-      <h3>Types d'activités CRM</h3>
-      <div class="seed-grid">
-        <div class="seed-card"><span class="sc-code">APPEL</span><div class="sc-label">Appel téléphonique</div></div>
-        <div class="seed-card"><span class="sc-code">EMAIL</span><div class="sc-label">Email envoyé</div></div>
-        <div class="seed-card"><span class="sc-code">RDV</span><div class="sc-label">Rendez-vous</div></div>
-        <div class="seed-card"><span class="sc-code">NOTE</span><div class="sc-label">Note interne</div></div>
+    </div>
+  </div>
+
+  <!-- ETAPE 5 : GED -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Configuration de la GED</div>
+      <div class="section-num">05</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">📁</div>Types de documents</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Pièce jointe (PJ)</span><span class="item-val">Document générique attaché à un objet</span></div>
+          <div class="item"><span class="item-label">Photo</span><span class="item-val">Image animal ou intervention</span></div>
+          <div class="item"><span class="item-label">Signature</span><span class="item-val">Devis ou contrat signé</span></div>
+          <div class="item"><span class="item-label">Rapport PDF</span><span class="item-val">Compte-rendu de séance ou bilan</span></div>
+          <div class="item"><span class="item-label">Document légal</span><span class="item-val">CGV, mandat, attestation…</span></div>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--ink3);">Formats acceptés : PDF, JPG, PNG, DOCX, XLSX — Taille max : selon votre quota plan.</div>
       </div>
-    </section>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">🏷</div>Tags GED</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Objectif</span><span class="item-val">Faciliter la recherche et le classement</span></div>
+          <div class="item"><span class="item-label">Exemples</span><span class="item-val">vaccin, radiographie, contrat-signé, urgence, bilan-annuel</span></div>
+          <div class="item"><span class="item-label">Création</span><span class="item-val">Libres — créés à la volée lors du dépôt</span></div>
+          <div class="item"><span class="item-label">Recherche</span><span class="item-val">Filtrage multi-tags depuis la liste documents</span></div>
+        </div>
+        <div class="info-box">Définissez une convention de nommage des tags dès le départ pour toute votre équipe.</div>
+      </div>
+    </div>
+  </div>
 
-    <section class="section" id="seance-types">
-      <div class="section-label">📅 Séances</div>
-      <h2>Types de séance</h2>
-      <table>
-        <thead><tr><th>Code</th><th>Libellé</th><th>Durée déf.</th><th>Unique/animal</th></tr></thead>
-        <tbody>
-          <tr><td><code>EDC</code></td><td>Étude de comportement</td><td>90 min</td><td>✅ Oui (trigger SQL)</td></tr>
-          <tr><td><code>SEANCE</code></td><td>Séance de suivi</td><td>60 min</td><td>Non</td></tr>
-          <tr><td><code>GARDIENNAGE</code></td><td>Gardiennage</td><td>60 min</td><td>Non</td></tr>
-        </tbody>
-      </table>
-    </section>
+  <!-- ETAPE 6 : EXERCICE COMPTABLE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Exercice comptable initial</div>
+      <div class="section-num">06</div>
+    </div>
+    <div class="card">
+      <div class="grid2" style="gap:24px;">
+        <div>
+          <div class="card-title">Créer le premier exercice</div>
+          <div class="step-list">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <div class="step-title">Définir la période</div>
+                <div class="step-desc">Code : 2025 (ou 2025-2026 si exercice décalé). Date début et date fin de l'exercice.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <div class="step-title">Vérifier les paramètres comptables</div>
+                <div class="step-desc">Contrôlez que les comptes (client, TVA, banque, caisse) sont bien renseignés dans Mes paramètres → Comptabilité.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <div class="step-title">Clôture en fin d'exercice</div>
+                <div class="step-desc">La clôture verrouille toutes les factures et règlements de la période. Action irréversible — à faire avec votre comptable.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card-title">Export FEC</div>
+          <div class="item-list">
+            <div class="item"><span class="item-label">Déclenchement</span><span class="item-val">Manuel depuis Comptabilité → Export FEC</span></div>
+            <div class="item"><span class="item-label">Contenu</span><span class="item-val">Toutes les écritures de vente et de règlement</span></div>
+            <div class="item"><span class="item-label">Format</span><span class="item-val">Fichier délimité par | conforme DGFiP</span></div>
+            <div class="item"><span class="item-label">Intégrité</span><span class="item-val">Hash SHA-256 par ligne + hash global</span></div>
+            <div class="item"><span class="item-label">Destination</span><span class="item-val">À transmettre à votre expert-comptable ou à l'administration fiscale</span></div>
+          </div>
+          <div class="warn-box">Conservez chaque fichier FEC généré. Il peut être demandé lors d'un contrôle fiscal.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <section class="section" id="entreprise">
-      <div class="section-label">🏢 Entreprise</div>
-      <h2>Mon entreprise</h2>
-      <table>
-        <thead><tr><th>Champ</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Raison sociale</strong></td><td>Nom officiel de votre structure</td></tr>
-          <tr><td><strong>SIRET</strong></td><td>14 chiffres — obligatoire pour la conformité FEC</td></tr>
-          <tr><td><strong>Adresse complète</strong></td><td>Apparaît sur tous les documents</td></tr>
-          <tr><td><strong>IBAN / BIC</strong></td><td>Coordonnées bancaires sur les factures</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="section" id="utilisateurs">
-      <div class="section-label">👨‍💼 Accès</div>
-      <h2>Utilisateurs &amp; Rôles</h2>
-      <table>
-        <thead><tr><th>Rôle</th><th>Accès</th><th>Usage</th></tr></thead>
-        <tbody>
-          <tr><td><code>ADMIN</code></td><td>Complet</td><td>Propriétaire / gérant</td></tr>
-          <tr><td><code>USER</code></td><td>Métier standard</td><td>Praticien, employé</td></tr>
-          <tr><td><code>COMPTA</code></td><td>Module comptable uniquement</td><td>Expert-comptable externe</td></tr>
-        </tbody>
-      </table>
-      <div class="alert alert-warning"><span class="alert-icon">⚠️</span><div>Ne jamais partager les credentials SQL avec les utilisateurs finaux. L'accès passe uniquement par l'API NestJS.</div></div>
-    </section>
-
-  </main>
 </div>
-<div class="doc-footer">
-  <div><strong>PetSuite — micro_logiciel</strong> · Guide de Paramétrage v3.0 · Sprint S30 · Mars 2026</div>
-  <div><a href="index.html">← Retour accueil</a></div>
-</div>
-</body> </html>
+
+<footer>
+  <strong>PetSuite</strong>
+  <div>Algorithmia · Sprint S33 · 18/03/2026 · Document interne</div>
+</footer>
+
+</body>
+</html>

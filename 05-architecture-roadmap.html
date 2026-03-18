@@ -4,96 +4,774 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite — Architecture & Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;0,800;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
+:root{
+  --bg:#f7f5f2;--bg2:#ffffff;--bg3:#eeebe6;--bg4:#e5e1da;
+  --border:#dedad3;--border2:#c8c3bb;
+  --ink:#1a1714;--ink2:#5c5650;--ink3:#9c9590;
+  --green:#1a6640;--green2:#e8f5ef;--green3:#c5e8d5;
+  --amber:#8a5c0a;--amber2:#fef3e2;
+  --blue:#1a4fa0;--blue2:#e8f0fb;
+  --red:#9a2020;--red2:#fdeaea;
+  --purple:#5a3fa0;--purple2:#ede8fc;
+  --gold:#7a5500;--gold2:#fdf3d8;
+  --r:10px;--rs:6px;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
-.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
-.header h1{font-size:2.5rem;font-weight:800;color:#fff;}
-.header p{color:var(--accent2);margin-top:8px;}
-.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
-nav.topnav{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;}
-nav.topnav a{color:var(--text2);text-decoration:none;font-size:.85rem;}
-nav.topnav a:hover{color:var(--accent2);}
-nav.topnav a.nf{color:#10b981;font-weight:600;}
-.container{max-width:1100px;margin:0 auto;padding:32px;}
-.section{margin-bottom:40px;}
-.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
-.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:16px 0;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
-.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:8px;}
-.card p,.card li{font-size:.875rem;color:var(--text2);}
-ul{list-style:none;padding:0;}
-li{padding:3px 0;display:flex;gap:6px;}
-li::before{content:'→';color:var(--accent);flex-shrink:0;}
-.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;}
-.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);font-size:.875rem;}
-table{width:100%;border-collapse:collapse;margin:16px 0;}
-th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
-td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}
-footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;}
+nav{background:#12151c;padding:0 36px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.06);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:#22d3a0;flex-shrink:0;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.nav-badge{font-family:'DM Mono',monospace;font-size:10px;background:#e8f5ef;color:#1a6640;padding:3px 10px;border-radius:20px;border:1px solid #c5e8d5;}
+.nav-back{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.12);border-radius:20px;transition:all .15s;}
+.nav-back:hover{color:#fff;border-color:rgba(255,255,255,.3);}
+.hero{background:#12151c;padding:52px 40px 44px;border-bottom:3px solid #1a6640;}
+.hero-label{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:8px;}
+.hero h1 em{font-style:italic;color:#22d3a0;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);max-width:600px;line-height:1.6;}
+.container{max-width:1000px;margin:0 auto;padding:36px 36px 80px;}
+.section{margin-bottom:44px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+.section-dot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:-.2px;}
+.section-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;}
+.card-title{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.ci-green{background:var(--green2);}
+.ci-amber{background:var(--amber2);}
+.ci-blue{background:var(--blue2);}
+.ci-red{background:var(--red2);}
+.ci-purple{background:var(--purple2);}
+.ci-gold{background:var(--gold2);}
+.ci-teal{background:#d0f0f0;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--bg3);}
+.item:last-child{border-bottom:none;padding-bottom:0;}
+.item-label{font-size:12px;font-weight:500;color:var(--ink);min-width:150px;flex-shrink:0;}
+.item-val{font-size:12px;color:var(--ink2);line-height:1.4;}
+.item-list{display:flex;flex-direction:column;}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.p-green{background:var(--green2);color:var(--green);}
+.p-amber{background:var(--amber2);color:var(--amber);}
+.p-blue{background:var(--blue2);color:var(--blue);}
+.p-red{background:var(--red2);color:var(--red);}
+.p-purple{background:var(--purple2);color:var(--purple);}
+.p-gold{background:var(--gold2);color:var(--gold);}
+.p-gray{background:var(--bg3);color:var(--ink2);border:1px solid var(--border);}
+.callout{border-left:3px solid var(--green);background:var(--green2);padding:13px 17px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;color:var(--ink2);margin:12px 0;}
+.callout.amber{border-color:var(--amber);background:var(--amber2);}
+.callout.blue{border-color:var(--blue);background:var(--blue2);}
+.callout.red{border-color:var(--red);background:var(--red2);}
+.alert{border-left:3px solid var(--green);background:var(--green2);padding:12px 16px;border-radius:0 var(--rs) var(--rs) 0;font-size:12px;margin:10px 0;}
+.alert.alert-info{border-color:var(--blue);background:var(--blue2);}
+.alert.alert-warn{border-color:var(--amber);background:var(--amber2);}
+.alert.alert-danger{border-color:var(--red);background:var(--red2);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);padding:8px 12px;border-bottom:2px solid var(--border);background:var(--bg3);}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg3);}
+.tw{overflow-x:auto;margin-bottom:4px;}
+code,.code{font-family:'DM Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 6px;border-radius:3px;color:var(--ink);}
+.code-block{background:#1a1d26;color:#e2ddd8;border-radius:var(--rs);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+footer{background:#12151c;color:rgba(255,255,255,.3);padding:18px 36px;font-size:11px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+footer strong{color:rgba(255,255,255,.6);font-family:'Playfair Display',serif;}
+@media(max-width:768px){
+  .hero{padding:36px 20px 28px;}.hero h1{font-size:28px;}
+  .container{padding:24px 16px 60px;}
+  nav{padding:0 16px;}
+  .grid2,.grid3{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
-<div class="header">
-  <h1>🗺️ PetSuite — Architecture &amp; Roadmap</h1>
-  <p>Vision technique et feuille de route</p>
-  <div class="badge">v4.0 — Sprint S30 — Mars 2026</div>
-</div>
-<nav class="topnav">
-  <a href="index.html">← Accueil</a>
-  <a href="01-synthese-projet.html">Synthèse projet</a>
-  <a href="06-roadmap.html">Roadmap</a>
-  <a href="20-pilotage-projet.html">Pilotage</a>
-  <a href="23-Prise-en-compte-de-la-NF-525.html" class="nf">🏛️ NF 525</a>
+<nav>
+  <a class="nav-brand" href="index.html"><div class="nav-dot"></div>PetSuite</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">← Index</a>
+    <span class="nav-badge">S33 · 18/03/2026</span>
+  </div>
 </nav>
-<div class="container">
 
-  <div class="section">
-    <h2>🏗️ Stack technique</h2>
-    <div class="grid">
-      <div class="card"><h4>Frontend — Next.js 15</h4><ul><li>58 pages applicatives</li><li>Build statique + SSR</li><li>Tailwind CSS</li><li>TypeScript strict</li></ul></div>
-      <div class="card"><h4>API — NestJS</h4><ul><li>TypeScript</li><li>custom-routes.ts (290 lignes)</li><li>24 routes custom S27→S30</li><li>Prisma ORM + MariaDB</li></ul></div>
-      <div class="card"><h4>BDD — MariaDB 11</h4><ul><li>HORS Docker — 192.168.1.62:3307</li><li>micro_logiciel (métier)</li><li>micro_logiciel_ged (GED)</li><li>40+ tables · 6 vues NF525</li></ul></div>
-      <div class="card"><h4>Infrastructure</h4><ul><li>Docker Compose — 3 conteneurs</li><li>nginx reverse proxy :80</li><li>Sauvegarde PS v5 — 04h00</li><li>Git push quotidien</li></ul></div>
-    </div>
+
+<div class="hero">
+  <div class="hero-tag">Document technique — Architecture & Roadmap</div>
+  <h1>Architecture <em>& Roadmap</em></h1>
+  <p class="hero-sub">Vision technique complète du projet PetSuite — stack, BDD, modules, multi-tenant SaaS, modèle commercial, scalabilité et feuille de route par phase.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-num">S25</div><div class="kpi-lbl">Session courante</div></div>
+    <div class="kpi"><div class="kpi-num">60+</div><div class="kpi-lbl">Tables BDD</div></div>
+    <div class="kpi"><div class="kpi-num">18</div><div class="kpi-lbl">Triggers actifs</div></div>
+    <div class="kpi"><div class="kpi-num">9</div><div class="kpi-lbl">Sprints réalisés</div></div>
+    <div class="kpi"><div class="kpi-num">3</div><div class="kpi-lbl">Conteneurs Docker</div></div>
+    <div class="kpi"><div class="kpi-num">20k</div><div class="kpi-lbl">Clients cibles (10 ans)</div></div>
+  </div>
+</div>
+
+<div class="layout">
+
+<!-- TOC -->
+<nav class="toc">
+  <div class="toc-title">Sommaire</div>
+  <a href="#s1" class="toc-h2">01. Vision produit</a>
+  <a href="#s2" class="toc-h2">02. Stack technique</a>
+  <a href="#s3" class="toc-h2">03. Infrastructure Docker</a>
+  <a href="#s4" class="toc-h2">04. Base de données</a>
+  <a href="#s4-triggers" class="toc-h3">Triggers</a>
+  <a href="#s4-vues" class="toc-h3">Vues & procédures</a>
+  <a href="#s5" class="toc-h2">05. GED</a>
+  <a href="#s6" class="toc-h2">06. API — État S25</a>
+  <a href="#s6-endpoints" class="toc-h3">Endpoints</a>
+  <a href="#s6-patches" class="toc-h3">Patches volatils</a>
+  <a href="#s7" class="toc-h2">07. Modules fonctionnels</a>
+  <a href="#s8" class="toc-h2">08. Multi-tenant SaaS</a>
+  <a href="#s9" class="toc-h2">09. Modèle commercial</a>
+  <a href="#s10" class="toc-h2">10. Scalabilité</a>
+  <a href="#s11" class="toc-h2">11. Carte d'identité animale</a>
+  <a href="#s12" class="toc-h2">12. Vidéos commerciales</a>
+  <a href="#s13" class="toc-h2">13. Roadmap sprints</a>
+  <a href="#s14" class="toc-h2">14. Bugs connus</a>
+  <a href="#s15" class="toc-h2">15. Règles critiques</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- 01 VISION -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-title">Vision produit</span>
   </div>
 
-  <div class="section">
-    <h2>🏛️ Conformité NF 525 — S30</h2>
-    <div class="warn">
-      ⚠️ <strong>Obligation légale Art. 88 LF2016</strong> — Module SQL livré en S30. Intégration API et interface front en S31.
+  <div class="grid3" style="margin-bottom:16px;">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🎯</div>Positionnement actuel</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Cible</span><span class="item-val">Comportementaliste canin indépendant</span></div>
+        <div class="item"><span class="item-label">Extension</span><span class="item-val">Tous animaux de compagnie</span></div>
+        <div class="item"><span class="item-label">Marché</span><span class="item-val">France — extensible Europe</span></div>
+        <div class="item"><span class="item-label">Modèle</span><span class="item-val">SaaS B2B multi-tenant</span></div>
+      </div>
     </div>
-    <div class="grid">
-      <div class="card"><h4>Journal inaltérable</h4><p>nf525_journal_caisse — SHA-256 chaîné — séquence sans trou — 4 triggers de protection</p></div>
-      <div class="card"><h4>Clôtures Z/X</h4><p>sp_nf525_cloture_z (journalière) + sp_nf525_cloture_x (intermédiaire) — détail TVA par taux</p></div>
-      <div class="card"><h4>Contrôle conformité</h4><p>6 vues SQL — v_nf525_conformite — sp_nf525_verifier_integrite — 0 anomalie cible</p></div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📈</div>Objectifs commerciaux</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">An 1–2</span><span class="item-val">100–500 sociétés</span></div>
+        <div class="item"><span class="item-label">An 3–5</span><span class="item-val">500–5 000 sociétés</span></div>
+        <div class="item"><span class="item-label">An 5–10</span><span class="item-val">5 000–20 000 sociétés</span></div>
+        <div class="item"><span class="item-label">Volume GED</span><span class="item-val">&gt; 1 Po à 20 000 clients</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">💼</div>Modèle économique</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Facturation</span><span class="item-val">Prélèvement mensuel SEPA</span></div>
+        <div class="item"><span class="item-label">Engagement</span><span class="item-val">6 mois minimum</span></div>
+        <div class="item"><span class="item-label">Résiliation</span><span class="item-val">Libre après engagement</span></div>
+        <div class="item"><span class="item-label">Rétention</span><span class="item-val">5 ans post-résiliation (légal)</span></div>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="section">
-    <h2>📐 Principes d'architecture</h2>
-    <div class="grid">
-      <div class="card"><h4>Séparation des responsabilités</h4><ul><li>Frontend : affichage uniquement</li><li>API : logique métier</li><li>BDD : triggers SQL (calculs, contraintes)</li><li>NF525 : couche inaltérable dédiée</li></ul></div>
-      <div class="card"><h4>Inaltérabilité NF525</h4><ul><li>Triggers BEFORE UPDATE/DELETE bloquants</li><li>Séquenceur atomique (singleton)</li><li>Hash SHA-256 ligne à ligne</li><li>Audit de toutes les tentatives</li></ul></div>
-      <div class="card"><h4>Scalabilité</h4><ul><li>MariaDB hors Docker (performances)</li><li>GED externe (URI/S3)</li><li>Multi-tenant ready (S32)</li><li>14 métiers paramétrables</li></ul></div>
-    </div>
+<!-- 02 STACK -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-title">Stack technique</span>
   </div>
-
-  <div class="section">
-    <h2>🚀 Roadmap synthétique</h2>
-    <table>
-      <thead><tr><th>Sprint</th><th>Thème principal</th><th>Statut</th></tr></thead>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Couche</th><th>Technologie actuelle</th><th>Version</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td>S25-S30</td><td>Socle complet + NF525 SQL</td><td>✅ Livré</td></tr>
-        <tr><td>S31</td><td>NF525 API/Front + Module Éditions + Extensions métiers</td><td>🔄 Planifié</td></tr>
-        <tr><td>S32</td><td>14 métiers complets · International · Réservations en ligne · Attestation NF525</td><td>📋 Vision</td></tr>
+        <tr><td>Frontend</td><td>Next.js App Router + React + TypeScript + Tailwind CSS</td><td>15</td><td>PWA manifest.json + sw.js</td></tr>
+        <tr><td>Backend</td><td>NestJS compilé CommonJS (dist/main.js)</td><td>—</td><td>Patches volatils dans /app/dist/</td></tr>
+        <tr><td>BDD</td><td>MariaDB</td><td>—</td><td>192.168.1.62:3307 — utf8mb4_unicode_ci</td></tr>
+        <tr><td>Reverse proxy</td><td>Nginx</td><td>1.27-alpine</td><td>Ports 80:80, 8443:443</td></tr>
+        <tr><td>Conteneurs</td><td>Docker Compose</td><td>3 services</td><td>micro_api, micro_frontend, micro_nginx</td></tr>
+        <tr><td>PDF / SMTP</td><td>Express smtp_server.js</td><td>—</td><td>Port 8081 — standalone</td></tr>
+        <tr><td>Email</td><td>SMTP via smtp_server.js</td><td>—</td><td>—</td></tr>
+        <tr><td>SMS</td><td>Twilio</td><td>—</td><td>Rappels impayés</td></tr>
+        <tr><td>Paiement</td><td>Stripe</td><td>—</td><td>Portail client</td></tr>
+        <tr><td>Signature</td><td>Yousign API v3</td><td>—</td><td>SPEC en cours</td></tr>
+        <tr><td>Storage GED</td><td>Volume Docker uploads_data</td><td>—</td><td>→ S3 Object Storage (SaaS)</td></tr>
       </tbody>
     </table>
   </div>
-
+  <div class="alert alert-warn" style="margin-top:12px;">En mode mono-tenant local (Docker). L'architecture multi-tenant SaaS est définie en section 08 — à implémenter lors du passage en production.</div>
 </div>
-<footer>PetSuite Architecture v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
+
+<!-- 03 DOCKER -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-title">Infrastructure Docker</span>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Conteneurs</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Container</th><th>Service</th><th>Description</th><th>Port</th></tr></thead>
+        <tbody>
+          <tr><td>micro_api</td><td>api</td><td>NestJS compilé JS + smtp_server Express 8081</td><td>interne</td></tr>
+          <tr><td>micro_frontend</td><td>frontend</td><td>Next.js 15 App Router</td><td>3000 interne</td></tr>
+          <tr><td>micro_nginx</td><td>nginx</td><td>nginx:1.27-alpine — reverse proxy</td><td>80:80, 8443:443</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Routage Nginx</div>
+    <div class="code">
+<span class="cm"># Routage principal</span>
+/api/              <span class="ck">-></span> proxy micro_api:8080
+/                  <span class="ck">-></span> proxy micro_frontend:3000
+/api/parametres/smtp  <span class="ck">-></span> micro_api:8081 (smtp_server)
+/api/ged/animal       <span class="ck">-></span> micro_api:8081
+
+<span class="cm"># Documentation statique (public/docs Next.js)</span>
+/docs/guide_parametrage.html   <span class="ck">-></span> tous utilisateurs connectés
+/docs/notice_utilisateur.html  <span class="ck">-></span> tous utilisateurs connectés
+/docs/doc_supervision.html     <span class="ck">-></span> SuperAdmin uniquement
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Variables PowerShell projet</div>
+    <div class="code">
+<span class="cv">$root</span> = <span class="ck">"D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs"</span>
+<span class="cv">$app</span>  = <span class="ck">"$root\src\app\app"</span>
+<span class="cv">$comp</span> = <span class="ck">"$root\src\components"</span>
+<span class="cv">$pub</span>  = <span class="ck">"$root\public\docs"</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Sauvegarde patches (à faire avant tout rebuild)</div>
+    <div class="code">
+<span class="cv">$bk</span> = <span class="ck">"C:\Backup\micro_logiciel\$(Get-Date -Format 'yyyyMMdd_HHmm')"</span>
+New-Item -ItemType Directory -Force -Path <span class="cv">$bk</span>
+docker cp micro_api:/app/dist/main.js              <span class="ck">"$bk\main.js"</span>
+docker cp micro_api:/app/dist/patch_animaux_v2.js  <span class="ck">"$bk\patch_animaux_v2.js"</span>
+docker cp micro_api:/app/dist/smtp_server.js       <span class="ck">"$bk\smtp_server.js"</span>
+docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\factures"</span>
+    </div>
+  </div>
+</div>
+
+<!-- 04 BDD -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-title">Base de données</span>
+  </div>
+
+  <div class="alert alert-info" style="margin-bottom:16px;">Connexion : 192.168.1.62:3307 — BDD : micro_logiciel (métier) + micro_logiciel_ged (GED) — Charset : utf8mb4_unicode_ci / InnoDB</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Architecture BDD complète — micro_logiciel (session 24)</div>
+    <div class="grid2">
+      <div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Groupe</th><th>Tables principales</th></tr></thead>
+            <tbody>
+              <tr><td>Référentiels</td><td>ville, condition_paiement, tva_taux, categorie, compte_compta, mode_paiement, role, seance_type (+STY_COULEUR), seance_statut, race</td></tr>
+              <tr><td>Tiers & Contacts</td><td>tiers, contact</td></tr>
+              <tr><td>Animaux</td><td>animal (+ANI_SCORE_CAC, ANI_DERNIERE_SEA_ID, ANI_DERNIERE_SEA_DATE)</td></tr>
+              <tr><td>Étude Comportementale</td><td>edc_fiche, edc_probleme (S24)</td></tr>
+              <tr><td>Suivi CAC</td><td>seance_suivi_cac, param_libelles_ec (S24)</td></tr>
+              <tr><td>Ventes</td><td>article_prestation, devis_contrat_entete/ligne, facture/ligne, reglement, avoir/ligne, acompte, remise, commande_client/ligne</td></tr>
+              <tr><td>Achats</td><td>demande_prix, commande_fournisseur, bon_livraison_fourn, facture_fournisseur, avoir_fournisseur, bon_retour, reglement_fournisseur</td></tr>
+              <tr><td>Stock</td><td>param_stock, stock_lot, stock_mouvement, inventaire, inventaire_ligne, sortie_stock</td></tr>
+              <tr><td>Tarification</td><td>param_tarification, article_prix_historique, tarif_historique_coef</td></tr>
+              <tr><td>Séances</td><td>seance, seance_ligne</td></tr>
+              <tr><td>CRM</td><td>crm_lead, crm_opportunite, crm_activite, crm_note, crm_campagne, crm_tag + liens</td></tr>
+              <tr><td>Comptabilité</td><td>param_compta, exercice_comptable, fec_export, fec_export_ligne, bilan_session, bilan_poste, balance_compte</td></tr>
+              <tr><td>Signature</td><td>param_yousign, signature_demande, signature_demande_doc</td></tr>
+              <tr><td>Utilisateurs</td><td>utilisateur, role, utilisateur_role, audit_log</td></tr>
+              <tr><td>Programmes</td><td>programme_suivi, programme_semaine</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="subsection-title" id="s4-triggers">Triggers actifs (18+)</div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Trigger</th><th>Rôle</th></tr></thead>
+            <tbody>
+              <tr><td>trg_facture_num</td><td>Numérotation FAC-YYMM-0001</td></tr>
+              <tr><td>trg_dce_num</td><td>Numérotation DEV-YYMM-0001</td></tr>
+              <tr><td>trg_reglement_check</td><td>Bloque dépassement TTC</td></tr>
+              <tr><td>trg_dcl_calc_*</td><td>Calcul HT/TVA/TTC devis</td></tr>
+              <tr><td>trg_fli_calc_*</td><td>Calcul HT/TVA/TTC facture</td></tr>
+              <tr><td>trg_sel_calc_*</td><td>Calcul lignes séance</td></tr>
+              <tr><td>trg_sel_after_*</td><td>MAJ totaux séance</td></tr>
+              <tr><td>trg_facture_no_*</td><td>Verrou exercice clôturé</td></tr>
+              <tr><td>trg_reglement_no_*</td><td>Verrou exercice clôturé</td></tr>
+              <tr><td>trg_sea_unique_*</td><td>EC unique par animal</td></tr>
+              <tr><td>trg_ssc_score_*</td><td>Score CAC auto (S24)</td></tr>
+              <tr><td>trg_ssc_remonte_*</td><td>MAJ fiche animal depuis CAC (S24)</td></tr>
+              <tr><td>bi_ged_*</td><td>Validation inter-base GED</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="subsection-title" style="margin-top:14px;" id="s4-vues">Vues & procédures</div>
+        <div class="pill-row">
+          <span class="pill pill-blue">v_facture_totaux</span>
+          <span class="pill pill-blue">v_facture_suivi</span>
+          <span class="pill pill-blue">v_encours_client</span>
+          <span class="pill pill-blue">v_edc_sans_devis</span>
+          <span class="pill pill-blue">v_fec_complet</span>
+          <span class="pill pill-blue">v_fec_export_non_equilibre</span>
+          <span class="pill pill-blue">v_ged_pj_animal</span>
+          <span class="pill pill-blue">v_animal_evolution_cac (S24)</span>
+          <span class="pill pill-green">sp_fec_generer_par_exercice</span>
+          <span class="pill pill-green">sp_exercice_cloturer</span>
+          <span class="pill pill-green">sp_dce_creer_depuis_seance</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Numérotation documents</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Préfixe</th><th>Document</th><th>Table</th></tr></thead>
+        <tbody>
+          <tr><td>FAC-</td><td>Facture vente</td><td>facture</td></tr>
+          <tr><td>DEV-</td><td>Devis (ex DCE-)</td><td>devis_contrat_entete</td></tr>
+          <tr><td>AVR-</td><td>Avoir vente</td><td>avoir</td></tr>
+          <tr><td>CMD-</td><td>Commande client</td><td>commande_client</td></tr>
+          <tr><td>FAF-</td><td>Facture fournisseur</td><td>facture_fournisseur</td></tr>
+          <tr><td>CMF-</td><td>Commande fournisseur</td><td>commande_fournisseur</td></tr>
+          <tr><td>AVF-</td><td>Avoir fournisseur</td><td>avoir_fournisseur</td></tr>
+          <tr><td>BLIV-</td><td>Bon livraison fournisseur</td><td>bon_livraison_fourn</td></tr>
+          <tr><td>BRET-</td><td>Bon de retour</td><td>bon_retour</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 05 GED -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <span class="section-title">GED — Gestion Électronique des Documents</span>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">📁</div>Structure micro_logiciel_ged</div>
+      <div class="pill-row">
+        <span class="pill pill-gray">ged_objet_type</span>
+        <span class="pill pill-gray">ged_document</span>
+        <span class="pill pill-gray">ged_document_lien (polymorphe)</span>
+        <span class="pill pill-gray">ged_tag</span>
+        <span class="pill pill-gray">ged_document_tag</span>
+        <span class="pill pill-gray">ged_document_version</span>
+      </div>
+      <div class="div"></div>
+      <div style="font-size:11px;color:var(--ink3);">13 types d'objets liables : ANIMAL, FACTURE, SEANCE, TIERS, CONTACT, RACE, ARTICLE_PRESTATION, UTILISATEUR, DEVIS_CONTRAT, AVOIR, REGLEMENT, EDC_FICHE, SEANCE_SUIVI</div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🏗</div>Arborescence SaaS cible</div>
+      <div class="code" style="margin:0;">
+/{tenant_id}/{type}/{YYYY}/{MM}/fichier
+<span class="cm">
+Ex: /tenant_0042/factures/2025/03/uuid.pdf
+Ex: /tenant_0042/animaux/2025/06/uuid.jpg
+Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
+      </div>
+      <div class="alert alert-info" style="margin-top:10px;">Cycle de vie : Hot (0–12 mois) → Warm (S3 IA, 1–5 ans) → Cold (S3 Glacier, archivage légal 5 ans)</div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 API -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <span class="section-title">API — État session 24</span>
+  </div>
+
+  <div class="alert alert-warn" style="margin-bottom:14px;">Les patches dans /app/dist/ sont volatils — perdus si rebuild image api. Sauvegarder AVANT tout <code>docker compose up --build api</code>.</div>
+
+  <div class="subsection" id="s6-endpoints">
+    <div class="subsection-title">Endpoints confirmés OK</div>
+    <div class="grid2">
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Méthode</th><th>Route</th></tr></thead>
+          <tbody>
+            <tr><td>GET</td><td>/api/tiers, /api/tiers?type=CLIENT</td></tr>
+            <tr><td>GET/POST/PATCH</td><td>/api/animaux, /api/animaux/:id, /api/animaux/races</td></tr>
+            <tr><td>GET</td><td>/api/seances, /api/seances/types</td></tr>
+            <tr><td>PUT</td><td>/api/seances/types/:id (PATCH_ROUTES_S56, corrigé S24)</td></tr>
+            <tr><td>GET</td><td>/api/devis, /api/factures (avec FAC_TOTAL_HT S21)</td></tr>
+            <tr><td>GET</td><td>/api/reglements, /api/articles</td></tr>
+            <tr><td>GET</td><td>/api/crm/leads, /api/crm/opportunites, /api/crm/activites</td></tr>
+            <tr><td>GET/POST</td><td>/api/ged/documents, /api/ged/animal/:id/photo</td></tr>
+            <tr><td>GET</td><td>/api/parametres/*, /api/dashboard/stats, /api/admin/*</td></tr>
+            <tr><td>GET/PUT</td><td>/api/parametres/libelles-ec, /api/parametres/libelles-ec/:id (S24)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:8px;">Endpoints à implanter (S24+)</div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Route</th><th>Statut</th></tr></thead>
+            <tbody>
+              <tr><td>GET/POST/PUT /api/edc/*</td><td><span class="pill pill-spec">SPEC</span></td></tr>
+              <tr><td>GET/POST /api/edc/:id/problemes</td><td><span class="pill pill-spec">SPEC</span></td></tr>
+              <tr><td>GET/POST /api/seances/:id/cac</td><td><span class="pill pill-spec">SPEC</span></td></tr>
+              <tr><td>GET /api/seances/:id/cac-initial</td><td><span class="pill pill-spec">SPEC</span></td></tr>
+              <tr><td>GET /api/ged-libelles-ec, PUT /api/ged-libelles-ec/:id</td><td><span class="pill pill-ok">S24 ✓</span></td></tr>
+              <tr><td>GET/POST/PUT /api/ged-edc — CRUD fiche EDC</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>GET/POST/PUT/DELETE /api/ged-edc/:id/problemes</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>GET/POST /api/ged-cac/:id — CAC séance</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>GET /api/ged-cac/:id/initial — CAC pré-remplis</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>GET /api/ged-evolution-cac/:ani_id — Historique CAC</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>/api/stock/*, /api/achats/*</td><td><span class="pill pill-todo">À FAIRE</span></td></tr>
+              <tr><td>/api/signature/*, /api/bilan/*</td><td><span class="pill pill-todo">À FAIRE</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s6-patches">
+    <div class="subsection-title">Patches actifs dans /app/dist/</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Fichier</th><th>Contenu</th></tr></thead>
+        <tbody>
+          <tr><td>main.js</td><td>Bootstrap NestJS + PATCH_ROUTES_S56 (reconstruit S24)</td></tr>
+          <tr><td>patch_edc_cac_s25.js</td><td>CRUD EDC + CAC séance + évolution CAC (S25)</td></tr>
+          <tr><td>patch_animaux_v2.js</td><td>PATCH /api/animaux/:id</td></tr>
+          <tr><td>patch_rappels.js</td><td>Routes rappels impayés</td></tr>
+          <tr><td>smtp_server.js</td><td>Express port 8081 (SMTP + photo animal)</td></tr>
+          <tr><td>factures/factures.service.js</td><td>FAC_TOTAL_HT dans findAll</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-danger" style="margin-top:10px;">Structure PATCH_ROUTES_S56 : toutes les routes injectées DOIVENT être dans le bloc <code>try { const _h56 = app.getHttpAdapter().getInstance(); ... }</code> après <code>await app.listen()</code>.</div>
+  </div>
+</div>
+
+<!-- 07 MODULES -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <span class="section-title">Modules fonctionnels</span>
+  </div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Module</th><th>BDD</th><th>API</th><th>Frontend</th><th>État</th></tr></thead>
+      <tbody>
+        <tr><td>Tiers / Clients</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+        <tr><td>Animaux</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+        <tr><td>Étude Comportementale</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">COMPLET</span></td><td><span class="pill pill-ok">S25</span></td></tr>
+        <tr><td>Suivi CAC par séance</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">COMPLET</span></td><td><span class="pill pill-ok">S25</span></td></tr>
+        <tr><td>Séances / Agenda</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+        <tr><td>Devis / Contrats</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+        <tr><td>Factures vente</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+        <tr><td>Règlements</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+        <tr><td>Avoirs vente</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-wip">PARTIEL</span></td><td><span class="pill pill-todo">À FAIRE</span></td><td><span class="pill pill-wip">S10</span></td></tr>
+        <tr><td>CRM complet</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+        <tr><td>GED</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+        <tr><td>Export FEC</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+        <tr><td>Statistiques</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+        <tr><td>Achats fournisseurs</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-todo">À FAIRE</span></td><td><span class="pill pill-spec">S10</span></td></tr>
+        <tr><td>Stock PMP/FIFO/LIFO</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-spec">S10</span></td></tr>
+        <tr><td>Tarification 3 méthodes</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-todo">À FAIRE</span></td><td><span class="pill pill-spec">S10</span></td></tr>
+        <tr><td>Bilan PCG 2025</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-todo">À FAIRE</span></td><td><span class="pill pill-spec">S10</span></td></tr>
+        <tr><td>Signature Yousign</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-spec">SPEC</span></td><td><span class="pill pill-spec">S10</span></td></tr>
+        <tr><td>Programmes suivi</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 08 MULTI-TENANT -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <span class="section-title">Architecture multi-tenant SaaS</span>
+  </div>
+  <div class="alert alert-warn" style="margin-bottom:16px;">Cette architecture est définie pour le passage en production SaaS. L'application tourne actuellement en mode mono-tenant local (Docker).</div>
+
+  <div class="grid2">
+    <div>
+      <div class="subsection-title">Couches d'infrastructure</div>
+      <div class="arch">
+        <div class="arch-layer l-gray">Client — navigateur / tablette / mobile<div class="arch-sub">URL : societe.petsuite.fr</div></div>
+        <div class="arch-layer l-purple">CDN Cloudflare<div class="arch-sub">Assets statiques, vidéos GIF modules</div></div>
+        <div class="arch-layer l-blue">Reverse proxy Nginx / Traefik<div class="arch-sub">Routage par sous-domaine → tenant_id</div></div>
+        <div class="arch-layer l-blue">API Gateway + Auth JWT<div class="arch-sub">Injection tenant_id — zéro fuite inter-société</div></div>
+        <div class="arch-layer l-teal">Shard registry<div class="arch-sub">tenant_id → host + port + schema MariaDB</div></div>
+        <div class="arch-layer l-green">Schema MariaDB par société<div class="arch-sub">micro_logiciel_{tenant_id} — isolation totale RGPD</div></div>
+        <div class="arch-layer l-gold">Bucket S3 GED par société<div class="arch-sub">/{tenant_id}/{type}/{YYYY}/{MM}/fichier</div></div>
+        <div class="arch-layer l-red">BDD Plateforme (super admin)<div class="arch-sub">contrats · licences · mandats SEPA · CGV · audit global</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="subsection-title">Principes clés multi-tenant</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Isolation</span><span class="item-val">Un schema MariaDB par société — jamais de table avec tenant_id partagé</span></div>
+        <div class="item"><span class="item-label">Scalabilité</span><span class="item-val">Ajout de serveurs MariaDB sans toucher aux tenants existants</span></div>
+        <div class="item"><span class="item-label">Migrations</span><span class="item-val">Flyway / Liquibase — appliqué sur tous les schemas à chaque update</span></div>
+        <div class="item"><span class="item-label">Cache</span><span class="item-val">Redis — sessions, JWT, droits utilisateur (TTL 15 min)</span></div>
+        <div class="item"><span class="item-label">Queue</span><span class="item-val">RabbitMQ / SQS — PDF, emails, prélèvements SEPA</span></div>
+        <div class="item"><span class="item-label">Performance</span><span class="item-val">Read replicas pour exports et rapports — pas sur primary</span></div>
+        <div class="item"><span class="item-label">DNS auto</span><span class="item-val">sous-domaine créé + certificat SSL Let's Encrypt au provisionnement</span></div>
+        <div class="item"><span class="item-label">Monitoring</span><span class="item-val">Prometheus + Grafana — alertes quota par tenant</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 09 MODELE COMMERCIAL -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <span class="section-title">Modèle commercial & licences SEPA</span>
+  </div>
+
+  <div class="grid2" style="margin-bottom:16px;">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">💳</div>Conditions d'abonnement</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Tarification</span><span class="item-val">Prélèvement mensuel automatique SEPA</span></div>
+        <div class="item"><span class="item-label">Engagement minimum</span><span class="item-val">6 mois — non résiliable avant terme</span></div>
+        <div class="item"><span class="item-label">Après engagement</span><span class="item-val">Résiliable à tout moment (préavis 1 mois conseillé)</span></div>
+        <div class="item"><span class="item-label">CGV</span><span class="item-val">Snapshot versionné horodaté à la signature</span></div>
+        <div class="item"><span class="item-label">Suspension</span><span class="item-val">Accès bloqué après 2 prélèvements échoués</span></div>
+        <div class="item"><span class="item-label">Modules</span><span class="item-val">Socle obligatoire + options (CRM, GED étendue…)</span></div>
+        <div class="item"><span class="item-label">Stockage</span><span class="item-val">Quota GED inclus — supplément au-delà</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">⚖️</div>Après résiliation</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">J (résiliation)</span><span class="item-val">Lecture seule — export PDF/CSV disponible</span></div>
+        <div class="item"><span class="item-label">J+3 mois</span><span class="item-val">Fermeture accès — export sur demande uniquement</span></div>
+        <div class="item"><span class="item-label">J+12 mois</span><span class="item-val">Snapshot BDD chiffré — suppression instance active</span></div>
+        <div class="item"><span class="item-label">J+5 ans</span><span class="item-val">Purge définitive (obligation légale L123-22 Code commerce)</span></div>
+        <div class="item"><span class="item-label">GED</span><span class="item-val">Hot → Warm → Cold (S3 Glacier) automatique</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Tables BDD plateforme (super admin)</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Table</th><th>Contenu</th><th>Clé</th></tr></thead>
+        <tbody>
+          <tr><td>tenant</td><td>Société, SIRET, sous-domaine, statut, dates</td><td>tenant_id</td></tr>
+          <tr><td>contrat</td><td>Plan souscrit, date début, engagement 6 mois, CGV snapshot</td><td>contrat_id</td></tr>
+          <tr><td>plan</td><td>Modules inclus, quota GED, nb users max, prix, URLs vidéos GIF</td><td>plan_id</td></tr>
+          <tr><td>mandat_sepa</td><td>IBAN, BIC, référence mandat, statut, date signature</td><td>mandat_id</td></tr>
+          <tr><td>prelevement</td><td>Date, montant, statut (OK/ECHOUE/RETENTÉ), référence bancaire</td><td>prelev_id</td></tr>
+          <tr><td>cgv_version</td><td>Version numérotée, texte complet, date application</td><td>cgv_id</td></tr>
+          <tr><td>tenant_shard</td><td>Mapping tenant_id → host MariaDB + schema</td><td>tenant_id</td></tr>
+          <tr><td>audit_plateforme</td><td>Toutes actions super admin tracées</td><td>audit_id</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Gestion des droits utilisateurs par société</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Rôle</th><th>Périmètre</th><th>MFA</th></tr></thead>
+        <tbody>
+          <tr><td>Super admin</td><td>Toutes sociétés — plateforme complète</td><td><span class="pill pill-red">Obligatoire</span></td></tr>
+          <tr><td>Admin société</td><td>Sa société — paramétrage complet</td><td><span class="pill pill-red">Obligatoire</span></td></tr>
+          <tr><td>Manager</td><td>Modules attribués — lecture/écriture</td><td><span class="pill pill-gold">Recommandé</span></td></tr>
+          <tr><td>Salarié</td><td>Modules attribués — usage standard</td><td><span class="pill pill-gray">Optionnel</span></td></tr>
+          <tr><td>Lecture seule</td><td>Consultation uniquement</td><td><span class="pill pill-gray">Non requis</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 10 SCALABILITE -->
+<div class="section" id="s10">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <span class="section-title">Scalabilité & performance</span>
+  </div>
+  <div class="grid4" style="margin-bottom:16px;">
+    <div class="card" style="text-align:center;"><div style="font-family:'DM Serif Display',serif;font-size:26px;">~5 Go</div><div style="font-size:10px;color:var(--ink3);margin-top:4px;">BDD métier / tenant / an</div></div>
+    <div class="card" style="text-align:center;"><div style="font-family:'DM Serif Display',serif;font-size:26px;">~500 To</div><div style="font-size:10px;color:var(--ink3);margin-top:4px;">BDD totale à 20 000 clients</div></div>
+    <div class="card" style="text-align:center;"><div style="font-family:'DM Serif Display',serif;font-size:26px;">&gt;1 Po</div><div style="font-size:10px;color:var(--ink3);margin-top:4px;">GED fichiers à 20 000 clients</div></div>
+    <div class="card" style="text-align:center;"><div style="font-family:'DM Serif Display',serif;font-size:26px;">5 ans</div><div style="font-size:10px;color:var(--ink3);margin-top:4px;">Rétention légale post-résiliation</div></div>
+  </div>
+  <div class="alert alert-info">Ces volumes imposent une architecture distribuée dès le départ. Un schema MariaDB par tenant + un bucket S3 par tenant est la seule approche viable à 20 000 clients.</div>
+</div>
+
+<!-- 11 CARTE ANIMALE -->
+<div class="section" id="s11">
+  <div class="section-header">
+    <span class="section-num">11</span>
+    <span class="section-title">Carte d'identité animale</span>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🐾</div>Principe</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Clé universelle</span><span class="item-val">Numéro de puce (15 chiffres) — unique mondial</span></div>
+        <div class="item"><span class="item-label">Données incluses</span><span class="item-val">Nom, race, naissance, propriétaire, photos, 14 CAC, rapports comportementaux, historique séances</span></div>
+        <div class="item"><span class="item-label">Export PDF</span><span class="item-val">Généré à la demande — champs sélectionnables</span></div>
+        <div class="item"><span class="item-label">Partage</span><span class="item-val">URL signée éphémère 15 min + consentement propriétaire requis</span></div>
+        <div class="item"><span class="item-label">Cross-tenant</span><span class="item-val">Lecture seule signée — jamais d'accès direct BDD tierce</span></div>
+        <div class="item"><span class="item-label">RGPD</span><span class="item-val">Consentement explicite tracé avant tout partage</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📊</div>Données CAC — Session 24</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">param_libelles_ec</span><span class="item-val">60 libellés paramétrables dont 14 libellés CAC</span></div>
+        <div class="item"><span class="item-label">seance_suivi_cac</span><span class="item-val">CAC coché par séance avec propagation</span></div>
+        <div class="item"><span class="item-label">ANI_SCORE_CAC</span><span class="item-val">Score actuel 0..14 sur fiche animal</span></div>
+        <div class="item"><span class="item-label">v_animal_evolution_cac</span><span class="item-val">Vue historique progression par séance</span></div>
+        <div class="item"><span class="item-label">Triggers</span><span class="item-val">trg_ssc_remonte_animal : MAJ fiche animal automatique</span></div>
+      </div>
+      <div class="alert alert-warn" style="margin-top:10px;">Bug B2 en cours : labels "CAC 1"..."CAC 14" génériques dans fiche animal — à corriger avec les libellés paramétrables.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 12 VIDEOS -->
+<div class="section" id="s12">
+  <div class="section-header">
+    <span class="section-num">12</span>
+    <span class="section-title">Vidéos commerciales GIF</span>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🎬</div>Spécifications</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Format</span><span class="item-val">GIF animé ou MP4 — max 1 min 30 par module</span></div>
+        <div class="item"><span class="item-label">Vidéo globale</span><span class="item-val">Scénario complet disponible (7 min) — SCENARIO_VIDEO_COMMERCIALE.md</span></div>
+        <div class="item"><span class="item-label">Résolution</span><span class="item-val">1920×1080 — zoom navigateur 100%</span></div>
+        <div class="item"><span class="item-label">Mode</span><span class="item-val">Sombre — compte demo_video / Demo2026!</span></div>
+        <div class="item"><span class="item-label">Hébergement</span><span class="item-val">CDN Cloudflare — URL dans table plan (BDD plateforme)</span></div>
+        <div class="item"><span class="item-label">Mise à jour</span><span class="item-val">Remplacement URL sans mise à jour applicative</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">📋</div>Séquences prévues</div>
+      <div class="pill-row">
+        <span class="pill pill-gray">Intro / Dashboard (0:25)</span>
+        <span class="pill pill-gray">Paramétrage (0:35)</span>
+        <span class="pill pill-gray">Client + Animal (0:45)</span>
+        <span class="pill pill-gray">Séance EDC (0:45)</span>
+        <span class="pill pill-gray">Devis (0:45)</span>
+        <span class="pill pill-gray">Réalisation + CAC (0:35)</span>
+        <span class="pill pill-gray">Suivi + Programme (0:40)</span>
+        <span class="pill pill-gray">Facturation (0:45)</span>
+        <span class="pill pill-gray">CRM (0:35)</span>
+        <span class="pill pill-gray">Stats (0:30)</span>
+        <span class="pill pill-gray">Export FEC (0:30)</span>
+        <span class="pill pill-gray">Outro (0:10)</span>
+      </div>
+      <div class="alert alert-info" style="margin-top:10px;">Total scénario global : 7 min. Pré-requis : corrections B2 (labels CAC) et I1 (dates ISO) avant tournage.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 13 ROADMAP -->
+<div class="section" id="s13">
+  <div class="section-header">
+    <span class="section-num">13</span>
+    <span class="section-title">Roadmap — Sprints</span>
+  </div>
+  <div class="sprint-row">
+    <div class="sprint"><div class="sprint-num" style="background:var(--accent2);">S1–S8</div><div class="sprint-content"><div class="sprint-title">Sprints 1 à 8 — <span class="pill pill-ok">COMPLETS</span></div><div class="sprint-desc">Setup BDD · Auth · CRUD tiers/animaux · PDF/SMTP · Agenda · Rappels · Portail client · Stripe · SMS · CRM · GED · FEC · PWA · Fix crashes · Audit visuel · Couleurs agenda</div></div></div>
+    <div class="sprint"><div class="sprint-num" style="background:var(--gold);">S9</div><div class="sprint-content"><div class="sprint-title">Sprint 9 — <span class="pill pill-ok">COMPLET</span> · Sessions 24–25</div><div class="sprint-desc">Étude Comportementale (edc_fiche, edc_probleme) · Suivi CAC par séance (seance_suivi_cac) · Libellés paramétrables (param_libelles_ec) · Fix API PATCH_ROUTES_S56 · Frontend EDC + CAC déployés S25</div></div></div>
+    <div class="sprint"><div class="sprint-num" style="background:var(--blue);">S10</div><div class="sprint-content"><div class="sprint-title">Sprint 10 — <span class="pill pill-todo">PLANIFIÉ</span></div><div class="sprint-desc">Frontend modules S9 : EC complet · Suivi CAC · Tarification 3 méthodes · Achats fournisseurs · Stock PMP/FIFO/LIFO · Bilan PCG 2025 · Signature Yousign · Cycles documents</div></div></div>
+    <div class="sprint"><div class="sprint-num" style="background:var(--blue);">S11</div><div class="sprint-content"><div class="sprint-title">Sprint 11 — <span class="pill pill-todo">PLANIFIÉ</span></div><div class="sprint-desc">Éditions PDF tous types (DMP, BLIV, BRET, CMD, AVR, AVF…) · PDF Étude Comportementale · Responsive mobile complet · PWA notifications push · Export CSV tous modules</div></div></div>
+    <div class="sprint"><div class="sprint-num" style="background:var(--purple);">S12+</div><div class="sprint-content"><div class="sprint-title">Sprint 12+ — <span class="pill pill-spec">SaaS / PROD</span></div><div class="sprint-desc">Passage multi-tenant · Provisionnement tenant auto · BDD plateforme · Contrats SEPA · Portail super admin · Infrastructure hébergement · CI/CD · Monitoring · Vidéos commerciales GIF</div></div></div>
+  </div>
+</div>
+
+<!-- 14 BUGS -->
+<div class="section" id="s14">
+  <div class="section-header">
+    <span class="section-num">14</span>
+    <span class="section-title">Bugs connus</span>
+  </div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Sévérité</th><th>Page</th><th>Description</th><th>Sprint</th></tr></thead>
+      <tbody>
+        <tr><td>B1</td><td><span class="pill pill-red">HAUTE</span></td><td>API main.js</td><td>Restart loop PUT /seances/types — fix appliqué S24 via fix_main_s24.ps1</td><td><span class="pill pill-ok">Fix S24</span></td></tr>
+        <tr><td>B2</td><td><span class="pill pill-gold">MOYENNE</span></td><td>Fiche animal</td><td>Labels CAC "CAC 1"..."CAC 14" génériques — doit utiliser param_libelles_ec</td><td><span class="pill pill-wip">S24</span></td></tr>
+        <tr><td>B3</td><td><span class="pill pill-gray">BASSE</span></td><td>Paramètres</td><td>Titre "Mes paramètres" → "Paramètres" — corrigé S24</td><td><span class="pill pill-ok">Corrigé</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 15 REGLES -->
+<div class="section" id="s15">
+  <div class="section-header">
+    <span class="section-num">15</span>
+    <span class="section-title">Règles critiques de développement</span>
+  </div>
+  <div class="alert alert-danger" style="margin-bottom:14px;">Ces règles doivent être respectées à chaque session pour éviter les régressions.</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-red">⚠️</div>Patches & Docker</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Patches volatils</span><span class="item-val">Perdus si rebuild image api — sauvegarder AVANT</span></div>
+        <div class="item"><span class="item-label">Rebuild frontend</span><span class="item-val">docker compose restart nginx obligatoire après</span></div>
+        <div class="item"><span class="item-label">docker cp</span><span class="item-val">Fonctionne sur container ARRÊTÉ uniquement</span></div>
+        <div class="item"><span class="item-label">docker exec</span><span class="item-val">Nom container (micro_api) pas le service</span></div>
+        <div class="item"><span class="item-label">docker compose</span><span class="item-val">cd "$root\deploy" AVANT toute commande</span></div>
+        <div class="item"><span class="item-label">PATCH_ROUTES_S56</span><span class="item-val">Routes DANS le bloc try { const _h56 = ... } uniquement</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">⚙️</div>Code & PowerShell</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">DECIMAL MariaDB</span><span class="item-val">parseFloat(val || 0) avant .toFixed() en JS</span></div>
+        <div class="item"><span class="item-label">Scripts PS</span><span class="item-val">ASCII pur — pas d'accents ni emojis</span></div>
+        <div class="item"><span class="item-label">Chemins PS</span><span class="item-val">C:\Users\AdminPC\ (pas $env:USERPROFILE)</span></div>
+        <div class="item"><span class="item-label">Regex JS</span><span class="item-val">Échapper / : \/png pas /png (crash Node.js)</span></div>
+        <div class="item"><span class="item-label">-LiteralPath</span><span class="item-val">Pour chemins PS avec [id] dans le nom</span></div>
+        <div class="item"><span class="item-label">require() nodes</span><span class="item-val">Chemin absolu /app/node_modules/xxx</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<footer>
+  <strong>PetSuite</strong>
+  <div>Algorithmia · Sprint S33 · 18/03/2026 · Document interne</div>
+</footer>
+
 </body>
 </html>
