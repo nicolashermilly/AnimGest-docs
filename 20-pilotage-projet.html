@@ -401,7 +401,7 @@ function checkPw(){
     <a href="#infra" class="nav-link">Infra</a>
     <a href="#commercial" class="nav-link">Commercial</a>
   </div>
-  <div class="nav-badge">S25 · 14/03/2026</div>
+  <div class="nav-badge">S33 · 18/03/2026</div>
 
   <a href="index.html" style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.5);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.15);border-radius:20px;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.5)'">← Index</a>
 </nav>
@@ -424,11 +424,11 @@ function checkPw(){
 
     <div class="kpi-grid">
       <div class="kpi accent">
-        <div class="kpi-num">S25</div>
-        <div class="kpi-lbl">Session courante</div>
+        <div class="kpi-num">S33</div>
+        <div class="kpi-lbl">Sprint courant</div>
       </div>
       <div class="kpi">
-        <div class="kpi-num">9</div>
+        <div class="kpi-num">32</div>
         <div class="kpi-lbl">Sprints réalisés</div>
       </div>
       <div class="kpi">
@@ -436,7 +436,7 @@ function checkPw(){
         <div class="kpi-lbl">Sprints planifiés</div>
       </div>
       <div class="kpi">
-        <div class="kpi-num">60+</div>
+        <div class="kpi-num">65+</div>
         <div class="kpi-lbl">Tables BDD</div>
       </div>
       <div class="kpi">
@@ -444,7 +444,7 @@ function checkPw(){
         <div class="kpi-lbl">Triggers SQL</div>
       </div>
       <div class="kpi">
-        <div class="kpi-num">80+</div>
+        <div class="kpi-num">90+</div>
         <div class="kpi-lbl">Endpoints API</div>
       </div>
     </div>
@@ -453,7 +453,7 @@ function checkPw(){
     <div class="progress-wrap">
       <div class="progress-label">
         <span>Avancement global — S1 → S12+</span>
-        <strong>S9 / 12 complet</strong>
+        <strong>S33 en cours</strong>
       </div>
       <div class="progress-track">
         <!-- S1-S9 complets : 9/12 = 75% -->
@@ -486,8 +486,8 @@ function checkPw(){
           <tr><td class="s-num">S7</td><td class="s-desc">PWA mobile, Backup BDD, Animal V2+V3</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">16–17</td></tr>
           <tr><td class="s-num">S8</td><td class="s-desc">Fix crashes, audit visuel, PATCH animaux, couleurs agenda</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">18–22</td></tr>
           <tr><td class="s-num">S9</td><td class="s-desc">EC, CAC, param_libelles_ec, achats, stock, tarif, bilan</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">23–25</td></tr>
-          <tr><td class="s-num" style="color:var(--amber);">S10</td><td class="s-desc">Frontend achats, stock, tarification, questionnaires, Yousign</td><td><span class="pill pill-wip">PLANIFIÉ</span></td><td class="s-sess">—</td></tr>
-          <tr><td class="s-num" style="color:var(--amber);">S11</td><td class="s-desc">PDF tous types, responsive mobile, PWA notifications</td><td><span class="pill pill-wip">PLANIFIÉ</span></td><td class="s-sess">—</td></tr>
+          <tr><td class="s-num">S10→S32</td><td class="s-desc">Frontend achats, stock, tarification, NF525, élevage, aide intégrée (199 articles/15 modules), formulaire lead CRM, PUT /animaux/:id, questionnaires multi-type, agenda semaine/mois</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">26–32</td></tr>
+          <tr><td class="s-num" style="color:var(--amber);">S33</td><td class="s-desc">Templates devis métier · NF525 clôture Z · Élevage portée/new · Documentation v4.0 · Historique admin · Charte graphique</td><td><span class="pill pill-wip">EN COURS</span></td><td class="s-sess">33→</td></tr>
           <tr><td class="s-num" style="color:var(--purple);">S12+</td><td class="s-desc">SaaS multi-tenant, provisionnement, SEPA, production</td><td><span class="pill pill-spec">SaaS PROD</span></td><td class="s-sess">—</td></tr>
         </tbody>
       </table>
@@ -511,38 +511,46 @@ function checkPw(){
             <div class="kanban-dot" style="background:var(--red);"></div>
             Priorité immédiate
           </div>
-          <span class="kanban-count">3</span>
+          <span class="kanban-count">4</span>
         </div>
 
         <div class="kanban-card urgent">
-          <div class="kanban-card-title">Intégrer patch_edc_cac_s25.js</div>
-          <div class="kanban-card-sub">Copier dans /app/dist/ + require() dans bloc try { _h56 } de main.js</div>
-          <div class="kanban-card-tags">
-            <span class="pill pill-urgent">API</span>
-            <span class="pill pill-later">Backend</span>
-          </div>
-        </div>
-
-        <div class="kanban-card urgent">
-          <div class="kanban-card-title">Déployer page-edc.tsx + page-cac.tsx</div>
-          <div class="kanban-card-sub">/seances/[id]/etude-comportementale/ et /suivi-cac/ — rebuild frontend + restart nginx</div>
+          <div class="kanban-card-title">Templates devis par métier</div>
+          <div class="kanban-card-sub">/app/devis/templates — séparateurs Comportementaliste / Équestre / Toiletteur / Pet-sitter</div>
           <div class="kanban-card-tags">
             <span class="pill pill-urgent">Frontend</span>
-            <span class="pill pill-later">Docker</span>
+            <span class="pill pill-later">API</span>
           </div>
         </div>
 
         <div class="kanban-card urgent">
-          <div class="kanban-card-title">Uploader 7 fichiers HTML GitHub</div>
-          <div class="kanban-card-sub">01, 05, 06, 07, 08, 09, 17 — docs GitHub Pages à jour S25</div>
+          <div class="kanban-card-title">NF525 — Clôture Z caisse</div>
+          <div class="kanban-card-sub">sp_nf525_enregistrer_encaissement + interface /app/comptabilite + dashboard conformité</div>
+          <div class="kanban-card-tags">
+            <span class="pill pill-urgent">BDD</span>
+            <span class="pill pill-urgent">Frontend</span>
+          </div>
+        </div>
+
+        <div class="kanban-card urgent">
+          <div class="kanban-card-title">Élevage — Portée/new</div>
+          <div class="kanban-card-sub">/app/elevage/portees/new — saisie individuelle naissances, puce chiot, lien DDPP</div>
+          <div class="kanban-card-tags">
+            <span class="pill pill-urgent">Frontend</span>
+            <span class="pill pill-later">BDD</span>
+          </div>
+        </div>
+
+        <div class="kanban-card urgent">
+          <div class="kanban-card-title">Uploader HTML S33 sur GitHub Pages</div>
+          <div class="kanban-card-sub">03, 01, 06, 07, 17, 20, 11, 26, index — docs mis à jour S33</div>
           <div class="kanban-card-tags">
             <span class="pill pill-urgent">Docs</span>
-            <span class="pill pill-later">GitHub Pages</span>
+            <span class="pill pill-later">GitHub</span>
           </div>
         </div>
       </div>
 
-      <!-- COL 2 : À FAIRE -->
       <div class="kanban-col" style="border-top:2px solid var(--amber);">
         <div class="kanban-col-header">
           <div class="kanban-col-title">
@@ -550,6 +558,30 @@ function checkPw(){
             À faire
           </div>
           <span class="kanban-count">6</span>
+        </div>
+
+        <div class="kanban-card">
+          <div class="kanban-card-title">Historique admin — colonne commentaires</div>
+          <div class="kanban-card-sub">audit_log.AUD_COMMENTAIRE + filtres INSERT/UPDATE/DELETE/LOGIN</div>
+          <div class="kanban-card-tags"><span class="pill pill-blue">Frontend</span></div>
+        </div>
+
+        <div class="kanban-card">
+          <div class="kanban-card-title">Charte graphique — upload logo</div>
+          <div class="kanban-card-sub">app_charte_graphique + apparition sur factures PDF et devis</div>
+          <div class="kanban-card-tags"><span class="pill pill-blue">Frontend</span></div>
+        </div>
+
+        <div class="kanban-card">
+          <div class="kanban-card-title">Redirect /app → /app/tableau-de-bord</div>
+          <div class="kanban-card-sub">Vérifier middleware Next.js — signalé S31</div>
+          <div class="kanban-card-tags"><span class="pill pill-blue">Frontend</span></div>
+        </div>
+
+        <div class="kanban-card">
+          <div class="kanban-card-title">Fix doublons animaux programmes</div>
+          <div class="kanban-card-sub">Ajouter DISTINCT / GROUP BY ANI_ID dans la requête</div>
+          <div class="kanban-card-tags"><span class="pill pill-blue">BDD</span></div>
         </div>
 
         <div class="kanban-card">
@@ -637,7 +669,7 @@ function checkPw(){
   <div id="s9" class="section">
     <div class="section-header">
       <span class="section-num">03</span>
-      <span class="section-title">Sprint 9 — Détail modules (sessions 23–25)</span>
+      <span class="section-title">Sprint S33 — En cours · 18/03/2026</span>
       <div class="section-line"></div>
       <span class="pill pill-ok">COMPLET</span>
     </div>
@@ -1026,7 +1058,7 @@ function checkPw(){
   <!-- FOOTER -->
   <div class="page-footer">
     <div class="footer-brand">PetSuite</div>
-    <div class="footer-meta">pilotage-projet · session S25 · 14/03/2026 · petsuite-docs/20-pilotage-projet.html</div>
+    <div class="footer-meta">pilotage-projet · session S33 · 18/03/2026 · petsuite-docs/20-pilotage-projet.html</div>
   </div>
 
 </div>
