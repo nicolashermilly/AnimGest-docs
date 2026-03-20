@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Changelog Sprint S36</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
+  :root {
+    --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--border:#30363d;--border2:#3d4450;
+    --text:#e6edf3;--muted:#8b949e;--accent:#2f81f7;--accent2:#58a6ff;
+    --green:#3fb950;--orange:#d29922;--red:#f85149;--purple:#bc8cff;--gold:#e3b341;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-size:14px;line-height:1.6;min-height:100vh;}
+  .layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh;}
+  .sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:24px 0;position:sticky;top:0;height:100vh;overflow-y:auto;}
+  .sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+  .sidebar-logo .icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .sidebar-logo span{font-size:13px;font-weight:700;color:var(--text);}
+  .sidebar-logo small{display:block;font-size:10px;color:var(--muted);font-weight:400;}
+  .nav-section{margin-bottom:20px;}
+  .nav-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 20px 8px;}
+  .nav-item{display:flex;align-items:center;gap:8px;padding:6px 20px;font-size:13px;color:var(--muted);text-decoration:none;transition:background .15s,color .15s;}
+  .nav-item:hover{background:var(--bg3);color:var(--text);}
+  .nav-item.active{background:rgba(47,129,247,.12);color:var(--accent2);border-left:2px solid var(--accent);}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--border2);flex-shrink:0;}
+  .dot.done{background:var(--green);}
+  .dot.current{background:var(--accent);box-shadow:0 0 0 3px rgba(47,129,247,.25);}
+  main{padding:40px 48px;max-width:960px;}
+  .breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:28px;}
+  .breadcrumb a{color:var(--accent2);text-decoration:none;}
+  .breadcrumb span{color:var(--border2);}
+  h1{font-size:26px;font-weight:800;color:var(--text);margin-bottom:8px;}
+  h2{font-size:16px;font-weight:700;color:var(--text);margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(63,185,80,.15);border:1px solid rgba(63,185,80,.3);color:var(--green);font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:20px;margin-bottom:16px;}
+  .meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:32px;}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:28px;}
+  .kpi{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+  .kpi-num{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;margin-bottom:4px;}
+  .kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .section-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+  .item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+  .item:last-child{border-bottom:none;}
+  .tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;flex-shrink:0;margin-top:2px;}
+  .tag-bdd{background:rgba(63,185,80,.15);color:var(--green);border:1px solid rgba(63,185,80,.3);}
+  .tag-api{background:rgba(47,129,247,.12);color:var(--accent2);border:1px solid rgba(47,129,247,.3);}
+  .tag-front{background:rgba(210,153,34,.12);color:var(--gold);border:1px solid rgba(210,153,34,.3);}
+  .tag-docs{background:rgba(188,140,255,.12);color:var(--purple);border:1px solid rgba(188,140,255,.3);}
+  .tag-infra{background:rgba(57,211,83,.1);color:#39d353;border:1px solid rgba(57,211,83,.3);}
+  .tag-ia{background:rgba(248,81,73,.12);color:#f85149;border:1px solid rgba(248,81,73,.3);}
+  .item-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+  .item-desc{font-size:12px;color:var(--muted);}
+  code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--purple);}
+  footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 48px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="icon">🐾</div>
+      <div><span>PetSuite</span><small>Algorithmia · Sprint S36</small></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Navigation</div>
+      <a class="nav-item" href="index.html"><div class="dot done"></div>🏠 Index</a>
+      <a class="nav-item" href="06-roadmap.html"><div class="dot done"></div>06 — Roadmap sprints</a>
+      <a class="nav-item" href="07-audit-stack.html"><div class="dot done"></div>07 — Audit Stack</a>
+      <a class="nav-item" href="27-changelog-S35.html"><div class="dot done"></div>27 — Changelog S35</a>
+      <a class="nav-item active" href="28-changelog-S36.html"><div class="dot current"></div>28 — Changelog S36</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Stack S36</div>
+      <a class="nav-item" href="#"><div class="dot done"></div>BDD 70+ tables</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>API 115+ routes custom</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>Frontend 110+ fichiers</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>IA modération communauté</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>PDF factures + achats</a>
+    </div>
+  </aside>
+
+  <main>
+    <nav class="breadcrumb">
+      <a href="index.html">PetSuite</a><span>/</span>
+      <a href="index.html">docs</a><span>/</span>
+      <span>Changelog S36</span>
+    </nav>
+
+    <div class="badge">✅ SPRINT S36 — COMPLET</div>
+    <h1>Changelog <span style="color:var(--accent2)">Sprint S36</span></h1>
+    <div class="meta">
+      <span>📅 20/03/2026</span>
+      <span>🗂️ Doc #28</span>
+      <span>🐾 Algorithmia</span>
+      <span>✅ 100% livré</span>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-num" style="color:var(--green)">15+</div><div class="kpi-lbl">Nouvelles routes</div></div>
+      <div class="kpi"><div class="kpi-num" style="color:var(--accent2)">6</div><div class="kpi-lbl">Pages frontend</div></div>
+      <div class="kpi"><div class="kpi-num" style="color:var(--gold)">3</div><div class="kpi-lbl">Modules IA/Slack</div></div>
+      <div class="kpi"><div class="kpi-num" style="color:var(--purple)">2</div><div class="kpi-lbl">Modules métier</div></div>
+      <div class="kpi"><div class="kpi-num" style="color:var(--text)">5,5 Mo</div><div class="kpi-lbl">Backup BDD</div></div>
+    </div>
+
+    <h2>Module Achats — Complet</h2>
+    <div class="section-card">
+      <div class="item">
+        <span class="tag tag-api">API</span>
+        <div><div class="item-title">GET /achats/:id/lignes</div>
+        <div class="item-desc">Lignes d'achat avec article associé (référence, libellé, unité). Correction colonnes <code>ALI_</code> (pas <code>ACL_</code>).</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-api">API</span>
+        <div><div class="item-title">POST /achats/:id — changement statut</div>
+        <div class="item-desc">Workflow BROUILLON → REÇU → VALIDÉ → ANNULÉ avec validation des transitions.</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-api">API</span>
+        <div><div class="item-title">GET /achats/:id/bon-a-payer</div>
+        <div class="item-desc">Bon de paiement avec IBAN/BIC fournisseur pour virement SEPA. Copie clipboard en un clic.</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-front">FRONT</span>
+        <div><div class="item-title">Page /app/achats/[id] — refonte complète S36</div>
+        <div class="item-desc">Boutons 🖨️ PDF · 📧 Email · 💳 Bon à payer · workflow statut. Tableau lignes avec totaux. Modal bon à payer avec IBAN.</div></div>
+      </div>
+    </div>
+
+    <h2>Module Inventaires — Complet</h2>
+    <div class="section-card">
+      <div class="item">
+        <span class="tag tag-api">API</span>
+        <div><div class="item-title">GET /inventaires/:id/lignes + POST /inventaires/:id/lignes</div>
+        <div class="item-desc">Lecture et ajout de lignes d'inventaire avec colonnes générées (<code>ILI_ECART</code>, <code>ILI_VALEUR_REELLE</code>).</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-api">API</span>
+        <div><div class="item-title">POST /inventaires/:id — changement statut</div>
+        <div class="item-desc">Transition BROUILLON → VALIDÉ → ANNULÉ sur <code>inventaire_entete</code>.</div></div>
+      </div>
+    </div>
+
+    <h2>Module Factures — PDF + Email</h2>
+    <div class="section-card">
+      <div class="item">
+        <span class="tag tag-api">API</span>
+        <div><div class="item-title">GET /factures/:id/pdf</div>
+        <div class="item-desc">Génération HTML imprimable avec logo, infos client, tableau lignes, totaux HT/TVA/TTC, reste à payer coloré. Déclenche <code>window.print()</code>.</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-api">API</span>
+        <div><div class="item-title">POST /factures/:id/email</div>
+        <div class="item-desc">Préparation mailto avec destinataire, sujet et corps pré-remplis. Ouvre le client mail natif.</div></div>
+      </div>
+    </div>
+
+    <h2>Modération IA — Claude API</h2>
+    <div class="section-card">
+      <div class="item">
+        <span class="tag tag-ia">IA</span>
+        <div><div class="item-title">POST /communaute/moderer/:id</div>
+        <div class="item-desc">Analyse d'un post par Claude Sonnet. Retourne score 0-100, décision APPROUVER/REJETER/RELIRE et raison. Met à jour <code>MOD_SCORE_IA</code> et <code>MOD_RAISON_IA</code> en BDD.</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-ia">IA</span>
+        <div><div class="item-title">POST /communaute/moderer-tous</div>
+        <div class="item-desc">Modération automatique de tous les posts PENDING en lot (max 10). Nécessite <code>CLAUDE_API_KEY</code> dans <code>.env</code>.</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-infra">SLACK</span>
+        <div><div class="item-title">POST /communaute/slack-notify</div>
+        <div class="item-desc">Notification Slack Block Kit lors d'une nouvelle évolution. Nécessite <code>SLACK_WEBHOOK_URL</code> dans <code>.env</code>.</div></div>
+      </div>
+    </div>
+
+    <h2>Modules Métier — Toiletteur + Pet-sitter</h2>
+    <div class="section-card">
+      <div class="item">
+        <span class="tag tag-front">FRONT</span>
+        <div><div class="item-title">Page /app/toilettage — Planning salon</div>
+        <div class="item-desc">Dashboard journalier : filtre par date, KPIs (RDV/planifiés/réalisés/CA), liste planning avec heures, animaux et statuts.</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-front">FRONT</span>
+        <div><div class="item-title">Page /app/visites — Visites & Promenades</div>
+        <div class="item-desc">Planning pet-sitting double vue (semaine/liste). Navigation semaine ←→, icônes par type (🏠🦮🏡🏨), CA total.</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-front">FRONT</span>
+        <div><div class="item-title">Page /app/forfaits — Forfaits & Abonnements</div>
+        <div class="item-desc">Affichage des formules depuis le catalogue articles. Message guidé si aucun forfait configuré.</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-front">FRONT</span>
+        <div><div class="item-title">Sidebar — sections Toiletteur + Pet-sitter</div>
+        <div class="item-desc">3 nouveaux liens : ✂️ Planning salon · 🎫 Forfaits · 🏠 Visites. Sidebar maintenant à 30 liens.</div></div>
+      </div>
+    </div>
+
+    <h2>Données démo</h2>
+    <div class="section-card">
+      <div class="item">
+        <span class="tag tag-bdd">BDD</span>
+        <div><div class="item-title">Jeu de données complet pour démo</div>
+        <div class="item-desc">5 posts communauté · 5 évolutions · 5 posts RS · 4 idées RS · 2 portées élevage · 4 achats numérotés · 1 inventaire valorisé (30 500€ théorique / 24 400€ réel).</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-bdd">BDD</span>
+        <div><div class="item-title">Numérotation achats corrigée</div>
+        <div class="item-desc">ACH-2603-0001 à ACH-2603-0004. Libellé inventaire : "Inventaire général mars 2026".</div></div>
+      </div>
+    </div>
+
+    <h2>Infrastructure</h2>
+    <div class="section-card">
+      <div class="item">
+        <span class="tag tag-infra">ENV</span>
+        <div><div class="item-title">CLAUDE_API_KEY + SLACK_WEBHOOK_URL dans .env</div>
+        <div class="item-desc">Variables ajoutées au fichier <code>deploy/.env</code>. Remplacer les placeholders par les vraies clés pour activer IA et Slack.</div></div>
+      </div>
+      <div class="item">
+        <span class="tag tag-infra">BACKUP</span>
+        <div><div class="item-title">C:\Backup\micro_logiciel\20260320_s36.sql</div>
+        <div class="item-desc">5 539 895 bytes — backup post-S36 complet.</div></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:16px;border-top:1px solid var(--border);margin-top:24px;">
+      Sprint S36 · 20/03/2026 · Doc #28 · Format 100% HTML
+    </div>
+  </main>
+</div>
+<footer>
+  <span>🐾 PetSuite · Algorithmia</span>
+  <span>Sprint S36 · 20/03/2026 · Document interne</span>
+</footer>
+</body>
+</html>
