@@ -1,50 +1,1332 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Modèle Commercial</title><style>:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
-.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
-.header h1{font-size:2.5rem;font-weight:800;color:#fff;}.header p{color:var(--accent2);margin-top:8px;}
-.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
-.container{max-width:1100px;margin:0 auto;padding:32px;}.section{margin-bottom:40px;}
-.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
-.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
-.section p{color:var(--text2);margin-bottom:10px;}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
-.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:8px;}.card p,.card li{font-size:.875rem;color:var(--text2);}
-ul{list-style:none;padding:0;}li{padding:3px 0;display:flex;gap:6px;}li::before{content:'→';color:var(--accent);flex-shrink:0;}
-table{width:100%;border-collapse:collapse;margin:12px 0;}
-th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
-td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}tr:hover td{background:var(--surface);}
-.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.nf-box{background:rgba(16,185,129,.08);border-left:3px solid #10b981;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);}
-.new{background:var(--green);color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;vertical-align:middle;}
-footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}</style></head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Modèle commercial & licences SEPA</title>
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg:        #0d1117;
+    --bg2:       #161b22;
+    --bg3:       #21262d;
+    --border:    #30363d;
+    --border2:   #3d4450;
+    --text:      #e6edf3;
+    --muted:     #8b949e;
+    --accent:    #2f81f7;
+    --accent2:   #58a6ff;
+    --green:     #3fb950;
+    --green2:    #238636;
+    --orange:    #d29922;
+    --orange2:   #b08800;
+    --red:       #f85149;
+    --purple:    #bc8cff;
+    --teal:      #39d353;
+    --gold:      #e3b341;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo .icon {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .sidebar-logo span { font-size: 13px; font-weight: 700; color: var(--text); }
+  .sidebar-logo small { display: block; font-size: 10px; color: var(--muted); font-weight: 400; }
+
+  .nav-section { margin-bottom: 20px; }
+  .nav-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0 20px 8px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 20px;
+    font-size: 13px; color: var(--muted);
+    cursor: pointer; text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active {
+    background: rgba(47,129,247,.12);
+    color: var(--accent2);
+    border-left: 2px solid var(--accent);
+  }
+  .nav-item .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border2); flex-shrink: 0;
+  }
+  .nav-item.active .dot, .nav-item .dot.done { background: var(--green); }
+  .nav-item .dot.wip { background: var(--gold); }
+  .nav-item .dot.current { background: var(--accent); box-shadow: 0 0 0 3px rgba(47,129,247,.25); }
+
+  /* ── Main ── */
+  main { padding: 40px 48px; max-width: 960px; }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 28px;
+  }
+  .breadcrumb a { color: var(--accent2); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { color: var(--border2); }
+
+  /* ── Page header ── */
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sprint-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(47,129,247,.15);
+    border: 1px solid rgba(47,129,247,.35);
+    color: var(--accent2);
+    font-size: 11px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 10px; border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: .06em;
+  }
+  .sprint-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  h1 {
+    font-size: 26px; font-weight: 800; color: var(--text);
+    line-height: 1.25; margin-bottom: 8px;
+  }
+  .page-meta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .page-meta span { display: flex; align-items: center; gap: 5px; }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .05em;
+  }
+  .status-pill.planning {
+    background: rgba(210,153,34,.12);
+    border: 1px solid rgba(210,153,34,.4);
+    color: var(--gold);
+  }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── Alert NF525 ── */
+  .alert {
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .alert.warn {
+    background: rgba(210,153,34,.1);
+    border: 1px solid rgba(210,153,34,.35);
+  }
+  .alert.info {
+    background: rgba(47,129,247,.08);
+    border: 1px solid rgba(47,129,247,.25);
+  }
+  .alert-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
+  .alert-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .alert.warn .alert-title { color: var(--gold); }
+  .alert.info .alert-title { color: var(--accent2); }
+  .alert p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* ── Cards grid ── */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: var(--border2); }
+  .card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 6px; }
+  .card-value { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .card-sub { font-size: 12px; color: var(--muted); }
+  .card-value.green { color: var(--green); }
+  .card-value.gold { color: var(--gold); }
+  .card-value.accent { color: var(--accent2); }
+
+  /* ── Conformité progress ── */
+  .compliance-grid {
+    display: grid; gap: 10px;
+    margin-bottom: 24px;
+  }
+  .compliance-row {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 28px 1fr auto 80px;
+    gap: 12px;
+    align-items: center;
+  }
+  .compliance-row .check {
+    width: 26px; height: 26px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .check.done  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .check.todo  { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .check.wip   { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
+  .check.crit  { background: rgba(248,81,73,.12); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+
+  .compliance-row .cr-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .compliance-row .cr-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .compliance-row .cr-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .06em;
+    padding: 3px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+  .cr-tag.done   { background: rgba(63,185,80,.15); color: var(--green); }
+  .cr-tag.todo   { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .cr-tag.wip    { background: rgba(210,153,34,.12); color: var(--gold); }
+  .cr-tag.crit   { background: rgba(248,81,73,.12); color: var(--red); }
+  .compliance-row .cr-bar { height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+  .cr-fill { height: 100%; border-radius: 2px; transition: width .5s; }
+  .cr-fill.green { background: var(--green); }
+  .cr-fill.gold  { background: var(--gold); }
+  .cr-fill.blue  { background: var(--accent); }
+  .cr-fill.red   { background: var(--red); }
+
+  /* ── User stories table ── */
+  .us-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .us-table th {
+    text-align: left; padding: 10px 14px;
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+  .us-table td {
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text);
+  }
+  .us-table tr:hover td { background: rgba(255,255,255,.02); }
+  .us-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: var(--accent2);
+    white-space: nowrap;
+  }
+  .us-points {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--purple);
+    text-align: center;
+  }
+  .prio-pill {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .04em;
+  }
+  .prio-pill.crit { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .prio-pill.high { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
+  .prio-pill.med  { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
+
+  .assignee {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+  }
+  .avatar {
+    width: 20px; height: 20px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .av-dba  { background: #8957e5; }
+  .av-dev  { background: #2f81f7; }
+  .av-fe   { background: #d29922; }
+  .av-dir  { background: #3fb950; }
+
+  /* ── Fichiers livrables ── */
+  .file-list { display: grid; gap: 8px; }
+  .file-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+    transition: border-color .2s;
+    cursor: pointer;
+  }
+  .file-item:hover { border-color: var(--accent2); }
+  .file-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
+  .file-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent2); }
+  .file-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .file-size { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
+  .file-status {
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .file-status.ready { background: rgba(63,185,80,.12); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .file-status.pending { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+
+  /* ── Dépendances ── */
+  .dep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dep-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .dep-card .dep-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .dep-card .dep-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .dep-badge {
+    font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+  }
+  .dep-badge.blocker { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .dep-badge.info    { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
+
+  /* ── Timeline sprint ── */
+  .timeline { display: grid; gap: 0; margin-bottom: 4px; }
+  .tl-week {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tl-week:last-child { border-bottom: none; }
+  .tl-label { font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding-top: 2px; }
+  .tl-items { display: flex; flex-direction: column; gap: 4px; }
+  .tl-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 12px; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tl-item .tl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tl-item.sql  .tl-dot { background: var(--purple); }
+  .tl-item.api  .tl-dot { background: var(--accent); }
+  .tl-item.front .tl-dot { background: var(--gold); }
+  .tl-item.test .tl-dot { background: var(--green); }
+  .tl-item.doc  .tl-dot { background: var(--muted); }
+  .tl-item.prod .tl-dot { background: var(--red); }
+
+  /* ── Checklist technique ── */
+  .checklist { display: grid; gap: 6px; }
+  .cl-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--text);
+    padding: 8px 12px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .cl-check {
+    width: 18px; height: 18px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+  }
+  .cl-check.ok  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .cl-check.no  { background: var(--bg3); border: 1px solid var(--border); color: transparent; }
+  .cl-item code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--purple);
+    background: rgba(188,140,255,.1);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ── Scroll animation ── */
+  .section { animation: fadeUp .4s ease both; }
+  .section:nth-child(2) { animation-delay: .05s; }
+  .section:nth-child(3) { animation-delay: .1s; }
+  .section:nth-child(4) { animation-delay: .15s; }
+  .section:nth-child(5) { animation-delay: .2s; }
+  .section:nth-child(6) { animation-delay: .25s; }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(12px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    main { padding: 24px 20px; }
+    .cards { grid-template-columns: 1fr 1fr; }
+    .dep-grid { grid-template-columns: 1fr; }
+    .page-header { grid-template-columns: 1fr; }
+  }
+
+
+  /* ── Compat classes existantes ── */
+  .hero{background:var(--bg2);padding:40px 48px 32px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .hero-tag{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+  .hero h1{font-size:28px;font-weight:800;color:var(--text);line-height:1.15;margin-bottom:8px;}
+  .hero h1 em{font-style:italic;color:var(--accent2);}
+  .hero-sub{font-size:13px;color:var(--muted);max-width:600px;line-height:1.6;}
+  .container{padding:32px 48px 80px;max-width:960px;}
+  .section{margin-bottom:36px;}
+  .section-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .section-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .section-title{font-size:16px;font-weight:700;color:var(--text);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+  .card:hover{border-color:var(--border2);}
+  .card-title{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:var(--text);}
+  .card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+  .ci-green,.icon-green{background:rgba(63,185,80,.12);color:var(--green);}
+  .ci-blue,.icon-blue{background:rgba(47,129,247,.1);color:var(--accent2);}
+  .ci-amber,.icon-gold,.icon-amber{background:rgba(210,153,34,.12);color:var(--gold);}
+  .ci-red,.icon-red{background:rgba(248,81,73,.1);color:var(--red);}
+  .ci-purple,.icon-purple{background:rgba(188,140,255,.1);color:var(--purple);}
+  .ci-teal,.icon-teal{background:rgba(57,211,83,.1);color:var(--teal);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);}
+  .item:last-child{border-bottom:none;padding-bottom:0;}
+  .item-label,.item-lbl{font-size:12px;font-weight:600;color:var(--text);min-width:150px;flex-shrink:0;}
+  .item-val,.item-value{font-size:12px;color:var(--muted);line-height:1.4;}
+  .item-list{display:flex;flex-direction:column;}
+  .subsection{margin-bottom:24px;}
+  .subsection-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;padding-left:10px;border-left:2px solid var(--accent);}
+  .pill,.tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;font-family:'JetBrains Mono',monospace;}
+  .p-green,.pill-green,.tag-green{background:rgba(63,185,80,.12);color:var(--green);border:1px solid rgba(63,185,80,.25);}
+  .p-amber,.pill-amber,.tag-gold,.p-gold{background:rgba(210,153,34,.12);color:var(--gold);border:1px solid rgba(210,153,34,.25);}
+  .p-blue,.pill-blue,.tag-blue{background:rgba(47,129,247,.1);color:var(--accent2);border:1px solid rgba(47,129,247,.25);}
+  .p-red,.pill-red,.tag-red{background:rgba(248,81,73,.1);color:var(--red);border:1px solid rgba(248,81,73,.25);}
+  .p-gray,.pill-gray,.tag-teal{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+  .p-purple,.pill-purple,.tag-purple{background:rgba(188,140,255,.1);color:var(--purple);border:1px solid rgba(188,140,255,.25);}
+  .callout{border-left:3px solid var(--accent);background:rgba(47,129,247,.08);padding:13px 17px;border-radius:0 6px 6px 0;font-size:12px;color:var(--muted);margin:12px 0;border:1px solid rgba(47,129,247,.2);border-left:3px solid var(--accent);}
+  .callout.amber{border-left-color:var(--orange);background:rgba(210,153,34,.08);}
+  .callout.blue{border-left-color:var(--accent2);background:rgba(47,129,247,.08);}
+  .callout.red{border-left-color:var(--red);background:rgba(248,81,73,.08);}
+  .callout strong{color:var(--text);}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg2);}
+  td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;color:var(--text);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+  .tw{overflow-x:auto;margin-bottom:4px;}
+  code,.code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--purple);}
+  .code-block,.code-box{background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+  .kpi-grid,.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;}
+  .kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+  .kpi-num,.kpi-value{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .kpi-lbl,.kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .kpi-card.highlight .kpi-num{color:var(--green);}
+  .check-list{display:flex;flex-direction:column;gap:5px;}
+  .check-item{font-size:12px;color:var(--muted);display:flex;gap:7px;align-items:flex-start;line-height:1.4;}
+  .check-item::before{content:'→';color:var(--accent2);font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+  .check-item.done::before{content:'✓';color:var(--green);}
+  .check-item.wip::before{content:'⏳';}
+  .module-card,.mcard{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;border-top:2px solid var(--accent);}
+  .module-feat{font-size:11px;color:var(--muted);margin-bottom:3px;display:flex;gap:6px;align-items:flex-start;}
+  .module-feat::before{content:'–';color:var(--muted);flex-shrink:0;}
+  .roadmap-phase,.tl-phase{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:10px;display:flex;gap:16px;align-items:flex-start;}
+  .phase-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+  .phase-done{background:rgba(63,185,80,.15);color:var(--green);}
+  .phase-current,.phase-wip{background:rgba(210,153,34,.12);color:var(--gold);}
+  .phase-planned{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+  .phase-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .phase-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+  .kanban-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;}
+  .kanban-card.urgent{border-left:3px solid var(--red);}
+  .kanban-card-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .kanban-card-sub{font-size:11px;color:var(--muted);line-height:1.4;}
+  .kanban-card-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+  .mcard-num{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .mcard-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .mcard-sub{font-size:11px;color:var(--muted);margin-top:6px;}
+  .mc-green{border-top:2px solid var(--green);}
+  .mc-blue{border-top:2px solid var(--accent);}
+  .mc-amber{border-top:2px solid var(--orange);}
+  .mc-purple{border-top:2px solid var(--purple);}
+  .prog-wrap{margin-bottom:10px;}
+  .prog-label{display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;color:var(--muted);}
+  .prog-track{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+  .prog-bar{height:100%;border-radius:2px;}
+  .index-section{margin-bottom:36px;}
+  .index-section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .index-section-title{font-size:16px;font-weight:700;color:var(--text);}
+  .index-section-line{flex:1;height:1px;background:var(--border);}
+  .index-section-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:20px;}
+  .doc-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;text-decoration:none;color:var(--text);display:block;transition:border-color .2s;position:relative;overflow:hidden;}
+  .doc-card:hover{border-color:var(--border2);}
+  .doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+  .c1::before{background:var(--green);}
+  .c2::before{background:var(--accent);}
+  .c3::before{background:var(--gold);}
+  .c4::before{background:var(--teal);}
+  .c5::before{background:var(--red);}
+  .c6::before{background:var(--purple);}
+  .doc-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:.06em;}
+  .doc-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px;line-height:1.2;}
+  .doc-desc{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:12px;}
+  .doc-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;}
+  .arrow{position:absolute;bottom:16px;right:16px;font-size:14px;color:var(--border2);}
+  .doc-card:hover .arrow{color:var(--accent2);}
+  .kpi-badge{position:absolute;top:12px;right:12px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:10px;text-align:right;line-height:1.4;}
+  .kpi-badge strong{display:block;font-size:11px;color:var(--accent2);font-weight:700;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+  .stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+  .stat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center;min-width:100px;}
+  .stat-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--text);}
+  .stat-lbl{font-size:10px;color:var(--muted);margin-top:3px;}
+  .stat.accent .stat-num{color:var(--green);}
+  .updated{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:16px;border-top:1px solid var(--border);margin-top:8px;}
+  .index-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+  .index-nav a{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);text-decoration:none;padding:4px 12px;border:1px solid var(--border);border-radius:20px;transition:all .15s;}
+  .index-nav a:hover{border-color:var(--accent2);color:var(--accent2);}
+  .plan-card,.plan{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px 18px;}
+  .plan.featured,.plan.feat{border-color:var(--accent);border-width:2px;}
+  .plan-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+  .plan-price{font-size:32px;font-weight:800;color:var(--text);margin-bottom:4px;}
+  .plan-price span{font-size:13px;font-weight:400;color:var(--muted);}
+  .plan-target{font-size:11px;color:var(--muted);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .plan-feat{font-size:11px;color:var(--muted);padding:4px 0;display:flex;gap:6px;}
+  .plan-feat::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+  .tl-item-ph,.tl-phase-item{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:8px;}
+  .tl-sprint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent2);font-weight:700;}
+  footer.ps-footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 48px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;}
+  .pw-overlay-wrap{position:fixed;inset:0;z-index:9999;background:#0d1117;display:flex;align-items:center;justify-content:center;}
+  .pw-overlay-wrap.hidden{display:none;}
+  .pw-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:40px 36px;width:320px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;}
+  .pw-input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:14px;font-family:'JetBrains Mono',monospace;outline:none;text-align:center;letter-spacing:.2em;}
+  .pw-input:focus{border-color:var(--accent);}
+  .pw-btn{width:100%;padding:10px;border-radius:8px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;}
+  .pw-btn:hover{opacity:.85;}
+  .pw-error{font-size:12px;color:var(--red);min-height:14px;font-family:'JetBrains Mono',monospace;}
+  @media(max-width:860px){
+    .grid2,.grid3,.grid4,.kpi-grid{grid-template-columns:1fr;}
+    main{padding:24px 20px;}
+  }
+
+</style>
+</head>
 <body>
-<div class="header"><h1>💰 Modèle Commercial</h1><p>Tarification, offres et positionnement marché</p><div class="badge">v4.0 — Sprint S30 — Mars 2026</div></div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="20-pilotage-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Pilotage</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a></nav>
-<div class="container">
-<div class="section"><h2>🎯 Positionnement</h2>
-<p>PetSuite est un logiciel de gestion dédié aux <strong>professionnels animaliers</strong> en France. Il se distingue des solutions génériques (EBP, Sage) par sa spécialisation métier et des solutions sectorielles par sa couverture des 14 métiers et sa conformité NF525 native.</p></div>
-<div class="section"><h2>💰 Offres</h2>
-<div class="grid">
-  <div class="card"><h4>🌱 Essentiel</h4><p>Comportementaliste solo. Clients, animaux, séances, facturation, CRM. NF525 inclus. Sauvegarde automatique.</p></div>
-  <div class="card"><h4>🚀 Pro</h4><p>Tout Essentiel + Élevage, GED complète, export FEC, programmes suivi, tableau de bord avancé.</p></div>
-  <div class="card"><h4>🏢 Business</h4><p>Tout Pro + Multi-utilisateurs, multi-métiers, API, support prioritaire. Idéal structures avec équipe.</p></div>
-</div></div>
-<div class="section"><h2>✅ Avantages compétitifs</h2>
-<table><thead><tr><th>Critère</th><th>PetSuite</th><th>Concurrent générique</th></tr></thead><tbody>
-<tr><td>Spécialisation animaliers</td><td>✅ 14 métiers</td><td>❌ Générique</td></tr>
-<tr><td>Conformité NF 525</td><td>✅ Native S30</td><td>⚠️ Optionnelle/payante</td></tr>
-<tr><td>Export FEC conforme DGFiP</td><td>✅ Inclus</td><td>⚠️ Module payant</td></tr>
-<tr><td>Gestion races (392)</td><td>✅ 8 espèces</td><td>❌ Non</td></tr>
-<tr><td>EDC + programmes suivi</td><td>✅ Natif</td><td>❌ Non</td></tr>
-<tr><td>Prix</td><td>Compétitif</td><td>Variable</td></tr>
-</tbody></table></div>
-<div class="section"><h2>🏛️ Argument NF 525</h2>
-<div class="nf-box"><p><strong>Obligation légale depuis 2018</strong> — Amende 7 500 € renouvelable par logiciel non conforme. PetSuite est livré avec le module NF525 complet : journal inaltérable SHA-256, clôtures Z/X, 6 vues de contrôle, 4 triggers de protection. Aucun surcoût.</p></div></div></div>
-<footer>PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
-</body></html>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="icon">🐾</div>
+      <div><span>PetSuite</span><small>Algorithmia · Sprint S33</small></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Navigation</div>
+      <a class="nav-item" href="index.html"><div class="dot done"></div>🏠 — Index</a>
+      <a class="nav-item" href="01-synthese-projet.html"><div class="dot done"></div>01 — Synthèse projet</a>
+      <a class="nav-item" href="02-guide-parametrage.html"><div class="dot done"></div>02 — Guide paramétrage</a>
+      <a class="nav-item" href="03-notice-utilisateur.html"><div class="dot done"></div>03 — Notice utilisateur v4.0</a>
+      <a class="nav-item" href="06-roadmap.html"><div class="dot done"></div>06 — Roadmap sprints</a>
+      <a class="nav-item" href="07-audit-stack.html"><div class="dot done"></div>07 — Audit Stack</a>
+      <a class="nav-item" href="09-scenario-video.html"><div class="dot done"></div>09 — Scénarios vidéo</a>
+      <a class="nav-item" href="17-api-reference.html"><div class="dot done"></div>17 — API Reference</a>
+      <a class="nav-item" href="26-changelog-S33.html"><div class="dot done"></div>26 — Changelog S33</a>
+      <a class="nav-item" href="27-investisseurs.html"><div class="dot done"></div>27 — 🔒 Investisseurs</a>
+      <a class="nav-item" href="99_Business_Plan.html"><div class="dot done"></div>99 — 🔒 Business Plan</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Stack technique</div>
+      <a class="nav-item" href="#"><div class="dot done"></div>BDD 65+ tables · 20+ triggers</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>API 90+ routes custom</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>Next.js 15 · 101 fichiers</a>
+      <a class="nav-item" href="#"><div class="dot wip"></div>NF525 · Élevage · Templates</a>
+    </div>
+  </aside>
+  <main>
+    <nav class="breadcrumb">
+      <a href="index.html">PetSuite</a>
+      <span>/</span>
+      <a href="index.html">docs</a>
+      <span>/</span>
+      <span>Modèle commercial & licences SEPA</span>
+    </nav>
+<main>
+    <nav class="breadcrumb">
+      <a href="index.html">PetSuite</a>
+      <span>/</span>
+      <a href="index.html">docs</a>
+      <span>/</span>
+      <span>Modèle commercial & licences SEPA</span>
+    </nav>
+<div class="hero">
+  <div class="hero-tag">Modèle commercial — Document vivant</div>
+  <h1>Licences & <em>SEPA</em></h1>
+  <p class="hero-sub">Modèle commercial complet de PetSuite — BDD plateforme, workflow de souscription, intégration paiement SEPA, cycle de vie contrat et gestion des données post-résiliation.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-num">6 mois</div><div class="kpi-lbl">Engagement minimum</div></div>
+    <div class="kpi"><div class="kpi-num">SEPA</div><div class="kpi-lbl">Prélèvement mensuel</div></div>
+    <div class="kpi"><div class="kpi-num">5 ans</div><div class="kpi-lbl">Rétention légale</div></div>
+    <div class="kpi"><div class="kpi-num">8</div><div class="kpi-lbl">Tables BDD plateforme</div></div>
+    <div class="kpi"><div class="kpi-num">20k</div><div class="kpi-lbl">Clients cibles (10 ans)</div></div>
+  </div>
+</div>
+
+
+
+
+<div class="main">
+
+<!-- 01 VUE D'ENSEMBLE -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">Vue d'ensemble</span></div>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">💳</div>Modèle d'abonnement</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Mode</span><span class="item-val">Prélèvement mensuel automatique SEPA</span></div>
+        <div class="item"><span class="item-label">Engagement</span><span class="item-val">6 mois minimum — non résiliable avant terme</span></div>
+        <div class="item"><span class="item-label">Après engagement</span><span class="item-val">Résiliable à tout moment (préavis 1 mois conseillé)</span></div>
+        <div class="item"><span class="item-label">Renouvellement</span><span class="item-val">Tacite reconduction mensuelle après les 6 mois</span></div>
+        <div class="item"><span class="item-label">Suspension</span><span class="item-val">Accès bloqué après 2 prélèvements échoués</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🏗</div>Architecture plateforme</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">BDD plateforme</span><span class="item-val">Séparée de la BDD métier — gère tous les tenants</span></div>
+        <div class="item"><span class="item-label">BDD métier</span><span class="item-val">Un schema MariaDB par société (isolation totale)</span></div>
+        <div class="item"><span class="item-label">GED</span><span class="item-val">Un bucket S3 par société</span></div>
+        <div class="item"><span class="item-label">Shard registry</span><span class="item-val">Table tenant_shard → résolution host/schema</span></div>
+        <div class="item"><span class="item-label">Provisionnement</span><span class="item-val">Automatique à la souscription validée</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">📋</div>CGV & légal</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">CGV</span><span class="item-val">Snapshot horodaté à chaque signature — immuable</span></div>
+        <div class="item"><span class="item-label">Nouvelle version CGV</span><span class="item-val">Notification J-30 + re-acceptation obligatoire</span></div>
+        <div class="item"><span class="item-label">Rétention données</span><span class="item-val">5 ans après résiliation (L123-22 Code commerce)</span></div>
+        <div class="item"><span class="item-label">RGPD</span><span class="item-val">Export données sur demande sous 30 jours</span></div>
+        <div class="item"><span class="item-label">Hébergement</span><span class="item-val">Données en France — certifiable HDS si besoin</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 BDD PLATEFORME -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">BDD plateforme — structure complète</span></div>
+  <div class="alert alert-info" style="margin-bottom:20px;">Base de données distincte de micro_logiciel — gère l'ensemble des sociétés clientes. Nom suggéré : <code>petsuite_platform</code>. Accessible uniquement depuis le service d'API plateforme, jamais depuis les API tenant.</div>
+
+  <!-- tenant -->
+  <div class="subsection" id="s2-tenant">
+    <div class="subsection-title">Table tenant</div>
+    <div class="schema-table">
+      <div class="schema-table-header"><span class="tname">tenant</span><span class="tdesc">Société cliente — identité et statut</span></div>
+      <div class="schema-field"><div class="sf-name sf-pk">tenant_id</div><div class="sf-type">VARCHAR(20)</div><div class="sf-desc">PK — identifiant unique ex: tenant_0042 (séquentiel auto)</div></div>
+      <div class="schema-field"><div class="sf-name">ten_raison_sociale</div><div class="sf-type">VARCHAR(150)</div><div class="sf-desc">Raison sociale officielle</div></div>
+      <div class="schema-field"><div class="sf-name">ten_siret</div><div class="sf-type">CHAR(14)</div><div class="sf-desc">SIRET — vérifié format 14 chiffres (UNIQUE)</div></div>
+      <div class="schema-field"><div class="sf-name">ten_email_admin</div><div class="sf-type">VARCHAR(150)</div><div class="sf-desc">Email de l'administrateur société — identifiant de connexion admin</div></div>
+      <div class="schema-field"><div class="sf-name">ten_sous_domaine</div><div class="sf-type">VARCHAR(80)</div><div class="sf-desc">Sous-domaine attribué (ex: cabinetmartin) → cabinetmartin.petsuite.fr (UNIQUE)</div></div>
+      <div class="schema-field"><div class="sf-name">ten_statut</div><div class="sf-type">ENUM</div><div class="sf-desc">PROVISIONNEMENT / ACTIF / SUSPENDU / RESILIE / ARCHIVE / PURGE</div></div>
+      <div class="schema-field"><div class="sf-name">ten_date_creation</div><div class="sf-type">DATETIME</div><div class="sf-desc">Date de création du tenant</div></div>
+      <div class="schema-field"><div class="sf-name">ten_date_suspension</div><div class="sf-type">DATETIME NULL</div><div class="sf-desc">Date de suspension (si applicable)</div></div>
+      <div class="schema-field"><div class="sf-name">ten_date_resiliation</div><div class="sf-type">DATETIME NULL</div><div class="sf-desc">Date effective de résiliation</div></div>
+      <div class="schema-field"><div class="sf-name">ten_date_purge_prevue</div><div class="sf-type">DATE NULL</div><div class="sf-desc">J+5 ans depuis résiliation — calculé automatiquement</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">plan_id</div><div class="sf-type">INT</div><div class="sf-desc">FK → plan — plan souscrit actuel</div></div>
+    </div>
+  </div>
+
+  <!-- contrat -->
+  <div class="subsection" id="s2-contrat">
+    <div class="subsection-title">Table contrat</div>
+    <div class="schema-table">
+      <div class="schema-table-header"><span class="tname">contrat</span><span class="tdesc">Contrat de licence — snapshot CGV + engagement</span></div>
+      <div class="schema-field"><div class="sf-name sf-pk">contrat_id</div><div class="sf-type">INT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">tenant_id</div><div class="sf-type">VARCHAR(20)</div><div class="sf-desc">FK → tenant</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">plan_id</div><div class="sf-type">INT</div><div class="sf-desc">FK → plan souscrit au moment de la signature</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">cgv_id</div><div class="sf-type">INT</div><div class="sf-desc">FK → cgv_version — version CGV acceptée (snapshot immuable)</div></div>
+      <div class="schema-field"><div class="sf-name">con_numero</div><div class="sf-type">VARCHAR(20)</div><div class="sf-desc">Numéro contrat — ex: CTR-2503-0001 (UNIQUE)</div></div>
+      <div class="schema-field"><div class="sf-name">con_date_signature</div><div class="sf-type">DATETIME</div><div class="sf-desc">Date/heure de signature électronique — horodatage serveur</div></div>
+      <div class="schema-field"><div class="sf-name">con_date_debut</div><div class="sf-type">DATE</div><div class="sf-desc">Date de début de facturation</div></div>
+      <div class="schema-field"><div class="sf-name">con_date_fin_engagement</div><div class="sf-type">DATE</div><div class="sf-desc">con_date_debut + 6 mois — non résiliable avant</div></div>
+      <div class="schema-field"><div class="sf-name">con_montant_mensuel</div><div class="sf-type">DECIMAL(10,2)</div><div class="sf-desc">Montant TTC mensuel figé à la signature</div></div>
+      <div class="schema-field"><div class="sf-name">con_statut</div><div class="sf-type">ENUM</div><div class="sf-desc">ACTIF / SUSPENDU / RESILIE / ARCHIVE</div></div>
+      <div class="schema-field"><div class="sf-name">con_ip_signature</div><div class="sf-type">VARCHAR(45)</div><div class="sf-desc">IP du signataire (traçabilité légale)</div></div>
+      <div class="schema-field"><div class="sf-name">con_cgv_texte_snapshot</div><div class="sf-type">LONGTEXT</div><div class="sf-desc">Texte complet CGV au moment de la signature — copie immuable</div></div>
+    </div>
+  </div>
+
+  <!-- plan -->
+  <div class="subsection" id="s2-plan">
+    <div class="subsection-title">Table plan</div>
+    <div class="schema-table">
+      <div class="schema-table-header"><span class="tname">plan</span><span class="tdesc">Offres commerciales disponibles</span></div>
+      <div class="schema-field"><div class="sf-name sf-pk">plan_id</div><div class="sf-type">INT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
+      <div class="schema-field"><div class="sf-name">plan_code</div><div class="sf-type">VARCHAR(30)</div><div class="sf-desc">Code unique ex: SOLO, CABINET, MULTI (UNIQUE)</div></div>
+      <div class="schema-field"><div class="sf-name">plan_libelle</div><div class="sf-type">VARCHAR(100)</div><div class="sf-desc">Nom commercial affiché</div></div>
+      <div class="schema-field"><div class="sf-name">plan_prix_mensuel_ht</div><div class="sf-type">DECIMAL(10,2)</div><div class="sf-desc">Prix HT mensuel</div></div>
+      <div class="schema-field"><div class="sf-name">plan_prix_mensuel_ttc</div><div class="sf-type">DECIMAL(10,2)</div><div class="sf-desc">Prix TTC mensuel (affiché client)</div></div>
+      <div class="schema-field"><div class="sf-name">plan_nb_users_max</div><div class="sf-type">INT</div><div class="sf-desc">Nombre max d'utilisateurs (0 = illimité)</div></div>
+      <div class="schema-field"><div class="sf-name">plan_quota_ged_go</div><div class="sf-type">INT</div><div class="sf-desc">Quota GED en Go inclus</div></div>
+      <div class="schema-field"><div class="sf-name">plan_modules_json</div><div class="sf-type">JSON</div><div class="sf-desc">Modules inclus ex: {"crm":true,"ged":true,"stock":false}</div></div>
+      <div class="schema-field"><div class="sf-name">plan_url_video_gif</div><div class="sf-type">JSON NULL</div><div class="sf-desc">URLs CDN des vidéos GIF par module ex: {"seances":"https://cdn.../seances.gif"}</div></div>
+      <div class="schema-field"><div class="sf-name">plan_actif</div><div class="sf-type">TINYINT(1)</div><div class="sf-desc">1 = commercialisé / 0 = retiré (existants conservés)</div></div>
+    </div>
+  </div>
+
+  <!-- mandat_sepa -->
+  <div class="subsection" id="s2-mandat">
+    <div class="subsection-title">Table mandat_sepa</div>
+    <div class="schema-table">
+      <div class="schema-table-header"><span class="tname">mandat_sepa</span><span class="tdesc">Mandat de prélèvement SEPA B2B</span></div>
+      <div class="schema-field"><div class="sf-name sf-pk">mandat_id</div><div class="sf-type">INT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">tenant_id</div><div class="sf-type">VARCHAR(20)</div><div class="sf-desc">FK → tenant</div></div>
+      <div class="schema-field"><div class="sf-name">man_reference</div><div class="sf-type">VARCHAR(35)</div><div class="sf-desc">Référence unique mandat SEPA — générée par GoCardless/Stripe (UNIQUE)</div></div>
+      <div class="schema-field"><div class="sf-name">man_iban</div><div class="sf-type">VARCHAR(34)</div><div class="sf-desc">IBAN (chiffré en base — AES-256)</div></div>
+      <div class="schema-field"><div class="sf-name">man_bic</div><div class="sf-type">VARCHAR(11)</div><div class="sf-desc">BIC</div></div>
+      <div class="schema-field"><div class="sf-name">man_titulaire</div><div class="sf-type">VARCHAR(150)</div><div class="sf-desc">Nom du titulaire du compte</div></div>
+      <div class="schema-field"><div class="sf-name">man_statut</div><div class="sf-type">ENUM</div><div class="sf-desc">PENDING / ACTIF / SUSPENDU / ANNULE</div></div>
+      <div class="schema-field"><div class="sf-name">man_date_signature</div><div class="sf-type">DATETIME</div><div class="sf-desc">Date de signature du mandat</div></div>
+      <div class="schema-field"><div class="sf-name">man_provider_id</div><div class="sf-type">VARCHAR(100)</div><div class="sf-desc">ID mandat chez le prestataire SEPA (GoCardless mandate_id / Stripe setup_intent_id)</div></div>
+      <div class="schema-field"><div class="sf-name">man_actif</div><div class="sf-type">TINYINT(1)</div><div class="sf-desc">1 = mandat en cours d'utilisation</div></div>
+    </div>
+    <div class="alert alert-warn">L'IBAN doit être chiffré en base (AES-256 via clé applicative) — jamais stocké en clair. Seuls les 4 derniers chiffres sont affichés en interface.</div>
+  </div>
+
+  <!-- prelevement -->
+  <div class="subsection" id="s2-prelev">
+    <div class="subsection-title">Table prelevement</div>
+    <div class="schema-table">
+      <div class="schema-table-header"><span class="tname">prelevement</span><span class="tdesc">Historique de chaque tentative de prélèvement</span></div>
+      <div class="schema-field"><div class="sf-name sf-pk">prelev_id</div><div class="sf-type">BIGINT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">tenant_id</div><div class="sf-type">VARCHAR(20)</div><div class="sf-desc">FK → tenant</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">mandat_id</div><div class="sf-type">INT</div><div class="sf-desc">FK → mandat_sepa utilisé</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">contrat_id</div><div class="sf-type">INT</div><div class="sf-desc">FK → contrat concerné</div></div>
+      <div class="schema-field"><div class="sf-name">pre_periode</div><div class="sf-type">CHAR(7)</div><div class="sf-desc">Période facturée ex: 2026-03</div></div>
+      <div class="schema-field"><div class="sf-name">pre_montant</div><div class="sf-type">DECIMAL(10,2)</div><div class="sf-desc">Montant TTC prélevé</div></div>
+      <div class="schema-field"><div class="sf-name">pre_date_echeance</div><div class="sf-type">DATE</div><div class="sf-desc">Date prévue du prélèvement</div></div>
+      <div class="schema-field"><div class="sf-name">pre_date_execution</div><div class="sf-type">DATETIME NULL</div><div class="sf-desc">Date effective d'exécution par la banque</div></div>
+      <div class="schema-field"><div class="sf-name">pre_statut</div><div class="sf-type">ENUM</div><div class="sf-desc">PLANIFIE / SOUMIS / OK / ECHOUE / REMBOURSE / ANNULE</div></div>
+      <div class="schema-field"><div class="sf-name">pre_provider_id</div><div class="sf-type">VARCHAR(100)</div><div class="sf-desc">ID paiement chez le prestataire SEPA</div></div>
+      <div class="schema-field"><div class="sf-name">pre_motif_echec</div><div class="sf-type">VARCHAR(255) NULL</div><div class="sf-desc">Motif retourné par la banque en cas d'échec</div></div>
+      <div class="schema-field"><div class="sf-name">pre_tentative_num</div><div class="sf-type">INT</div><div class="sf-desc">Numéro de tentative (1, 2…) — suspension déclenchée à 2</div></div>
+    </div>
+  </div>
+
+  <!-- cgv_version -->
+  <div class="subsection" id="s2-cgv">
+    <div class="subsection-title">Table cgv_version</div>
+    <div class="schema-table">
+      <div class="schema-table-header"><span class="tname">cgv_version</span><span class="tdesc">Versions successives des CGV</span></div>
+      <div class="schema-field"><div class="sf-name sf-pk">cgv_id</div><div class="sf-type">INT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
+      <div class="schema-field"><div class="sf-name">cgv_version</div><div class="sf-type">VARCHAR(10)</div><div class="sf-desc">Numéro de version ex: 1.0, 1.1, 2.0 (UNIQUE)</div></div>
+      <div class="schema-field"><div class="sf-name">cgv_date_publication</div><div class="sf-type">DATE</div><div class="sf-desc">Date de mise en vigueur</div></div>
+      <div class="schema-field"><div class="sf-name">cgv_date_notification</div><div class="sf-type">DATE NULL</div><div class="sf-desc">Date d'envoi des notifications J-30 aux clients actifs</div></div>
+      <div class="schema-field"><div class="sf-name">cgv_texte_complet</div><div class="sf-type">LONGTEXT</div><div class="sf-desc">Texte intégral des CGV</div></div>
+      <div class="schema-field"><div class="sf-name">cgv_hash_sha256</div><div class="sf-type">CHAR(64)</div><div class="sf-desc">Empreinte SHA-256 du texte — preuve d'intégrité</div></div>
+      <div class="schema-field"><div class="sf-name">cgv_actuelle</div><div class="sf-type">TINYINT(1)</div><div class="sf-desc">1 = version en vigueur (une seule à 1 simultanément)</div></div>
+    </div>
+  </div>
+
+  <!-- tenant_shard -->
+  <div class="subsection" id="s2-shard">
+    <div class="subsection-title">Tables complémentaires</div>
+    <div class="grid2">
+      <div class="schema-table">
+        <div class="schema-table-header"><span class="tname">tenant_shard</span><span class="tdesc">Registre de routage BDD</span></div>
+        <div class="schema-field"><div class="sf-name sf-pk">tenant_id</div><div class="sf-type">VARCHAR(20)</div><div class="sf-desc">PK = FK → tenant</div></div>
+        <div class="schema-field"><div class="sf-name">shard_host</div><div class="sf-type">VARCHAR(100)</div><div class="sf-desc">Hostname du serveur MariaDB</div></div>
+        <div class="schema-field"><div class="sf-name">shard_port</div><div class="sf-type">INT</div><div class="sf-desc">Port (défaut 3306)</div></div>
+        <div class="schema-field"><div class="sf-name">schema_name</div><div class="sf-type">VARCHAR(100)</div><div class="sf-desc">Nom du schema ex: micro_logiciel_tenant_0042</div></div>
+      </div>
+      <div class="schema-table">
+        <div class="schema-table-header"><span class="tname">audit_plateforme</span><span class="tdesc">Journal super admin</span></div>
+        <div class="schema-field"><div class="sf-name sf-pk">aud_id</div><div class="sf-type">BIGINT</div><div class="sf-desc">PK auto</div></div>
+        <div class="schema-field"><div class="sf-name sf-fk">tenant_id</div><div class="sf-type">VARCHAR(20) NULL</div><div class="sf-desc">Tenant concerné si applicable</div></div>
+        <div class="schema-field"><div class="sf-name">aud_action</div><div class="sf-type">VARCHAR(50)</div><div class="sf-desc">PROVISIONNING / SUSPENSION / RESILIATION / CGV_UPDATE…</div></div>
+        <div class="schema-field"><div class="sf-name">aud_detail</div><div class="sf-type">JSON NULL</div><div class="sf-desc">Détail de l'action</div></div>
+        <div class="schema-field"><div class="sf-name">aud_date</div><div class="sf-type">DATETIME</div><div class="sf-desc">Horodatage</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 WORKFLOW SOUSCRIPTION -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">Workflow de souscription</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">📋</div>Étapes du parcours</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Formulaire prospect</div>
+            <div class="flow-step-desc">Saisie : raison sociale, SIRET, email admin, sous-domaine souhaité, plan choisi. Vérification SIRET format + unicité.</div>
+            <span class="flow-step-tag tag-manual">Manuel</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Affichage & acceptation CGV</div>
+            <div class="flow-step-desc">Présentation de la version CGV en vigueur. Checkbox obligatoire + horodatage serveur. IP client enregistrée.</div>
+            <span class="flow-step-tag tag-manual">Manuel</span> <span class="flow-step-tag tag-legal">Légal</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Saisie IBAN + signature mandat SEPA</div>
+            <div class="flow-step-desc">Formulaire IBAN/BIC/titulaire. Envoi à GoCardless ou Stripe pour création du mandat. Référence mandat retournée et stockée.</div>
+            <span class="flow-step-tag tag-manual">Manuel</span> <span class="flow-step-tag tag-system">Système</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Création contrat en base</div>
+            <div class="flow-step-desc">INSERT dans contrat (snapshot CGV, dates, montant figé). Génération numéro CTR-YYMM-0001. tenant_id créé.</div>
+            <span class="flow-step-tag tag-auto">Auto</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">5</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Provisionnement automatique tenant</div>
+            <div class="flow-step-desc">Création schema MariaDB + migration Flyway. Création bucket S3 GED. Configuration DNS sous-domaine + SSL Let's Encrypt. Enregistrement dans tenant_shard.</div>
+            <span class="flow-step-tag tag-auto">Auto</span> <span class="flow-step-tag tag-system">Système</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">6</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Création compte admin société</div>
+            <div class="flow-step-desc">Insertion utilisateur rôle ADMIN dans le schema tenant. Email de bienvenue avec lien de première connexion (48h).</div>
+            <span class="flow-step-tag tag-auto">Auto</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">7</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Premier prélèvement J+1</div>
+            <div class="flow-step-desc">Prélèvement soumis le lendemain de la souscription. Statut tenant → ACTIF dès confirmation bancaire (délai 2–5 jours ouvrés SEPA).</div>
+            <span class="flow-step-tag tag-auto">Auto</span> <span class="flow-step-tag tag-system">Système</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-title"><div class="card-icon icon-blue">🔄</div>Cycle de prélèvement mensuel</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-step-num">J-3</div>
+            <div class="flow-step-body">
+              <div class="flow-step-title">Email de notification</div>
+              <div class="flow-step-desc">Email automatique au client : montant à venir, date, IBAN utilisé (4 derniers chiffres).</div>
+              <span class="flow-step-tag tag-auto">Auto</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-num">J</div>
+            <div class="flow-step-body">
+              <div class="flow-step-title">Soumission prélèvement</div>
+              <div class="flow-step-desc">INSERT prelevement statut PLANIFIE → appel API GoCardless/Stripe → statut SOUMIS.</div>
+              <span class="flow-step-tag tag-auto">Auto</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-num">J+2 à J+5</div>
+            <div class="flow-step-body">
+              <div class="flow-step-title">Webhook confirmation</div>
+              <div class="flow-step-desc">Réception webhook → statut OK ou ECHOUE. Mise à jour prelevement + audit_plateforme.</div>
+              <span class="flow-step-tag tag-system">Système</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-teal">📅</div>Calendrier engagement</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">J0 — Souscription</span><span class="item-val">Contrat créé, provisionnement lancé</span></div>
+          <div class="item"><span class="item-label">J0 à M+6</span><span class="item-val">Période d'engagement — résiliation impossible</span></div>
+          <div class="item"><span class="item-label">M+6</span><span class="item-val">Fin engagement — résiliable à tout moment</span></div>
+          <div class="item"><span class="item-label">Résiliation + 1 mois</span><span class="item-val">Dernier prélèvement — accès lecture seule</span></div>
+          <div class="item"><span class="item-label">Résiliation + 3 mois</span><span class="item-val">Fermeture accès — export disponible sur demande</span></div>
+          <div class="item"><span class="item-label">Résiliation + 5 ans</span><span class="item-val">Purge automatique (script planifié)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 INTEGRATION SEPA -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">Intégration SEPA</span></div>
+
+  <div class="subsection" id="s4-choix">
+    <div class="subsection-title">Comparatif GoCardless vs Stripe SEPA</div>
+    <div class="compare-grid">
+      <div class="compare-card recommended">
+        <div class="compare-badge">Recommandé</div>
+        <div class="compare-title">GoCardless</div>
+        <div class="compare-sub">Spécialiste prélèvements récurrents</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Spécialité</span><span class="item-val">100% dédié aux prélèvements SEPA récurrents</span></div>
+          <div class="item"><span class="item-label">Frais</span><span class="item-val">~1% + 0,20€ / transaction — plafond négociable</span></div>
+          <div class="item"><span class="item-label">Mandat SEPA B2B</span><span class="item-val">Natif — délais de remboursement réduits (B2B)</span></div>
+          <div class="item"><span class="item-label">Webhooks</span><span class="item-val">Très complets — statuts granulaires (paid, failed, cancelled…)</span></div>
+          <div class="item"><span class="item-label">Dashboard</span><span class="item-val">Interface dédiée gestion mandats + exports</span></div>
+          <div class="item"><span class="item-label">Intégration</span><span class="item-val">API REST + bibliothèques Node.js officielles</span></div>
+          <div class="item"><span class="item-label">Inconvénient</span><span class="item-val">Pas de gestion carte bancaire — SEPA uniquement</span></div>
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="compare-title">Stripe SEPA Debit</div>
+        <div class="compare-sub">Solution tout-en-un</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Spécialité</span><span class="item-val">Multi-moyens de paiement (CB + SEPA + virement)</span></div>
+          <div class="item"><span class="item-label">Frais</span><span class="item-val">0,8% plafonné à 6€ / transaction</span></div>
+          <div class="item"><span class="item-label">Mandat SEPA</span><span class="item-val">Via SetupIntent — processus légèrement plus complexe</span></div>
+          <div class="item"><span class="item-label">Webhooks</span><span class="item-val">Bons — event payment_intent.succeeded/failed</span></div>
+          <div class="item"><span class="item-label">Dashboard</span><span class="item-val">Dashboard Stripe complet — déjà utilisé pour portail client</span></div>
+          <div class="item"><span class="item-label">Intégration</span><span class="item-val">SDK Node.js mature — déjà intégré dans le projet</span></div>
+          <div class="item"><span class="item-label">Avantage</span><span class="item-val">Unification avec Stripe portail client existant</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-info" style="margin-top:12px;"><strong>Recommandation :</strong> GoCardless pour la plateforme SaaS (spécialisé, frais compétitifs à volume, SEPA B2B natif). Stripe reste utilisé pour le portail client (paiement CB one-shot). Les deux peuvent coexister.</div>
+  </div>
+
+  <div class="subsection" id="s4-mandat">
+    <div class="subsection-title">Flux technique mandat & prélèvement (GoCardless)</div>
+    <div class="code">
+<span class="cm">// 1. Création mandat à la souscription</span>
+<span class="ct">POST</span> https://api.gocardless.com/redirect_flows
+{
+  "session_token": <span class="cv">"uuid_session"</span>,
+  "success_redirect_url": <span class="ck">"https://app.petsuite.fr/souscription/confirmation"</span>,
+  "prefilled_customer": { "email": <span class="cv">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91f2fdf8f4ffe5d1e2fef2f8f4e5f4bff7e3">[email&#160;protected]</a>"</span>, "company_name": <span class="cv">"Cabinet Martin"</span> }
+}
+<span class="cm">// → redirect_url renvoyée → client saisit IBAN sur page GoCardless</span>
+
+<span class="cm">// 2. Confirmation (webhook redirect_flows/completed)</span>
+<span class="ct">POST</span> https://api.gocardless.com/redirect_flows/:id/actions/complete
+<span class="cm">// → mandate_id retourné → stocker dans mandat_sepa.man_provider_id</span>
+
+<span class="cm">// 3. Prélèvement mensuel (cron J de chaque mois)</span>
+<span class="ct">POST</span> https://api.gocardless.com/payments
+{
+  "amount": <span class="cv">4900</span>,  <span class="cm">// en centimes</span>
+  "currency": <span class="ck">"EUR"</span>,
+  "links": { "mandate": <span class="cv">"MD_XXXXXXXX"</span> },
+  "description": <span class="ck">"PetSuite - Abonnement Mars 2026"</span>
+}
+<span class="cm">// → payment_id → stocker dans prelevement.pre_provider_id</span>
+
+<span class="cm">// 4. Webhooks à écouter</span>
+payments.paid_out      <span class="cm">→ statut OK</span>
+payments.failed        <span class="cm">→ statut ECHOUE + motif + incrémenter tentative_num</span>
+payments.charged_back  <span class="cm">→ statut REMBOURSE + alerte super admin</span>
+    </div>
+  </div>
+
+  <div class="subsection" id="s4-echecs">
+    <div class="subsection-title">Gestion automatique des échecs de prélèvement</div>
+    <div class="card">
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">1er échec — J+1</div>
+            <div class="flow-step-desc">Webhook payments.failed reçu. Statut prelevement → ECHOUE. Email automatique au client : "Votre prélèvement a échoué — régularisez sous 7 jours." pre_tentative_num = 1. Accès normal maintenu.</div>
+            <span class="flow-step-tag tag-auto">Auto</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Nouvelle tentative — J+8</div>
+            <div class="flow-step-desc">Si non régularisé sous 7 jours : second prélèvement soumis automatiquement. Email de relance envoyé.</div>
+            <span class="flow-step-tag tag-auto">Auto</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">2e échec — suspension</div>
+            <div class="flow-step-desc">pre_tentative_num = 2. Statut tenant → SUSPENDU. Accès application → lecture seule uniquement. Email client : "Accès suspendu — mettez à jour votre IBAN ou régularisez." Alerte super admin.</div>
+            <span class="flow-step-tag tag-auto">Auto</span> <span class="flow-step-tag tag-legal">Légal</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Réactivation</div>
+            <div class="flow-step-desc">Client saisit nouveau mandat SEPA OU règle l'arriéré par virement. Super admin valide manuellement → statut tenant → ACTIF. Nouveau prélèvement planifié.</div>
+            <span class="flow-step-tag tag-manual">Manuel</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">5</div>
+          <div class="flow-step-body">
+            <div class="flow-step-title">Sans régularisation J+30</div>
+            <div class="flow-step-desc">Mise en demeure par email. Résiliation d'office si l'engagement de 6 mois est atteint. Dans l'engagement : suspension maintenue jusqu'à la fin des 6 mois.</div>
+            <span class="flow-step-tag tag-legal">Légal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 PLANS -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">Plans & tarification</span></div>
+  <div class="alert alert-warn" style="margin-bottom:16px;">Les prix ci-dessous sont indicatifs — à définir selon l'étude de marché. La structure BDD supporte n'importe quelle grille tarifaire.</div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Plan</th><th>Code</th><th>Utilisateurs</th><th>GED</th><th>Modules inclus</th><th>Prix TTC/mois</th></tr></thead>
+      <tbody>
+        <tr><td>Solo</td><td><span style="font-family:'DM Mono',monospace;font-size:11px;">SOLO</span></td><td>1 utilisateur</td><td>5 Go</td><td>Animaux · Séances · Devis · Factures · GED</td><td>À définir</td></tr>
+        <tr><td>Cabinet</td><td><span style="font-family:'DM Mono',monospace;font-size:11px;">CABINET</span></td><td>5 utilisateurs</td><td>20 Go</td><td>Tout Solo + CRM + Programmes suivi</td><td>À définir</td></tr>
+        <tr><td>Multi</td><td><span style="font-family:'DM Mono',monospace;font-size:11px;">MULTI</span></td><td>Illimité</td><td>100 Go</td><td>Tout Cabinet + Stock + Achats + Bilan</td><td>À définir</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid2" style="margin-top:14px;">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">💡</div>Options supplémentaires</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">GED étendue</span><span class="item-val">+N Go/mois — facturation au Go supplémentaire</span></div>
+        <div class="item"><span class="item-label">Utilisateurs sup.</span><span class="item-val">+N€/utilisateur/mois au-delà du plafond plan</span></div>
+        <div class="item"><span class="item-label">Signature Yousign</span><span class="item-val">Optionnel — facturation à l'acte ou forfait mensuel</span></div>
+        <div class="item"><span class="item-label">Formation</span><span class="item-val">Session de prise en main à distance — one-shot</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📊</div>Projection revenus (indicatif)</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">500 clients</span><span class="item-val">MRR = 500 × prix moyen</span></div>
+        <div class="item"><span class="item-label">5 000 clients</span><span class="item-val">MRR = 5 000 × prix moyen</span></div>
+        <div class="item"><span class="item-label">20 000 clients</span><span class="item-val">MRR = 20 000 × prix moyen</span></div>
+        <div class="item"><span class="item-label">Churn target</span><span class="item-val">&lt; 2% / mois (engagement 6 mois aide)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 CYCLE DE VIE -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">Cycle de vie contrat</span></div>
+  <div class="status-flow" style="margin-bottom:20px;">
+    <div class="status-box">Prospect</div>
+    <div class="status-arrow">→</div>
+    <div class="status-box s-active">PROVISIONNEMENT</div>
+    <div class="status-arrow">→</div>
+    <div class="status-box s-active">ACTIF</div>
+    <div class="status-arrow">→</div>
+    <div class="status-box s-warn">SUSPENDU</div>
+    <div class="status-arrow">→</div>
+    <div class="status-box s-danger">RÉSILIÉ</div>
+    <div class="status-arrow">→</div>
+    <div class="status-box s-gray">ARCHIVÉ</div>
+    <div class="status-arrow">→</div>
+    <div class="status-box s-gray">PURGÉ</div>
+  </div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Statut</th><th>Déclencheur</th><th>Accès application</th><th>Données</th><th>Prélèvement</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill pill-blue">PROVISIONNEMENT</span></td><td>Souscription validée</td><td>Non (en cours)</td><td>Schema créé</td><td>J+1 premier prélèvement</td></tr>
+        <tr><td><span class="pill pill-ok">ACTIF</span></td><td>1er prélèvement OK</td><td>Complet selon plan</td><td>Actives</td><td>Mensuel auto</td></tr>
+        <tr><td><span class="pill pill-wip">SUSPENDU</span></td><td>2e échec prélèvement</td><td>Lecture seule</td><td>Actives (lecture)</td><td>Suspendu</td></tr>
+        <tr><td><span class="pill pill-todo">RÉSILIÉ</span></td><td>Demande client / défaut</td><td>Lecture seule 3 mois</td><td>Actives (lecture)</td><td>Dernier mois puis stop</td></tr>
+        <tr><td><span class="pill pill-gray">ARCHIVÉ</span></td><td>J+3 mois post-résiliation</td><td>Aucun</td><td>Cold storage</td><td>Aucun</td></tr>
+        <tr><td><span class="pill pill-gray">PURGÉ</span></td><td>J+5 ans post-résiliation</td><td>Aucun</td><td>Supprimées définitivement</td><td>Aucun</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 07 PROVISIONNEMENT -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Provisionnement automatique tenant</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">⚡</div>Séquence de création</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-body"><div class="flow-step-title">Génération tenant_id</div><div class="flow-step-desc">Sequential : tenant_0001, tenant_0002… Insertion dans table tenant (statut PROVISIONNEMENT).</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-body"><div class="flow-step-title">Création schema MariaDB</div><div class="flow-step-desc">CREATE DATABASE micro_logiciel_{tenant_id}. Application migrations Flyway. Insertion dans tenant_shard.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-body"><div class="flow-step-title">Création bucket S3 GED</div><div class="flow-step-desc">Bucket petsuite-ged-{tenant_id}. Politique cycle de vie hot/warm/cold. Chiffrement SSE-S3.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-body"><div class="flow-step-title">DNS + SSL</div><div class="flow-step-desc">{sous_domaine}.petsuite.fr → reverse proxy. Certificat Let's Encrypt auto via Traefik.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">5</div>
+          <div class="flow-step-body"><div class="flow-step-title">Compte admin société</div><div class="flow-step-desc">INSERT utilisateur (email_admin, rôle ADMIN) dans le schema tenant. Email bienvenue avec lien 48h.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">6</div>
+          <div class="flow-step-body"><div class="flow-step-title">Statut → ACTIF</div><div class="flow-step-desc">Une fois le premier prélèvement confirmé par webhook : tenant.ten_statut → ACTIF.</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-title"><div class="card-icon icon-blue">💻</div>Commandes CLI</div>
+        <div class="code" style="margin:0;">
+<span class="cm"># Créer un nouveau tenant</span>
+node tenant-cli.js create \
+  --id=<span class="cv">tenant_0042</span> \
+  --siret=<span class="ck">12345678901234</span> \
+  --admin=<span class="ck"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="82e7efe3ebeec2f1ede1ebe7f6e7ace4f0">[email&#160;protected]</a></span> \
+  --plan=<span class="ck">CABINET</span>
+
+<span class="cm"># Vérifier l'état</span>
+node tenant-cli.js status <span class="cv">tenant_0042</span>
+
+<span class="cm"># Appliquer migrations (MAJ produit)</span>
+node tenant-cli.js migrate-all
+
+<span class="cm"># Suspendre</span>
+node tenant-cli.js suspend <span class="cv">tenant_0042</span>
+
+<span class="cm"># Archiver (J+3 mois post-résiliation)</span>
+node tenant-cli.js archive <span class="cv">tenant_0042</span>
+
+<span class="cm"># Purge (J+5 ans — IRRÉVERSIBLE)</span>
+node tenant-cli.js purge <span class="cv">tenant_0042</span> --confirm
+        </div>
+      </div>
+      <div class="alert alert-danger">La commande purge est irréversible. Vérifier ten_date_purge_prevue avant exécution. Logger l'action dans audit_plateforme.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 CGV -->
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">Gestion des CGV versionnées</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">📄</div>Principe</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Snapshot immuable</span><span class="item-val">Texte complet CGV copié dans contrat.con_cgv_texte_snapshot à la signature — ne change jamais</span></div>
+        <div class="item"><span class="item-label">Hash SHA-256</span><span class="item-val">Empreinte calculée sur le texte — preuve d'intégrité</span></div>
+        <div class="item"><span class="item-label">Nouvelle version</span><span class="item-val">Créer une nouvelle ligne cgv_version — pas de modification de l'existante</span></div>
+        <div class="item"><span class="item-label">Version active</span><span class="item-val">Un seul enregistrement avec cgv_actuelle = 1</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">📬</div>Processus de mise à jour CGV</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-body"><div class="flow-step-title">Rédaction nouvelle version</div><div class="flow-step-desc">INSERT cgv_version (cgv_actuelle = 0). Hash SHA-256 calculé. Date publication future définie.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-body"><div class="flow-step-title">Notification J-30</div><div class="flow-step-desc">Email à tous les tenants ACTIF : "Nos CGV évolueront le [date]." Lien vers nouvelles CGV.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-body"><div class="flow-step-title">Application</div><div class="flow-step-desc">À la date de publication : cgv_actuelle = 1 pour la nouvelle, 0 pour l'ancienne.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <div class="flow-step-body"><div class="flow-step-title">Re-acceptation obligatoire</div><div class="flow-step-desc">À la prochaine connexion admin : modal d'acceptation bloquant. Nouveau snapshot enregistré dans contrat.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 09 POST-RESILIATION -->
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><span class="section-title">Gestion post-résiliation</span></div>
+  <div class="tbl-wrap" style="margin-bottom:16px;">
+    <table class="tbl">
+      <thead><tr><th>Période</th><th>Action automatique</th><th>Accès client</th><th>BDD</th><th>GED</th></tr></thead>
+      <tbody>
+        <tr><td>J (résiliation)</td><td>Statut RÉSILIÉ · dernier prélèvement planifié</td><td>Lecture seule complète</td><td>Active (lecture)</td><td>Hot</td></tr>
+        <tr><td>J+1 mois</td><td>Dernier prélèvement exécuté</td><td>Lecture seule</td><td>Active (lecture)</td><td>Hot</td></tr>
+        <tr><td>J+3 mois</td><td>Statut ARCHIVÉ · fermeture accès · email export</td><td>Export sur demande uniquement (super admin)</td><td>Snapshot chiffré</td><td>Hot → Warm</td></tr>
+        <tr><td>J+12 mois</td><td>Suppression instance active · cold storage GED</td><td>Aucun</td><td>Archive chiffrée</td><td>Warm → Cold (Glacier)</td></tr>
+        <tr><td>J+5 ans</td><td>Purge définitive (script cron)</td><td>Aucun</td><td>Supprimée</td><td>Supprimée (Glacier)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-red">⚖️</div>Obligation légale</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Base légale</span><span class="item-val">Article L123-22 du Code de commerce — 5 ans</span></div>
+        <div class="item"><span class="item-label">Données concernées</span><span class="item-val">Factures, règlements, FEC — toutes pièces comptables</span></div>
+        <div class="item"><span class="item-label">Stockage</span><span class="item-val">S3 Glacier (cold) — coût minimal — non accessible en ligne</span></div>
+        <div class="item"><span class="item-label">Restauration</span><span class="item-val">3 à 12h depuis Glacier si demande légale ou client</span></div>
+        <div class="item"><span class="item-label">Chiffrement</span><span class="item-val">AES-256 — clé de chiffrement rotative annuelle</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📦</div>Procédure export données client</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-body"><div class="flow-step-title">Demande client (RGPD ou post-résiliation)</div><div class="flow-step-desc">Email à <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="20535550504f52546050455453554954450e4652">[email&#160;protected]</a> — vérification identité (email admin du contrat).</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-body"><div class="flow-step-title">Restauration snapshot</div><div class="flow-step-desc">Restauration sur environnement isolé temporaire. Si Glacier : délai 3–12h.</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-body"><div class="flow-step-title">Génération export</div><div class="flow-step-desc">Export CSV métier + archive ZIP GED. Lien de téléchargement sécurisé (72h). Délai légal : 30 jours.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 10 DROITS -->
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">10</span><span class="section-title">Droits utilisateurs par société</span></div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Rôle</th><th>Périmètre</th><th>Paramétrage</th><th>Facturation</th><th>MFA</th></tr></thead>
+      <tbody>
+        <tr><td>Super admin</td><td>Toutes sociétés — plateforme complète</td><td><span class="pill pill-ok">Tout</span></td><td><span class="pill pill-ok">Tout</span></td><td><span class="pill pill-todo">Obligatoire</span></td></tr>
+        <tr><td>Admin société</td><td>Sa société — configuration complète</td><td><span class="pill pill-ok">Tout</span></td><td><span class="pill pill-blue">Lecture</span></td><td><span class="pill pill-todo">Obligatoire</span></td></tr>
+        <tr><td>Manager</td><td>Modules attribués — lecture/écriture</td><td><span class="pill pill-gray">Non</span></td><td><span class="pill pill-gray">Non</span></td><td><span class="pill pill-wip">Recommandé</span></td></tr>
+        <tr><td>Salarié</td><td>Modules attribués — usage standard</td><td><span class="pill pill-gray">Non</span></td><td><span class="pill pill-gray">Non</span></td><td><span class="pill pill-gray">Optionnel</span></td></tr>
+        <tr><td>Lecture seule</td><td>Consultation uniquement</td><td><span class="pill pill-gray">Non</span></td><td><span class="pill pill-gray">Non</span></td><td><span class="pill pill-gray">Non requis</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 11 CHECKLIST -->
+<div class="section" id="s11">
+  <div class="section-header"><span class="section-num">11</span><span class="section-title">Checklist mise en production commerciale</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🏗</div>Infrastructure</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Choix hébergeur</span><span class="item-val"><span class="pill pill-todo">TODO</span> OVH / Hetzner / AWS — région FR obligatoire</span></div>
+        <div class="item"><span class="item-label">BDD plateforme</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer petsuite_platform + tables</span></div>
+        <div class="item"><span class="item-label">Shard MariaDB initial</span><span class="item-val"><span class="pill pill-todo">TODO</span> Premier serveur shard configuré</span></div>
+        <div class="item"><span class="item-label">Bucket S3</span><span class="item-val"><span class="pill pill-todo">TODO</span> Configuration + politiques cycle de vie</span></div>
+        <div class="item"><span class="item-label">DNS wildcard</span><span class="item-val"><span class="pill pill-todo">TODO</span> *.petsuite.fr → reverse proxy</span></div>
+        <div class="item"><span class="item-label">SSL auto</span><span class="item-val"><span class="pill pill-todo">TODO</span> Traefik + Let's Encrypt wildcard</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">💳</div>SEPA & légal</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Compte GoCardless</span><span class="item-val"><span class="pill pill-todo">TODO</span> Ouverture compte + vérification KYB</span></div>
+        <div class="item"><span class="item-label">Intégration API SEPA</span><span class="item-val"><span class="pill pill-todo">TODO</span> Webhooks + gestion echecs</span></div>
+        <div class="item"><span class="item-label">CGV v1.0</span><span class="item-val"><span class="pill pill-todo">TODO</span> Rédaction + validation juridique</span></div>
+        <div class="item"><span class="item-label">Mentions légales</span><span class="item-val"><span class="pill pill-todo">TODO</span> Site vitrine + application</span></div>
+        <div class="item"><span class="item-label">RGPD</span><span class="item-val"><span class="pill pill-todo">TODO</span> Registre traitements + DPA hébergeur</span></div>
+        <div class="item"><span class="item-label">Chiffrement IBAN</span><span class="item-val"><span class="pill pill-todo">TODO</span> Clé AES-256 + KMS</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">📱</div>Produit</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Page souscription</span><span class="item-val"><span class="pill pill-todo">TODO</span> Formulaire + IBAN + CGV</span></div>
+        <div class="item"><span class="item-label">CLI provisionnement</span><span class="item-val"><span class="pill pill-todo">TODO</span> tenant-cli.js complet</span></div>
+        <div class="item"><span class="item-label">Portail super admin</span><span class="item-val"><span class="pill pill-todo">TODO</span> Dashboard tenants + KPIs MRR</span></div>
+        <div class="item"><span class="item-label">Emails transactionnels</span><span class="item-val"><span class="pill pill-todo">TODO</span> Bienvenue / Echec / Suspension / Résiliation</span></div>
+        <div class="item"><span class="item-label">Script purge</span><span class="item-val"><span class="pill pill-todo">TODO</span> Cron + vérification date légale</span></div>
+        <div class="item"><span class="item-label">Nom commercial</span><span class="item-val"><span class="pill pill-wip">EN COURS</span> Décision finale sur "PetSuite"</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">📊</div>Commercial</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Grille tarifaire</span><span class="item-val"><span class="pill pill-todo">TODO</span> Plans SOLO / CABINET / MULTI + prix</span></div>
+        <div class="item"><span class="item-label">Site vitrine</span><span class="item-val"><span class="pill pill-todo">TODO</span> Landing page + vidéos GIF modules</span></div>
+        <div class="item"><span class="item-label">Vidéos GIF</span><span class="item-val"><span class="pill pill-wip">EN COURS</span> Scénario prêt — tournage à planifier</span></div>
+        <div class="item"><span class="item-label">Clients bêta</span><span class="item-val"><span class="pill pill-todo">TODO</span> 5–10 comportementalistes testeurs</span></div>
+        <div class="item"><span class="item-label">Support</span><span class="item-val"><span class="pill pill-todo">TODO</span> Email support + bas
+  </main>
+</div>
+  </main>
+</div>
+<footer class="ps-footer">
+  <span>🐾 PetSuite · Algorithmia</span>
+  <span>Sprint S33 · 18/03/2026 · Document interne</span>
+</footer>
+</body>
+</html>

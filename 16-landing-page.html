@@ -1,46 +1,1054 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Landing Page</title><style>:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
-.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
-.header h1{font-size:2.5rem;font-weight:800;color:#fff;}.header p{color:var(--accent2);margin-top:8px;}
-.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
-.container{max-width:1100px;margin:0 auto;padding:32px;}.section{margin-bottom:40px;}
-.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
-.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
-.section p{color:var(--text2);margin-bottom:10px;}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
-.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:8px;}.card p,.card li{font-size:.875rem;color:var(--text2);}
-ul{list-style:none;padding:0;}li{padding:3px 0;display:flex;gap:6px;}li::before{content:'→';color:var(--accent);flex-shrink:0;}
-table{width:100%;border-collapse:collapse;margin:12px 0;}
-th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
-td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}tr:hover td{background:var(--surface);}
-.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.nf-box{background:rgba(16,185,129,.08);border-left:3px solid #10b981;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);}
-.new{background:var(--green);color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;vertical-align:middle;}
-footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}</style></head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Le logiciel des comportementalistes canins</title>
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg:        #0d1117;
+    --bg2:       #161b22;
+    --bg3:       #21262d;
+    --border:    #30363d;
+    --border2:   #3d4450;
+    --text:      #e6edf3;
+    --muted:     #8b949e;
+    --accent:    #2f81f7;
+    --accent2:   #58a6ff;
+    --green:     #3fb950;
+    --green2:    #238636;
+    --orange:    #d29922;
+    --orange2:   #b08800;
+    --red:       #f85149;
+    --purple:    #bc8cff;
+    --teal:      #39d353;
+    --gold:      #e3b341;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo .icon {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .sidebar-logo span { font-size: 13px; font-weight: 700; color: var(--text); }
+  .sidebar-logo small { display: block; font-size: 10px; color: var(--muted); font-weight: 400; }
+
+  .nav-section { margin-bottom: 20px; }
+  .nav-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0 20px 8px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 20px;
+    font-size: 13px; color: var(--muted);
+    cursor: pointer; text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active {
+    background: rgba(47,129,247,.12);
+    color: var(--accent2);
+    border-left: 2px solid var(--accent);
+  }
+  .nav-item .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border2); flex-shrink: 0;
+  }
+  .nav-item.active .dot, .nav-item .dot.done { background: var(--green); }
+  .nav-item .dot.wip { background: var(--gold); }
+  .nav-item .dot.current { background: var(--accent); box-shadow: 0 0 0 3px rgba(47,129,247,.25); }
+
+  /* ── Main ── */
+  main { padding: 40px 48px; max-width: 960px; }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 28px;
+  }
+  .breadcrumb a { color: var(--accent2); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { color: var(--border2); }
+
+  /* ── Page header ── */
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sprint-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(47,129,247,.15);
+    border: 1px solid rgba(47,129,247,.35);
+    color: var(--accent2);
+    font-size: 11px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 10px; border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: .06em;
+  }
+  .sprint-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  h1 {
+    font-size: 26px; font-weight: 800; color: var(--text);
+    line-height: 1.25; margin-bottom: 8px;
+  }
+  .page-meta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .page-meta span { display: flex; align-items: center; gap: 5px; }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .05em;
+  }
+  .status-pill.planning {
+    background: rgba(210,153,34,.12);
+    border: 1px solid rgba(210,153,34,.4);
+    color: var(--gold);
+  }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── Alert NF525 ── */
+  .alert {
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .alert.warn {
+    background: rgba(210,153,34,.1);
+    border: 1px solid rgba(210,153,34,.35);
+  }
+  .alert.info {
+    background: rgba(47,129,247,.08);
+    border: 1px solid rgba(47,129,247,.25);
+  }
+  .alert-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
+  .alert-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .alert.warn .alert-title { color: var(--gold); }
+  .alert.info .alert-title { color: var(--accent2); }
+  .alert p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* ── Cards grid ── */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: var(--border2); }
+  .card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 6px; }
+  .card-value { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .card-sub { font-size: 12px; color: var(--muted); }
+  .card-value.green { color: var(--green); }
+  .card-value.gold { color: var(--gold); }
+  .card-value.accent { color: var(--accent2); }
+
+  /* ── Conformité progress ── */
+  .compliance-grid {
+    display: grid; gap: 10px;
+    margin-bottom: 24px;
+  }
+  .compliance-row {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 28px 1fr auto 80px;
+    gap: 12px;
+    align-items: center;
+  }
+  .compliance-row .check {
+    width: 26px; height: 26px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .check.done  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .check.todo  { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .check.wip   { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
+  .check.crit  { background: rgba(248,81,73,.12); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+
+  .compliance-row .cr-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .compliance-row .cr-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .compliance-row .cr-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .06em;
+    padding: 3px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+  .cr-tag.done   { background: rgba(63,185,80,.15); color: var(--green); }
+  .cr-tag.todo   { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .cr-tag.wip    { background: rgba(210,153,34,.12); color: var(--gold); }
+  .cr-tag.crit   { background: rgba(248,81,73,.12); color: var(--red); }
+  .compliance-row .cr-bar { height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+  .cr-fill { height: 100%; border-radius: 2px; transition: width .5s; }
+  .cr-fill.green { background: var(--green); }
+  .cr-fill.gold  { background: var(--gold); }
+  .cr-fill.blue  { background: var(--accent); }
+  .cr-fill.red   { background: var(--red); }
+
+  /* ── User stories table ── */
+  .us-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .us-table th {
+    text-align: left; padding: 10px 14px;
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+  .us-table td {
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text);
+  }
+  .us-table tr:hover td { background: rgba(255,255,255,.02); }
+  .us-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: var(--accent2);
+    white-space: nowrap;
+  }
+  .us-points {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--purple);
+    text-align: center;
+  }
+  .prio-pill {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .04em;
+  }
+  .prio-pill.crit { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .prio-pill.high { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
+  .prio-pill.med  { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
+
+  .assignee {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+  }
+  .avatar {
+    width: 20px; height: 20px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .av-dba  { background: #8957e5; }
+  .av-dev  { background: #2f81f7; }
+  .av-fe   { background: #d29922; }
+  .av-dir  { background: #3fb950; }
+
+  /* ── Fichiers livrables ── */
+  .file-list { display: grid; gap: 8px; }
+  .file-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+    transition: border-color .2s;
+    cursor: pointer;
+  }
+  .file-item:hover { border-color: var(--accent2); }
+  .file-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
+  .file-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent2); }
+  .file-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .file-size { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
+  .file-status {
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .file-status.ready { background: rgba(63,185,80,.12); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .file-status.pending { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+
+  /* ── Dépendances ── */
+  .dep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dep-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .dep-card .dep-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .dep-card .dep-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .dep-badge {
+    font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+  }
+  .dep-badge.blocker { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .dep-badge.info    { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
+
+  /* ── Timeline sprint ── */
+  .timeline { display: grid; gap: 0; margin-bottom: 4px; }
+  .tl-week {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tl-week:last-child { border-bottom: none; }
+  .tl-label { font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding-top: 2px; }
+  .tl-items { display: flex; flex-direction: column; gap: 4px; }
+  .tl-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 12px; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tl-item .tl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tl-item.sql  .tl-dot { background: var(--purple); }
+  .tl-item.api  .tl-dot { background: var(--accent); }
+  .tl-item.front .tl-dot { background: var(--gold); }
+  .tl-item.test .tl-dot { background: var(--green); }
+  .tl-item.doc  .tl-dot { background: var(--muted); }
+  .tl-item.prod .tl-dot { background: var(--red); }
+
+  /* ── Checklist technique ── */
+  .checklist { display: grid; gap: 6px; }
+  .cl-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--text);
+    padding: 8px 12px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .cl-check {
+    width: 18px; height: 18px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+  }
+  .cl-check.ok  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .cl-check.no  { background: var(--bg3); border: 1px solid var(--border); color: transparent; }
+  .cl-item code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--purple);
+    background: rgba(188,140,255,.1);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ── Scroll animation ── */
+  .section { animation: fadeUp .4s ease both; }
+  .section:nth-child(2) { animation-delay: .05s; }
+  .section:nth-child(3) { animation-delay: .1s; }
+  .section:nth-child(4) { animation-delay: .15s; }
+  .section:nth-child(5) { animation-delay: .2s; }
+  .section:nth-child(6) { animation-delay: .25s; }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(12px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    main { padding: 24px 20px; }
+    .cards { grid-template-columns: 1fr 1fr; }
+    .dep-grid { grid-template-columns: 1fr; }
+    .page-header { grid-template-columns: 1fr; }
+  }
+
+
+  /* ── Compat classes existantes ── */
+  .hero{background:var(--bg2);padding:40px 48px 32px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .hero-tag{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+  .hero h1{font-size:28px;font-weight:800;color:var(--text);line-height:1.15;margin-bottom:8px;}
+  .hero h1 em{font-style:italic;color:var(--accent2);}
+  .hero-sub{font-size:13px;color:var(--muted);max-width:600px;line-height:1.6;}
+  .container{padding:32px 48px 80px;max-width:960px;}
+  .section{margin-bottom:36px;}
+  .section-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .section-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .section-title{font-size:16px;font-weight:700;color:var(--text);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+  .card:hover{border-color:var(--border2);}
+  .card-title{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:var(--text);}
+  .card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+  .ci-green,.icon-green{background:rgba(63,185,80,.12);color:var(--green);}
+  .ci-blue,.icon-blue{background:rgba(47,129,247,.1);color:var(--accent2);}
+  .ci-amber,.icon-gold,.icon-amber{background:rgba(210,153,34,.12);color:var(--gold);}
+  .ci-red,.icon-red{background:rgba(248,81,73,.1);color:var(--red);}
+  .ci-purple,.icon-purple{background:rgba(188,140,255,.1);color:var(--purple);}
+  .ci-teal,.icon-teal{background:rgba(57,211,83,.1);color:var(--teal);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);}
+  .item:last-child{border-bottom:none;padding-bottom:0;}
+  .item-label,.item-lbl{font-size:12px;font-weight:600;color:var(--text);min-width:150px;flex-shrink:0;}
+  .item-val,.item-value{font-size:12px;color:var(--muted);line-height:1.4;}
+  .item-list{display:flex;flex-direction:column;}
+  .subsection{margin-bottom:24px;}
+  .subsection-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;padding-left:10px;border-left:2px solid var(--accent);}
+  .pill,.tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;font-family:'JetBrains Mono',monospace;}
+  .p-green,.pill-green,.tag-green{background:rgba(63,185,80,.12);color:var(--green);border:1px solid rgba(63,185,80,.25);}
+  .p-amber,.pill-amber,.tag-gold,.p-gold{background:rgba(210,153,34,.12);color:var(--gold);border:1px solid rgba(210,153,34,.25);}
+  .p-blue,.pill-blue,.tag-blue{background:rgba(47,129,247,.1);color:var(--accent2);border:1px solid rgba(47,129,247,.25);}
+  .p-red,.pill-red,.tag-red{background:rgba(248,81,73,.1);color:var(--red);border:1px solid rgba(248,81,73,.25);}
+  .p-gray,.pill-gray,.tag-teal{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+  .p-purple,.pill-purple,.tag-purple{background:rgba(188,140,255,.1);color:var(--purple);border:1px solid rgba(188,140,255,.25);}
+  .callout{border-left:3px solid var(--accent);background:rgba(47,129,247,.08);padding:13px 17px;border-radius:0 6px 6px 0;font-size:12px;color:var(--muted);margin:12px 0;border:1px solid rgba(47,129,247,.2);border-left:3px solid var(--accent);}
+  .callout.amber{border-left-color:var(--orange);background:rgba(210,153,34,.08);}
+  .callout.blue{border-left-color:var(--accent2);background:rgba(47,129,247,.08);}
+  .callout.red{border-left-color:var(--red);background:rgba(248,81,73,.08);}
+  .callout strong{color:var(--text);}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg2);}
+  td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;color:var(--text);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+  .tw{overflow-x:auto;margin-bottom:4px;}
+  code,.code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--purple);}
+  .code-block,.code-box{background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+  .kpi-grid,.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;}
+  .kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+  .kpi-num,.kpi-value{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .kpi-lbl,.kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .kpi-card.highlight .kpi-num{color:var(--green);}
+  .check-list{display:flex;flex-direction:column;gap:5px;}
+  .check-item{font-size:12px;color:var(--muted);display:flex;gap:7px;align-items:flex-start;line-height:1.4;}
+  .check-item::before{content:'→';color:var(--accent2);font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+  .check-item.done::before{content:'✓';color:var(--green);}
+  .check-item.wip::before{content:'⏳';}
+  .module-card,.mcard{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;border-top:2px solid var(--accent);}
+  .module-feat{font-size:11px;color:var(--muted);margin-bottom:3px;display:flex;gap:6px;align-items:flex-start;}
+  .module-feat::before{content:'–';color:var(--muted);flex-shrink:0;}
+  .roadmap-phase,.tl-phase{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:10px;display:flex;gap:16px;align-items:flex-start;}
+  .phase-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+  .phase-done{background:rgba(63,185,80,.15);color:var(--green);}
+  .phase-current,.phase-wip{background:rgba(210,153,34,.12);color:var(--gold);}
+  .phase-planned{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+  .phase-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .phase-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+  .kanban-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;}
+  .kanban-card.urgent{border-left:3px solid var(--red);}
+  .kanban-card-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .kanban-card-sub{font-size:11px;color:var(--muted);line-height:1.4;}
+  .kanban-card-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+  .mcard-num{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .mcard-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .mcard-sub{font-size:11px;color:var(--muted);margin-top:6px;}
+  .mc-green{border-top:2px solid var(--green);}
+  .mc-blue{border-top:2px solid var(--accent);}
+  .mc-amber{border-top:2px solid var(--orange);}
+  .mc-purple{border-top:2px solid var(--purple);}
+  .prog-wrap{margin-bottom:10px;}
+  .prog-label{display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;color:var(--muted);}
+  .prog-track{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+  .prog-bar{height:100%;border-radius:2px;}
+  .index-section{margin-bottom:36px;}
+  .index-section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .index-section-title{font-size:16px;font-weight:700;color:var(--text);}
+  .index-section-line{flex:1;height:1px;background:var(--border);}
+  .index-section-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:20px;}
+  .doc-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;text-decoration:none;color:var(--text);display:block;transition:border-color .2s;position:relative;overflow:hidden;}
+  .doc-card:hover{border-color:var(--border2);}
+  .doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+  .c1::before{background:var(--green);}
+  .c2::before{background:var(--accent);}
+  .c3::before{background:var(--gold);}
+  .c4::before{background:var(--teal);}
+  .c5::before{background:var(--red);}
+  .c6::before{background:var(--purple);}
+  .doc-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:.06em;}
+  .doc-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px;line-height:1.2;}
+  .doc-desc{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:12px;}
+  .doc-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;}
+  .arrow{position:absolute;bottom:16px;right:16px;font-size:14px;color:var(--border2);}
+  .doc-card:hover .arrow{color:var(--accent2);}
+  .kpi-badge{position:absolute;top:12px;right:12px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:10px;text-align:right;line-height:1.4;}
+  .kpi-badge strong{display:block;font-size:11px;color:var(--accent2);font-weight:700;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+  .stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+  .stat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center;min-width:100px;}
+  .stat-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--text);}
+  .stat-lbl{font-size:10px;color:var(--muted);margin-top:3px;}
+  .stat.accent .stat-num{color:var(--green);}
+  .updated{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:16px;border-top:1px solid var(--border);margin-top:8px;}
+  .index-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+  .index-nav a{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);text-decoration:none;padding:4px 12px;border:1px solid var(--border);border-radius:20px;transition:all .15s;}
+  .index-nav a:hover{border-color:var(--accent2);color:var(--accent2);}
+  .plan-card,.plan{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px 18px;}
+  .plan.featured,.plan.feat{border-color:var(--accent);border-width:2px;}
+  .plan-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+  .plan-price{font-size:32px;font-weight:800;color:var(--text);margin-bottom:4px;}
+  .plan-price span{font-size:13px;font-weight:400;color:var(--muted);}
+  .plan-target{font-size:11px;color:var(--muted);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .plan-feat{font-size:11px;color:var(--muted);padding:4px 0;display:flex;gap:6px;}
+  .plan-feat::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+  .tl-item-ph,.tl-phase-item{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:8px;}
+  .tl-sprint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent2);font-weight:700;}
+  footer.ps-footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 48px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;}
+  .pw-overlay-wrap{position:fixed;inset:0;z-index:9999;background:#0d1117;display:flex;align-items:center;justify-content:center;}
+  .pw-overlay-wrap.hidden{display:none;}
+  .pw-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:40px 36px;width:320px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;}
+  .pw-input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:14px;font-family:'JetBrains Mono',monospace;outline:none;text-align:center;letter-spacing:.2em;}
+  .pw-input:focus{border-color:var(--accent);}
+  .pw-btn{width:100%;padding:10px;border-radius:8px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;}
+  .pw-btn:hover{opacity:.85;}
+  .pw-error{font-size:12px;color:var(--red);min-height:14px;font-family:'JetBrains Mono',monospace;}
+  @media(max-width:860px){
+    .grid2,.grid3,.grid4,.kpi-grid{grid-template-columns:1fr;}
+    main{padding:24px 20px;}
+  }
+
+</style>
+</head>
 <body>
-<div class="header"><h1>🌐 Landing Page</h1><p>Site commercial PetSuite — positionnement et contenu</p><div class="badge">v4.0 — Sprint S30 — Mars 2026</div></div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="20-pilotage-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Pilotage</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a></nav>
-<div class="container">
-<div class="section"><h2>🌐 Objectif du site</h2>
-<p>La landing page PetSuite est un site commercial one-page présentant la solution aux professionnels animaliers. Elle intègre un formulaire de contact qui alimente directement le CRM (leads entrants).</p></div>
-<div class="section"><h2>📄 Structure de la page</h2>
-<div class="grid">
-  <div class="card"><h4>Hero</h4><p>"Le logiciel pensé pour les professionnels animaliers." CTA : Demander une démo. QR Code partage.</p></div>
-  <div class="card"><h4>14 métiers</h4><p>Grille des 14 métiers couverts avec icônes. Message : "Votre activité, notre logiciel."</p></div>
-  <div class="card"><h4>Fonctionnalités clés</h4><p>Clients &amp; Animaux, Séances &amp; Programmes, Facturation &amp; NF525, CRM, FEC.</p></div>
-  <div class="card"><h4>Conformité</h4><p>Section dédiée NF525 + FEC + RGPD. Rassurance légale pour les prospects.</p></div>
-  <div class="card"><h4>Formulaire contact</h4><p>Nom, email, téléphone, métier, message. Envoi → CRM (crm_lead via API).</p></div>
-  <div class="card"><h4>Footer</h4><p>Liens RGPD, mentions légales, © micro_logiciel.</p></div>
-</div></div>
-<div class="section"><h2>🔗 Intégration CRM</h2>
-<div class="highlight"><p>Le formulaire de contact de la landing page est connecté à l'API via <code>POST /ged-formulaire-lead</code>. Chaque soumission crée un lead dans <code>crm_lead</code> avec source = WEB et statut = NOUVEAU.</p></div></div>
-<div class="section"><h2>🏛️ Section NF 525 sur la landing page</h2>
-<div class="nf-box"><p>Message recommandé : "PetSuite est conforme NF 525 (Art. 88 LF2016) — Journal de caisse inaltérable SHA-256, clôtures Z journalières, 0 amende possible." Logo ou badge de conformité à ajouter.</p></div></div></div>
-<footer>PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
-</body></html>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="icon">🐾</div>
+      <div><span>PetSuite</span><small>Algorithmia · Sprint S33</small></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Navigation</div>
+      <a class="nav-item" href="index.html"><div class="dot done"></div>🏠 — Index</a>
+      <a class="nav-item" href="01-synthese-projet.html"><div class="dot done"></div>01 — Synthèse projet</a>
+      <a class="nav-item" href="02-guide-parametrage.html"><div class="dot done"></div>02 — Guide paramétrage</a>
+      <a class="nav-item" href="03-notice-utilisateur.html"><div class="dot done"></div>03 — Notice utilisateur v4.0</a>
+      <a class="nav-item" href="06-roadmap.html"><div class="dot done"></div>06 — Roadmap sprints</a>
+      <a class="nav-item" href="07-audit-stack.html"><div class="dot done"></div>07 — Audit Stack</a>
+      <a class="nav-item" href="09-scenario-video.html"><div class="dot done"></div>09 — Scénarios vidéo</a>
+      <a class="nav-item" href="17-api-reference.html"><div class="dot done"></div>17 — API Reference</a>
+      <a class="nav-item" href="26-changelog-S33.html"><div class="dot done"></div>26 — Changelog S33</a>
+      <a class="nav-item" href="27-investisseurs.html"><div class="dot done"></div>27 — 🔒 Investisseurs</a>
+      <a class="nav-item" href="99_Business_Plan.html"><div class="dot done"></div>99 — 🔒 Business Plan</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Stack technique</div>
+      <a class="nav-item" href="#"><div class="dot done"></div>BDD 65+ tables · 20+ triggers</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>API 90+ routes custom</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>Next.js 15 · 101 fichiers</a>
+      <a class="nav-item" href="#"><div class="dot wip"></div>NF525 · Élevage · Templates</a>
+    </div>
+  </aside>
+  <main>
+    <nav class="breadcrumb">
+      <a href="index.html">PetSuite</a>
+      <span>/</span>
+      <a href="index.html">docs</a>
+      <span>/</span>
+      <span>Le logiciel des comportementalistes canins</span>
+    </nav>
+<main>
+    <nav class="breadcrumb">
+      <a href="index.html">PetSuite</a>
+      <span>/</span>
+      <a href="index.html">docs</a>
+      <span>/</span>
+      <span>Le logiciel des comportementalistes canins</span>
+    </nav>
+<!-- NAV -->
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">Conçu pour les comportementalistes canins</div>
+      <h1>Votre cabinet,<br><em>organisé.</em></h1>
+      <p class="hero-sub">PetSuite centralise vos clients, animaux, études comportementales, séances, devis et factures en un seul outil. Fini les tableurs.</p>
+      <div class="hero-ctas">
+        <a href="#essai" class="btn-primary">Commencer l'essai gratuit →</a>
+        <a href="#fonctionnalites" class="btn-ghost">Voir les fonctionnalités</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">14</div>
+          <div class="hero-stat-lbl">Critères CAC</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-lbl">Export FEC certifié</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">5 min</div>
+          <div class="hero-stat-lbl">Pour démarrer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APP MOCKUP -->
+    <div class="hero-mockup">
+      <div class="mockup-window">
+        <div class="mockup-titlebar">
+          <div class="mockup-dot mockup-dot-r"></div>
+          <div class="mockup-dot mockup-dot-y"></div>
+          <div class="mockup-dot mockup-dot-g"></div>
+          <div class="mockup-url">cabinetmartin.petsuite.fr</div>
+        </div>
+        <div class="mockup-body">
+          <div class="mockup-kpis">
+            <div class="mockup-kpi">
+              <div class="mockup-kpi-num">29</div>
+              <div class="mockup-kpi-lbl">Animaux</div>
+              <div class="mockup-kpi-delta">+3 ce mois</div>
+            </div>
+            <div class="mockup-kpi">
+              <div class="mockup-kpi-num">4 200€</div>
+              <div class="mockup-kpi-lbl">CA mars</div>
+              <div class="mockup-kpi-delta">+12%</div>
+            </div>
+            <div class="mockup-kpi">
+              <div class="mockup-kpi-num">59</div>
+              <div class="mockup-kpi-lbl">Séances</div>
+              <div class="mockup-kpi-delta">+7</div>
+            </div>
+            <div class="mockup-kpi">
+              <div class="mockup-kpi-num">3</div>
+              <div class="mockup-kpi-lbl">Devis attente</div>
+              <div class="mockup-kpi-delta" style="color:#f0c040;">À relancer</div>
+            </div>
+          </div>
+          <div class="mockup-row">
+            <div class="mockup-card">
+              <div class="mockup-card-title">ANIMAUX RÉCENTS</div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot"></div>
+                <div><div class="mockup-animal-name">Titan</div><div class="mockup-animal-sub">CAC 3/14</div><div class="mockup-bar"><div class="mockup-bar-fill" style="width:21%"></div></div></div>
+              </div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot"></div>
+                <div><div class="mockup-animal-name">Luna</div><div class="mockup-animal-sub">CAC 8/14</div><div class="mockup-bar"><div class="mockup-bar-fill" style="width:57%"></div></div></div>
+              </div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot warn"></div>
+                <div><div class="mockup-animal-name">Rex</div><div class="mockup-animal-sub">EC sans devis</div><div class="mockup-bar"><div class="mockup-bar-fill" style="width:0%"></div></div></div>
+              </div>
+            </div>
+            <div class="mockup-card">
+              <div class="mockup-card-title">PROCHAINES SÉANCES</div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot" style="background:#74c69d"></div>
+                <div><div class="mockup-animal-name">Séance suivi · Titan</div><div class="mockup-animal-sub">28/03 · 10h00</div></div>
+              </div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot" style="background:#74c69d"></div>
+                <div><div class="mockup-animal-name">EDC · Bella</div><div class="mockup-animal-sub">29/03 · 14h30</div></div>
+              </div>
+              <div class="mockup-animal">
+                <div class="mockup-animal-dot" style="background:#6080c0"></div>
+                <div><div class="mockup-animal-name">Gardiennage · Luna</div><div class="mockup-animal-sub">01/04 · 09h00</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-icon">📄</div>
+        <div class="hero-badge-text"><strong>FEC généré en 1 clic</strong>Certifié DGFiP · SHA-256</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEME -->
+<section class="section problem-section">
+  <div class="section-inner">
+    <div class="section-tag">Le quotidien du comportementaliste</div>
+    <h2 class="section-title" style="color:#fff;">Vous gérez votre cabinet<br><em>avec les mauvais outils.</em></h2>
+    <p class="section-sub">Excel pour les clients, Word pour les devis, email pour les documents, et un carnet pour les notes comportementales. Résultat : du temps perdu et des informations éparpillées.</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">📋</div>
+        <div class="pain-title">Dossiers éparpillés</div>
+        <div class="pain-desc">Fiches EC dans Word, historique CAC dans Excel, photos dans WhatsApp, factures dans un autre logiciel…</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">⏱</div>
+        <div class="pain-title">Tâches administratives chronophages</div>
+        <div class="pain-desc">Rédiger un devis, envoyer une facture, relancer un impayé — des heures par semaine volées sur le terrain.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🔢</div>
+        <div class="pain-title">Comptabilité artisanale</div>
+        <div class="pain-desc">Export FEC laborieux en fin d'année, TVA à calculer à la main, registre incomplet pour votre comptable.</div>
+      </div>
+    </div>
+    <div class="pain-arrow">↓</div>
+    <div class="solution-highlight">
+      <div class="solution-highlight-icon">🐾</div>
+      <div>
+        <div class="solution-highlight-title">PetSuite centralise tout en un seul endroit</div>
+        <div class="solution-highlight-text">Clients, animaux, études comportementales, CAC, séances, devis, factures, GED et export comptable. Un outil conçu spécifiquement pour votre métier — pas un CRM générique à adapter.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="fonctionnalites">
+  <div class="section-inner">
+    <div class="section-tag">Fonctionnalités</div>
+    <h2 class="section-title">Tout ce dont vous avez besoin,<br><em>rien de superflu.</em></h2>
+    <p class="section-sub">Conçu avec des comportementalistes canins, PetSuite couvre l'intégralité du cycle — du premier contact au bilan comptable.</p>
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🐕</div>
+        <div class="feature-title">Dossiers animaux complets</div>
+        <div class="feature-desc">Fiche animal avec puce (identifiant universel), races, historique, photo, commentaires. Tout rattaché au bon client.</div>
+        <span class="feature-badge">Puce = clé universelle</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">Étude Comportementale</div>
+        <div class="feature-desc">Formulaire structuré en 60+ champs pour vos EDC. Grille comportementale, anamnèse, problématiques — tout en un.</div>
+        <span class="feature-badge">Spécifique comportemental</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Suivi CAC</div>
+        <div class="feature-desc">14 critères d'aptitude au contact entièrement paramétrables. Score automatique et évolution graphique séance par séance.</div>
+        <span class="feature-badge">Libellés personnalisables</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📅</div>
+        <div class="feature-title">Agenda & séances</div>
+        <div class="feature-desc">Planifiez EDC, séances de suivi, gardiennage. Vue semaine avec couleurs par type. Compte-rendu directement dans la fiche.</div>
+        <span class="feature-badge">Types paramétrables</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">💶</div>
+        <div class="feature-title">Devis & facturation</div>
+        <div class="feature-desc">Générez devis et factures en un clic depuis une séance. PDF professionnel. Paiement en ligne Stripe. Export FEC certifié.</div>
+        <span class="feature-badge">Numérotation auto</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📁</div>
+        <div class="feature-title">GED & documents</div>
+        <div class="feature-desc">Stockage illimité de documents par animal, séance ou client. Carte d'identité animale PDF partageable. Partage sécurisé.</div>
+        <span class="feature-badge">Partage propriétaire</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAC SHOWCASE -->
+<section class="section cac-section" id="cac">
+  <div class="section-inner">
+    <div class="cac-inner">
+      <div>
+        <div class="section-tag">Le cœur du suivi comportemental</div>
+        <h2 class="section-title">Les 14 critères CAC,<br><em>enfin digitaux.</em></h2>
+        <p class="section-sub">Vos Critères d'Aptitude au Contact sont entièrement paramétrables. Le score est calculé automatiquement et évolue séance par séance. Partageable avec le propriétaire en un clic.</p>
+        <div class="cac-score-display">
+          <div class="cac-score-num">3<span>/14</span></div>
+          <div class="cac-score-lbl">Score actuel de Titan · Berger Allemand</div>
+          <div class="cac-progress"><div class="cac-progress-fill"></div></div>
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;">
+          <div style="font-size:13px;color:var(--fog);"><strong style="color:var(--leaf2);">✓</strong> Score calculé automatiquement</div>
+          <div style="font-size:13px;color:var(--fog);"><strong style="color:var(--leaf2);">✓</strong> Évolution graphique</div>
+          <div style="font-size:13px;color:var(--fog);"><strong style="color:var(--leaf2);">✓</strong> Libellés paramétrables</div>
+        </div>
+      </div>
+      <div>
+        <div class="cac-grid-display">
+          <div class="cac-cell ok"><div class="cac-cell-num">01</div><div class="cac-cell-check">✓</div><div class="cac-cell-label">Sociabilisation chiens</div></div>
+          <div class="cac-cell ok"><div class="cac-cell-num">02</div><div class="cac-cell-check">✓</div><div class="cac-cell-label">Marche en laisse</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">03</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Social. humains</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">04</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Mordillement</div></div>
+          <div class="cac-cell ok"><div class="cac-cell-num">05</div><div class="cac-cell-check">✓</div><div class="cac-cell-label">Rappel</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">06</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Position assise</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">07</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Couché</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">08</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Reste</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">09</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Aboiement</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">10</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Véhicule</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">11</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Seul domicile</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">12</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Propreté</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">13</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Jeu sans mordre</div></div>
+          <div class="cac-cell empty"><div class="cac-cell-num">14</div><div class="cac-cell-check">—</div><div class="cac-cell-label">Câlins</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing-section" id="pricing">
+  <div class="section-inner">
+    <div class="section-tag">Tarifs</div>
+    <h2 class="section-title">Choisissez votre formule.</h2>
+    <p class="section-sub">Engagement de 6 mois puis résiliable à tout moment. Prélèvement mensuel automatique. Données hébergées en Europe.</p>
+    <div class="pricing-grid">
+
+      <!-- SOLO -->
+      <div class="pricing-card fade-in">
+        <div class="pricing-plan">Solo</div>
+        <div class="pricing-price"><sup>€</sup>À définir<sub>/mois TTC</sub></div>
+        <div class="pricing-cadence">Prélèvement mensuel SEPA</div>
+        <div class="pricing-engagement">Engagement 6 mois · 1 utilisateur</div>
+        <div class="pricing-features">
+          <div class="pricing-feature">Clients & animaux illimités</div>
+          <div class="pricing-feature">Étude comportementale complète</div>
+          <div class="pricing-feature">Suivi CAC 14 critères</div>
+          <div class="pricing-feature">Devis & factures PDF</div>
+          <div class="pricing-feature">Export FEC certifié</div>
+          <div class="pricing-feature">GED 5 Go inclus</div>
+          <div class="pricing-feature">Portail propriétaire</div>
+          <div class="pricing-feature dim">CRM & agenda avancé</div>
+          <div class="pricing-feature dim">Utilisateurs supplémentaires</div>
+        </div>
+        <a href="#essai" class="pricing-cta">Commencer →</a>
+      </div>
+
+      <!-- CABINET -->
+      <div class="pricing-card featured fade-in">
+        <div class="pricing-popular">Le plus choisi</div>
+        <div class="pricing-plan">Cabinet</div>
+        <div class="pricing-price"><sup>€</sup>À définir<sub>/mois TTC</sub></div>
+        <div class="pricing-cadence">Prélèvement mensuel SEPA</div>
+        <div class="pricing-engagement">Engagement 6 mois · Jusqu'à 5 utilisateurs</div>
+        <div class="pricing-features">
+          <div class="pricing-feature">Tout le plan Solo</div>
+          <div class="pricing-feature">5 utilisateurs inclus</div>
+          <div class="pricing-feature">CRM complet (leads, opps, campagnes)</div>
+          <div class="pricing-feature">Programmes de suivi</div>
+          <div class="pricing-feature">GED 20 Go inclus</div>
+          <div class="pricing-feature">Agenda partagé multi-utilisateurs</div>
+          <div class="pricing-feature">Questionnaires comportementaux</div>
+          <div class="pricing-feature dim">Stock & achats fournisseurs</div>
+        </div>
+        <a href="#essai" class="pricing-cta featured">Commencer →</a>
+      </div>
+
+      <!-- MULTI -->
+      <div class="pricing-card fade-in">
+        <div class="pricing-plan">Multi</div>
+        <div class="pricing-price"><sup>€</sup>À définir<sub>/mois TTC</sub></div>
+        <div class="pricing-cadence">Prélèvement mensuel SEPA</div>
+        <div class="pricing-engagement">Engagement 6 mois · Utilisateurs illimités</div>
+        <div class="pricing-features">
+          <div class="pricing-feature">Tout le plan Cabinet</div>
+          <div class="pricing-feature">Utilisateurs illimités</div>
+          <div class="pricing-feature">Stock & achats fournisseurs</div>
+          <div class="pricing-feature">Tarification 3 méthodes</div>
+          <div class="pricing-feature">Bilan comptable PCG 2025</div>
+          <div class="pricing-feature">GED 100 Go inclus</div>
+          <div class="pricing-feature">Signature électronique Yousign</div>
+          <div class="pricing-feature">Support prioritaire</div>
+        </div>
+        <a href="#essai" class="pricing-cta">Commencer →</a>
+      </div>
+    </div>
+    <div class="pricing-note">Tous les plans incluent l'hébergement en Europe · Backup quotidien · SSL inclus · Sans engagement après 6 mois</div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section class="section" id="temoignages">
+  <div class="section-inner">
+    <div class="section-tag">Témoignages</div>
+    <h2 class="section-title">Ce qu'en disent<br><em>nos utilisateurs.</em></h2>
+    <p class="section-sub">Comportementalistes canins, éleveurs et dresseurs nous font confiance au quotidien.</p>
+    <div class="temoignages-grid">
+      <div class="temoignage fade-in">
+        <div class="temoignage-stars">★★★★★</div>
+        <div class="temoignage-text">Avant PetSuite, je passais 4 heures par semaine en administratif. Maintenant, une heure suffit. Le suivi CAC est exactement ce dont j'avais besoin pour montrer la progression à mes clients.</div>
+        <div class="temoignage-author">
+          <div class="temoignage-avatar" style="background:#2a6b44;">SM</div>
+          <div>
+            <div class="temoignage-name">Sophie M.</div>
+            <div class="temoignage-role">Comportementaliste canin — Lyon</div>
+          </div>
+        </div>
+      </div>
+      <div class="temoignage fade-in">
+        <div class="temoignage-stars">★★★★★</div>
+        <div class="temoignage-text">L'export FEC m'a économisé 3 jours de travail avec mon comptable. Toutes les écritures sont déjà dans le bon format. Et la carte d'identité animale, les propriétaires adorent.</div>
+        <div class="temoignage-author">
+          <div class="temoignage-avatar" style="background:#1d4e8f;">LR</div>
+          <div>
+            <div class="temoignage-name">Laurent R.</div>
+            <div class="temoignage-role">École canine — Bordeaux</div>
+          </div>
+        </div>
+      </div>
+      <div class="temoignage fade-in">
+        <div class="temoignage-stars">★★★★☆</div>
+        <div class="temoignage-text">J'ai tout migré depuis Excel en une journée. Le formulaire d'étude comportementale reproduit exactement ma méthode de travail. Je ne reviendrais pas en arrière.</div>
+        <div class="temoignage-author">
+          <div class="temoignage-avatar" style="background:#5b3fa0;">CB</div>
+          <div>
+            <div class="temoignage-name">Claire B.</div>
+            <div class="temoignage-role">Comportementaliste indépendante — Nantes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-section" id="faq">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="section-tag" style="display:inline-block;">Questions fréquentes</div>
+      <h2 class="section-title">Tout ce que vous<br><em>voulez savoir.</em></h2>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          PetSuite est-il réservé aux comportementalistes canins ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">PetSuite a été conçu spécifiquement pour les comportementalistes canins, mais convient à tous les professionnels du monde animal : dresseurs, éleveurs, vétérinaires comportementalistes, toiletteurs. Le module de suivi CAC est paramétrable et peut être adapté à n'importe quelle grille d'évaluation.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Mes données sont-elles en sécurité ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">Vos données sont hébergées en Europe (Allemagne) sur des serveurs dédiés, chiffrées en transit (TLS 1.3) et au repos (AES-256). Un backup chiffré est effectué chaque nuit. PetSuite est conforme au RGPD — vous restez responsable de vos données, PetSuite est votre sous-traitant. Vous pouvez exporter toutes vos données à tout moment.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Comment fonctionne l'engagement de 6 mois ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">À la souscription, vous vous engagez sur 6 mois minimum. Passé cette période, votre abonnement se renouvelle automatiquement mois par mois et est résiliable à tout moment sans frais. Le prélèvement est effectué chaque mois par virement SEPA automatique.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Puis-je migrer mes données existantes (Excel, autre logiciel) ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">Oui. PetSuite accepte l'import CSV pour les clients, animaux et articles. Pour des migrations complexes depuis un autre logiciel, contactez notre support — nous pouvons vous aider à préparer les fichiers d'import.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          L'export FEC est-il vraiment certifié ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">L'export FEC de PetSuite respecte le format DGFiP (Direction Générale des Finances Publiques) avec chaîne de hachage SHA-256 sur chaque ligne pour garantir l'intégrité. Le fichier est directement utilisable par votre comptable ou transmissible à l'administration en cas de contrôle fiscal.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          Le portail client propriétaire est-il inclus ?
+          <span class="faq-q-icon">+</span>
+        </div>
+        <div class="faq-a">Oui, tous les plans incluent le portail propriétaire. Les propriétaires de vos clients peuvent consulter le dossier de leur animal, suivre la progression CAC, télécharger la carte d'identité animale PDF et payer leurs factures en ligne. Accès par lien email sécurisé, sans création de compte.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section" id="essai">
+  <div class="cta-inner">
+    <h2 class="cta-title">Prêt à simplifier<br><em>votre cabinet ?</em></h2>
+    <p class="cta-sub">Rejoignez les comportementalistes qui ont repris le contrôle de leur administratif. Démarrez dès aujourd'hui — sans engagement immédiat.</p>
+    <div class="cta-btns">
+      <a href="/cdn-cgi/l/email-protection#84e7ebeaf0e5e7f0c4f4e1f0f7f1edf0e1aae2f6bbf7f1e6eee1e7f0b9c0e1e9e5eae0e1a4e0a3e1f7f7e5eda4d4e1f0d7f1edf0e1" class="btn-white">Demander un accès →</a>
+      <a href="/cdn-cgi/l/email-protection#d5b6babba1b4b6a195a5b0a1a6a0bca1b0fbb3a7" class="btn-outline-white">Nous contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Scroll animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAl
+  </main>
+</div>
+  </main>
+</div>
+<footer class="ps-footer">
+  <span>🐾 PetSuite · Algorithmia</span>
+  <span>Sprint S33 · 18/03/2026 · Document interne</span>
+</footer>
+</body>
+</html>

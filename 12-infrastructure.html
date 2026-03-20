@@ -1,3 +1,1360 @@
-<!DOCTYPE html> <html lang="fr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>PetSuite — Infrastructure</title> <style> :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;} *{box-sizing:border-box;margin:0;padding:0;} body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;} .header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);} .header h1{font-size:2.5rem;font-weight:800;color:#fff;} .header p{color:var(--accent2);margin-top:8px;} .badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;} .container{max-width:1100px;margin:0 auto;padding:32px;} .section{margin-bottom:40px;} .section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;} .section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;} table{width:100%;border-collapse:collapse;margin:12px 0;} th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;} td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;} code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);} pre{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;font-size:.8rem;color:var(--text2);margin:12px 0;line-height:1.8;} .highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;} .warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;} footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;} </style> </head> <body> <div class="header"> <h1>🐳 PetSuite — Infrastructure</h1> <p>Docker Compose, nginx, MariaDB, déploiement</p> <div class="badge">v4.0 — Sprint S30 — Mars 2026</div> </div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="07-audit-stack.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Audit Stack</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a></nav>
-<div class="container"> <div class="section"> <h2>🐳 Docker Compose — 3 conteneurs</h2> <div class="warn"><p>⚠️ RÈGLE ABSOLUE : <code>cd deploy</code> AVANT toute commande <code>docker compose</code>. Le fichier docker-compose.yml est dans le dossier deploy/.</p></div> <table> <thead><tr><th>Service</th><th>Image</th><th>Port</th><th>Rôle</th></tr></thead> <tbody> <tr><td><code>micro_frontend</code></td><td>node:20-alpine</td><td>3000</td><td>Next.js — 58 pages</td></tr> <tr><td><code>micro_api</code></td><td>node:20-alpine</td><td>3001</td><td>API NestJS — custom-routes.ts</td></tr> <tr><td><code>micro_nginx</code></td><td>nginx:alpine</td><td>80 (public)</td><td>Reverse proxy /api → :3001, / → :3000</td></tr> </tbody> </table> </div> <div class="section"> <h2>🗄️ MariaDB — HORS Docker</h2> <div class="highlight"><p>MariaDB 11 tourne sur la machine hôte Windows. Connexion depuis les conteneurs via IP réseau. Bases : <code>micro_logiciel</code> + <code>micro_logiciel_ged</code>.</p></div> <table> <thead><tr><th>Paramètre</th><th>Valeur</th></tr></thead> <tbody> <tr><td>Host</td><td><code>192.168.1.62</code></td></tr> <tr><td>Port</td><td><code>3307</code></td></tr> <tr><td>User applicatif</td><td><code>@lgorithme</code></td></tr> <tr><td>SSL</td><td><code>--skip-ssl</code> obligatoire</td></tr> <tr><td>mariadb-dump.exe</td><td><code>C:\ProgramData\OptimBTP\MariaDB\bin\mariadb-dump.exe</code></td></tr> </tbody> </table> </div> <div class="section"> <h2>💾 Sauvegarde automatique v5</h2> <table> <thead><tr><th>Composant</th><th>Détail</th></tr></thead> <tbody> <tr><td>Script</td><td><code>G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1</code></td></tr> <tr><td>Tâche planifiée</td><td>PetSuite_Sauvegarde — 04h00 quotidien</td></tr> <tr><td>Dump BDD</td><td><code>backup_AAAA-MM-JJ.zip</code> — 2 bases</td></tr> <tr><td>Rétention</td><td>30j BDD · 14j ZIP · 60j Logs</td></tr> <tr><td>Git</td><td>Push automatique vers github.com/nicolashermilly</td></tr> </tbody> </table> </div> <div class="section"> <h2>🌐 URLs d'accès</h2> <table> <thead><tr><th>URL</th><th>Cible</th></tr></thead> <tbody> <tr><td><code>http://localhost/</code></td><td>Application PetSuite (Next.js)</td></tr> <tr><td><code>http://localhost/api/</code></td><td>API NestJS</td></tr> <tr><td><code>http://localhost/api/dashboard/stats</code></td><td>KPIs temps réel</td></tr> <tr><td><code>http://localhost/api/animaux/races/types</code></td><td>Compteurs races par espèce</td></tr> </tbody> </table> </div> </div> <footer>PetSuite Infrastructure v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer> </body> </html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Infrastructure & Hébergement</title>
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg:        #0d1117;
+    --bg2:       #161b22;
+    --bg3:       #21262d;
+    --border:    #30363d;
+    --border2:   #3d4450;
+    --text:      #e6edf3;
+    --muted:     #8b949e;
+    --accent:    #2f81f7;
+    --accent2:   #58a6ff;
+    --green:     #3fb950;
+    --green2:    #238636;
+    --orange:    #d29922;
+    --orange2:   #b08800;
+    --red:       #f85149;
+    --purple:    #bc8cff;
+    --teal:      #39d353;
+    --gold:      #e3b341;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo .icon {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .sidebar-logo span { font-size: 13px; font-weight: 700; color: var(--text); }
+  .sidebar-logo small { display: block; font-size: 10px; color: var(--muted); font-weight: 400; }
+
+  .nav-section { margin-bottom: 20px; }
+  .nav-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0 20px 8px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 20px;
+    font-size: 13px; color: var(--muted);
+    cursor: pointer; text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active {
+    background: rgba(47,129,247,.12);
+    color: var(--accent2);
+    border-left: 2px solid var(--accent);
+  }
+  .nav-item .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border2); flex-shrink: 0;
+  }
+  .nav-item.active .dot, .nav-item .dot.done { background: var(--green); }
+  .nav-item .dot.wip { background: var(--gold); }
+  .nav-item .dot.current { background: var(--accent); box-shadow: 0 0 0 3px rgba(47,129,247,.25); }
+
+  /* ── Main ── */
+  main { padding: 40px 48px; max-width: 960px; }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 28px;
+  }
+  .breadcrumb a { color: var(--accent2); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { color: var(--border2); }
+
+  /* ── Page header ── */
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sprint-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(47,129,247,.15);
+    border: 1px solid rgba(47,129,247,.35);
+    color: var(--accent2);
+    font-size: 11px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 10px; border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: .06em;
+  }
+  .sprint-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  h1 {
+    font-size: 26px; font-weight: 800; color: var(--text);
+    line-height: 1.25; margin-bottom: 8px;
+  }
+  .page-meta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .page-meta span { display: flex; align-items: center; gap: 5px; }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .05em;
+  }
+  .status-pill.planning {
+    background: rgba(210,153,34,.12);
+    border: 1px solid rgba(210,153,34,.4);
+    color: var(--gold);
+  }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── Alert NF525 ── */
+  .alert {
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .alert.warn {
+    background: rgba(210,153,34,.1);
+    border: 1px solid rgba(210,153,34,.35);
+  }
+  .alert.info {
+    background: rgba(47,129,247,.08);
+    border: 1px solid rgba(47,129,247,.25);
+  }
+  .alert-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
+  .alert-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .alert.warn .alert-title { color: var(--gold); }
+  .alert.info .alert-title { color: var(--accent2); }
+  .alert p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* ── Cards grid ── */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: var(--border2); }
+  .card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 6px; }
+  .card-value { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .card-sub { font-size: 12px; color: var(--muted); }
+  .card-value.green { color: var(--green); }
+  .card-value.gold { color: var(--gold); }
+  .card-value.accent { color: var(--accent2); }
+
+  /* ── Conformité progress ── */
+  .compliance-grid {
+    display: grid; gap: 10px;
+    margin-bottom: 24px;
+  }
+  .compliance-row {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 28px 1fr auto 80px;
+    gap: 12px;
+    align-items: center;
+  }
+  .compliance-row .check {
+    width: 26px; height: 26px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .check.done  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .check.todo  { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .check.wip   { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
+  .check.crit  { background: rgba(248,81,73,.12); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+
+  .compliance-row .cr-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .compliance-row .cr-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .compliance-row .cr-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .06em;
+    padding: 3px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+  .cr-tag.done   { background: rgba(63,185,80,.15); color: var(--green); }
+  .cr-tag.todo   { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .cr-tag.wip    { background: rgba(210,153,34,.12); color: var(--gold); }
+  .cr-tag.crit   { background: rgba(248,81,73,.12); color: var(--red); }
+  .compliance-row .cr-bar { height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+  .cr-fill { height: 100%; border-radius: 2px; transition: width .5s; }
+  .cr-fill.green { background: var(--green); }
+  .cr-fill.gold  { background: var(--gold); }
+  .cr-fill.blue  { background: var(--accent); }
+  .cr-fill.red   { background: var(--red); }
+
+  /* ── User stories table ── */
+  .us-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .us-table th {
+    text-align: left; padding: 10px 14px;
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+  .us-table td {
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text);
+  }
+  .us-table tr:hover td { background: rgba(255,255,255,.02); }
+  .us-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: var(--accent2);
+    white-space: nowrap;
+  }
+  .us-points {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--purple);
+    text-align: center;
+  }
+  .prio-pill {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .04em;
+  }
+  .prio-pill.crit { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .prio-pill.high { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
+  .prio-pill.med  { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
+
+  .assignee {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+  }
+  .avatar {
+    width: 20px; height: 20px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .av-dba  { background: #8957e5; }
+  .av-dev  { background: #2f81f7; }
+  .av-fe   { background: #d29922; }
+  .av-dir  { background: #3fb950; }
+
+  /* ── Fichiers livrables ── */
+  .file-list { display: grid; gap: 8px; }
+  .file-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+    transition: border-color .2s;
+    cursor: pointer;
+  }
+  .file-item:hover { border-color: var(--accent2); }
+  .file-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
+  .file-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent2); }
+  .file-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .file-size { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
+  .file-status {
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .file-status.ready { background: rgba(63,185,80,.12); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .file-status.pending { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+
+  /* ── Dépendances ── */
+  .dep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dep-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .dep-card .dep-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .dep-card .dep-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .dep-badge {
+    font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+  }
+  .dep-badge.blocker { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .dep-badge.info    { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
+
+  /* ── Timeline sprint ── */
+  .timeline { display: grid; gap: 0; margin-bottom: 4px; }
+  .tl-week {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tl-week:last-child { border-bottom: none; }
+  .tl-label { font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding-top: 2px; }
+  .tl-items { display: flex; flex-direction: column; gap: 4px; }
+  .tl-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 12px; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tl-item .tl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tl-item.sql  .tl-dot { background: var(--purple); }
+  .tl-item.api  .tl-dot { background: var(--accent); }
+  .tl-item.front .tl-dot { background: var(--gold); }
+  .tl-item.test .tl-dot { background: var(--green); }
+  .tl-item.doc  .tl-dot { background: var(--muted); }
+  .tl-item.prod .tl-dot { background: var(--red); }
+
+  /* ── Checklist technique ── */
+  .checklist { display: grid; gap: 6px; }
+  .cl-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--text);
+    padding: 8px 12px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .cl-check {
+    width: 18px; height: 18px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+  }
+  .cl-check.ok  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .cl-check.no  { background: var(--bg3); border: 1px solid var(--border); color: transparent; }
+  .cl-item code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--purple);
+    background: rgba(188,140,255,.1);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ── Scroll animation ── */
+  .section { animation: fadeUp .4s ease both; }
+  .section:nth-child(2) { animation-delay: .05s; }
+  .section:nth-child(3) { animation-delay: .1s; }
+  .section:nth-child(4) { animation-delay: .15s; }
+  .section:nth-child(5) { animation-delay: .2s; }
+  .section:nth-child(6) { animation-delay: .25s; }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(12px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    main { padding: 24px 20px; }
+    .cards { grid-template-columns: 1fr 1fr; }
+    .dep-grid { grid-template-columns: 1fr; }
+    .page-header { grid-template-columns: 1fr; }
+  }
+
+
+  /* ── Compat classes existantes ── */
+  .hero{background:var(--bg2);padding:40px 48px 32px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .hero-tag{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+  .hero h1{font-size:28px;font-weight:800;color:var(--text);line-height:1.15;margin-bottom:8px;}
+  .hero h1 em{font-style:italic;color:var(--accent2);}
+  .hero-sub{font-size:13px;color:var(--muted);max-width:600px;line-height:1.6;}
+  .container{padding:32px 48px 80px;max-width:960px;}
+  .section{margin-bottom:36px;}
+  .section-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .section-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .section-title{font-size:16px;font-weight:700;color:var(--text);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+  .card:hover{border-color:var(--border2);}
+  .card-title{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:var(--text);}
+  .card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+  .ci-green,.icon-green{background:rgba(63,185,80,.12);color:var(--green);}
+  .ci-blue,.icon-blue{background:rgba(47,129,247,.1);color:var(--accent2);}
+  .ci-amber,.icon-gold,.icon-amber{background:rgba(210,153,34,.12);color:var(--gold);}
+  .ci-red,.icon-red{background:rgba(248,81,73,.1);color:var(--red);}
+  .ci-purple,.icon-purple{background:rgba(188,140,255,.1);color:var(--purple);}
+  .ci-teal,.icon-teal{background:rgba(57,211,83,.1);color:var(--teal);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);}
+  .item:last-child{border-bottom:none;padding-bottom:0;}
+  .item-label,.item-lbl{font-size:12px;font-weight:600;color:var(--text);min-width:150px;flex-shrink:0;}
+  .item-val,.item-value{font-size:12px;color:var(--muted);line-height:1.4;}
+  .item-list{display:flex;flex-direction:column;}
+  .subsection{margin-bottom:24px;}
+  .subsection-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;padding-left:10px;border-left:2px solid var(--accent);}
+  .pill,.tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;font-family:'JetBrains Mono',monospace;}
+  .p-green,.pill-green,.tag-green{background:rgba(63,185,80,.12);color:var(--green);border:1px solid rgba(63,185,80,.25);}
+  .p-amber,.pill-amber,.tag-gold,.p-gold{background:rgba(210,153,34,.12);color:var(--gold);border:1px solid rgba(210,153,34,.25);}
+  .p-blue,.pill-blue,.tag-blue{background:rgba(47,129,247,.1);color:var(--accent2);border:1px solid rgba(47,129,247,.25);}
+  .p-red,.pill-red,.tag-red{background:rgba(248,81,73,.1);color:var(--red);border:1px solid rgba(248,81,73,.25);}
+  .p-gray,.pill-gray,.tag-teal{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+  .p-purple,.pill-purple,.tag-purple{background:rgba(188,140,255,.1);color:var(--purple);border:1px solid rgba(188,140,255,.25);}
+  .callout{border-left:3px solid var(--accent);background:rgba(47,129,247,.08);padding:13px 17px;border-radius:0 6px 6px 0;font-size:12px;color:var(--muted);margin:12px 0;border:1px solid rgba(47,129,247,.2);border-left:3px solid var(--accent);}
+  .callout.amber{border-left-color:var(--orange);background:rgba(210,153,34,.08);}
+  .callout.blue{border-left-color:var(--accent2);background:rgba(47,129,247,.08);}
+  .callout.red{border-left-color:var(--red);background:rgba(248,81,73,.08);}
+  .callout strong{color:var(--text);}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg2);}
+  td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;color:var(--text);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+  .tw{overflow-x:auto;margin-bottom:4px;}
+  code,.code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--purple);}
+  .code-block,.code-box{background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+  .kpi-grid,.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;}
+  .kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+  .kpi-num,.kpi-value{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .kpi-lbl,.kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .kpi-card.highlight .kpi-num{color:var(--green);}
+  .check-list{display:flex;flex-direction:column;gap:5px;}
+  .check-item{font-size:12px;color:var(--muted);display:flex;gap:7px;align-items:flex-start;line-height:1.4;}
+  .check-item::before{content:'→';color:var(--accent2);font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+  .check-item.done::before{content:'✓';color:var(--green);}
+  .check-item.wip::before{content:'⏳';}
+  .module-card,.mcard{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;border-top:2px solid var(--accent);}
+  .module-feat{font-size:11px;color:var(--muted);margin-bottom:3px;display:flex;gap:6px;align-items:flex-start;}
+  .module-feat::before{content:'–';color:var(--muted);flex-shrink:0;}
+  .roadmap-phase,.tl-phase{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:10px;display:flex;gap:16px;align-items:flex-start;}
+  .phase-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+  .phase-done{background:rgba(63,185,80,.15);color:var(--green);}
+  .phase-current,.phase-wip{background:rgba(210,153,34,.12);color:var(--gold);}
+  .phase-planned{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+  .phase-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .phase-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+  .kanban-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;}
+  .kanban-card.urgent{border-left:3px solid var(--red);}
+  .kanban-card-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .kanban-card-sub{font-size:11px;color:var(--muted);line-height:1.4;}
+  .kanban-card-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+  .mcard-num{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .mcard-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .mcard-sub{font-size:11px;color:var(--muted);margin-top:6px;}
+  .mc-green{border-top:2px solid var(--green);}
+  .mc-blue{border-top:2px solid var(--accent);}
+  .mc-amber{border-top:2px solid var(--orange);}
+  .mc-purple{border-top:2px solid var(--purple);}
+  .prog-wrap{margin-bottom:10px;}
+  .prog-label{display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;color:var(--muted);}
+  .prog-track{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+  .prog-bar{height:100%;border-radius:2px;}
+  .index-section{margin-bottom:36px;}
+  .index-section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .index-section-title{font-size:16px;font-weight:700;color:var(--text);}
+  .index-section-line{flex:1;height:1px;background:var(--border);}
+  .index-section-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:20px;}
+  .doc-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;text-decoration:none;color:var(--text);display:block;transition:border-color .2s;position:relative;overflow:hidden;}
+  .doc-card:hover{border-color:var(--border2);}
+  .doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+  .c1::before{background:var(--green);}
+  .c2::before{background:var(--accent);}
+  .c3::before{background:var(--gold);}
+  .c4::before{background:var(--teal);}
+  .c5::before{background:var(--red);}
+  .c6::before{background:var(--purple);}
+  .doc-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:.06em;}
+  .doc-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px;line-height:1.2;}
+  .doc-desc{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:12px;}
+  .doc-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;}
+  .arrow{position:absolute;bottom:16px;right:16px;font-size:14px;color:var(--border2);}
+  .doc-card:hover .arrow{color:var(--accent2);}
+  .kpi-badge{position:absolute;top:12px;right:12px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:10px;text-align:right;line-height:1.4;}
+  .kpi-badge strong{display:block;font-size:11px;color:var(--accent2);font-weight:700;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+  .stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+  .stat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center;min-width:100px;}
+  .stat-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--text);}
+  .stat-lbl{font-size:10px;color:var(--muted);margin-top:3px;}
+  .stat.accent .stat-num{color:var(--green);}
+  .updated{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:16px;border-top:1px solid var(--border);margin-top:8px;}
+  .index-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+  .index-nav a{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);text-decoration:none;padding:4px 12px;border:1px solid var(--border);border-radius:20px;transition:all .15s;}
+  .index-nav a:hover{border-color:var(--accent2);color:var(--accent2);}
+  .plan-card,.plan{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px 18px;}
+  .plan.featured,.plan.feat{border-color:var(--accent);border-width:2px;}
+  .plan-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+  .plan-price{font-size:32px;font-weight:800;color:var(--text);margin-bottom:4px;}
+  .plan-price span{font-size:13px;font-weight:400;color:var(--muted);}
+  .plan-target{font-size:11px;color:var(--muted);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .plan-feat{font-size:11px;color:var(--muted);padding:4px 0;display:flex;gap:6px;}
+  .plan-feat::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+  .tl-item-ph,.tl-phase-item{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:8px;}
+  .tl-sprint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent2);font-weight:700;}
+  footer.ps-footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 48px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;}
+  .pw-overlay-wrap{position:fixed;inset:0;z-index:9999;background:#0d1117;display:flex;align-items:center;justify-content:center;}
+  .pw-overlay-wrap.hidden{display:none;}
+  .pw-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:40px 36px;width:320px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;}
+  .pw-input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:14px;font-family:'JetBrains Mono',monospace;outline:none;text-align:center;letter-spacing:.2em;}
+  .pw-input:focus{border-color:var(--accent);}
+  .pw-btn{width:100%;padding:10px;border-radius:8px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;}
+  .pw-btn:hover{opacity:.85;}
+  .pw-error{font-size:12px;color:var(--red);min-height:14px;font-family:'JetBrains Mono',monospace;}
+  @media(max-width:860px){
+    .grid2,.grid3,.grid4,.kpi-grid{grid-template-columns:1fr;}
+    main{padding:24px 20px;}
+  }
+
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="icon">🐾</div>
+      <div><span>PetSuite</span><small>Algorithmia · Sprint S33</small></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Navigation</div>
+      <a class="nav-item" href="index.html"><div class="dot done"></div>🏠 — Index</a>
+      <a class="nav-item" href="01-synthese-projet.html"><div class="dot done"></div>01 — Synthèse projet</a>
+      <a class="nav-item" href="02-guide-parametrage.html"><div class="dot done"></div>02 — Guide paramétrage</a>
+      <a class="nav-item" href="03-notice-utilisateur.html"><div class="dot done"></div>03 — Notice utilisateur v4.0</a>
+      <a class="nav-item" href="06-roadmap.html"><div class="dot done"></div>06 — Roadmap sprints</a>
+      <a class="nav-item" href="07-audit-stack.html"><div class="dot done"></div>07 — Audit Stack</a>
+      <a class="nav-item" href="09-scenario-video.html"><div class="dot done"></div>09 — Scénarios vidéo</a>
+      <a class="nav-item" href="17-api-reference.html"><div class="dot done"></div>17 — API Reference</a>
+      <a class="nav-item" href="26-changelog-S33.html"><div class="dot done"></div>26 — Changelog S33</a>
+      <a class="nav-item" href="27-investisseurs.html"><div class="dot done"></div>27 — 🔒 Investisseurs</a>
+      <a class="nav-item" href="99_Business_Plan.html"><div class="dot done"></div>99 — 🔒 Business Plan</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Stack technique</div>
+      <a class="nav-item" href="#"><div class="dot done"></div>BDD 65+ tables · 20+ triggers</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>API 90+ routes custom</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>Next.js 15 · 101 fichiers</a>
+      <a class="nav-item" href="#"><div class="dot wip"></div>NF525 · Élevage · Templates</a>
+    </div>
+  </aside>
+  <main>
+    <nav class="breadcrumb">
+      <a href="index.html">PetSuite</a>
+      <span>/</span>
+      <a href="index.html">docs</a>
+      <span>/</span>
+      <span>Infrastructure & Hébergement</span>
+    </nav>
+<main>
+    <nav class="breadcrumb">
+      <a href="index.html">PetSuite</a>
+      <span>/</span>
+      <a href="index.html">docs</a>
+      <span>/</span>
+      <span>Infrastructure & Hébergement</span>
+    </nav>
+<div class="hero">
+  <div class="hero-tag">Infrastructure & hébergement — Document vivant</div>
+  <h1>Infrastructure <em>& déploiement</em></h1>
+  <p class="hero-sub">Choix d'hébergeur, architecture serveurs en production, Docker Compose prod, CI/CD GitHub Actions, SSL automatique, monitoring, backup et scalabilité horizontale pour 5 000 à 20 000 tenants.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-num">France</div><div class="kpi-lbl">Données hébergées</div></div>
+    <div class="kpi"><div class="kpi-num">99.9%</div><div class="kpi-lbl">SLA cible</div></div>
+    <div class="kpi"><div class="kpi-num">GitHub</div><div class="kpi-lbl">CI/CD Actions</div></div>
+    <div class="kpi"><div class="kpi-num">Traefik</div><div class="kpi-lbl">Reverse proxy</div></div>
+    <div class="kpi"><div class="kpi-num">S3</div><div class="kpi-lbl">Stockage GED</div></div>
+  </div>
+</div>
+
+
+
+
+<div class="main">
+
+<!-- 01 HEBERGEUR -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">Choix de l'hébergeur</span></div>
+
+  <div class="compare-grid">
+    <div class="compare-card recommended">
+      <div class="compare-badge">Recommandé phase 1</div>
+      <div class="compare-title">Hetzner Cloud</div>
+      <div class="compare-sub">Allemagne / Finlande — RGPD EU</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Prix</span><span class="item-val">CX22 : 4€/mois · CX32 : 9€/mois · CX52 : 22€/mois</span></div>
+        <div class="item"><span class="item-label">Stockage</span><span class="item-val">Volumes bloc + Object Storage S3-compatible</span></div>
+        <div class="item"><span class="item-label">Réseau</span><span class="item-val">20 To trafic inclus — très généreux</span></div>
+        <div class="item"><span class="item-label">Load balancer</span><span class="item-val">6€/mois — simple et efficace</span></div>
+        <div class="item"><span class="item-label">Datacenter FR</span><span class="item-val">Non (DE/FI) — RGPD EU ✓</span></div>
+        <div class="item"><span class="item-label">API</span><span class="item-val">Excellente — Terraform provider officiel</span></div>
+        <div class="item"><span class="item-label">SLA</span><span class="item-val">99.9% garanti</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-ok">Meilleur rapport qualité/prix</span></div>
+    </div>
+
+    <div class="compare-card">
+      <div class="compare-title">OVHcloud</div>
+      <div class="compare-sub">France — souveraineté données FR</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Prix</span><span class="item-val">VPS Starter : 4€/mois · VPS Value : 8€/mois</span></div>
+        <div class="item"><span class="item-label">Stockage</span><span class="item-val">Object Storage S3 — 0.01€/Go/mois</span></div>
+        <div class="item"><span class="item-label">Réseau</span><span class="item-val">Bandwidth limitée selon plan</span></div>
+        <div class="item"><span class="item-label">Load balancer</span><span class="item-val">Disponible via Loadbalancer OVH</span></div>
+        <div class="item"><span class="item-label">Datacenter FR</span><span class="item-val">Oui (Roubaix, Gravelines, Strasbourg)</span></div>
+        <div class="item"><span class="item-label">API</span><span class="item-val">API OVH + OpenStack</span></div>
+        <div class="item"><span class="item-label">SLA</span><span class="item-val">99.9% garanti</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-blue">Données en France</span></div>
+    </div>
+
+    <div class="compare-card">
+      <div class="compare-title">AWS (eu-west-3 Paris)</div>
+      <div class="compare-sub">Paris — scalabilité maximale</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Prix</span><span class="item-val">EC2 t3.small : ~18€/mois · t3.medium : ~37€/mois</span></div>
+        <div class="item"><span class="item-label">Stockage</span><span class="item-val">S3 natif — référence mondiale</span></div>
+        <div class="item"><span class="item-label">Réseau</span><span class="item-val">Payant au Go sortant — peut être coûteux</span></div>
+        <div class="item"><span class="item-label">Load balancer</span><span class="item-val">ALB ~20€/mois</span></div>
+        <div class="item"><span class="item-label">Datacenter FR</span><span class="item-val">Oui (Paris)</span></div>
+        <div class="item"><span class="item-label">API</span><span class="item-val">Écosystème très riche — RDS, ElastiCache…</span></div>
+        <div class="item"><span class="item-label">SLA</span><span class="item-val">99.99% sur services managés</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-purple">Pour 5 000+ tenants</span></div>
+    </div>
+  </div>
+
+  <div class="alert alert-info" style="margin-top:16px;"><strong>Stratégie recommandée :</strong> Démarrer sur Hetzner (coût minimal, performance excellente) pour les 500 premiers clients. Migrer vers OVH si la souveraineté des données FR devient un argument commercial clé, ou AWS à partir de 5 000 tenants pour la scalabilité managée.</div>
+
+  <div class="subsection" style="margin-top:20px;">
+    <div class="subsection-title">Configuration serveurs initiale Hetzner (phase 1 — 0 à 500 clients)</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Serveur</th><th>Type Hetzner</th><th>CPU / RAM</th><th>Rôle</th><th>Prix/mois</th></tr></thead>
+        <tbody>
+          <tr><td>srv-app-01</td><td>CX32</td><td>4 vCPU / 8 Go</td><td>Frontend Next.js + API NestJS</td><td>~9€</td></tr>
+          <tr><td>srv-db-01</td><td>CX32</td><td>4 vCPU / 8 Go</td><td>MariaDB master (tous les tenants phase 1)</td><td>~9€</td></tr>
+          <tr><td>srv-cache-01</td><td>CX22</td><td>2 vCPU / 4 Go</td><td>Redis + RabbitMQ</td><td>~4€</td></tr>
+          <tr><td>vol-db-01</td><td>Volume bloc</td><td>—</td><td>Données MariaDB persistent</td><td>~5€ (50 Go)</td></tr>
+          <tr><td>lb-01</td><td>Load Balancer</td><td>—</td><td>Entrée trafic + SSL termination</td><td>~6€</td></tr>
+          <tr><td>object-storage</td><td>Object Storage</td><td>—</td><td>GED S3-compatible</td><td>~1€/To</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:12px;color:var(--ink3);margin-top:8px;"><strong>Total phase 1 ≈ 35€/mois</strong> pour les 100 premiers tenants. À comparer aux revenus MRR dès le 1er client.</div>
+  </div>
+</div>
+
+<!-- 02 ARCHITECTURE PROD -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">Architecture serveurs production</span></div>
+
+  <div class="subsection" id="s2-serveurs">
+    <div class="subsection-title">Couches d'infrastructure</div>
+    <div class="grid2">
+      <div>
+        <div class="arch-layer l-purple">
+          Clients — navigateur / tablette / mobile
+          <div class="arch-sub">societe.petsuite.fr → Load Balancer Hetzner</div>
+        </div>
+        <div class="arch-layer l-blue">
+          Traefik reverse proxy (srv-app-01)
+          <div class="arch-sub">Routage par sous-domaine · SSL Let's Encrypt auto · Rate limiting</div>
+        </div>
+        <div class="arch-layer l-blue">
+          Next.js 15 + NestJS API (srv-app-01)
+          <div class="arch-sub">Conteneurs Docker · multi-tenant via tenant_id JWT</div>
+        </div>
+        <div class="arch-layer l-teal">
+          Redis + RabbitMQ (srv-cache-01)
+          <div class="arch-sub">Sessions · JWT cache · Queue PDF / emails / SEPA</div>
+        </div>
+        <div class="arch-layer l-green">
+          MariaDB master (srv-db-01 + volume persistant)
+          <div class="arch-sub">Un schema par tenant · Flyway migrations · Backups quotidiens</div>
+        </div>
+        <div class="arch-layer l-gold">
+          Object Storage S3 (Hetzner)
+          <div class="arch-sub">GED par tenant · Cycle de vie hot/warm/cold</div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-title"><div class="card-icon icon-blue">🌐</div>Réseau interne Hetzner</div>
+          <div class="item-list">
+            <div class="item"><span class="item-label">Réseau privé</span><span class="item-val">10.0.0.0/16 — communication inter-serveurs sans exposition</span></div>
+            <div class="item"><span class="item-label">srv-app-01</span><span class="item-val">10.0.1.1 — seul exposé via Load Balancer</span></div>
+            <div class="item"><span class="item-label">srv-db-01</span><span class="item-val">10.0.2.1 — accessible uniquement depuis 10.0.1.0/24</span></div>
+            <div class="item"><span class="item-label">srv-cache-01</span><span class="item-val">10.0.3.1 — Redis/RabbitMQ en réseau privé</span></div>
+            <div class="item"><span class="item-label">Firewall</span><span class="item-val">Hetzner Firewall : ports 80/443 uniquement publics</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><div class="card-icon icon-green">🔒</div>Accès SSH</div>
+          <div class="item-list">
+            <div class="item"><span class="item-label">Authentification</span><span class="item-val">Clés SSH uniquement — mot de passe désactivé</span></div>
+            <div class="item"><span class="item-label">Port SSH</span><span class="item-val">Port non standard (ex: 2222) + Fail2ban</span></div>
+            <div class="item"><span class="item-label">Accès DB</span><span class="item-val">Uniquement depuis srv-app-01 via réseau privé</span></div>
+            <div class="item"><span class="item-label">Déploiement</span><span class="item-val">GitHub Actions → SSH deploy key dédiée (read-only)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s2-reseau">
+    <div class="subsection-title">DNS & sous-domaines</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Entrée DNS</th><th>Type</th><th>Cible</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td>petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>Site vitrine</td></tr>
+          <tr><td>*.petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>Wildcard tenants</td></tr>
+          <tr><td>app.petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>Portail super admin</td></tr>
+          <tr><td>api.petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>API plateforme</td></tr>
+          <tr><td>docs.petsuite.fr</td><td>CNAME</td><td>nicolashermilly.github.io</td><td>Documentation (GitHub Pages)</td></tr>
+          <tr><td>cabinetmartin.petsuite.fr</td><td>Wildcard résolu</td><td>IP Load Balancer</td><td>Exemple tenant</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-warn">Le certificat SSL wildcard *.petsuite.fr est obligatoire pour couvrir tous les sous-domaines tenants dynamiques. Let's Encrypt le supporte via challenge DNS-01.</div>
+  </div>
+</div>
+
+<!-- 03 DOCKER PROD -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">Docker Compose production</span></div>
+
+  <div class="subsection" id="s3-compose">
+    <div class="subsection-title">docker-compose.prod.yml</div>
+    <div class="code">
+<span class="cs">version:</span> <span class="ck">'3.9'</span>
+
+<span class="cs">services:</span>
+
+  <span class="cm"># Reverse proxy + SSL automatique</span>
+  traefik:
+    image: <span class="ck">traefik:v3.0</span>
+    restart: unless-stopped
+    ports:
+      - <span class="ck">"80:80"</span>
+      - <span class="ck">"443:443"</span>
+    volumes:
+      - <span class="cv">/var/run/docker.sock:/var/run/docker.sock:ro</span>
+      - <span class="cv">./traefik/traefik.yml:/traefik.yml:ro</span>
+      - <span class="cv">./traefik/acme.json:/acme.json</span>  <span class="cm"># chmod 600</span>
+    networks: [proxy]
+
+  <span class="cm"># Frontend Next.js</span>
+  frontend:
+    image: <span class="ck">ghcr.io/nicolashermilly/petsuite-frontend:${TAG}</span>
+    restart: unless-stopped
+    environment:
+      - <span class="cv">NEXT_PUBLIC_API_URL=https://api.petsuite.fr</span>
+      - <span class="cv">NODE_ENV=production</span>
+    labels:
+      - <span class="ck">"traefik.enable=true"</span>
+      - <span class="ck">"traefik.http.routers.frontend.rule=HostRegexp(`{subdomain:[a-z0-9-]+}.petsuite.fr`)"</span>
+      - <span class="ck">"traefik.http.routers.frontend.tls.certresolver=letsencrypt"</span>
+    networks: [proxy, internal]
+
+  <span class="cm"># API NestJS</span>
+  api:
+    image: <span class="ck">ghcr.io/nicolashermilly/petsuite-api:${TAG}</span>
+    restart: unless-stopped
+    environment:
+      - <span class="cv">NODE_ENV=production</span>
+      - <span class="cv">DB_HOST=10.0.2.1</span>
+      - <span class="cv">REDIS_URL=redis://10.0.3.1:6379</span>
+      - <span class="cv">RABBITMQ_URL=amqp://10.0.3.1</span>
+      - <span class="cv">JWT_SECRET=${JWT_SECRET}</span>
+      - <span class="cv">S3_ENDPOINT=${S3_ENDPOINT}</span>
+      - <span class="cv">S3_ACCESS_KEY=${S3_ACCESS_KEY}</span>
+      - <span class="cv">S3_SECRET_KEY=${S3_SECRET_KEY}</span>
+    labels:
+      - <span class="ck">"traefik.enable=true"</span>
+      - <span class="ck">"traefik.http.routers.api.rule=Host(`api.petsuite.fr`)"</span>
+      - <span class="ck">"traefik.http.routers.api.tls.certresolver=letsencrypt"</span>
+    networks: [proxy, internal]
+    depends_on: [redis]
+
+  <span class="cm"># Redis cache</span>
+  redis:
+    image: <span class="ck">redis:7-alpine</span>
+    restart: unless-stopped
+    volumes: [redis_data:/data]
+    networks: [internal]
+    command: <span class="ck">redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}</span>
+
+  <span class="cm"># Worker queues (PDF, emails, SEPA)</span>
+  worker:
+    image: <span class="ck">ghcr.io/nicolashermilly/petsuite-api:${TAG}</span>
+    restart: unless-stopped
+    command: <span class="ck">node dist/worker.js</span>
+    environment:
+      - <span class="cv">NODE_ENV=production</span>
+      - <span class="cv">RABBITMQ_URL=amqp://10.0.3.1</span>
+    networks: [internal]
+
+<span class="cs">volumes:</span>
+  redis_data:
+
+<span class="cs">networks:</span>
+  proxy:
+    external: true
+  internal:
+    driver: bridge
+    internal: true  <span class="cm"># pas d'accès internet direct</span>
+    </div>
+  </div>
+
+  <div class="subsection" id="s3-traefik">
+    <div class="subsection-title">traefik.yml — configuration SSL wildcard</div>
+    <div class="code">
+<span class="cs">entryPoints:</span>
+  web:
+    address: <span class="ck">":80"</span>
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https  <span class="cm"># Force HTTPS</span>
+  websecure:
+    address: <span class="ck">":443"</span>
+
+<span class="cs">certificatesResolvers:</span>
+  letsencrypt:
+    acme:
+      email: <span class="ck"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e5f5a5357507e4e5b4a4d4b574a5b10584c">[email&#160;protected]</a></span>
+      storage: <span class="ck">/acme.json</span>
+      dnsChallenge:          <span class="cm"># DNS-01 pour wildcard *.petsuite.fr</span>
+        provider: <span class="ck">hetzner</span>  <span class="cm"># ou ovh selon hébergeur</span>
+        delayBeforeCheck: <span class="cv">30</span>
+
+<span class="cs">providers:</span>
+  docker:
+    exposedByDefault: false
+    network: proxy
+
+<span class="cs">api:</span>
+  dashboard: true
+  insecure: false  <span class="cm"># Dashboard sécurisé</span>
+
+<span class="cs">log:</span>
+  level: <span class="ck">INFO</span>
+
+<span class="cs">accessLog: {}</span>  <span class="cm"># Logs d'accès pour monitoring</span>
+    </div>
+  </div>
+</div>
+
+<!-- 04 CI/CD -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">CI/CD — GitHub Actions</span></div>
+
+  <div class="subsection" id="s4-workflows">
+    <div class="subsection-title">Structure des workflows</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Fichier workflow</th><th>Déclencheur</th><th>Actions</th></tr></thead>
+        <tbody>
+          <tr><td>.github/workflows/ci.yml</td><td>Push sur toute branche + PR</td><td>Lint · Tests · Build images Docker</td></tr>
+          <tr><td>.github/workflows/deploy-staging.yml</td><td>Push sur branche develop</td><td>Build + push GHCR + deploy staging</td></tr>
+          <tr><td>.github/workflows/deploy-prod.yml</td><td>Tag vX.Y.Z sur main</td><td>Build + push GHCR + deploy production</td></tr>
+          <tr><td>.github/workflows/migrate.yml</td><td>Manuel (workflow_dispatch)</td><td>Flyway migrate tous les tenants</td></tr>
+          <tr><td>.github/workflows/backup.yml</td><td>Cron 02:00 UTC</td><td>Backup BDD + upload S3</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection" id="s4-pipeline">
+    <div class="subsection-title">Pipeline de déploiement production</div>
+    <div class="code">
+<span class="cm"># .github/workflows/deploy-prod.yml</span>
+<span class="cs">name:</span> Deploy Production
+
+<span class="cs">on:</span>
+  push:
+    tags: [<span class="ck">'v*.*.*'</span>]
+
+<span class="cs">jobs:</span>
+  <span class="cs">build-and-push:</span>
+    runs-on: ubuntu-latest
+    steps:
+      - uses: <span class="ck">actions/checkout@v4</span>
+
+      - <span class="cs">name:</span> Login GHCR
+        uses: <span class="ck">docker/login-action@v3</span>
+        with:
+          registry: <span class="cv">ghcr.io</span>
+          username: <span class="cv">${{ github.actor }}</span>
+          password: <span class="cv">${{ secrets.GITHUB_TOKEN }}</span>
+
+      - <span class="cs">name:</span> Build & push API
+        uses: <span class="ck">docker/build-push-action@v5</span>
+        with:
+          context: <span class="cv">./api</span>
+          push: true
+          tags: <span class="cv">ghcr.io/nicolashermilly/petsuite-api:${{ github.ref_name }}</span>
+
+      - <span class="cs">name:</span> Build & push Frontend
+        uses: <span class="ck">docker/build-push-action@v5</span>
+        with:
+          context: <span class="cv">./frontend</span>
+          push: true
+          tags: <span class="cv">ghcr.io/nicolashermilly/petsuite-frontend:${{ github.ref_name }}</span>
+
+  <span class="cs">deploy:</span>
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - <span class="cs">name:</span> Deploy via SSH
+        uses: <span class="ck">appleboy/ssh-action@v1</span>
+        with:
+          host: <span class="cv">${{ secrets.PROD_HOST }}</span>
+          username: <span class="cv">deploy</span>
+          key: <span class="cv">${{ secrets.PROD_SSH_KEY }}</span>
+          script: |
+            cd /opt/petsuite
+            export TAG=<span class="cv">${{ github.ref_name }}</span>
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml up -d --no-deps api frontend worker
+            docker image prune -f
+            echo <span class="ck">"Deployed $TAG at $(date)"</span>
+    </div>
+
+    <div class="alert alert-info" style="margin-top:10px;">Le déploiement utilise <code>--no-deps</code> pour ne redémarrer que les conteneurs mis à jour. MariaDB et Redis ne sont jamais redémarrés par le pipeline.</div>
+
+    <div class="subsection-title" style="margin-top:16px;">Secrets GitHub à configurer</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Secret</th><th>Valeur</th></tr></thead>
+        <tbody>
+          <tr><td>PROD_HOST</td><td>IP du srv-app-01</td></tr>
+          <tr><td>PROD_SSH_KEY</td><td>Clé privée SSH du compte deploy</td></tr>
+          <tr><td>JWT_SECRET</td><td>Clé secrète JWT (min 64 chars aléatoires)</td></tr>
+          <tr><td>S3_ENDPOINT</td><td>URL endpoint Object Storage</td></tr>
+          <tr><td>S3_ACCESS_KEY</td><td>Clé d'accès S3</td></tr>
+          <tr><td>S3_SECRET_KEY</td><td>Clé secrète S3</td></tr>
+          <tr><td>REDIS_PASSWORD</td><td>Mot de passe Redis</td></tr>
+          <tr><td>DB_PASSWORD</td><td>Mot de passe MariaDB (user technique)</td></tr>
+          <tr><td>GOCARDLESS_TOKEN</td><td>Token API GoCardless</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 05 SSL -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">SSL & sécurité réseau</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🔒</div>SSL wildcard automatique</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Provider</span><span class="item-val">Let's Encrypt via Traefik — challenge DNS-01</span></div>
+        <div class="item"><span class="item-label">Certificat</span><span class="item-val">*.petsuite.fr — couvre tous les sous-domaines tenants</span></div>
+        <div class="item"><span class="item-label">Renouvellement</span><span class="item-val">Automatique tous les 60 jours (expiration à 90)</span></div>
+        <div class="item"><span class="item-label">Stockage</span><span class="item-val">acme.json (chmod 600) — volume persistant Docker</span></div>
+        <div class="item"><span class="item-label">Nouveau tenant</span><span class="item-val">Sous-domaine couvert instantanément par le wildcard</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-red">🛡</div>Sécurité applicative</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Rate limiting</span><span class="item-val">Traefik : 100 req/min par IP sur /api/auth</span></div>
+        <div class="item"><span class="item-label">Headers sécurité</span><span class="item-val">HSTS · X-Frame-Options · CSP via middleware Traefik</span></div>
+        <div class="item"><span class="item-label">CORS</span><span class="item-val">Origines autorisées : *.petsuite.fr uniquement</span></div>
+        <div class="item"><span class="item-label">JWT</span><span class="item-val">Expiration 15 min · Refresh token 7 jours · Rotation</span></div>
+        <div class="item"><span class="item-label">Fail2ban</span><span class="item-val">Banissement auto après 5 tentatives SSH échouées</span></div>
+        <div class="item"><span class="item-label">Audit log</span><span class="item-val">Toutes actions critiques loggées en BDD</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 S3 GED -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">Stockage S3 — GED</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🪣</div>Structure buckets</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Bucket unique</span><span class="item-val">petsuite-ged — préfixe tenant_id dans le chemin</span></div>
+        <div class="item"><span class="item-label">Arborescence</span><span class="item-val">/{tenant_id}/{type}/{YYYY}/{MM}/{uuid}.ext</span></div>
+        <div class="item"><span class="item-label">Chiffrement</span><span class="item-val">SSE-S3 côté serveur — AES-256</span></div>
+        <div class="item"><span class="item-label">Accès</span><span class="item-val">Privé — URLs signées 15 min pour accès client</span></div>
+        <div class="item"><span class="item-label">Versionning</span><span class="item-val">Activé — conserve les versions précédentes</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🔄</div>Politique cycle de vie</div>
+      <div class="code" style="margin:0;font-size:11px;">
+<span class="cm"># Règles lifecycle S3 (JSON)</span>
+{
+  <span class="ck">"Rules"</span>: [
+    {
+      <span class="cm">// Tenants actifs — transition warm après 1 an</span>
+      <span class="ck">"Prefix"</span>: <span class="cv">""</span>,
+      <span class="ck">"Transitions"</span>: [
+        { <span class="ck">"Days"</span>: <span class="cv">365</span>, <span class="ck">"Class"</span>: <span class="cv">"ONEZONE_IA"</span> },
+        { <span class="ck">"Days"</span>: <span class="cv">1095</span>, <span class="ck">"Class"</span>: <span class="cv">"GLACIER"</span> }
+      ]
+    }
+  ]
+}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 MONITORING -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Monitoring & alertes</span></div>
+
+  <div class="subsection">
+    <div class="subsection-title">Stack de monitoring</div>
+    <div class="grid3">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">📊</div>Prometheus + Grafana</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Métriques</span><span class="item-val">CPU · RAM · disque · requêtes/sec · latence P95</span></div>
+          <div class="item"><span class="item-label">Exporters</span><span class="item-val">node_exporter · mariadb_exporter · redis_exporter</span></div>
+          <div class="item"><span class="item-label">Dashboards</span><span class="item-val">Vue globale + vue par tenant (quota BDD/GED)</span></div>
+        </div>
+        <div class="pill-row"><span class="pill pill-ok">Gratuit auto-hébergé</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-gold">🔔</div>Alertes</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Canal</span><span class="item-val">Email + Slack (webhook)</span></div>
+          <div class="item"><span class="item-label">CPU &gt; 80%</span><span class="item-val">Alerte warning pendant 5 min</span></div>
+          <div class="item"><span class="item-label">Disque &gt; 85%</span><span class="item-val">Alerte critique</span></div>
+          <div class="item"><span class="item-label">API latence &gt;500ms</span><span class="item-val">Alerte P95</span></div>
+          <div class="item"><span class="item-label">Échec prélèvement</span><span class="item-val">Alerte immédiate super admin</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">✅</div>Uptime Kuma</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Surveillance</span><span class="item-val">Ping chaque endpoint public toutes les 60s</span></div>
+          <div class="item"><span class="item-label">Page statut</span><span class="item-val">status.petsuite.fr — accessible clients</span></div>
+          <div class="item"><span class="item-label">Notification</span><span class="item-val">Email + SMS si downtime &gt; 2 min</span></div>
+        </div>
+        <div class="pill-row"><span class="pill pill-ok">Gratuit auto-hébergé</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Métriques business à suivre</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Métrique</th><th>Source</th><th>Alerte si</th></tr></thead>
+        <tbody>
+          <tr><td>Tenants actifs</td><td>BDD plateforme</td><td>Baisse soudaine &gt; 5%</td></tr>
+          <tr><td>MRR</td><td>table prelevement</td><td>—</td></tr>
+          <tr><td>Prélèvements échoués</td><td>webhook SEPA</td><td>Dès le 1er</td></tr>
+          <tr><td>Volume GED par tenant</td><td>S3 metrics</td><td>Quota dépassé à 90%</td></tr>
+          <tr><td>Taille schema BDD</td><td>MariaDB information_schema</td><td>Shard &gt; 80% capacité</td></tr>
+          <tr><td>Erreurs API 500</td><td>Logs NestJS</td><td>&gt; 10 erreurs/min</td></tr>
+          <tr><td>Latence PDF génération</td><td>Métriques worker</td><td>&gt; 10 secondes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 08 BACKUP -->
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">Backup & restauration</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">💾</div>Stratégie backup BDD</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Fréquence</span><span class="item-val">Quotidien à 02h00 UTC (cron GitHub Actions)</span></div>
+        <div class="item"><span class="item-label">Méthode</span><span class="item-val">mysqldump par schema tenant + compression gzip</span></div>
+        <div class="item"><span class="item-label">Chiffrement</span><span class="item-val">GPG AES-256 avant upload S3</span></div>
+        <div class="item"><span class="item-label">Destination</span><span class="item-val">Bucket S3 dédié backups (région différente)</span></div>
+        <div class="item"><span class="item-label">Rétention</span><span class="item-val">7 jours quotidiens · 4 semaines hebdomadaires · 12 mois mensuels</span></div>
+        <div class="item"><span class="item-label">Test restauration</span><span class="item-val">Mensuel automatique sur environnement de test</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🔁</div>Script backup (cron)</div>
+      <div class="code" style="margin:0;font-size:11px;">
+<span class="cm">#!/bin/bash — backup-all-tenants.sh</span>
+DATE=$(date +%Y%m%d_%H%M)
+BACKUP_DIR=<span class="cv">/tmp/backups/$DATE</span>
+mkdir -p <span class="cv">$BACKUP_DIR</span>
+
+<span class="cm"># Lister tous les schemas tenants</span>
+TENANTS=$(mysql -u <span class="cm"># user_technique</span> -p<span class="cv">$DB_PASS</span> \
+  -e <span class="ck">"SHOW DATABASES LIKE 'micro_logiciel_%'"</span> \
+  -s --skip-column-names)
+
+for DB in <span class="cv">$TENANTS</span>; do
+  mysqldump -u <span class="cm"># user_technique</span> -p<span class="cv">$DB_PASS</span> \
+    --single-transaction --quick \
+    <span class="cv">$DB</span> | gzip | gpg --symmetric \
+    --cipher-algo AES256 \
+    -o <span class="cv">$BACKUP_DIR/$DB.sql.gz.gpg</span>
+done
+
+<span class="cm"># Upload vers S3</span>
+aws s3 sync <span class="cv">$BACKUP_DIR</span> \
+  s3://petsuite-backups/<span class="cv">$DATE</span>/ \
+  --storage-class STANDARD_IA
+
+rm -rf <span class="cv">$BACKUP_DIR</span>
+echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenants"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" style="margin-top:14px;">
+    <div class="subsection-title">Procédure de restauration d'urgence</div>
+    <div class="card">
+      <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <div class="flow-step-body"><div class="flow-step-title">Identifier le backup</div><div class="flow-step-desc">aws s3 ls s3://petsuite-backups/ → choisir la date/heure du backup souhaité.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <div class="flow-step-body"><div class="flow-step-title">Télécharger et déchiffrer</div><div class="flow-step-desc">aws s3 cp s3://petsuite-backups/{date}/{schema}.sql.gz.gpg . → gpg --decrypt → gunzip.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <div class="flow-step-body"><div class="flow-step-title">Restaurer le schema</div><div class="flow-step-desc">mysql -u [user_technique] -p {schema} &lt; {schema}.sql — Sur environnement isolé d'abord pour vérification.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <div class="flow-step-body"><div class="flow-step-title">Vérifier et basculer</div><div class="flow-step-desc">Contrôle intégrité des données → mise à jour tenant_shard si basculement de serveur → notification client.</div></div>
+      </div>
+    </div>
+    <div class="alert alert-warn">RTO (Recovery Time Objective) cible : &lt; 4h. RPO (Recovery Point Objective) cible : &lt; 24h (backup quotidien). Pour un SLA plus exigeant : binlog MariaDB en temps réel.</div>
+  </div>
+</div>
+
+<!-- 09 SCALABILITE -->
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><span class="section-title">Scalabilité horizontale</span></div>
+  <div class="tbl-wrap" style="margin-bottom:16px;">
+    <table class="tbl">
+      <thead><tr><th>Phase</th><th>Clients</th><th>Architecture</th><th>Action requise</th></tr></thead>
+      <tbody>
+        <tr><td>Phase 1</td><td>0 → 500</td><td>1 srv-app + 1 srv-db + 1 srv-cache</td><td>Setup initial (~35€/mois)</td></tr>
+        <tr><td>Phase 2</td><td>500 → 2 000</td><td>2 srv-app (load balanced) + 1 srv-db upgradé + read replica</td><td>Ajout srv-app-02 + upgrade CX52</td></tr>
+        <tr><td>Phase 3</td><td>2 000 → 5 000</td><td>3+ srv-app + 2 srv-db (shard A/B) + Redis cluster</td><td>Sharding BDD — migration partielle des tenants</td></tr>
+        <tr><td>Phase 4</td><td>5 000 → 20 000</td><td>Auto-scaling + K8s ou AWS ECS + RDS Multi-AZ</td><td>Migration vers infrastructure managée (AWS/GCP)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📈</div>Ajout d'un shard BDD (phase 3)</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Nouveau serveur</span><span class="item-val">Provisionner srv-db-02 (CX52 ou dédié)</span></div>
+        <div class="item"><span class="item-label">Migration tenants</span><span class="item-val">Script de déplacement schema par schema avec downtime minimal</span></div>
+        <div class="item"><span class="item-label">Shard registry</span><span class="item-val">UPDATE tenant_shard SET shard_host = 'srv-db-02' pour les tenants migrés</span></div>
+        <div class="item"><span class="item-label">Nouveaux tenants</span><span class="item-val">Provisionnés automatiquement sur le shard le moins chargé</span></div>
+        <div class="item"><span class="item-label">Transparence</span><span class="item-val">Zéro impact client — l'API résout le bon shard à chaque requête</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">⚡</div>Optimisations performance</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Read replica</span><span class="item-val">Exports FEC et rapports sur replica — pas sur primary</span></div>
+        <div class="item"><span class="item-label">Redis cache</span><span class="item-val">JWT + droits utilisateurs (TTL 15 min) + données statiques (TTL 1h)</span></div>
+        <div class="item"><span class="item-label">CDN Cloudflare</span><span class="item-val">Assets Next.js + vidéos GIF commerciales — edge caching mondial</span></div>
+        <div class="item"><span class="item-label">Queue workers</span><span class="item-val">PDF, emails, SEPA en arrière-plan — pas de blocage API</span></div>
+        <div class="item"><span class="item-label">Index BDD</span><span class="item-val">Tous les champs de filtrage fréquent indexés (dates, statuts, FKs)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 10 ENV VARS -->
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">10</span><span class="section-title">Variables d'environnement production</span></div>
+  <div class="code">
+<span class="cm"># /opt/petsuite/.env.prod — NE PAS COMMITTER</span>
+
+<span class="cm"># Application</span>
+<span class="cv">NODE_ENV</span>=<span class="ck">production</span>
+<span class="cv">TAG</span>=<span class="ck">v1.0.0</span>  <span class="cm"># version déployée</span>
+
+<span class="cm"># BDD plateforme</span>
+<span class="cv">PLATFORM_DB_HOST</span>=<span class="ck">10.0.2.1</span>
+<span class="cv">PLATFORM_DB_NAME</span>=<span class="ck">petsuite_platform</span>
+<span class="cv">PLATFORM_DB_USER</span>=<span class="ck">[user_technique_applicatif]</span>
+<span class="cv">PLATFORM_DB_PASS</span>=<span class="ck">@lgoritHme+2025+977_73300</span>
+
+<span class="cm"># JWT</span>
+<span class="cv">JWT_SECRET</span>=<span class="ck">[64 caractères aléatoires générés avec openssl rand -hex 32]</span>
+<span class="cv">JWT_EXPIRY</span>=<span class="ck">15m</span>
+<span class="cv">REFRESH_TOKEN_EXPIRY</span>=<span class="ck">7d</span>
+
+<span class="cm"># Redis</span>
+<span class="cv">REDIS_URL</span>=<span class="ck">redis://:${REDIS_PASSWORD}@10.0.3.1:6379</span>
+<span class="cv">REDIS_PASSWORD</span>=<span class="ck">[généré]</span>
+
+<span class="cm"># S3 GED (Hetzner Object Storage)</span>
+<span class="cv">S3_ENDPOINT</span>=<span class="ck">https://fsn1.your-objectstorage.com</span>
+<span class="cv">S3_REGION</span>=<span class="ck">eu-central-1</span>
+<span class="cv">S3_BUCKET</span>=<span class="ck">petsuite-ged</span>
+<span class="cv">S3_ACCESS_KEY</span>=<span class="ck">[clé Hetzner]</span>
+<span class="cv">S3_SECRET_KEY</span>=<span class="ck">[secret Hetzner]</span>
+
+<span class="cm"># SEPA (GoCardless)</span>
+<span class="cv">GOCARDLESS_ENV</span>=<span class="ck">live</span>  <span class="cm"># ou sandbox pour tests</span>
+<span class="cv">GOCARDLESS_TOKEN</span>=<span class="ck">[token GoCardless live]</span>
+<span class="cv">GOCARDLESS_WEBHOOK_SECRET</span>=<span class="ck">[secret validation webhooks]</span>
+
+<span class="cm"># Email (transactionnel)</span>
+<span class="cv">SMTP_HOST</span>=<span class="ck">smtp.mailgun.org</span>
+<span class="cv">SMTP_PORT</span>=<span class="ck">587</span>
+<span class="cv">SMTP_USER</span>=<span class="ck"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e38d8cce9186938f9aa393869790968a9786cd8591">[email&#160;protected]</a></span>
+<span class="cv">SMTP_PASS</span>=<span class="ck">[clé Mailgun]</span>
+
+<span class="cm"># Monitoring</span>
+<span class="cv">SENTRY_DSN</span>=<span class="ck">[DSN Sentry pour erreurs prod]</span>
+  </div>
+  <div class="alert alert-danger">Ce fichier ne doit jamais être versionné. Ajouter .env.prod dans .gitignore. Les valeurs sensibles transitent uniquement via GitHub Secrets → SSH deploy.</div>
+</div>
+
+<!-- 11 CHECKLIST -->
+<div class="section" id="s11">
+  <div class="section-header"><span class="section-num">11</span><span class="section-title">Checklist mise en production</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🖥</div>Serveurs & réseau</div>
+      <div class="check-list">
+        <div class="check-item">Créer les 3 serveurs Hetzner (srv-app, srv-db, srv-cache)</div>
+        <div class="check-item">Configurer le réseau privé 10.0.0.0/16</div>
+        <div class="check-item">Créer le Load Balancer et attacher srv-app-01</div>
+        <div class="check-item">Configurer le Firewall (ports 80/443 publics uniquement)</div>
+        <div class="check-item">Configurer SSH clé uniquement + port non standard</div>
+        <div class="check-item">Installer Fail2ban sur tous les serveurs</div>
+        <div class="check-item">Créer le volume bloc persistant pour MariaDB</div>
+        <div class="check-item">Configurer les entrées DNS (A + wildcard *.petsuite.fr)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🐳</div>Docker & déploiement</div>
+      <div class="check-list">
+        <div class="check-item">Installer Docker + Docker Compose sur srv-app-01</div>
+        <div class="check-item">Créer le réseau Docker proxy externe</div>
+        <div class="check-item">Configurer traefik.yml + acme.json (chmod 600)</div>
+        <div class="check-item">Créer .env.prod avec toutes les variables</div>
+        <div class="check-item">Premier déploiement manuel pour validation</div>
+        <div class="check-item">Configurer GitHub Secrets (tous les tokens)</div>
+        <div class="check-item">Tester le pipeline CI/CD sur un tag v0.1.0-test</div>
+        <div class="check-item">Vérifier SSL wildcard actif sur *.petsuite.fr</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🗄</div>BDD & données</div>
+      <div class="check-list">
+        <div class="check-item">Installer MariaDB 10.11+ sur srv-db-01</div>
+        <div class="check-item">Créer la BDD plateforme petsuite_platform</div>
+        <div class="check-item">Appliquer les migrations Flyway</div>
+        <div class="check-item">Tester la création d'un premier tenant</div>
+        <div class="check-item">Configurer le backup quotidien (cron workflow)</div>
+        <div class="check-item">Tester une restauration depuis backup</div>
+        <div class="check-item">Configurer Object Storage S3 + politique lifecycle</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-purple">📊</div>Monitoring & go-live</div>
+      <div class="check-list">
+        <div class="check-item">Déployer Prometheus + Grafana + node_exporter</div>
+        <div class="check-item">Déployer Uptime Kuma + configurer status.petsuite.fr</div>
+        <div class="check-item">Configurer les alertes email/Slack</div>
+        <div class="check-item">Intégrer Sentry pour les erreurs prod</div>
+        <div class="check-item">Test de charge (k6 ou Locust) avant ouverture</div>
+        <div class="check-item">Vérifier RGPD : mentions légales + CGV en ligne</div>
+        <div class="check-item">Premier tenant beta — validation end-to-end</div>
+        <div class="check-item">Go-live 🚀</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<footer>
+  <div><strong>Pe
+  </main>
+</div>
+  </main>
+</div>
+<footer class="ps-footer">
+  <span>🐾 PetSuite · Algorithmia</span>
+  <span>Sprint S33 · 18/03/2026 · Document interne</span>
+</footer>
+</body>
+</html>

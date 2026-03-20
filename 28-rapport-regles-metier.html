@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — 28 · Rapport Règles Métier · Recettes S33</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
+  :root {
+    --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--border:#30363d;--border2:#3d4450;
+    --text:#e6edf3;--muted:#8b949e;--accent:#2f81f7;--accent2:#58a6ff;
+    --green:#3fb950;--orange:#d29922;--red:#f85149;--purple:#bc8cff;--gold:#e3b341;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-size:14px;line-height:1.6;min-height:100vh;}
+  .layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh;}
+
+  /* SIDEBAR */
+  .sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:24px 0;position:sticky;top:0;height:100vh;overflow-y:auto;}
+  .sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+  .sidebar-logo .icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .sidebar-logo span{font-size:13px;font-weight:700;}
+  .sidebar-logo small{display:block;font-size:10px;color:var(--muted);font-weight:400;}
+  .nav-section{margin-bottom:20px;}
+  .nav-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 20px 8px;}
+  .nav-item{display:flex;align-items:center;gap:8px;padding:6px 20px;font-size:12px;color:var(--muted);cursor:pointer;text-decoration:none;transition:all .15s;}
+  .nav-item:hover{background:var(--bg3);color:var(--text);}
+  .nav-item.active{background:rgba(47,129,247,.12);color:var(--accent2);border-left:2px solid var(--accent);}
+  .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+  .dot.ok{background:var(--green);}
+  .dot.warn{background:var(--gold);}
+  .dot.crit{background:var(--red);}
+
+  /* MAIN */
+  main{padding:40px 48px;max-width:940px;}
+  .breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:28px;}
+  .breadcrumb a{color:var(--accent2);text-decoration:none;}
+  .breadcrumb span{color:var(--border2);}
+
+  /* PAGE HEADER */
+  .page-header{margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+  .sprint-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(47,129,247,.15);border:1px solid rgba(47,129,247,.35);color:var(--accent2);font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:.06em;}
+  .sprint-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  h1{font-size:26px;font-weight:800;color:var(--text);line-height:1.25;margin-bottom:8px;}
+  .page-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+
+  /* SECTIONS */
+  .section{margin-bottom:40px;}
+  .section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  /* RULE CARDS */
+  .rule-list{display:grid;gap:10px;}
+  .rule{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;border-left:3px solid var(--border);}
+  .rule.ok{border-left-color:var(--green);}
+  .rule.warn{border-left-color:var(--orange);}
+  .rule.crit{border-left-color:var(--red);}
+  .rule.info{border-left-color:var(--accent);}
+  .rule-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
+  .rule-id{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--accent2);background:rgba(47,129,247,.1);padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:1px;}
+  .rule-title{font-size:13px;font-weight:700;color:var(--text);}
+  .rule-body{font-size:12px;color:var(--muted);line-height:1.55;}
+  .rule-body strong{color:var(--text);}
+  .rule-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+
+  /* PILLS */
+  .pill{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace;white-space:nowrap;}
+  .p-ok{background:rgba(63,185,80,.15);color:var(--green);border:1px solid rgba(63,185,80,.3);}
+  .p-warn{background:rgba(210,153,34,.12);color:var(--gold);border:1px solid rgba(210,153,34,.3);}
+  .p-crit{background:rgba(248,81,73,.12);color:var(--red);border:1px solid rgba(248,81,73,.3);}
+  .p-info{background:rgba(47,129,247,.1);color:var(--accent2);border:1px solid rgba(47,129,247,.25);}
+  .p-purple{background:rgba(188,140,255,.1);color:var(--purple);border:1px solid rgba(188,140,255,.25);}
+  .p-gray{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+
+  /* CODE */
+  code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--purple);}
+  .code-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:8px 0;color:var(--text);}
+  .cm{color:#6e7681;font-style:italic;}
+  .ck{color:var(--accent2);}
+  .cs{color:#a5d6ff;}
+  .cv{color:var(--green);}
+  .ce{color:var(--red);}
+
+  /* TABLES */
+  .tw{overflow-x:auto;margin-bottom:4px;}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg2);}
+  td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;color:var(--text);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+
+  /* ALERT */
+  .alert{border-radius:8px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;}
+  .alert.warn{background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.35);}
+  .alert.info{background:rgba(47,129,247,.08);border:1px solid rgba(47,129,247,.25);}
+  .alert.ok{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.25);}
+  .alert-icon{font-size:18px;flex-shrink:0;}
+  .alert-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+  .alert.warn .alert-title{color:var(--gold);}
+  .alert.info .alert-title{color:var(--accent2);}
+  .alert.ok .alert-title{color:var(--green);}
+  .alert p{font-size:12px;color:var(--muted);line-height:1.55;}
+
+  /* RECETTE CHECK */
+  .check-grid{display:grid;gap:6px;}
+  .check-item{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;display:flex;align-items:flex-start;gap:10px;}
+  .check-box{width:18px;height:18px;border-radius:4px;border:1px solid var(--border2);flex-shrink:0;margin-top:1px;}
+  .check-text{font-size:12px;color:var(--text);line-height:1.5;}
+  .check-text .sub{font-size:11px;color:var(--muted);margin-top:2px;}
+
+  /* KPI ROW */
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px;}
+  .kpi{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+  .kpi-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--text);margin-bottom:3px;}
+  .kpi-num.green{color:var(--green);}
+  .kpi-num.accent{color:var(--accent2);}
+  .kpi-num.gold{color:var(--gold);}
+  .kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+
+  footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 48px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;}
+  @media(max-width:860px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}main{padding:24px 20px;}.kpi-row{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="icon">🐾</div>
+    <div><span>PetSuite</span><small>28 · Rapport recettes · S33</small></div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Modules</div>
+    <a class="nav-item active" href="#animaux"><div class="dot ok"></div>Animaux & Races</a>
+    <a class="nav-item" href="#seances"><div class="dot ok"></div>Séances & Agenda</a>
+    <a class="nav-item" href="#edc"><div class="dot ok"></div>EDC / CAC</a>
+    <a class="nav-item" href="#devis"><div class="dot ok"></div>Devis & Contrats</a>
+    <a class="nav-item" href="#facturation"><div class="dot ok"></div>Facturation</a>
+    <a class="nav-item" href="#reglements"><div class="dot ok"></div>Règlements</a>
+    <a class="nav-item" href="#fec"><div class="dot ok"></div>FEC & Comptabilité</a>
+    <a class="nav-item" href="#ged"><div class="dot ok"></div>GED Documentaire</a>
+    <a class="nav-item" href="#crm"><div class="dot ok"></div>CRM</a>
+    <a class="nav-item" href="#exercices"><div class="dot ok"></div>Exercices comptables</a>
+    <a class="nav-item" href="#securite"><div class="dot warn"></div>Sécurité & Accès</a>
+    <a class="nav-item" href="#scenaries-erreur"><div class="dot crit"></div>Scénarios d'erreur</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Triggers BDD</div>
+    <a class="nav-item" href="#triggers"><div class="dot ok"></div>20+ triggers actifs</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Référence</div>
+    <a class="nav-item" href="index.html"><div class="dot ok"></div>← Index docs</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main>
+  <nav class="breadcrumb">
+    <a href="index.html">PetSuite</a><span>/</span>
+    <a href="index.html">docs</a><span>/</span>
+    <span>28 — Rapport règles métier · Recettes</span>
+  </nav>
+
+  <div class="page-header">
+    <div class="sprint-badge">28 · SPRINT S33 · RECETTES</div>
+    <h1>Rapport des règles métier<br>— Référentiel de recette</h1>
+    <div class="page-meta">
+      <span>📅 18/03/2026</span>
+      <span>⚙️ BDD micro_logiciel + micro_logiciel_ged</span>
+      <span>🔧 20+ triggers · 3 procédures · 10+ vues</span>
+    </div>
+  </div>
+
+  <div class="alert info">
+    <div class="alert-icon">ℹ️</div>
+    <div>
+      <div class="alert-title">Usage de ce document</div>
+      <p>Ce rapport liste toutes les règles métier implémentées en BDD (triggers, contraintes, procédures stockées) et en frontend (validations, comportements attendus). Chaque règle est accompagnée des scénarios de test à jouer en recette et des erreurs attendues en cas de violation.</p>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-num accent">20+</div><div class="kpi-lbl">Triggers BDD</div></div>
+    <div class="kpi"><div class="kpi-num green">3</div><div class="kpi-lbl">Procédures stockées</div></div>
+    <div class="kpi"><div class="kpi-num gold">10+</div><div class="kpi-lbl">Vues métier</div></div>
+    <div class="kpi"><div class="kpi-num accent">2</div><div class="kpi-lbl">Triggers GED inter-BDD</div></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 1. ANIMAUX -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="animaux">
+    <div class="section-title">1 — Animaux & Races</div>
+    <div class="rule-list">
+
+      <div class="rule crit">
+        <div class="rule-header">
+          <span class="rule-id">ANI-01</span>
+          <span class="rule-title">Numéro de puce — unicité & format 15 chiffres</span>
+        </div>
+        <div class="rule-body">Le numéro de puce <code>ANI_PUC</code> est la <strong>clé universelle</strong> de l'animal. Il doit contenir exactement 15 chiffres, sans espace ni tiret. Il est unique dans toute la base et <strong>non modifiable</strong> après création.</div>
+        <div class="rule-meta">
+          <span class="pill p-crit">UNIQUE KEY uq_ani_puc</span>
+          <span class="pill p-crit">CHECK REGEXP ^[0-9]{15}$</span>
+          <span class="pill p-gray">Frontend : maxLength=15, required</span>
+        </div>
+        <div class="code-block">
+<span class="cm">-- Cas de recette :</span>
+<span class="ce">INSERT INTO animal (ANI_PUC, ...) VALUES ('123', ...);</span>   <span class="cm">-- ✗ Rejeté (< 15 chiffres)</span>
+<span class="ce">INSERT INTO animal (ANI_PUC, ...) VALUES ('1234A6789012345', ...);</span> <span class="cm">-- ✗ Rejeté (lettres)</span>
+<span class="cv">INSERT INTO animal (ANI_PUC, ...) VALUES ('250269811400022', ...);</span> <span class="cm">-- ✓ Accepté</span>
+<span class="ce">INSERT INTO animal (ANI_PUC, ...) VALUES ('250269811400022', ...);</span> <span class="cm">-- ✗ Rejeté (doublon)</span>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">ANI-02</span>
+          <span class="rule-title">Propriétaire obligatoire — lien tiers client</span>
+        </div>
+        <div class="rule-body">Tout animal doit être rattaché à un tiers de type <code>CLIENT</code> ou <code>CLIENT_FOURNISSEUR</code>. La FK <code>ANI_CLI → tiers.TIE_ID</code> est <strong>ON DELETE RESTRICT</strong> : impossible de supprimer un client qui a des animaux.</div>
+        <div class="rule-meta">
+          <span class="pill p-crit">FK fk_animal_client ON DELETE RESTRICT</span>
+          <span class="pill p-gray">Frontend : select required</span>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">ANI-03</span>
+          <span class="rule-title">Races — 1 principale + 1 secondaire optionnelle</span>
+        </div>
+        <div class="rule-body">L'animal peut avoir jusqu'à 2 races (<code>ANI_ESP_1</code> et <code>ANI_ESP_2</code>). Les deux sont optionnelles. Si la race est supprimée du référentiel, les champs passent à NULL (<code>ON DELETE SET NULL</code>).</div>
+        <div class="rule-meta">
+          <span class="pill p-info">FK ON DELETE SET NULL</span>
+          <span class="pill p-gray">392 races disponibles · 8 espèces</span>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">ANI-04</span>
+          <span class="rule-title">14 critères CAC — cases à cocher booléennes</span>
+        </div>
+        <div class="rule-body">Les colonnes <code>ANI_CAC_1</code> à <code>ANI_CAC_14</code> sont des <code>TINYINT(1)</code> avec valeur par défaut 0. Le score CAC est calculé à chaque séance de suivi, pas directement sur la fiche animal.</div>
+        <div class="rule-meta">
+          <span class="pill p-gray">DEFAULT 0 · Mis à jour via PUT /animaux/:id</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 2. SÉANCES -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="seances">
+    <div class="section-title">2 — Séances & Agenda</div>
+    <div class="rule-list">
+
+      <div class="rule crit">
+        <div class="rule-header">
+          <span class="rule-id">SEA-01</span>
+          <span class="rule-title">Unicité EDC par animal — trigger BDD</span>
+        </div>
+        <div class="rule-body">Une seule séance de type <strong>EDC (Étude de comportement)</strong> peut exister par animal, hors statut ANNULÉE. Géré par <strong>2 triggers</strong> (<code>BEFORE INSERT</code> et <code>BEFORE UPDATE</code>). L'animal est obligatoire pour ce type de séance.</div>
+        <div class="rule-meta">
+          <span class="pill p-crit">trg_sea_unique_par_animal_ins</span>
+          <span class="pill p-crit">trg_sea_unique_par_animal_upd</span>
+          <span class="pill p-gray">STY_UNIQUE_PAR_ANIMAL = 1</span>
+        </div>
+        <div class="code-block">
+<span class="cm">-- Erreurs levées :</span>
+<span class="ce">SQLSTATE 45000 : 'Une séance de ce type existe déjà pour cet animal'</span>
+<span class="ce">SQLSTATE 45000 : 'Type de séance unique par animal : ANI_ID obligatoire'</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer une 2ème EDC pour le même animal → message d'erreur attendu<div class="sub">L'erreur doit s'afficher clairement côté frontend</div></div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Annuler l'EDC existante → recréer une nouvelle EDC pour le même animal → doit être accepté</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer une EDC sans sélectionner d'animal → rejet BDD + message frontend</div></div>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">SEA-02</span>
+          <span class="rule-title">Calcul automatique des totaux de séance — 3 triggers AFTER</span>
+        </div>
+        <div class="rule-body">À chaque INSERT / UPDATE / DELETE d'une ligne de séance (<code>seance_ligne</code>), les totaux HT/TVA/TTC de la séance parente sont automatiquement recalculés et mis à jour via les triggers <code>trg_sel_after_*</code>. Le champ <code>SEA_MODIFIE_LE</code> est également mis à jour.</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">trg_sel_after_insert</span>
+          <span class="pill p-ok">trg_sel_after_update</span>
+          <span class="pill p-ok">trg_sel_after_delete</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Ajouter une ligne prestation → vérifier que SEA_MONTANT_TTC se met à jour immédiatement</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Modifier la quantité d'une ligne → recalcul automatique des totaux</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Supprimer toutes les lignes → SEA_MONTANT_TTC revient à 0</div></div>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">SEA-03</span>
+          <span class="rule-title">Calcul lignes de séance — arrondi 2 décimales</span>
+        </div>
+        <div class="rule-body">Les totaux de chaque ligne sont calculés par trigger <strong>BEFORE INSERT/UPDATE</strong> avec arrondi à 2 décimales : <code>ROUND(QTE * PU_HT, 2)</code> pour le HT, puis TVA appliquée sur le HT calculé.</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">trg_sel_calc_insert</span>
+          <span class="pill p-ok">trg_sel_calc_update</span>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">SEA-04</span>
+          <span class="rule-title">Statuts de séance</span>
+        </div>
+        <div class="rule-body">4 statuts possibles : <code>PLANIFIÉE</code> · <code>RÉALISÉE</code> · <code>ANNULÉE</code> (statut final) · <code>NO_SHOW</code> (statut final). Le statut ANNULÉE est exclu de la règle d'unicité EDC.</div>
+        <div class="rule-meta">
+          <span class="pill p-gray">SST_FINAL = 1 pour ANNULEE et NO_SHOW</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 3. EDC / CAC -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="edc">
+    <div class="section-title">3 — Étude Comportementale (EDC) & Suivi CAC</div>
+    <div class="rule-list">
+
+      <div class="rule crit">
+        <div class="rule-header">
+          <span class="rule-id">EDC-01</span>
+          <span class="rule-title">Une seule fiche EDC par animal</span>
+        </div>
+        <div class="rule-body">La fiche EDC est <strong>unique par animal</strong>. Elle est partagée entre toutes les séances EDC de cet animal. Elle comporte 7 sections : Identité · Alimentation · Comportement · Mode de vie · Antécédents · Grille comportementale · Attentes. La grille comportementale est multi-lignes (CRUD).</div>
+        <div class="rule-meta">
+          <span class="pill p-crit">Unicité garantie par SEA-01</span>
+          <span class="pill p-gray">Sauvegarde partielle autorisée</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Ouvrir l'EDC depuis une séance → la même fiche s'affiche (pas de doublon)</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Sauvegarder partiellement (section 1 seulement) → reprendre depuis section 2 lors d'une séance ultérieure</div></div>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">CAC-01</span>
+          <span class="rule-title">14 critères CAC par séance — pré-remplissage</span>
+        </div>
+        <div class="rule-body">Pour chaque séance de suivi, les 14 critères CAC sont cochables individuellement. Lors de l'ouverture d'une nouvelle séance, les critères sont <strong>pré-remplis depuis la dernière séance de l'animal</strong>. Le score temps réel est calculé côté frontend.</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">64 libellés paramétrables</span>
+          <span class="pill p-gray">Score = somme des cases cochées / 14</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer une 2ème séance de suivi → vérifier que les 14 critères reprennent l'état de la séance précédente</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Onglet Évolution → graphique et tableau comparatif mis à jour après sauvegarde</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 4. DEVIS & CONTRATS -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="devis">
+    <div class="section-title">4 — Devis & Contrats</div>
+    <div class="rule-list">
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">DCE-01</span>
+          <span class="rule-title">Numérotation automatique DCE-YYMM-NNNN</span>
+        </div>
+        <div class="rule-body">À l'insertion d'un devis sans numéro, le trigger <code>trg_dce_num</code> génère automatiquement un numéro au format <code>DCE-2603-0001</code> (YYMM = année 2 chiffres + mois 2 chiffres). Le compteur est par mois via la table <code>dce_compteur_mois</code>.</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">trg_dce_num BEFORE INSERT</span>
+          <span class="pill p-gray">Remise à 0 chaque mois</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer un devis → vérifier le format DCE-YYMM-0001</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer un 2ème devis le même mois → numéro DCE-YYMM-0002</div></div>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">DCE-02</span>
+          <span class="rule-title">Calcul automatique des totaux lignes devis</span>
+        </div>
+        <div class="rule-body">À chaque INSERT/UPDATE de ligne de devis, les totaux sont calculés par trigger : <code>ROUND(QTE × PU_HT, 2)</code> pour le HT, puis TVA sur le HT arrondi, puis TTC = HT + TVA. Le taux TVA est enregistré en snapshot (<code>DCL_TVA_TAUX</code>).</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">trg_dcl_calc_insert</span>
+          <span class="pill p-ok">trg_dcl_calc_update</span>
+          <span class="pill p-gray">Snapshot taux TVA au moment de la création</span>
+        </div>
+      </div>
+
+      <div class="rule crit">
+        <div class="rule-header">
+          <span class="rule-id">DCE-03</span>
+          <span class="rule-title">Procédure sp_dce_creer_depuis_seance — règles strictes</span>
+        </div>
+        <div class="rule-body">La procédure <code>sp_dce_creer_depuis_seance(p_sea_id, p_forcer)</code> génère un devis depuis une séance avec 3 règles bloquantes :
+          <br>1. La séance doit exister
+          <br>2. Si un devis est déjà lié et <code>p_forcer = 0</code> → erreur
+          <br>3. Pour une EDC, l'animal est obligatoire
+          <br>Le devis créé a une validité de <strong>30 jours</strong> à partir de la date de séance. Les lignes de séance sont copiées dans le devis.</div>
+        <div class="rule-meta">
+          <span class="pill p-crit">sp_dce_creer_depuis_seance</span>
+          <span class="pill p-warn">Validité +30j auto</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Générer devis depuis séance EDC sans animal → erreur attendue</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Générer un 2ème devis sans forcer → message "Un devis est déjà lié"</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Vérifier que la date de validité = date séance + 30j</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Vérifier que les lignes de séance sont bien copiées dans le devis</div></div>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">DCE-04</span>
+          <span class="rule-title">Statuts devis</span>
+        </div>
+        <div class="rule-body">5 statuts : <code>BROUILLON</code> → <code>ENVOYÉ</code> → <code>ACCEPTÉ</code> ou <code>REFUSÉ</code> ou <code>ANNULÉ</code>. Un devis généré depuis une séance est créé en <code>BROUILLON</code>.</div>
+        <div class="rule-meta"><span class="pill p-gray">Statuts ENUM BDD</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 5. FACTURATION -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="facturation">
+    <div class="section-title">5 — Facturation</div>
+    <div class="rule-list">
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">FAC-01</span>
+          <span class="rule-title">Numérotation automatique FAC-YYMM-NNNN</span>
+        </div>
+        <div class="rule-body">Même mécanisme que les devis — trigger <code>trg_facture_num</code> génère un numéro au format <code>FAC-2603-0001</code>. Compteur mensuel via <code>fac_compteur_mois</code>.</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">trg_facture_num BEFORE INSERT</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer une facture → format FAC-YYMM-NNNN vérifié</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Séquence des numéros : FAC-2603-0001, FAC-2603-0002… sans saut</div></div>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">FAC-02</span>
+          <span class="rule-title">Calcul automatique totaux lignes facture</span>
+        </div>
+        <div class="rule-body">Identique aux devis — triggers <code>trg_fli_calc_insert</code> et <code>trg_fli_calc_update</code> calculent HT · TVA · TTC avec arrondi 2 décimales. Le taux TVA est snapshoté.</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">trg_fli_calc_insert</span>
+          <span class="pill p-ok">trg_fli_calc_update</span>
+        </div>
+      </div>
+
+      <div class="rule crit">
+        <div class="rule-header">
+          <span class="rule-id">FAC-03</span>
+          <span class="rule-title">Verrouillage facture après clôture d'exercice</span>
+        </div>
+        <div class="rule-body">Si l'exercice comptable auquel appartient une facture est <strong>clôturé</strong> (<code>EXE_CLOTURE = 1</code>), toute modification ou suppression de cette facture est bloquée par trigger. La date de facture est comparée aux bornes de l'exercice.</div>
+        <div class="rule-meta">
+          <span class="pill p-crit">trg_facture_no_update_if_closed</span>
+          <span class="pill p-crit">trg_facture_no_delete_if_closed</span>
+        </div>
+        <div class="code-block">
+<span class="ce">SQLSTATE 45000 : 'Exercice cloture : modification facture interdite'</span>
+<span class="ce">SQLSTATE 45000 : 'Exercice cloture : suppression facture interdite'</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Clôturer l'exercice 2026 → tenter de modifier une facture de 2026 → rejet attendu</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer une facture sur un exercice non clôturé → modification possible</div></div>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">FAC-04</span>
+          <span class="rule-title">Statuts facture</span>
+        </div>
+        <div class="rule-body">4 statuts : <code>BROUILLON</code> → <code>EMISE</code> → <code>PAYÉE</code> ou <code>ANNULÉE</code>. Une facture émise et partiellement réglée apparaît dans l'encours client via la vue <code>v_facture_suivi</code>.</div>
+        <div class="rule-meta">
+          <span class="pill p-gray">v_facture_suivi · v_encours_client</span>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">FAC-05</span>
+          <span class="rule-title">Client obligatoire — ON DELETE RESTRICT</span>
+        </div>
+        <div class="rule-body">Une facture doit être rattachée à un tiers existant. La FK est <code>ON DELETE RESTRICT</code> : impossible de supprimer un client qui a des factures.</div>
+        <div class="rule-meta"><span class="pill p-crit">FK fk_fac_tiers ON DELETE RESTRICT</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 6. RÈGLEMENTS -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="reglements">
+    <div class="section-title">6 — Règlements</div>
+    <div class="rule-list">
+
+      <div class="rule crit">
+        <div class="rule-header">
+          <span class="rule-id">REG-01</span>
+          <span class="rule-title">Pas de dépassement du montant TTC facturé</span>
+        </div>
+        <div class="rule-body">Le trigger <code>trg_reglement_check</code> vérifie que la somme des règlements d'une facture ne dépasse pas son montant TTC. Si <code>(déjà payé + nouveau règlement) > TTC</code>, le règlement est bloqué.</div>
+        <div class="rule-meta">
+          <span class="pill p-crit">trg_reglement_check BEFORE INSERT</span>
+        </div>
+        <div class="code-block">
+<span class="ce">SQLSTATE 45000 : 'Montant total des règlements supérieur au TTC'</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Facture 100€ → règlement 80€ → règlement 30€ → rejet (80+30 > 100)</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Facture 100€ → règlement 60€ → règlement 40€ → accepté (total = 100)</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Facture 100€ → règlement 100€ en une fois → accepté</div></div>
+        </div>
+      </div>
+
+      <div class="rule crit">
+        <div class="rule-header">
+          <span class="rule-id">REG-02</span>
+          <span class="rule-title">Verrouillage règlement après clôture d'exercice</span>
+        </div>
+        <div class="rule-body">Même que FAC-03 — tout règlement dont la date tombe dans un exercice clôturé est protégé en modification et suppression.</div>
+        <div class="rule-meta">
+          <span class="pill p-crit">trg_reglement_no_update_if_closed</span>
+          <span class="pill p-crit">trg_reglement_no_delete_if_closed</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 7. FEC & COMPTABILITÉ -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="fec">
+    <div class="section-title">7 — FEC & Comptabilité</div>
+    <div class="rule-list">
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">FEC-01</span>
+          <span class="rule-title">Génération FEC par exercice — procédure sp_fec_generer_par_exercice</span>
+        </div>
+        <div class="rule-body">La procédure génère un export FEC complet (journal VT + journal BQ) pour un exercice donné. Chaque ligne reçoit un <strong>hash SHA-256</strong> calculé sur tous ses champs via <code>SHA2(CONCAT_WS('|', ...), 256)</code>. Un hash global SHA-256 chaîné est ensuite calculé sur toutes les lignes triées.</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">sp_fec_generer_par_exercice</span>
+          <span class="pill p-ok">Hash SHA-256 par ligne</span>
+          <span class="pill p-ok">Hash global chaîné</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">CALL sp_fec_generer_par_exercice('2026') → vérifier que toutes les factures de 2026 sont présentes</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Vérifier l'équilibre : pour chaque EcritureNum, SUM(Debit) = SUM(Credit) via <code>v_fec_export_non_equilibre</code></div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Vérifier que FXL_HASH est non NULL sur chaque ligne</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Vérifier que FEX_HASH_GLOBAL est non NULL sur l'export</div></div>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">FEC-02</span>
+          <span class="rule-title">Structure FEC — 3 écritures par facture</span>
+        </div>
+        <div class="rule-body">Chaque facture génère 3 lignes FEC : (1) Débit 411000 Clients = TTC, (2) Crédit 706000 Prestations de services = HT, (3) Crédit 445710 TVA collectée = TVA (uniquement si TVA ≠ 0). Chaque règlement génère 2 lignes : Débit 512000 Banque + Crédit 411000 Clients.</div>
+        <div class="rule-meta">
+          <span class="pill p-info">411000 Clients</span>
+          <span class="pill p-info">706000 Prestations</span>
+          <span class="pill p-info">445710 TVA collectée</span>
+          <span class="pill p-info">512000 Banque</span>
+        </div>
+      </div>
+
+      <div class="rule crit">
+        <div class="rule-header">
+          <span class="rule-id">FEC-03</span>
+          <span class="rule-title">Clôture d'exercice — irréversible</span>
+        </div>
+        <div class="rule-body">La procédure <code>sp_exercice_cloturer</code> passe <code>EXE_CLOTURE = 1</code>. Cette opération est <strong>irréversible</strong> — aucune procédure de réouverture n'est prévue. Une fois clôturé, toutes les factures et règlements de la période sont verrouillés.</div>
+        <div class="rule-meta">
+          <span class="pill p-crit">sp_exercice_cloturer — irréversible</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Clôturer l'exercice → confirmer que EXE_CLOTURE = 1 en BDD</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Vérifier qu'un message d'avertissement clair est affiché avant confirmation côté frontend</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 8. GED -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="ged">
+    <div class="section-title">8 — GED Documentaire</div>
+    <div class="rule-list">
+
+      <div class="rule crit">
+        <div class="rule-header">
+          <span class="rule-id">GED-01</span>
+          <span class="rule-title">Validation inter-BDD — objet métier doit exister</span>
+        </div>
+        <div class="rule-body">Avant de créer un lien document → objet métier, le trigger <code>bi_ged_document_lien_check_objet</code> vérifie que l'objet cible existe dans <code>micro_logiciel</code>. Couvre 13 types : ANIMAL, ARTICLE_PRESTATION, CONTACT, FACTURE, RACE, SEANCE, TIERS, UTILISATEUR, DEVIS_CONTRAT, AVOIR, REGLEMENT, CRM_NOTE, CRM_ACTIVITE.</div>
+        <div class="rule-meta">
+          <span class="pill p-crit">bi_ged_document_lien_check_objet BEFORE INSERT</span>
+          <span class="pill p-crit">bu_ged_document_lien_check_objet BEFORE UPDATE</span>
+          <span class="pill p-gray">13 types d'objets supportés</span>
+        </div>
+        <div class="code-block">
+<span class="ce">SQLSTATE 45000 : 'Objet métier introuvable pour ce lien GED'</span>
+<span class="ce">SQLSTATE 45000 : 'Type d''objet GED (GOT_ID) inconnu'</span>
+<span class="ce">SQLSTATE 45000 : 'Type d''objet métier non pris en charge par la GED'</span>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">GED-02</span>
+          <span class="rule-title">Hash SHA-256 par document — intégrité</span>
+        </div>
+        <div class="rule-body">Chaque document GED possède un champ <code>DOC_HASH_SHA256 CHAR(64)</code> pour déduplication et contrôle d'intégrité. Le stockage est externe (URI/S3) — pas de BLOB en BDD.</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">Hash SHA-256 optionnel</span>
+          <span class="pill p-gray">Stockage URI externe (S3-compatible)</span>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">GED-03</span>
+          <span class="rule-title">Unicité lien (DOC_ID, GOT_ID, OBJ_ID, DLI_ROLE)</span>
+        </div>
+        <div class="rule-body">Un même document ne peut pas être lié deux fois au même objet métier avec le même rôle. La contrainte <code>uq_dli</code> garantit l'unicité de la combinaison.</div>
+        <div class="rule-meta"><span class="pill p-ok">UNIQUE KEY uq_dli</span></div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">GED-04</span>
+          <span class="rule-title">Statuts document</span>
+        </div>
+        <div class="rule-body">3 statuts : <code>ACTIF</code> · <code>ARCHIVE</code> · <code>SUPPRIME</code>. La vue <code>v_ged_pj_animal</code> filtre automatiquement les documents SUPPRIMÉS.</div>
+        <div class="rule-meta"><span class="pill p-gray">v_ged_pj_animal filtre DOC_STATUT ≠ SUPPRIME</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 9. CRM -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="crm">
+    <div class="section-title">9 — CRM</div>
+    <div class="rule-list">
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">CRM-01</span>
+          <span class="rule-title">Formulaire lead public — création automatique</span>
+        </div>
+        <div class="rule-body">Le formulaire accessible via <code>/questionnaire?type=canin|equestre|pension|toiletteur</code> (sans connexion) crée automatiquement un lead dans le CRM. Les champs fixes : Nom · Prénom · Téléphone · Email · Nom animal · Race · Âge · Commentaire. Le consentement RGPD est obligatoire.</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">GET /api/questionnaires</span>
+          <span class="pill p-gray">4 types de questionnaire</span>
+          <span class="pill p-warn">Consentement RGPD obligatoire</span>
+        </div>
+        <div class="check-grid" style="margin-top:10px;">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Soumettre formulaire ?type=canin → vérifier création lead dans CRM → Leads</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Soumettre sans cocher le consentement RGPD → soumission bloquée</div></div>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">CRM-02</span>
+          <span class="rule-title">Historique pipeline opportunités</span>
+        </div>
+        <div class="rule-body">Tout changement de statut d'une opportunité est tracé dans <code>crm_opportunite_histo</code> avec le statut avant/après, la probabilité avant/après, et le montant avant/après.</div>
+        <div class="rule-meta"><span class="pill p-ok">crm_opportunite_histo</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 10. EXERCICES COMPTABLES -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="exercices">
+    <div class="section-title">10 — Exercices comptables</div>
+    <div class="rule-list">
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">EXE-01</span>
+          <span class="rule-title">Dates cohérentes — CHECK EXE_DATE_DEBUT ≤ EXE_DATE_FIN</span>
+        </div>
+        <div class="rule-body">La contrainte <code>chk_exe_dates</code> garantit que la date de début d'exercice est antérieure ou égale à la date de fin.</div>
+        <div class="rule-meta"><span class="pill p-ok">CHECK (EXE_DATE_DEBUT <= EXE_DATE_FIN)</span></div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">EXE-02</span>
+          <span class="rule-title">Code exercice unique</span>
+        </div>
+        <div class="rule-body">Le code exercice (ex: <code>2026</code>, <code>2025-2026</code>) est unique. EX2026 est déjà créé en base.</div>
+        <div class="rule-meta"><span class="pill p-ok">UNIQUE KEY uq_exe_code</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 11. SÉCURITÉ & ACCÈS -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="securite">
+    <div class="section-title">11 — Sécurité & Accès</div>
+    <div class="rule-list">
+
+      <div class="rule warn">
+        <div class="rule-header">
+          <span class="rule-id">SEC-01</span>
+          <span class="rule-title">Utilisateur SQL unique — Admin</span>
+        </div>
+        <div class="rule-body">Un seul utilisateur SQL applicatif : <code>Admin</code> (MariaDB hors Docker, port 3307, <code>--skip-ssl</code> obligatoire). Droits : SELECT, INSERT, UPDATE, DELETE, SHOW VIEW, EXECUTE, TRIGGER, EVENT sur <code>micro_logiciel.*</code>.</div>
+        <div class="rule-meta">
+          <span class="pill p-warn">Hors Docker · 192.168.1.62:3307</span>
+          <span class="pill p-crit">--skip-ssl obligatoire</span>
+        </div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">SEC-02</span>
+          <span class="rule-title">SIRET — format 14 chiffres</span>
+        </div>
+        <div class="rule-body">La contrainte <code>chk_tie_siret_format</code> sur la table <code>tiers</code> vérifie que le SIRET, s'il est renseigné, contient exactement 14 chiffres.</div>
+        <div class="rule-meta"><span class="pill p-ok">CHECK REGEXP ^[0-9]{14}$</span></div>
+      </div>
+
+      <div class="rule ok">
+        <div class="rule-header">
+          <span class="rule-id">SEC-03</span>
+          <span class="rule-title">Audit log — toutes actions tracées</span>
+        </div>
+        <div class="rule-body">La table <code>audit_log</code> trace toutes les actions : INSERT / UPDATE / DELETE / LOGIN / EXPORT. Chaque entrée contient la date, l'utilisateur, la table, l'ID objet, un commentaire et un payload JSON optionnel (validé par <code>JSON_VALID</code>).</div>
+        <div class="rule-meta">
+          <span class="pill p-ok">audit_log</span>
+          <span class="pill p-gray">CHECK JSON_VALID(AUD_PAYLOAD)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 12. SCÉNARIOS D'ERREUR COMPLETS -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="scenaries-erreur">
+    <div class="section-title">12 — Récapitulatif scénarios d'erreur attendus</div>
+
+    <div class="alert warn">
+      <div class="alert-icon">⚠️</div>
+      <div>
+        <div class="alert-title">À tester en priorité lors des recettes</div>
+        <p>Ces scénarios déclenchent des erreurs BDD (SQLSTATE 45000) qui doivent être correctement interceptées et affichées côté frontend avec un message utilisateur clair.</p>
+      </div>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Action</th><th>Condition déclenchante</th><th>Erreur BDD</th><th>Message attendu côté UI</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>ANI-01</code></td><td>Créer un animal</td><td>Puce ≠ 15 chiffres exactement</td><td>CHECK violation</td><td>"Le numéro de puce doit contenir exactement 15 chiffres"</td></tr>
+          <tr><td><code>ANI-01</code></td><td>Créer un animal</td><td>Puce déjà utilisée</td><td>UNIQUE KEY violation</td><td>"Un animal avec cette puce existe déjà"</td></tr>
+          <tr><td><code>SEA-01</code></td><td>Créer une séance EDC</td><td>EDC déjà existante pour l'animal (non annulée)</td><td>SQLSTATE 45000</td><td>"Une étude comportementale existe déjà pour cet animal"</td></tr>
+          <tr><td><code>SEA-01</code></td><td>Créer une séance EDC</td><td>Aucun animal sélectionné</td><td>SQLSTATE 45000</td><td>"L'animal est obligatoire pour ce type de séance"</td></tr>
+          <tr><td><code>DCE-03</code></td><td>Générer devis depuis séance</td><td>Devis déjà lié + forcer=false</td><td>SQLSTATE 45000</td><td>"Un devis est déjà associé à cette séance"</td></tr>
+          <tr><td><code>DCE-03</code></td><td>Générer devis EDC</td><td>Pas d'animal sur la séance EDC</td><td>SQLSTATE 45000</td><td>"L'animal est obligatoire pour générer un devis EDC"</td></tr>
+          <tr><td><code>REG-01</code></td><td>Saisir un règlement</td><td>Somme règlements > TTC facture</td><td>SQLSTATE 45000</td><td>"Le montant dépasse le total de la facture"</td></tr>
+          <tr><td><code>FAC-03</code></td><td>Modifier une facture</td><td>Exercice de la facture clôturé</td><td>SQLSTATE 45000</td><td>"Cette facture appartient à un exercice clôturé"</td></tr>
+          <tr><td><code>FAC-03</code></td><td>Supprimer une facture</td><td>Exercice de la facture clôturé</td><td>SQLSTATE 45000</td><td>"Impossible de supprimer une facture d'un exercice clôturé"</td></tr>
+          <tr><td><code>REG-02</code></td><td>Modifier un règlement</td><td>Exercice du règlement clôturé</td><td>SQLSTATE 45000</td><td>"Ce règlement appartient à un exercice clôturé"</td></tr>
+          <tr><td><code>GED-01</code></td><td>Lier un document</td><td>Objet métier cible introuvable</td><td>SQLSTATE 45000</td><td>"L'objet associé à ce document n'existe pas"</td></tr>
+          <tr><td><code>ANI-02</code></td><td>Supprimer un client</td><td>Client a des animaux</td><td>FK RESTRICT</td><td>"Ce client ne peut pas être supprimé (animaux associés)"</td></tr>
+          <tr><td><code>FAC-05</code></td><td>Supprimer un client</td><td>Client a des factures</td><td>FK RESTRICT</td><td>"Ce client ne peut pas être supprimé (factures associées)"</td></tr>
+          <tr><td><code>FEC-03</code></td><td>Clôturer un exercice</td><td>Action irréversible</td><td>—</td><td>Confirmation explicite requise · "Cette action est irréversible"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- TRIGGERS RÉCAPITULATIF -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section" id="triggers">
+    <div class="section-title">Récapitulatif des triggers BDD</div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Trigger</th><th>Table</th><th>Moment</th><th>Règle</th></tr></thead>
+        <tbody>
+          <tr><td><code>trg_facture_num</code></td><td>facture</td><td>BEFORE INSERT</td><td>Numérotation auto FAC-YYMM-NNNN</td></tr>
+          <tr><td><code>trg_reglement_check</code></td><td>reglement</td><td>BEFORE INSERT</td><td>Pas de dépassement TTC</td></tr>
+          <tr><td><code>trg_dcl_calc_insert</code></td><td>devis_contrat_ligne</td><td>BEFORE INSERT</td><td>Calcul HT/TVA/TTC ligne devis</td></tr>
+          <tr><td><code>trg_dcl_calc_update</code></td><td>devis_contrat_ligne</td><td>BEFORE UPDATE</td><td>Recalcul HT/TVA/TTC ligne devis</td></tr>
+          <tr><td><code>trg_fli_calc_insert</code></td><td>facture_ligne</td><td>BEFORE INSERT</td><td>Calcul HT/TVA/TTC ligne facture</td></tr>
+          <tr><td><code>trg_fli_calc_update</code></td><td>facture_ligne</td><td>BEFORE UPDATE</td><td>Recalcul HT/TVA/TTC ligne facture</td></tr>
+          <tr><td><code>trg_facture_no_update_if_closed</code></td><td>facture</td><td>BEFORE UPDATE</td><td>Verrouillage exercice clôturé</td></tr>
+          <tr><td><code>trg_facture_no_delete_if_closed</code></td><td>facture</td><td>BEFORE DELETE</td><td>Verrouillage exercice clôturé</td></tr>
+          <tr><td><code>trg_reglement_no_update_if_closed</code></td><td>reglement</td><td>BEFORE UPDATE</td><td>Verrouillage exercice clôturé</td></tr>
+          <tr><td><code>trg_reglement_no_delete_if_closed</code></td><td>reglement</td><td>BEFORE DELETE</td><td>Verrouillage exercice clôturé</td></tr>
+          <tr><td><code>trg_dce_num</code></td><td>devis_contrat_entete</td><td>BEFORE INSERT</td><td>Numérotation auto DCE-YYMM-NNNN</td></tr>
+          <tr><td><code>trg_sel_calc_insert</code></td><td>seance_ligne</td><td>BEFORE INSERT</td><td>Calcul HT/TVA/TTC ligne séance</td></tr>
+          <tr><td><code>trg_sel_calc_update</code></td><td>seance_ligne</td><td>BEFORE UPDATE</td><td>Recalcul HT/TVA/TTC ligne séance</td></tr>
+          <tr><td><code>trg_sel_after_insert</code></td><td>seance_ligne</td><td>AFTER INSERT</td><td>Mise à jour totaux séance parente</td></tr>
+          <tr><td><code>trg_sel_after_update</code></td><td>seance_ligne</td><td>AFTER UPDATE</td><td>Mise à jour totaux séance parente</td></tr>
+          <tr><td><code>trg_sel_after_delete</code></td><td>seance_ligne</td><td>AFTER DELETE</td><td>Mise à jour totaux séance parente (→ 0 si vide)</td></tr>
+          <tr><td><code>trg_sea_unique_par_animal_ins</code></td><td>seance</td><td>BEFORE INSERT</td><td>Unicité EDC par animal</td></tr>
+          <tr><td><code>trg_sea_unique_par_animal_upd</code></td><td>seance</td><td>BEFORE UPDATE</td><td>Unicité EDC par animal</td></tr>
+          <tr><td><code>bi_ged_document_lien_check_objet</code></td><td>ged_document_lien</td><td>BEFORE INSERT</td><td>Validation inter-BDD objet métier (13 types)</td></tr>
+          <tr><td><code>bu_ged_document_lien_check_objet</code></td><td>ged_document_lien</td><td>BEFORE UPDATE</td><td>Revalidation si objet cible change</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<footer>
+  <span>🐾 PetSuite · Algorithmia</span>
+  <span>Rapport règles métier · Sprint S33 · 18/03/2026</span>
+</footer>
+
+</body>
+</html>

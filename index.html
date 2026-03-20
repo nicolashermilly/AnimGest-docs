@@ -3,327 +3,1025 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Documentation</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<title>PetSuite — Documentation officielle</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#3d3d5c;--ink3:#8888aa;--paper:#f7f6f1;--paper2:#eeecea;--paper3:#e2e0da;--accent:#2d6a4f;--accent2:#40916c;--accent3:#d8f3dc;--gold:#a07030;--gold2:#fdf3e0;--blue:#1d4e8f;--blue2:#dbeafe;--red:#9b2335;--red2:#fdecea;--purple:#5b3fa0;--purple2:#ede8fc;--r:12px;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);font-size:14px;min-height:100vh;display:flex;flex-direction:column;}
-.hero{background:var(--ink);color:#fff;padding:72px 48px;text-align:center;}
-.logo{font-family:'DM Serif Display',serif;font-size:52px;color:#fff;margin-bottom:12px;}
-.logo span{color:#74c69d;}
-.tagline{color:rgba(255,255,255,0.5);font-size:15px;max-width:480px;margin:0 auto 28px;}
-.version{display:inline-block;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);font-size:11px;padding:4px 14px;border-radius:20px;}
-.section-label{max-width:960px;margin:40px auto 12px;padding:0 48px;font-size:11px;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;}
-.container{max-width:960px;margin:0 auto;padding:0 48px 52px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
-.doc-card{background:#fff;border:1px solid var(--paper3);border-radius:var(--r);padding:24px;text-decoration:none;color:var(--ink);display:block;transition:all .2s;position:relative;overflow:hidden;}
-.doc-card:hover{border-color:var(--accent2);transform:translateY(-2px);}
-.doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;}
-.c1::before{background:var(--accent2);}
-.c2::before{background:var(--blue);}
-.c3::before{background:var(--gold);}
-.c4::before{background:#40a0c0;}
-.c5::before{background:var(--red);}
-.c6::before{background:var(--purple);}
-.doc-num{font-size:10px;color:var(--ink3);font-weight:500;margin-bottom:8px;letter-spacing:.06em;}
-.doc-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px;line-height:1.2;}
-.doc-desc{font-size:11px;color:var(--ink3);line-height:1.55;margin-bottom:14px;}
-.doc-tag{display:inline-block;font-size:10px;font-weight:500;padding:2px 9px;border-radius:20px;}
-.tag-green{background:var(--accent3);color:var(--accent);}
-.tag-blue{background:var(--blue2);color:var(--blue);}
-.tag-gold{background:var(--gold2);color:var(--gold);}
-.tag-teal{background:#d0f0f8;color:#0f6e8f;}
-.tag-red{background:var(--red2);color:var(--red);}
-.tag-purple{background:var(--purple2);color:var(--purple);}
-.arrow{position:absolute;bottom:20px;right:20px;font-size:16px;color:var(--paper3);transition:all .2s;}
-.doc-card:hover .arrow{color:var(--accent2);}
-.updated{text-align:center;color:var(--ink3);font-size:11px;margin-top:32px;padding-bottom:8px;}
-.updated span{background:var(--paper2);padding:4px 12px;border-radius:20px;border:1px solid var(--paper3);}
-footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:20px 48px;font-size:12px;display:flex;justify-content:space-between;align-items:center;margin-top:auto;}
-footer strong{color:rgba(255,255,255,0.7);}
-@media(max-width:600px){.hero{padding:48px 24px;}.logo{font-size:38px;}.container,.section-label{padding-left:20px;padding-right:20px;}footer{padding:16px 20px;flex-direction:column;gap:8px;text-align:center;}}
 
-.kpi-badge{position:absolute;top:14px;right:14px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;color:var(--ink3);background:var(--paper2);border:1px solid var(--paper3);padding:3px 8px;border-radius:20px;line-height:1.3;text-align:right;}
-.kpi-badge strong{display:block;font-size:11px;color:var(--ink);font-weight:600;font-family:'DM Serif Display',serif;}
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
 
-.index-section{margin-bottom:40px;}
-.index-section-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--paper3);}
-.index-section-icon{font-size:16px;}
-.index-section-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink);}
-.index-section-line{flex:1;height:1px;background:var(--paper3);}
-.index-section-count{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);background:var(--paper2);border:1px solid var(--paper3);padding:2px 8px;border-radius:20px;}
+  :root {
+    --bg:        #0d1117;
+    --bg2:       #161b22;
+    --bg3:       #21262d;
+    --border:    #30363d;
+    --border2:   #3d4450;
+    --text:      #e6edf3;
+    --muted:     #8b949e;
+    --accent:    #2f81f7;
+    --accent2:   #58a6ff;
+    --green:     #3fb950;
+    --green2:    #238636;
+    --orange:    #d29922;
+    --orange2:   #b08800;
+    --red:       #f85149;
+    --purple:    #bc8cff;
+    --teal:      #39d353;
+    --gold:      #e3b341;
+  }
 
-.index-section{margin-bottom:40px;}
-.index-section-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--paper3);}
-.index-section-icon{font-size:16px;}
-.index-section-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink);}
-.index-section-line{flex:1;height:1px;background:var(--paper3);}
-.index-section-count{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);background:var(--paper2);border:1px solid var(--paper3);padding:2px 8px;border-radius:20px;}
-.index-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
-.index-nav a{font-size:11px;font-family:'DM Mono',monospace;color:var(--ink2);text-decoration:none;padding:4px 14px;border:1px solid var(--paper3);border-radius:20px;transition:all .15s;}
-.index-nav a:hover{border-color:var(--accent2);color:var(--accent2);}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo .icon {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .sidebar-logo span { font-size: 13px; font-weight: 700; color: var(--text); }
+  .sidebar-logo small { display: block; font-size: 10px; color: var(--muted); font-weight: 400; }
+
+  .nav-section { margin-bottom: 20px; }
+  .nav-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0 20px 8px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 20px;
+    font-size: 13px; color: var(--muted);
+    cursor: pointer; text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active {
+    background: rgba(47,129,247,.12);
+    color: var(--accent2);
+    border-left: 2px solid var(--accent);
+  }
+  .nav-item .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border2); flex-shrink: 0;
+  }
+  .nav-item.active .dot, .nav-item .dot.done { background: var(--green); }
+  .nav-item .dot.wip { background: var(--gold); }
+  .nav-item .dot.current { background: var(--accent); box-shadow: 0 0 0 3px rgba(47,129,247,.25); }
+
+  /* ── Main ── */
+  main { padding: 40px 48px; max-width: 960px; }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 28px;
+  }
+  .breadcrumb a { color: var(--accent2); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { color: var(--border2); }
+
+  /* ── Page header ── */
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sprint-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(47,129,247,.15);
+    border: 1px solid rgba(47,129,247,.35);
+    color: var(--accent2);
+    font-size: 11px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 10px; border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: .06em;
+  }
+  .sprint-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  h1 {
+    font-size: 26px; font-weight: 800; color: var(--text);
+    line-height: 1.25; margin-bottom: 8px;
+  }
+  .page-meta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .page-meta span { display: flex; align-items: center; gap: 5px; }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .05em;
+  }
+  .status-pill.planning {
+    background: rgba(210,153,34,.12);
+    border: 1px solid rgba(210,153,34,.4);
+    color: var(--gold);
+  }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── Alert NF525 ── */
+  .alert {
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .alert.warn {
+    background: rgba(210,153,34,.1);
+    border: 1px solid rgba(210,153,34,.35);
+  }
+  .alert.info {
+    background: rgba(47,129,247,.08);
+    border: 1px solid rgba(47,129,247,.25);
+  }
+  .alert-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
+  .alert-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .alert.warn .alert-title { color: var(--gold); }
+  .alert.info .alert-title { color: var(--accent2); }
+  .alert p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* ── Cards grid ── */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: var(--border2); }
+  .card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 6px; }
+  .card-value { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .card-sub { font-size: 12px; color: var(--muted); }
+  .card-value.green { color: var(--green); }
+  .card-value.gold { color: var(--gold); }
+  .card-value.accent { color: var(--accent2); }
+
+  /* ── Conformité progress ── */
+  .compliance-grid {
+    display: grid; gap: 10px;
+    margin-bottom: 24px;
+  }
+  .compliance-row {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 28px 1fr auto 80px;
+    gap: 12px;
+    align-items: center;
+  }
+  .compliance-row .check {
+    width: 26px; height: 26px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .check.done  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .check.todo  { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .check.wip   { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
+  .check.crit  { background: rgba(248,81,73,.12); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+
+  .compliance-row .cr-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .compliance-row .cr-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .compliance-row .cr-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .06em;
+    padding: 3px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+  .cr-tag.done   { background: rgba(63,185,80,.15); color: var(--green); }
+  .cr-tag.todo   { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .cr-tag.wip    { background: rgba(210,153,34,.12); color: var(--gold); }
+  .cr-tag.crit   { background: rgba(248,81,73,.12); color: var(--red); }
+  .compliance-row .cr-bar { height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+  .cr-fill { height: 100%; border-radius: 2px; transition: width .5s; }
+  .cr-fill.green { background: var(--green); }
+  .cr-fill.gold  { background: var(--gold); }
+  .cr-fill.blue  { background: var(--accent); }
+  .cr-fill.red   { background: var(--red); }
+
+  /* ── User stories table ── */
+  .us-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .us-table th {
+    text-align: left; padding: 10px 14px;
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+  .us-table td {
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text);
+  }
+  .us-table tr:hover td { background: rgba(255,255,255,.02); }
+  .us-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: var(--accent2);
+    white-space: nowrap;
+  }
+  .us-points {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--purple);
+    text-align: center;
+  }
+  .prio-pill {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .04em;
+  }
+  .prio-pill.crit { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .prio-pill.high { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
+  .prio-pill.med  { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
+
+  .assignee {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+  }
+  .avatar {
+    width: 20px; height: 20px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .av-dba  { background: #8957e5; }
+  .av-dev  { background: #2f81f7; }
+  .av-fe   { background: #d29922; }
+  .av-dir  { background: #3fb950; }
+
+  /* ── Fichiers livrables ── */
+  .file-list { display: grid; gap: 8px; }
+  .file-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+    transition: border-color .2s;
+    cursor: pointer;
+  }
+  .file-item:hover { border-color: var(--accent2); }
+  .file-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
+  .file-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent2); }
+  .file-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .file-size { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
+  .file-status {
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .file-status.ready { background: rgba(63,185,80,.12); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .file-status.pending { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+
+  /* ── Dépendances ── */
+  .dep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dep-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .dep-card .dep-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .dep-card .dep-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .dep-badge {
+    font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+  }
+  .dep-badge.blocker { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .dep-badge.info    { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
+
+  /* ── Timeline sprint ── */
+  .timeline { display: grid; gap: 0; margin-bottom: 4px; }
+  .tl-week {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tl-week:last-child { border-bottom: none; }
+  .tl-label { font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding-top: 2px; }
+  .tl-items { display: flex; flex-direction: column; gap: 4px; }
+  .tl-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 12px; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tl-item .tl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tl-item.sql  .tl-dot { background: var(--purple); }
+  .tl-item.api  .tl-dot { background: var(--accent); }
+  .tl-item.front .tl-dot { background: var(--gold); }
+  .tl-item.test .tl-dot { background: var(--green); }
+  .tl-item.doc  .tl-dot { background: var(--muted); }
+  .tl-item.prod .tl-dot { background: var(--red); }
+
+  /* ── Checklist technique ── */
+  .checklist { display: grid; gap: 6px; }
+  .cl-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--text);
+    padding: 8px 12px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .cl-check {
+    width: 18px; height: 18px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+  }
+  .cl-check.ok  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .cl-check.no  { background: var(--bg3); border: 1px solid var(--border); color: transparent; }
+  .cl-item code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--purple);
+    background: rgba(188,140,255,.1);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ── Scroll animation ── */
+  .section { animation: fadeUp .4s ease both; }
+  .section:nth-child(2) { animation-delay: .05s; }
+  .section:nth-child(3) { animation-delay: .1s; }
+  .section:nth-child(4) { animation-delay: .15s; }
+  .section:nth-child(5) { animation-delay: .2s; }
+  .section:nth-child(6) { animation-delay: .25s; }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(12px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    main { padding: 24px 20px; }
+    .cards { grid-template-columns: 1fr 1fr; }
+    .dep-grid { grid-template-columns: 1fr; }
+    .page-header { grid-template-columns: 1fr; }
+  }
+
+
+  /* ── Compat classes existantes ── */
+  .hero{background:var(--bg2);padding:40px 48px 32px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .hero-tag{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+  .hero h1{font-size:28px;font-weight:800;color:var(--text);line-height:1.15;margin-bottom:8px;}
+  .hero h1 em{font-style:italic;color:var(--accent2);}
+  .hero-sub{font-size:13px;color:var(--muted);max-width:600px;line-height:1.6;}
+  .container{padding:32px 48px 80px;max-width:960px;}
+  .section{margin-bottom:36px;}
+  .section-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .section-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .section-title{font-size:16px;font-weight:700;color:var(--text);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+  .card:hover{border-color:var(--border2);}
+  .card-title{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:var(--text);}
+  .card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+  .ci-green,.icon-green{background:rgba(63,185,80,.12);color:var(--green);}
+  .ci-blue,.icon-blue{background:rgba(47,129,247,.1);color:var(--accent2);}
+  .ci-amber,.icon-gold,.icon-amber{background:rgba(210,153,34,.12);color:var(--gold);}
+  .ci-red,.icon-red{background:rgba(248,81,73,.1);color:var(--red);}
+  .ci-purple,.icon-purple{background:rgba(188,140,255,.1);color:var(--purple);}
+  .ci-teal,.icon-teal{background:rgba(57,211,83,.1);color:var(--teal);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);}
+  .item:last-child{border-bottom:none;padding-bottom:0;}
+  .item-label,.item-lbl{font-size:12px;font-weight:600;color:var(--text);min-width:150px;flex-shrink:0;}
+  .item-val,.item-value{font-size:12px;color:var(--muted);line-height:1.4;}
+  .item-list{display:flex;flex-direction:column;}
+  .subsection{margin-bottom:24px;}
+  .subsection-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;padding-left:10px;border-left:2px solid var(--accent);}
+  .pill,.tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;font-family:'JetBrains Mono',monospace;}
+  .p-green,.pill-green,.tag-green{background:rgba(63,185,80,.12);color:var(--green);border:1px solid rgba(63,185,80,.25);}
+  .p-amber,.pill-amber,.tag-gold,.p-gold{background:rgba(210,153,34,.12);color:var(--gold);border:1px solid rgba(210,153,34,.25);}
+  .p-blue,.pill-blue,.tag-blue{background:rgba(47,129,247,.1);color:var(--accent2);border:1px solid rgba(47,129,247,.25);}
+  .p-red,.pill-red,.tag-red{background:rgba(248,81,73,.1);color:var(--red);border:1px solid rgba(248,81,73,.25);}
+  .p-gray,.pill-gray,.tag-teal{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+  .p-purple,.pill-purple,.tag-purple{background:rgba(188,140,255,.1);color:var(--purple);border:1px solid rgba(188,140,255,.25);}
+  .callout{border-left:3px solid var(--accent);background:rgba(47,129,247,.08);padding:13px 17px;border-radius:0 6px 6px 0;font-size:12px;color:var(--muted);margin:12px 0;border:1px solid rgba(47,129,247,.2);border-left:3px solid var(--accent);}
+  .callout.amber{border-left-color:var(--orange);background:rgba(210,153,34,.08);}
+  .callout.blue{border-left-color:var(--accent2);background:rgba(47,129,247,.08);}
+  .callout.red{border-left-color:var(--red);background:rgba(248,81,73,.08);}
+  .callout strong{color:var(--text);}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg2);}
+  td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;color:var(--text);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+  .tw{overflow-x:auto;margin-bottom:4px;}
+  code,.code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--purple);}
+  .code-block,.code-box{background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+  .kpi-grid,.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;}
+  .kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+  .kpi-num,.kpi-value{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .kpi-lbl,.kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .kpi-card.highlight .kpi-num{color:var(--green);}
+  .check-list{display:flex;flex-direction:column;gap:5px;}
+  .check-item{font-size:12px;color:var(--muted);display:flex;gap:7px;align-items:flex-start;line-height:1.4;}
+  .check-item::before{content:'→';color:var(--accent2);font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+  .check-item.done::before{content:'✓';color:var(--green);}
+  .check-item.wip::before{content:'⏳';}
+  .module-card,.mcard{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;border-top:2px solid var(--accent);}
+  .module-feat{font-size:11px;color:var(--muted);margin-bottom:3px;display:flex;gap:6px;align-items:flex-start;}
+  .module-feat::before{content:'–';color:var(--muted);flex-shrink:0;}
+  .roadmap-phase,.tl-phase{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:10px;display:flex;gap:16px;align-items:flex-start;}
+  .phase-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+  .phase-done{background:rgba(63,185,80,.15);color:var(--green);}
+  .phase-current,.phase-wip{background:rgba(210,153,34,.12);color:var(--gold);}
+  .phase-planned{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+  .phase-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .phase-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+  .kanban-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;}
+  .kanban-card.urgent{border-left:3px solid var(--red);}
+  .kanban-card-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .kanban-card-sub{font-size:11px;color:var(--muted);line-height:1.4;}
+  .kanban-card-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+  .mcard-num{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .mcard-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .mcard-sub{font-size:11px;color:var(--muted);margin-top:6px;}
+  .mc-green{border-top:2px solid var(--green);}
+  .mc-blue{border-top:2px solid var(--accent);}
+  .mc-amber{border-top:2px solid var(--orange);}
+  .mc-purple{border-top:2px solid var(--purple);}
+  .prog-wrap{margin-bottom:10px;}
+  .prog-label{display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;color:var(--muted);}
+  .prog-track{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+  .prog-bar{height:100%;border-radius:2px;}
+  .index-section{margin-bottom:36px;}
+  .index-section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .index-section-title{font-size:16px;font-weight:700;color:var(--text);}
+  .index-section-line{flex:1;height:1px;background:var(--border);}
+  .index-section-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:20px;}
+  .doc-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;text-decoration:none;color:var(--text);display:block;transition:border-color .2s;position:relative;overflow:hidden;}
+  .doc-card:hover{border-color:var(--border2);}
+  .doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+  .c1::before{background:var(--green);}
+  .c2::before{background:var(--accent);}
+  .c3::before{background:var(--gold);}
+  .c4::before{background:var(--teal);}
+  .c5::before{background:var(--red);}
+  .c6::before{background:var(--purple);}
+  .doc-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:.06em;}
+  .doc-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px;line-height:1.2;}
+  .doc-desc{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:12px;}
+  .doc-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;}
+  .arrow{position:absolute;bottom:16px;right:16px;font-size:14px;color:var(--border2);}
+  .doc-card:hover .arrow{color:var(--accent2);}
+  .kpi-badge{position:absolute;top:12px;right:12px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:10px;text-align:right;line-height:1.4;}
+  .kpi-badge strong{display:block;font-size:11px;color:var(--accent2);font-weight:700;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+  .stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+  .stat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center;min-width:100px;}
+  .stat-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--text);}
+  .stat-lbl{font-size:10px;color:var(--muted);margin-top:3px;}
+  .stat.accent .stat-num{color:var(--green);}
+  .updated{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:16px;border-top:1px solid var(--border);margin-top:8px;}
+  .index-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+  .index-nav a{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);text-decoration:none;padding:4px 12px;border:1px solid var(--border);border-radius:20px;transition:all .15s;}
+  .index-nav a:hover{border-color:var(--accent2);color:var(--accent2);}
+  .plan-card,.plan{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px 18px;}
+  .plan.featured,.plan.feat{border-color:var(--accent);border-width:2px;}
+  .plan-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+  .plan-price{font-size:32px;font-weight:800;color:var(--text);margin-bottom:4px;}
+  .plan-price span{font-size:13px;font-weight:400;color:var(--muted);}
+  .plan-target{font-size:11px;color:var(--muted);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .plan-feat{font-size:11px;color:var(--muted);padding:4px 0;display:flex;gap:6px;}
+  .plan-feat::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+  .tl-item-ph,.tl-phase-item{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:8px;}
+  .tl-sprint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent2);font-weight:700;}
+  footer.ps-footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 48px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;}
+  .pw-overlay-wrap{position:fixed;inset:0;z-index:9999;background:#0d1117;display:flex;align-items:center;justify-content:center;}
+  .pw-overlay-wrap.hidden{display:none;}
+  .pw-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:40px 36px;width:320px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;}
+  .pw-input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:14px;font-family:'JetBrains Mono',monospace;outline:none;text-align:center;letter-spacing:.2em;}
+  .pw-input:focus{border-color:var(--accent);}
+  .pw-btn{width:100%;padding:10px;border-radius:8px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;}
+  .pw-btn:hover{opacity:.85;}
+  .pw-error{font-size:12px;color:var(--red);min-height:14px;font-family:'JetBrains Mono',monospace;}
+  @media(max-width:860px){
+    .grid2,.grid3,.grid4,.kpi-grid{grid-template-columns:1fr;}
+    main{padding:24px 20px;}
+  }
+
+
+  .cat-section { margin-bottom: 40px; }
+  .cat-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cat-icon { font-size: 16px; }
+  .cat-title {
+    font-size: 13px; font-weight: 700; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cat-line { flex: 1; height: 1px; background: var(--border); }
+  .cat-count {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--muted); background: var(--bg3);
+    border: 1px solid var(--border); padding: 2px 8px; border-radius: 20px;
+  }
+  .cat-accent { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .nav-cat-label {
+    font-size: 9px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--border2);
+    padding: 12px 20px 4px; display: block;
+  }
+  .index-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .index-nav a {
+    font-size: 11px; font-family: 'JetBrains Mono', monospace;
+    color: var(--muted); text-decoration: none;
+    padding: 4px 12px; border: 1px solid var(--border);
+    border-radius: 20px; transition: all .15s;
+  }
+  .index-nav a:hover { border-color: var(--accent2); color: var(--accent2); }
 </style>
 </head>
 <body>
-<div class="hero">
-  <div class="logo">Pet<span>Suite</span></div>
-  <p class="tagline">Documentation officielle — Logiciel SaaS de gestion pour professionnels des animaux de compagnie</p>
-  <span class="version">Sprint S33 · 18/03/2026</span>
+
+<!-- ── Accès global documents ── -->
+<div id="global-pw-bar" style="background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 36px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+  <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);">🔒 Documents restreints :</span>
+  <input id="global-pw-input" type="password" placeholder="Mot de passe global…"
+    style="font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:6px;outline:none;width:200px;"
+    onkeydown="if(event.key==='Enter')checkGlobalPw()"
+    onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+  <button onclick="checkGlobalPw()"
+    style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;background:var(--accent);color:#fff;border:none;padding:5px 14px;border-radius:6px;cursor:pointer;">
+    Accéder →
+  </button>
+  <span id="global-pw-msg" style="font-size:11px;font-family:'JetBrains Mono',monospace;"></span>
+  <span id="global-pw-ok" style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--green);display:none;">✓ Accès global activé — tous les documents sont déverrouillés</span>
 </div>
 
-<div class="section-label">Documents utilisateurs</div>
-<div class="container">
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;padding:0 32px;">
-  <a href="#stack" style="font-size:11px;font-family:'DM Mono',monospace;color:var(--ink2);text-decoration:none;padding:4px 12px;border:1px solid var(--paper3);border-radius:20px;">⚙️ Stack</a>
-  <a href="#commercial" style="font-size:11px;font-family:'DM Mono',monospace;color:var(--ink2);text-decoration:none;padding:4px 12px;border:1px solid var(--paper3);border-radius:20px;">💼 Commercial</a>
-  <a href="#business" style="font-size:11px;font-family:'DM Mono',monospace;color:var(--ink2);text-decoration:none;padding:4px 12px;border:1px solid var(--paper3);border-radius:20px;">📈 Business</a>
-  <a href="#interne" style="font-size:11px;font-family:'DM Mono',monospace;color:var(--ink2);text-decoration:none;padding:4px 12px;border:1px solid var(--paper3);border-radius:20px;">🔧 Interne</a>
-  <a href="#conformite" style="font-size:11px;font-family:'DM Mono',monospace;color:var(--ink2);text-decoration:none;padding:4px 12px;border:1px solid var(--paper3);border-radius:20px;">🛡️ Conformité</a>
+<script>
+// Clés sessionStorage de toutes les pages protégées
+var ALL_KEYS = ['auth_04_s33','auth_08_s33','auth_13_s33','auth_20_s33','auth_27_s33','auth_99_s33'];
+var VALID_PW = ['@lgorithme','@Gilles','@Edith'];
+
+// Vérifier si déjà déverrouillé
+(function(){
+  if(sessionStorage.getItem('auth_global')==='1'){
+    document.getElementById('global-pw-bar').style.display='none';
+    // Activer toutes les clés
+    ALL_KEYS.forEach(function(k){sessionStorage.setItem(k,'1');});
+  }
+})();
+
+function checkGlobalPw(){
+  var v = document.getElementById('global-pw-input').value;
+  if(VALID_PW.indexOf(v) !== -1){
+    sessionStorage.setItem('auth_global','1');
+    ALL_KEYS.forEach(function(k){sessionStorage.setItem(k,'1');});
+    document.getElementById('global-pw-bar').style.display='none';
+    // Afficher confirmation brève
+    var bar = document.getElementById('global-pw-bar');
+    bar.style.display='flex';
+    document.getElementById('global-pw-ok').style.display='inline';
+    document.getElementById('global-pw-input').style.display='none';
+    document.querySelector('#global-pw-bar button').style.display='none';
+    document.querySelector('#global-pw-bar span').style.display='none';
+    setTimeout(function(){bar.style.display='none';},3000);
+  } else {
+    var msg = document.getElementById('global-pw-msg');
+    msg.style.color='var(--red)';
+    msg.textContent='Mot de passe incorrect';
+    document.getElementById('global-pw-input').value='';
+    setTimeout(function(){msg.textContent='';},2500);
+  }
+}
+</script>
+
+<div class="layout">
+    <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="icon">🐾</div>
+      <div><span>PetSuite</span><small>Documentation · Sprint S35</small></div>
+    </div>
+    <span class="nav-cat-label">⚙️ Stack technique</span>
+    <a class="nav-item" href="01-synthese-projet.html"><div class="dot ok"></div>01 — Synthèse projet</a>
+    <a class="nav-item" href="05-architecture-roadmap.html"><div class="dot ok"></div>05 — Architecture</a>
+    <a class="nav-item" href="06-roadmap.html"><div class="dot ok"></div>06 — Roadmap</a>
+    <a class="nav-item" href="07-audit-stack.html"><div class="dot ok"></div>07 — Audit Stack</a>
+    <a class="nav-item" href="08-projet-reference.html"><div class="dot warn"></div>08 — Référence 🔒</a>
+    <a class="nav-item" href="12-infrastructure.html"><div class="dot ok"></div>12 — Infrastructure</a>
+    <a class="nav-item" href="17-api-reference.html"><div class="dot ok"></div>17 — API Reference</a>
+    <a class="nav-item" href="26-changelog-S33.html"><div class="dot ok"></div>26 — Changelog S33</a>
+    <a class="nav-item" href="28-rapport-regles-metier.html"><div class="dot ok"></div>28 — Règles métier</a>
+    <a class="nav-item" href="28-scenarios-video-metiers.html"><div class="dot ok"></div>28b — Scénarios vidéo métiers</a>
+    <a class="nav-item" href="29-communaute.html"><div class="dot warn"></div>29 — Module Communauté</a>
+    <a class="nav-item" href="30-assistant-vocal-mcp.html"><div class="dot warn"></div>30 — Assistant vocal MCP</a>
+    <a class="nav-item" href="31-signature-electronique.html"><div class="dot warn"></div>31 — Signature électronique</a>
+
+    <span class="nav-cat-label">💼 Commercial</span>
+    <a class="nav-item" href="16-landing-page.html"><div class="dot ok"></div>16 — Site vitrine</a>
+    <a class="nav-item" href="10-modele-commercial.html"><div class="dot ok"></div>10 — Licences &amp; SEPA</a>
+    <a class="nav-item" href="09-scenario-video.html"><div class="dot ok"></div>09 — Scénarios vidéo</a>
+    <a class="nav-item" href="18-questionnaires.html"><div class="dot ok"></div>18 — Questionnaires</a>
+    <a class="nav-item" href="14-portail-client.html"><div class="dot ok"></div>14 — Portail client</a>
+    <a class="nav-item" href="19-onboarding.html"><div class="dot ok"></div>19 — Onboarding</a>
+    <a class="nav-item" href="21-aide-integree.html"><div class="dot ok"></div>21 — Aide intégrée</a>
+
+    <span class="nav-cat-label">📈 Business &amp; Investisseurs</span>
+    <a class="nav-item" href="27-investisseurs.html"><div class="dot warn"></div>27 — 🔒 Investisseurs</a>
+    <a class="nav-item" href="99_Business_Plan.html"><div class="dot warn"></div>99 — 🔒 Business Plan</a>
+
+    <span class="nav-cat-label">🔧 Interne &amp; pilotage</span>
+    <a class="nav-item" href="02-guide-parametrage.html"><div class="dot ok"></div>02 — Guide paramétrage</a>
+    <a class="nav-item" href="03-notice-utilisateur.html"><div class="dot ok"></div>03 — Notice v4.0</a>
+    <a class="nav-item" href="04-super-admin.html"><div class="dot warn"></div>04 — 🔒 Super admin</a>
+    <a class="nav-item" href="13-portail-super-admin.html"><div class="dot warn"></div>13 — 🔒 Portail SA</a>
+    <a class="nav-item" href="20-pilotage-projet.html"><div class="dot warn"></div>20 — 🔒 Pilotage</a>
+    <a class="nav-item" href="11-carte-identite-animale.html"><div class="dot ok"></div>11 — Carte animale</a>
+
+    <span class="nav-cat-label">🛡️ Conformité &amp; RGPD</span>
+    <a class="nav-item" href="15-rgpd-conformite.html"><div class="dot ok"></div>15 — RGPD &amp; Conformité</a>
+    <a class="nav-item" href="23-Prise-en-compte-NF-525.html"><div class="dot ok"></div>23 — NF525</a>
+
+  </aside>
+  <main>
+    <nav class="breadcrumb">
+      <a href="index.html">PetSuite</a>
+      <span>/</span>
+      <span>Documentation</span>
+    </nav>
+
+<div class="hero">
+  <div class="sprint-badge">PETSUITE DOCS · SPRINT S35</div>
+  <h1>Documentation<br><span style="color:var(--accent2);">PetSuite</span></h1>
+  <div class="page-meta" style="margin-top:10px;">
+    <span>📦 36 documents</span>
+    <span>⚙️ Sprint S35 · 19/03/2026</span>
+    <span>🐾 Algorithmia SaaS</span>
+  </div>
 </div>
-  <div class="index-nav">
-  <a href="#stack">⚙️ Stack technique</a>
-  <a href="#commercial">💼 Commercial</a>
-  <a href="#business">📈 Business</a>
-  <a href="#interne">🔧 Interne</a>
-  <a href="#conformite">🛡️ Conformité</a>
-</div>
-<div class="index-section" id="stack">
-  <div class="index-section-header">
-    <span class="index-section-icon">⚙️</span>
-    <span class="index-section-title">Stack technique</span>
-    <div class="index-section-line"></div>
-    <span class="index-section-count">8 docs</span>
+
+<div style="padding:32px 48px 80px;">
+<div class="index-nav"><a href="#stack">⚙️ Stack technique</a><a href="#commercial">💼 Commercial & pricing</a><a href="#business">📈 Business & investisseurs</a><a href="#interne">🔧 Interne & pilotage</a><a href="#conformite">🛡️ Conformité & RGPD</a></div>
+
+<div class="cat-section" id="stack">
+  <div class="cat-header">
+    <span class="cat-icon">⚙️</span>
+    <div class="cat-accent" style="background:var(--accent)"></div>
+    <span class="cat-title">Stack technique</span>
+    <div class="cat-line"></div>
+    <span class="cat-count">12 docs</span>
   </div>
   <div class="grid">
     <a class="doc-card c1" href="01-synthese-projet.html">
       <div class="kpi-badge"><strong>65+ tables</strong>BDD métier</div>
       <div class="doc-num">01 — ARCHITECTURE</div>
       <div class="doc-title">Synthèse projet</div>
-      <div class="doc-desc">Vision globale — architecture, modules, BDD 65+ tables, API S33, scalabilité 5 000–20 000 clients.</div>
-      <span class="doc-tag tag-green">Document vivant</span><div class="arrow">→</div>
+      <div class="doc-desc">Architecture, modules, BDD 65+ tables, API S33, scalabilité 5 000–20 000 clients.</div>
+      <span class="doc-tag">Document vivant</span>
+      <div class="arrow">→</div>
     </a>
-    <a class="doc-card c2" href="05-architecture-roadmap.html">
-      <div class="kpi-badge"><strong>65+ tables</strong>BDD S33</div>
+    <a class="doc-card c2" href="05-architecture-roadmap.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><strong>90+ routes</strong>API S33</div>
       <div class="doc-num">05 — TECHNIQUE</div>
-      <div class="doc-title">Architecture &amp; Roadmap</div>
+      <div class="doc-title">Architecture & Roadmap</div>
       <div class="doc-desc">Stack Next.js 15 · NestJS · MariaDB hors Docker · multi-tenant SaaS cible · custom-routes.ts.</div>
-      <span class="doc-tag tag-blue">S33</span><div class="arrow">→</div>
+      <span class="doc-tag">S33</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c2" href="06-roadmap.html">
       <div class="kpi-badge"><strong>S33</strong>sprint courant</div>
       <div class="doc-num">06 — ROADMAP</div>
       <div class="doc-title">Roadmap sprints</div>
-      <div class="doc-desc">Feuille de route S1→S32 complets · S33 en cours · templates devis, NF525, élevage, doc v4.0.</div>
-      <span class="doc-tag tag-blue">S33</span><div class="arrow">→</div>
+      <div class="doc-desc">Feuille de route S1→S32 complets · S33 en cours · templates devis, NF525, élevage.</div>
+      <span class="doc-tag">S33</span>
+      <div class="arrow">→</div>
     </a>
-    <a class="doc-card c2" href="07-audit-stack.html">
-      <div class="kpi-badge"><strong>90+ routes</strong>API active</div>
+    <a class="doc-card c2" href="07-audit-stack.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><strong>90+ routes</strong>custom-routes</div>
       <div class="doc-num">07 — AUDIT</div>
       <div class="doc-title">Audit Stack</div>
-      <div class="doc-desc">Infrastructure Docker, BDD 65+ tables, custom-routes.ts S33, règles absolues, MariaDB hors Docker.</div>
-      <span class="doc-tag tag-blue">S33</span><div class="arrow">→</div>
+      <div class="doc-desc">BDD 65+ tables, custom-routes.ts S33, règles absolues, MariaDB hors Docker.</div>
+      <span class="doc-tag">S33</span>
+      <div class="arrow">→</div>
     </a>
-    <a class="doc-card c2" href="08-projet-reference.html">
-      <div class="kpi-badge"><strong>32 sprints</strong>livrés</div>
+    <a class="doc-card c2" href="08-projet-reference.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><span style="color:var(--red);font-size:11px;">🔒</span> <strong>32 sprints</strong>livrés</div>
       <div class="doc-num">08 — RÉFÉRENCE</div>
       <div class="doc-title">Référence projet</div>
-      <div class="doc-desc">Stack, accès, variables PS, numérotation docs, architecture BDD complète, historique sessions.</div>
-      <span class="doc-tag tag-blue">🔒 Référence</span><div class="arrow">→</div>
+      <div class="doc-desc">Stack, accès, chemins PS, architecture BDD complète, historique sessions.</div>
+      <span class="doc-tag">🔒 Référence</span>
+      <div class="arrow">→</div>
     </a>
-    <a class="doc-card c2" href="12-infrastructure.html">
-      <div class="kpi-badge"><strong>0,80€</strong>/abonné/mois</div>
+    <a class="doc-card c2" href="12-infrastructure.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><strong>Hetzner</strong>Cloud prod</div>
       <div class="doc-num">12 — INFRA</div>
       <div class="doc-title">Infrastructure</div>
-      <div class="doc-desc">Hébergeur Hetzner, Docker prod, CI/CD GitHub Actions, SSL wildcard, monitoring, backup.</div>
-      <span class="doc-tag tag-blue">S33</span><div class="arrow">→</div>
+      <div class="doc-desc">Hetzner, Docker prod, CI/CD GitHub Actions, SSL wildcard, monitoring, backup.</div>
+      <span class="doc-tag">S33</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c2" href="17-api-reference.html">
-      <div class="kpi-badge"><strong>90+ endpoints</strong>documentés</div>
+      <div class="kpi-badge"><strong>90+</strong>endpoints</div>
       <div class="doc-num">17 — API</div>
       <div class="doc-title">API Reference</div>
-      <div class="doc-desc">Routes API complètes S33 — PUT /animaux/:id, custom-routes, authentification, GED, CRM.</div>
-      <span class="doc-tag tag-blue">Développeurs</span><div class="arrow">→</div>
+      <div class="doc-desc">Routes API complètes S33 — PUT /animaux/:id, custom-routes, GED, CRM, élevage.</div>
+      <span class="doc-tag">Développeurs</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c2" href="26-changelog-S33.html">
       <div class="kpi-badge"><strong>S33</strong>18/03/2026</div>
       <div class="doc-num">26 — CHANGELOG</div>
-      <div class="doc-title">Sprint S33</div>
+      <div class="doc-title">Changelog S33</div>
       <div class="doc-desc">Release notes S33 — templates devis, NF525, élevage portée/new, documentation v4.0.</div>
-      <span class="doc-tag tag-blue">18/03/2026</span><div class="arrow">→</div>
+      <span class="doc-tag">18/03/2026</span>
+      <div class="arrow">→</div>
+    </a>
+    <a class="doc-card c5" href="28-rapport-regles-metier.html">
+      <div class="kpi-badge"><strong>20+</strong>triggers BDD</div>
+      <div class="doc-num">28 — RECETTES</div>
+      <div class="doc-title">Rapport règles métier</div>
+      <div class="doc-desc">Référentiel de recette — 12 modules, 20+ triggers, scénarios d'erreur, cas de test.</div>
+      <span class="doc-tag">Recettes</span>
+      <div class="arrow">→</div>
+    </a>
+    <a class="doc-card c4" href="29-communaute.html">
+      <div class="kpi-badge"><strong>Claude API</strong>modération IA</div>
+      <div class="doc-num">29 — MODULE</div>
+      <div class="doc-title">Module Communauté</div>
+      <div class="doc-desc">Forum inter-utilisateurs — modération IA, votes, demandes d'évolution, webhook Slack admin.</div>
+      <span class="doc-tag">S34</span>
+      <div class="arrow">→</div>
+    </a>
+    <a class="doc-card c6" href="30-assistant-vocal-mcp.html">
+      <div class="kpi-badge"><strong>MCP</strong>Voice Agent</div>
+      <div class="doc-num">30 — MODULE</div>
+      <div class="doc-title">Assistant vocal MCP</div>
+      <div class="doc-desc">Assistant vocal intégré via MCP — commandes vocales, navigation, saisie mains-libres.</div>
+      <span class="doc-tag">S34</span>
+      <div class="arrow">→</div>
+    </a>
+    <a class="doc-card c6" href="31-signature-electronique.html">
+      <div class="kpi-badge"><strong>eIDAS</strong>Yousign</div>
+      <div class="doc-num">31 — FONCTIONNEL</div>
+      <div class="doc-title">Signature électronique</div>
+      <div class="doc-desc">Intégration Yousign — signature légale des devis et contrats. BDD + script S9, frontend S35.</div>
+      <span class="doc-tag">S35</span>
+      <div class="arrow">→</div>
     </a>
   </div>
 </div>
 
-<div class="index-section" id="commercial">
-  <div class="index-section-header">
-    <span class="index-section-icon">💼</span>
-    <span class="index-section-title">Commercial &amp; pricing</span>
-    <div class="index-section-line"></div>
-    <span class="index-section-count">7 docs</span>
+<div class="cat-section" id="commercial">
+  <div class="cat-header">
+    <span class="cat-icon">💼</span>
+    <div class="cat-accent" style="background:var(--gold)"></div>
+    <span class="cat-title">Commercial & pricing</span>
+    <div class="cat-line"></div>
+    <span class="cat-count">7 docs</span>
   </div>
   <div class="grid">
-    <a class="doc-card c3" href="16-landing-page.html">
-      <div class="kpi-badge"><strong>SAM 36M€</strong>/an</div>
+    <a class="doc-card c3" href="16-landing-page.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><strong>50 000+</strong>pros France</div>
       <div class="doc-num">16 — COMMERCIAL</div>
       <div class="doc-title">Site vitrine</div>
-      <div class="doc-desc">Page commerciale — proposition de valeur, pricing, témoignages, CTA. Cible 50 000+ pros France.</div>
-      <span class="doc-tag tag-purple">Production</span><div class="arrow">→</div>
+      <div class="doc-desc">Page commerciale — proposition de valeur, pricing, témoignages, CTA. 50 000+ pros France.</div>
+      <span class="doc-tag">Production</span>
+      <div class="arrow">→</div>
     </a>
-    <a class="doc-card c3" href="10-modele-commercial.html">
-      <div class="kpi-badge"><strong>39/69/119€</strong>HT/mois</div>
+    <a class="doc-card c3" href="10-modele-commercial.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><strong>3 formules</strong>Starter·Pro·Business</div>
       <div class="doc-num">10 — COMMERCIAL</div>
-      <div class="doc-title">Licences &amp; SEPA</div>
-      <div class="doc-desc">BDD plateforme, workflow souscription, GoCardless vs Stripe, cycle contrat, provisionnement, CGV.</div>
-      <span class="doc-tag tag-gold">Super admin</span><div class="arrow">→</div>
+      <div class="doc-title">Licences & SEPA</div>
+      <div class="doc-desc">Workflow souscription, GoCardless, cycle contrat, provisionnement, CGV.</div>
+      <span class="doc-tag">Super admin</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c6" href="09-scenario-video.html">
       <div class="kpi-badge"><strong>4 métiers</strong>7 min chacun</div>
       <div class="doc-num">09 — PRODUCTION</div>
       <div class="doc-title">Scénarios vidéo métiers</div>
-      <div class="doc-desc">4 scripts démo — Comportementaliste · Équestre · Toiletteur · Pension/Pet-sitter. 10–11 séquences.</div>
-      <span class="doc-tag tag-purple">Commercial</span><div class="arrow">→</div>
+      <div class="doc-desc">4 scripts démo — Comportementaliste · Équestre · Toiletteur · Pension/Pet-sitter.</div>
+      <span class="doc-tag">Commercial</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c1" href="18-questionnaires.html">
-      <div class="kpi-badge"><strong>Multi-type</strong>4 métiers</div>
+      <div class="kpi-badge"><strong>4 types</strong>multi-métier</div>
       <div class="doc-num">18 — FONCTIONNEL</div>
       <div class="doc-title">Questionnaires</div>
-      <div class="doc-desc">Formulaire lead public — ?type=canin/equestre/pension/toiletteur. Création lead CRM automatique.</div>
-      <span class="doc-tag tag-green">S33</span><div class="arrow">→</div>
+      <div class="doc-desc">Formulaire lead public — ?type=canin/equestre/pension/toiletteur → CRM auto.</div>
+      <span class="doc-tag">S33</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c4" href="14-portail-client.html">
       <div class="kpi-badge"><strong>Magic link</strong>0 mot de passe</div>
       <div class="doc-num">14 — FONCTIONNEL</div>
       <div class="doc-title">Portail client</div>
-      <div class="doc-desc">Accès propriétaire — historique animal, documents, séances, factures. Magic link sans compte.</div>
-      <span class="doc-tag tag-teal">Sprint 11</span><div class="arrow">→</div>
+      <div class="doc-desc">Magic link propriétaire — historique animal, documents, séances, factures.</div>
+      <span class="doc-tag">Sprint 11</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c3" href="19-onboarding.html">
       <div class="kpi-badge"><strong>J0→J30</strong>activation</div>
       <div class="doc-num">19 — EXPÉRIENCE</div>
       <div class="doc-title">Onboarding</div>
-      <div class="doc-desc">Parcours client — de l'inscription à la 1ère séance facturée. Checklist, guides, vidéos.</div>
-      <span class="doc-tag tag-gold">Go-live</span><div class="arrow">→</div>
+      <div class="doc-desc">Parcours client — de l'inscription à la 1ère séance facturée. Checklist, vidéos.</div>
+      <span class="doc-tag">Go-live</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c4" href="21-aide-integree.html">
       <div class="kpi-badge"><strong>199 articles</strong>Ctrl+K</div>
       <div class="doc-num">21 — UX</div>
       <div class="doc-title">Aide intégrée</div>
-      <div class="doc-desc">Centre d'aide — 199 articles, 15 modules, panneau contextuel par page, recherche Ctrl+K.</div>
-      <span class="doc-tag tag-teal">S33</span><div class="arrow">→</div>
+      <div class="doc-desc">Centre d'aide — 199 articles, 15 modules, panneau contextuel, recherche Ctrl+K.</div>
+      <span class="doc-tag">S33</span>
+      <div class="arrow">→</div>
     </a>
   </div>
 </div>
 
-<div class="index-section" id="business">
-  <div class="index-section-header">
-    <span class="index-section-icon">📈</span>
-    <span class="index-section-title">Business &amp; investisseurs</span>
-    <div class="index-section-line"></div>
-    <span class="index-section-count">2 docs</span>
+<div class="cat-section" id="business">
+  <div class="cat-header">
+    <span class="cat-icon">📈</span>
+    <div class="cat-accent" style="background:var(--green)"></div>
+    <span class="cat-title">Business & investisseurs</span>
+    <div class="cat-line"></div>
+    <span class="cat-count">2 docs</span>
   </div>
   <div class="grid">
-    <a class="doc-card c3" href="27-investisseurs.html">
-      <div class="kpi-badge"><strong>1,8M€</strong>ARR an 5</div>
+    <a class="doc-card c3" href="27-investisseurs.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><span style="color:var(--red);font-size:11px;">🔒</span> <strong>Confidentiel</strong>An 5</div>
       <div class="doc-num">27 — INVESTISSEURS</div>
       <div class="doc-title">Dossier investisseurs</div>
-      <div class="doc-desc">Opportunité, finances 5 ans, ROI, financement T3–T4 2026, scénarios, exit strategy, réglementation.</div>
-      <span class="doc-tag tag-gold">🔒 Confidentiel</span><div class="arrow">→</div>
+      <div class="doc-desc">Opportunité, finances 5 ans, ROI, financement T3–T4 2026, scénarios, exit strategy.</div>
+      <span class="doc-tag">🔒 Confidentiel</span>
+      <div class="arrow">→</div>
     </a>
-    <a class="doc-card c3" href="99_Business_Plan.html">
-      <div class="kpi-badge"><strong>×10–18</strong>ROI BA seed</div>
+    <a class="doc-card c3" href="99_Business_Plan.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><span style="color:var(--red);font-size:11px;">🔒</span> <strong>Confidentiel</strong>Stratégie</div>
       <div class="doc-num">99 — STRATÉGIE</div>
       <div class="doc-title">Business Plan 2025–2030</div>
-      <div class="doc-desc">Plan stratégique complet Algorithmia — marché, modèle financier, financement, roadmap, pitch deck.</div>
-      <span class="doc-tag tag-gold">🔒 Confidentiel</span><div class="arrow">→</div>
+      <div class="doc-desc">Plan stratégique Algorithmia — marché, modèle financier, financement, roadmap.</div>
+      <span class="doc-tag">🔒 Confidentiel</span>
+      <div class="arrow">→</div>
     </a>
   </div>
 </div>
 
-<div class="index-section" id="interne">
-  <div class="index-section-header">
-    <span class="index-section-icon">🔧</span>
-    <span class="index-section-title">Interne &amp; pilotage</span>
-    <div class="index-section-line"></div>
-    <span class="index-section-count">6 docs</span>
+<div class="cat-section" id="interne">
+  <div class="cat-header">
+    <span class="cat-icon">🔧</span>
+    <div class="cat-accent" style="background:var(--purple)"></div>
+    <span class="cat-title">Interne & pilotage</span>
+    <div class="cat-line"></div>
+    <span class="cat-count">6 docs</span>
   </div>
   <div class="grid">
     <a class="doc-card c4" href="02-guide-parametrage.html">
       <div class="kpi-badge"><strong>5 min</strong>config initiale</div>
-      <div class="doc-num">02 — ADMIN SOCIÉTÉ</div>
+      <div class="doc-num">02 — ADMIN</div>
       <div class="doc-title">Guide de paramétrage</div>
       <div class="doc-desc">Configuration initiale — TVA, catalogue, utilisateurs, GED, exercice comptable 2026.</div>
-      <span class="doc-tag tag-gold">Administrateurs</span><div class="arrow">→</div>
+      <span class="doc-tag">Administrateurs</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c4" href="03-notice-utilisateur.html">
       <div class="kpi-badge"><strong>199 articles</strong>15 modules</div>
       <div class="doc-num">03 — TOUS USERS</div>
-      <div class="doc-title">Notice utilisation v4.0</div>
-      <div class="doc-desc">Guide pratique — animaux, séances, EDC, CAC, devis, facturation, GED, CRM, agenda, aide.</div>
-      <span class="doc-tag tag-teal">Tous utilisateurs</span><div class="arrow">→</div>
+      <div class="doc-title">Notice utilisateur v4.0</div>
+      <div class="doc-desc">Guide pratique — animaux, séances, EDC, CAC, agenda, aide intégrée.</div>
+      <span class="doc-tag">Tous utilisateurs</span>
+      <div class="arrow">→</div>
     </a>
-    <a class="doc-card c5" href="04-super-admin.html">
-      <div class="kpi-badge"><strong>Multi-tenant</strong>1 schema/tenant</div>
+    <a class="doc-card c5" href="04-super-admin.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><span style="color:var(--red);font-size:11px;">🔒</span> <strong>Multi-tenant</strong>1 schema/tenant</div>
       <div class="doc-num">04 — ACCÈS RESTREINT</div>
       <div class="doc-title">Espace super admin</div>
       <div class="doc-desc">Pilotage plateforme — contrats, tenants, supervision, données post-résiliation.</div>
-      <span class="doc-tag tag-red">🔒 Super admin</span><div class="arrow">→</div>
+      <span class="doc-tag">🔒 Super admin</span>
+      <div class="arrow">→</div>
     </a>
-    <a class="doc-card c5" href="13-portail-super-admin.html">
-      <div class="kpi-badge"><strong>MRR</strong>temps réel</div>
+    <a class="doc-card c5" href="13-portail-super-admin.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><span style="color:var(--red);font-size:11px;">🔒</span> <strong>MRR</strong>temps réel</div>
       <div class="doc-num">13 — ACCÈS RESTREINT</div>
       <div class="doc-title">Portail super admin</div>
       <div class="doc-desc">Multi-instances — tableau de bord MRR, gestion tenants, facturation plateforme.</div>
-      <span class="doc-tag tag-red">🔒 Super admin</span><div class="arrow">→</div>
+      <span class="doc-tag">🔒 Super admin</span>
+      <div class="arrow">→</div>
     </a>
-    <a class="doc-card c2" href="20-pilotage-projet.html">
-      <div class="kpi-badge"><strong>S33</strong>18/03/2026</div>
+    <a class="doc-card c2" href="20-pilotage-projet.html" style="border-color:rgba(248,81,73,.35);">
+      <div class="kpi-badge"><span style="color:var(--red);font-size:11px;">🔒</span> <strong>32 sprints</strong>S33 en cours</div>
       <div class="doc-num">20 — PILOTAGE</div>
       <div class="doc-title">Tableau de bord projet</div>
       <div class="doc-desc">Kanban S33, historique 32 sprints, stats BDD réelles, backlog, bugs actifs.</div>
-      <span class="doc-tag tag-blue">🔒 S33</span><div class="arrow">→</div>
+      <span class="doc-tag">🔒 S33</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c1" href="11-carte-identite-animale.html">
       <div class="kpi-badge"><strong>392 races</strong>8 espèces</div>
       <div class="doc-num">11 — FONCTIONNEL</div>
       <div class="doc-title">Carte identité animale</div>
-      <div class="doc-desc">Puce xxx-xxx-xxx-xxx-xxx, photo upload, CAC, historique séances. PDF à la demande, RGPD.</div>
-      <span class="doc-tag tag-green">S33</span><div class="arrow">→</div>
+      <div class="doc-desc">Puce xxx-xxx-xxx-xxx-xxx, photo upload, CAC, historique séances. PDF RGPD.</div>
+      <span class="doc-tag">S33</span>
+      <div class="arrow">→</div>
     </a>
   </div>
 </div>
 
-<div class="index-section" id="conformite">
-  <div class="index-section-header">
-    <span class="index-section-icon">🛡️</span>
-    <span class="index-section-title">Conformité &amp; RGPD</span>
-    <div class="index-section-line"></div>
-    <span class="index-section-count">2 docs</span>
+<div class="cat-section" id="conformite">
+  <div class="cat-header">
+    <span class="cat-icon">🛡️</span>
+    <div class="cat-accent" style="background:var(--red)"></div>
+    <span class="cat-title">Conformité & RGPD</span>
+    <div class="cat-line"></div>
+    <span class="cat-count">2 docs</span>
   </div>
   <div class="grid">
     <a class="doc-card c1" href="15-rgpd-conformite.html">
       <div class="kpi-badge"><strong>RGPD</strong>by design</div>
       <div class="doc-num">15 — CONFORMITÉ</div>
-      <div class="doc-title">RGPD &amp; Conformité</div>
-      <div class="doc-desc">Registre traitements, DPA, droits effacement, rétention 5 ans, consentement, audit log.</div>
-      <span class="doc-tag tag-green">Avant go-live</span><div class="arrow">→</div>
+      <div class="doc-title">RGPD & Conformité</div>
+      <div class="doc-desc">Registre traitements, DPA, droits effacement, rétention 5 ans, audit log complet.</div>
+      <span class="doc-tag">Avant go-live</span>
+      <div class="arrow">→</div>
     </a>
     <a class="doc-card c5" href="23-Prise-en-compte-NF-525.html">
       <div class="kpi-badge"><strong>NF525</strong>certifié</div>
       <div class="doc-num">23 — CONFORMITÉ</div>
       <div class="doc-title">NF525 — Logiciel de caisse</div>
       <div class="doc-desc">Certification caisse, hash chaîné, clôture Z, sp_nf525_enregistrer_encaissement.</div>
-      <span class="doc-tag tag-red">S33</span><div class="arrow">→</div>
+      <span class="doc-tag">S33</span>
+      <div class="arrow">→</div>
     </a>
   </div>
 </div>
 
-  <div class="updated"><span>Sprint S33 · 18/03/2026 · 25 documents · Format 100% HTML</span></div>
+  <div class="updated">Sprint S35 · 19/03/2026 · 36 documents · Format 100% HTML</div>
 </div>
-
-<footer>
-  <div><strong>PetSuite</strong> — Documentation interne</div>
-  <div>Confidentiel — ne pas diffuser</div>
+  </main>
+</div>
+<footer class="ps-footer">
+  <span>🐾 PetSuite · Algorithmia</span>
+  <span>Sprint S35 · 19/03/2026 · Document interne</span>
 </footer>
 </body>
 </html>

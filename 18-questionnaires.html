@@ -1,49 +1,1298 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Questionnaires</title><style>:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#6366f1;--accent2:#818cf8;--text:#e2e8f0;--text2:#94a3b8;--border:#2d3348;--green:#10b981;--yellow:#f59e0b;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
-.header{background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:48px 32px;text-align:center;border-bottom:1px solid var(--border);}
-.header h1{font-size:2.5rem;font-weight:800;color:#fff;}.header p{color:var(--accent2);margin-top:8px;}
-.badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:12px;}
-.container{max-width:1100px;margin:0 auto;padding:32px;}.section{margin-bottom:40px;}
-.section h2{font-size:1.4rem;font-weight:700;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--accent);margin-bottom:20px;}
-.section h3{font-size:1rem;font-weight:600;color:var(--accent2);margin:16px 0 8px;}
-.section p{color:var(--text2);margin-bottom:10px;}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;}
-.card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:8px;}.card p,.card li{font-size:.875rem;color:var(--text2);}
-ul{list-style:none;padding:0;}li{padding:3px 0;display:flex;gap:6px;}li::before{content:'→';color:var(--accent);flex-shrink:0;}
-table{width:100%;border-collapse:collapse;margin:12px 0;}
-th{background:var(--surface2);color:var(--text2);font-size:.75rem;font-weight:700;text-transform:uppercase;padding:10px 14px;text-align:left;}
-td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);font-size:.875rem;}tr:hover td{background:var(--surface);}
-.highlight{background:var(--surface2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.warn{background:rgba(245,158,11,.1);border-left:3px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-.nf-box{background:rgba(16,185,129,.08);border-left:3px solid #10b981;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:var(--text2);}
-code{background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:.8rem;font-family:monospace;color:var(--accent2);}
-.new{background:var(--green);color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;vertical-align:middle;}
-footer{background:var(--surface);border-top:1px solid var(--border);padding:24px 32px;text-align:center;color:var(--text2);font-size:.875rem;}</style></head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Questionnaires comportementaux</title>
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg:        #0d1117;
+    --bg2:       #161b22;
+    --bg3:       #21262d;
+    --border:    #30363d;
+    --border2:   #3d4450;
+    --text:      #e6edf3;
+    --muted:     #8b949e;
+    --accent:    #2f81f7;
+    --accent2:   #58a6ff;
+    --green:     #3fb950;
+    --green2:    #238636;
+    --orange:    #d29922;
+    --orange2:   #b08800;
+    --red:       #f85149;
+    --purple:    #bc8cff;
+    --teal:      #39d353;
+    --gold:      #e3b341;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo .icon {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .sidebar-logo span { font-size: 13px; font-weight: 700; color: var(--text); }
+  .sidebar-logo small { display: block; font-size: 10px; color: var(--muted); font-weight: 400; }
+
+  .nav-section { margin-bottom: 20px; }
+  .nav-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0 20px 8px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 20px;
+    font-size: 13px; color: var(--muted);
+    cursor: pointer; text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active {
+    background: rgba(47,129,247,.12);
+    color: var(--accent2);
+    border-left: 2px solid var(--accent);
+  }
+  .nav-item .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border2); flex-shrink: 0;
+  }
+  .nav-item.active .dot, .nav-item .dot.done { background: var(--green); }
+  .nav-item .dot.wip { background: var(--gold); }
+  .nav-item .dot.current { background: var(--accent); box-shadow: 0 0 0 3px rgba(47,129,247,.25); }
+
+  /* ── Main ── */
+  main { padding: 40px 48px; max-width: 960px; }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 28px;
+  }
+  .breadcrumb a { color: var(--accent2); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { color: var(--border2); }
+
+  /* ── Page header ── */
+  .page-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sprint-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(47,129,247,.15);
+    border: 1px solid rgba(47,129,247,.35);
+    color: var(--accent2);
+    font-size: 11px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 10px; border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: .06em;
+  }
+  .sprint-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  h1 {
+    font-size: 26px; font-weight: 800; color: var(--text);
+    line-height: 1.25; margin-bottom: 8px;
+  }
+  .page-meta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-size: 12px; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .page-meta span { display: flex; align-items: center; gap: 5px; }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .05em;
+  }
+  .status-pill.planning {
+    background: rgba(210,153,34,.12);
+    border: 1px solid rgba(210,153,34,.4);
+    color: var(--gold);
+  }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── Alert NF525 ── */
+  .alert {
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .alert.warn {
+    background: rgba(210,153,34,.1);
+    border: 1px solid rgba(210,153,34,.35);
+  }
+  .alert.info {
+    background: rgba(47,129,247,.08);
+    border: 1px solid rgba(47,129,247,.25);
+  }
+  .alert-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
+  .alert-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .alert.warn .alert-title { color: var(--gold); }
+  .alert.info .alert-title { color: var(--accent2); }
+  .alert p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* ── Cards grid ── */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: var(--border2); }
+  .card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 6px; }
+  .card-value { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+  .card-sub { font-size: 12px; color: var(--muted); }
+  .card-value.green { color: var(--green); }
+  .card-value.gold { color: var(--gold); }
+  .card-value.accent { color: var(--accent2); }
+
+  /* ── Conformité progress ── */
+  .compliance-grid {
+    display: grid; gap: 10px;
+    margin-bottom: 24px;
+  }
+  .compliance-row {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 28px 1fr auto 80px;
+    gap: 12px;
+    align-items: center;
+  }
+  .compliance-row .check {
+    width: 26px; height: 26px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .check.done  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .check.todo  { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .check.wip   { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
+  .check.crit  { background: rgba(248,81,73,.12); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+
+  .compliance-row .cr-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .compliance-row .cr-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .compliance-row .cr-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .06em;
+    padding: 3px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+  .cr-tag.done   { background: rgba(63,185,80,.15); color: var(--green); }
+  .cr-tag.todo   { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+  .cr-tag.wip    { background: rgba(210,153,34,.12); color: var(--gold); }
+  .cr-tag.crit   { background: rgba(248,81,73,.12); color: var(--red); }
+  .compliance-row .cr-bar { height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+  .cr-fill { height: 100%; border-radius: 2px; transition: width .5s; }
+  .cr-fill.green { background: var(--green); }
+  .cr-fill.gold  { background: var(--gold); }
+  .cr-fill.blue  { background: var(--accent); }
+  .cr-fill.red   { background: var(--red); }
+
+  /* ── User stories table ── */
+  .us-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .us-table th {
+    text-align: left; padding: 10px 14px;
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+  .us-table td {
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text);
+  }
+  .us-table tr:hover td { background: rgba(255,255,255,.02); }
+  .us-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    color: var(--accent2);
+    white-space: nowrap;
+  }
+  .us-points {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--purple);
+    text-align: center;
+  }
+  .prio-pill {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .04em;
+  }
+  .prio-pill.crit { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .prio-pill.high { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
+  .prio-pill.med  { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
+
+  .assignee {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+  }
+  .avatar {
+    width: 20px; height: 20px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .av-dba  { background: #8957e5; }
+  .av-dev  { background: #2f81f7; }
+  .av-fe   { background: #d29922; }
+  .av-dir  { background: #3fb950; }
+
+  /* ── Fichiers livrables ── */
+  .file-list { display: grid; gap: 8px; }
+  .file-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+    transition: border-color .2s;
+    cursor: pointer;
+  }
+  .file-item:hover { border-color: var(--accent2); }
+  .file-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
+  .file-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent2); }
+  .file-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .file-size { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
+  .file-status {
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .file-status.ready { background: rgba(63,185,80,.12); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .file-status.pending { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+
+  /* ── Dépendances ── */
+  .dep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dep-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .dep-card .dep-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .dep-card .dep-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .dep-badge {
+    font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+  }
+  .dep-badge.blocker { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .dep-badge.info    { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
+
+  /* ── Timeline sprint ── */
+  .timeline { display: grid; gap: 0; margin-bottom: 4px; }
+  .tl-week {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tl-week:last-child { border-bottom: none; }
+  .tl-label { font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding-top: 2px; }
+  .tl-items { display: flex; flex-direction: column; gap: 4px; }
+  .tl-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 12px; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tl-item .tl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tl-item.sql  .tl-dot { background: var(--purple); }
+  .tl-item.api  .tl-dot { background: var(--accent); }
+  .tl-item.front .tl-dot { background: var(--gold); }
+  .tl-item.test .tl-dot { background: var(--green); }
+  .tl-item.doc  .tl-dot { background: var(--muted); }
+  .tl-item.prod .tl-dot { background: var(--red); }
+
+  /* ── Checklist technique ── */
+  .checklist { display: grid; gap: 6px; }
+  .cl-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--text);
+    padding: 8px 12px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .cl-check {
+    width: 18px; height: 18px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+  }
+  .cl-check.ok  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+  .cl-check.no  { background: var(--bg3); border: 1px solid var(--border); color: transparent; }
+  .cl-item code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--purple);
+    background: rgba(188,140,255,.1);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ── Scroll animation ── */
+  .section { animation: fadeUp .4s ease both; }
+  .section:nth-child(2) { animation-delay: .05s; }
+  .section:nth-child(3) { animation-delay: .1s; }
+  .section:nth-child(4) { animation-delay: .15s; }
+  .section:nth-child(5) { animation-delay: .2s; }
+  .section:nth-child(6) { animation-delay: .25s; }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(12px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    main { padding: 24px 20px; }
+    .cards { grid-template-columns: 1fr 1fr; }
+    .dep-grid { grid-template-columns: 1fr; }
+    .page-header { grid-template-columns: 1fr; }
+  }
+
+
+  /* ── Compat classes existantes ── */
+  .hero{background:var(--bg2);padding:40px 48px 32px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .hero-tag{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+  .hero h1{font-size:28px;font-weight:800;color:var(--text);line-height:1.15;margin-bottom:8px;}
+  .hero h1 em{font-style:italic;color:var(--accent2);}
+  .hero-sub{font-size:13px;color:var(--muted);max-width:600px;line-height:1.6;}
+  .container{padding:32px 48px 80px;max-width:960px;}
+  .section{margin-bottom:36px;}
+  .section-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .section-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .section-title{font-size:16px;font-weight:700;color:var(--text);}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto;background:var(--bg3);padding:2px 8px;border-radius:4px;border:1px solid var(--border);}
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+  .card:hover{border-color:var(--border2);}
+  .card-title{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:var(--text);}
+  .card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+  .ci-green,.icon-green{background:rgba(63,185,80,.12);color:var(--green);}
+  .ci-blue,.icon-blue{background:rgba(47,129,247,.1);color:var(--accent2);}
+  .ci-amber,.icon-gold,.icon-amber{background:rgba(210,153,34,.12);color:var(--gold);}
+  .ci-red,.icon-red{background:rgba(248,81,73,.1);color:var(--red);}
+  .ci-purple,.icon-purple{background:rgba(188,140,255,.1);color:var(--purple);}
+  .ci-teal,.icon-teal{background:rgba(57,211,83,.1);color:var(--teal);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .item{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);}
+  .item:last-child{border-bottom:none;padding-bottom:0;}
+  .item-label,.item-lbl{font-size:12px;font-weight:600;color:var(--text);min-width:150px;flex-shrink:0;}
+  .item-val,.item-value{font-size:12px;color:var(--muted);line-height:1.4;}
+  .item-list{display:flex;flex-direction:column;}
+  .subsection{margin-bottom:24px;}
+  .subsection-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;padding-left:10px;border-left:2px solid var(--accent);}
+  .pill,.tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;font-family:'JetBrains Mono',monospace;}
+  .p-green,.pill-green,.tag-green{background:rgba(63,185,80,.12);color:var(--green);border:1px solid rgba(63,185,80,.25);}
+  .p-amber,.pill-amber,.tag-gold,.p-gold{background:rgba(210,153,34,.12);color:var(--gold);border:1px solid rgba(210,153,34,.25);}
+  .p-blue,.pill-blue,.tag-blue{background:rgba(47,129,247,.1);color:var(--accent2);border:1px solid rgba(47,129,247,.25);}
+  .p-red,.pill-red,.tag-red{background:rgba(248,81,73,.1);color:var(--red);border:1px solid rgba(248,81,73,.25);}
+  .p-gray,.pill-gray,.tag-teal{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+  .p-purple,.pill-purple,.tag-purple{background:rgba(188,140,255,.1);color:var(--purple);border:1px solid rgba(188,140,255,.25);}
+  .callout{border-left:3px solid var(--accent);background:rgba(47,129,247,.08);padding:13px 17px;border-radius:0 6px 6px 0;font-size:12px;color:var(--muted);margin:12px 0;border:1px solid rgba(47,129,247,.2);border-left:3px solid var(--accent);}
+  .callout.amber{border-left-color:var(--orange);background:rgba(210,153,34,.08);}
+  .callout.blue{border-left-color:var(--accent2);background:rgba(47,129,247,.08);}
+  .callout.red{border-left-color:var(--red);background:rgba(248,81,73,.08);}
+  .callout strong{color:var(--text);}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg2);}
+  td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;color:var(--text);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+  .tw{overflow-x:auto;margin-bottom:4px;}
+  code,.code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--purple);}
+  .code-block,.code-box{background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:10px 0;}
+  .kpi-grid,.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;}
+  .kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+  .kpi-num,.kpi-value{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .kpi-lbl,.kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .kpi-card.highlight .kpi-num{color:var(--green);}
+  .check-list{display:flex;flex-direction:column;gap:5px;}
+  .check-item{font-size:12px;color:var(--muted);display:flex;gap:7px;align-items:flex-start;line-height:1.4;}
+  .check-item::before{content:'→';color:var(--accent2);font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+  .check-item.done::before{content:'✓';color:var(--green);}
+  .check-item.wip::before{content:'⏳';}
+  .module-card,.mcard{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;border-top:2px solid var(--accent);}
+  .module-feat{font-size:11px;color:var(--muted);margin-bottom:3px;display:flex;gap:6px;align-items:flex-start;}
+  .module-feat::before{content:'–';color:var(--muted);flex-shrink:0;}
+  .roadmap-phase,.tl-phase{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:10px;display:flex;gap:16px;align-items:flex-start;}
+  .phase-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+  .phase-done{background:rgba(63,185,80,.15);color:var(--green);}
+  .phase-current,.phase-wip{background:rgba(210,153,34,.12);color:var(--gold);}
+  .phase-planned{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
+  .phase-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .phase-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+  .kanban-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px;}
+  .kanban-card.urgent{border-left:3px solid var(--red);}
+  .kanban-card-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .kanban-card-sub{font-size:11px;color:var(--muted);line-height:1.4;}
+  .kanban-card-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+  .mcard-num{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:var(--text);margin-bottom:4px;}
+  .mcard-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+  .mcard-sub{font-size:11px;color:var(--muted);margin-top:6px;}
+  .mc-green{border-top:2px solid var(--green);}
+  .mc-blue{border-top:2px solid var(--accent);}
+  .mc-amber{border-top:2px solid var(--orange);}
+  .mc-purple{border-top:2px solid var(--purple);}
+  .prog-wrap{margin-bottom:10px;}
+  .prog-label{display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;color:var(--muted);}
+  .prog-track{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+  .prog-bar{height:100%;border-radius:2px;}
+  .index-section{margin-bottom:36px;}
+  .index-section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .index-section-title{font-size:16px;font-weight:700;color:var(--text);}
+  .index-section-line{flex:1;height:1px;background:var(--border);}
+  .index-section-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:20px;}
+  .doc-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;text-decoration:none;color:var(--text);display:block;transition:border-color .2s;position:relative;overflow:hidden;}
+  .doc-card:hover{border-color:var(--border2);}
+  .doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+  .c1::before{background:var(--green);}
+  .c2::before{background:var(--accent);}
+  .c3::before{background:var(--gold);}
+  .c4::before{background:var(--teal);}
+  .c5::before{background:var(--red);}
+  .c6::before{background:var(--purple);}
+  .doc-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:.06em;}
+  .doc-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px;line-height:1.2;}
+  .doc-desc{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:12px;}
+  .doc-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;}
+  .arrow{position:absolute;bottom:16px;right:16px;font-size:14px;color:var(--border2);}
+  .doc-card:hover .arrow{color:var(--accent2);}
+  .kpi-badge{position:absolute;top:12px;right:12px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:10px;text-align:right;line-height:1.4;}
+  .kpi-badge strong{display:block;font-size:11px;color:var(--accent2);font-weight:700;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+  .stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+  .stat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center;min-width:100px;}
+  .stat-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--text);}
+  .stat-lbl{font-size:10px;color:var(--muted);margin-top:3px;}
+  .stat.accent .stat-num{color:var(--green);}
+  .updated{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);padding:16px;border-top:1px solid var(--border);margin-top:8px;}
+  .index-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+  .index-nav a{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);text-decoration:none;padding:4px 12px;border:1px solid var(--border);border-radius:20px;transition:all .15s;}
+  .index-nav a:hover{border-color:var(--accent2);color:var(--accent2);}
+  .plan-card,.plan{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px 18px;}
+  .plan.featured,.plan.feat{border-color:var(--accent);border-width:2px;}
+  .plan-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+  .plan-price{font-size:32px;font-weight:800;color:var(--text);margin-bottom:4px;}
+  .plan-price span{font-size:13px;font-weight:400;color:var(--muted);}
+  .plan-target{font-size:11px;color:var(--muted);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+  .plan-feat{font-size:11px;color:var(--muted);padding:4px 0;display:flex;gap:6px;}
+  .plan-feat::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+  .tl-item-ph,.tl-phase-item{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:8px;}
+  .tl-sprint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent2);font-weight:700;}
+  footer.ps-footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 48px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;}
+  .pw-overlay-wrap{position:fixed;inset:0;z-index:9999;background:#0d1117;display:flex;align-items:center;justify-content:center;}
+  .pw-overlay-wrap.hidden{display:none;}
+  .pw-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:40px 36px;width:320px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;}
+  .pw-input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:14px;font-family:'JetBrains Mono',monospace;outline:none;text-align:center;letter-spacing:.2em;}
+  .pw-input:focus{border-color:var(--accent);}
+  .pw-btn{width:100%;padding:10px;border-radius:8px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;}
+  .pw-btn:hover{opacity:.85;}
+  .pw-error{font-size:12px;color:var(--red);min-height:14px;font-family:'JetBrains Mono',monospace;}
+  @media(max-width:860px){
+    .grid2,.grid3,.grid4,.kpi-grid{grid-template-columns:1fr;}
+    main{padding:24px 20px;}
+  }
+
+</style>
+</head>
 <body>
-<div class="header"><h1>📝 Questionnaires</h1><p>Formulaires EDC et recueil d'informations</p><div class="badge">v4.0 — Sprint S30 — Mars 2026</div></div>
-<nav style="background:#1a1d27;border-bottom:1px solid #2d3348;padding:12px 32px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Segoe UI',system-ui,sans-serif;"><a href="index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">← Accueil</a><a href="01-synthese-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Synthèse</a><a href="20-pilotage-projet.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem;">Pilotage</a><a href="23-Prise-en-compte-de-la-NF-525.html" style="color:#10b981;text-decoration:none;font-size:.85rem;font-weight:600;">🏛️ NF 525</a></nav>
-<div class="container">
-<div class="section"><h2>📝 Objectif</h2>
-<p>Les questionnaires permettent de recueillir des informations structurées avant une séance (EDC, consultation naturopathe, bilan comportemental...). Ils sont remplis par le client ou le praticien.</p></div>
-<div class="section"><h2>📋 Types de questionnaires</h2>
-<div class="grid">
-  <div class="card"><h4>Questionnaire EDC</h4><p>Anamnèse comportementale complète. Historique de l'animal, comportements problématiques, déclencheurs, contexte de vie.</p></div>
-  <div class="card"><h4>Questionnaire nutritionnel</h4><p>Régime alimentaire actuel, compléments, état corporel, historique digestif. Pour les naturopathes et nutritionnistes.</p></div>
-  <div class="card"><h4>Fiche de garde</h4><p>Instructions de garde, médicaments, contacts vétérinaire, habitudes, allergies. Pour pet-sitters et pensions.</p></div>
-  <div class="card"><h4>Bilan kinésithérapique</h4><p>Antécédents médicaux, motif de consultation, zones douloureuses, traitements en cours. Pour ostéopathes et kinés.</p></div>
-</div></div>
-<div class="section"><h2>🔌 Intégration PetSuite</h2>
-<table><thead><tr><th>Questionnaire</th><th>Lié à</th><th>Stockage</th></tr></thead><tbody>
-<tr><td>EDC</td><td>Séance EDC (SEA_ID)</td><td>SEA_COMPTE_RENDU + GED</td></tr>
-<tr><td>Nutritionnel</td><td>Animal (ANI_ID)</td><td>Extension animal S31</td></tr>
-<tr><td>Fiche de garde</td><td>Séance gardiennage</td><td>SEA_COMMENTAIRE + GED</td></tr>
-<tr><td>Bilan kiné</td><td>Séance suivi</td><td>Extension seance S31</td></tr>
-</tbody></table></div>
-<div class="section"><h2>🚀 Roadmap</h2>
-<div class="highlight"><p><strong>S31 :</strong> Module Questionnaires avec éditeur visuel (champs texte, choix multiple, échelle 1-10, photos). Envoi par lien avant la séance. Réponses intégrées dans la fiche séance.</p></div></div></div>
-<footer>PetSuite v4.0 — Sprint S30 — Mars 2026 — © micro_logiciel | <a href="index.html" style="color:#818cf8;text-decoration:none;">← Retour accueil</a></footer>
-</body></html>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="icon">🐾</div>
+      <div><span>PetSuite</span><small>Algorithmia · Sprint S33</small></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Navigation</div>
+      <a class="nav-item" href="index.html"><div class="dot done"></div>🏠 — Index</a>
+      <a class="nav-item" href="01-synthese-projet.html"><div class="dot done"></div>01 — Synthèse projet</a>
+      <a class="nav-item" href="02-guide-parametrage.html"><div class="dot done"></div>02 — Guide paramétrage</a>
+      <a class="nav-item" href="03-notice-utilisateur.html"><div class="dot done"></div>03 — Notice utilisateur v4.0</a>
+      <a class="nav-item" href="06-roadmap.html"><div class="dot done"></div>06 — Roadmap sprints</a>
+      <a class="nav-item" href="07-audit-stack.html"><div class="dot done"></div>07 — Audit Stack</a>
+      <a class="nav-item" href="09-scenario-video.html"><div class="dot done"></div>09 — Scénarios vidéo</a>
+      <a class="nav-item" href="17-api-reference.html"><div class="dot done"></div>17 — API Reference</a>
+      <a class="nav-item" href="26-changelog-S33.html"><div class="dot done"></div>26 — Changelog S33</a>
+      <a class="nav-item" href="27-investisseurs.html"><div class="dot done"></div>27 — 🔒 Investisseurs</a>
+      <a class="nav-item" href="99_Business_Plan.html"><div class="dot done"></div>99 — 🔒 Business Plan</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Stack technique</div>
+      <a class="nav-item" href="#"><div class="dot done"></div>BDD 65+ tables · 20+ triggers</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>API 90+ routes custom</a>
+      <a class="nav-item" href="#"><div class="dot done"></div>Next.js 15 · 101 fichiers</a>
+      <a class="nav-item" href="#"><div class="dot wip"></div>NF525 · Élevage · Templates</a>
+    </div>
+  </aside>
+  <main>
+    <nav class="breadcrumb">
+      <a href="index.html">PetSuite</a>
+      <span>/</span>
+      <a href="index.html">docs</a>
+      <span>/</span>
+      <span>Questionnaires comportementaux</span>
+    </nav>
+<main>
+    <nav class="breadcrumb">
+      <a href="index.html">PetSuite</a>
+      <span>/</span>
+      <a href="index.html">docs</a>
+      <span>/</span>
+      <span>Questionnaires comportementaux</span>
+    </nav>
+<div class="hero">
+  <div class="hero-tag">Spécification fonctionnelle — Document vivant</div>
+  <h1>Questionnaires <em>comportementaux</em></h1>
+  <p class="hero-sub">Moteur de questionnaires dynamiques — pré-visite EDC, suivi intermédiaire, satisfaction fin de programme. Envoyés par email, remplis en ligne par le propriétaire, résultats intégrés dans le dossier animal.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-num">3</div><div class="kpi-lbl">Types de questionnaire</div></div>
+    <div class="kpi"><div class="kpi-num">7</div><div class="kpi-lbl">Types de question</div></div>
+    <div class="kpi"><div class="kpi-num">Email</div><div class="kpi-lbl">Envoi automatique</div></div>
+    <div class="kpi"><div class="kpi-num">PWA</div><div class="kpi-lbl">Réponse mobile</div></div>
+    <div class="kpi"><div class="kpi-num">RGPD</div><div class="kpi-lbl">Consentement tracé</div></div>
+  </div>
+</div>
+
+
+
+
+<div class="main">
+
+<!-- 01 CONCEPT -->
+<div class="section" id="s1">
+  <div class="section-header"><span class="section-num">01</span><span class="section-title">Concept & objectifs</span></div>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🎯</div>Pourquoi des questionnaires ?</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Gagner du temps</span><span class="item-val">Anamnèse EDC collectée AVANT la visite — arriver informé</span></div>
+        <div class="item"><span class="item-label">Standardiser</span><span class="item-val">Même grille pour tous les clients — données comparables</span></div>
+        <div class="item"><span class="item-label">Engager</span><span class="item-val">Le propriétaire se prépare — meilleure qualité séance</span></div>
+        <div class="item"><span class="item-label">Suivre</span><span class="item-val">Mesurer l'évolution entre les séances via scores</span></div>
+        <div class="item"><span class="item-label">Fidéliser</span><span class="item-val">Questionnaire satisfaction = boucle de retour pro</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📋</div>Principe technique</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Modèle dynamique</span><span class="item-val">Questions définies en BDD — pas de formulaire codé en dur</span></div>
+        <div class="item"><span class="item-label">Templates</span><span class="item-val">3 templates système + questionnaires personnalisés pro</span></div>
+        <div class="item"><span class="item-label">Envoi</span><span class="item-val">Email avec lien URL signée (7 jours) — pas de compte requis</span></div>
+        <div class="item"><span class="item-label">Réponses</span><span class="item-val">Stockées en BDD, liées à l'animal et la séance</span></div>
+        <div class="item"><span class="item-label">Portail</span><span class="item-val">Accessible aussi depuis le portail propriétaire</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🔄</div>Cycle de vie</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Création</span><span class="item-val">Pro crée ou choisit un template</span></div>
+        <div class="item"><span class="item-label">Envoi</span><span class="item-val">Manuel ou automatique (J-2 avant séance)</span></div>
+        <div class="item"><span class="item-label">Réponse</span><span class="item-val">Propriétaire répond en ligne (mobile ou PC)</span></div>
+        <div class="item"><span class="item-label">Notification</span><span class="item-val">Pro notifié dès réception</span></div>
+        <div class="item"><span class="item-label">Analyse</span><span class="item-val">Résultats dans la fiche animal + comparaison</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 TYPES -->
+<div class="section" id="s2">
+  <div class="section-header"><span class="section-num">02</span><span class="section-title">Types de questionnaires</span></div>
+
+  <div class="grid2">
+    <!-- PRE-EDC -->
+    <div class="card" id="s2-preedc">
+      <div class="card-title"><div class="card-icon icon-purple">📝</div>Pré-EDC — Questionnaire de pré-visite</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Déclencheur</span><span class="item-val">Automatique J-2 avant une séance de type EDC</span></div>
+        <div class="item"><span class="item-label">Destinataire</span><span class="item-val">Propriétaire de l'animal</span></div>
+        <div class="item"><span class="item-label">Objectif</span><span class="item-val">Collecter l'anamnèse avant la visite</span></div>
+        <div class="item"><span class="item-label">Durée</span><span class="item-val">~10 minutes (20–25 questions)</span></div>
+        <div class="item"><span class="item-label">Sections</span><span class="item-val">Identité animal · Alimentation · Comportement général · Problématique principale · Antécédents</span></div>
+        <div class="item"><span class="item-label">Résultat</span><span class="item-val">Pré-remplissage automatique de certains champs edc_fiche</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-ok">Template système</span><span class="pill pill-blue">Auto J-2</span></div>
+    </div>
+
+    <!-- SUIVI -->
+    <div class="card" id="s2-suivi">
+      <div class="card-title"><div class="card-icon icon-blue">📊</div>Suivi intermédiaire</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Déclencheur</span><span class="item-val">Automatique J+2 après une séance de suivi RÉALISÉE</span></div>
+        <div class="item"><span class="item-label">Destinataire</span><span class="item-val">Propriétaire de l'animal</span></div>
+        <div class="item"><span class="item-label">Objectif</span><span class="item-val">Mesurer l'évolution comportementale entre séances</span></div>
+        <div class="item"><span class="item-label">Durée</span><span class="item-val">~5 minutes (10–12 questions)</span></div>
+        <div class="item"><span class="item-label">Sections</span><span class="item-val">Exercices réalisés · Difficultés rencontrées · Évolution perçue (score 1–10)</span></div>
+        <div class="item"><span class="item-label">Résultat</span><span class="item-val">Score d'évolution visible dans l'historique séances</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-ok">Template système</span><span class="pill pill-blue">Auto J+2</span></div>
+    </div>
+
+    <!-- FIN PROGRAMME -->
+    <div class="card" id="s2-fin">
+      <div class="card-title"><div class="card-icon icon-gold">🏆</div>Fin de programme — Satisfaction</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Déclencheur</span><span class="item-val">Manuel — pro l'envoie en clôturant un programme de suivi</span></div>
+        <div class="item"><span class="item-label">Destinataire</span><span class="item-val">Propriétaire de l'animal</span></div>
+        <div class="item"><span class="item-label">Objectif</span><span class="item-val">NPS + satisfaction + témoignage</span></div>
+        <div class="item"><span class="item-label">Durée</span><span class="item-val">~3 minutes (6–8 questions)</span></div>
+        <div class="item"><span class="item-label">Sections</span><span class="item-val">Note globale (NPS 0–10) · Points forts · Points d'amélioration · Autorisation témoignage</span></div>
+        <div class="item"><span class="item-label">Résultat</span><span class="item-val">Score NPS dans le dashboard pro + témoignage (si autorisé)</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-ok">Template système</span><span class="pill pill-wip">Manuel</span></div>
+    </div>
+
+    <!-- CUSTOM -->
+    <div class="card" id="s2-custom">
+      <div class="card-title"><div class="card-icon icon-teal">✏️</div>Questionnaire personnalisé</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Création</span><span class="item-val">Pro crée ses propres questions via l'interface</span></div>
+        <div class="item"><span class="item-label">Types de questions</span><span class="item-val">Tous les types disponibles (voir section 03)</span></div>
+        <div class="item"><span class="item-label">Ordre</span><span class="item-val">Drag & drop pour réorganiser</span></div>
+        <div class="item"><span class="item-label">Questions conditionnelles</span><span class="item-val">Afficher une question si réponse X à la question Y</span></div>
+        <div class="item"><span class="item-label">Réutilisable</span><span class="item-val">Envoyable à plusieurs clients différents</span></div>
+        <div class="item"><span class="item-label">Lier</span><span class="item-val">À une séance, un animal, ou envoi libre</span></div>
+      </div>
+      <div class="pill-row"><span class="pill pill-blue">Plan Cabinet+</span><span class="pill pill-wip">Sprint 11</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 TYPES DE QUESTIONS -->
+<div class="section" id="s3">
+  <div class="section-header"><span class="section-num">03</span><span class="section-title">Types de questions disponibles</span></div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Type</th><th>Code BDD</th><th>Description</th><th>Paramètres</th><th>Exemple</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="qtype qt-text">📝 Texte libre</span></td>
+          <td><span style="font-family:'DM Mono',monospace;font-size:11px;">TEXT</span></td>
+          <td>Saisie libre — court ou long</td>
+          <td>min_length, max_length, multiline</td>
+          <td>"Décrivez le comportement problématique"</td>
+        </tr>
+        <tr>
+          <td><span class="qtype qt-choix">🔵 Choix unique</span></td>
+          <td><span style="font-family:'DM Mono',monospace;font-size:11px;">RADIO</span></td>
+          <td>Sélection d'une option parmi N</td>
+          <td>options[] (JSON), allow_other</td>
+          <td>"Type d'alimentation : Croquettes / Pâtée / Barf / Mixte"</td>
+        </tr>
+        <tr>
+          <td><span class="qtype qt-multi">🔴 Choix multiple</span></td>
+          <td><span style="font-family:'DM Mono',monospace;font-size:11px;">CHECKBOX</span></td>
+          <td>Sélection de plusieurs options</td>
+          <td>options[], min_select, max_select</td>
+          <td>"Avec quels animaux vit-il ? (Chiens / Chats / NAC…)"</td>
+        </tr>
+        <tr>
+          <td><span class="qtype qt-echelle">📊 Échelle</span></td>
+          <td><span style="font-family:'DM Mono',monospace;font-size:11px;">SCALE</span></td>
+          <td>Note sur une échelle numérique</td>
+          <td>min, max, step, label_min, label_max</td>
+          <td>"Intensité de l'agressivité : 0 = Jamais / 10 = Constant"</td>
+        </tr>
+        <tr>
+          <td><span class="qtype qt-oui-non">✅ Oui / Non</span></td>
+          <td><span style="font-family:'DM Mono',monospace;font-size:11px;">BOOLEAN</span></td>
+          <td>Réponse binaire oui/non</td>
+          <td>label_true, label_false</td>
+          <td>"Votre chien a-t-il déjà mordu ?"</td>
+        </tr>
+        <tr>
+          <td><span class="qtype qt-date">📅 Date</span></td>
+          <td><span style="font-family:'DM Mono',monospace;font-size:11px;">DATE</span></td>
+          <td>Saisie d'une date</td>
+          <td>min_date, max_date</td>
+          <td>"Depuis quand observez-vous ce comportement ?"</td>
+        </tr>
+        <tr>
+          <td><span class="qtype qt-score">⭐ Score NPS</span></td>
+          <td><span style="font-family:'DM Mono',monospace;font-size:11px;">NPS</span></td>
+          <td>Note 0–10 style Net Promoter Score</td>
+          <td>label_question</td>
+          <td>"Recommanderiez-vous notre cabinet ?"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 04 MAQUETTE -->
+<div class="section" id="s4">
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">Maquette — Questionnaire pré-EDC</span></div>
+  <div class="alert alert-info" style="margin-bottom:16px;">Rendu sur mobile — accessible via lien email sans connexion. Barre de progression en haut. Sections paginées (1 section = 1 écran).</div>
+
+  <div id="s4-preedc">
+    <div class="q-preview">
+      <div class="q-preview-header">
+        <div class="q-preview-title">Questionnaire de pré-visite</div>
+        <div class="q-preview-meta">Cabinet Canin Harmonie · Titan (Berger Allemand) · EDC du 14/03/2026</div>
+        <div class="q-preview-progress"><div class="q-preview-progress-fill" style="width:40%;"></div></div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:6px;">Section 2/5 — Alimentation · 8 questions restantes</div>
+      </div>
+      <div class="q-preview-body">
+
+        <!-- Q1 TEXTE -->
+        <div class="q-item">
+          <div class="q-num">Question 4</div>
+          <div class="q-text">Décrivez en quelques mots le comportement qui vous préoccupe le plus.<span class="q-required">*</span></div>
+          <div class="q-input" style="width:100%;min-height:64px;">Il tire fort en laisse et réagit aux autres chiens avec des aboiements et des sauts…</div>
+        </div>
+
+        <!-- Q2 RADIO -->
+        <div class="q-item">
+          <div class="q-num">Question 5</div>
+          <div class="q-text">Ce comportement se produit-il principalement :<span class="q-required">*</span></div>
+          <div class="q-choices">
+            <div class="q-choice selected">
+              <div class="q-choice-radio"></div>
+              À l'extérieur uniquement
+            </div>
+            <div class="q-choice">
+              <div class="q-choice-radio"></div>
+              À la maison uniquement
+            </div>
+            <div class="q-choice">
+              <div class="q-choice-radio"></div>
+              Dans les deux contextes
+            </div>
+            <div class="q-choice">
+              <div class="q-choice-radio"></div>
+              En voiture
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3 ECHELLE -->
+        <div class="q-item">
+          <div class="q-num">Question 6</div>
+          <div class="q-text">Sur une échelle de 0 à 10, quelle est l'intensité de ce comportement ?<span class="q-required">*</span></div>
+          <div class="q-scale">
+            <div class="q-scale-btn">0</div>
+            <div class="q-scale-btn">1</div>
+            <div class="q-scale-btn">2</div>
+            <div class="q-scale-btn">3</div>
+            <div class="q-scale-btn">4</div>
+            <div class="q-scale-btn">5</div>
+            <div class="q-scale-btn">6</div>
+            <div class="q-scale-btn active">7</div>
+            <div class="q-scale-btn">8</div>
+            <div class="q-scale-btn">9</div>
+            <div class="q-scale-btn">10</div>
+          </div>
+          <div class="q-scale-labels">
+            <span>Jamais / Faible</span>
+            <span>Constant / Très intense</span>
+          </div>
+        </div>
+
+        <!-- Q4 BOOLEAN -->
+        <div class="q-item">
+          <div class="q-num">Question 7</div>
+          <div class="q-text">Votre chien a-t-il déjà mordu ou tenté de mordre ?<span class="q-required">*</span></div>
+          <div class="q-choices" style="flex-direction:row;">
+            <div class="q-choice" style="flex:1;">
+              <div class="q-choice-radio"></div>
+              Oui
+            </div>
+            <div class="q-choice selected" style="flex:1;">
+              <div class="q-choice-radio"></div>
+              Non
+            </div>
+          </div>
+        </div>
+
+        <!-- NAV -->
+        <div style="display:flex;justify-content:space-between;margin-top:8px;">
+          <div style="background:var(--paper2);border:1px solid var(--paper3);border-radius:var(--rs);padding:8px 16px;font-size:12px;color:var(--ink2);">← Précédent</div>
+          <div style="background:var(--ink);color:#fff;border-radius:var(--rs);padding:8px 16px;font-size:12px;font-weight:500;">Suivant →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:16px;">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">✅</div>Page de confirmation (après envoi)</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Message</span><span class="item-val">"Merci ! Vos réponses ont été transmises à Cabinet Canin Harmonie."</span></div>
+        <div class="item"><span class="item-label">Résumé</span><span class="item-val">Date de la séance + nom de l'animal</span></div>
+        <div class="item"><span class="item-label">CTA</span><span class="item-val">Bouton "Voir le dossier de Titan" → portail propriétaire</span></div>
+        <div class="item"><span class="item-label">Notification pro</span><span class="item-val">Email automatique au professionnel</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">⚠️</div>Lien expiré ou déjà répondu</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Expiré (7 jours)</span><span class="item-val">"Ce lien a expiré. Contactez votre comportementaliste pour en recevoir un nouveau."</span></div>
+        <div class="item"><span class="item-label">Déjà répondu</span><span class="item-val">"Vous avez déjà répondu à ce questionnaire le [date]. Merci !"</span></div>
+        <div class="item"><span class="item-label">Pas de retry auto</span><span class="item-val">Le pro renvoie manuellement depuis la fiche séance</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 BDD -->
+<div class="section" id="s5">
+  <div class="section-header"><span class="section-num">05</span><span class="section-title">BDD — Structure complète</span></div>
+  <div id="s5-tables">
+
+    <div class="schema-table">
+      <div class="schema-table-header"><span class="tname">questionnaire_template</span><span class="tdesc">Modèles de questionnaires (système + personnalisés)</span></div>
+      <div class="schema-field"><div class="sf-name sf-pk">QT_ID</div><div class="sf-type">INT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
+      <div class="schema-field"><div class="sf-name">QT_CODE</div><div class="sf-type">VARCHAR(50)</div><div class="sf-desc">Code unique ex: PRE_EDC, SUIVI_INTERMEDIAIRE, SATISFACTION, CUSTOM_xxx</div></div>
+      <div class="schema-field"><div class="sf-name">QT_TYPE</div><div class="sf-type">ENUM</div><div class="sf-desc">SYSTEME | CUSTOM — les templates SYSTEME ne sont pas modifiables</div></div>
+      <div class="schema-field"><div class="sf-name">QT_TITRE</div><div class="sf-type">VARCHAR(200)</div><div class="sf-desc">Titre affiché au propriétaire</div></div>
+      <div class="schema-field"><div class="sf-name">QT_DESCRIPTION</div><div class="sf-type">TEXT NULL</div><div class="sf-desc">Introduction / consignes affichées en début de questionnaire</div></div>
+      <div class="schema-field"><div class="sf-name">QT_DECLENCHEUR</div><div class="sf-type">ENUM</div><div class="sf-desc">MANUEL | AUTO_PRE_SEANCE | AUTO_POST_SEANCE — pour les templates système</div></div>
+      <div class="schema-field"><div class="sf-name">QT_DECLENCHEUR_DELAI_J</div><div class="sf-type">INT NULL</div><div class="sf-desc">Délai en jours (négatif = avant, positif = après) ex: -2 pour J-2</div></div>
+      <div class="schema-field"><div class="sf-name">QT_TYPE_SEANCE_CODE</div><div class="sf-type">VARCHAR(30) NULL</div><div class="sf-desc">Si rempli : déclenché uniquement pour ce type de séance (ex: EDC)</div></div>
+      <div class="schema-field"><div class="sf-name">QT_ACTIF</div><div class="sf-type">TINYINT(1)</div><div class="sf-desc">1 = actif</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">USR_ID_CREATEUR</div><div class="sf-type">INT NULL</div><div class="sf-desc">FK utilisateur pour templates CUSTOM — NULL pour SYSTEME</div></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header"><span class="tname">questionnaire_question</span><span class="tdesc">Questions d'un template (ordonnées)</span></div>
+      <div class="schema-field"><div class="sf-name sf-pk">QQ_ID</div><div class="sf-type">INT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">QT_ID</div><div class="sf-type">INT</div><div class="sf-desc">FK → questionnaire_template</div></div>
+      <div class="schema-field"><div class="sf-name">QQ_ORDRE</div><div class="sf-type">INT</div><div class="sf-desc">Ordre d'affichage (1..n)</div></div>
+      <div class="schema-field"><div class="sf-name">QQ_SECTION</div><div class="sf-type">VARCHAR(100) NULL</div><div class="sf-desc">Groupe/section pour la pagination ex: "Alimentation", "Comportement"</div></div>
+      <div class="schema-field"><div class="sf-name">QQ_TYPE</div><div class="sf-type">ENUM</div><div class="sf-desc">TEXT | RADIO | CHECKBOX | SCALE | BOOLEAN | DATE | NPS</div></div>
+      <div class="schema-field"><div class="sf-name">QQ_TEXTE</div><div class="sf-type">TEXT</div><div class="sf-desc">Intitulé de la question</div></div>
+      <div class="schema-field"><div class="sf-name">QQ_REQUIS</div><div class="sf-type">TINYINT(1)</div><div class="sf-desc">1 = obligatoire</div></div>
+      <div class="schema-field"><div class="sf-name">QQ_OPTIONS_JSON</div><div class="sf-type">JSON NULL</div><div class="sf-desc">Options pour RADIO/CHECKBOX, paramètres SCALE (min,max,labels), etc.</div></div>
+      <div class="schema-field"><div class="sf-name">QQ_CONDITION_JSON</div><div class="sf-type">JSON NULL</div><div class="sf-desc">Affichage conditionnel ex: {"si": "QQ_ID:12", "vaut": "Oui"}</div></div>
+      <div class="schema-field"><div class="sf-name">QQ_CHAMP_EDC_CIBLE</div><div class="sf-type">VARCHAR(80) NULL</div><div class="sf-desc">Si rempli : réponse copiée dans ce champ de edc_fiche automatiquement</div></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header"><span class="tname">questionnaire_envoi</span><span class="tdesc">Instances envoyées — un envoi = un questionnaire pour un client/animal</span></div>
+      <div class="schema-field"><div class="sf-name sf-pk">QE_ID</div><div class="sf-type">BIGINT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">QT_ID</div><div class="sf-type">INT</div><div class="sf-desc">FK → questionnaire_template</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">TIE_ID</div><div class="sf-type">INT</div><div class="sf-desc">FK → tiers (propriétaire destinataire)</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">ANI_ID</div><div class="sf-type">INT NULL</div><div class="sf-desc">FK → animal concerné</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">SEA_ID</div><div class="sf-type">BIGINT NULL</div><div class="sf-desc">FK → seance liée (si déclenché par séance)</div></div>
+      <div class="schema-field"><div class="sf-name">QE_TOKEN_HASH</div><div class="sf-type">CHAR(64)</div><div class="sf-desc">SHA-256 du token d'accès (UNIQUE)</div></div>
+      <div class="schema-field"><div class="sf-name">QE_DATE_ENVOI</div><div class="sf-type">DATETIME</div><div class="sf-desc">Date d'envoi de l'email</div></div>
+      <div class="schema-field"><div class="sf-name">QE_DATE_EXPIRATION</div><div class="sf-type">DATETIME</div><div class="sf-desc">Validité du lien (défaut: 7 jours)</div></div>
+      <div class="schema-field"><div class="sf-name">QE_STATUT</div><div class="sf-type">ENUM</div><div class="sf-desc">ENVOYE | OUVERT | PARTIEL | COMPLETE | EXPIRE</div></div>
+      <div class="schema-field"><div class="sf-name">QE_DATE_REPONSE</div><div class="sf-type">DATETIME NULL</div><div class="sf-desc">Date de complétion</div></div>
+      <div class="schema-field"><div class="sf-name">QE_SCORE_GLOBAL</div><div class="sf-type">DECIMAL(5,2) NULL</div><div class="sf-desc">Score calculé (pour questionnaires avec questions à pondération)</div></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header"><span class="tname">questionnaire_reponse</span><span class="tdesc">Réponses individuelles par question</span></div>
+      <div class="schema-field"><div class="sf-name sf-pk">QR_ID</div><div class="sf-type">BIGINT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">QE_ID</div><div class="sf-type">BIGINT</div><div class="sf-desc">FK → questionnaire_envoi</div></div>
+      <div class="schema-field"><div class="sf-name sf-fk">QQ_ID</div><div class="sf-type">INT</div><div class="sf-desc">FK → questionnaire_question</div></div>
+      <div class="schema-field"><div class="sf-name">QR_VALEUR_TEXT</div><div class="sf-type">TEXT NULL</div><div class="sf-desc">Réponse texte libre ou valeur serialisée (JSON pour CHECKBOX)</div></div>
+      <div class="schema-field"><div class="sf-name">QR_VALEUR_NUM</div><div class="sf-type">DECIMAL(10,2) NULL</div><div class="sf-desc">Valeur numérique (SCALE, NPS)</div></div>
+      <div class="schema-field"><div class="sf-name">QR_VALEUR_BOOL</div><div class="sf-type">TINYINT(1) NULL</div><div class="sf-desc">Valeur booléenne (BOOLEAN)</div></div>
+      <div class="schema-field"><div class="sf-name">QR_VALEUR_DATE</div><div class="sf-type">DATE NULL</div><div class="sf-desc">Valeur date (DATE)</div></div>
+      <div class="schema-field"><div class="sf-name">QR_DATE_SAISIE</div><div class="sf-type">DATETIME</div><div class="sf-desc">Horodatage de la saisie</div></div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s5-seed" style="margin-top:16px;">
+    <div class="subsection-title">Questions pré-EDC — liste complète (template système)</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Section</th><th>Question</th><th>Type</th><th>Req.</th><th>Champ EDC cible</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Identité</td><td>Quel est le poids actuel de votre animal ?</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td>✓</td><td>EDC_POIDS</td></tr>
+          <tr><td>2</td><td>Identité</td><td>Y a-t-il d'autres animaux au domicile ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>EDC_COHABITATION</td></tr>
+          <tr><td>3</td><td>Identité</td><td>Si oui, lesquels ? (Chiens / Chats / NAC / Autre)</td><td><span class="qtype qt-multi" style="font-size:9px;padding:2px 6px;">CHECKBOX</span></td><td></td><td>EDC_COHABITATION_TYPE</td></tr>
+          <tr><td>4</td><td>Identité</td><td>Y a-t-il des enfants au domicile ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>EDC_ENFANTS</td></tr>
+          <tr><td>5</td><td>Alimentation</td><td>Type d'alimentation principale</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_ALIMENTATION</td></tr>
+          <tr><td>6</td><td>Alimentation</td><td>Combien de repas par jour ?</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_NB_REPAS</td></tr>
+          <tr><td>7</td><td>Alimentation</td><td>Comportement autour de la gamelle (garde ressource ?)</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-5</span></td><td></td><td>EDC_GARDE_RESSOURCE</td></tr>
+          <tr><td>8</td><td>Comportement</td><td>Décrivez le comportement qui vous préoccupe le plus</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td>✓</td><td>EDC_PROBLEME_PRINCIPAL</td></tr>
+          <tr><td>9</td><td>Comportement</td><td>Ce comportement se produit principalement</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_CONTEXTE_PROBLEME</td></tr>
+          <tr><td>10</td><td>Comportement</td><td>Intensité du comportement problématique (0–10)</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-10</span></td><td>✓</td><td>EDC_INTENSITE_PROBLEME</td></tr>
+          <tr><td>11</td><td>Comportement</td><td>Depuis combien de temps observez-vous ce comportement ?</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_DUREE_PROBLEME</td></tr>
+          <tr><td>12</td><td>Comportement</td><td>Votre chien a-t-il déjà mordu ou tenté de mordre ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>EDC_MORSURE</td></tr>
+          <tr><td>13</td><td>Comportement</td><td>Si oui, décrivez les circonstances (conditionnel Q12=Oui)</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td></td><td>EDC_MORSURE_DETAIL</td></tr>
+          <tr><td>14</td><td>Mode de vie</td><td>Temps seul par jour en moyenne</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_TEMPS_SEUL</td></tr>
+          <tr><td>15</td><td>Mode de vie</td><td>Durée quotidienne de promenades</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_ACTIVITE_PHYSIQUE</td></tr>
+          <tr><td>16</td><td>Mode de vie</td><td>Réactions en voiture</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-5</span></td><td></td><td>EDC_VOITURE</td></tr>
+          <tr><td>17</td><td>Antécédents</td><td>Votre animal a-t-il déjà suivi un programme de rééducation ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>EDC_ANTECEDENT_PROG</td></tr>
+          <tr><td>18</td><td>Antécédents</td><td>Traitements médicaux ou médicaments en cours ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>EDC_MEDOC</td></tr>
+          <tr><td>19</td><td>Antécédents</td><td>Si oui, lesquels ? (conditionnel Q18=Oui)</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td></td><td>EDC_MEDOC_DETAIL</td></tr>
+          <tr><td>20</td><td>Attentes</td><td>Qu'attendez-vous principalement de cette consultation ?</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td>✓</td><td>EDC_ATTENTES</td></tr>
+          <tr><td>21</td><td>Attentes</td><td>Êtes-vous disponible pour des exercices quotidiens ?</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-5</span></td><td>✓</td><td>EDC_MOTIVATION</td></tr>
+          <tr><td>22</td><td>Attentes</td><td>Informations complémentaires (libre)</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 06 WORKFLOW -->
+<div class="section" id="s6">
+  <div class="section-header"><span class="section-num">06</span><span class="section-title">Workflow envoi & réponse</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">🔄</div>Envoi automatique (pré-EDC)</div>
+      <div class="flow-step" style="padding-top:0;">
+        <div class="flow-step-num">1</div>
+        <div class="flow-step-body"><div class="flow-step-title">Séance EDC créée</div><div class="flow-step-desc">Trigger BDD ou cron quotidien détecte séance EDC J+2.</div><span class="flow-tag ft-auto">Auto</span></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <div class="flow-step-body"><div class="flow-step-title">Génération token + INSERT questionnaire_envoi</div><div class="flow-step-desc">UUID v4 → SHA-256 stocké. Statut ENVOYE. Expiration J+7 depuis envoi.</div><span class="flow-tag ft-auto">Auto</span></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <div class="flow-step-body"><div class="flow-step-title">Email au propriétaire</div><div class="flow-step-desc">"Préparez votre visite ! Titan vous attend le 14/03." — lien vers questionnaire.</div><span class="flow-tag ft-auto">Auto</span></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <div class="flow-step-body"><div class="flow-step-title">Propriétaire répond</div><div class="flow-step-desc">Accès direct sans compte. Progression sauvegardée à chaque page. Statut PARTIEL → COMPLETE.</div><span class="flow-tag ft-client">Client</span></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">5</div>
+        <div class="flow-step-body"><div class="flow-step-title">Notification pro + pré-remplissage EDC</div><div class="flow-step-desc">Email : "Luc Rousseau a rempli le questionnaire de Titan." Champs edc_fiche pré-remplis depuis QQ_CHAMP_EDC_CIBLE.</div><span class="flow-tag ft-auto">Auto</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">⏰</div>Relances automatiques</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">J-1 avant séance</span><span class="item-val">Si statut ENVOYE (pas COMPLETE) : relance email automatique</span></div>
+        <div class="item"><span class="item-label">1 seule relance</span><span class="item-val">Pas de harcèlement — 1 envoi initial + 1 relance max</span></div>
+        <div class="item"><span class="item-label">Relance manuelle</span><span class="item-val">Pro peut renvoyer manuellement depuis la fiche séance</span></div>
+        <div class="item"><span class="item-label">Expiration</span><span class="item-val">Après J+7 le lien expire — statut → EXPIRE</span></div>
+      </div>
+      <div class="div"></div>
+      <div class="card-title" style="margin-bottom:8px;"><div class="card-icon icon-green">📊</div>Indicateurs de suivi</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Taux de réponse</span><span class="item-val">% questionnaires COMPLETE vs ENVOYE (dashboard pro)</span></div>
+        <div class="item"><span class="item-label">Délai moyen</span><span class="item-val">Temps entre envoi et réponse</span></div>
+        <div class="item"><span class="item-label">Questions abandonnées</span><span class="item-val">Identifier les questions trop difficiles (% PARTIEL)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 INTEGRATION APP -->
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Intégration dans l'application</span></div>
+
+  <div class="subsection" id="s7-pro">
+    <div class="subsection-title">Côté professionnel</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-blue">📋</div>Pages à créer</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">/app/questionnaires</span><span class="item-val">Liste des templates + envois récents</span></div>
+          <div class="item"><span class="item-label">/app/questionnaires/new</span><span class="item-val">Créer un template custom (builder drag & drop)</span></div>
+          <div class="item"><span class="item-label">/app/questionnaires/:id</span><span class="item-val">Détail template + prévisualisation</span></div>
+          <div class="item"><span class="item-label">/app/questionnaires/envois</span><span class="item-val">Tous les envois avec statuts</span></div>
+          <div class="item"><span class="item-label">/app/questionnaires/envois/:id</span><span class="item-val">Réponses d'un envoi + export PDF</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-green">🔗</div>Points d'intégration existants</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Fiche séance</span><span class="item-val">Section "Questionnaire" : statut + lien réponses + bouton renvoyer</span></div>
+          <div class="item"><span class="item-label">Fiche animal</span><span class="item-val">Historique questionnaires + scores évolution</span></div>
+          <div class="item"><span class="item-label">Formulaire EDC</span><span class="item-val">Bouton "Importer depuis questionnaire" — pré-rempli</span></div>
+          <div class="item"><span class="item-label">Dashboard</span><span class="item-val">Widget "Questionnaires en attente de réponse"</span></div>
+          <div class="item"><span class="item-label">Paramètres</span><span class="item-val">Activer/désactiver envois auto par type de séance</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" id="s7-client">
+    <div class="subsection-title">Côté propriétaire (portail + lien direct)</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-purple">🔗</div>Accès via lien email</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">URL</span><span class="item-val">portail.{sous-domaine}.petsuite.fr/q/{token}</span></div>
+          <div class="item"><span class="item-label">Sans connexion</span><span class="item-val">Pas de JWT nécessaire — token suffit</span></div>
+          <div class="item"><span class="item-label">Sauvegarde auto</span><span class="item-val">Réponses sauvegardées à chaque page — reprendre si fermé</span></div>
+          <div class="item"><span class="item-label">Mobile first</span><span class="item-val">Layout PWA — fonctionnel sans réseau une fois chargé</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon icon-teal">📱</div>Accès via portail propriétaire</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Section</span><span class="item-val">Onglet "Questionnaires" sur la page d'accueil portail</span></div>
+          <div class="item"><span class="item-label">En attente</span><span class="item-val">Badge rouge si questionnaire non complété</span></div>
+          <div class="item"><span class="item-label">Historique</span><span class="item-val">Questionnaires complétés avec date et score</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 ANALYSE -->
+<div class="section" id="s8">
+  <div class="section-header"><span class="section-num">08</span><span class="section-title">Analyse des réponses</span></div>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">📊</div>Vue réponses (pro)</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Toutes les réponses</span><span class="item-val">Tableau question par question avec réponse</span></div>
+        <div class="item"><span class="item-label">Scores</span><span class="item-val">Questions SCALE et NPS agrégées visuellement</span></div>
+        <div class="item"><span class="item-label">Export</span><span class="item-val">PDF du questionnaire rempli ou CSV brut</span></div>
+        <div class="item"><span class="item-label">Comparaison</span><span class="item-val">Évolution des scores entre 2 questionnaires de même type</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🏆</div>NPS & satisfaction</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Calcul NPS</span><span class="item-val">Promoteurs (9–10) − Détracteurs (0–6) = NPS score</span></div>
+        <div class="item"><span class="item-label">Dashboard</span><span class="item-val">NPS moyen du cabinet + évolution mensuelle</span></div>
+        <div class="item"><span class="item-label">Témoignages</span><span class="item-val">Réponses texte avec autorisation → extractibles pour site vitrine</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-green">🔗</div>Pré-remplissage EDC</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Automatique</span><span class="item-val">22 champs edc_fiche pré-remplis depuis les réponses</span></div>
+        <div class="item"><span class="item-label">Modifiable</span><span class="item-val">Pro peut toujours modifier les valeurs importées</span></div>
+        <div class="item"><span class="item-label">Gain de temps</span><span class="item-val">~15 min d'anamnèse gagnées sur la séance</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 09 API -->
+<div class="section" id="s9">
+  <div class="section-header"><span class="section-num">09</span><span class="section-title">API endpoints</span></div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Auth</th></tr></thead>
+      <tbody>
+        <tr><td>GET</td><td>/api/questionnaires/templates</td><td>Liste des templates (système + custom)</td><td>JWT</td></tr>
+        <tr><td>GET</td><td>/api/questionnaires/templates/:id</td><td>Détail template + questions</td><td>JWT</td></tr>
+        <tr><td>POST</td><td>/api/questionnaires/templates</td><td>Créer template custom</td><td>JWT</td></tr>
+        <tr><td>PUT</td><td>/api/questionnaires/templates/:id</td><td>Modifier template custom (pas SYSTEME)</td><td>JWT</td></tr>
+        <tr><td>GET</td><td>/api/questionnaires/envois</td><td>Liste des envois avec statuts</td><td>JWT</td></tr>
+        <tr><td>POST</td><td>/api/questionnaires/envoyer</td><td>Envoyer un questionnaire (manuel)</td><td>JWT</td></tr>
+        <tr><td>POST</td><td>/api/questionnaires/envois/:id/relancer</td><td>Renvoyer le lien (nouveau token)</td><td>JWT</td></tr>
+        <tr><td>GET</td><td>/api/questionnaires/envois/:id/reponses</td><td>Réponses d'un envoi complété</td><td>JWT</td></tr>
+        <tr><td>GET</td><td>/api/questionnaires/envois/:id/export-pdf</td><td>Export PDF questionnaire rempli</td><td>JWT</td></tr>
+        <tr><td>GET</td><td>/api/q/:token</td><td>Charger questionnaire par token (côté client)</td><td>Public</td></tr>
+        <tr><td>POST</td><td>/api/q/:token/repondre</td><td>Soumettre les réponses</td><td>Public</td></tr>
+        <tr><td>PUT</td><td>/api/q/:token/repondre</td><td>Sauvegarder réponses partielles (reprise)</td><td>Public</td></tr>
+        <tr><td>GET</td><td>/api/dashboard/questionnaires</td><td>KPIs : taux réponse, NPS, en attente</td><td>JWT</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 10 CHECKLIST -->
+<div class="section" id="s10">
+  <div class="section-header"><span class="section-num">10</span><span class="section-title">Checklist implémentation</span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-gold">🗄</div>BDD</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">questionnaire_template</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer table</span></div>
+        <div class="item"><span class="item-label">questionnaire_question</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer table</span></div>
+        <div class="item"><span class="item-label">questionnaire_envoi</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer table</span></div>
+        <div class="item"><span class="item-label">questionnaire_reponse</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer table</span></div>
+        <div class="item"><span class="item-label">Seeds templates système</span><span class="item-val"><span class="pill pill-todo">TODO</span> 3 templates + 22+12+8 questions</span></div>
+        <div class="item"><span class="item-label">Colonnes edc_fiche cibles</span><span class="item-val"><span class="pill pill-ok">OK S24</span> 60+ champs disponibles</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon icon-blue">⚙️</div>API & Frontend</div>
+      <div class="item-list">
+        <div class="item"><span class="item-label">Endpoints /api/questionnaires/*</span><span class="item-val"><span class="pill pill-todo">TODO</span> 13 routes via _h56.use</span></div>
+        <div class="item"><span class="item-label">Route publique /api/q/:token</span><span class="item-val"><span class="pill pill-todo">TODO</span> Sans authentification</span></div>
+        <div class="item"><span class="item-label">Cron envoi auto J-2/J+2</span><span class="item-val"><span class="pill pill-todo">TODO</span> Script cron quotidien</span></div>
+        <div class="item"><span class="item-label">Email template questionnaire</span><span class="item-val"><span class="pill pill-todo">TODO</span> Template HTML SMTP</span></div>
+        <div class="item"><span class="item-label">UI réponse mobile</span><span class="item-val"><span class="pill pill-todo">TODO</span> Page /q/:token PWA</span></div>
+        <div class="item"><span class="item-label">UI pro — vue réponses</span><span class="item-val"><span class="pill pill-todo">TODO</span> /app/questionnaires/envois/:id</span></div>
+        <div class="item"><span class="item-label">Pré-remplissage edc_fiche</span><span class="item-val"><span class="pill pill-todo">TODO</span> Import depuis réponses questionnaire</span></div>
+        <div class="item"><span class="item-label">Plan requis</span><span class="item-val"><span class="pill pill-blue">Templates système : tous plans</span></span></div>
+        <div class="item"><span class="item-label">Custom</span><span class="item-val"><span class="pill pill-blue">Cabinet+ uniquement</span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+
+<div class="section" id="s7">
+  <div class="section-header"><span class="section-num">07</span><span class="section-title">Formulaire pré-qualification lead CRM</span></div>
+
+  <div class="subsection">
+    <div class="subsection-title">Concept</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:#e8f5ef;font-size:18px;">🔗</div>Lien public paramétrable</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">URL</span><span class="item-val">petsuite.fr/formulaire/[token]</span></div>
+          <div class="item"><span class="item-label">Accès</span><span class="item-val">Sans connexion — public</span></div>
+          <div class="item"><span class="item-label">Usage</span><span class="item-val">Réseaux sociaux, site web, email</span></div>
+          <div class="item"><span class="item-label">Token</span><span class="item-val">Unique par tenant, permanent</span></div>
+          <div class="item"><span class="item-label">Résultat</span><span class="item-val">Création automatique lead dans le CRM</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:#e8f0fb;font-size:18px;">📋</div>Champs du formulaire</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">Coordonnées</span><span class="item-val">Nom, prénom, téléphone, email (obligatoires)</span></div>
+          <div class="item"><span class="item-label">Animal</span><span class="item-val">Nom, race, âge/naissance, sexe (optionnels)</span></div>
+          <div class="item"><span class="item-label">Questions</span><span class="item-val">Paramétrables par le comportementaliste</span></div>
+          <div class="item"><span class="item-label">Commentaire</span><span class="item-val">Champ libre — expression libre du prospect</span></div>
+          <div class="item"><span class="item-label">Consentement</span><span class="item-val">Checkbox RGPD obligatoire</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">BDD — 3 tables</div>
+    <div class="grid3">
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:#e8f5ef;font-size:16px;">🗄️</div>lead_formulaire</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">LFO_ID</span><span class="item-val">INT PK</span></div>
+          <div class="item"><span class="item-label">LFO_TOKEN</span><span class="item-val">CHAR(32) — lien public unique</span></div>
+          <div class="item"><span class="item-label">LFO_TITRE</span><span class="item-val">VARCHAR(150) — nom du formulaire</span></div>
+          <div class="item"><span class="item-label">LFO_ACTIF</span><span class="item-val">TINYINT(1)</span></div>
+          <div class="item"><span class="item-label">LFO_CREATED</span><span class="item-val">DATETIME</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:#e8f0fb;font-size:16px;">🗄️</div>lead_formulaire_question</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">LFQ_ID</span><span class="item-val">INT PK</span></div>
+          <div class="item"><span class="item-label">LFO_ID</span><span class="item-val">FK lead_formulaire</span></div>
+          <div class="item"><span class="item-label">LFQ_ORDRE</span><span class="item-val">INT</span></div>
+          <div class="item"><span class="item-label">LFQ_LIBELLE</span><span class="item-val">VARCHAR(255)</span></div>
+          <div class="item"><span class="item-label">LFQ_TYPE</span><span class="item-val">ENUM texte / choix / echelle</span></div>
+          <div class="item"><span class="item-label">LFQ_OBLIGATOIRE</span><span class="item-val">TINYINT(1)</span></div>
+          <div class="item"><span class="item-label">LFQ_OPTIONS</span><span class="item-val">JSON — options si choix</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="card-icon" style="background:#fdf3e0;font-size:16px;">🗄️</div>lead_formulaire_reponse</div>
+        <div class="item-list">
+          <div class="item"><span class="item-label">LFR_ID</span><span class="item-val">BIGINT PK</span></div>
+          <div class="item"><span class="item-label">LFO_ID</span><span class="item-val">FK lead_formulaire</span></div>
+          <div class="item"><span class="item-label">LED_ID</span><span class="item-val">FK crm_lead (créé à la soumission)</span></div>
+          <div class="item"><span class="item-label">LFR_NOM</span><span class="item-val">VARCHAR(100)</span></div>
+          <div class="item"><span class="item-label">LFR_PRENOM</span><span class="item-val">VARCHAR(100)</span></div>
+          <div class="item"><span class="item-label">LFR_TEL</span><span class="item-val">VARCHAR(20)</span></div>
+          <div class="item"><span class="item-label">LFR_EMAIL</span><span class="item-val">VARCHAR(150)</span></div>
+          <div class="item"><span class="item-label">LFR_ANIMAL_NOM</span><span class="item-val">VARCHAR(100)</span></div>
+          <div class="item"><span class="item-label">LFR_ANIMAL_RACE</span><span class="item-val">VARCHAR(150)</span></div>
+          <div class="item"><span class="item-label">LFR_ANIMAL_AGE</span><span class="item-val">VARCHAR(50)</span></div>
+          <div class="item"><span class="item-label">LFR_REPONSES</span><span class="item-val">JSON — réponses aux questions</span></div>
+          <div class="item"><span class="item-label">LFR_COMMENTAIRE</span><span class="item-val">TEXT</span></div>
+          <div class="item"><span class="item-label">LFR_IP</span><span class="item-val">VARCHAR(45) — traçabilité RGPD</span></div>
+          <div class="item"><span class="item-label">LFR_DATE</span><span class="item-val">DATETIME</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">API — Routes publiques (sans auth)</div>
+    <div class="card" style="max-width:600px;">
+      <div class="item-list">
+        <div class="item"><span class="item-label">GET /public/formulaire/:token</span><span class="item-val">Récupère le formulaire + questions</span></div>
+        <div class="item"><span class="item-label">POST /public/formulaire/:token</span><span class="item-val">Soumet réponses → crée lead CRM automatiquement</span></div>
+        <div class="item"><span class="item-label">GET /app/parametres/formulaire-lead</span><span class="item-val">Configuration des questions (admin)</span></div>
+        <div class="item"><span class="item-label">POST /app/parametres/formulaire-lead</span><span class="item-val">Créer/modifier question</span></div>
+        <div class="item"><span class="item-label">GET /app/crm/leads/:id/reponse-formulaire</span><span class="item-val">Voir la réponse originale du prospect</span></div>
+      </div>
+    </div>
+  </div>
+  </main>
+</div>
+  </main>
+</div>
+<footer class="ps-footer">
+  <span>🐾 PetSuite · Algorithmia</span>
+  <span>Sprint S33 · 18/03/2026 · Document interne</span>
+</footer>
+</body>
+</html>
