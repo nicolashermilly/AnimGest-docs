@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Briefing Session S40 — PetSuite</title>
+<style>
+  :root{--bg:#0F1923;--bg-card:#1A2332;--bg-code:#0D1117;--border:#2A3A4A;--accent:#4F46E5;--cyan:#06B6D4;--text:#E2E8F0;--muted:#94A3B8;--dim:#64748B;--green:#10B981;--orange:#F59E0B;--red:#EF4444}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px}
+  .header{background:linear-gradient(135deg,#1a1040 0%,#0f1923 70%);border-bottom:1px solid var(--border);padding:36px 48px}
+  .header-inner{max-width:1100px;margin:0 auto}
+  .header h1{font-size:1.5rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
+  .header .sub{color:var(--muted);font-size:.875rem;margin-top:6px}
+  .badges{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .badge{border-radius:20px;padding:3px 12px;font-size:.72rem;font-weight:600}
+  .bp{background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.4);color:#a5b4fc}
+  .bc{background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.35);color:#67e8f9}
+  .bg{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.35);color:#6ee7b7}
+  .container{max-width:1100px;margin:0 auto;padding:32px 48px}
+  .section{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px}
+  .st{font-size:1rem;font-weight:700;color:#fff;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+  h3{font-size:.9rem;font-weight:600;color:#fff;margin:14px 0 8px}
+  p{color:var(--muted);font-size:.875rem;margin-bottom:8px;line-height:1.7}
+  ul,ol{padding-left:18px;color:var(--muted);font-size:.875rem;margin-bottom:10px}
+  li{margin-bottom:5px}
+  strong{color:var(--text);font-weight:600}
+  code{background:rgba(255,255,255,.07);border:1px solid var(--border);color:#f0abfc;font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:2px 6px;border-radius:4px}
+  pre{background:var(--bg-code);border:1px solid var(--border);border-left:3px solid var(--accent);color:#E2E8F0;padding:16px 18px;border-radius:8px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:1.7;margin:8px 0 14px}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem}
+  th{background:rgba(255,255,255,.05);padding:8px 12px;text-align:left;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);border-bottom:1px solid var(--border)}
+  td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .ok{color:var(--green)} .warn{color:var(--orange)} .err{color:var(--red)}
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:14px 0}
+  .stat{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center}
+  .stat-val{font-size:1.8rem;font-weight:700;color:var(--cyan)}
+  .stat-lbl{font-size:.72rem;color:var(--dim);margin-top:2px}
+  footer{text-align:center;color:var(--dim);font-size:.78rem;padding:28px 48px;border-top:1px solid var(--border);margin-top:12px}
+  footer a{color:var(--cyan);text-decoration:none}
+  @media(max-width:768px){.header,.container{padding:20px}}
+</style>
+</head>
+<body>
+
+<div class="header"><div class="header-inner">
+  <h1><span>📋</span> Briefing Session S40</h1>
+  <div class="sub">État fin S39 — Priorités S40 — Corrections API, composants, refactoring, assistant vocal</div>
+  <div class="badges">
+    <span class="badge bp">Sprint S40</span>
+    <span class="badge bc">22 mars 2026</span>
+    <span class="badge bg">PetSuite by Algorithmia</span>
+  </div>
+</div></div>
+
+<div class="container">
+
+<div class="section">
+  <div class="st">🔑 Chemins essentiels</div>
+  <table>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">App locale</td><td>http://localhost/app/</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">GitHub docs</td><td>https://nicolashermilly.github.io/petsuite-docs/</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">Deploy</td><td>…\micro_logiciel_frontend_nextjs\deploy</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">$apiFile</td><td>…\api\src\custom-routes.ts</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">BDD MariaDB</td><td>192.168.1.62:3307 / @lgorithme / micro_logiciel</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">Backup S39</td><td>C:\Backup\micro_logiciel\20260322_fin_s39.sql ✅</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">Docs repo local</td><td>C:\Users\AdminPC\AppData\Local\Temp\petsuite-docs-s33</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="st">⚙️ Règles critiques (rappel)</div>
+  <pre>cd "D:\...\micro_logiciel_frontend_nextjs"
+.\COPIER_TOUTES_PAGES_v2.ps1
+cd deploy
+docker compose build api --no-cache && docker compose up -d api
+# Rebuild tout
+docker compose build api frontend --no-cache && docker compose up -d api frontend && docker compose restart nginx
+# Sauvegarde début S40
+& "C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe" -h 192.168.1.62 -P 3307 -u "@lgorithme" --password="@lgoritHme+2025+977_73300" --single-transaction --skip-lock-tables micro_logiciel > C:\Backup\micro_logiciel\20260322_debut_s40.sql</pre>
+  <ul>
+    <li>Toujours <code>cd deploy</code> avant <code>docker compose</code></li>
+    <li><strong>TOUTES les éditions PDF = Modal/Popup</strong> — jamais de navigation vers nouvelle page</li>
+    <li>Commentaires BDD FK : <code>COMMENT 'Relation NomTable — description'</code></li>
+    <li><strong>EC</strong> (Étude Comportementale) — plus jamais EDC</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="st">🏆 État fin S39</div>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-val">70</div><div class="stat-lbl">Pages UI</div></div>
+    <div class="stat"><div class="stat-val">110k</div><div class="stat-lbl">Chars API</div></div>
+    <div class="stat"><div class="stat-val">50</div><div class="stat-lbl">Docs GitHub</div></div>
+    <div class="stat"><div class="stat-val">10</div><div class="stat-lbl">Chiots démo</div></div>
+    <div class="stat"><div class="stat-val">51</div><div class="stat-lbl">Factures RFE</div></div>
+    <div class="stat"><div class="stat-val">6</div><div class="stat-lbl">Réservations</div></div>
+  </div>
+  <h3>✅ Livraisons S39</h3>
+  <ul>
+    <li>Seeds élevage complets : 10 chiots, 68 poids, 14 vaccins, 2 gestations, 6 réservations, 2 saillies</li>
+    <li>Vues SQL corrigées : <code>v_portees_suivi</code>, <code>v_gestations_en_cours</code></li>
+    <li>Seeds RFE : 51 factures avec cycle complet (ACCEPTEE/TRANSMISE/DEPOSEE/EN_LITIGE/REFUSEE)</li>
+    <li>Config Pennylane (param_pdp actif, SIREN, URL API)</li>
+    <li>Commentaires BDD : ALTER TABLE sur 10 tables (animal, tiers, contact, facture, seance, elevage_*, signature_demande)</li>
+    <li>Page Interfaces API avec section URLs paramétrables (LOF, LOOF, I-CAD, SCC, Google Maps...)</li>
+    <li>Remplacement EDC → EC global (9 fichiers, 0 résiduel)</li>
+    <li>Documentation GitHub Pages : 50 docs, changelogs S30/S34/S35/S37/S38, briefings S37/S38/S39</li>
+    <li>Index docs mis à jour : 50 docs, Sprint S39</li>
+  </ul>
+  <h3>⚠️ Non terminé en S39</h3>
+  <ul>
+    <li>Événements RFE (<code>facture_rfe_evenement</code>) — colonnes à confirmer</li>
+    <li>Litiges (<code>facture_litige</code>) — colonnes à confirmer</li>
+    <li>Page <code>/app/parametres/api-keys</code> — version S39 avec URLs paramétrables non déployée</li>
+    <li>Route <code>GET/POST /param-urls</code> — à créer dans custom-routes.ts</li>
+    <li>Fixes body parsing : <code>POST /reglements</code>, <code>POST /achats</code> toujours cassés</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="st">🚨 Priorité 1 — Corrections API body parsing</div>
+  <table>
+    <tr><th>Route</th><th>Erreur</th><th>Fix</th></tr>
+    <tr><td><code>POST /reglements</code></td><td class="err">400 — body non lu</td><td>Remplacer <code>req.body</code> par <code>req.on('data')</code></td></tr>
+    <tr><td><code>POST /achats</code></td><td class="err">500 — undefined bind</td><td>Null-safety sur champs optionnels</td></tr>
+    <tr><td><code>POST /seances</code></td><td class="warn">500 — NestJS conflit</td><td>Pointer frontend sur <code>/seances/custom</code></td></tr>
+    <tr><td><code>POST /communaute/moderer/:id</code></td><td class="warn">500 — undefined bind</td><td>Null-safety + body parsing</td></tr>
+  </table>
+  <p>Toutes les routes POST élevage ont le même bug body parsing — les corriger en même temps.</p>
+</div>
+
+<div class="section">
+  <div class="st">🚨 Priorité 2 — Finaliser seeds RFE</div>
+  <p>Exécuter <code>DESCRIBE facture_rfe_evenement; DESCRIBE facture_litige;</code> dans HeidiSQL puis insérer :</p>
+  <ul>
+    <li>Événements RFE sur factures 1-5 : cycle complet DEPOSEE → TRANSMISE → ACCEPTEE</li>
+    <li>Événements litiges sur 3 factures EN_LITIGE</li>
+    <li>3 litiges (MONTANT, DOUBLON, MONTANT)</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="st">🚨 Priorité 3 — Déployer page Interfaces API S39</div>
+  <pre>$root = "D:\...\micro_logiciel_frontend_nextjs"
+Copy-Item "C:\Users\AdminPC\Downloads\api-keys-page-s39.tsx" "$root\src\app\app\parametres\api-keys\page.tsx" -Force</pre>
+  <p>Puis créer la route <code>GET/POST /param-urls</code> dans custom-routes.ts — table <code>param_url</code> à créer (PRM_KEY, PRM_VALUE).</p>
+</div>
+
+<div class="section">
+  <div class="st">🚨 Priorité 4 — DocumentActions sur tous les écrans</div>
+  <p>Intégrer <code>&lt;DocumentActions /&gt;</code> dans les PageHeader de :</p>
+  <ul>
+    <li><code>/app/factures/[id]</code> + onglets RFE + litige</li>
+    <li><code>/app/achats/[id]</code> + onglets Règlements / Avoirs / Retours / SEPA</li>
+    <li><code>/app/devis/[id]</code> — bouton signature déjà présent, uniformiser</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="st">🚨 Priorité 5 — Refactoring custom-routes.ts</div>
+  <p>Le fichier fait ~110 000 chars. Découper en modules :</p>
+  <table>
+    <tr><th>Fichier</th><th>Contenu</th></tr>
+    <tr><td><code>routes-elevage.ts</code></td><td>Portées, naissances, saillies, gestations, carnets</td></tr>
+    <tr><td><code>routes-signatures.ts</code></td><td>Yousign, webhook HMAC</td></tr>
+    <tr><td><code>routes-commercial.ts</code></td><td>Devis, factures, avoirs, règlements, achats</td></tr>
+    <tr><td><code>routes-parametres.ts</code></td><td>param_yousign, param_pdp, param_smtp, param_urls</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="st">🚨 Priorité 6 — Composants S40</div>
+  <ul>
+    <li><code>StatusBadge</code> — badge statut coloré (BROUILLON, ENVOYE, SIGNE, ACCEPTEE…)</li>
+    <li><code>TabBar</code> — barre d'onglets uniforme (remplacer les implémentations ad-hoc)</li>
+    <li><code>ContactSelector</code> — extraire de EmailModal + SignatureModal</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="st">📊 État routes API (fin S39)</div>
+  <table>
+    <tr><th>Route</th><th>Méthode</th><th>Statut</th></tr>
+    <tr><td>/elevage/portees</td><td>GET</td><td class="ok">✅ 200 — 2 portées</td></tr>
+    <tr><td>/elevage/gestations</td><td>GET</td><td class="ok">✅ 200 — 2 gestations</td></tr>
+    <tr><td>/elevage/reservations</td><td>GET</td><td class="ok">✅ 200 — 6 réservations</td></tr>
+    <tr><td>/elevage/carnet/:nai_id</td><td>GET</td><td class="ok">✅ 200 — HTML imprimable</td></tr>
+    <tr><td>/signatures</td><td>GET</td><td class="ok">✅ 200 S38</td></tr>
+    <tr><td>/devis/:id/signature</td><td>GET/POST</td><td class="ok">✅ 200 S38</td></tr>
+    <tr><td>/factures/:id/rfe</td><td>GET/POST</td><td class="ok">✅ 200</td></tr>
+    <tr><td>/param-pdp</td><td>GET/POST</td><td class="ok">✅ 200 — Pennylane actif</td></tr>
+    <tr><td>/reglements</td><td>POST</td><td class="err">❌ 400 body parsing</td></tr>
+    <tr><td>/achats</td><td>POST</td><td class="err">❌ 500 undefined params</td></tr>
+    <tr><td>/seances</td><td>POST</td><td class="warn">⚠️ 500 NestJS conflit</td></tr>
+    <tr><td>/communaute/moderer/:id</td><td>POST</td><td class="warn">⚠️ 500 undefined</td></tr>
+    <tr><td>/param-urls</td><td>GET/POST</td><td class="err">❌ À créer S40</td></tr>
+    <tr><td>/vocal/*</td><td>*</td><td class="err">❌ Non implémenté</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="st">🗺️ Roadmap S40 → S42</div>
+  <table>
+    <tr><th>Sprint</th><th>Objectif</th></tr>
+    <tr><td><strong>S40</strong></td><td>Corrections POST body parsing, page api-keys + /param-urls, seeds RFE complets, DocumentActions tous écrans, composants StatusBadge/TabBar</td></tr>
+    <tr><td><strong>S41</strong></td><td>Split custom-routes.ts, assistant vocal MCP, adaptation écrans par métier</td></tr>
+    <tr><td><strong>S42</strong></td><td>Vidéos démo par métier, préparation commerciale Algorithmia, onboarding guidé</td></tr>
+  </table>
+</div>
+
+</div>
+
+<footer>PetSuite — Briefing S40 | Algorithmia 2026<br><br>
+<a href="index.html">← Retour à l'index</a> · <a href="BRIEFING_S39.html">← Briefing S39</a>
+</footer>
+</body></html>
