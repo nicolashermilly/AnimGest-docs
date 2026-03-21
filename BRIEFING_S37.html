@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite Briefing S37</title>
+<style>
+:root{--bg:#0f1923;--bg2:#1a2332;--bg3:#1e2d3d;--border:#2a3f55;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--r:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.8;max-width:960px;margin:0 auto;padding:40px}
+h1{font-size:30px;font-weight:800;margin-bottom:8px}
+h2{font-size:19px;font-weight:700;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+h3{font-size:14px;font-weight:600;margin:18px 0 8px;color:var(--text)}
+p{color:var(--text2);margin-bottom:10px;font-size:14px}
+code{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-family:monospace;font-size:12px;color:#a5b4fc}
+pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;font-family:monospace;font-size:12px;color:#e2e8f0;overflow-x:auto;margin:12px 0;white-space:pre-wrap}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);font-size:11px;text-transform:uppercase}
+td{padding:10px 14px;border-bottom:1px solid rgba(42,63,85,.5);color:var(--text2)}
+.ok{display:inline-block;background:rgba(16,185,129,.2);color:#6ee7b7;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.warn{display:inline-block;background:rgba(245,158,11,.2);color:#fcd34d;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.err{display:inline-block;background:rgba(239,68,68,.2);color:#fca5a5;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.info{display:inline-block;background:rgba(99,102,241,.2);color:#a5b4fc;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+a{color:#6366f1}
+.back{display:inline-block;margin-bottom:24px;color:#6366f1;text-decoration:none;font-size:13px}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--text3);text-align:center}
+</style>
+</head>
+<body>
+<a href="index.html" class="back">&#x2190; Retour index</a>
+<h1>&#x1F4CB; Briefing PetSuite S37</h1>
+<p style="color:var(--text2)">Session suivante &mdash; 21 mars 2026 &mdash; Sprint S37 en cours</p>
+
+<h2>&#x1F511; Chemins essentiels</h2>
+<table>
+<tr><th>Ressource</th><th>Chemin / URL</th></tr>
+<tr><td>App locale</td><td><code>http://localhost/app/</code></td></tr>
+<tr><td>GitHub docs</td><td><code>https://github.com/nicolashermilly/petsuite-docs</code></td></tr>
+<tr><td>GitHub Pages</td><td><code>https://nicolashermilly.github.io/petsuite-docs/</code></td></tr>
+<tr><td>Downloads</td><td><code>C:\Users\AdminPC\Downloads</code></td></tr>
+<tr><td>Deploy</td><td><code>D:\...\micro_logiciel_frontend_nextjs\deploy</code></td></tr>
+<tr><td>API custom routes</td><td><code>...\api\src\custom-routes.ts</code></td></tr>
+<tr><td>BDD MariaDB</td><td><code>192.168.1.62:3307 / @lgorithme / micro_logiciel</code></td></tr>
+<tr><td>Backup S37</td><td><code>C:\Backup\micro_logiciel\20260321_fin_s37.sql</code></td></tr>
+</table>
+
+<h2>&#x26A0;&#xFE0F; Regles critiques immuables</h2>
+<pre>1. Toujours cd deploy avant docker compose
+2. Toujours python fix_all_newlines.py avant docker compose build
+3. Toujours COPIER_TOUTES_PAGES_v2.ps1 avant build frontend
+4. Injections Python : [System.IO.File]::WriteAllText avec UTF8 sans BOM
+5. Rebuild API : docker compose build api --no-cache && docker compose up -d api
+6. Rebuild tout : docker compose build api frontend --no-cache && docker compose up -d api frontend && docker compose restart nginx
+7. TOUTES les editions PDF = Modal/Popup (jamais navigation)
+8. PDF = Modal/Popup partout : factures, devis, bons commande, avoirs, bon a payer</pre>
+
+<h2>&#x1F6A8; TODO prioritaires</h2>
+<h3>1. Signature electronique Yousign (NON FAIT)</h3>
+<p>Tables BDD creees (SGN_ID, YS_SIGN_URL...). API sandbox : <code>https://api-sandbox.yousign.app/v3</code></p>
+<p>Routes a creer : GET /signatures, POST /signatures/init, POST /signatures/:id/send, POST /signatures/webhook</p>
+<p>Pages a creer : <code>/app/signatures</code> + bouton dans <code>/app/devis/[id]</code></p>
+
+<h3>2. Communaute (PARTIEL)</h3>
+<p>Route manquante : <code>POST /communaute/moderer/:id</code> (404 actuellement)</p>
+
+<h3>3. Assistant Vocal MCP (NON FAIT)</h3>
+<p>Tables BDD creees (vocal_session, vocal_message, vocal_action, param_vocal)</p>
+<p>A creer : serveur MCP Node.js + Whisper STT + page <code>/app/assistant-vocal</code></p>
+
+<h3>4. API a corriger</h3>
+<table>
+<tr><th>Route</th><th>Probleme</th><th>Statut</th></tr>
+<tr><td><code>POST /reglements</code></td><td>Body parsing defaillant</td><td><span class="err">A corriger</span></td></tr>
+<tr><td><code>POST /achats</code></td><td>Undefined dans bind params</td><td><span class="err">A corriger</span></td></tr>
+<tr><td><code>POST /seances</code></td><td>500 conflit NestJS</td><td><span class="err">A corriger</span></td></tr>
+<tr><td><code>GET /factures/entrants</code></td><td>Inbox PA non creee</td><td><span class="err">A creer</span></td></tr>
+</table>
+
+<h3>5. Pages frontend a creer</h3>
+<table>
+<tr><th>Page</th><th>Description</th></tr>
+<tr><td><code>/app/achats/[id]/avoir</code></td><td>Formulaire avoir fournisseur + bon de retour</td></tr>
+<tr><td><code>/app/factures/entrants</code></td><td>Inbox factures recues electroniquement via PA</td></tr>
+<tr><td><code>/app/signatures</code></td><td>Tableau de bord signatures Yousign</td></tr>
+<tr><td><code>/app/assistant-vocal</code></td><td>Interface assistant vocal MCP</td></tr>
+</table>
+
+<h2>&#x1F4CA; Etat routes API (21/03/2026)</h2>
+<table>
+<tr><th>Route</th><th>Statut</th></tr>
+<tr><td>GET /parametres/modules</td><td><span class="ok">200 OK</span></td></tr>
+<tr><td>POST /parametres/modules (4 modules)</td><td><span class="ok">200 OK</span></td></tr>
+<tr><td>GET /tva (4 taux)</td><td><span class="ok">200 OK</span></td></tr>
+<tr><td>GET /utilisateurs (3 users)</td><td><span class="ok">200 OK</span></td></tr>
+<tr><td>GET /factures/5/pdf</td><td><span class="ok">200 HTML+print</span></td></tr>
+<tr><td>GET /achats/1/reglements</td><td><span class="ok">200 S37</span></td></tr>
+<tr><td>GET /factures/5/rfe</td><td><span class="ok">200 S37</span></td></tr>
+<tr><td>GET /param-pdp</td><td><span class="ok">200 S37</span></td></tr>
+<tr><td>POST /reglements</td><td><span class="err">400 body parsing</span></td></tr>
+<tr><td>POST /seances</td><td><span class="err">500 NestJS</span></td></tr>
+<tr><td>POST /signatures/*</td><td><span class="err">404 non implemente</span></td></tr>
+</table>
+
+<h2>&#x1F3DB;&#xFE0F; RFE - Obligations 2026</h2>
+<p>1er septembre 2026 : obligation RECEPTION factures electroniques (toutes entreprises)</p>
+<p>1er septembre 2027 : obligation EMISSION (PME/TPE)</p>
+<p>PA principale : <strong>Pennylane</strong> + 9 autres PA integrees</p>
+<p>Format recommande PME : <strong>Factur-X</strong> (PDF + XML structure)</p>
+
+<h2>&#x1F4CB; Documentation HTML a creer</h2>
+<p>Pages manquantes : #41 Veterinaire, #42 Programmes-questionnaires, #43 Communaute-RS</p>
+<p>Mettre a jour toutes les pages existantes avec la charte dark #1a2332</p>
+<p>Commenter tous les champs BDD avec : <code>Relation NomTable - description</code> pour les FK</p>
+
+<div class="footer">PetSuite by Algorithmia &middot; Sprint S37 &middot; 21 mars 2026 &middot; <a href="index.html">Retour index</a></div>
+</body>
+</html>
