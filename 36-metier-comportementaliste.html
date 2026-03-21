@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Métier Comportementaliste / Éducateur</title>
+<style>
+:root{--bg:#0f1923;--bg2:#1a2332;--bg3:#1e2d3d;--border:#2a3f55;--accent:#4f46e5;--green:#10b981;--amber:#f59e0b;--red:#ef4444;--teal:#14b8a6;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--r:12px;--rs:8px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.6}
+.header{background:linear-gradient(135deg,#1a2332 0%,#1e1b4b 100%);padding:48px 40px;border-bottom:1px solid var(--border)}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.4);color:#a5b4fc;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
+h1{font-size:32px;font-weight:800;margin-bottom:8px}
+.subtitle{color:var(--text2);font-size:16px}
+.container{max-width:1200px;margin:0 auto;padding:40px}
+h2{font-size:20px;font-weight:700;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+h3{font-size:15px;font-weight:600;margin-bottom:12px;color:var(--text)}
+.section{margin-bottom:40px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:24px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.module-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:16px;transition:.2s}
+.module-card:hover{border-color:rgba(79,70,229,.4)}
+.module-icon{font-size:28px;margin-bottom:10px}
+.module-name{font-weight:700;font-size:14px;margin-bottom:4px}
+.module-desc{font-size:12px;color:var(--text2)}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase}
+.tag-green{background:rgba(16,185,129,.2);color:#6ee7b7}
+.tag-amber{background:rgba(245,158,11,.2);color:#fcd34d}
+.tag-red{background:rgba(239,68,68,.2);color:#fca5a5}
+.tag-blue{background:rgba(99,102,241,.2);color:#a5b4fc}
+.progress{height:8px;background:var(--bg);border-radius:4px;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#4f46e5,#6366f1)}
+.workflow{display:flex;flex-direction:column;gap:12px}
+.wf-step{display:flex;align-items:flex-start;gap:16px;padding:12px;background:var(--bg3);border-radius:var(--rs)}
+.wf-num{width:28px;height:28px;border-radius:50%;background:rgba(79,70,229,.3);border:1px solid rgba(79,70,229,.5);color:#a5b4fc;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wf-content h4{font-size:13px;font-weight:600;margin-bottom:2px}
+.wf-content p{font-size:12px;color:var(--text2)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);font-size:11px;text-transform:uppercase}
+td{padding:10px 14px;border-bottom:1px solid rgba(42,63,85,.5)}
+.status-ok::before{content:'✅ '}
+.status-wip::before{content:'🔧 '}
+.status-todo::before{content:'📋 '}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="badge">🐕 Métier #36 — Documentation</div>
+  <h1>🐕 Comportementaliste / Éducateur canin</h1>
+  <p class="subtitle">Modules dédiés · Workflow complet · Avancement au 21 mars 2026</p>
+</div>
+
+<div class="container">
+
+  <!-- PRÉSENTATION -->
+  <div class="section">
+    <div class="card">
+      <div class="grid2">
+        <div>
+          <h3>🎯 Périmètre du métier</h3>
+          <p style="color:var(--text2);font-size:13px;margin-bottom:12px">PetSuite cible en priorité les <strong>comportementalistes canins</strong> et les <strong>éducateurs</strong>. Ce sont les utilisateurs fondateurs de l'application — tous les modules de base ont été conçus pour ce métier.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span class="tag tag-blue">Comportementaliste</span>
+            <span class="tag tag-blue">Éducateur canin</span>
+            <span class="tag tag-green">Module principal</span>
+          </div>
+        </div>
+        <div>
+          <h3>📊 Avancement global</h3>
+          <div style="margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>Fonctionnalités core</span><span style="color:#6ee7b7">95%</span></div>
+            <div class="progress"><div class="progress-fill" style="width:95%"></div></div>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>Facturation & compta</span><span style="color:#6ee7b7">90%</span></div>
+            <div class="progress"><div class="progress-fill" style="width:90%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>Signature électronique</span><span style="color:#fcd34d">5%</span></div>
+            <div class="progress"><div class="progress-fill" style="width:5%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULES -->
+  <div class="section">
+    <h2>📦 Modules disponibles</h2>
+    <div class="grid3">
+      <div class="module-card">
+        <div class="module-icon">🗂️</div>
+        <div class="module-name">Fiche client + animal</div>
+        <div class="module-desc">Gestion tiers, contacts, animaux avec numéro de puce, races, CAC 1-14</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">🔍</div>
+        <div class="module-name">EDC — Étude de comportement</div>
+        <div class="module-desc">Séance unique par animal, durée 90min par défaut, génération devis automatique</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">📅</div>
+        <div class="module-name">Agenda & Séances</div>
+        <div class="module-desc">Planification, statuts (planifiée/réalisée/annulée/no-show), compte-rendu</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">📋</div>
+        <div class="module-name">Programmes de suivi</div>
+        <div class="module-desc">Plans hebdomadaires avec exercices, 5 modèles prédéfinis par métier</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">📝</div>
+        <div class="module-name">Questionnaires pré-EDC</div>
+        <div class="module-desc">Formulaires client avec 2 modèles : pré-EDC doléances + bilan séance suivi</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">📄</div>
+        <div class="module-name">Devis / Contrats</div>
+        <div class="module-desc">Génération automatique depuis EDC, numérotation DCE-YYMM-0001, templates</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">🧾</div>
+        <div class="module-name">Facturation</div>
+        <div class="module-desc">FAC-YYMM-0001, FEC-compliant, avoirs, acomptes, remises, PDF modal</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">💳</div>
+        <div class="module-name">Règlements</div>
+        <div class="module-desc">Multi-modes, suivi encours, rappels impayés automatiques</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">📊</div>
+        <div class="module-name">Comptabilité FEC</div>
+        <div class="module-desc">Export FEC équilibré, exercices comptables, vues comptables ventes/règlements</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">🎯</div>
+        <div class="module-name">CRM Leads & Opps</div>
+        <div class="module-desc">Pipeline commercial, leads, opportunités, activités, campagnes</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">📁</div>
+        <div class="module-name">GED Documents</div>
+        <div class="module-desc">Gestion documentaire polymorphe, liens vers objets métier, Google Drive</div>
+        <span class="tag tag-green" style="margin-top:8px">✅ Opérationnel</span>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">🖊️</div>
+        <div class="module-name">Signature électronique</div>
+        <div class="module-desc">Yousign sandbox — envoi devis/contrats à la signature numérique</div>
+        <span class="tag tag-red" style="margin-top:8px">❌ À développer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW EDC -->
+  <div class="section">
+    <h2>🔄 Workflow EDC → Facturation</h2>
+    <div class="card">
+      <div class="workflow">
+        <div class="wf-step">
+          <div class="wf-num">1</div>
+          <div class="wf-content">
+            <h4>Premier contact → Questionnaire pré-EDC</h4>
+            <p>Le propriétaire remplit le questionnaire en ligne (lien client). Données importées dans la fiche client/animal.</p>
+          </div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-num">2</div>
+          <div class="wf-content">
+            <h4>Planification de l'EDC</h4>
+            <p>Séance de type EDC — unique par animal. Durée 90min. Lieu renseigné. Statut : PLANIFIÉE.</p>
+          </div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-num">3</div>
+          <div class="wf-content">
+            <h4>Réalisation + Compte-rendu</h4>
+            <p>Statut → RÉALISÉE. Saisie du compte-rendu, critères CAC 1-14, objectifs identifiés.</p>
+          </div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-num">4</div>
+          <div class="wf-content">
+            <h4>Génération automatique du Devis</h4>
+            <p>Bouton "Créer devis depuis EDC" → DCE-YYMM-0001 généré avec les lignes de la séance.</p>
+          </div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-num">5</div>
+          <div class="wf-content">
+            <h4>Signature électronique (à venir)</h4>
+            <p>Envoi du devis via Yousign — le client signe électroniquement. Statut DCE → ACCEPTÉ.</p>
+          </div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-num">6</div>
+          <div class="wf-content">
+            <h4>Programme de suivi + Séances</h4>
+            <p>Création du programme (5 modèles disponibles). Planification des 5-10 séances de suivi.</p>
+          </div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-num">7</div>
+          <div class="wf-content">
+            <h4>Facturation & Règlement</h4>
+            <p>FAC-YYMM-0001 générée. Règlement CB/virement/chèque. FEC équilibré automatiquement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULES CAC -->
+  <div class="section">
+    <h2>🏆 Suivi CAC — Critères comportementaux</h2>
+    <div class="card">
+      <p style="color:var(--text2);font-size:13px;margin-bottom:16px">14 critères d'évaluation comportementale (CAC 1-14) stockés dans la fiche animal. Suivi de progression au fil des séances.</p>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px">
+        <div style="background:var(--bg3);border-radius:var(--rs);padding:10px;text-align:center">
+          <div style="font-size:10px;color:var(--text3)">CAC 1</div>
+          <div style="font-size:11px;font-weight:600;margin-top:2px">Réactivité</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--rs);padding:10px;text-align:center">
+          <div style="font-size:10px;color:var(--text3)">CAC 2</div>
+          <div style="font-size:11px;font-weight:600;margin-top:2px">Anxiété</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--rs);padding:10px;text-align:center">
+          <div style="font-size:10px;color:var(--text3)">CAC 3</div>
+          <div style="font-size:11px;font-weight:600;margin-top:2px">Agressivité</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--rs);padding:10px;text-align:center">
+          <div style="font-size:10px;color:var(--text3)">CAC 4</div>
+          <div style="font-size:11px;font-weight:600;margin-top:2px">Socialisation</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--rs);padding:10px;text-align:center">
+          <div style="font-size:10px;color:var(--text3)">CAC 5</div>
+          <div style="font-size:11px;font-weight:600;margin-top:2px">Obéissance</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--rs);padding:10px;text-align:center">
+          <div style="font-size:10px;color:var(--text3)">CAC 6</div>
+          <div style="font-size:11px;font-weight:600;margin-top:2px">Rappel</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--rs);padding:10px;text-align:center">
+          <div style="font-size:10px;color:var(--text3)">CAC 7-14</div>
+          <div style="font-size:11px;font-weight:600;margin-top:2px">+ 8 critères</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAT DES ROUTES -->
+  <div class="section">
+    <h2>🔌 Routes API disponibles</h2>
+    <div class="card">
+      <table>
+        <tr><th>Route</th><th>Méthode</th><th>Description</th><th>Statut</th></tr>
+        <tr><td>/api/animaux</td><td>GET/POST</td><td>Liste et création animaux</td><td><span class="tag tag-green">✅ OK</span></td></tr>
+        <tr><td>/api/animaux/races</td><td>GET</td><td>Référentiel races</td><td><span class="tag tag-green">✅ OK</span></td></tr>
+        <tr><td>/api/seances</td><td>GET</td><td>Liste séances</td><td><span class="tag tag-green">✅ OK</span></td></tr>
+        <tr><td>/api/seances</td><td>POST</td><td>Création séance</td><td><span class="tag tag-red">❌ 500</span></td></tr>
+        <tr><td>/api/seances/custom</td><td>POST</td><td>Création séance (workaround)</td><td><span class="tag tag-green">✅ OK</span></td></tr>
+        <tr><td>/api/programmes</td><td>GET</td><td>Liste programmes</td><td><span class="tag tag-green">✅ OK</span></td></tr>
+        <tr><td>/api/programmes/modeles</td><td>GET</td><td>Modèles par métier</td><td><span class="tag tag-green">✅ OK</span></td></tr>
+        <tr><td>/api/questionnaires</td><td>GET</td><td>Liste questionnaires</td><td><span class="tag tag-green">✅ OK</span></td></tr>
+        <tr><td>/api/devis</td><td>GET/POST</td><td>Devis/contrats</td><td><span class="tag tag-green">✅ OK</span></td></tr>
+        <tr><td>/api/factures</td><td>GET/POST</td><td>Factures</td><td><span class="tag tag-green">✅ OK</span></td></tr>
+        <tr><td>/api/factures/:id/pdf</td><td>GET</td><td>PDF facture (HTML modal)</td><td><span class="tag tag-green">✅ OK</span></td></tr>
+        <tr><td>/api/signatures/*</td><td>*</td><td>Signature Yousign</td><td><span class="tag tag-red">❌ Non implémenté</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
