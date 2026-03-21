@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Briefing Session S37 — PetSuite</title>
+<title>Changelog Sprint S30 — PetSuite</title>
 <style>
   :root{--bg:#0F1923;--bg-card:#1A2332;--bg-code:#0D1117;--border:#2A3A4A;--accent:#4F46E5;--cyan:#06B6D4;--text:#E2E8F0;--muted:#94A3B8;--dim:#64748B;--green:#10B981;--orange:#F59E0B;--red:#EF4444}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -43,54 +43,45 @@
 </head>
 <body>
 <div class="header"><div class="header-inner">
-  <h1><span>📋</span> Briefing Session S37</h1>
-  <div class="sub">État fin S36 — Priorités S37 — RFE, achats, programmes, questionnaires</div>
+  <h1><span>📋</span> Changelog Sprint S30</h1>
+  <div class="sub">Finalisation modules core — GED, inventaires, réseaux sociaux</div>
   <div class="badges">
-    <span class="badge bp">Sprint S37</span>
-    <span class="badge bc">21 mars 2026</span>
+    <span class="badge bp">Sprint S30</span>
+    <span class="badge bc">Mars 2026</span>
     <span class="badge bg">PetSuite by Algorithmia</span>
   </div>
 </div></div>
 <div class="container">
-<div class="section"><div class="st">🔑 Chemins essentiels</div>
-<table>
-  <tr><td style="color:var(--cyan);font-weight:600">App locale</td><td>http://localhost/app/</td></tr>
-  <tr><td style="color:var(--cyan);font-weight:600">$apiFile</td><td>…\api\src\custom-routes.ts</td></tr>
-  <tr><td style="color:var(--cyan);font-weight:600">BDD MariaDB</td><td>192.168.1.62:3307 / @lgorithme</td></tr>
-  <tr><td style="color:var(--cyan);font-weight:600">Backup S36</td><td>C:\Backup\micro_logiciel\fin_s36.sql ✅</td></tr>
-</table></div>
-<div class="section"><div class="st">⚙️ Règles critiques</div>
-<pre>$apiFile = "D:\...\api\src\custom-routes.ts"
-cd "D:\...\micro_logiciel_frontend_nextjs"
-.\COPIER_TOUTES_PAGES_v2.ps1
-cd deploy
-docker compose build api --no-cache && docker compose up -d api
-# Sauvegarde
-& "C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe" ... > fin_s37.sql</pre></div>
-<div class="section"><div class="st">🏆 État fin S36</div>
+<div class="section"><div class="st">📊 Chiffres clés S30</div>
+<div class="stat-grid">
+  <div class="stat"><div class="stat-val">58</div><div class="stat-lbl">Pages UI</div></div>
+  <div class="stat"><div class="stat-val">88k</div><div class="stat-lbl">Chars API</div></div>
+  <div class="stat"><div class="stat-val">5</div><div class="stat-lbl">Routes nouvelles</div></div>
+</div></div>
+<div class="section"><div class="st">✅ Livraisons S30</div>
+<h3>API & Routes</h3>
 <ul>
-  <li><code>custom-routes.ts</code> : ~80 000 chars — routes S36 opérationnelles</li>
-  <li>Module PDF/email factures, bon à payer, modules métier configurables</li>
-  <li>Page <code>/app/factures/[id]</code> avec aperçu PDF et envoi email</li>
-  <li>Paramètres types-séance, SMTP, SMS, libellés-EC</li>
-</ul></div>
-<div class="section"><div class="st">🚨 Priorités S37</div>
+  <li>Routes <code>/inventaires/:id</code> — détail inventaire avec lignes</li>
+  <li>Route <code>POST /portees/new</code> — création portée avec naissances individuelles</li>
+  <li>Routes réseaux sociaux consolidées : <code>GET /reseaux-sociaux</code> opérationnel</li>
+  <li>Route <code>GET /achats</code> + <code>GET /inventaires</code> — listes paginées</li>
+</ul>
+<h3>Pages frontend</h3>
 <ul>
-  <li><strong>P1</strong> — Réforme Facturation Électronique (RFE) : page tableau de bord + config PDP</li>
-  <li><strong>P2</strong> — Module Achats complet : règlements, avoirs, retours, SEPA</li>
-  <li><strong>P3</strong> — Programmes suivi par métier : 20 modèles seeds</li>
-  <li><strong>P4</strong> — Questionnaires par métier : 12 modèles seeds</li>
-  <li><strong>P5</strong> — Routes manquantes : <code>/tva</code>, <code>/utilisateurs</code>, <code>/param-pdp</code></li>
+  <li><code>/app/achats/[id]</code> — détail achat avec onglets Règlements / Avoirs / Retours / SEPA</li>
+  <li><code>/app/inventaires/[id]</code> — détail inventaire avec lignes articles</li>
+  <li><code>/app/reseaux-sociaux</code> — tableau de bord réseaux sociaux élevage</li>
+</ul>
+<h3>Documentation</h3>
+<ul>
+  <li>Push <code>01-synthese-projet.html</code> et <code>02-guide-parametrage.html</code> sur GitHub Pages</li>
+  <li>Fichiers <code>COPIER_TOUTES_PAGES_v2.ps1</code> (touch timestamps OneDrive)</li>
 </ul></div>
-<div class="section"><div class="st">📊 État routes API (fin S36)</div>
-<table>
-  <tr><th>Route</th><th>Statut</th></tr>
-  <tr><td>/factures/:id/pdf</td><td class="ok">✅ 200</td></tr>
-  <tr><td>/factures/:id/email</td><td class="ok">✅ 200</td></tr>
-  <tr><td>/parametres/modules</td><td class="ok">✅ 200</td></tr>
-  <tr><td>/achats/:id/reglements</td><td class="err">❌ À créer S37</td></tr>
-  <tr><td>/factures/:id/rfe</td><td class="err">❌ À créer S37</td></tr>
-  <tr><td>/programmes/modeles</td><td class="err">❌ À créer S37</td></tr>
-</table></div></div>
-<footer>PetSuite Documentation | Sprint S37 | Algorithmia 2026<br><br><a href="index.html">← Retour à l'index</a></footer>
+<div class="section"><div class="st">🔧 Corrections S30</div>
+<ul>
+  <li>Fix encodage UTF-8 scripts PowerShell (Python pour écriture pure ASCII)</li>
+  <li>Correction layout.tsx — patch import Sidebar sans écrasement</li>
+  <li>Séquence rebuild frontend normalisée : <code>build frontend → up -d → restart nginx</code></li>
+</ul></div></div>
+<footer>PetSuite Documentation | Sprint S30 | Algorithmia 2026<br><br><a href="index.html">← Retour à l'index</a></footer>
 </body></html>

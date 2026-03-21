@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Briefing Session S37 — PetSuite</title>
+<title>Changelog Sprint S37 — PetSuite</title>
 <style>
   :root{--bg:#0F1923;--bg-card:#1A2332;--bg-code:#0D1117;--border:#2A3A4A;--accent:#4F46E5;--cyan:#06B6D4;--text:#E2E8F0;--muted:#94A3B8;--dim:#64748B;--green:#10B981;--orange:#F59E0B;--red:#EF4444}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -43,8 +43,8 @@
 </head>
 <body>
 <div class="header"><div class="header-inner">
-  <h1><span>📋</span> Briefing Session S37</h1>
-  <div class="sub">État fin S36 — Priorités S37 — RFE, achats, programmes, questionnaires</div>
+  <h1><span>📋</span> Changelog Sprint S37</h1>
+  <div class="sub">RFE, Achats complet, Programmes/Questionnaires par métier, seeds BDD</div>
   <div class="badges">
     <span class="badge bp">Sprint S37</span>
     <span class="badge bc">21 mars 2026</span>
@@ -52,45 +52,50 @@
   </div>
 </div></div>
 <div class="container">
-<div class="section"><div class="st">🔑 Chemins essentiels</div>
-<table>
-  <tr><td style="color:var(--cyan);font-weight:600">App locale</td><td>http://localhost/app/</td></tr>
-  <tr><td style="color:var(--cyan);font-weight:600">$apiFile</td><td>…\api\src\custom-routes.ts</td></tr>
-  <tr><td style="color:var(--cyan);font-weight:600">BDD MariaDB</td><td>192.168.1.62:3307 / @lgorithme</td></tr>
-  <tr><td style="color:var(--cyan);font-weight:600">Backup S36</td><td>C:\Backup\micro_logiciel\fin_s36.sql ✅</td></tr>
-</table></div>
-<div class="section"><div class="st">⚙️ Règles critiques</div>
-<pre>$apiFile = "D:\...\api\src\custom-routes.ts"
-cd "D:\...\micro_logiciel_frontend_nextjs"
-.\COPIER_TOUTES_PAGES_v2.ps1
-cd deploy
-docker compose build api --no-cache && docker compose up -d api
-# Sauvegarde
-& "C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe" ... > fin_s37.sql</pre></div>
-<div class="section"><div class="st">🏆 État fin S36</div>
+<div class="section"><div class="st">📊 Chiffres clés S37</div>
+<div class="stat-grid">
+  <div class="stat"><div class="stat-val">69</div><div class="stat-lbl">Pages UI</div></div>
+  <div class="stat"><div class="stat-val">88k</div><div class="stat-lbl">Chars API</div></div>
+  <div class="stat"><div class="stat-val">9</div><div class="stat-lbl">Routes nouvelles</div></div>
+  <div class="stat"><div class="stat-val">42</div><div class="stat-lbl">Docs GitHub</div></div>
+</div></div>
+<div class="section"><div class="st">✅ Routes API S37</div>
 <ul>
-  <li><code>custom-routes.ts</code> : ~80 000 chars — routes S36 opérationnelles</li>
-  <li>Module PDF/email factures, bon à payer, modules métier configurables</li>
-  <li>Page <code>/app/factures/[id]</code> avec aperçu PDF et envoi email</li>
-  <li>Paramètres types-séance, SMTP, SMS, libellés-EC</li>
+  <li><code>/achats/:id/reglements</code> — règlements fournisseurs + SEPA <span class="ok">✅</span></li>
+  <li><code>/achats/:id/avoirs</code> — avoirs fournisseurs <span class="ok">✅</span></li>
+  <li><code>/achats/:id/retours</code> — bons de retour <span class="ok">✅</span></li>
+  <li><code>/achats/:id/sepa</code> — génération fichier SEPA <span class="ok">✅</span></li>
+  <li><code>/factures/:id/rfe</code> — cycle de vie RFE <span class="ok">✅</span></li>
+  <li><code>/factures/:id/litiges</code> — gestion litiges <span class="ok">✅</span></li>
+  <li><code>/param-pdp</code> — config Plateforme Agréée <span class="ok">✅</span></li>
+  <li><code>/tva</code> — référentiel taux TVA <span class="ok">✅</span></li>
+  <li><code>/utilisateurs</code> — liste utilisateurs <span class="ok">✅</span></li>
 </ul></div>
-<div class="section"><div class="st">🚨 Priorités S37</div>
+<div class="section"><div class="st">✅ BDD S37</div>
 <ul>
-  <li><strong>P1</strong> — Réforme Facturation Électronique (RFE) : page tableau de bord + config PDP</li>
-  <li><strong>P2</strong> — Module Achats complet : règlements, avoirs, retours, SEPA</li>
-  <li><strong>P3</strong> — Programmes suivi par métier : 20 modèles seeds</li>
-  <li><strong>P4</strong> — Questionnaires par métier : 12 modèles seeds</li>
-  <li><strong>P5</strong> — Routes manquantes : <code>/tva</code>, <code>/utilisateurs</code>, <code>/param-pdp</code></li>
+  <li>Tables : <code>achat_reglement</code>, <code>achat_avoir</code>, <code>achat_retour</code>, <code>facture_rfe_evenement</code>, <code>facture_litige</code>, <code>param_pdp</code>, <code>param_yousign</code>, <code>signature_demande</code>, <code>vocal_session</code>, <code>vocal_message</code>, <code>vocal_action</code>, <code>param_vocal</code></li>
+  <li>Extensions <code>facture</code> : <code>FAC_RFE_STATUT</code>, <code>FAC_PDP_REF</code>, <code>FAC_SIREN_CLIENT</code>, <code>FAC_CAT_OPERATION</code></li>
+  <li>Extensions <code>programme_suivi</code> et <code>questionnaire</code> par métier</li>
 </ul></div>
-<div class="section"><div class="st">📊 État routes API (fin S36)</div>
-<table>
-  <tr><th>Route</th><th>Statut</th></tr>
-  <tr><td>/factures/:id/pdf</td><td class="ok">✅ 200</td></tr>
-  <tr><td>/factures/:id/email</td><td class="ok">✅ 200</td></tr>
-  <tr><td>/parametres/modules</td><td class="ok">✅ 200</td></tr>
-  <tr><td>/achats/:id/reglements</td><td class="err">❌ À créer S37</td></tr>
-  <tr><td>/factures/:id/rfe</td><td class="err">❌ À créer S37</td></tr>
-  <tr><td>/programmes/modeles</td><td class="err">❌ À créer S37</td></tr>
-</table></div></div>
+<div class="section"><div class="st">✅ Seeds & données démo S37</div>
+<ul>
+  <li>20 modèles programmes (5 par métier : COMPORTEMENTALISTE, TOILETTEUR, PET_SITTER, ELEVEUR)</li>
+  <li>12 modèles questionnaires (2 par métier x 6 métiers)</li>
+  <li>Modules actifs en BDD : COMPORTEMENTALISTE, TOILETTEUR, PET_SITTER, ELEVEUR</li>
+</ul></div>
+<div class="section"><div class="st">✅ Pages frontend S37</div>
+<ul>
+  <li><code>/app/factures/rfe</code> — tableau de bord Réforme Facturation Électronique</li>
+  <li><code>/app/parametres/pdp</code> — config PDP (Pennylane + 9 alternatives)</li>
+  <li><code>/app/achats/[id]/reglements</code> — règlements fournisseur + modal SEPA</li>
+  <li><code>/app/programmes</code> — onglets par métier + 20 modèles cliquables</li>
+  <li><code>/app/questionnaires</code> — onglets par métier + aperçu détaillé</li>
+</ul></div>
+<div class="section"><div class="st">📚 Documentation S37</div>
+<ul>
+  <li>42 fichiers HTML sur GitHub Pages</li>
+  <li>Nouveaux docs : #32 RFE, #33 Achats, #36-40 Métiers</li>
+  <li><code>03-notice-utilisateur.html</code> v3.1, <code>07-audit-stack.html</code> mis à jour</li>
+</ul></div></div>
 <footer>PetSuite Documentation | Sprint S37 | Algorithmia 2026<br><br><a href="index.html">← Retour à l'index</a></footer>
 </body></html>

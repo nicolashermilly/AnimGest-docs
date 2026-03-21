@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Briefing Session S37 — PetSuite</title>
+<title>Changelog Sprint S38 — PetSuite</title>
 <style>
   :root{--bg:#0F1923;--bg-card:#1A2332;--bg-code:#0D1117;--border:#2A3A4A;--accent:#4F46E5;--cyan:#06B6D4;--text:#E2E8F0;--muted:#94A3B8;--dim:#64748B;--green:#10B981;--orange:#F59E0B;--red:#EF4444}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -43,54 +43,58 @@
 </head>
 <body>
 <div class="header"><div class="header-inner">
-  <h1><span>📋</span> Briefing Session S37</h1>
-  <div class="sub">État fin S36 — Priorités S37 — RFE, achats, programmes, questionnaires</div>
+  <h1><span>📋</span> Changelog Sprint S38</h1>
+  <div class="sub">Signature Yousign, DocumentActions, Élevage complet, API Keys, EDC→EC</div>
   <div class="badges">
-    <span class="badge bp">Sprint S37</span>
-    <span class="badge bc">21 mars 2026</span>
+    <span class="badge bc">Sprint S38</span>
+    <span class="badge bc">21-22 mars 2026</span>
     <span class="badge bg">PetSuite by Algorithmia</span>
   </div>
 </div></div>
 <div class="container">
-<div class="section"><div class="st">🔑 Chemins essentiels</div>
-<table>
-  <tr><td style="color:var(--cyan);font-weight:600">App locale</td><td>http://localhost/app/</td></tr>
-  <tr><td style="color:var(--cyan);font-weight:600">$apiFile</td><td>…\api\src\custom-routes.ts</td></tr>
-  <tr><td style="color:var(--cyan);font-weight:600">BDD MariaDB</td><td>192.168.1.62:3307 / @lgorithme</td></tr>
-  <tr><td style="color:var(--cyan);font-weight:600">Backup S36</td><td>C:\Backup\micro_logiciel\fin_s36.sql ✅</td></tr>
-</table></div>
-<div class="section"><div class="st">⚙️ Règles critiques</div>
-<pre>$apiFile = "D:\...\api\src\custom-routes.ts"
-cd "D:\...\micro_logiciel_frontend_nextjs"
-.\COPIER_TOUTES_PAGES_v2.ps1
-cd deploy
-docker compose build api --no-cache && docker compose up -d api
-# Sauvegarde
-& "C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe" ... > fin_s37.sql</pre></div>
-<div class="section"><div class="st">🏆 État fin S36</div>
+<div class="section"><div class="st">📊 Chiffres clés S38</div>
+<div class="stat-grid">
+  <div class="stat"><div class="stat-val">70</div><div class="stat-lbl">Pages UI</div></div>
+  <div class="stat"><div class="stat-val">110k</div><div class="stat-lbl">Chars API</div></div>
+  <div class="stat"><div class="stat-val">14</div><div class="stat-lbl">Routes élevage</div></div>
+  <div class="stat"><div class="stat-val">7</div><div class="stat-lbl">Routes Yousign</div></div>
+</div></div>
+<div class="section"><div class="st">✅ Signature électronique Yousign</div>
 <ul>
-  <li><code>custom-routes.ts</code> : ~80 000 chars — routes S36 opérationnelles</li>
-  <li>Module PDF/email factures, bon à payer, modules métier configurables</li>
-  <li>Page <code>/app/factures/[id]</code> avec aperçu PDF et envoi email</li>
-  <li>Paramètres types-séance, SMTP, SMS, libellés-EC</li>
+  <li>7 routes API : <code>GET/POST /signatures</code>, <code>/signatures/:id</code>, <code>/signatures/init</code>, <code>/signatures/:id/send</code>, <code>/signatures/:id/cancel</code>, <code>/devis/:id/signature</code>, <code>/signatures/webhook</code></li>
+  <li>Table <code>signature_evenement</code> créée en BDD</li>
+  <li>Génération PDF via <strong>pdfkit</strong> (déjà installé)</li>
+  <li>Upload PDF + création signataire sur Yousign sandbox</li>
+  <li>Test end-to-end réussi : SGN_ID:2, PDF uploadé, signataire créé</li>
 </ul></div>
-<div class="section"><div class="st">🚨 Priorités S37</div>
+<div class="section"><div class="st">✅ Composant DocumentActions</div>
 <ul>
-  <li><strong>P1</strong> — Réforme Facturation Électronique (RFE) : page tableau de bord + config PDP</li>
-  <li><strong>P2</strong> — Module Achats complet : règlements, avoirs, retours, SEPA</li>
-  <li><strong>P3</strong> — Programmes suivi par métier : 20 modèles seeds</li>
-  <li><strong>P4</strong> — Questionnaires par métier : 12 modèles seeds</li>
-  <li><strong>P5</strong> — Routes manquantes : <code>/tva</code>, <code>/utilisateurs</code>, <code>/param-pdp</code></li>
+  <li>Composant unique <code>DocumentActions</code> — 3 boutons 🖨️ PDF / 📧 Email / 🖊️ Signature</li>
+  <li>Modal PDF avec iframe, modal Email avec sélecteur contact, SignatureModal v2 avec TTS</li>
+  <li>Règle : <strong>toutes les éditions PDF = modal/iframe</strong> — jamais de nouvelle page</li>
+  <li>Sélecteur contact commun (Email + Signature) : <code>GET /api/contacts?tieId=...</code></li>
 </ul></div>
-<div class="section"><div class="st">📊 État routes API (fin S36)</div>
+<div class="section"><div class="st">✅ Module Élevage — 14 routes</div>
+<ul>
+  <li>Saillies, gestations, portées, naissances, poids J0→J60, vaccins, réservations, déclarations</li>
+  <li>Route <code>GET /elevage/carnet/:nai_id</code> — HTML imprimable avec courbe poids SVG</li>
+  <li>3 tables : <code>elevage_chiot_poids</code>, <code>elevage_reservation</code>, <code>elevage_vaccination</code></li>
+  <li>Seeds démo : 2 portées, 10 chiots, 8 réservations</li>
+</ul></div>
+<div class="section"><div class="st">✅ Page Interfaces API + charte S38/S39</div>
+<ul>
+  <li>Page <code>/app/parametres/api-keys</code> — 5 sections accordéon : Yousign, Pennylane, SMTP, Stripe, SMS</li>
+  <li>Refonte page Élevage sur charte CSS Variables (suppression thème dark hardcodé)</li>
+  <li>Remplacement global <strong>EDC → EC</strong> (Étude Comportementale) : 9 fichiers, 0 résiduel</li>
+  <li>Doc <code>41-composants-techniques.html</code> publié, index mis à jour 43 docs</li>
+</ul></div>
+<div class="section"><div class="st">⚠️ Routes à corriger S39</div>
 <table>
-  <tr><th>Route</th><th>Statut</th></tr>
-  <tr><td>/factures/:id/pdf</td><td class="ok">✅ 200</td></tr>
-  <tr><td>/factures/:id/email</td><td class="ok">✅ 200</td></tr>
-  <tr><td>/parametres/modules</td><td class="ok">✅ 200</td></tr>
-  <tr><td>/achats/:id/reglements</td><td class="err">❌ À créer S37</td></tr>
-  <tr><td>/factures/:id/rfe</td><td class="err">❌ À créer S37</td></tr>
-  <tr><td>/programmes/modeles</td><td class="err">❌ À créer S37</td></tr>
+  <tr><th>Route</th><th>Erreur</th></tr>
+  <tr><td><code>POST /reglements</code></td><td class="err">400 body parsing</td></tr>
+  <tr><td><code>POST /achats</code></td><td class="err">500 undefined params</td></tr>
+  <tr><td><code>POST /seances</code></td><td class="warn">500 NestJS conflit</td></tr>
+  <tr><td><code>GET /factures/entrants</code></td><td class="err">404 à créer</td></tr>
 </table></div></div>
-<footer>PetSuite Documentation | Sprint S37 | Algorithmia 2026<br><br><a href="index.html">← Retour à l'index</a></footer>
+<footer>PetSuite Documentation | Sprint S38 | Algorithmia 2026<br><br><a href="index.html">← Retour à l'index</a></footer>
 </body></html>
