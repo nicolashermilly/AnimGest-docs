@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefing Session S38</title>
+<style>
+  :root { --bg:#0F1923; --bg-card:#1A2332; --bg-code:#0D1117; --border:#2A3A4A; --accent:#4F46E5; --cyan:#06B6D4; --text:#E2E8F0; --muted:#94A3B8; --dim:#64748B; --green:#10B981; --orange:#F59E0B; --red:#EF4444; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px}
+  .header{background:linear-gradient(135deg,#1a1040 0%,#0f1923 70%);border-bottom:1px solid var(--border);padding:40px 48px}
+  .header-inner{max-width:1100px;margin:0 auto}
+  .header h1{font-size:1.6rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:12px}
+  .header .sub{color:var(--muted);font-size:.9rem;margin-top:6px}
+  .badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .badge{border-radius:20px;padding:3px 12px;font-size:.72rem;font-weight:600}
+  .bp{background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.4);color:#a5b4fc}
+  .bc{background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.35);color:#67e8f9}
+  .bg{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.35);color:#6ee7b7}
+  .br{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.35);color:#fca5a5}
+  .container{max-width:1100px;margin:0 auto;padding:36px 48px}
+  .section{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:24px}
+  .section-title{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+  h3{font-size:.95rem;font-weight:600;color:#fff;margin:18px 0 10px}
+  p{color:var(--muted);font-size:.9rem;margin-bottom:10px;line-height:1.7}
+  ul,ol{padding-left:20px;color:var(--muted);font-size:.9rem;margin-bottom:12px}
+  li{margin-bottom:5px}
+  strong{color:var(--text);font-weight:600}
+  code{background:rgba(255,255,255,.07);border:1px solid var(--border);color:#f0abfc;font-family:'JetBrains Mono','Fira Code',monospace;font-size:.8rem;padding:2px 6px;border-radius:4px}
+  pre{background:var(--bg-code);border:1px solid var(--border);border-left:3px solid var(--accent);color:#E2E8F0;padding:18px 20px;border-radius:8px;overflow-x:auto;font-family:'JetBrains Mono','Fira Code',monospace;font-size:.8rem;line-height:1.7;margin:10px 0 16px}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.875rem}
+  th{background:rgba(255,255,255,.05);padding:8px 14px;text-align:left;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);border-bottom:1px solid var(--border)}
+  td{padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .ok{color:var(--green)} .warn{color:var(--orange)} .err{color:var(--red)}
+  .alert{border-radius:8px;padding:12px 16px;margin:12px 0;font-size:.875rem;display:flex;gap:8px}
+  .ai{background:rgba(79,70,229,.12);border:1px solid rgba(79,70,229,.3);color:#c7d2fe}
+  .as{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.28);color:#a7f3d0}
+  .aw{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.28);color:#fde68a}
+  .paths-table td:first-child{color:var(--cyan);font-weight:600;white-space:nowrap}
+  .paths-table td:last-child{font-family:'JetBrains Mono',monospace;font-size:.78rem;word-break:break-all}
+  footer{text-align:center;color:var(--dim);font-size:.8rem;padding:32px 48px;border-top:1px solid var(--border);margin-top:16px}
+  footer a{color:var(--cyan);text-decoration:none}
+  @media(max-width:768px){.header,.container{padding:20px}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="header-inner">
+  <h1><span>📋</span> Briefing Session S38</h1>
+  <div class="sub">État fin S37 — Priorités S38 — Signature Yousign, corrections API, pages manquantes</div>
+  <div class="badges">
+    <span class="badge bp">Sprint S38</span>
+    <span class="badge bc">21 mars 2026</span>
+    <span class="badge bg">PetSuite by Algorithmia</span>
+  </div>
+</div>
+</div>
+<div class="container">
+
+<div class="section">
+  <div class="section-title">🔑 Chemins essentiels</div>
+  <table class="paths-table">
+    <tr><td>App locale</td><td>http://localhost/app/</td></tr>
+    <tr><td>GitHub docs</td><td>https://github.com/nicolashermilly/petsuite-docs</td></tr>
+    <tr><td>GitHub Pages</td><td>https://nicolashermilly.github.io/petsuite-docs/</td></tr>
+    <tr><td>Deploy</td><td>…\micro_logiciel_frontend_nextjs\deploy</td></tr>
+    <tr><td>$apiFile</td><td>…\api\src\custom-routes.ts</td></tr>
+    <tr><td>BDD MariaDB</td><td>192.168.1.62:3307 / @lgorithme / micro_logiciel</td></tr>
+    <tr><td>Backup S37</td><td>C:\Backup\micro_logiciel\20260321_fin_s37.sql ✅</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-title">⚙️ Règles critiques</div>
+  <pre>$apiFile = "D:\...\api\src\custom-routes.ts"
+
+# Avant tout build frontend
+cd "D:\...\micro_logiciel_frontend_nextjs"
+.\COPIER_TOUTES_PAGES_v2.ps1
+cd deploy
+
+# Rebuild API seule
+docker compose build api --no-cache && docker compose up -d api
+
+# Rebuild tout
+docker compose build api frontend --no-cache && docker compose up -d api frontend && docker compose restart nginx
+
+# Sauvegarde BDD
+& "C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe" -h 192.168.1.62 -P 3307 -u "@lgorithme" --password="@lgoritHme+2025+977_73300" --single-transaction --skip-lock-tables micro_logiciel > C:\Backup\micro_logiciel\20260322_debut_s38.sql</pre>
+  <ul>
+    <li>Toujours <code>cd deploy</code> avant <code>docker compose</code></li>
+    <li>Injections Python → <code>[System.IO.File]::WriteAllText(...)</code> avec <code>New-Object System.Text.UTF8Encoding $false</code></li>
+    <li><strong>TOUTES les éditions PDF = Modal/Popup</strong> — jamais de navigation vers nouvelle page</li>
+    <li>Commentaires BDD FK : <code>COMMENT 'Relation NomTable — description'</code></li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="section-title">🏆 État fin S37</div>
+  <h3>✅ Infrastructure & API</h3>
+  <ul>
+    <li><code>custom-routes.ts</code> : 88 748 chars — toutes les routes S37 opérationnelles</li>
+    <li>Modules dynamiques <code>POST /parametres/modules</code> → 4 modules OK</li>
+    <li>Routes S37 : <code>/achats/:id/reglements</code>, <code>/achats/:id/avoirs</code>, <code>/achats/:id/retours</code>, <code>/achats/:id/sepa</code>, <code>/factures/:id/rfe</code>, <code>/factures/:id/litiges</code>, <code>/param-pdp</code>, <code>/tva</code>, <code>/utilisateurs</code></li>
+  </ul>
+  <h3>✅ BDD (tables créées S37)</h3>
+  <ul>
+    <li><code>achat_reglement</code>, <code>achat_avoir</code>, <code>achat_retour</code>, <code>facture_rfe_evenement</code>, <code>facture_litige</code>, <code>param_pdp</code>, <code>param_yousign</code>, <code>signature_demande</code>, tables vocales</li>
+  </ul>
+  <h3>✅ Pages frontend créées S37</h3>
+  <ul>
+    <li><code>/app/factures/rfe</code>, <code>/app/parametres/pdp</code>, <code>/app/achats/[id]/reglements</code>, <code>/app/programmes</code>, <code>/app/questionnaires</code></li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="section-title">🚨 Priorité 1 — Signature électronique Yousign</div>
+  <h3>Routes à créer (7)</h3>
+  <pre>GET  /signatures            — liste toutes signatures
+GET  /signatures/:id        — détail + événements
+POST /signatures/init       — upload PDF + créer signataire Yousign
+POST /signatures/:id/send   — activer/envoyer
+POST /signatures/:id/cancel — annuler
+GET  /devis/:id/signature   — signature liée à un devis
+POST /devis/:id/signature   — initier signature depuis devis
+POST /signatures/webhook    — callback Yousign (vérif HMAC)</pre>
+  <h3>Pages à créer</h3>
+  <ul>
+    <li><code>/app/signatures</code> — liste + statuts + liens signature</li>
+    <li>Bouton <code>🖊️ Envoyer à la signature</code> dans <code>/app/devis/[id]</code></li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="section-title">🚨 Priorité 2 — Corrections API urgentes</div>
+  <table>
+    <tr><th>Route</th><th>Erreur</th><th>Fix</th></tr>
+    <tr><td><code>POST /reglements</code></td><td class="err">400 body parsing</td><td>Ajouter <code>req.on('data')</code></td></tr>
+    <tr><td><code>POST /achats</code></td><td class="err">500 undefined params</td><td>Null-safety champs optionnels</td></tr>
+    <tr><td><code>POST /seances</code></td><td class="err">500 NestJS conflit</td><td>Workaround <code>/seances/custom</code></td></tr>
+    <tr><td><code>GET /factures/entrants</code></td><td class="err">404</td><td>Créer route + page inbox PDP</td></tr>
+    <tr><td><code>POST /communaute/moderer/:id</code></td><td class="err">404</td><td>Route individuelle manquante</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-title">📊 État routes API (fin S37)</div>
+  <table>
+    <tr><th>Route</th><th>Méthode</th><th>Statut</th></tr>
+    <tr><td>/parametres/modules</td><td>GET/POST</td><td class="ok">✅ 200</td></tr>
+    <tr><td>/factures/:id/pdf</td><td>GET</td><td class="ok">✅ 200</td></tr>
+    <tr><td>/factures/:id/rfe</td><td>GET/POST</td><td class="ok">✅ 200 S37</td></tr>
+    <tr><td>/achats/:id/reglements</td><td>GET/POST</td><td class="ok">✅ 200 S37</td></tr>
+    <tr><td>/elevage/alertes</td><td>GET</td><td class="ok">✅ 200</td></tr>
+    <tr><td>/reglements</td><td>POST</td><td class="err">❌ 400 body parsing</td></tr>
+    <tr><td>/achats</td><td>POST</td><td class="err">❌ 500 undefined params</td></tr>
+    <tr><td>/seances</td><td>POST</td><td class="err">❌ 500 NestJS conflit</td></tr>
+    <tr><td>/factures/entrants</td><td>GET</td><td class="err">❌ 404 à créer</td></tr>
+    <tr><td>/signatures/*</td><td>*</td><td class="err">❌ Non implémenté</td></tr>
+    <tr><td>/communaute/moderer/:id</td><td>POST</td><td class="err">❌ 404 manquant</td></tr>
+    <tr><td>/vocal/*</td><td>*</td><td class="err">❌ Non implémenté</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-title">🎬 Vidéos de démonstration</div>
+  <ul>
+    <li><strong>Vidéo 1 — Tour complet (8 min)</strong> : Paramètres → Client+2contacts+2chiens → EC → Devis → Signature → Facture → Règlement → FEC → Stats → CRM → PDF</li>
+    <li><strong>Comportementaliste</strong> — EC + programmes + CAC + facturation</li>
+    <li><strong>Toiletteur</strong> — Planning salon + forfaits + abonnements</li>
+    <li><strong>Pet-sitter</strong> — Visites + gardes + rapports + promenades</li>
+    <li><strong>Éleveur</strong> — Saillies + gestations + portées + LOF + cessions</li>
+    <li><strong>Éducateur</strong> — Cours collectifs/individuels + bilans + progression</li>
+  </ul>
+</div>
+
+</div>
+<footer>
+  PetSuite — Briefing Sprint S38 | Algorithmia 2026<br><br>
+  <a href="index.html">← Retour à l'index</a>
+</footer>
+</body>
+</html>
