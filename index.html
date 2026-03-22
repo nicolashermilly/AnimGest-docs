@@ -1,152 +1,210 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite Documentation</title>
 <style>
-  :root { --primary: #534AB7; --primary-light: #7F77DD; --bg: #0f0e17; --bg2: #1a1828;
-          --bg3: #252336; --text: #e8e6f0; --text2: #a09cb8; --green: #5dcaa5;
-          --orange: #f4a261; --red: #e06c6c; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-         background: var(--bg); color: var(--text); line-height: 1.6; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
-  h1 { font-size: 2rem; font-weight: 700; color: var(--primary-light); margin-bottom: 8px; }
-  h2 { font-size: 1.3rem; font-weight: 600; color: var(--primary-light); margin: 32px 0 12px;
-       padding-bottom: 6px; border-bottom: 1px solid var(--bg3); }
-  h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
-  p { color: var(--text2); margin-bottom: 12px; }
-  .subtitle { color: var(--text2); font-size: 1rem; margin-bottom: 32px; }
-  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem;
-           font-weight: 600; margin-right: 6px; }
-  .badge-green { background: rgba(93,202,165,0.15); color: var(--green); }
-  .badge-purple { background: rgba(83,74,183,0.25); color: var(--primary-light); }
-  .badge-orange { background: rgba(244,162,97,0.15); color: var(--orange); }
-  .badge-red { background: rgba(224,108,108,0.15); color: var(--red); }
-  .card { background: var(--bg2); border: 1px solid var(--bg3); border-radius: 12px;
-          padding: 20px; margin-bottom: 16px; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-  th { background: var(--bg3); padding: 10px 14px; text-align: left; font-size: 0.85rem;
-       color: var(--text2); font-weight: 500; }
-  td { padding: 10px 14px; border-bottom: 1px solid var(--bg3); font-size: 0.9rem; vertical-align: top; }
-  code { background: var(--bg3); padding: 2px 7px; border-radius: 4px; font-size: 0.85rem;
-         font-family: 'Fira Code', 'Cascadia Code', monospace; color: var(--primary-light); }
-  .kpi { text-align: center; padding: 16px; }
-  .kpi-val { font-size: 2rem; font-weight: 700; color: var(--primary-light); }
-  .kpi-lbl { font-size: 0.8rem; color: var(--text2); margin-top: 4px; }
-  .nav { background: var(--bg2); border-bottom: 1px solid var(--bg3); padding: 12px 24px;
-         display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-  .nav a { color: var(--text2); text-decoration: none; font-size: 0.85rem; }
-  .nav a:hover { color: var(--primary-light); }
-  .nav-brand { color: var(--primary-light); font-weight: 700; font-size: 1rem; margin-right: 8px; }
-  ul { color: var(--text2); padding-left: 20px; margin-bottom: 12px; }
-  li { margin-bottom: 4px; }
-  .tag { display: inline-block; background: var(--bg3); color: var(--text2);
-         border-radius: 6px; padding: 3px 8px; font-size: 0.8rem; margin: 2px; }
-  @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+         background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+  .header { background: #13131a; border-bottom: 1px solid #2a2a3a;
+            padding: 1.5rem 2rem; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+  .logo span { color: #7f77dd; }
+  .badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8;
+           padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-links a { color: #888; text-decoration: none; font-size: 0.85rem; }
+  .nav-links a:hover { color: #fff; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem;
+       padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a3a; }
+  p { color: #9a9890; margin-bottom: 0.75rem; }
+  .section { margin-bottom: 2.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
+          padding: 1.25rem; transition: border-color 0.2s; }
+  .card:hover { border-color: #534ab7; }
+  .card-title { font-size: 0.95rem; font-weight: 600; color: #e2e0d8; margin-bottom: 0.4rem; }
+  .card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+         font-size: 0.7rem; font-weight: 600; margin-right: 0.25rem; margin-bottom: 0.4rem; }
+  .tag-purple { background: #1a1530; color: #9d97e8; }
+  .tag-green  { background: #0a2015; color: #5dcaa5; }
+  .tag-blue   { background: #0a1525; color: #6baed6; }
+  .tag-amber  { background: #1a1205; color: #d4a44c; }
+  .tag-red    { background: #1a0a0a; color: #e06c6c; }
+  code { background: #1a1a2e; color: #9d97e8; padding: 0.1rem 0.4rem;
+         border-radius: 4px; font-size: 0.85em; font-family: 'Fira Code', monospace; }
+  .back-link { color: #534ab7; text-decoration: none; font-size: 0.85rem; }
+  .back-link:hover { color: #9d97e8; }
+  footer { text-align: center; padding: 2rem; color: #333; font-size: 0.8rem;
+           border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+  /* Hero */
+  .hero { background: #0d0d18; border-bottom: 1px solid #1a1a2a; padding: 3rem 2rem; text-align: center; }
+  .hero h1 { font-size: 2.5rem; color: #fff; margin-bottom: .5rem; }
+  .hero p { color: #555; font-size: 1.1rem; }
+  .stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-n { font-size: 1.5rem; font-weight: 700; color: #7f77dd; }
+  .stat-l { font-size: .75rem; color: #555; }
+  /* Filtre */
+  .filter { max-width: 400px; margin: 1.5rem auto; }
+  .filter input { width: 100%; background: #13131a; border: 1px solid #2a2a3a; border-radius: 8px;
+                  padding: .6rem 1rem; color: #e2e0d8; font-size: .9rem; outline: none; }
+  .filter input:focus { border-color: #534ab7; }
 </style>
-</head><body>
+</head>
+<body>
 
-<nav class="nav">
-  <span class="nav-brand">🐾 PetSuite Docs</span>
-  <a href="index.html">Accueil</a>
-  <a href="01-synthese-projet.html">Synthèse</a>
-  <a href="03-notice-utilisateur.html">Notice</a>
-  <a href="07-audit-stack.html">Audit Stack</a>
-  <a href="17-api-reference-s42.html">API Ref</a>
-  <a href="53-changelog-s43.html">S43</a>
-  <a href="06-roadmap-s43.html">Roadmap</a>
-</nav>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="01-synthese-projet.html">Synthèse</a>
+    <a href="07-audit-stack.html">Stack</a>
+    <a href="17-api-reference-s42.html">API</a>
+    <a href="53-changelog-s43.html">S43</a>
+    <a href="06-roadmap-s43.html">Roadmap</a>
+    <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a>
+  </div>
+  <span class="badge new">S43 — 22 mars 2026</span>
+</header>
+
+<div class="hero">
+  <h1>📚 PetSuite Documentation</h1>
+  <p>Plateforme B2B SaaS pour professionnels du monde animal — <strong style="color:#9d97e8">Algorithmia</strong></p>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">87</div><div class="stat-l">Pages UI compilées</div></div>
+    <div class="stat"><div class="stat-n">10</div><div class="stat-l">Métiers couverts</div></div>
+    <div class="stat"><div class="stat-n">12</div><div class="stat-l">Dashboards CEO</div></div>
+    <div class="stat"><div class="stat-n">~45</div><div class="stat-l">Routes API custom</div></div>
+    <div class="stat"><div class="stat-n">200</div><div class="stat-l">Animaux en BDD</div></div>
+    <div class="stat"><div class="stat-n">5.5 MB</div><div class="stat-l">Backup S42</div></div>
+  </div>
+  <div class="filter">
+    <input type="text" placeholder="🔍 Rechercher dans la documentation..." oninput="filter(this.value)" />
+  </div>
+</div>
 
 <div class="container">
-  <h1>📚 PetSuite Documentation</h1>
-  <p class="subtitle">Plateforme B2B SaaS pour professionnels du monde animal — <strong>Algorithmia</strong></p>
 
-  <div class="grid-3" style="margin-bottom: 32px;">
-    <div class="card kpi"><div class="kpi-val">87</div><div class="kpi-lbl">Pages UI compilées</div></div>
-    <div class="card kpi"><div class="kpi-val">10</div><div class="kpi-lbl">Métiers couverts</div></div>
-    <div class="card kpi"><div class="kpi-val">12</div><div class="kpi-lbl">Dashboards CEO</div></div>
-  </div>
-
-  <h2>Navigation</h2>
-  <div class="grid-2">
-    <div class="card">
-      <h3>📋 Architecture & Stack</h3>
-      <ul>
-        <li><a href="01-synthese-projet.html" style="color:var(--primary-light)">01 — Synthèse projet</a></li>
-        <li><a href="02-guide-parametrage.html" style="color:var(--primary-light)">02 — Guide paramétrage</a></li>
-        <li><a href="07-audit-stack.html" style="color:var(--primary-light)">07 — Audit stack</a></li>
-        <li><a href="41-composants-techniques.html" style="color:var(--primary-light)">41 — Composants techniques</a></li>
-        <li><a href="17-api-reference-s42.html" style="color:var(--primary-light)">17 — Référence API S42</a></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>🚀 Sprints & Roadmap</h3>
-      <ul>
-        <li><a href="44-changelog-s42.html" style="color:var(--primary-light)">44 — Changelog S42</a></li>
-        <li><a href="53-changelog-s43.html" style="color:var(--primary-light)">53 — Changelog S43</a></li>
-        <li><a href="06-roadmap-s43.html" style="color:var(--primary-light)">06 — Roadmap S44+</a></li>
-        <li><a href="50-seeds-demo-s42.html" style="color:var(--primary-light)">50 — Seeds démo S42</a></li>
-        <li><a href="51-sidebar-metiers.html" style="color:var(--primary-light)">51 — Sidebar métiers</a></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>📊 Modules métier</h3>
-      <ul>
-        <li><a href="45-dashboards-ceo-bi.html" style="color:var(--primary-light)">45 — Dashboards CEO/BI</a></li>
-        <li><a href="46-integration-calendly.html" style="color:var(--primary-light)">46 — Intégration Calendly</a></li>
-        <li><a href="47-module-equestre.html" style="color:var(--primary-light)">47 — Module équestre</a></li>
-        <li><a href="48-module-pension-chenil.html" style="color:var(--primary-light)">48 — Module pension/chenil</a></li>
-        <li><a href="49-module-veterinaire.html" style="color:var(--primary-light)">49 — Module vétérinaire</a></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>👤 Utilisation</h3>
-      <ul>
-        <li><a href="03-notice-utilisateur.html" style="color:var(--primary-light)">03 — Notice utilisateur</a></li>
-        <li><a href="S43-briefing.html" style="color:var(--primary-light)">S43 — Briefing</a></li>
-      </ul>
+  <!-- SPRINTS ACTIFS -->
+  <div class="section">
+    <h2>🚀 Sprints &amp; Changelogs</h2>
+    <div class="grid">
+      <div class="card" style="border-color:#0f6e56">
+        <span class="tag tag-green">S43 TERMINÉ</span>
+        <div class="card-title">📋 Changelog S43</div>
+        <div class="card-desc">Planning 3 vues, Mail visible, Questionnaires filtrés, Dashboard V2, route /bilan/metier, TemplateSelector</div>
+        <div style="margin-top:.75rem"><a href="53-changelog-s43.html" class="back-link">Voir →</a></div>
+      </div>
+      <div class="card" style="border-color:#534ab7">
+        <span class="tag tag-purple">S42 COMPLÉTÉ</span>
+        <div class="card-title">📋 Changelog S42</div>
+        <div class="card-desc">Dashboards CEO/BI, Calendly, Seeds volumétriques, Sidebar 10 métiers, 87 pages</div>
+        <div style="margin-top:.75rem"><a href="44-changelog-s42.html" class="back-link">Voir →</a></div>
+      </div>
+      <div class="card">
+        <span class="tag tag-amber">S44 ROADMAP</span>
+        <div class="card-title">🗺️ Roadmap S44+</div>
+        <div class="card-desc">Dashboards dynamiques, Webhook Calendly, devis/new V2, visites enrichies, RFE Septembre 2026</div>
+        <div style="margin-top:.75rem"><a href="06-roadmap-s43.html" class="back-link">Roadmap →</a></div>
+      </div>
+      <div class="card">
+        <span class="tag tag-purple">S41</span>
+        <div class="card-title">📋 Changelog S41</div>
+        <div class="card-desc">TikTok, communauté, signatures Yousign, inventaires, 4 métiers démo</div>
+        <div style="margin-top:.75rem"><a href="43-changelog-S41.html" class="back-link">Voir →</a></div>
+      </div>
+      <div class="card">
+        <span class="tag tag-purple">S38</span>
+        <div class="card-title">📋 Changelog S38</div>
+        <div class="card-desc">Signature Yousign, DocumentActions, Élevage 14 routes, 70 pages</div>
+        <div style="margin-top:.75rem"><a href="S38-changelog.html" class="back-link">Voir →</a></div>
+      </div>
+      <div class="card">
+        <span class="tag tag-purple">S37</span>
+        <div class="card-title">📋 Changelog S37</div>
+        <div class="card-desc">RFE, Achats complet, Programmes/Questionnaires, 9 routes, 42 docs</div>
+        <div style="margin-top:.75rem"><a href="S37-changelog.html" class="back-link">Voir →</a></div>
+      </div>
     </div>
   </div>
 
-  <h2>État technique — S43 (22 mars 2026)</h2>
-  <div class="grid-3">
-    <div class="card">
-      <h3>Frontend</h3>
-      <p>Next.js 15.5 App Router — <span class="badge badge-green">87 pages</span></p>
-      <ul>
-        <li>Planning 3 vues (Jour/Semaine/Mois)</li>
-        <li>Dashboards CEO × 12 métiers</li>
-        <li>DocumentActions PDF | Mail | Signature</li>
-        <li>Questionnaires filtrés par métier</li>
-        <li>Templates devis 25 modèles</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>API NestJS</h3>
-      <p><span class="badge badge-purple">~45 routes custom</span></p>
-      <ul>
-        <li><code>GET /bilan/metier</code> — CA dynamique</li>
-        <li><code>GET /devis/templates</code></li>
-        <li><code>GET/POST /parametres/calendly</code></li>
-        <li><code>GET /ged-factures-impayees</code></li>
-        <li><code>GET /inventaires</code></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Base de données</h3>
-      <p>MariaDB 192.168.1.62:3307 <span class="badge badge-green">OK</span></p>
-      <ul>
-        <li>~200 animaux (6 espèces)</li>
-        <li>~450 factures</li>
-        <li>25 templates devis</li>
-        <li>Backup: 20260322_fin_s42.sql</li>
-      </ul>
+  <!-- ARCHITECTURE -->
+  <div class="section">
+    <h2>🏗️ Architecture &amp; Fondations</h2>
+    <div class="grid">
+      <div class="card"><span class="tag tag-purple">#01</span><div class="card-title">Synthèse projet PetSuite</div><div class="card-desc">Vision globale, positionnement, stack technique, architecture</div><div style="margin-top:.75rem"><a href="01-synthese-projet.html" class="back-link">Fondation →</a></div></div>
+      <div class="card"><span class="tag tag-purple">#02</span><div class="card-title">Guide de paramétrage</div><div class="card-desc">Configuration initiale, utilisateurs, rôles, paramètres entreprise</div><div style="margin-top:.75rem"><a href="02-guide-parametrage.html" class="back-link">Guide →</a></div></div>
+      <div class="card"><span class="tag tag-purple">#03</span><div class="card-title">Notice utilisateur v3.1</div><div class="card-desc">Manuel complet de toutes les fonctionnalités</div><div style="margin-top:.75rem"><a href="03-notice-utilisateur.html" class="back-link">Manuel →</a></div></div>
+      <div class="card"><span class="tag tag-purple">#07</span><div class="card-title">Audit stack technique</div><div class="card-desc">Docker, NestJS, Next.js 15, MariaDB, nginx — état S43</div><div style="margin-top:.75rem"><a href="07-audit-stack.html" class="back-link">Technique →</a></div></div>
+      <div class="card"><span class="tag tag-purple">#17</span><div class="card-title">Référence API S42</div><div class="card-desc">Toutes les routes custom-routes.ts — ~45 routes custom</div><div style="margin-top:.75rem"><a href="17-api-reference-s42.html" class="back-link">API →</a></div></div>
+      <div class="card"><span class="tag tag-purple">#41</span><div class="card-title">Composants Techniques</div><div class="card-desc">DocumentActions (PDF|Mail|Signature), SignatureModal, charte CSS</div><div style="margin-top:.75rem"><a href="41-composants-techniques.html" class="back-link">Architecture →</a></div></div>
+      <div class="card"><span class="tag tag-green">NEW S43</span><div class="card-title" style="color:#5dcaa5">Dashboards Dynamiques</div><div class="card-desc">Hook useDashboardMetier, route /bilan/metier, toggle Mois/Trim/An</div><div style="margin-top:.75rem"><a href="54-dashboard-dynamique.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-green">NEW S43</span><div class="card-title" style="color:#5dcaa5">Module Questionnaires</div><div class="card-desc">25 modèles × 11 métiers, filtres, recherche, envoi futur</div><div style="margin-top:.75rem"><a href="55-module-questionnaires.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-blue">#46</span><div class="card-title" style="color:#6baed6">Intégration Calendly</div><div class="card-desc">Réservations sans auth, 11 types RDV, page publique /reservation</div><div style="margin-top:.75rem"><a href="46-integration-calendly.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-purple">#45</span><div class="card-title">Dashboards CEO/BI</div><div class="card-desc">Architecture 7 dashboards, sidebar intégrée, généalogie éleveur</div><div style="margin-top:.75rem"><a href="45-dashboards-ceo-bi.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-purple">#51</span><div class="card-title">Sidebar 10 métiers</div><div class="card-desc">Structure complète, 📊 Tableau de bord en 1er, Questionnaires</div><div style="margin-top:.75rem"><a href="51-sidebar-metiers.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-green">#50</span><div class="card-title">Seeds démo S42</div><div class="card-desc">200 animaux 6 espèces, 450 factures, 60 visites pet-sitter, 25 templates</div><div style="margin-top:.75rem"><a href="50-seeds-demo-s42.html" class="back-link">→</a></div></div>
     </div>
   </div>
 
-  <p style="margin-top: 24px; font-size: 0.85rem;">
-    Dernière mise à jour : 22 mars 2026 — Sprint S43
-    &nbsp;|&nbsp; <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:var(--primary-light)">GitHub</a>
-  </p>
-</div></body></html>
+  <!-- MODULES METIER -->
+  <div class="section">
+    <h2>🐾 Modules métier</h2>
+    <div class="grid">
+      <div class="card"><span class="tag tag-green">95%</span><div class="card-title">🐕 Comportementaliste</div><div class="card-desc">EDC, programmes suivi, CAC 1-14, dashboard V2 dynamique (Mois/Trim/An)</div><div style="margin-top:.75rem"><a href="36-module-comportementaliste.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-green">80%</span><div class="card-title">✂️ Toiletteur</div><div class="card-desc">Planning salon, forfaits abonnements, fiches toilettage, dashboard CEO</div><div style="margin-top:.75rem"><a href="37-module-toiletteur.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-green">80%</span><div class="card-title">🏠 Pet-Sitter</div><div class="card-desc">Visites enrichies (filtres ville/espèce/statut), gardes, dashboard CEO</div><div style="margin-top:.75rem"><a href="38-module-petsitter.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-green">85%</span><div class="card-title">🐣 Éleveur</div><div class="card-desc">Saillies, gestations, portées, suivi chiots, LOF, arbre généalogique SVG</div><div style="margin-top:.75rem"><a href="39-module-eleveur.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-amber">65%</span><div class="card-title">🎓 Éducateur canin</div><div class="card-desc">Cours collectifs/individuels, bilans, progression, planning</div><div style="margin-top:.75rem"><a href="40-module-educateur.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-amber">60%</span><div class="card-title">🐴 Centre équestre</div><div class="card-desc">Cours, planning cavaliers, abonnements, concours, dashboard CEO</div><div style="margin-top:.75rem"><a href="47-module-equestre.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-amber">60%</span><div class="card-title">🏠 Pension / Chenil</div><div class="card-desc">Gardes, taux occupation, dashboard CEO</div><div style="margin-top:.75rem"><a href="48-module-pension-chenil.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-amber">40%</span><div class="card-title">🩺 Vétérinaire</div><div class="card-desc">Consultations, planning, dashboard squelette</div><div style="margin-top:.75rem"><a href="49-module-veterinaire.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-amber">40%</span><div class="card-title">🤲 Ostéopathe / Kiné</div><div class="card-desc">Consultations, planning, dashboard squelette</div><div style="margin-top:.75rem"><span style="color:#555;font-size:.8rem">S44</span></div></div>
+      <div class="card"><span class="tag tag-amber">40%</span><div class="card-title">🌿 Naturopathe / Nutri</div><div class="card-desc">Consultations, bilan nutritionnel, dashboard squelette</div><div style="margin-top:.75rem"><span style="color:#555;font-size:.8rem">S44</span></div></div>
+    </div>
+  </div>
+
+  <!-- FACTURATION -->
+  <div class="section">
+    <h2>💰 Facturation, Achats &amp; Comptabilité</h2>
+    <div class="grid">
+      <div class="card"><span class="tag tag-red">⚠️ Sept 2026</span><div class="card-title">🏛️ Réforme Facturation Électronique</div><div class="card-desc">e-Invoicing, e-Reporting, 10 PA dont Pennylane, cycle de vie RFE</div><div style="margin-top:.75rem"><a href="32-facturation-electronique.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-green">S37</span><div class="card-title">🛒 Module Achats complet</div><div class="card-desc">Commandes, livraisons, avoirs, retours, SEPA, réception</div><div style="margin-top:.75rem"><a href="33-module-achats.html" class="back-link">→</a></div></div>
+      <div class="card"><span class="tag tag-purple">#23</span><div class="card-title">Conformité NF 525</div><div class="card-desc">FEC export, journalisation, inaltérabilité, exercices comptables</div><div style="margin-top:.75rem"><a href="23-conformite-nf525.html" class="back-link">→</a></div></div>
+    </div>
+  </div>
+
+  <!-- BUSINESS -->
+  <div class="section">
+    <h2>📊 Business &amp; Stratégie</h2>
+    <div class="grid">
+      <div class="card"><span class="tag tag-amber">#22</span><div class="card-title">Business Plan Algorithmia</div><div class="card-desc">Plan 5 ans, pricing Starter 39€/Pro 69€/Business 119€, ARR 1.8M€ an 5</div><div style="margin-top:.75rem"><a href="22-business-plan.html" class="back-link">Stratégique →</a></div></div>
+      <div class="card"><span class="tag tag-amber">#27</span><div class="card-title">Dossier investisseurs</div><div class="card-desc">Pitch, BPI, love money, business angels, Série A — breakeven M+28</div><div style="margin-top:.75rem"><a href="27-dossier-investisseurs.html" class="back-link">Finance →</a></div></div>
+      <div class="card"><span class="tag tag-amber">#10</span><div class="card-title">Modèle commercial</div><div class="card-desc">Pricing, offres, conditions, canal de vente, 2000+ subscribers an 5</div><div style="margin-top:.75rem"><a href="10-modele-commercial.html" class="back-link">Commercial →</a></div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>PetSuite by Algorithmia · Sprint S43 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
+
+<script>
+function filter(q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('.card').forEach(c => {
+    c.style.display = c.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+  document.querySelectorAll('.section').forEach(s => {
+    const vis = [...s.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+    s.style.display = vis ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
