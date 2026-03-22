@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>PetSuite — Synthèse Projet</title>
+<title>PetSuite — Planning Multi-Métier</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
@@ -38,40 +38,36 @@
 <header class="header">
   <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
   <div class="nav-links"><a href="index.html">Accueil</a><a href="06-roadmap.html">Roadmap</a><a href="73-changelog-s44.html">S44</a></div>
-  <span class="badge">#1 — MàJ S44</span>
+  <span class="badge">#74 — S44 Nouveau</span>
 </header>
 <div class="container">
-<h1>📋 Synthèse Projet PetSuite</h1>
-<p class="subtitle">État du projet au 22 mars 2026 — Sprint S44 en cours</p>
-<div class="alert">✅ <strong>Build S43 :</strong> 87 pages compilées · Stack Docker stable · BDD 450+ factures · 200 animaux</div>
-<div class="section"><h2>🎯 Vision</h2>
-<p>PetSuite (marque commerciale Algorithmia) est un SaaS B2B vertical dédié aux professionnels du bien-être et soin animal en France. Il couvre 10 métiers : comportementaliste canin, pet-sitter, toiletteur, éleveur, éducateur, centre équestre, pension/chenil, vétérinaire, ostéopathe/kiné, sport canin et naturopathe animal.</p>
-</div>
-<div class="section"><h2>📊 Indicateurs clés S44</h2>
-<div class="grid">
-  <div class="card"><div class="card-title">87 pages</div><div class="card-desc">Build Next.js 15 — App Router — 58 pages statiques + 29 dynamiques</div></div>
-  <div class="card"><div class="card-title">10 métiers</div><div class="card-desc">Sidebar dédiée par métier, dashboard CEO dynamique, planning multi-métier</div></div>
-  <div class="card"><div class="card-title">~450 factures</div><div class="card-desc">BDD seeds réalistes — dont 50 impayées niveaux 1/2/3 — FEC export conforme</div></div>
-  <div class="card"><div class="card-title">Sprint S44</div><div class="card-desc">Fixes audit UX, planning par métier, devis/new V2, droits utilisateurs, RFE</div></div>
-</div></div>
-<div class="section"><h2>🏗️ Stack technique</h2>
+<h1>📅 Planning Multi-Métier</h1>
+<p class="subtitle">Architecture du planning — 1 planning dédié par métier, toutes les séances visibles avec couleurs distinctes</p>
+<div class="alert-warn alert">⚠️ <strong>S44 :</strong> Chaque métier doit avoir son propre planning (<code>/app/[metier]/planning</code>) affichant TOUTES les séances colorées par type, pour éviter les conflits.</div>
+<div class="section"><h2>🎨 Palette de couleurs par type de séance</h2>
 <table>
-<tr><th>Composant</th><th>Technologie</th><th>Version</th></tr>
-<tr><td>Frontend</td><td>Next.js App Router + TypeScript</td><td>15.5.12</td></tr>
-<tr><td>API</td><td>NestJS + custom-routes.ts (mysql2)</td><td>Node 20</td></tr>
-<tr><td>BDD</td><td>MariaDB locale</td><td>192.168.1.62:3307</td></tr>
-<tr><td>Proxy</td><td>nginx:1.27-alpine</td><td>strip /api/</td></tr>
-<tr><td>Orchestration</td><td>Docker Compose</td><td>deploy/</td></tr>
-<tr><td>Docs</td><td>GitHub Pages</td><td>petsuite-docs</td></tr>
+<tr><th>Métier / Type</th><th>Couleur</th><th>Code hex</th></tr>
+<tr><td>EDC Comportementaliste</td><td><span style="background:#534ab7;color:#fff;padding:2px 8px;border-radius:4px">■ Violet</span></td><td><code>#534ab7</code></td></tr>
+<tr><td>Séance suivi</td><td><span style="background:#7f77dd;color:#fff;padding:2px 8px;border-radius:4px">■ Violet clair</span></td><td><code>#7f77dd</code></td></tr>
+<tr><td>Visite Pet-Sitter</td><td><span style="background:#6baed6;color:#fff;padding:2px 8px;border-radius:4px">■ Bleu</span></td><td><code>#6baed6</code></td></tr>
+<tr><td>Garde & Pension</td><td><span style="background:#2171b5;color:#fff;padding:2px 8px;border-radius:4px">■ Bleu foncé</span></td><td><code>#2171b5</code></td></tr>
+<tr><td>Toilettage</td><td><span style="background:#d4a44c;color:#fff;padding:2px 8px;border-radius:4px">■ Amber</span></td><td><code>#d4a44c</code></td></tr>
+<tr><td>Cours sport canin collectif</td><td><span style="background:#5dcaa5;color:#fff;padding:2px 8px;border-radius:4px">■ Vert</span></td><td><code>#5dcaa5</code></td></tr>
+<tr><td>Cours sport canin individuel</td><td><span style="background:#41a882;color:#fff;padding:2px 8px;border-radius:4px">■ Vert foncé</span></td><td><code>#41a882</code></td></tr>
+<tr><td>Cours équestre</td><td><span style="background:#854d0e;color:#fff;padding:2px 8px;border-radius:4px">■ Marron</span></td><td><code>#854d0e</code></td></tr>
+<tr><td>Consultation vétérinaire</td><td><span style="background:#e06c6c;color:#fff;padding:2px 8px;border-radius:4px">■ Rouge</span></td><td><code>#e06c6c</code></td></tr>
+<tr><td>Ostéopathie</td><td><span style="background:#f4a261;color:#fff;padding:2px 8px;border-radius:4px">■ Orange</span></td><td><code>#f4a261</code></td></tr>
+<tr><td>Nutrition / Naturopathie</td><td><span style="background:#a8c96e;color:#fff;padding:2px 8px;border-radius:4px">■ Vert olive</span></td><td><code>#a8c96e</code></td></tr>
 </table></div>
-<div class="section"><h2>💰 Modèle commercial (Algorithmia)</h2>
+<div class="section"><h2>🔧 Architecture technique</h2>
 <table>
-<tr><th>Plan</th><th>Prix/mois</th><th>Cible</th></tr>
-<tr><td>Starter</td><td>39 €</td><td>1 utilisateur, 1 métier</td></tr>
-<tr><td>Pro</td><td>69 €</td><td>3 utilisateurs, multi-métier</td></tr>
-<tr><td>Business</td><td>119 €</td><td>Illimité + support prioritaire</td></tr>
+<tr><th>Route</th><th>Contenu</th></tr>
+<tr><td><code>/app/planning-seances</code></td><td>Planning général — toutes séances — existant ✅</td></tr>
+<tr><td><code>/app/comportementaliste/planning</code></td><td>Planning dédié comportementaliste — à créer S44</td></tr>
+<tr><td><code>/app/pet-sitter/planning</code></td><td>Planning dédié pet-sitter — à créer S44</td></tr>
+<tr><td><code>/app/[metier]/planning</code></td><td>Pattern générique — 1 page par métier</td></tr>
 </table>
-<p>Objectif : 2 000+ abonnés, ~1,8M€ ARR à 5 ans. Breakeven estimé mois 28-30.</p>
+<p>Chaque planning métier utilise le même composant PlanningView avec un filtre <code>STY_CODE[]</code> passé en props, et la palette de couleurs ci-dessus.</p>
 </div></div>
 <footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
 </body></html>
