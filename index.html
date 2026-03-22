@@ -5,96 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite Documentation</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
-  .header { background: #13131a; border-bottom: 1px solid #2a2a3a; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-  .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
-  .logo span { color: #7f77dd; }
-  .badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-  .badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
-  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .nav-links a { color: #888; text-decoration: none; font-size: 0.85rem; }
-  .nav-links a:hover { color: #fff; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-  h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a3a; }
-  p { color: #9a9890; margin-bottom: 0.75rem; }
-  .section { margin-bottom: 2.5rem; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
-  .card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1.25rem; transition: border-color 0.2s; }
-  .card:hover { border-color: #534ab7; }
-  .card-title { font-size: 0.95rem; font-weight: 600; color: #e2e0d8; margin-bottom: 0.4rem; }
-  .card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
-  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; margin-right: 0.25rem; margin-bottom: 0.4rem; }
-  .tag-purple { background: #1a1530; color: #9d97e8; }
-  .tag-green  { background: #0a2015; color: #5dcaa5; }
-  .tag-blue   { background: #0a1525; color: #6baed6; }
-  .tag-amber  { background: #1a1205; color: #d4a44c; }
-  .tag-red    { background: #1a0a0a; color: #e06c6c; }
-  code { background: #1a1a2e; color: #9d97e8; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.85em; font-family: 'Fira Code', monospace; }
-  .back-link { color: #534ab7; text-decoration: none; font-size: 0.85rem; }
-  .back-link:hover { color: #9d97e8; }
-  footer { text-align: center; padding: 2rem; color: #333; font-size: 0.8rem; border-top: 1px solid #1a1a2a; margin-top: 3rem; }
-  .hero { background: #0d0d18; border-bottom: 1px solid #1a1a2a; padding: 3rem 2rem; text-align: center; }
-  .hero h1 { font-size: 2.5rem; color: #fff; margin-bottom: .5rem; }
-  .hero p { color: #555; font-size: 1.1rem; }
-  .stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
-  .stat { text-align: center; }
-  .stat-n { font-size: 1.5rem; font-weight: 700; color: #7f77dd; }
-  .stat-l { font-size: .75rem; color: #555; }
-  .filter { max-width: 400px; margin: 1.5rem auto; }
-  .filter input { width: 100%; background: #13131a; border: 1px solid #2a2a3a; border-radius: 8px; padding: .6rem 1rem; color: #e2e0d8; font-size: .9rem; outline: none; }
-  .filter input:focus { border-color: #534ab7; }
-
-  /* ── Mot de passe header ── */
-  .pwd-wrap { display: flex; align-items: center; gap: .5rem; }
-  .pwd-input {
-    background: #0a0a0f; border: 1px solid #2a2a3a; border-radius: 6px;
-    padding: .3rem .6rem; color: #e2e0d8; font-size: .75rem;
-    width: 140px; outline: none; letter-spacing: .05em;
-    transition: border-color .2s;
-  }
-  .pwd-input:focus { border-color: #534ab7; }
-  .pwd-input.ok { border-color: #0f6e56; color: #5dcaa5; }
-  .pwd-input.err { border-color: #7a1515; color: #e06c6c; animation: shake .3s; }
-  .pwd-btn {
-    background: #1a1530; border: 1px solid #534ab7; color: #9d97e8;
-    border-radius: 6px; padding: .3rem .7rem; font-size: .72rem;
-    cursor: pointer; transition: background .2s;
-  }
-  .pwd-btn:hover { background: #534ab7; color: #fff; }
-  .pwd-status { font-size: .7rem; color: #555; white-space: nowrap; }
-  .pwd-status.unlocked { color: #5dcaa5; }
-  @keyframes shake {
-    0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-4px)} 40%,80%{transform:translateX(4px)}
-  }
-  /* Overlay page protégée */
-  .lock-overlay {
-    position: fixed; inset: 0; background: #0a0a0f; z-index: 9999;
-    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem;
-  }
-  .lock-overlay.hidden { display: none; }
-  .lock-box {
-    background: #13131a; border: 1px solid #2a2a3a; border-radius: 16px;
-    padding: 2.5rem 2rem; text-align: center; max-width: 360px; width: 90%;
-  }
-  .lock-icon { font-size: 2.5rem; margin-bottom: .75rem; }
-  .lock-title { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: .3rem; }
-  .lock-sub { font-size: .8rem; color: #555; margin-bottom: 1.25rem; }
-  .lock-input {
-    width: 100%; background: #0a0a0f; border: 1px solid #2a2a3a; border-radius: 8px;
-    padding: .6rem 1rem; color: #e2e0d8; font-size: .9rem; text-align: center;
-    letter-spacing: .1em; outline: none; margin-bottom: .75rem;
-    transition: border-color .2s;
-  }
-  .lock-input:focus { border-color: #534ab7; }
-  .lock-btn {
-    width: 100%; background: #534ab7; border: none; border-radius: 8px;
-    padding: .65rem; color: #fff; font-size: .85rem; font-weight: 600;
-    cursor: pointer; transition: background .2s;
-  }
-  .lock-btn:hover { background: #7f77dd; }
-  .lock-err { font-size: .75rem; color: #e06c6c; margin-top: .5rem; display: none; }
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+.header { background: #13131a; border-bottom: 1px solid #2a2a3a; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+.logo span { color: #7f77dd; }
+.badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+.badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+.nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.nav-links a { color: #888; text-decoration: none; font-size: 0.85rem; }
+.nav-links a:hover { color: #fff; }
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a3a; }
+p { color: #9a9890; margin-bottom: 0.75rem; }
+.section { margin-bottom: 2.5rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1.25rem; transition: border-color 0.2s; cursor: pointer; }
+.card:hover { border-color: #534ab7; }
+.card-title { font-size: 0.95rem; font-weight: 600; color: #e2e0d8; margin-bottom: 0.4rem; }
+.card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
+.tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; margin-right: 0.25rem; margin-bottom: 0.4rem; }
+.tag-purple { background: #1a1530; color: #9d97e8; }
+.tag-green { background: #0a2015; color: #5dcaa5; }
+.tag-blue { background: #0a1525; color: #6baed6; }
+.tag-amber { background: #1a1205; color: #d4a44c; }
+.tag-red { background: #1a0a0a; color: #e06c6c; }
+code { background: #1a1a2e; color: #9d97e8; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.85em; font-family: 'Fira Code', monospace; }
+.back-link { color: #534ab7; text-decoration: none; font-size: 0.85rem; }
+.back-link:hover { color: #9d97e8; }
+footer { text-align: center; padding: 2rem; color: #333; font-size: 0.8rem; border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+.hero { background: #0d0d18; border-bottom: 1px solid #1a1a2a; padding: 3rem 2rem; text-align: center; }
+.hero h1 { font-size: 2.5rem; color: #fff; margin-bottom: .5rem; }
+.hero p { color: #555; font-size: 1.1rem; }
+.stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat-n { font-size: 1.5rem; font-weight: 700; color: #7f77dd; }
+.stat-l { font-size: .75rem; color: #555; }
+.filter { max-width: 400px; margin: 1.5rem auto; }
+.filter input { width: 100%; background: #13131a; border: 1px solid #2a2a3a; border-radius: 8px; padding: .6rem 1rem; color: #e2e0d8; font-size: .9rem; outline: none; }
+.filter input:focus { border-color: #534ab7; }
+.pwd-wrap { display: flex; align-items: center; gap: .5rem; }
+.pwd-input { background: #0a0a0f; border: 1px solid #2a2a3a; border-radius: 6px; padding: .3rem .6rem; color: #e2e0d8; font-size: .75rem; width: 140px; outline: none; letter-spacing: .05em; transition: border-color .2s; }
+.pwd-input:focus { border-color: #534ab7; }
+.pwd-input.ok { border-color: #0f6e56; color: #5dcaa5; }
+.pwd-input.err { border-color: #7a1515; color: #e06c6c; animation: shake .3s; }
+.pwd-btn { background: #1a1530; border: 1px solid #534ab7; color: #9d97e8; border-radius: 6px; padding: .3rem .7rem; font-size: .72rem; cursor: pointer; transition: background .2s; }
+.pwd-btn:hover { background: #534ab7; color: #fff; }
+.pwd-status { font-size: .7rem; color: #555; white-space: nowrap; }
+.pwd-status.unlocked { color: #5dcaa5; }
+.lock-icon { position: absolute; top: .4rem; right: .4rem; font-size: .7rem; opacity: .4; pointer-events: none; }
+.card { position: relative; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-4px)} 40%,80%{transform:translateX(4px)} }
 </style>
 </head>
 <body>
@@ -110,7 +71,7 @@
     <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a>
   </div>
   <div class="pwd-wrap">
-    <input type="password" id="hPwdInput" class="pwd-input" placeholder="🔒 Mot de passe..." />
+    <input type="password" id="hPwdInput" class="pwd-input" placeholder="🔒 Session..." />
     <button id="hPwdBtn" class="pwd-btn">Entrer</button>
     <span id="hPwdStatus" class="pwd-status"></span>
   </div>
@@ -185,9 +146,9 @@
       <div class="card"><span class="tag tag-purple">#01</span><div class="card-title">Synthèse projet PetSuite</div><div class="card-desc">Vision globale, positionnement, stack technique, architecture — MàJ S44</div><div style="margin-top:.75rem"><a href="01-synthese-projet.html" class="back-link">Fondation →</a></div></div>
       <div class="card"><span class="tag tag-purple">#02</span><div class="card-title">Guide de paramétrage</div><div class="card-desc">Configuration initiale, utilisateurs, rôles, paramètres entreprise</div><div style="margin-top:.75rem"><a href="02-guide-parametrage.html" class="back-link">Guide →</a></div></div>
       <div class="card"><span class="tag tag-purple">#03</span><div class="card-title">Notice utilisateur</div><div class="card-desc">Manuel complet de toutes les fonctionnalités</div><div style="margin-top:.75rem"><a href="03-notice-utilisateur.html" class="back-link">Manuel →</a></div></div>
-      <div class="card"><span class="tag tag-purple">#07</span><div class="card-title">Audit stack technique</div><div class="card-desc">Docker, NestJS, Next.js 15, MariaDB, nginx — routes API, règles critiques — MàJ S44</div><div style="margin-top:.75rem"><a href="07-audit-stack.html" class="back-link">Technique →</a></div></div>
-      <div class="card"><span class="tag tag-purple">#17</span><div class="card-title">Référence API S42</div><div class="card-desc">Toutes les routes custom-routes.ts — ~45 routes custom</div><div style="margin-top:.75rem"><a href="17-api-reference-s42.html" class="back-link">API →</a></div></div>
-      <div class="card"><span class="tag tag-purple">#41</span><div class="card-title">Composants Techniques</div><div class="card-desc">DocumentActions (PDF|Mail|Signature), SignatureModal, charte CSS</div><div style="margin-top:.75rem"><a href="41-composants-techniques.html" class="back-link">Architecture →</a></div></div>
+      <div class="card"><span class="tag tag-red">🔒 #07</span><div class="card-title">Audit stack technique</div><div class="card-desc">Docker, NestJS, Next.js 15, MariaDB, nginx — routes API, règles critiques — MàJ S44</div><div style="margin-top:.75rem"><a href="07-audit-stack.html" class="back-link">Technique →</a></div></div>
+      <div class="card"><span class="tag tag-red">🔒 #17</span><div class="card-title">Référence API S42</div><div class="card-desc">Toutes les routes custom-routes.ts — ~45 routes custom</div><div style="margin-top:.75rem"><a href="17-api-reference-s42.html" class="back-link">API →</a></div></div>
+      <div class="card"><span class="tag tag-red">🔒 #41</span><div class="card-title">Composants Techniques</div><div class="card-desc">DocumentActions (PDF|Mail|Signature), SignatureModal, charte CSS</div><div style="margin-top:.75rem"><a href="41-composants-techniques.html" class="back-link">Architecture →</a></div></div>
       <div class="card"><span class="tag tag-green">NEW S44</span><div class="card-title" style="color:#5dcaa5">Charte Graphique</div><div class="card-desc">Variables CSS dark/light, standards boutons, audit contrastes, corrections S44</div><div style="margin-top:.75rem"><a href="71-charte-graphique.html" class="back-link">→</a></div></div>
       <div class="card"><span class="tag tag-green">NEW S44</span><div class="card-title" style="color:#5dcaa5">Droits Utilisateurs</div><div class="card-desc">Rôles Céline/Bastien/Anna/@lgorithme — matrice permissions — middleware S44</div><div style="margin-top:.75rem"><a href="72-droits-utilisateurs.html" class="back-link">→</a></div></div>
       <div class="card"><span class="tag tag-green">S43</span><div class="card-title" style="color:#5dcaa5">Dashboards Dynamiques</div><div class="card-desc">Hook useDashboardMetier, route /bilan/metier, toggle Mois/Trim/An</div><div style="margin-top:.75rem"><a href="54-dashboard-dynamique.html" class="back-link">→</a></div></div>
@@ -234,9 +195,9 @@
   <div class="section">
     <h2>📊 Business &amp; Stratégie</h2>
     <div class="grid">
-      <div class="card"><span class="tag tag-amber">#22</span><div class="card-title">Business Plan Algorithmia</div><div class="card-desc">Plan 5 ans, pricing Starter 39€/Pro 69€/Business 119€, ARR 1.8M€ an 5</div><div style="margin-top:.75rem"><a href="22-business-plan.html" class="back-link">Stratégique →</a></div></div>
-      <div class="card"><span class="tag tag-amber">#27</span><div class="card-title">Dossier investisseurs</div><div class="card-desc">Pitch, BPI, love money, business angels, Série A — breakeven M+28</div><div style="margin-top:.75rem"><a href="27-investisseurs.html" class="back-link">Finance →</a></div></div>
-      <div class="card"><span class="tag tag-amber">#10</span><div class="card-title">Modèle commercial</div><div class="card-desc">Pricing, offres, conditions, canal de vente, 2000+ subscribers an 5</div><div style="margin-top:.75rem"><a href="10-modele-commercial.html" class="back-link">Commercial →</a></div></div>
+      <div class="card"><span class="tag tag-red">🔒 #22</span><div class="card-title">Business Plan Algorithmia</div><div class="card-desc">Plan 5 ans, pricing Starter 39€/Pro 69€/Business 119€, ARR 1.8M€ an 5</div><div style="margin-top:.75rem"><a href="22-business-plan.html" class="back-link">Stratégique →</a></div></div>
+      <div class="card"><span class="tag tag-red">🔒 #27</span><div class="card-title">Dossier investisseurs</div><div class="card-desc">Pitch, BPI, love money, business angels, Série A — breakeven M+28</div><div style="margin-top:.75rem"><a href="27-investisseurs.html" class="back-link">Finance →</a></div></div>
+      <div class="card"><span class="tag tag-red">🔒 #10</span><div class="card-title">Modèle commercial</div><div class="card-desc">Pricing, offres, conditions, canal de vente, 2000+ subscribers an 5</div><div style="margin-top:.75rem"><a href="10-modele-commercial.html" class="back-link">Commercial →</a></div></div>
       <div class="card"><span class="tag tag-green">NEW S44</span><div class="card-title" style="color:#5dcaa5">🎬 Scénario Vidéo Démo</div><div class="card-desc">Démo comportementaliste 7 min — timecodes, seeds nécessaires, scénario complet</div><div style="margin-top:.75rem"><a href="09-scenario-video.html" class="back-link">→</a></div></div>
     </div>
   </div>
@@ -246,87 +207,140 @@
 <footer>PetSuite by Algorithmia · Sprint S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
 
 <script>
-  function filter(q) {
-    q = q.toLowerCase();
-    document.querySelectorAll('.card').forEach(c => {
-      c.style.display = c.textContent.toLowerCase().includes(q) ? '' : 'none';
-    });
-    document.querySelectorAll('.section').forEach(s => {
-      const vis = [...s.querySelectorAll('.card')].some(c => c.style.display !== 'none');
-      s.style.display = vis ? '' : 'none';
-    });
-  }
+function filter(q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('.card').forEach(c => {
+    c.style.display = c.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+  document.querySelectorAll('.section').forEach(s => {
+    const vis = [...s.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+    s.style.display = vis ? '' : 'none';
+  });
+}
 </script>
 
 <script>
-// ─── Système de mot de passe global ───────────────────────────────────────
-const PWD_KEY = 'petsuite_docs_auth';
-const PWD_HASH = '@lgorithme'; // mot de passe en clair (côté client = sécurité légère)
+// ─── Système auth PetSuite Docs ─────────────────────────────────────────────
+// Pages protégées : accès par mot de passe uniquement
+// Session de 5 minutes si authentifié depuis l'index
+const PROTECTED = {
+  '07-audit-stack.html':           '@lgorithme',
+  '17-api-reference-s42.html':     'Gilles',
+  '41-composants-techniques.html': 'Edith',
+  '22-business-plan.html':         'Ch@ton',
+  '27-investisseurs.html':         'Ch@ton',
+  '10-modele-commercial.html':     'Gilles',
+};
+const STORE_KEY   = 'psd_auth_v2';
+const SESSION_TTL = 5 * 60 * 1000; // 5 min
 
-function checkAuth() {
-  return localStorage.getItem(PWD_KEY) === 'ok';
+function isUnlocked(page) {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORE_KEY) || '[]');
+    const now = Date.now();
+    return data.some(e => (e.page === page || e.page === '_all') && (now - e.ts) < SESSION_TTL);
+  } catch { return false; }
 }
 
-function unlock(pwd, inputEl, statusEl) {
-  if (pwd === PWD_HASH) {
-    localStorage.setItem(PWD_KEY, 'ok');
-    if (inputEl) { inputEl.value = ''; inputEl.classList.remove('err'); inputEl.classList.add('ok'); }
-    if (statusEl) { statusEl.textContent = '🔓 Déverrouillé'; statusEl.classList.add('unlocked'); }
-    // Fermer l'overlay si présent
-    const overlay = document.getElementById('lockOverlay');
-    if (overlay) overlay.classList.add('hidden');
-    // Afficher le contenu protégé
-    document.querySelectorAll('.protected-content').forEach(el => el.style.display = '');
-    setTimeout(() => { if(inputEl) inputEl.classList.remove('ok'); }, 2000);
-  } else {
-    if (inputEl) { inputEl.classList.add('err'); setTimeout(() => inputEl.classList.remove('err'), 400); }
-    if (statusEl) { statusEl.textContent = ''; }
-    const errEl = document.getElementById('lockErr');
-    if (errEl) { errEl.style.display = 'block'; setTimeout(() => errEl.style.display = 'none', 2000); }
-  }
+function setUnlocked(page) {
+  try {
+    let data = JSON.parse(localStorage.getItem(STORE_KEY) || '[]');
+    const now = Date.now();
+    data = data.filter(e => (now - e.ts) < SESSION_TTL && e.page !== page);
+    data.push({ page, ts: now });
+    localStorage.setItem(STORE_KEY, JSON.stringify(data));
+  } catch {}
 }
 
-// Init au chargement
 document.addEventListener('DOMContentLoaded', () => {
-  const isAuth = checkAuth();
-
-  // Gestion header
-  const hInput = document.getElementById('hPwdInput');
-  const hBtn = document.getElementById('hPwdBtn');
+  const hInput  = document.getElementById('hPwdInput');
+  const hBtn    = document.getElementById('hPwdBtn');
   const hStatus = document.getElementById('hPwdStatus');
 
+  // Afficher l'état de session au chargement
+  if (isUnlocked('_all') && hStatus) {
+    hStatus.textContent = '🔓 Session active';
+    hStatus.classList.add('unlocked');
+  }
+
+  // Déverrouillage global depuis le header
+  function tryUnlockGlobal(pwd) {
+    if (!pwd) return;
+    if (Object.values(PROTECTED).includes(pwd)) {
+      setUnlocked('_all');
+      if (hInput) hInput.value = '';
+      if (hStatus) { hStatus.textContent = '🔓 Session 5 min'; hStatus.classList.add('unlocked'); }
+      return true;
+    }
+    if (hInput) { hInput.classList.add('err'); setTimeout(() => hInput.classList.remove('err'), 400); }
+    return false;
+  }
+
   if (hInput && hBtn) {
-    if (isAuth) {
-      hStatus.textContent = '🔓 Déverrouillé';
-      hStatus.classList.add('unlocked');
-    }
-    hInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') unlock(hInput.value.trim(), hInput, hStatus);
+    hInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlockGlobal(hInput.value.trim()); });
+    hBtn.addEventListener('click',    () => tryUnlockGlobal(hInput.value.trim()));
+  }
+
+  // Intercepter les clics sur tuiles protégées
+  document.querySelectorAll('.card a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!PROTECTED[href]) return; // page libre → navigation normale
+    link.addEventListener('click', e => {
+      if (isUnlocked('_all') || isUnlocked(href)) return; // session valide → OK
+      e.preventDefault();
+      showPwdModal(href);
     });
-    hBtn.addEventListener('click', () => unlock(hInput.value.trim(), hInput, hStatus));
-  }
-
-  // Gestion overlay (pages protégées)
-  const overlay = document.getElementById('lockOverlay');
-  const lInput = document.getElementById('lPwdInput');
-  const lBtn = document.getElementById('lPwdBtn');
-
-  if (overlay) {
-    if (isAuth) {
-      overlay.classList.add('hidden');
-      document.querySelectorAll('.protected-content').forEach(el => el.style.display = '');
-    } else {
-      document.querySelectorAll('.protected-content').forEach(el => el.style.display = 'none');
-    }
-    if (lInput && lBtn) {
-      lInput.addEventListener('keydown', e => {
-        if (e.key === 'Enter') unlock(lInput.value.trim(), lInput, null);
-      });
-      lBtn.addEventListener('click', () => unlock(lInput.value.trim(), lInput, null));
-      lInput.focus();
-    }
-  }
+  });
 });
+
+// Modal mot de passe flottant
+function showPwdModal(targetPage) {
+  document.getElementById('pwdModal')?.remove();
+  const overlay = document.createElement('div');
+  overlay.id = 'pwdModal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center';
+  const pageName = targetPage.replace('.html','').replace(/-/g,' ');
+  overlay.innerHTML = `<div id="pwdBox" style="background:#13131a;border:1px solid #534ab7;border-radius:16px;padding:2rem;text-align:center;max-width:340px;width:90%;box-shadow:0 0 40px rgba(83,74,183,.3)">
+    <div style="font-size:2rem;margin-bottom:.5rem">🔒</div>
+    <div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:.25rem">Accès restreint</div>
+    <div style="font-size:.8rem;color:#555;margin-bottom:1.25rem">${pageName}</div>
+    <input id="modalPwd" type="password" placeholder="Mot de passe..." autocomplete="off"
+      style="width:100%;background:#0a0a0f;border:1px solid #2a2a3a;border-radius:8px;padding:.6rem 1rem;color:#e2e0d8;font-size:.9rem;text-align:center;letter-spacing:.1em;outline:none;margin-bottom:.75rem;transition:border-color .2s;box-sizing:border-box">
+    <button id="modalBtn" style="width:100%;background:#534ab7;border:none;border-radius:8px;padding:.65rem;color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;transition:background .2s;margin-bottom:.5rem">Déverrouiller</button>
+    <div id="modalErr" style="font-size:.75rem;color:#e06c6c;display:none;margin-bottom:.5rem">Mot de passe incorrect</div>
+    <button id="modalClose" style="background:none;border:none;color:#555;font-size:.75rem;cursor:pointer;text-decoration:underline">Annuler</button>
+  </div>`;
+  document.body.appendChild(overlay);
+
+  const inp = document.getElementById('modalPwd');
+  inp.focus();
+  inp.addEventListener('focus', () => inp.style.borderColor = '#534ab7');
+  inp.addEventListener('blur',  () => inp.style.borderColor = '#2a2a3a');
+  document.getElementById('modalBtn').style.cursor = 'pointer';
+  document.getElementById('modalBtn').onmouseover = () => document.getElementById('modalBtn').style.background = '#7f77dd';
+  document.getElementById('modalBtn').onmouseout  = () => document.getElementById('modalBtn').style.background = '#534ab7';
+
+  function tryUnlock() {
+    const pwd = inp.value.trim();
+    if (pwd === PROTECTED[targetPage]) {
+      setUnlocked(targetPage);
+      overlay.remove();
+      window.location.href = targetPage;
+    } else {
+      const err = document.getElementById('modalErr');
+      err.style.display = 'block';
+      inp.style.borderColor = '#7a1515';
+      inp.value = '';
+      inp.focus();
+      setTimeout(() => { err.style.display = 'none'; inp.style.borderColor = '#2a2a3a'; }, 2000);
+    }
+  }
+
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+  document.getElementById('modalBtn').addEventListener('click', tryUnlock);
+  document.getElementById('modalClose').addEventListener('click', () => overlay.remove());
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+}
 </script>
 
 </body>
