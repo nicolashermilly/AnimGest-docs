@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
+.header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:1.1rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
+.badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600}
+.badge.new{background:#0f2a1a;border-color:#0f6e56;color:#5dcaa5}
+.container{max-width:1000px;margin:0 auto;padding:2rem}
+h1{font-size:1.75rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+h2{font-size:1.1rem;font-weight:600;color:#c8c6be;margin:2rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid #2a2a3a}
+h3{font-size:.95rem;font-weight:600;color:#888;margin:1.25rem 0 .4rem}
+p{color:#9a9890;margin-bottom:.6rem;font-size:.9rem}
+.subtitle{color:#555;font-size:.9rem;margin-bottom:1.5rem}
+.section{margin-bottom:2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem}
+.card{background:#13131a;border:1px solid #2a2a3a;border-radius:10px;padding:1rem}
+.card-title{font-size:.9rem;font-weight:600;color:#e2e0d8;margin-bottom:.3rem}
+.card-desc{font-size:.78rem;color:#666;line-height:1.5}
+.tag{display:inline-block;padding:.1rem .45rem;border-radius:4px;font-size:.68rem;font-weight:600;margin-right:.2rem}
+.tag-p{background:#1a1530;color:#9d97e8}.tag-g{background:#0a2015;color:#5dcaa5}
+.tag-b{background:#0a1525;color:#6baed6}.tag-a{background:#1a1205;color:#d4a44c}
+.tag-r{background:#1a0a0a;color:#e06c6c}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin:1rem 0}
+.kpi{background:#13131a;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;text-align:center}
+.kpi-val{font-size:1.5rem;font-weight:700;color:#7f77dd}
+.kpi-lbl{font-size:.7rem;color:#555;margin-top:.2rem}
+.timeline{border-left:2px solid #2a2a3a;padding-left:1.25rem;margin:.75rem 0}
+.tl-item{position:relative;margin-bottom:1.25rem}
+.tl-item::before{content:'';position:absolute;left:-1.52rem;top:.3rem;width:8px;height:8px;border-radius:50%;background:#534ab7}
+.tl-date{font-size:.7rem;color:#444;margin-bottom:.15rem}
+.tl-title{font-size:.85rem;font-weight:600;color:#c8c6be}
+.tl-desc{font-size:.78rem;color:#555;margin-top:.15rem}
+code{background:#1a1a2e;color:#9d97e8;padding:.1rem .35rem;border-radius:3px;font-size:.82em;font-family:'Fira Code',monospace}
+pre{background:#0d0d15;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;overflow-x:auto;margin:.75rem 0;font-size:.8rem}
+pre code{background:none;padding:0}
+table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.82rem}
+th{background:#13131a;color:#666;font-weight:600;padding:.5rem .7rem;text-align:left;border-bottom:1px solid #2a2a3a}
+td{padding:.4rem .7rem;border-bottom:1px solid #1a1a2a;color:#9a9890}
+tr:hover td{background:#0f0f18}
+.ok{color:#5dcaa5}.wip{color:#d4a44c}.todo{color:#e06c6c}
+.back{color:#534ab7;text-decoration:none;font-size:.82rem}
+.back:hover{color:#9d97e8}
+.alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:.75rem 1rem;margin:.75rem 0;font-size:.82rem;color:#5dcaa5}
+.alert-w{background:#1a1205;border-color:#854f0b;color:#d4a44c}
+footer{text-align:center;padding:1.5rem;color:#333;font-size:.75rem;border-top:1px solid #1a1a2a;margin-top:2rem}
+</style>
+<title>PetSuite — Seeds & Données Démo S42</title></head>
+<body>
+<div class="header">
+  <div class="logo">🐾 Pet<span>Suite</span></div>
+  <div style="display:flex;gap:.6rem;align-items:center">
+    <span class="badge badge new">S42 — BDD</span>
+    <a class="back" href="index.html">← Index</a>
+  </div>
+</div>
+<div class="container">
+<a class="back" href="index.html">← Index</a>
+
+<h1 style="margin-top:1rem">🌱 Seeds & Données Démo S42</h1>
+<p class="subtitle">Inventaire complet des données de démonstration — 200 animaux, acteurs français, humour métier</p>
+
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-val">167</div><div class="kpi-lbl">Clients (acteurs FR)</div></div>
+  <div class="kpi"><div class="kpi-val">200</div><div class="kpi-lbl">Animaux</div></div>
+  <div class="kpi"><div class="kpi-val">200</div><div class="kpi-lbl">Devis</div></div>
+  <div class="kpi"><div class="kpi-val">200</div><div class="kpi-lbl">Factures vente</div></div>
+  <div class="kpi"><div class="kpi-val">100</div><div class="kpi-lbl">Cmd fournisseurs</div></div>
+  <div class="kpi"><div class="kpi-val">50</div><div class="kpi-lbl">Impayés relances</div></div>
+</div>
+
+<div class="section">
+<h2>Clients — acteurs français</h2>
+<p>Tous les clients sont des acteurs/réalisateurs français avec des animaux nommés en référence à leurs œuvres ou personnalités. Style : humour subtil, profondeur métier.</p>
+<table>
+  <thead><tr><th>Client</th><th>Animaux</th><th>Métier principal</th></tr></thead>
+  <tbody>
+    <tr><td>Dujardin, Jean</td><td>Frimousse (Malinois), Luna (BA éleveuse), Thor/Freya (chiots)</td><td>Comportementaliste + Éleveur</td></tr>
+    <tr><td>Huppert, Isabelle</td><td>Kafka (Border Collie, fugues), Kafka Cat (British)</td><td>Comportementaliste</td></tr>
+    <tr><td>Cassel, Vincent</td><td>Mastro (Malinois impulsif), Fantasia (Siamois)</td><td>Comportementaliste</td></tr>
+    <tr><td>Binoche, Juliette</td><td>Bergamo (BA, anxiété), Kiki (Yorkshire), Liberté (Ragdoll)</td><td>Comportementaliste + Toiletteur</td></tr>
+    <tr><td>Deneuve, Catherine</td><td>Coquine (réactivité laisse), Diva (Caniche), Diva Cat (Persan)</td><td>Comportementaliste + Toiletteur</td></tr>
+    <tr><td>Adjani, Isabelle</td><td>Godzilla (Iguane vert 1m20), Godzilla Jr (NAC)</td><td>Pet-Sitter NAC</td></tr>
+    <tr><td>Kassovitz, Mathieu</td><td>Spielberg (Gris du Gabon, dit "Action !"), Coppola (perroquet)</td><td>Pet-Sitter NAC</td></tr>
+    <tr><td>Canet, Guillaume</td><td>Paddington (Canard de Barbarie, monte dans les voitures)</td><td>Pet-Sitter NAC</td></tr>
+    <tr><td>Dupont, Éric</td><td>Versailles, Fontainebleau, Château (chevaux SF/KWPN)</td><td>Centre équestre</td></tr>
+    <tr><td>Ardant, Fanny</td><td>Truffaut (Border Collie, phobie chapeaux)</td><td>Comportementaliste</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="section">
+<h2>Espèces et races créées S42</h2>
+<table>
+  <thead><tr><th>Espèce</th><th>Races ajoutées</th><th>Nb animaux</th></tr></thead>
+  <tbody>
+    <tr><td>Chien</td><td>Persan, Maine Coon, Siamois, Bengal, British Shorthair, Ragdoll, Sphynx</td><td>90 nouveaux</td></tr>
+    <tr><td>Chat</td><td>Persan, Maine Coon, Siamois, Bengal, British, Ragdoll</td><td>50</td></tr>
+    <tr><td>Équin</td><td>Selle Français, KWPN, Lusitanien, Shetland, Welsh, New Forest</td><td>35</td></tr>
+    <tr><td>Rongeur</td><td>Cochon d'inde, Lapin nain, Hamster, Chinchilla, Rat fancy</td><td>15</td></tr>
+    <tr><td>Oiseau</td><td>Perroquet gris, Perruche</td><td>3</td></tr>
+    <tr><td>Reptile</td><td>Iguane, Gecko léopard</td><td>4</td></tr>
+    <tr><td>Autre NAC</td><td>Cochon vietnamien, Canard, Axolotl, Tortue Hermann</td><td>3</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="section">
+<h2>Portée O — Du Vallon des Brumes (mars 2026)</h2>
+<p>Luna von Schwarzwald × Arès du Manoir des Loups. 8 naissances, 1 mort-né, 2 réservés.</p>
+<table>
+  <thead><tr><th>Chiot</th><th>Sexe</th><th>Poids naissance</th><th>Statut</th></tr></thead>
+  <tbody>
+    <tr><td>Odin du Vallon des Brumes</td><td>M</td><td>445g</td><td class="ok">Disponible</td></tr>
+    <tr><td>Thor du Vallon des Brumes</td><td>M</td><td>430g</td><td class="wip">Réservé — V. Cassel (acompte 300€)</td></tr>
+    <tr><td>Osiris du Vallon des Brumes</td><td>M</td><td>415g</td><td class="ok">Disponible</td></tr>
+    <tr><td>Loki du Vallon des Brumes</td><td>M</td><td>400g</td><td class="ok">Disponible</td></tr>
+    <tr><td>Freya du Vallon des Brumes</td><td>F</td><td>420g</td><td class="wip">Réservé — Ch. Gainsbourg (acompte 300€)</td></tr>
+    <tr><td>Sigrid du Vallon des Brumes</td><td>F</td><td>395g</td><td class="ok">Disponible</td></tr>
+    <tr><td>Hera du Vallon des Brumes</td><td>F</td><td>385g</td><td class="ok">Disponible</td></tr>
+    <tr><td>Mort-né O1</td><td>M</td><td>165g</td><td class="todo">Décédé J0</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="section">
+<h2>Fournisseurs S42</h2>
+<table>
+  <thead><tr><th>Fournisseur</th><th>Nb commandes</th><th>Total TTC</th></tr></thead>
+  <tbody>
+    <tr><td>Royal Canin Pro</td><td>12</td><td>~5 600€</td></tr>
+    <tr><td>Hill's Pet Nutrition</td><td>8</td><td>~3 200€</td></tr>
+    <tr><td>Grooming Supplies FR</td><td>8</td><td>~3 100€</td></tr>
+    <tr><td>Boehringer Ingelheim</td><td>8</td><td>~1 900€</td></tr>
+    <tr><td>Cavalassur Équipement</td><td>6</td><td>~4 800€</td></tr>
+    <tr><td>Biogance France</td><td>5</td><td>~1 200€</td></tr>
+  </tbody>
+</table>
+</div>
+
+<footer>PetSuite by Algorithmia · S42 · 22 mars 2026 · <a href="index.html" style="color:#534ab7">Index</a></footer>
+</div></body></html>
