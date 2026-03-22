@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PetSuite — Notice Utilisateur v4.0</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
+.header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:1.1rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
+.badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600}
+.badge.new{background:#0f2a1a;border-color:#0f6e56;color:#5dcaa5}
+.container{max-width:900px;margin:0 auto;padding:2rem}
+h1{font-size:1.75rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+h2{font-size:1.1rem;font-weight:600;color:#c8c6be;margin:2rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid #2a2a3a}
+h3{font-size:.95rem;font-weight:600;color:#888;margin:1.25rem 0 .4rem}
+p{color:#9a9890;margin-bottom:.6rem;font-size:.9rem}
+.subtitle{color:#555;font-size:.9rem;margin-bottom:1.5rem}
+.section{margin-bottom:2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.75rem}
+.card{background:#13131a;border:1px solid #2a2a3a;border-radius:10px;padding:1rem}
+.card-title{font-size:.9rem;font-weight:600;color:#e2e0d8;margin-bottom:.3rem}
+.card-desc{font-size:.78rem;color:#666;line-height:1.5}
+.tag{display:inline-block;padding:.1rem .45rem;border-radius:4px;font-size:.68rem;font-weight:600;margin-right:.2rem}
+.tag-p{background:#1a1530;color:#9d97e8}.tag-g{background:#0a2015;color:#5dcaa5}
+.tag-b{background:#0a1525;color:#6baed6}.tag-a{background:#1a1205;color:#d4a44c}
+code{background:#1a1a2e;color:#9d97e8;padding:.1rem .35rem;border-radius:3px;font-size:.82em}
+table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.82rem}
+th{background:#13131a;color:#666;font-weight:600;padding:.5rem .7rem;text-align:left;border-bottom:1px solid #2a2a3a}
+td{padding:.4rem .7rem;border-bottom:1px solid #1a1a2a;color:#9a9890}
+.ok{color:#5dcaa5}.wip{color:#d4a44c}.todo{color:#e06c6c}
+.back{color:#534ab7;text-decoration:none;font-size:.82rem}
+.alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:.75rem 1rem;margin:.75rem 0;font-size:.82rem;color:#5dcaa5}
+footer{text-align:center;padding:1.5rem;color:#333;font-size:.75rem;border-top:1px solid #1a1a2a;margin-top:2rem}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">&#128062; Pet<span>Suite</span></div>
+  <div style="display:flex;gap:.6rem;align-items:center">
+    <span class="badge new">v4.0 — S42/S43</span>
+    <a class="back" href="index.html">&#8592; Index</a>
+  </div>
+</div>
+<div class="container">
+<a class="back" href="index.html">&#8592; Index</a>
+<h1 style="margin-top:1rem">&#128209; Notice Utilisateur PetSuite v4.0</h1>
+<p class="subtitle">Manuel complet — Sprint S42/S43 — 22 mars 2026</p>
+
+<div class="alert">Version 4.0 — Refonte majeure : 10 metiers, dashboards CEO/BI, Calendly, 87 pages UI, 200 animaux, templates devis.</div>
+
+<div class="section">
+<h2>&#128336; Premiere connexion</h2>
+<p>Acces via <code>http://localhost/app</code> ou votre domaine. Identifiants par defaut : <code>admin / admin123</code>. A changer immediatement dans Parametres &gt; Mon compte.</p>
+<h3>Configuration initiale recommandee</h3>
+<table>
+<thead><tr><th>Etape</th><th>Ou</th><th>Quoi faire</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Parametres &gt; Entreprise</td><td>Nom, SIRET, adresse, logo</td></tr>
+<tr><td>2</td><td>Mes parametres &gt; Metier</td><td>Activer votre/vos metier(s)</td></tr>
+<tr><td>3</td><td>Parametres &gt; TVA</td><td>Verifier les taux (20%, 10%, 5.5%, exo)</td></tr>
+<tr><td>4</td><td>Parametres &gt; Articles</td><td>Creer vos prestations et tarifs</td></tr>
+<tr><td>5</td><td>Parametres &gt; Calendly</td><td>Saisir vos URLs de reservation en ligne</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="section">
+<h2>&#128202; Tableau de bord CEO/BI</h2>
+<p>Acces direct depuis la page d'accueil (<code>/app</code>). Vue globale multi-metiers avec KPIs en temps reel.</p>
+<div class="grid">
+  <div class="card"><div class="card-title">&#128202; Dashboard global</div><div class="card-desc">CA total, clients actifs, animaux, impayés. Raccourcis vers chaque dashboard metier. Sparkbars CA 6 mois.</div></div>
+  <div class="card"><div class="card-title">&#128202; Dashboard par metier</div><div class="card-desc">Accessible depuis la sidebar de chaque metier (premier lien "Tableau de bord"). KPIs specifiques, programmes en cours, reservations.</div></div>
+  <div class="card"><div class="card-title">&#129381; Genealogie elevage</div><div class="card-desc">Arbre genealogique SVG visible uniquement si metier ELEVEUR actif. Toggle "Voir/Masquer" dans le dashboard eleveur.</div></div>
+</div>
+</div>
+
+<div class="section">
+<h2>&#128062; Gestion des animaux</h2>
+<p>PetSuite gere toutes les especes : chiens, chats, equins, rongeurs, oiseaux, reptiles, NAC.</p>
+<table>
+<thead><tr><th>Espece</th><th>Metiers associes</th><th>Specificites</th></tr></thead>
+<tbody>
+<tr><td>Chien &#128054;</td><td>Comportementaliste, Toiletteur, Pet-sitter, Educateur</td><td>Puce 15 chiffres obligatoire, races LOF</td></tr>
+<tr><td>Chat &#128049;</td><td>Toiletteur, Pet-sitter, Veterinaire</td><td>Race LOOF optionnelle</td></tr>
+<tr><td>Equin &#128014;</td><td>Centre equestre, Veterinaire, Osteopathe</td><td>Races reconnues FFE, licences cavalier</td></tr>
+<tr><td>Rongeur / NAC &#128048;</td><td>Pet-sitter, Veterinaire</td><td>Champ espece libre disponible</td></tr>
+<tr><td>Oiseau &#128038;</td><td>Pet-sitter</td><td>Protocole visite specifique</td></tr>
+<tr><td>Reptile &#128013;</td><td>Pet-sitter, Veterinaire</td><td>Protocole soins specialise</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="section">
+<h2>&#128203; Devis et templates</h2>
+<p>Creez un devis depuis <code>Devis / Contrats &gt; Nouveau devis</code>. Le bouton <strong>Utiliser un template</strong> affiche les modeles pre-remplis de votre metier.</p>
+<table>
+<thead><tr><th>Metier</th><th>Templates disponibles</th></tr></thead>
+<tbody>
+<tr><td>Comportementaliste</td><td>EDC seule, EDC + Forfait 5, EDC + Forfait 10, Forfait 5 seul, Bilan urgent</td></tr>
+<tr><td>Toiletteur</td><td>Toilettage S/M, Toilettage L/XL, Abonnement 2x/mois, Abonnement 4x/mois, Bain+sechage</td></tr>
+<tr><td>Pet-Sitter</td><td>Promenade 5x/semaine, Visite quotidienne, Garde semaine, Pack vacances, NAC specialise</td></tr>
+<tr><td>Eleveur</td><td>Reservation LOF, Chiot compagnon, Pack depart chiot, Saillie, Consultation chiot</td></tr>
+<tr><td>Centre equestre</td><td>Abonnement club 10S, Cours individuel x5, Pack decouverte, Preparation concours, Balades x4</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="section">
+<h2>&#128197; Reservations Calendly</h2>
+<p>Page publique accessible sans connexion : <code>/reservation</code>. Partagez ce lien a vos clients par email, SMS ou QR code.</p>
+<p>Configuration dans <code>Parametres &gt; Calendly</code> : saisissez l'URL Calendly de chaque type de RDV. Le widget s'affiche directement sans demander de compte Google au client.</p>
+</div>
+
+<div class="section">
+<h2>&#128176; Facturation et relances</h2>
+<p>Tableau de bord des impayés visible dans l'accueil global. Niveaux de relance : Niv.1 (15-30j), Niv.2 (30-60j), Niv.3 (+60j / contentieux).</p>
+<p>Export FEC : <code>Comptabilite &gt; Export FEC</code>. Conforme NF 525 avec hash SHA-256 par ligne.</p>
+</div>
+
+<div class="section">
+<h2>&#128241; Metiers disponibles</h2>
+<div class="grid">
+<div class="card"><div class="card-title">&#129504; Comportementaliste</div><div class="card-desc">EDC, programmes suivi, CAC 1-14, questionnaires, dashboard CEO</div></div>
+<div class="card"><div class="card-title">&#9986;&#65039; Toiletteur</div><div class="card-desc">Planning salon, forfaits, abonnements, dashboard CEO</div></div>
+<div class="card"><div class="card-title">&#127968; Pet-Sitter</div><div class="card-desc">Visites, gardes, rapports proprietaires, 9 villes, dashboard CEO</div></div>
+<div class="card"><div class="card-title">&#128035; Eleveur</div><div class="card-desc">Saillies, portees, LOF, arbre genealogique, dashboard CEO</div></div>
+<div class="card"><div class="card-title">&#127950; Centre equestre</div><div class="card-desc">Cours, cavaliers, chevaux, licences FFE, dashboard CEO</div></div>
+<div class="card"><div class="card-title">&#127968; Pension / Chenil</div><div class="card-desc">Gardes, taux occupation, dashboard CEO</div></div>
+<div class="card"><div class="card-title">&#127948; Educateur canin</div><div class="card-desc">Cours collectifs/individuels, bilans, progression</div></div>
+<div class="card"><div class="card-title">&#129658; Veterinaire</div><div class="card-desc">Consultations, planning — dashboard squelette S43</div></div>
+<div class="card"><div class="card-title">&#129304; Osteopathe / Kine</div><div class="card-desc">Consultations, planning — dashboard squelette S43</div></div>
+<div class="card"><div class="card-title">&#127807; Naturopathe / Nutri</div><div class="card-desc">Consultations — dashboard squelette S43</div></div>
+</div>
+</div>
+
+<footer>PetSuite by Algorithmia &middot; Notice v4.0 &middot; S42/S43 &middot; 22 mars 2026 &middot; <a href="index.html" style="color:#534ab7">Index</a></footer>
+</div>
+</body></html>
