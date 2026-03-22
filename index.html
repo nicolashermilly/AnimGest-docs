@@ -261,15 +261,15 @@
 <script>
 // ─── Système de mot de passe global ───────────────────────────────────────
 const PWD_KEY = 'petsuite_docs_auth';
-const PWD_HASH = 'petsuite2026'; // mot de passe en clair (côté client = sécurité légère)
+const PWD_HASH = '@lgorithme'; // mot de passe en clair (côté client = sécurité légère)
 
 function checkAuth() {
-  return sessionStorage.getItem(PWD_KEY) === 'ok';
+  return localStorage.getItem(PWD_KEY) === 'ok';
 }
 
 function unlock(pwd, inputEl, statusEl) {
   if (pwd === PWD_HASH) {
-    sessionStorage.setItem(PWD_KEY, 'ok');
+    localStorage.setItem(PWD_KEY, 'ok');
     if (inputEl) { inputEl.value = ''; inputEl.classList.remove('err'); inputEl.classList.add('ok'); }
     if (statusEl) { statusEl.textContent = '🔓 Déverrouillé'; statusEl.classList.add('unlocked'); }
     // Fermer l'overlay si présent
