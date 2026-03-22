@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Changelog Sprint S41</title>
+<style>
+  :root {
+    --accent: #4F46E5; --bg: #0f1117; --bg2: #1a1d2e; --bg3: #222640;
+    --border: #2d3155; --text: #e2e8f0; --text2: #94a3b8;
+    --green: #10b981; --amber: #f59e0b; --red: #ef4444; --blue: #3b82f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .hero { background: linear-gradient(135deg, #1a1d2e 0%, #0f1117 100%); border-bottom: 1px solid var(--border); padding: 3rem 2rem 2rem; text-align: center; }
+  .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .hero p { color: var(--text2); font-size: 1.05rem; margin-bottom: 1.5rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+  .badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge-purple { background: #312e81; color: #a5b4fc; }
+  .badge-green  { background: #064e3b; color: #6ee7b7; }
+  .badge-amber  { background: #78350f; color: #fcd34d; }
+  .badge-blue   { background: #1e3a5f; color: #93c5fd; }
+  .badge-red    { background: #7f1d1d; color: #fca5a5; }
+  nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0.75rem 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  nav a { color: var(--text2); text-decoration: none; font-size: 0.85rem; padding: 0.25rem 0.5rem; border-radius: 4px; transition: all 0.15s; }
+  nav a:hover { color: var(--text); background: var(--bg3); }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  .section { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 2rem; overflow: hidden; }
+  .section-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; }
+  .section-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .section-title { font-size: 1.1rem; font-weight: 700; }
+  .section-subtitle { color: var(--text2); font-size: 0.85rem; margin-top: 0.15rem; }
+  .section-body { padding: 1.25rem 1.5rem; }
+  h3 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; color: var(--text); }
+  h3:first-child { margin-top: 0; }
+  p { color: var(--text2); font-size: 0.875rem; margin-bottom: 0.6rem; }
+  code { background: var(--bg3); color: #a5b4fc; padding: 0.1rem 0.4rem; border-radius: 4px; font-family: monospace; font-size: 0.8rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 0.6rem 0; }
+  th { background: var(--bg3); color: var(--text2); font-weight: 600; padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+  td { padding: 0.45rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+  td:first-child { color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  .ok   { color: var(--green); }
+  .warn { color: var(--amber); }
+  .err  { color: var(--red); }
+  .info { color: var(--blue); }
+  .tag { display: inline-block; padding: 0.1rem 0.45rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; margin-left: 0.3rem; }
+  .tag-new   { background: var(--accent); color: white; }
+  .tag-fix   { background: #064e3b; color: #6ee7b7; }
+  .tag-break { background: #7f1d1d; color: #fca5a5; }
+  ul { padding-left: 1.25rem; color: var(--text2); font-size: 0.875rem; }
+  ul li { margin-bottom: 0.3rem; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .stat { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+  .stat-num { font-size: 1.75rem; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 0.75rem; color: var(--text2); margin-top: 0.2rem; }
+  footer { text-align: center; padding: 2rem; color: var(--text2); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>📋 Changelog Sprint S41</h1>
+  <p>Stabilisation, corrections POST body parsing, navigation S41, PDF/Email/Signature, Élevage profondeur</p>
+  <div class="badges">
+    <span class="badge badge-purple">Sprint S41</span>
+    <span class="badge badge-green">22 mars 2026</span>
+    <span class="badge badge-blue">70 pages UI</span>
+    <span class="badge badge-amber">custom-routes.ts 43k chars</span>
+    <span class="badge badge-red">12 bugs corrigés</span>
+  </div>
+</div>
+
+<nav>
+  <a href="#stats">Stats</a>
+  <a href="#fixes">Corrections</a>
+  <a href="#frontend">Frontend</a>
+  <a href="#api">API</a>
+  <a href="#bdd">BDD</a>
+  <a href="#docs">Docs</a>
+  <a href="#reste">Reste S41</a>
+  <a href="index.html">← Index</a>
+</nav>
+
+<div class="container">
+
+  <!-- Stats -->
+  <div class="section" id="stats">
+    <div class="section-header">
+      <span class="section-icon">📊</span>
+      <div>
+        <div class="section-title">Chiffres clés S41</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="stats">
+        <div class="stat"><div class="stat-num">12</div><div class="stat-label">Bugs corrigés</div></div>
+        <div class="stat"><div class="stat-num">10</div><div class="stat-label">Routes API ajoutées</div></div>
+        <div class="stat"><div class="stat-num">7</div><div class="stat-label">Routes POST fixées</div></div>
+        <div class="stat"><div class="stat-num">4</div><div class="stat-label">Pages frontend refaites</div></div>
+        <div class="stat"><div class="stat-num">70</div><div class="stat-label">Pages UI compilées</div></div>
+        <div class="stat"><div class="stat-num">2</div><div class="stat-label">Tables BDD créées</div></div>
+        <div class="stat"><div class="stat-num">1</div><div class="stat-label">Doc GitHub publiée</div></div>
+        <div class="stat"><div class="stat-num">1</div><div class="stat-num" style="font-size:1rem">Backup S40</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Corrections critiques -->
+  <div class="section" id="fixes">
+    <div class="section-header">
+      <span class="section-icon">🔧</span>
+      <div>
+        <div class="section-title">Corrections critiques</div>
+        <div class="section-subtitle">Bugs bloquants résolus en S41</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table>
+        <tr><th>Bug</th><th>Cause</th><th>Fix</th></tr>
+        <tr>
+          <td>POST /reglements, /achats, /inventaires, /programmes, /questionnaires, /parametres/metier → 400/500 <span class="tag tag-fix">Fix</span></td>
+          <td>req.body toujours undefined dans instance.use() NestJS</td>
+          <td>Helper readBody() injecté — pattern req.on('data') sur 7 routes</td>
+        </tr>
+        <tr>
+          <td>PDF modal se ferme immédiatement <span class="tag tag-fix">Fix</span></td>
+          <td>URL /api/factures/:id/pdf inexistante + iframe bloquée par navigateur</td>
+          <td>URL corrigée vers /api/editions/facture/:id + &lt;object&gt; remplace &lt;iframe&gt;</td>
+        </tr>
+        <tr>
+          <td>Email → Cannot POST /factures/:id/email (404) <span class="tag tag-fix">Fix</span></td>
+          <td>Route email spécifique par facture inexistante</td>
+          <td>Redirigé vers /api/ged-factures-email (route simulée)</td>
+        </tr>
+        <tr>
+          <td>/param-yousign → 404 <span class="tag tag-fix">Fix</span></td>
+          <td>Route disparue après patches successifs</td>
+          <td>Route GET/POST /param-yousign recréée dans custom-routes.ts</td>
+        </tr>
+        <tr>
+          <td>Inventaires lignes → erreur ILI_ECART <span class="tag tag-fix">Fix</span></td>
+          <td>ILI_ECART est une colonne GENERATED dans MariaDB</td>
+          <td>Retiré du INSERT — MariaDB calcule automatiquement</td>
+        </tr>
+        <tr>
+          <td>Autocomplete carte transparent <span class="tag tag-fix">Fix</span></td>
+          <td>z-50 insuffisant face au z-index Leaflet (400+)</td>
+          <td>z-[1000] sur le dropdown suggestions</td>
+        </tr>
+        <tr>
+          <td>Carte appelle mauvaises routes <span class="tag tag-fix">Fix</span></td>
+          <td>/tiers?type=CLIENT ne retourne pas les coordonnées, /villes inexistante</td>
+          <td>/tiers-avec-coords + /villes-search</td>
+        </tr>
+        <tr>
+          <td>/parametres/smtp et /parametres/sms → 404 <span class="tag tag-fix">Fix</span></td>
+          <td>Routes manquantes + tables BDD inexistantes</td>
+          <td>Routes créées + tables param_smtp et param_sms créées</td>
+        </tr>
+        <tr>
+          <td>Build frontend — Unterminated regexp literal ligne 469 <span class="tag tag-fix">Fix</span></td>
+          <td>Commentaire JSX non fermé : {/* ... */ sans }</td>
+          <td>Ajout du } manquant en début de session</td>
+        </tr>
+        <tr>
+          <td>Build API — 24 erreurs TS18046 "b is unknown" <span class="tag tag-fix">Fix</span></td>
+          <td>const b sans annotation : any dans les nouvelles routes</td>
+          <td>const b: any = await new Promise&lt;any&gt;(...) sur toutes les routes</td>
+        </tr>
+        <tr>
+          <td>Page clients corrompue (EOSX dans le TSX) <span class="tag tag-fix">Fix</span></td>
+          <td>Heredoc bash mal terminé — echo inclus dans le fichier TSX</td>
+          <td>Recréation propre du fichier via Python</td>
+        </tr>
+        <tr>
+          <td>Backup BDD — Access denied LOCK TABLES <span class="tag tag-fix">Fix</span></td>
+          <td>@lgorithme n'a pas LOCK TABLES sur InnoDB</td>
+          <td>Flag --single-transaction pour mysqldump</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Frontend -->
+  <div class="section" id="frontend">
+    <div class="section-header">
+      <span class="section-icon">🖥️</span>
+      <div>
+        <div class="section-title">Frontend — Nouvelles pages et composants</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <h3>Sidebar S41 <span class="tag tag-new">Nouveau</span></h3>
+      <ul>
+        <li>8 groupes avec espacement <code>mt-4</code> entre chaque groupe</li>
+        <li>Paramètres = 1 seule ligne → page tuiles <code>/app/parametres</code></li>
+        <li>Mon/Mes Métier(s) dans Accueil ET groupe dédié avec accordéons</li>
+        <li>Carte clients ajoutée dans le groupe Clients & Animaux</li>
+      </ul>
+
+      <h3>Page Paramètres — Tuiles S41 <span class="tag tag-new">Nouveau</span></h3>
+      <ul>
+        <li>5 sections organisées : Identité, Métier, Comptabilité, Interfaces, Administration</li>
+        <li>Toutes les entrées disponibles — suppression de la section "À venir"</li>
+        <li>Nouvelles tuiles : Interfaces API, Facturation électronique, Catalogue articles, Plan de comptes</li>
+      </ul>
+
+      <h3>Page Clients — 3 vues <span class="tag tag-new">Nouveau</span></h3>
+      <ul>
+        <li>Switcher ☰ Liste / ⊞ Tuiles / 🗺️ Carte intégré dans <code>/app/clients</code></li>
+        <li>Vue Liste : tableau classique avec recherche textuelle</li>
+        <li>Vue Tuiles : cards avec avatar initiale, coordonnées, email, tel</li>
+        <li>Vue Carte : Leaflet OSM, rayon Haversine, autocomplete villes — z-index corrigé</li>
+      </ul>
+
+      <h3>DocumentActions <span class="tag tag-fix">Corrigé</span></h3>
+      <ul>
+        <li>URL PDF : <code>/api/editions/facture/:id</code> (était /api/factures/:id/pdf)</li>
+        <li>Affichage PDF : <code>&lt;object&gt;</code> avec fallback lien (était iframe bloquée)</li>
+        <li>Email : route corrigée vers <code>/api/ged-factures-email</code></li>
+        <li>Signature : bouton uniquement visible pour docType="DEVIS"</li>
+      </ul>
+
+      <h3>Page Inventaires/:id <span class="tag tag-fix">Corrigé</span></h3>
+      <ul>
+        <li>Routes GET/POST <code>/inventaires/:id/lignes</code> créées côté API</li>
+        <li>Sauvegarde batch : DELETE existantes + INSERT nouvelles lignes</li>
+        <li>ILI_ECART retiré du INSERT (colonne générée MariaDB)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- API -->
+  <div class="section" id="api">
+    <div class="section-header">
+      <span class="section-icon">⚡</span>
+      <div>
+        <div class="section-title">API — Routes ajoutées en S41</div>
+        <div class="section-subtitle">custom-routes.ts — 43k chars</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table>
+        <tr><th>Route</th><th>Méthodes</th><th>Statut</th><th>Description</th></tr>
+        <tr><td>/reglements</td><td>GET, POST, DELETE</td><td class="ok">✅ New</td><td>Liste, création, suppression règlements avec jointures</td></tr>
+        <tr><td>/communaute</td><td>GET, POST, DELETE</td><td class="ok">✅ New</td><td>Posts + modération communauté</td></tr>
+        <tr><td>/inventaires/:id</td><td>GET</td><td class="ok">✅ New</td><td>Fiche entête inventaire</td></tr>
+        <tr><td>/inventaires/:id/lignes</td><td>GET, POST</td><td class="ok">✅ New</td><td>Lignes inventaire — sauvegarde batch</td></tr>
+        <tr><td>/inventaires/:id (statut)</td><td>POST</td><td class="ok">✅ New</td><td>Mise à jour statut VALIDE/ANNULE</td></tr>
+        <tr><td>/param-yousign</td><td>GET, POST</td><td class="ok">✅ Restauré</td><td>Clés Yousign sandbox/prod</td></tr>
+        <tr><td>/parametres/smtp</td><td>GET, POST</td><td class="ok">✅ New</td><td>Configuration SMTP (table param_smtp)</td></tr>
+        <tr><td>/parametres/sms</td><td>GET, POST</td><td class="ok">✅ New</td><td>Configuration SMS Twilio + WhatsApp</td></tr>
+        <tr><td>/parametres/sms/test</td><td>POST</td><td class="ok">✅ New</td><td>Test SMS simulé</td></tr>
+        <tr><td>/ged-factures-email</td><td>POST</td><td class="ok">✅ Enrichi</td><td>Envoi email simulé (SMTP à intégrer S42)</td></tr>
+      </table>
+
+      <h3>Routes corrigées (body parsing)</h3>
+      <table>
+        <tr><th>Route</th><th>Fix</th></tr>
+        <tr><td>POST /achats</td><td class="ok">readBody() — plus de 500 undefined</td></tr>
+        <tr><td>POST /inventaires</td><td class="ok">readBody() — création entête OK</td></tr>
+        <tr><td>POST /parametres/metier</td><td class="ok">readBody() — sauvegarde OK</td></tr>
+        <tr><td>POST/PATCH /programmes</td><td class="ok">readBody() — création + semaines OK</td></tr>
+        <tr><td>POST/PATCH /questionnaires</td><td class="ok">readBody() — création + statut OK</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- BDD -->
+  <div class="section" id="bdd">
+    <div class="section-header">
+      <span class="section-icon">🗄️</span>
+      <div>
+        <div class="section-title">BDD — Évolutions S41</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <h3>Tables créées</h3>
+      <table>
+        <tr><th>Table</th><th>Colonnes clés</th><th>Description</th></tr>
+        <tr><td>param_smtp</td><td>SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, SMTP_FROM, SMTP_TLS, SMTP_ACTIF</td><td>Configuration serveur email sortant</td></tr>
+        <tr><td>param_sms</td><td>SMS_PROVIDER, SMS_API_KEY, SMS_SENDER, SMS_ACTIF, WA_ACTIF, WA_NUMBER</td><td>Configuration SMS Twilio + WhatsApp Business</td></tr>
+      </table>
+
+      <h3>Backup</h3>
+      <p>Backup S40 créé : <code>C:\Backup\micro_logiciel\20260322_fin_s40.sql</code> — avec flag <code>--single-transaction</code></p>
+    </div>
+  </div>
+
+  <!-- Docs -->
+  <div class="section" id="docs">
+    <div class="section-header">
+      <span class="section-icon">📚</span>
+      <div>
+        <div class="section-title">Documentation GitHub Pages</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table>
+        <tr><th>Page</th><th>Action</th></tr>
+        <tr><td><a href="41-composants-techniques.html" style="color:var(--accent)">#41 Composants Techniques</a></td><td class="ok">✅ Mise à jour S41 — DocumentActions, Sidebar, routes, clients 3 vues, règles TypeScript</td></tr>
+        <tr><td>#43 Changelog S41 (cette page)</td><td class="ok">✅ Créé</td></tr>
+        <tr><td>BRIEFING_S41.md</td><td class="ok">✅ Feuille de route complète avec module Élevage profondeur</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Reste S41 -->
+  <div class="section" id="reste">
+    <div class="section-header">
+      <span class="section-icon">📋</span>
+      <div>
+        <div class="section-title">Reste à faire — S41</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table>
+        <tr><th>Priorité</th><th>Item</th><th>Statut</th></tr>
+        <tr><td>P8</td><td>Email SMTP réel — intégration nodemailer dans EditionsController</td><td class="warn">⚠️ Simulé actuellement</td></tr>
+        <tr><td>P9</td><td>Aides contextuelles — pages S40 non couvertes (Carte, Formulaires lead, Élevage géniteurs, API keys)</td><td class="warn">⚠️ À créer</td></tr>
+        <tr><td>P10</td><td>Module Élevage profondeur — 5 tables + 9 routes + 4 pages + seeds démo Berger Allemand</td><td class="warn">⚠️ À développer</td></tr>
+        <tr><td>DOC</td><td>Pages HTML 43-48 (RFE) + 50-59 (métiers par activité)</td><td class="warn">⚠️ À créer</td></tr>
+        <tr><td>DOC</td><td>Suppression section SMTP dans api-keys/page.tsx (doublon)</td><td class="warn">⚠️ À faire</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  PetSuite — Changelog Sprint S41 | 22 mars 2026 | Algorithmia
+  &nbsp;·&nbsp;
+  <a href="index.html" style="color:var(--accent)">← Retour à l'index</a>
+</footer>
+
+</body>
+</html>
