@@ -1,159 +1,133 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Changelog S43</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
-.header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-size:1.1rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
-.badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600}
-.badge.new{background:#0f2a1a;border-color:#0f6e56;color:#5dcaa5}
-.container{max-width:1000px;margin:0 auto;padding:2rem}
-h1{font-size:1.75rem;font-weight:700;color:#fff;margin-bottom:.4rem}
-h2{font-size:1.1rem;font-weight:600;color:#c8c6be;margin:2rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid #2a2a3a}
-h3{font-size:.95rem;font-weight:600;color:#888;margin:1.25rem 0 .4rem}
-p{color:#9a9890;margin-bottom:.6rem;font-size:.9rem}
-.subtitle{color:#555;font-size:.9rem;margin-bottom:1.5rem}
-.section{margin-bottom:2rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem}
-.card{background:#13131a;border:1px solid #2a2a3a;border-radius:10px;padding:1rem}
-.card-title{font-size:.9rem;font-weight:600;color:#e2e0d8;margin-bottom:.3rem}
-.card-desc{font-size:.78rem;color:#666;line-height:1.5}
-.tag{display:inline-block;padding:.1rem .45rem;border-radius:4px;font-size:.68rem;font-weight:600;margin-right:.2rem}
-.tag-p{background:#1a1530;color:#9d97e8}.tag-g{background:#0a2015;color:#5dcaa5}
-.tag-b{background:#0a1525;color:#6baed6}.tag-a{background:#1a1205;color:#d4a44c}.tag-r{background:#1a0a0a;color:#e06c6c}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin:1rem 0}
-.kpi{background:#13131a;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;text-align:center}
-.kpi-val{font-size:1.5rem;font-weight:700;color:#7f77dd}.kpi-lbl{font-size:.7rem;color:#555;margin-top:.2rem}
-.timeline{border-left:2px solid #2a2a3a;padding-left:1.25rem;margin:.75rem 0}
-.tl-item{position:relative;margin-bottom:1.25rem}
-.tl-item::before{content:'';position:absolute;left:-1.52rem;top:.3rem;width:8px;height:8px;border-radius:50%;background:#534ab7}
-.tl-date{font-size:.7rem;color:#444;margin-bottom:.15rem}
-.tl-title{font-size:.85rem;font-weight:600;color:#c8c6be}
-.tl-desc{font-size:.78rem;color:#555;margin-top:.15rem}
-code{background:#1a1a2e;color:#9d97e8;padding:.1rem .35rem;border-radius:3px;font-size:.82em;font-family:'Fira Code',monospace}
-pre{background:#0d0d15;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;overflow-x:auto;margin:.75rem 0;font-size:.8rem}
-pre code{background:none;padding:0}
-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.82rem}
-th{background:#13131a;color:#666;font-weight:600;padding:.5rem .7rem;text-align:left;border-bottom:1px solid #2a2a3a}
-td{padding:.4rem .7rem;border-bottom:1px solid #1a1a2a;color:#9a9890}
-.ok{color:#5dcaa5}.wip{color:#d4a44c}.todo{color:#e06c6c}
-.back{color:#534ab7;text-decoration:none;font-size:.82rem}.back:hover{color:#9d97e8}
-.alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:.75rem 1rem;margin:.75rem 0;font-size:.82rem;color:#5dcaa5}
-.alert-w{background:#1a1205;border-color:#854f0b;color:#d4a44c}
-footer{text-align:center;padding:1.5rem;color:#333;font-size:.75rem;border-top:1px solid #1a1a2a;margin-top:2rem}
-</style><title>PetSuite — Changelog S43</title></head>
-<body>
-<div class="header">
-  <div class="logo">&#128062; Pet<span>Suite</span></div>
-  <div style="display:flex;gap:.6rem;align-items:center">
-    <span class="badge new">S43 — 22 mars 2026</span>
-    <a class="back" href="index.html">&#8592; Index</a>
-  </div>
-</div>
+  :root { --primary: #534AB7; --primary-light: #7F77DD; --bg: #0f0e17; --bg2: #1a1828;
+          --bg3: #252336; --text: #e8e6f0; --text2: #a09cb8; --green: #5dcaa5;
+          --orange: #f4a261; --red: #e06c6c; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: var(--bg); color: var(--text); line-height: 1.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 2rem; font-weight: 700; color: var(--primary-light); margin-bottom: 8px; }
+  h2 { font-size: 1.3rem; font-weight: 600; color: var(--primary-light); margin: 32px 0 12px;
+       padding-bottom: 6px; border-bottom: 1px solid var(--bg3); }
+  h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
+  p { color: var(--text2); margin-bottom: 12px; }
+  .subtitle { color: var(--text2); font-size: 1rem; margin-bottom: 32px; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem;
+           font-weight: 600; margin-right: 6px; }
+  .badge-green { background: rgba(93,202,165,0.15); color: var(--green); }
+  .badge-purple { background: rgba(83,74,183,0.25); color: var(--primary-light); }
+  .badge-orange { background: rgba(244,162,97,0.15); color: var(--orange); }
+  .badge-red { background: rgba(224,108,108,0.15); color: var(--red); }
+  .card { background: var(--bg2); border: 1px solid var(--bg3); border-radius: 12px;
+          padding: 20px; margin-bottom: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  th { background: var(--bg3); padding: 10px 14px; text-align: left; font-size: 0.85rem;
+       color: var(--text2); font-weight: 500; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--bg3); font-size: 0.9rem; vertical-align: top; }
+  code { background: var(--bg3); padding: 2px 7px; border-radius: 4px; font-size: 0.85rem;
+         font-family: 'Fira Code', 'Cascadia Code', monospace; color: var(--primary-light); }
+  .kpi { text-align: center; padding: 16px; }
+  .kpi-val { font-size: 2rem; font-weight: 700; color: var(--primary-light); }
+  .kpi-lbl { font-size: 0.8rem; color: var(--text2); margin-top: 4px; }
+  .nav { background: var(--bg2); border-bottom: 1px solid var(--bg3); padding: 12px 24px;
+         display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .nav a { color: var(--text2); text-decoration: none; font-size: 0.85rem; }
+  .nav a:hover { color: var(--primary-light); }
+  .nav-brand { color: var(--primary-light); font-weight: 700; font-size: 1rem; margin-right: 8px; }
+  ul { color: var(--text2); padding-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; }
+  .tag { display: inline-block; background: var(--bg3); color: var(--text2);
+         border-radius: 6px; padding: 3px 8px; font-size: 0.8rem; margin: 2px; }
+  @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+</style>
+</head><body>
+
+<nav class="nav">
+  <span class="nav-brand">🐾 PetSuite Docs</span>
+  <a href="index.html">Accueil</a>
+  <a href="01-synthese-projet.html">Synthèse</a>
+  <a href="03-notice-utilisateur.html">Notice</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+  <a href="17-api-reference-s42.html">API Ref</a>
+  <a href="53-changelog-s43.html">S43</a>
+  <a href="06-roadmap-s43.html">Roadmap</a>
+</nav>
+
 <div class="container">
-<a class="back" href="index.html">&#8592; Index</a>
-<h1 style="margin-top:1rem">&#128203; Changelog Sprint S43</h1>
-<p class="subtitle">Planning 3 vues, Templates devis, Sidebar Educateur, Especes animaux</p>
+  <h1>🚀 Changelog S43</h1>
+  <p class="subtitle">Sprint S43 — 22 mars 2026 &nbsp;<span class="badge badge-green">Terminé</span></p>
 
-<div class="kpi-grid">
-  <div class="kpi"><div class="kpi-val">87</div><div class="kpi-lbl">Pages UI</div></div>
-  <div class="kpi"><div class="kpi-val">3</div><div class="kpi-lbl">Vues planning</div></div>
-  <div class="kpi"><div class="kpi-val">25</div><div class="kpi-lbl">Templates devis</div></div>
-  <div class="kpi"><div class="kpi-val">60</div><div class="kpi-lbl">Visites pet-sitter</div></div>
-  <div class="kpi"><div class="kpi-val">6</div><div class="kpi-lbl">Especes BDD</div></div>
-  <div class="kpi"><div class="kpi-val">5</div><div class="kpi-lbl">Dash squelettes</div></div>
-</div>
-
-<div class="section">
-<h2>&#128197; Planning 3 vues</h2>
-<div class="grid">
-  <div class="card"><span class="tag tag-g">&#10003; NOUVEAU</span>
-    <div class="card-title">Vue Jour</div>
-    <div class="card-desc">Grille horaire 7h&#8594;19h. Seances colorees par type (violet=EC, bleu=Suivi, orange=Garde). Clic = detail seance.</div>
+  <div class="grid-3" style="margin-bottom: 32px;">
+    <div class="card kpi"><div class="kpi-val">87</div><div class="kpi-lbl">Pages compilées</div></div>
+    <div class="card kpi"><div class="kpi-val">+8</div><div class="kpi-lbl">Nouvelles routes API</div></div>
+    <div class="card kpi"><div class="kpi-val">+5</div><div class="kpi-lbl">Nouveaux composants</div></div>
   </div>
-  <div class="card"><span class="tag tag-g">&#10003; AMELIORE</span>
-    <div class="card-title">Vue Semaine</div>
-    <div class="card-desc">Conservation de l'existant + badge nombre de seances par jour + indicateur "Aujourd'hui" colore.</div>
+
+  <h2>✅ Livré en S43</h2>
+
+  <div class="card">
+    <h3>🗓️ Planning 3 vues</h3>
+    <p>La page <code>/app/planning-seances</code> propose désormais trois vues : <strong>Jour</strong> (grille horaire 7h-19h), <strong>Semaine</strong> (vue colonnes avec compteur), <strong>Mois</strong> (grille 6×7 avec "N+ autres"). Toggle segment en haut à droite, navigation ← Aujourd'hui →.</p>
   </div>
-  <div class="card"><span class="tag tag-g">&#10003; NOUVEAU</span>
-    <div class="card-title">Vue Mois</div>
-    <div class="card-desc">Grille 6x7, 3 seances max par case + "+N autres", navigation mois precedent/suivant, jours hors mois en transparence.</div>
+
+  <div class="card">
+    <h3>📧 DocumentActions — Mail visible</h3>
+    <p>Le bouton Mail était masqué en mode <code>size="sm"</code> (condition JSX). Les 3 labels sont maintenant toujours affichés : <strong>PDF | Mail | Signature</strong>.</p>
   </div>
-  <div class="card"><span class="tag tag-g">&#10003;</span>
-    <div class="card-title">Navigation unifiee</div>
-    <div class="card-desc">Boutons &#8249; Aujourd'hui &#8250; adaptes a chaque vue. Toggle Jour/Semaine/Mois style segmente en haut a droite.</div>
+
+  <div class="card">
+    <h3>📋 Questionnaires par métier</h3>
+    <p>Page <code>/app/questionnaires</code> complètement refaite : grille de 25 modèles pré-définis pour 11 métiers, filtres cliquables par métier + barre de recherche texte. Chaque carte affiche titre, description, nombre de questions et métier.</p>
   </div>
-</div>
-</div>
 
-<div class="section">
-<h2>&#128203; Templates de devis</h2>
-<p>25 templates pre-remplis (5 par metier) avec le composant <code>TemplateSelector</code> dans le formulaire de devis.</p>
-<div class="alert">Tables creees : <code>devis_template</code> + <code>devis_template_ligne</code>. Route API : <code>GET /devis/templates?metier=X</code>.</div>
-<table>
-  <thead><tr><th>Metier</th><th>Templates</th><th>Lignes type</th></tr></thead>
-  <tbody>
-    <tr><td>Comportementaliste</td><td>EDC seule, EDC+5S, EDC+10S, Forfait 5, Bilan urgent</td><td>150 &#8594; 630 EUR HT</td></tr>
-    <tr><td>Toiletteur</td><td>S/M, L/XL, Abonnement 2x, Abonnement 4x, Bain+sechage</td><td>30 &#8594; 456 EUR HT</td></tr>
-    <tr><td>Pet-Sitter</td><td>Promenades 5x/sem, Visite quotidienne, Garde semaine, Vacances 2S, NAC</td><td>45 &#8594; 870 EUR HT</td></tr>
-    <tr><td>Eleveur</td><td>Reservation LOF, Compagnon, Pack depart, Saillie, Consultation</td><td>70 &#8594; 1 750 EUR HT</td></tr>
-    <tr><td>Centre equestre</td><td>Abonnement club 10S, Individuel x5, Decouverte, Concours, Balades x4</td><td>60 &#8594; 360 EUR HT</td></tr>
-  </tbody>
-</table>
-</div>
+  <div class="card">
+    <h3>📊 Dashboard Comportementaliste V2</h3>
+    <p>Toggle <strong>Mois / Trimestre / Année</strong> en haut. CA et nombre de séances calculés dynamiquement via <code>GET /api/bilan/metier</code>. Barres de progression CA par prestation + suivi 5 programmes en cours.</p>
+  </div>
 
-<div class="section">
-<h2>&#128248; Sidebar — corrections et enrichissements</h2>
-<table>
-  <thead><tr><th>Correction</th><th>Avant</th><th>Apres</th></tr></thead>
-  <tbody>
-    <tr><td>Educateur — Planning</td><td>Absent</td><td class="ok">&#10003; Ajoute</td></tr>
-    <tr><td>Seances de suivi — route</td><td><code>/app/programmes</code></td><td><code>/app/seances</code></td></tr>
-    <tr><td>Suivi CAC — route</td><td><code>/app/seances</code></td><td><code>/app/mes-parametres/cac</code></td></tr>
-    <tr><td>Questionnaires doublon</td><td>2 entrees par metier</td><td class="ok">&#10003; 1 entree avec ?metier=</td></tr>
-    <tr><td>Tableau de bord tous metiers</td><td>Absent</td><td class="ok">&#10003; En 1er dans chaque bloc</td></tr>
-  </tbody>
-</table>
-</div>
+  <div class="card">
+    <h3>🔌 Route API <code>/bilan/metier</code></h3>
+    <p>Nouvelle route dans <code>custom-routes.ts</code> : <code>GET /bilan/metier?metier=COMPORTEMENTALISTE&amp;periode=mois</code>. Retourne CA TTC, nb factures, nb séances, nb clients, CA mensuel 6 mois. Mapping métier → STY_CODE pour filtrer par type de séance.</p>
+  </div>
 
-<div class="section">
-<h2>&#128062; Multi-especes — BDD</h2>
-<p>Colonnes <code>ANI_ESPECE</code> et <code>ANI_ESPECE_LIBRE</code> ajoutees sur la table <code>animal</code>. 78 animaux mis a jour automatiquement.</p>
-<table>
-  <thead><tr><th>Espece</th><th>Code</th><th>Nb animaux</th><th>Metiers</th></tr></thead>
-  <tbody>
-    <tr><td>&#128054; Chien</td><td>CHIEN</td><td>~116</td><td>Comportementaliste, Toiletteur, Pet-sitter, Educateur</td></tr>
-    <tr><td>&#128049; Chat</td><td>CHAT</td><td>~78</td><td>Toiletteur, Pet-sitter, Veterinaire</td></tr>
-    <tr><td>&#128014; Equin</td><td>EQUIN</td><td>35</td><td>Centre equestre, Veterinaire, Osteopathe</td></tr>
-    <tr><td>&#128048; Rongeur</td><td>RONGEUR</td><td>15</td><td>Pet-sitter, Veterinaire</td></tr>
-    <tr><td>&#128038; Oiseau</td><td>OISEAU</td><td>3</td><td>Pet-sitter</td></tr>
-    <tr><td>&#128013; Reptile</td><td>REPTILE</td><td>4</td><td>Pet-sitter, Veterinaire</td></tr>
-  </tbody>
-</table>
-</div>
+  <div class="card">
+    <h3>🪝 Hook <code>useDashboardMetier</code></h3>
+    <p>Hook React créé dans <code>src/hooks/useDashboardMetier.ts</code>. Usage : <code>const { data, loading } = useDashboardMetier("COMPORTEMENTALISTE", "mois")</code>. Inclut <code>formatEur()</code> pour le formatage monétaire fr-FR.</p>
+  </div>
 
-<div class="section">
-<h2>&#128200; Dashboards squelettes crees</h2>
-<p>5 nouveaux dashboards squelettes avec KPIs vides, barre coloree metier, message "en construction S43".</p>
-<div class="grid">
-  <div class="card"><div class="card-title">&#127948; Educateur canin</div><div class="card-desc"><code>/app/educateur/dashboard</code> — bleu #185FA5</div></div>
-  <div class="card"><div class="card-title">&#129658; Veterinaire</div><div class="card-desc"><code>/app/veterinaire/dashboard</code> — vert #1D9E75</div></div>
-  <div class="card"><div class="card-title">&#129304; Osteopathe / Kine</div><div class="card-desc"><code>/app/osteopathe/dashboard</code> — violet #534AB7</div></div>
-  <div class="card"><div class="card-title">&#127942; Sport canin</div><div class="card-desc"><code>/app/sport-canin/dashboard</code> — ambre #BA7517</div></div>
-  <div class="card"><div class="card-title">&#127807; Naturopathe</div><div class="card-desc"><code>/app/naturopathe/dashboard</code> — vert #0F6E56</div></div>
-</div>
-</div>
+  <div class="card">
+    <h3>📝 Templates devis dans devis/new</h3>
+    <p>Composant <code>TemplateSelector</code> intégré dans la page de création de devis. Apparaît avant la sélection client à l'étape 1 — permet de pré-remplir les lignes depuis un modèle.</p>
+  </div>
 
-<div class="section">
-<h2>&#128246; Reservations Calendly</h2>
-<p>Routes API <code>GET/POST /parametres/calendly</code> injectees dans custom-routes.ts. Table <code>param_config</code> creee. Page <code>/reservation</code> publique deployee.</p>
-</div>
+  <div class="card">
+    <h3>💾 Backup S42</h3>
+    <p>Backup réalisé : <code>C:\Backup\micro_logiciel\20260322_fin_s42.sql</code> — 5.5 MB. Via <code>C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe</code>.</p>
+  </div>
 
-<div class="section">
-<h2>&#9888;&#65039; Backup S42</h2>
-<div class="alert-w alert">
-  <strong>BACKUP S42 REQUIS</strong> — mysqldump introuvable dans PATH. Lancer <code>backup_s42.ps1</code> qui cherche le bon chemin automatiquement, ou utiliser HeidiSQL : Outils &gt; Exporter la BDD &gt; micro_logiciel &gt; C:\Backup\micro_logiciel60322_fin_s42.sql
-</div>
-</div>
+  <h2>🐛 Bugs corrigés</h2>
+  <table>
+    <tr><th>Bug</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td>Build cassé devis/new</td><td>TemplateSelector inséré hors fragment JSX</td><td>Suppression ligne par ligne + réinsertion dans <code>&lt;&gt;&lt;/&gt;</code></td></tr>
+    <tr><td>Mail absent dans DocumentActions</td><td>Label conditionnel <code>size==="md"</code></td><td>Labels fixes sans condition</td></tr>
+    <tr><td>Sidebar "Suivi CAC" mauvaise route</td><td>Pointait sur /app/seances</td><td>Corrigé vers /app/mes-parametres/cac</td></tr>
+  </table>
 
-<footer>PetSuite by Algorithmia &middot; S43 &middot; 22 mars 2026 &middot; <a href="index.html" style="color:#534ab7">Index</a></footer>
+  <h2>Fichiers modifiés</h2>
+  <table>
+    <tr><th>Fichier</th><th>Modification</th></tr>
+    <tr><td><code>src/components/DocumentActions.tsx</code></td><td>Labels PDF/Mail/Signature fixes</td></tr>
+    <tr><td><code>src/app/app/questionnaires/page.tsx</code></td><td>Grille filtrée complète</td></tr>
+    <tr><td><code>src/app/app/comportementaliste/dashboard/page.tsx</code></td><td>V2 dynamique + toggle</td></tr>
+    <tr><td><code>src/hooks/useDashboardMetier.ts</code></td><td>Nouveau hook (créé)</td></tr>
+    <tr><td><code>src/app/app/devis/new/page.tsx</code></td><td>TemplateSelector intégré</td></tr>
+    <tr><td><code>src/app/app/planning-seances/page.tsx</code></td><td>3 vues Jour/Semaine/Mois</td></tr>
+    <tr><td><code>api/src/custom-routes.ts</code></td><td>Route /bilan/metier ajoutée</td></tr>
+    <tr><td><code>src/components/Sidebar.tsx</code></td><td>Éducateur + Planning, fix routes</td></tr>
+  </table>
 </div></body></html>

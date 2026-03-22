@@ -1,125 +1,133 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Roadmap S44+</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
-.header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-size:1.1rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
-.badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600}
-.badge.new{background:#0f2a1a;border-color:#0f6e56;color:#5dcaa5}
-.container{max-width:1000px;margin:0 auto;padding:2rem}
-h1{font-size:1.75rem;font-weight:700;color:#fff;margin-bottom:.4rem}
-h2{font-size:1.1rem;font-weight:600;color:#c8c6be;margin:2rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid #2a2a3a}
-h3{font-size:.95rem;font-weight:600;color:#888;margin:1.25rem 0 .4rem}
-p{color:#9a9890;margin-bottom:.6rem;font-size:.9rem}
-.subtitle{color:#555;font-size:.9rem;margin-bottom:1.5rem}
-.section{margin-bottom:2rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem}
-.card{background:#13131a;border:1px solid #2a2a3a;border-radius:10px;padding:1rem}
-.card-title{font-size:.9rem;font-weight:600;color:#e2e0d8;margin-bottom:.3rem}
-.card-desc{font-size:.78rem;color:#666;line-height:1.5}
-.tag{display:inline-block;padding:.1rem .45rem;border-radius:4px;font-size:.68rem;font-weight:600;margin-right:.2rem}
-.tag-p{background:#1a1530;color:#9d97e8}.tag-g{background:#0a2015;color:#5dcaa5}
-.tag-b{background:#0a1525;color:#6baed6}.tag-a{background:#1a1205;color:#d4a44c}.tag-r{background:#1a0a0a;color:#e06c6c}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin:1rem 0}
-.kpi{background:#13131a;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;text-align:center}
-.kpi-val{font-size:1.5rem;font-weight:700;color:#7f77dd}.kpi-lbl{font-size:.7rem;color:#555;margin-top:.2rem}
-.timeline{border-left:2px solid #2a2a3a;padding-left:1.25rem;margin:.75rem 0}
-.tl-item{position:relative;margin-bottom:1.25rem}
-.tl-item::before{content:'';position:absolute;left:-1.52rem;top:.3rem;width:8px;height:8px;border-radius:50%;background:#534ab7}
-.tl-date{font-size:.7rem;color:#444;margin-bottom:.15rem}
-.tl-title{font-size:.85rem;font-weight:600;color:#c8c6be}
-.tl-desc{font-size:.78rem;color:#555;margin-top:.15rem}
-code{background:#1a1a2e;color:#9d97e8;padding:.1rem .35rem;border-radius:3px;font-size:.82em;font-family:'Fira Code',monospace}
-pre{background:#0d0d15;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;overflow-x:auto;margin:.75rem 0;font-size:.8rem}
-pre code{background:none;padding:0}
-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.82rem}
-th{background:#13131a;color:#666;font-weight:600;padding:.5rem .7rem;text-align:left;border-bottom:1px solid #2a2a3a}
-td{padding:.4rem .7rem;border-bottom:1px solid #1a1a2a;color:#9a9890}
-.ok{color:#5dcaa5}.wip{color:#d4a44c}.todo{color:#e06c6c}
-.back{color:#534ab7;text-decoration:none;font-size:.82rem}.back:hover{color:#9d97e8}
-.alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:.75rem 1rem;margin:.75rem 0;font-size:.82rem;color:#5dcaa5}
-.alert-w{background:#1a1205;border-color:#854f0b;color:#d4a44c}
-footer{text-align:center;padding:1.5rem;color:#333;font-size:.75rem;border-top:1px solid #1a1a2a;margin-top:2rem}
-</style><title>PetSuite — Roadmap S44</title></head>
-<body>
-<div class="header">
-  <div class="logo">&#128062; Pet<span>Suite</span></div>
-  <div style="display:flex;gap:.6rem;align-items:center">
-    <span class="badge">S44 — Roadmap</span>
-    <a class="back" href="index.html">&#8592; Index</a>
-  </div>
-</div>
+  :root { --primary: #534AB7; --primary-light: #7F77DD; --bg: #0f0e17; --bg2: #1a1828;
+          --bg3: #252336; --text: #e8e6f0; --text2: #a09cb8; --green: #5dcaa5;
+          --orange: #f4a261; --red: #e06c6c; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: var(--bg); color: var(--text); line-height: 1.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 2rem; font-weight: 700; color: var(--primary-light); margin-bottom: 8px; }
+  h2 { font-size: 1.3rem; font-weight: 600; color: var(--primary-light); margin: 32px 0 12px;
+       padding-bottom: 6px; border-bottom: 1px solid var(--bg3); }
+  h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
+  p { color: var(--text2); margin-bottom: 12px; }
+  .subtitle { color: var(--text2); font-size: 1rem; margin-bottom: 32px; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem;
+           font-weight: 600; margin-right: 6px; }
+  .badge-green { background: rgba(93,202,165,0.15); color: var(--green); }
+  .badge-purple { background: rgba(83,74,183,0.25); color: var(--primary-light); }
+  .badge-orange { background: rgba(244,162,97,0.15); color: var(--orange); }
+  .badge-red { background: rgba(224,108,108,0.15); color: var(--red); }
+  .card { background: var(--bg2); border: 1px solid var(--bg3); border-radius: 12px;
+          padding: 20px; margin-bottom: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  th { background: var(--bg3); padding: 10px 14px; text-align: left; font-size: 0.85rem;
+       color: var(--text2); font-weight: 500; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--bg3); font-size: 0.9rem; vertical-align: top; }
+  code { background: var(--bg3); padding: 2px 7px; border-radius: 4px; font-size: 0.85rem;
+         font-family: 'Fira Code', 'Cascadia Code', monospace; color: var(--primary-light); }
+  .kpi { text-align: center; padding: 16px; }
+  .kpi-val { font-size: 2rem; font-weight: 700; color: var(--primary-light); }
+  .kpi-lbl { font-size: 0.8rem; color: var(--text2); margin-top: 4px; }
+  .nav { background: var(--bg2); border-bottom: 1px solid var(--bg3); padding: 12px 24px;
+         display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .nav a { color: var(--text2); text-decoration: none; font-size: 0.85rem; }
+  .nav a:hover { color: var(--primary-light); }
+  .nav-brand { color: var(--primary-light); font-weight: 700; font-size: 1rem; margin-right: 8px; }
+  ul { color: var(--text2); padding-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; }
+  .tag { display: inline-block; background: var(--bg3); color: var(--text2);
+         border-radius: 6px; padding: 3px 8px; font-size: 0.8rem; margin: 2px; }
+  @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+</style>
+</head><body>
+
+<nav class="nav">
+  <span class="nav-brand">🐾 PetSuite Docs</span>
+  <a href="index.html">Accueil</a>
+  <a href="01-synthese-projet.html">Synthèse</a>
+  <a href="03-notice-utilisateur.html">Notice</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+  <a href="17-api-reference-s42.html">API Ref</a>
+  <a href="53-changelog-s43.html">S43</a>
+  <a href="06-roadmap-s43.html">Roadmap</a>
+</nav>
+
 <div class="container">
-<a class="back" href="index.html">&#8592; Index</a>
-<h1 style="margin-top:1rem">&#128506; Roadmap S44 et au-dela</h1>
-<p class="subtitle">Etat fin S43 &middot; Priorites S44 &middot; Vision long terme</p>
+  <h1>🗺️ Roadmap S44+</h1>
+  <p class="subtitle">Après S43 — Plan de développement 2026</p>
 
-<div class="section">
-<h2>Etat fin S42/S43</h2>
-<div class="kpi-grid">
-  <div class="kpi"><div class="kpi-val">87</div><div class="kpi-lbl">Pages UI</div></div>
-  <div class="kpi"><div class="kpi-val">10</div><div class="kpi-lbl">Metiers</div></div>
-  <div class="kpi"><div class="kpi-val">12</div><div class="kpi-lbl">Dashboards</div></div>
-  <div class="kpi"><div class="kpi-val">200</div><div class="kpi-lbl">Animaux</div></div>
-  <div class="kpi"><div class="kpi-val">25</div><div class="kpi-lbl">Templates devis</div></div>
-  <div class="kpi"><div class="kpi-val">11</div><div class="kpi-lbl">Types RDV Calendly</div></div>
-</div>
-</div>
+  <h2>S44 — Priorités (prochaine session)</h2>
+  <table>
+    <tr><th>Priorité</th><th>Tâche</th><th>Effort</th><th>Impact</th></tr>
+    <tr><td><span class="badge badge-red">P1</span></td><td>Données dynamiques sur TOUS les dashboards via <code>/bilan/metier</code></td><td>M</td><td>★★★</td></tr>
+    <tr><td><span class="badge badge-red">P2</span></td><td>Webhook Calendly → création séance automatique</td><td>M</td><td>★★★</td></tr>
+    <tr><td><span class="badge badge-orange">P3</span></td><td>Page Visites pet-sitter enrichie (filtres ville/espèce)</td><td>S</td><td>★★</td></tr>
+    <tr><td><span class="badge badge-orange">P4</span></td><td>Dashboards enrichis Éducateur, Véto, Ostéo, Sport, Naturo</td><td>L</td><td>★★★</td></tr>
+    <tr><td><span class="badge badge-orange">P5</span></td><td>Devis multi-animaux (checkbox sélecteur)</td><td>M</td><td>★★</td></tr>
+    <tr><td><span class="badge badge-purple">P6</span></td><td>Export PDF dashboard CEO mensuel</td><td>M</td><td>★★</td></tr>
+    <tr><td><span class="badge badge-purple">P7</span></td><td>Séances de groupe équestre (table seance_participant)</td><td>L</td><td>★★</td></tr>
+    <tr><td><span class="badge badge-purple">P8</span></td><td>Planning filtré par métier</td><td>S</td><td>★★</td></tr>
+    <tr><td><span class="badge badge-purple">P9</span></td><td>RFE Septembre 2026 — intégration PA (Pennylane)</td><td>XL</td><td>★★★</td></tr>
+  </table>
 
-<div class="section">
-<h2>Priorites S44</h2>
-<div class="timeline">
-  <div class="tl-item">
-    <div class="tl-date">P1 — API dynamique dashboards</div>
-    <div class="tl-title">Brancher /api/bilan?metier=X sur chaque dashboard</div>
-    <div class="tl-desc">Filtre Mois / Trimestre / Annee. Remplace les donnees statiques par des vraies requetes SQL.</div>
+  <h2>Backlog moyen terme (S45-S48)</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>🔌 Intégrations</h3>
+      <ul>
+        <li>SMTP réel (Postmark/Mailgun) pour envoi mails</li>
+        <li>SMS (Twilio/OVH) pour rappels</li>
+        <li>Stripe pour paiement en ligne</li>
+        <li>Pennylane / API FEC export automatique</li>
+        <li>GPS/carte visites pet-sitter</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📱 Mobile & UX</h3>
+      <ul>
+        <li>PWA — installation sur mobile</li>
+        <li>Mode offline basique (planning)</li>
+        <li>Notifications push (rappels RDV)</li>
+        <li>Scanner QR code puce animale</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📊 Analytics</h3>
+      <ul>
+        <li>Export Excel dashboard CEO</li>
+        <li>Rapport mensuel auto-généré</li>
+        <li>Comparaison N vs N-1</li>
+        <li>Taux de fidélisation clients</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🐾 Métier</h3>
+      <ul>
+        <li>Module généalogique élevage complet</li>
+        <li>Protocoles de soins vétérinaire</li>
+        <li>Gestion licences sport canin (SCC)</li>
+        <li>Portail client self-service</li>
+      </ul>
+    </div>
   </div>
-  <div class="tl-item">
-    <div class="tl-date">P2 — Webhook Calendly</div>
-    <div class="tl-title">Route POST /webhooks/calendly</div>
-    <div class="tl-desc">Creation automatique de seance PetSuite a chaque reservation Calendly confirmee.</div>
-  </div>
-  <div class="tl-item">
-    <div class="tl-date">P3 — Dashboards metiers complets</div>
-    <div class="tl-title">Enrichir les 5 squelettes</div>
-    <div class="tl-desc">Educateur, Veterinaire, Osteopathe, Sport canin, Naturopathe avec KPIs reels.</div>
-  </div>
-  <div class="tl-item">
-    <div class="tl-date">P4 — Devis multi-animaux</div>
-    <div class="tl-title">Selecteur multi-animaux dans formulaire devis</div>
-    <div class="tl-desc">Checkbox pour associer plusieurs animaux a un devis. Utile eleveur (portee), pension (plusieurs animaux d un client).</div>
-  </div>
-  <div class="tl-item">
-    <div class="tl-date">P5 — Export PDF dashboard</div>
-    <div class="tl-title">Bilan CEO mensuel en PDF</div>
-    <div class="tl-desc">Generation PDF du dashboard global via API editions. Logo + KPIs + CA par metier + impayés.</div>
-  </div>
-  <div class="tl-item">
-    <div class="tl-date">P6 — Seances de groupe equestre</div>
-    <div class="tl-title">Table seance_participant</div>
-    <div class="tl-desc">Permettre plusieurs cavaliers/chevaux sur une meme seance. Affichage planning collectif.</div>
-  </div>
-  <div class="tl-item">
-    <div class="tl-date">P7 — RFE septembre 2026</div>
-    <div class="tl-title">Facturation electronique obligatoire</div>
-    <div class="tl-desc">Integration Pennylane ou autre PA. e-Invoicing + e-Reporting. Deadline legale : septembre 2026.</div>
-  </div>
-</div>
-</div>
 
-<div class="section">
-<h2>Vision long terme (S45+)</h2>
-<table>
-  <thead><tr><th>Theme</th><th>Description</th><th>Horizon</th></tr></thead>
-  <tbody>
-    <tr><td>Application mobile</td><td>App React Native pour les professionnels itinerants (pet-sitter, equestre)</td><td>S46-S50</td></tr>
-    <tr><td>Portail client</td><td>Espace client : reservations, documents, suivi animal, questionnaires</td><td>S45</td></tr>
-    <tr><td>Multi-tenant SaaS</td><td>Isolation par tenant, portail super-admin, facturation abonnements</td><td>S48+</td></tr>
-    <tr><td>IA comportementale</td><td>Suggestions de programme basees sur le profil EDC de l animal</td><td>S50+</td></tr>
-    <tr><td>Marketplace metiers</td><td>Annuaire des pros PetSuite avec prise de RDV integree</td><td>S52+</td></tr>
-  </tbody>
-</table>
-</div>
+  <h2>Objectif Algorithmia 2026-2030</h2>
+  <table>
+    <tr><th>Année</th><th>Subscribers</th><th>ARR estimé</th><th>Étape clé</th></tr>
+    <tr><td>2026</td><td>50-150</td><td>~50K€</td><td>Lancement, premiers clients payants</td></tr>
+    <tr><td>2027</td><td>300-500</td><td>~200K€</td><td>Breakeven, BPI / love money</td></tr>
+    <tr><td>2028</td><td>800-1000</td><td>~600K€</td><td>Business angels, équipe 2-3 pers</td></tr>
+    <tr><td>2029</td><td>1400-1600</td><td>~1.1M€</td><td>Series A / banque</td></tr>
+    <tr><td>2030</td><td>2000+</td><td>~1.8M€</td><td>Leader vertical France</td></tr>
+  </table>
 
-<footer>PetSuite by Algorithmia &middot; Roadmap S44 &middot; 22 mars 2026 &middot; <a href="index.html" style="color:#534ab7">Index</a></footer>
+  <p style="margin-top: 24px; font-size: 0.85rem; color: var(--text2);">
+    Tarifs : Starter 39€ / Pro 69€ / Business 119€ par mois — Breakeven estimé M+28
+  </p>
 </div></body></html>
