@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PetSuite — Documentation technique</title>
+<style>:root{--bg:#0F1923;--bg-card:#1A2332;--border:#2A3A4A;--accent:#4F46E5;--cyan:#06B6D4;--text:#E2E8F0;--muted:#94A3B8;--dim:#64748B;--green:#10B981;--orange:#F59E0B;--red:#EF4444}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px}
+  .header{background:linear-gradient(135deg,#1a1040 0%,#0f1923 70%);border-bottom:1px solid var(--border);padding:48px 48px 36px}
+  .header-inner{max-width:1200px;margin:0 auto}
+  .header h1{font-size:1.75rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:12px}
+  .header .sub{color:var(--muted);font-size:.95rem;margin-top:8px}
+  .badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .badge{border-radius:20px;padding:3px 12px;font-size:.72rem;font-weight:600;background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.4);color:#a5b4fc}
+  .badge.g{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.35);color:#6ee7b7}
+  .badge.c{background:rgba(6,182,212,.15);border-color:rgba(6,182,212,.35);color:#67e8f9}
+  .container{max-width:1200px;margin:0 auto;padding:40px 48px}
+  .cat-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:8px}
+  .card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px;text-decoration:none;display:block;transition:all .15s}
+  .card:hover{border-color:var(--accent);background:rgba(79,70,229,.08);transform:translateY(-1px)}
+  .card-num{font-size:.7rem;font-weight:700;color:var(--dim);margin-bottom:6px;font-family:monospace}
+  .card-title{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .card-desc{font-size:.8rem;color:var(--muted);line-height:1.5}
+  .new-badge{background:var(--green);color:#fff;font-size:.6rem;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase}
+  .upd-badge{background:var(--orange);color:#000;font-size:.6rem;font-weight:700;padding:1px 7px;border-radius:10px;text-transform:uppercase}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:36px}
+  .stat{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+  .stat-val{font-size:1.8rem;font-weight:700;color:var(--cyan)}
+  .stat-lbl{font-size:.72rem;color:var(--dim);margin-top:2px}
+  footer{text-align:center;color:var(--dim);font-size:.8rem;padding:36px 48px;border-top:1px solid var(--border);margin-top:24px}
+  footer a{color:var(--cyan);text-decoration:none}
+  @media(max-width:768px){.header,.container{padding:20px}.grid{grid-template-columns:1fr}}</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+  <h1><span>🐾</span> PetSuite — Documentation technique</h1>
+  <div class="sub">Architecture · Fonctionnel · Métiers · API · Roadmap · Sprint S40 — 22/03/2026</div>
+  <div class="badges">
+    <span class="badge">Algorithmia 2026</span>
+    <span class="badge c">Sprint S40</span>
+    <span class="badge g">47 documents</span>
+    <span class="badge g">9 nouveaux S40</span>
+  </div>
+</div></div>
+
+<div class="container">
+
+<div class="stats">
+  <div class="stat"><div class="stat-val">47</div><div class="stat-lbl">Documents</div></div>
+  <div class="stat"><div class="stat-val">9</div><div class="stat-lbl">Nouveaux S40</div></div>
+  <div class="stat"><div class="stat-val">17</div><div class="stat-lbl">Mis à jour S40</div></div>
+  <div class="stat"><div class="stat-val">14</div><div class="stat-lbl">Métiers documentés</div></div>
+  <div class="stat"><div class="stat-val">70+</div><div class="stat-lbl">Pages UI</div></div>
+  <div class="stat"><div class="stat-val">35k</div><div class="stat-lbl">Lignes API</div></div>
+</div>
+
+<div class="cat-title">📌 Essentiels</div>
+<div class="grid">
+  <a href="01-synthese-projet.html" class="card">
+    <div class="card-num">#01</div>
+    <div class="card-title">📋 Synthèse projet <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Architecture, stack technique, modules, état d'avancement global</div>
+  </a>
+  <a href="02-guide-parametrage.html" class="card">
+    <div class="card-num">#02</div>
+    <div class="card-title">⚙️ Guide paramétrage <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Configuration complète — entreprise, TVA, articles, modes de paiement, intégrations</div>
+  </a>
+  <a href="03-notice-utilisateur.html" class="card">
+    <div class="card-num">#03</div>
+    <div class="card-title">📖 Notice utilisateur <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Manuel d'utilisation complet — workflows, fonctionnalités, raccourcis</div>
+  </a>
+  <a href="07-audit-stack.html" class="card">
+    <div class="card-num">#07</div>
+    <div class="card-title">🔍 Audit stack <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Routes API, statuts, BDD, conteneurs Docker, performances</div>
+  </a>
+</div>
+
+<div class="cat-title">🗺️ Architecture & Roadmap</div>
+<div class="grid">
+  <a href="05-architecture-roadmap.html" class="card">
+    <div class="card-num">#05</div>
+    <div class="card-title">🏗️ Architecture</div>
+    <div class='card-desc'>Infrastructure Docker, NestJS, Next.js, MariaDB, nginx, GED</div>
+  </a>
+  <a href="06-roadmap.html" class="card">
+    <div class="card-num">#06</div>
+    <div class="card-title">🛣️ Roadmap sprints <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Historique S01–S40, statuts, livraisons, backlog S41+</div>
+  </a>
+  <a href="08-roadmap-metiers.html" class="card">
+    <div class="card-num">#08</div>
+    <div class="card-title">🐾 Roadmap métiers <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>14 métiers cibles, modules mutualisés, avancement par métier</div>
+  </a>
+  <a href="12-infrastructure.html" class="card">
+    <div class="card-num">#12</div>
+    <div class="card-title">🖥️ Infrastructure</div>
+    <div class='card-desc'>Architecture réseau, Docker Compose, volumes, monitoring</div>
+  </a>
+  <a href="20-pilotage-projet.html" class="card">
+    <div class="card-num">#20</div>
+    <div class="card-title">📊 Pilotage projet</div>
+    <div class='card-desc'>KPIs, jalons, risques, gouvernance</div>
+  </a>
+</div>
+
+<div class="cat-title">💼 Commercial & Business</div>
+<div class="grid">
+  <a href="10-modele-commercial.html" class="card">
+    <div class="card-num">#10</div>
+    <div class="card-title">💰 Modèle commercial <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Pricing Starter/Pro/Business, stratégie go-to-market, projections</div>
+  </a>
+  <a href="16-landing-page.html" class="card">
+    <div class="card-num">#16</div>
+    <div class="card-title">🌐 Landing page <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Wireframes, messages clés, CTA, SEO, A/B tests</div>
+  </a>
+  <a href="22-business-plan.html" class="card">
+    <div class="card-num">#22</div>
+    <div class="card-title">📈 Business plan</div>
+    <div class='card-desc'>Projections 5 ans, Algorithmia, financement, rentabilité</div>
+  </a>
+  <a href="27-investisseurs.html" class="card">
+    <div class="card-num">#27</div>
+    <div class="card-title">💎 Investisseurs</div>
+    <div class='card-desc'>Deck investisseurs, valorisation, roadmap levée</div>
+  </a>
+</div>
+
+<div class="cat-title">🎬 Vidéos & Scénarios</div>
+<div class="grid">
+  <a href="09-scenario-video.html" class="card">
+    <div class="card-num">#09</div>
+    <div class="card-title">🎬 Scénario vidéo <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Scénario démo complète multi-métiers (8 min)</div>
+  </a>
+  <a href="28-scenarios-video-metiers.html" class="card">
+    <div class="card-num">#28s</div>
+    <div class="card-title">🎭 Scénarios par métier <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Scénarios vidéo commerciaux par activité (7 min)</div>
+  </a>
+</div>
+
+<div class="cat-title">📚 Documentation fonctionnelle</div>
+<div class="grid">
+  <a href="08-projet-reference.html" class="card">
+    <div class="card-num">#08r</div>
+    <div class="card-title">📘 Référence projet</div>
+    <div class='card-desc'>Spécifications fonctionnelles détaillées</div>
+  </a>
+  <a href="11-carte-identite-animale.html" class="card">
+    <div class="card-num">#11</div>
+    <div class="card-title">🐕 Carte identité animale</div>
+    <div class='card-desc'>Fiche animal, puce, races, LOF/LOOF, I-CAD</div>
+  </a>
+  <a href="15-rgpd-conformite.html" class="card">
+    <div class="card-num">#15</div>
+    <div class="card-title">🔒 RGPD</div>
+    <div class='card-desc'>Conformité RGPD, données personnelles, droit à l'oubli</div>
+  </a>
+  <a href="17-api-reference.html" class="card">
+    <div class="card-num">#17</div>
+    <div class="card-title">🔌 Référence API <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Documentation complète de toutes les routes REST</div>
+  </a>
+  <a href="18-questionnaires.html" class="card">
+    <div class="card-num">#18</div>
+    <div class="card-title">📝 Questionnaires</div>
+    <div class='card-desc'>Module questionnaires pré-consultation, templates</div>
+  </a>
+  <a href="19-onboarding.html" class="card">
+    <div class="card-num">#19</div>
+    <div class="card-title">🚀 Onboarding</div>
+    <div class='card-desc'>Parcours guidé premier paramétrage, wizard</div>
+  </a>
+  <a href="21-aide-integree.html" class="card">
+    <div class="card-num">#21</div>
+    <div class="card-title">❓ Aide intégrée</div>
+    <div class='card-desc'>Système FAQ/aide contextuelle dans l'application</div>
+  </a>
+  <a href="28-rapport-regles-metier.html" class="card">
+    <div class="card-num">#28r</div>
+    <div class="card-title">⚖️ Règles métier <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Règles de gestion, contraintes BDD, triggers, validations</div>
+  </a>
+</div>
+
+<div class="cat-title">📡 Facturation Électronique (RFE)</div>
+<div class="grid">
+  <a href="32-rfe-facturation-electronique.html" class="card">
+    <div class="card-num">#32</div>
+    <div class="card-title">📡 RFE — Vue d'ensemble</div>
+    <div class='card-desc'>Module RFE, statuts, tableau de bord, intégration Pennylane</div>
+  </a>
+  <a href="43-rfe-introduction.html" class="card">
+    <div class="card-num">#43</div>
+    <div class="card-title">⚖️ RFE — Contexte légal <span class="new-badge">NEW</span></div>
+    <div class='card-desc'>Obligations 2026/2027, calendrier, formats, plateformes agréées</div>
+  </a>
+  <a href="46-rfe-regles-acceptation.html" class="card">
+    <div class="card-num">#46</div>
+    <div class="card-title">⚖️ RFE — Règles <span class="new-badge">NEW</span></div>
+    <div class='card-desc'>Délais normés, motifs litige, refus, mise en attente</div>
+  </a>
+</div>
+
+<div class="cat-title">🛒 Achats & Stock</div>
+<div class="grid">
+  <a href="33-module-achats-complet.html" class="card">
+    <div class="card-num">#33</div>
+    <div class="card-title">🛒 Achats — Vue d'ensemble</div>
+    <div class='card-desc'>Module achats complet, commandes, réceptions, règlements</div>
+  </a>
+  <a href="49-achats-guide.html" class="card">
+    <div class="card-num">#49</div>
+    <div class="card-title">📦 Guide Achats <span class="new-badge">NEW</span></div>
+    <div class='card-desc'>Cycle commande→livraison→facture fournisseur→règlement SEPA</div>
+  </a>
+</div>
+
+<div class="cat-title">🐕 Métiers — Documentation</div>
+<div class="grid">
+  <a href="36-metier-comportementaliste.html" class="card">
+    <div class="card-num">#36</div>
+    <div class="card-title">🐕 Comportementaliste <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>EC, séances suivi, CAC 1-14, programmes, workflow complet</div>
+  </a>
+  <a href="37-metier-toiletteur.html" class="card">
+    <div class="card-num">#37</div>
+    <div class="card-title">✂️ Toiletteur <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Salon, planning créneaux, forfaits, abonnements</div>
+  </a>
+  <a href="38-metier-petsitter.html" class="card">
+    <div class="card-num">#38</div>
+    <div class="card-title">🏠 Pet-Sitter <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Visites, promenades, gardes, suivi client</div>
+  </a>
+  <a href="39-metier-eleveur.html" class="card">
+    <div class="card-num">#39</div>
+    <div class="card-title">🐾 Éleveur <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Portées, géniteurs, naissances, mortalité, LOF/LOOF</div>
+  </a>
+  <a href="40-metier-educateur.html" class="card">
+    <div class="card-num">#40</div>
+    <div class="card-title">🎓 Éducateur canin <span class="upd-badge">MAJ S40</span></div>
+    <div class='card-desc'>Éducation comportementale, programmes, suivi progression</div>
+  </a>
+  <a href="54-metier-pension.html" class="card">
+    <div class="card-num">#54</div>
+    <div class="card-title">🏠 Pension / Chenil <span class="new-badge">NEW</span></div>
+    <div class='card-desc'>Planning multi-animaux, check-in/out, tarifs durée</div>
+  </a>
+  <a href="55-metier-veterinaire.html" class="card">
+    <div class="card-num">#55</div>
+    <div class="card-title">🩺 Vétérinaire <span class="new-badge">NEW</span></div>
+    <div class='card-desc'>Consultations, actes, vaccinations, ordonnances GED</div>
+  </a>
+  <a href="56-metier-osteopathe.html" class="card">
+    <div class="card-num">#56</div>
+    <div class="card-title">🤲 Ostéopathe <span class="new-badge">NEW</span></div>
+    <div class='card-desc'>Bilans, traitements, suivi thérapeutique</div>
+  </a>
+  <a href="57-metier-club-sport.html" class="card">
+    <div class="card-num">#57</div>
+    <div class="card-title">🏆 Club Sport Canin <span class="new-badge">NEW</span></div>
+    <div class='card-desc'>Agility, obéissance, ring, licences, compétitions</div>
+  </a>
+  <a href="58-metier-naturopathe.html" class="card">
+    <div class="card-num">#58</div>
+    <div class="card-title">🌿 Naturopathe <span class="new-badge">NEW</span></div>
+    <div class='card-desc'>Bilans nutritionnels, compléments, plans personnalisés</div>
+  </a>
+  <a href="59-metier-centre-equestre.html" class="card">
+    <div class="card-num">#59</div>
+    <div class="card-title">🐴 Centre Équestre <span class="new-badge">NEW</span></div>
+    <div class='card-desc'>Cours, pension chevaux, stages, licences FFE</div>
+  </a>
+</div>
+
+<div class="cat-title">⚙️ Administration & Portails</div>
+<div class="grid">
+  <a href="04-super-admin.html" class="card">
+    <div class="card-num">#04</div>
+    <div class="card-title">🔑 Super Admin</div>
+    <div class='card-desc'>Portail multi-tenants, gestion abonnements, monitoring</div>
+  </a>
+  <a href="13-portail-super-admin.html" class="card">
+    <div class="card-num">#13</div>
+    <div class="card-title">🏛️ Portail Super Admin</div>
+    <div class='card-desc'>Interface administration centrale</div>
+  </a>
+  <a href="14-portail-client.html" class="card">
+    <div class="card-num">#14</div>
+    <div class="card-title">👤 Portail client</div>
+    <div class='card-desc'>Espace client public (suivi dossier, devis, factures)</div>
+  </a>
+  <a href="23-Prise-en-compte-de-la-NF-525.html" class="card">
+    <div class="card-num">#23</div>
+    <div class="card-title">🧾 NF 525</div>
+    <div class='card-desc'>Conformité caisse enregistreuse NF 525</div>
+  </a>
+</div>
+
+<div class="cat-title">📋 Changelogs</div>
+<div class="grid">
+  <a href="24-changelog-sprint-S31.html" class="card">
+    <div class="card-num">#24</div>
+    <div class="card-title">📋 Changelog S31</div>
+    
+  </a>
+  <a href="25-changelog-sprint-S32.html" class="card">
+    <div class="card-num">#25</div>
+    <div class="card-title">📋 Changelog S32</div>
+    
+  </a>
+  <a href="26-changelog-S33.html" class="card">
+    <div class="card-num">#26</div>
+    <div class="card-title">📋 Changelog S33</div>
+    
+  </a>
+  <a href="28-changelog-S36.html" class="card">
+    <div class="card-num">#28c</div>
+    <div class="card-title">📋 Changelog S36</div>
+    
+  </a>
+</div>
+</div>
+<footer>
+  PetSuite Documentation — Sprint S40 · Algorithmia 2026 · Hermilly Nicolas<br><br>
+  <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a> ·
+  <a href="http://localhost/app/">App locale</a>
+</footer>
+</body></html>

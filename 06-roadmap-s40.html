@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PetSuite — Roadmap Sprints</title>
+<style>:root{--bg:#0F1923;--bg-card:#1A2332;--bg-code:#0D1117;--border:#2A3A4A;--accent:#4F46E5;--cyan:#06B6D4;--text:#E2E8F0;--muted:#94A3B8;--dim:#64748B;--green:#10B981;--orange:#F59E0B;--red:#EF4444}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px}
+.header{background:linear-gradient(135deg,#1a1040 0%,#0f1923 70%);border-bottom:1px solid var(--border);padding:48px 48px 40px}
+.header-inner{max-width:1100px;margin:0 auto}
+.header h1{font-size:1.75rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:12px}
+.header .sub{color:var(--muted);font-size:.95rem;margin-top:8px}
+.badges{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.badge{border-radius:20px;padding:3px 12px;font-size:.72rem;font-weight:600;background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.4);color:#a5b4fc}
+.bg{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.35);color:#6ee7b7}
+.bc{background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.35);color:#67e8f9}
+.bo{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);color:#fcd34d}
+.container{max-width:1100px;margin:0 auto;padding:40px 48px}
+.toc{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:22px 28px;margin-bottom:36px}
+.toc-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin-bottom:12px}
+.toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.toc a{color:var(--cyan);text-decoration:none;font-size:.85rem;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);padding:4px 14px;border-radius:20px}
+.toc a:hover{background:var(--cyan);color:#000}
+.section{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:36px;margin-bottom:28px}
+.sh{display:flex;align-items:flex-start;gap:18px;padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.si{font-size:2.2rem;line-height:1;flex-shrink:0}
+.st h2{font-size:1.3rem;font-weight:700;color:#fff}
+.st .sub{font-size:.875rem;color:var(--muted);margin-top:5px}
+h3{font-size:1rem;font-weight:600;color:#fff;margin:24px 0 10px}
+h4{font-size:.78rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin:16px 0 8px}
+p{color:var(--muted);font-size:.9rem;margin-bottom:12px;line-height:1.75}
+ul,ol{padding-left:20px;color:var(--muted);font-size:.9rem;margin-bottom:12px}
+li{margin-bottom:6px}strong{color:var(--text);font-weight:600}
+code{background:rgba(255,255,255,.07);border:1px solid var(--border);color:#f0abfc;font-family:'JetBrains Mono',monospace;font-size:.82rem;padding:2px 7px;border-radius:5px}
+pre{background:var(--bg-code);border:1px solid var(--border);border-left:3px solid var(--accent);color:#E2E8F0;padding:20px;border-radius:10px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.75;margin:12px 0 20px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.875rem}
+th{background:rgba(255,255,255,.04);padding:9px 14px;text-align:left;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);border-bottom:1px solid var(--border)}
+td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.sok{background:rgba(16,185,129,.15);color:#6ee7b7;padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
+.sfut{background:rgba(100,116,139,.2);color:var(--muted);padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
+.swarn{background:rgba(245,158,11,.15);color:#fcd34d;padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0}
+.mini{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:18px}
+.mini h4{margin:0 0 8px;font-size:.9rem;color:#fff}
+.mini p{margin:0;font-size:.82rem}
+.mini ul{font-size:.82rem;margin-bottom:0}
+.step{display:flex;gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.step-num{background:var(--accent);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0;margin-top:2px}
+.step-content h4{color:#fff;font-size:.95rem;margin:0 0 6px}
+.step-content p{margin:0;font-size:.875rem}
+.alert{border-radius:10px;padding:14px 18px;margin:14px 0;font-size:.875rem;display:flex;gap:10px;align-items:flex-start}
+.ai{background:rgba(79,70,229,.12);border:1px solid rgba(79,70,229,.3);color:#c7d2fe}
+.ag{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.28);color:#a7f3d0}
+.ao{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.28);color:#fde68a}
+.ad{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.28);color:#fca5a5}
+footer{text-align:center;color:var(--dim);font-size:.8rem;padding:40px 48px;border-top:1px solid var(--border);margin-top:20px}
+footer a{color:var(--cyan);text-decoration:none}
+@media(max-width:768px){.header,.container{padding:24px 20px}.g2,.g3{grid-template-columns:1fr}}
+.sprint-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:20px 0}
+.sprint-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.sprint-card.done{border-left:4px solid var(--green)}
+.sprint-card.current{border-left:4px solid var(--orange);background:rgba(245,158,11,.05)}
+.sprint-card.future{border-left:4px solid var(--dim)}
+.sprint-num{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:8px}
+.sprint-title{font-size:1rem;font-weight:600;color:#fff;margin-bottom:10px}
+.sprint-items{font-size:.82rem;color:var(--muted);padding-left:16px}
+.sprint-items li{margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+  <h1><span>🛣️</span> Roadmap Sprints</h1>
+  <div class="sub">Historique S01–S40 · Backlog S41–S43 · 22/03/2026</div>
+  <div class="badges">
+    <span class="badge">S40 Actuel</span>
+    <span class="badge bc">22/03/2026</span>
+    <span class="badge bg">70+ pages UI</span>
+    <span class="badge bg">35k lignes API</span>
+  </div>
+</div></div>
+<div class="container">
+
+<div class="section">
+  <div class="sh"><span class="si">📊</span><div class="st"><h2>Vue d'ensemble</h2><div class="sub">État du projet PetSuite au Sprint S40</div></div></div>
+  <div class="g3">
+    <div class="mini"><h4>✅ Sprints livrés</h4><p><strong>S01 → S40</strong> — 40 sprints. Architecture, BDD, API, frontend, élevage, RFE, CRM, Yousign, FEC, statistiques, formulaires lead, interfaces API consolidées.</p></div>
+    <div class="mini"><h4>🔧 En cours — S41</h4><p>Fix body parsing (POST règlements/achats/séances), Sidebar groupée déployée, carte géographique, commentaires BDD, charte graphique audit.</p></div>
+    <div class="mini"><h4>🚀 Roadmap S42-S43</h4><p>Vidéos démo par métier, WhatsApp Business, UBL facturation électronique, onboarding guidé, adaptation écrans par métier, préparation commerciale Algorithmia.</p></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sh"><span class="si">🏆</span><div class="st"><h2>Sprints récents (S35–S40)</h2><div class="sub">Détail des livrables</div></div></div>
+  <div class="sprint-grid">
+    <div class="sprint-card done">
+      <div class="sprint-num">Sprint S35</div>
+      <div class="sprint-title">Module RFE + FEC</div>
+      <ul class="sprint-items">
+        <li>Tableau de bord RFE avec statuts</li>
+        <li>Export FEC avec hash SHA-256</li>
+        <li>Procédure sp_fec_generer_par_exercice</li>
+        <li>Seeds 51 factures RFE complets</li>
+      </ul>
+    </div>
+    <div class="sprint-card done">
+      <div class="sprint-num">Sprint S37</div>
+      <div class="sprint-title">Signature Yousign + DocumentActions</div>
+      <ul class="sprint-items">
+        <li>Composant DocumentActions (PDF/Email/Signature)</li>
+        <li>SignatureModal avec TTS vocal</li>
+        <li>Règle modale PDF obligatoire</li>
+        <li>Intégration Yousign sandbox/production</li>
+      </ul>
+    </div>
+    <div class="sprint-card done">
+      <div class="sprint-num">Sprint S38</div>
+      <div class="sprint-title">Page Interfaces API + CRM enrichi</div>
+      <ul class="sprint-items">
+        <li>Page API Keys accordéon (Yousign, PDP, SMTP, Stripe)</li>
+        <li>CRM Leads, Opportunités, Activités, Campagnes</li>
+        <li>Commentaires BDD ALTER TABLE (10 tables)</li>
+        <li>Réseaux sociaux + Communauté</li>
+      </ul>
+    </div>
+    <div class="sprint-card done">
+      <div class="sprint-num">Sprint S39</div>
+      <div class="sprint-title">Élevage + Seeds + EC→EC rename</div>
+      <ul class="sprint-items">
+        <li>Seeds élevage : 10 chiots, 68 poids, 14 vaccins, 6 réservations</li>
+        <li>Seeds RFE : 51 factures cycle complet</li>
+        <li>Remplacement EDC → EC (9 fichiers, 0 résiduel)</li>
+        <li>Config Pennylane PDP actif</li>
+      </ul>
+    </div>
+    <div class="sprint-card current">
+      <div class="sprint-num">Sprint S40 — ACTUEL</div>
+      <div class="sprint-title">Interfaces API consolidées + Élevage géniteurs + Carte géo</div>
+      <ul class="sprint-items">
+        <li>Interfaces API : Klarna + WhatsApp fusionnés (SMTP+PDP sous-pages)</li>
+        <li>Formulaires lead multi-métiers UUID auto</li>
+        <li>Tables elevage_mortalite + elevage_geniteur</li>
+        <li>Routes tiers-avec-coords + villes-search (carte géo)</li>
+        <li>Sidebar groupée (ACCUEIL, COMMERCIAL, MON/MES MÉTIER(S)...)</li>
+        <li>10 pages métier documentées (HTML)</li>
+        <li>Pages RFE : introduction + règles acceptation/litige</li>
+      </ul>
+    </div>
+    <div class="sprint-card future">
+      <div class="sprint-num">Sprint S41 — PROCHAIN</div>
+      <div class="sprint-title">Stabilisation + Commentaires BDD + Charte</div>
+      <ul class="sprint-items">
+        <li>Fix POST /reglements, /achats, /seances (body parsing)</li>
+        <li>Carte clients géographique déployée</li>
+        <li>Commentaires BDD complets (format Relation NomTable)</li>
+        <li>Audit charte graphique mode sombre/clair</li>
+        <li>Libellés EC personnalisables</li>
+        <li>CGV dans les PDFs factures</li>
+      </ul>
+    </div>
+    <div class="sprint-card future">
+      <div class="sprint-num">Sprint S42</div>
+      <div class="sprint-title">Vidéos démo + Enrichissement</div>
+      <ul class="sprint-items">
+        <li>Seeds BDD démo réalistes par métier</li>
+        <li>Vidéos GIF démo par métier (gif_creator)</li>
+        <li>WhatsApp Business : envoi automatique rappels</li>
+        <li>UBL 2.1 — format facture électronique étendu</li>
+        <li>E-reporting BtoC automatique</li>
+      </ul>
+    </div>
+    <div class="sprint-card future">
+      <div class="sprint-num">Sprint S43</div>
+      <div class="sprint-title">Préparation commerciale Algorithmia</div>
+      <ul class="sprint-items">
+        <li>Wizard onboarding guidé</li>
+        <li>Adaptation écrans par métier (modules conditionnels)</li>
+        <li>Connexion PDP réelle (Pennylane API live)</li>
+        <li>Plan freemium + essai 30 jours</li>
+        <li>Multi-tenants SaaS (isolation par cabinet)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sh"><span class="si">🎯</span><div class="st"><h2>Objectifs commerciaux Algorithmia</h2><div class="sub">Business plan 2025–2030</div></div></div>
+  <table>
+    <tr><th>Année</th><th>Abonnés cible</th><th>ARR cible</th><th>Jalons clés</th></tr>
+    <tr><td><strong>2026</strong></td><td>50</td><td>~24k€</td><td>MVP stable, 3 métiers en production, premiers clients payants</td></tr>
+    <tr><td><strong>2027</strong></td><td>200</td><td>~117k€</td><td>5 métiers, RFE obligatoire PME, partenariats vétérinaires</td></tr>
+    <tr><td><strong>2028</strong></td><td>500</td><td>~350k€</td><td>10 métiers, WhatsApp Business, application mobile client</td></tr>
+    <tr><td><strong>2029</strong></td><td>1000</td><td>~830k€</td><td>Levée Serie A, équipe commerciale, expansion Europe</td></tr>
+    <tr><td><strong>2030</strong></td><td>2000</td><td>~1,8M€</td><td>Leader France petcare pro, 14 métiers, 3 pays</td></tr>
+  </table>
+  <div class="alert ai">💡 Pricing : Starter 39€/mois · Pro 69€/mois · Business 119€/mois. Breakeven estimé à 28–30 mois.</div>
+</div>
+
+</div>
+<footer>
+  PetSuite — Roadmap Sprints | Sprint S40 | Algorithmia 2026<br><br>
+  <a href="index.html">← Index</a> · <a href="08-roadmap-metiers.html">Roadmap métiers →</a>
+</footer>
+</body></html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PetSuite — Scénarios vidéo par métier</title>
+<style>:root{--bg:#0F1923;--bg-card:#1A2332;--bg-code:#0D1117;--border:#2A3A4A;--accent:#4F46E5;--cyan:#06B6D4;--text:#E2E8F0;--muted:#94A3B8;--dim:#64748B;--green:#10B981;--orange:#F59E0B;--red:#EF4444}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px}
+.header{background:linear-gradient(135deg,#1a1040 0%,#0f1923 70%);border-bottom:1px solid var(--border);padding:48px 48px 40px}
+.header-inner{max-width:1100px;margin:0 auto}
+.header h1{font-size:1.75rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:12px}
+.header .sub{color:var(--muted);font-size:.95rem;margin-top:8px}
+.badges{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.badge{border-radius:20px;padding:3px 12px;font-size:.72rem;font-weight:600;background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.4);color:#a5b4fc}
+.bg{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.35);color:#6ee7b7}
+.bc{background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.35);color:#67e8f9}
+.bo{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);color:#fcd34d}
+.container{max-width:1100px;margin:0 auto;padding:40px 48px}
+.toc{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:22px 28px;margin-bottom:36px}
+.toc-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin-bottom:12px}
+.toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.toc a{color:var(--cyan);text-decoration:none;font-size:.85rem;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);padding:4px 14px;border-radius:20px}
+.toc a:hover{background:var(--cyan);color:#000}
+.section{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:36px;margin-bottom:28px}
+.sh{display:flex;align-items:flex-start;gap:18px;padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.si{font-size:2.2rem;line-height:1;flex-shrink:0}
+.st h2{font-size:1.3rem;font-weight:700;color:#fff}
+.st .sub{font-size:.875rem;color:var(--muted);margin-top:5px}
+h3{font-size:1rem;font-weight:600;color:#fff;margin:24px 0 10px}
+h4{font-size:.78rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin:16px 0 8px}
+p{color:var(--muted);font-size:.9rem;margin-bottom:12px;line-height:1.75}
+ul,ol{padding-left:20px;color:var(--muted);font-size:.9rem;margin-bottom:12px}
+li{margin-bottom:6px}strong{color:var(--text);font-weight:600}
+code{background:rgba(255,255,255,.07);border:1px solid var(--border);color:#f0abfc;font-family:'JetBrains Mono',monospace;font-size:.82rem;padding:2px 7px;border-radius:5px}
+pre{background:var(--bg-code);border:1px solid var(--border);border-left:3px solid var(--accent);color:#E2E8F0;padding:20px;border-radius:10px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.75;margin:12px 0 20px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.875rem}
+th{background:rgba(255,255,255,.04);padding:9px 14px;text-align:left;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);border-bottom:1px solid var(--border)}
+td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.sok{background:rgba(16,185,129,.15);color:#6ee7b7;padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
+.sfut{background:rgba(100,116,139,.2);color:var(--muted);padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
+.swarn{background:rgba(245,158,11,.15);color:#fcd34d;padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0}
+.mini{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:18px}
+.mini h4{margin:0 0 8px;font-size:.9rem;color:#fff}
+.mini p{margin:0;font-size:.82rem}
+.mini ul{font-size:.82rem;margin-bottom:0}
+.step{display:flex;gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.step-num{background:var(--accent);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0;margin-top:2px}
+.step-content h4{color:#fff;font-size:.95rem;margin:0 0 6px}
+.step-content p{margin:0;font-size:.875rem}
+.alert{border-radius:10px;padding:14px 18px;margin:14px 0;font-size:.875rem;display:flex;gap:10px;align-items:flex-start}
+.ai{background:rgba(79,70,229,.12);border:1px solid rgba(79,70,229,.3);color:#c7d2fe}
+.ag{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.28);color:#a7f3d0}
+.ao{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.28);color:#fde68a}
+.ad{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.28);color:#fca5a5}
+footer{text-align:center;color:var(--dim);font-size:.8rem;padding:40px 48px;border-top:1px solid var(--border);margin-top:20px}
+footer a{color:var(--cyan);text-decoration:none}
+@media(max-width:768px){.header,.container{padding:24px 20px}.g2,.g3{grid-template-columns:1fr}}</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+  <h1><span>🎬</span> Scénarios vidéo par métier</h1>
+  <div class="sub">Guides de tournage · 7 min max · Parcours complets · Seeds BDD requis</div>
+  <div class="badges">
+    <span class="badge">Sprint S40</span>
+    <span class="badge bc">Mis à jour 22/03/2026</span>
+    <span class="badge bg">10 métiers</span>
+  </div>
+</div></div>
+<div class="container">
+
+<div class="section">
+  <div class="sh"><span class="si">📋</span><div class="st"><h2>Structure commune (7 min)</h2><div class="sub">Applicable à tous les métiers</div></div></div>
+  <table>
+    <tr><th>Séquence</th><th>Durée</th><th>Contenu</th><th>Écrans montrés</th></tr>
+    <tr><td><strong>1. Paramétrage</strong></td><td>1 min</td><td>Mon Entreprise, Sélection Métier, Catalogue articles, Charte graphique</td><td>Tous les sous-menus Paramètres</td></tr>
+    <tr><td><strong>2. Onboarding client</strong></td><td>1 min</td><td>Nouveau client + 2 contacts + 2 animaux géolocalisés</td><td>Clients, Animaux, Carte clients</td></tr>
+    <tr><td><strong>3. Activité principale</strong></td><td>2 min</td><td>Spécifique au métier (EC, séance, portée, etc.)</td><td>Selon métier</td></tr>
+    <tr><td><strong>4. Commercial</strong></td><td>1 min 30s</td><td>Devis → Signature Yousign → Facture → PDF modal → Email → Règlement</td><td>Devis, Factures, DocumentActions</td></tr>
+    <tr><td><strong>5. Compta & FEC</strong></td><td>1 min</td><td>Balance, export FEC, vérification équilibre débit/crédit</td><td>Comptabilité, Export FEC</td></tr>
+    <tr><td><strong>6. Stats & CRM</strong></td><td>30s</td><td>Dashboard CA, leads entrants, pipeline</td><td>Statistiques, CRM Leads & Opps</td></tr>
+  </table>
+  <div class="alert ao">⚠️ <strong>Règle d'or vidéo :</strong> toutes les ouvertures de PDF se font via la modal DocumentActions (🖨️ bouton PDF → fenêtre modale avec iframe). Ne jamais ouvrir un onglet PDF.</div>
+</div>
+
+<div class="section">
+  <div class="sh"><span class="si">🐕</span><div class="st"><h2>Scénario 1 — Comportementaliste / Éducateur</h2><div class="sub">Module : COMPORTEMENTALISTE — Durée cible : 7 min</div></div></div>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Paramétrage (1 min)</h4><p>Mon Entreprise → renseigner SIRET, adresse. Sélection Métier → cocher Comportementaliste. Catalogue → créer EC-STD 150€ HT, SEA-60 75€, PROG-5 350€. Charte → couleur indigo par défaut.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Nouveau client (1 min)</h4><p>Clients → Nouveau → Dupont Marie, email, téléphone, adresse Lyon. 2 contacts (vétérinaire, conjoint). Animaux → Max (Labrador, puce 250269811400099, né 2021), Luna (Berger Australien, 2022).</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Étude Comportementale — Max (2 min)</h4><p>EC → Nouvelle → sélectionner Max → cocher CAC 3, 7, 12 (agressivité, réactivité laisse, saut). Compte-rendu structuré. Formulaire lead → montrer le lien public comportementaliste. Questionnaire → simuler réception.</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Commercial : Devis → Facture (1 min 30s)</h4><p>Devis depuis EC → lignes pré-remplies (EC-STD + PROG-5). Signature Yousign → envoyer → montrer le process. Devis ACCEPTÉ → Transformer en facture → PDF modal → Envoyer par email → Règlement CB 500€. Statut PAYÉE.</p></div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Suivi séances (30s)</h4><p>Séances → 3 séances planifiées → montrer l'agenda et le planning semaine.</p></div></div>
+  <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Compta + Stats (1 min)</h4><p>Comptabilité → balance. Export FEC → générer → vérifier équilibre. Statistiques → CA du mois. CRM → lead entrant depuis formulaire.</p></div></div>
+  <div class="alert ai">📦 <strong>Seeds BDD requis :</strong> 3 clients, 5 animaux, 2 EC réalisées, 1 devis signé, 3 factures dont 1 impayée, 5 séances planifiées, 2 leads CRM.</div>
+</div>
+
+<div class="section">
+  <div class="sh"><span class="si">🐾</span><div class="st"><h2>Scénario 2 — Éleveur</h2><div class="sub">Module : ELEVEUR — Durée cible : 7 min</div></div></div>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Paramétrage éleveur (1 min)</h4><p>Sélection Métier → Éleveur. Races → vérifier Komondor, Sloughi présents. Catalogue → Réservation chiot 500€, Cession chiot 1200€, Complément alimentation 45€.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Géniteurs (1 min)</h4><p>Mon/Mes Métier(s) → Élevage → Géniteurs → montrer Maestro (mâle, 100% viabilité, 2 portées 10 chiots). Fiche modal → photo, stats reproductrices, historique saillies.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Portée en cours (2 min)</h4><p>Portées → Portée 2026-01 → 6 chiots. Suivi poids hebdomadaire → courbe croissance. Naissances → fiche chiot individuelle → pesée → statut VIVANT. Vaccins → saisir primo-vaccination J45. Mortalité → onglet (vide = bonne viabilité).</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Réservations et cessions (1 min 30s)</h4><p>Réservations → 3 familles → acomptes 300€ chacun → devis de réservation → signature. À la cession : facture complète 1200€ - 300€ acompte = 900€ solde. PDF carnet santé chiot en modal.</p></div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Déclarations LOF (30s)</h4><p>Portée → Bouton "Déclarer LOF/SCC" → montrer le lien vers LOFselect (URL paramétrable). Formulaire de déclaration.</p></div></div>
+  <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Compta + FEC (1 min)</h4><p>Règlements reçus → comptabilité → export FEC → équilibre débit/crédit. Stats → CA élevage du trimestre.</p></div></div>
+</div>
+
+<div class="section">
+  <div class="sh"><span class="si">✂️</span><div class="st"><h2>Scénario 3 — Toiletteur</h2><div class="sub">Module : TOILETTEUR — Durée cible : 7 min</div></div></div>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Paramétrage salon (1 min)</h4><p>Sélection Métier → Toiletteur. Catalogue → Toilettage petit chien 45€, moyen 65€, grand 85€, bain seul 30€, coupe race 25€. Modes paiement → CB, espèces, virement.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Client et chien (45s)</h4><p>Nouveau client → Martin Sophie → Caniche Noisette (6 ans, allergie aux parfums — note dans commentaire). Fiche animal → préférences coupe (commentaire).</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Planning RDV salon (2 min)</h4><p>Agenda → créer RDV toilettage. Séances → RDV Noisette jeudi 14h. Réalisation → noter prestations effectuées. Facturation directe depuis la séance. PDF facture modal → imprimer ou envoyer SMS.</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Abonnement mensuel (1 min)</h4><p>Devis forfait mensuel → 3 toilettages/mois × 65€ = 195€/mois. Signature. Facture mensuelle automatique. Règlement prélèvement SEPA.</p></div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Rappels et fidélisation (30s)</h4><p>WhatsApp → rappel RDV automatique J-2. Email → bonne fête de votre chien (anniversaire dans la fiche animal).</p></div></div>
+  <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Stats & Compta (1 min)</h4><p>CA du mois → comparaison mois précédent. Export FEC. Rappels impayés → 0 impayé (bonne gestion).</p></div></div>
+</div>
+
+<div class="section">
+  <div class="sh"><span class="si">🏠</span><div class="st"><h2>Scénario 4 — Pet-Sitter</h2><div class="sub">Module : PET_SITTER — Durée cible : 7 min</div></div></div>
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Paramétrage (1 min)</h4><p>Catalogue → Visite 30min 15€, Promenade 1h 25€, Garde journée 45€, Garde nuit 55€, Forfait semaine 280€. Formulaire lead pet-sitter → lien public.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Carte clients — zone géographique (1 min)</h4><p>Carte clients → saisir "Lyon" + 20km → afficher 15 clients dans la zone. Badge distance (vert <10km, bleu <30km). Cliquer sur un client → popup avec lien fiche.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Planning visites semaine (2 min)</h4><p>Agenda → semaine → 5 visites matin, 3 promenades après-midi. Séance réalisée → compte-rendu + photo envoyée au client. GED → photo liée à la fiche animal.</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Devis forfait vacances (1 min 30s)</h4><p>Devis → forfait 2 semaines garde domicile. Contrat signé Yousign. Facture en 2 fois → acompte 50% avant départ → solde au retour. Règlements tracés.</p></div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Formulaire lead et CRM (30s)</h4><p>Lead entrant depuis formulaire web → qualification → rendez-vous découverte planifié → conversion client.</p></div></div>
+  <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Compta + Stats (1 min)</h4><p>CA mensuel, nombre de prestations, taux de fidélisation. Export FEC. Rappel impayé automatique.</p></div></div>
+</div>
+
+</div>
+<footer>
+  PetSuite — Scénarios vidéo par métier | Sprint S40 | Algorithmia 2026<br><br>
+  <a href="index.html">← Index</a> · <a href="09-scenario-video.html">Scénario démo complète →</a>
+</footer>
+</body></html>
