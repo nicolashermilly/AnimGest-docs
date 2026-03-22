@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>PetSuite — Synthèse Projet</title>
+<title>PetSuite — RFE — Règles d'acceptation</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
@@ -38,40 +38,28 @@
 <header class="header">
   <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
   <div class="nav-links"><a href="index.html">Accueil</a><a href="06-roadmap.html">Roadmap</a><a href="73-changelog-s44.html">S44</a></div>
-  <span class="badge">#1 — MàJ S44</span>
+  <span class="badge">#34 — S44 Fix</span>
 </header>
 <div class="container">
-<h1>📋 Synthèse Projet PetSuite</h1>
-<p class="subtitle">État du projet au 22 mars 2026 — Sprint S44 en cours</p>
-<div class="alert">✅ <strong>Build S43 :</strong> 87 pages compilées · Stack Docker stable · BDD 450+ factures · 200 animaux</div>
-<div class="section"><h2>🎯 Vision</h2>
-<p>PetSuite (marque commerciale Algorithmia) est un SaaS B2B vertical dédié aux professionnels du bien-être et soin animal en France. Il couvre 10 métiers : comportementaliste canin, pet-sitter, toiletteur, éleveur, éducateur, centre équestre, pension/chenil, vétérinaire, ostéopathe/kiné, sport canin et naturopathe animal.</p>
-</div>
-<div class="section"><h2>📊 Indicateurs clés S44</h2>
-<div class="grid">
-  <div class="card"><div class="card-title">87 pages</div><div class="card-desc">Build Next.js 15 — App Router — 58 pages statiques + 29 dynamiques</div></div>
-  <div class="card"><div class="card-title">10 métiers</div><div class="card-desc">Sidebar dédiée par métier, dashboard CEO dynamique, planning multi-métier</div></div>
-  <div class="card"><div class="card-title">~450 factures</div><div class="card-desc">BDD seeds réalistes — dont 50 impayées niveaux 1/2/3 — FEC export conforme</div></div>
-  <div class="card"><div class="card-title">Sprint S44</div><div class="card-desc">Fixes audit UX, planning par métier, devis/new V2, droits utilisateurs, RFE</div></div>
-</div></div>
-<div class="section"><h2>🏗️ Stack technique</h2>
+<h1>⚖️ RFE — Règles d'acceptation et cycle de vie</h1>
+<p class="subtitle">Anciennement 46-rfe-regles-acceptation — renommé 34 (slot libre)</p>
+<div class="section"><h2>🔄 Statuts normés du cycle de vie</h2>
 <table>
-<tr><th>Composant</th><th>Technologie</th><th>Version</th></tr>
-<tr><td>Frontend</td><td>Next.js App Router + TypeScript</td><td>15.5.12</td></tr>
-<tr><td>API</td><td>NestJS + custom-routes.ts (mysql2)</td><td>Node 20</td></tr>
-<tr><td>BDD</td><td>MariaDB locale</td><td>192.168.1.62:3307</td></tr>
-<tr><td>Proxy</td><td>nginx:1.27-alpine</td><td>strip /api/</td></tr>
-<tr><td>Orchestration</td><td>Docker Compose</td><td>deploy/</td></tr>
-<tr><td>Docs</td><td>GitHub Pages</td><td>petsuite-docs</td></tr>
+<tr><th>Statut</th><th>Description</th><th>Action destinataire</th><th>Délai</th></tr>
+<tr><td><code>DEPOSEE</code></td><td>Facture transmise à la PDP</td><td>—</td><td>Immédiat</td></tr>
+<tr><td><code>MISE_EN_ATTENTE</code></td><td>En traitement PDP</td><td>—</td><td>24h max</td></tr>
+<tr><td><code>PRISE_EN_CHARGE</code></td><td>PDP a reçu</td><td>—</td><td>—</td></tr>
+<tr><td><code>TRANSMISE_DESTINATAIRE</code></td><td>Envoyée au destinataire</td><td>—</td><td>—</td></tr>
+<tr><td><strong>ACQUITTEE</strong></td><td>Acceptée</td><td>Accepte la facture</td><td>5j ouvrés</td></tr>
+<tr><td><strong style="color:#e06c6c">REJETEE</strong></td><td>Rejet technique</td><td>—</td><td>—</td></tr>
+<tr><td><strong style="color:#e06c6c">REFUSEE</strong></td><td>Refus métier</td><td>Refuse et motive</td><td>5j ouvrés</td></tr>
+<tr><td><strong style="color:#d4a44c">LITIGE</strong></td><td>Contestation partielle</td><td>Conteste un montant</td><td>—</td></tr>
 </table></div>
-<div class="section"><h2>💰 Modèle commercial (Algorithmia)</h2>
-<table>
-<tr><th>Plan</th><th>Prix/mois</th><th>Cible</th></tr>
-<tr><td>Starter</td><td>39 €</td><td>1 utilisateur, 1 métier</td></tr>
-<tr><td>Pro</td><td>69 €</td><td>3 utilisateurs, multi-métier</td></tr>
-<tr><td>Business</td><td>119 €</td><td>Illimité + support prioritaire</td></tr>
-</table>
-<p>Objectif : 2 000+ abonnés, ~1,8M€ ARR à 5 ans. Breakeven estimé mois 28-30.</p>
-</div></div>
+<div class="section"><h2>🔧 Gestion dans PetSuite</h2>
+<div class="grid">
+  <div class="card"><span class="tag tgreen">✅ Existant</span><div class="card-title">Export FEC</div><div class="card-desc">Compatible DGFiP, chaîné SHA-256, procédure sp_fec_generer_par_exercice.</div></div>
+  <div class="card"><span class="tag tamber">⏳ S44</span><div class="card-title">Interface statuts</div><div class="card-desc">Dashboard factures électroniques avec badge statut PDP en temps réel.</div></div>
+  <div class="card"><span class="tag tamber">⏳ S45</span><div class="card-title">Module Litige</div><div class="card-desc">Formulaire contestation, suivi résolution, génération avoir automatique.</div></div>
+</div></div></div>
 <footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
 </body></html>
