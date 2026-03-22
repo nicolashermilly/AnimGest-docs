@@ -1,247 +1,151 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PetSuite — Métier Comportementaliste / Éducateur</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — 🐕 Comportementaliste</title>
 <style>
-  :root{--bg:#0F1923;--bg-card:#1A2332;--bg-code:#0D1117;--border:#2A3A4A;--accent:#4F46E5;--cyan:#06B6D4;--text:#E2E8F0;--muted:#94A3B8;--dim:#64748B;--green:#10B981;--orange:#F59E0B;--red:#EF4444}
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px}
-  .header{background:linear-gradient(135deg,#1a0f40 0%,#0f1923 70%);border-bottom:1px solid var(--border);padding:48px 48px 40px}
-  .header-inner{max-width:1100px;margin:0 auto}
-  .header h1{font-size:1.75rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:12px}
-  .header .sub{color:var(--muted);font-size:.95rem;margin-top:8px}
-  .badges{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
-  .badge{border-radius:20px;padding:3px 12px;font-size:.72rem;font-weight:600}
-  .bp{background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.4);color:#a5b4fc}
-  .bc{background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.35);color:#67e8f9}
-  .bg{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.35);color:#6ee7b7}
-  .bo{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);color:#fcd34d}
-  .container{max-width:1100px;margin:0 auto;padding:40px 48px}
-  .section{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:36px;margin-bottom:28px}
-  .sh{display:flex;align-items:flex-start;gap:18px;padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid var(--border)}
-  .si{font-size:2.2rem;line-height:1;flex-shrink:0}
-  .st h2{font-size:1.3rem;font-weight:700;color:#fff}
-  .st .sub{font-size:.875rem;color:var(--muted);margin-top:5px}
-  h3{font-size:1rem;font-weight:600;color:#fff;margin:24px 0 10px}
-  p{color:var(--muted);font-size:.9rem;margin-bottom:12px;line-height:1.75}
-  ul{padding-left:20px;color:var(--muted);font-size:.9rem;margin-bottom:12px}
-  li{margin-bottom:6px}
-  strong{color:var(--text);font-weight:600}
-  code{background:rgba(255,255,255,.07);border:1px solid var(--border);color:#f0abfc;font-family:'JetBrains Mono',monospace;font-size:.82rem;padding:2px 7px;border-radius:5px}
-  .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
-  .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0}
-  .mini{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:18px}
-  .mini h4{margin:0 0 8px;font-size:.9rem;color:#fff;display:flex;align-items:center;gap:8px}
-  .mini p{margin:0;font-size:.82rem}
-  .mini ul{font-size:.82rem;margin-bottom:0}
-  .workflow{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin:16px 0}
-  .ws{background:rgba(79,70,229,.18);border:1px solid rgba(79,70,229,.35);border-radius:8px;padding:6px 14px;font-size:.8rem;font-weight:500;color:#a5b4fc}
-  .wa{color:var(--dim);font-size:1.1rem;margin:0 2px}
-  .ws.ok{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#6ee7b7}
-  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.875rem}
-  th{background:rgba(255,255,255,.04);padding:9px 14px;text-align:left;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);border-bottom:1px solid var(--border)}
-  td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);vertical-align:top}
-  tr:last-child td{border-bottom:none}
-  .sok{background:rgba(16,185,129,.15);color:#6ee7b7;padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
-  .swarn{background:rgba(245,158,11,.15);color:#fcd34d;padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
-  .sfut{background:rgba(100,116,139,.2);color:var(--muted);padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600}
-  .alert{border-radius:10px;padding:14px 18px;margin:14px 0;font-size:.875rem;display:flex;gap:10px;align-items:flex-start}
-  .ai{background:rgba(79,70,229,.12);border:1px solid rgba(79,70,229,.3);color:#c7d2fe}
-  .ag{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.28);color:#a7f3d0}
-  footer{text-align:center;color:var(--dim);font-size:.8rem;padding:40px 48px;border-top:1px solid var(--border);margin-top:20px}
-  footer a{color:var(--cyan);text-decoration:none}
-  @media(max-width:768px){.header,.container{padding:24px 20px}.g2,.g3{grid-template-columns:1fr}}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+  .header { background: #13131a; border-bottom: 1px solid #2a2a3a;
+            padding: 1.5rem 2rem; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+  .logo span { color: #7f77dd; }
+  .badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8;
+           padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-links a { color: #888; text-decoration: none; font-size: 0.85rem; }
+  .nav-links a:hover { color: #fff; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem;
+       padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a3a; }
+  h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 0.5rem; }
+  p { color: #9a9890; margin-bottom: 0.75rem; }
+  .subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
+          padding: 1.25rem; transition: border-color 0.2s; }
+  .card:hover { border-color: #534ab7; }
+  .card-title { font-size: 0.95rem; font-weight: 600; color: #e2e0d8; margin-bottom: 0.4rem; }
+  .card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+         font-size: 0.7rem; font-weight: 600; margin-right: 0.25rem; margin-bottom: 0.4rem; }
+  .tag-purple { background: #1a1530; color: #9d97e8; }
+  .tag-green  { background: #0a2015; color: #5dcaa5; }
+  .tag-blue   { background: #0a1525; color: #6baed6; }
+  .tag-amber  { background: #1a1205; color: #d4a44c; }
+  .tag-red    { background: #1a0a0a; color: #e06c6c; }
+  code { background: #1a1a2e; color: #9d97e8; padding: 0.1rem 0.4rem;
+         border-radius: 4px; font-size: 0.85em; font-family: 'Fira Code', monospace; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  th { background: #13131a; color: #888; font-weight: 600; padding: 0.6rem 0.8rem;
+       text-align: left; border-bottom: 1px solid #2a2a3a; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; }
+  tr:hover td { background: #0f0f18; }
+  .back-link { color: #534ab7; text-decoration: none; font-size: 0.85rem; }
+  .back-link:hover { color: #9d97e8; }
+  .alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px;
+           padding: 1rem 1.25rem; margin: 1rem 0; font-size: 0.85rem; color: #5dcaa5; }
+  .alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
+  .alert-red { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
+  .progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
+  .progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
+  footer { text-align: center; padding: 2rem; color: #333; font-size: 0.8rem;
+           border-top: 1px solid #1a1a2a; margin-top: 3rem; }
 </style>
 </head>
 <body>
-
-<div class="header"><div class="header-inner">
-  <h1><span>🐕</span> Métier : Comportementaliste / Éducateur canin</h1>
-  <div class="sub">Modules dédiés · Workflow complet · Avancement S40 · Roadmap</div>
-  <div class="badges">
-    <span class="badge bp">Module COMPORTEMENTALISTE</span>
-    <span class="badge bc">Éducateur canin</span>
-    <span class="badge bg">Cœur de cible PetSuite</span>
-    <span class="badge bo">Sprint S40</span>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="01-synthese-projet.html">Synthèse</a>
+    <a href="53-changelog-s43.html">S43</a>
+    <a href="06-roadmap-s43.html">Roadmap</a>
   </div>
-</div></div>
-
+  <span class="badge">#59 — S44</span>
+</header>
 <div class="container">
 
-<!-- Profil métier -->
-<div class="section">
-  <div class="sh"><span class="si">👤</span><div class="st"><h2>Profil du métier</h2><div class="sub">Comportementaliste, éducateur canin, consultant comportement</div></div></div>
+<h1>🐕 Comportementaliste</h1>
+<p class="subtitle">Documentation module métier — Avancement 95%</p>
 
-  <div class="g3">
-    <div class="mini">
-      <h4>🎯 Activité principale</h4>
-      <p>Évaluation et modification du comportement des animaux. Gestion des troubles comportementaux (agressivité, peur, anxiété, etc.).</p>
+<div class="section" style="background:#13131a;border:1px solid #2a2a3a;border-radius:12px;padding:1.5rem;margin-bottom:2rem">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+    <strong>Avancement global</strong>
+    <span style="color:#5dcaa5;font-weight:700">95%</span>
+  </div>
+  <div class="progress"><div class="progress-bar" style="width:95%;background:#5dcaa5"></div></div>
+</div>
+
+<div class="section">
+  <h2>🔧 Modules & Fonctionnalités</h2>
+  <div class="grid">
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">EDC — Étude de Comportement</div>
+      <div class="card-desc">Séance initiale 90min, diagnostic complet, rapport EDC. Unique par animal. Génère devis automatiquement.</div>
     </div>
-    <div class="mini">
-      <h4>📋 Format de travail</h4>
-      <p>EC (Étude Comportementale) unique par animal, suivies de séances de suivi régulières. Compte-rendu détaillé obligatoire.</p>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Programmes de suivi</div>
+      <div class="card-desc">Forfaits 5/8/10 séances. Suivi progression CAC 1-14. Dashboard avancement.</div>
     </div>
-    <div class="mini">
-      <h4>💼 Facturation typique</h4>
-      <p>EC : 120–250€ · Séance suivi : 60–90€ · Programme complet (forfait) : 400–800€</p>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Suivi CAC</div>
+      <div class="card-desc">14 cases à cocher par animal. Historique progression. Page dédiée /mes-parametres/cac</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Dashboard CEO V2</div>
+      <div class="card-desc">CA dynamique Mois/Trimestre/Année. Programmes en cours. CA par prestation.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Questionnaires</div>
+      <div class="card-desc">Bilan initial EDC (18Q), Suivi hebdo (8Q), Bilan programme (12Q)</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Templates devis</div>
+      <div class="card-desc">5 modèles : EDC, Forfait 5, Forfait 8, Forfait 10, Bilan urgence</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Planning</div>
+      <div class="card-desc">3 vues Jour/Semaine/Mois. Séances colorées par type.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-amber">⏳</span>
+      <div class="card-title">TemplateSelector devis/new</div>
+      <div class="card-desc">Étape 0 dans la création de devis — fichier V2 prêt pour S44</div>
     </div>
   </div>
 </div>
 
-<!-- Modules -->
 <div class="section">
-  <div class="sh"><span class="si">🧩</span><div class="st"><h2>Modules activés</h2><div class="sub">Sélectionner "Comportementaliste/Éducateur" dans Mes Paramètres → Sélection Métier(s)</div></div></div>
-
+  <h2>📊 Routes API dédiées</h2>
   <table>
-    <tr><th>Module</th><th>Description</th><th>Accès sidebar</th><th>Statut</th></tr>
-    <tr><td><strong>Études Comportementales (EC)</strong></td><td>Fiche EC unique par animal, critères CAC 1-14, compte-rendu structuré</td><td>Activité → Études comportement</td><td><span class="sok">✅ Stable</span></td></tr>
-    <tr><td><strong>Séances de suivi</strong></td><td>Planification, réalisation, compte-rendu. Lien EC → Séances</td><td>Activité → Séances</td><td><span class="sok">✅ Stable</span></td></tr>
-    <tr><td><strong>Programmes suivi</strong></td><td>Programmes multi-semaines avec objectifs par semaine</td><td>Activité → Programmes suivi</td><td><span class="sok">✅ Stable</span></td></tr>
-    <tr><td><strong>Questionnaires</strong></td><td>Questionnaires pré-consultation envoyés aux clients</td><td>Activité → Questionnaires</td><td><span class="sok">✅ Stable</span></td></tr>
-    <tr><td><strong>Suivi CAC</strong></td><td>14 critères CAC cochables par animal (grille d'évaluation)</td><td>Activité → Suivi CAC</td><td><span class="sok">✅ Stable</span></td></tr>
-    <tr><td><strong>Devis / Contrats</strong></td><td>Devis depuis EC, multi-états, signature électronique</td><td>Commercial → Devis/Contrats</td><td><span class="sok">✅ Stable</span></td></tr>
-    <tr><td><strong>Factures & Règlements</strong></td><td>Facturation depuis devis, PDF Factur-X, règlements, RFE</td><td>Commercial → Factures</td><td><span class="sok">✅ Stable</span></td></tr>
-    <tr><td><strong>Formulaires lead</strong></td><td>Formulaire comportementaliste en ligne (pré-qualification prospect)</td><td>Paramètres → Formulaires lead</td><td><span class="sok">✅ S40</span></td></tr>
-    <tr><td><strong>CRM</strong></td><td>Leads entrants formulaire, suivi commercial, relances</td><td>CRM Leads & Opps</td><td><span class="sok">✅ Stable</span></td></tr>
-    <tr><td><strong>Libellés EC</strong></td><td>Personnalisation des intitulés de l'étude comportementale</td><td>Paramètres → Libellés EC</td><td><span class="sfut">🔜 S41</span></td></tr>
+    <tr><th>Route</th><th>Description</th></tr>
+    <tr><td><code>GET /seances?type=COMPORTEMENTALISTE</code></td><td>Séances du métier</td></tr>
+    <tr><td><code>GET /bilan/metier?metier=COMPORTEMENTALISTE</code></td><td>KPIs dashboard</td></tr>
+    <tr><td><code>GET /devis/templates?metier=COMPORTEMENTALISTE</code></td><td>Templates devis</td></tr>
   </table>
 </div>
 
-<!-- Workflow complet -->
 <div class="section">
-  <div class="sh"><span class="si">🔄</span><div class="st"><h2>Workflow complet</h2><div class="sub">Du prospect à la facturation</div></div></div>
-
-  <h3>1. Acquisition client</h3>
-  <div class="workflow">
-    <div class="ws">Formulaire lead en ligne</div><div class="wa">→</div>
-    <div class="ws">Lead CRM (statut NOUVEAU)</div><div class="wa">→</div>
-    <div class="ws">Questionnaire pré-consultation</div><div class="wa">→</div>
-    <div class="ws">Qualification lead</div><div class="wa">→</div>
-    <div class="ws ok">Création client + animal</div>
-  </div>
-
-  <h3>2. Étude Comportementale</h3>
-  <div class="workflow">
-    <div class="ws">Nouvelle EC (unique/animal)</div><div class="wa">→</div>
-    <div class="ws">Évaluation CAC 1-14</div><div class="wa">→</div>
-    <div class="ws">Compte-rendu détaillé</div><div class="wa">→</div>
-    <div class="ws">Devis depuis l'EC</div><div class="wa">→</div>
-    <div class="ws">Signature électronique Yousign</div><div class="wa">→</div>
-    <div class="ws ok">Devis ACCEPTÉ</div>
-  </div>
-
-  <h3>3. Suivi comportemental</h3>
-  <div class="workflow">
-    <div class="ws">Planification séances</div><div class="wa">→</div>
-    <div class="ws">Réalisation séance</div><div class="wa">→</div>
-    <div class="ws">Compte-rendu séance</div><div class="wa">→</div>
-    <div class="ws">Programme suivi (si forfait)</div><div class="wa">→</div>
-    <div class="ws ok">Clôture programme</div>
-  </div>
-
-  <h3>4. Facturation</h3>
-  <div class="workflow">
-    <div class="ws">Facture depuis devis</div><div class="wa">→</div>
-    <div class="ws">PDF Factur-X (modal)</div><div class="wa">→</div>
-    <div class="ws">Envoi email</div><div class="wa">→</div>
-    <div class="ws">Transmission PDP (Pennylane)</div><div class="wa">→</div>
-    <div class="ws">Règlement</div><div class="wa">→</div>
-    <div class="ws ok">Facture PAYÉE</div>
+  <h2>🎯 Roadmap S44+</h2>
+  <div class="card">
+    <div class="card-desc">Voir <a href="06-roadmap-s43.html" class="back-link">Roadmap complète S44+</a> pour les priorités globales et le planning.</div>
   </div>
 </div>
 
-<!-- Spécificités EC -->
-<div class="section">
-  <div class="sh"><span class="si">🧠</span><div class="st"><h2>Spécificités de l'EC</h2><div class="sub">Étude Comportementale — module central du comportementaliste</div></div></div>
-
-  <div class="alert ag">✅ <strong>Règle métier :</strong> Une seule EC par animal. Le système bloque la création d'une 2ème EC active sur le même animal (trigger BDD <code>trg_sea_unique_par_animal</code>).</div>
-
-  <div class="g2">
-    <div class="mini">
-      <h4>📋 Critères CAC (1-14)</h4>
-      <ul>
-        <li>14 cases à cocher sur la fiche animal</li>
-        <li>Évaluation comportementale standardisée</li>
-        <li>Visible sur la fiche animal et dans l'EC</li>
-        <li>Exportable dans le compte-rendu PDF</li>
-      </ul>
-    </div>
-    <div class="mini">
-      <h4>📄 Compte-rendu EC</h4>
-      <ul>
-        <li>Structuré en sections (contexte, observations, recommandations)</li>
-        <li>Génération PDF en modal (DocumentActions)</li>
-        <li>Envoi par email depuis PetSuite</li>
-        <li>Signature électronique possible (Yousign)</li>
-      </ul>
-    </div>
-    <div class="mini">
-      <h4>🔗 Lien EC → Devis</h4>
-      <ul>
-        <li>Depuis l'EC : bouton "Créer un devis"</li>
-        <li>Lignes de devis pré-remplies depuis les lignes EC</li>
-        <li>Procédure BDD : <code>sp_dce_creer_depuis_seance</code></li>
-        <li>Lien visible dans la fiche devis</li>
-      </ul>
-    </div>
-    <div class="mini">
-      <h4>📊 Vue dashboard</h4>
-      <ul>
-        <li>EC sans devis : vue <code>v_edc_sans_devis</code></li>
-        <li>Alerte si EC réalisée mais pas de devis associé</li>
-        <li>Taux de conversion EC → Devis → Facture</li>
-      </ul>
-    </div>
-  </div>
 </div>
-
-<!-- Paramétrage recommandé -->
-<div class="section">
-  <div class="sh"><span class="si">⚙️</span><div class="st"><h2>Paramétrage recommandé</h2><div class="sub">Configuration optimale pour un comportementaliste</div></div></div>
-
-  <h3>Catalogue articles type</h3>
-  <table>
-    <tr><th>Référence</th><th>Libellé</th><th>Prix HT</th><th>TVA</th></tr>
-    <tr><td><code>EC-STD</code></td><td>Étude Comportementale standard (1h30)</td><td>150,00 €</td><td>20%</td></tr>
-    <tr><td><code>EC-DOM</code></td><td>Étude Comportementale à domicile (2h)</td><td>200,00 €</td><td>20%</td></tr>
-    <tr><td><code>SEA-60</code></td><td>Séance de suivi (1h)</td><td>75,00 €</td><td>20%</td></tr>
-    <tr><td><code>PROG-5</code></td><td>Programme 5 séances</td><td>350,00 €</td><td>20%</td></tr>
-    <tr><td><code>PROG-10</code></td><td>Programme 10 séances</td><td>650,00 €</td><td>20%</td></tr>
-    <tr><td><code>BILAN</code></td><td>Bilan comportemental (45 min)</td><td>60,00 €</td><td>20%</td></tr>
-  </table>
-
-  <h3>Formulaire lead recommandé</h3>
-  <p>Créez un formulaire "Comportementaliste" avec les questions complémentaires :</p>
-  <ul>
-    <li>Problème(s) comportemental(aux) rencontré(s) — type liste</li>
-    <li>Depuis quand ce comportement ? — texte</li>
-    <li>Consultations vétérinaires en cours ? — oui/non</li>
-    <li>Budget indicatif — type liste (< 200€ / 200-500€ / > 500€)</li>
-  </ul>
-</div>
-
-<!-- Roadmap -->
-<div class="section">
-  <div class="sh"><span class="si">🛣️</span><div class="st"><h2>Roadmap module</h2><div class="sub">Évolutions prévues</div></div></div>
-
-  <table>
-    <tr><th>Sprint</th><th>Évolution</th><th>Statut</th></tr>
-    <tr><td>S40</td><td>Formulaires lead multi-métiers avec UUID auto</td><td><span class="sok">✅ Livré</span></td></tr>
-    <tr><td>S41</td><td>Libellés EC personnalisables (paramétrage)</td><td><span class="sfut">🔜 Planifié</span></td></tr>
-    <tr><td>S41</td><td>Envoi compte-rendu EC par WhatsApp</td><td><span class="sfut">🔜 Planifié</span></td></tr>
-    <tr><td>S42</td><td>Rapport statistique annuel comportementaliste</td><td><span class="sfut">🔜 Planifié</span></td></tr>
-    <tr><td>S42</td><td>Intégration agenda Google / iCal</td><td><span class="sfut">🔜 Planifié</span></td></tr>
-    <tr><td>S43</td><td>Application mobile client (suivi programme)</td><td><span class="sfut">🔜 Vision</span></td></tr>
-  </table>
-</div>
-
-</div>
-
-<footer>
-  PetSuite — Documentation Métier Comportementaliste | Sprint S40 | Algorithmia 2026<br><br>
-  <a href="index.html">← Retour à l'index</a> ·
-  <a href="51-metier-pet-sitter.html">Pet-Sitter →</a>
-</footer>
-
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
 </body></html>
