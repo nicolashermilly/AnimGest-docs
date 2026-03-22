@@ -3,345 +3,581 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Architecture Composants Techniques</title>
+<title>PetSuite — Architecture Composants Techniques S41</title>
 <style>
   :root {
-    --bg:      #0F1923;
-    --bg-card: #1A2332;
-    --bg-code: #0D1117;
-    --border:  #2A3A4A;
-    --accent:  #4F46E5;
-    --cyan:    #06B6D4;
-    --text:    #E2E8F0;
-    --muted:   #94A3B8;
-    --dim:     #64748B;
-    --green:   #10B981;
-    --orange:  #F59E0B;
-    --red:     #EF4444;
+    --accent: #4F46E5;
+    --accent-light: #EEF2FF;
+    --bg: #0f1117;
+    --bg2: #1a1d2e;
+    --bg3: #222640;
+    --border: #2d3155;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --green: #10b981;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --blue: #3b82f6;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; font-size: 15px; }
-
-  .header { background: linear-gradient(135deg,#1a1040 0%,#0f1923 70%); border-bottom:1px solid var(--border); padding:48px 48px 40px; }
-  .header-inner { max-width:1100px; margin:0 auto; }
-  .header h1 { font-size:1.75rem; font-weight:700; color:#fff; display:flex; align-items:center; gap:12px; }
-  .header .sub { color:var(--muted); font-size:.95rem; margin-top:8px; }
-  .badges { display:flex; gap:8px; margin-top:18px; flex-wrap:wrap; }
-  .badge { border-radius:20px; padding:3px 12px; font-size:.72rem; font-weight:600; letter-spacing:.04em; }
-  .b-purple { background:rgba(79,70,229,.2); border:1px solid rgba(79,70,229,.4); color:#a5b4fc; }
-  .b-cyan   { background:rgba(6,182,212,.15); border:1px solid rgba(6,182,212,.35); color:#67e8f9; }
-  .b-green  { background:rgba(16,185,129,.15); border:1px solid rgba(16,185,129,.35); color:#6ee7b7; }
-
-  .container { max-width:1100px; margin:0 auto; padding:40px 48px; }
-
-  .toc { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:22px 28px; margin-bottom:36px; }
-  .toc-lbl { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--dim); margin-bottom:12px; }
-  .toc ul { list-style:none; display:flex; flex-wrap:wrap; gap:8px; }
-  .toc a { color:var(--cyan); text-decoration:none; font-size:.85rem; background:rgba(6,182,212,.08); border:1px solid rgba(6,182,212,.2); padding:4px 14px; border-radius:20px; transition:all .15s; }
-  .toc a:hover { background:var(--cyan); color:#000; }
-
-  .section { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:36px; margin-bottom:28px; }
-  .sh { display:flex; align-items:flex-start; gap:18px; padding-bottom:22px; margin-bottom:24px; border-bottom:1px solid var(--border); }
-  .si { font-size:2.2rem; line-height:1; flex-shrink:0; }
-  .st h2 { font-size:1.3rem; font-weight:700; color:#fff; }
-  .st .sub { font-size:.875rem; color:var(--muted); margin-top:5px; }
-  .new { background:var(--green); color:#fff; font-size:.62rem; font-weight:700; padding:2px 8px; border-radius:10px; text-transform:uppercase; vertical-align:middle; margin-left:8px; }
-
-  h3 { font-size:1rem; font-weight:600; color:#fff; margin:24px 0 10px; }
-  h4 { font-size:.78rem; font-weight:700; color:var(--dim); text-transform:uppercase; letter-spacing:.1em; margin:16px 0 8px; }
-  p { color:var(--muted); font-size:.9rem; margin-bottom:12px; line-height:1.75; }
-  ul,ol { padding-left:20px; color:var(--muted); font-size:.9rem; margin-bottom:12px; }
-  li { margin-bottom:6px; }
-  strong { color:var(--text); font-weight:600; }
-
-  code { background:rgba(255,255,255,.07); border:1px solid var(--border); color:#f0abfc; font-family:'JetBrains Mono','Fira Code',monospace; font-size:.82rem; padding:2px 7px; border-radius:5px; }
-  pre { background:var(--bg-code); border:1px solid var(--border); border-left:3px solid var(--accent); color:#E2E8F0; padding:20px 22px; border-radius:10px; overflow-x:auto; font-family:'JetBrains Mono','Fira Code',monospace; font-size:.82rem; line-height:1.75; margin:12px 0 20px; }
-  pre code { background:none; border:none; color:inherit; padding:0; font-size:inherit; }
-  .kw{color:#93C5FD} .st{color:#86EFAC} .pr{color:#FDE68A} .tp{color:#F9A8D4} .cm{color:#4B5563} .nb{color:#6EE7B7}
-
-  table.t { width:100%; border-collapse:collapse; margin:14px 0; font-size:.875rem; }
-  table.t th { background:rgba(255,255,255,.04); padding:9px 14px; text-align:left; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); border-bottom:1px solid var(--border); }
-  table.t td { padding:9px 14px; border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; color:var(--muted); }
-  table.t tr:last-child td { border-bottom:none; }
-  table.t td:first-child code { color:var(--cyan); border-color:rgba(6,182,212,.25); }
-  .req{color:var(--red);font-weight:700;font-size:.75rem} .opt{color:var(--dim);font-size:.75rem}
-
-  .flow { display:flex; align-items:center; flex-wrap:wrap; gap:4px; margin:16px 0; }
-  .fs { background:rgba(79,70,229,.18); border:1px solid rgba(79,70,229,.35); border-radius:8px; padding:6px 14px; font-size:.8rem; font-weight:500; color:#a5b4fc; }
-  .fa { color:var(--dim); font-size:1.1rem; margin:0 2px; }
-  .fs.ok { background:rgba(16,185,129,.12); border-color:rgba(16,185,129,.3); color:#6ee7b7; }
-  .fs.warn { background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.3); color:#fcd34d; }
-
-  .g2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
-  .mini { background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:10px; padding:18px; }
-  .mini h4 { margin:0 0 8px; }
-  .mini p { margin:0; font-size:.85rem; }
-
-  .alert { border-radius:10px; padding:14px 18px; margin:14px 0; font-size:.875rem; display:flex; gap:10px; align-items:flex-start; line-height:1.6; }
-  .ai { background:rgba(79,70,229,.12);  border:1px solid rgba(79,70,229,.3);  color:#c7d2fe; }
-  .as { background:rgba(16,185,129,.1);  border:1px solid rgba(16,185,129,.28); color:#a7f3d0; }
-  .aw { background:rgba(245,158,11,.1);  border:1px solid rgba(245,158,11,.28); color:#fde68a; }
-  .ad { background:rgba(239,68,68,.1);   border:1px solid rgba(239,68,68,.28);  color:#fca5a5; }
-
-  .rules { border:1px solid var(--border); border-radius:10px; overflow:hidden; }
-  .rule { display:flex; gap:12px; padding:11px 16px; border-bottom:1px solid rgba(255,255,255,.04); font-size:.875rem; color:var(--muted); }
-  .rule:last-child { border-bottom:none; }
-  .rule.ok   { border-left:3px solid var(--green); }
-  .rule.warn { border-left:3px solid var(--red); }
-  .rn { font-weight:700; min-width:22px; }
-
-  footer { text-align:center; color:var(--dim); font-size:.8rem; padding:40px 48px; border-top:1px solid var(--border); margin-top:20px; }
-  footer a { color:var(--cyan); text-decoration:none; }
-
-  @media(max-width:768px){.header,.container{padding:24px 20px;}.g2{grid-template-columns:1fr}.flow{flex-direction:column;align-items:flex-start}}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .hero { background: linear-gradient(135deg, #1a1d2e 0%, #0f1117 100%); border-bottom: 1px solid var(--border); padding: 3rem 2rem 2rem; text-align: center; }
+  .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .hero p { color: var(--text2); font-size: 1.05rem; margin-bottom: 1.5rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+  .badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge-purple { background: #312e81; color: #a5b4fc; }
+  .badge-green  { background: #064e3b; color: #6ee7b7; }
+  .badge-amber  { background: #78350f; color: #fcd34d; }
+  .badge-blue   { background: #1e3a5f; color: #93c5fd; }
+  .badge-new    { background: #4F46E5; color: #fff; }
+  nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0.75rem 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+  nav a { color: var(--text2); text-decoration: none; font-size: 0.85rem; padding: 0.25rem 0.5rem; border-radius: 4px; transition: all 0.15s; }
+  nav a:hover { color: var(--text); background: var(--bg3); }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  .section { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 2rem; overflow: hidden; }
+  .section-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; }
+  .section-icon { font-size: 1.75rem; flex-shrink: 0; }
+  .section-title { font-size: 1.2rem; font-weight: 700; }
+  .section-subtitle { color: var(--text2); font-size: 0.875rem; margin-top: 0.2rem; }
+  .section-body { padding: 1.5rem; }
+  h3 { font-size: 1rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: var(--text); }
+  h3:first-child { margin-top: 0; }
+  p { color: var(--text2); font-size: 0.9rem; margin-bottom: 0.75rem; line-height: 1.7; }
+  code { background: var(--bg3); color: #a5b4fc; padding: 0.1rem 0.4rem; border-radius: 4px; font-family: 'Fira Code', monospace; font-size: 0.82rem; }
+  pre { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; overflow-x: auto; margin: 0.75rem 0; }
+  pre code { background: none; padding: 0; color: #e2e8f0; font-size: 0.82rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.75rem 0; }
+  th { background: var(--bg3); color: var(--text2); font-weight: 600; padding: 0.6rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+  td { padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+  td:first-child { color: var(--text); font-family: monospace; font-size: 0.8rem; }
+  tr:last-child td { border-bottom: none; }
+  .ok    { color: var(--green); }
+  .warn  { color: var(--amber); }
+  .err   { color: var(--red); }
+  .info  { color: var(--blue); }
+  .rule-box { border-radius: 8px; padding: 0.75rem 1rem; margin: 0.75rem 0; font-size: 0.875rem; }
+  .rule-green  { background: #064e3b22; border: 1px solid #065f46; color: #6ee7b7; }
+  .rule-amber  { background: #78350f22; border: 1px solid #92400e; color: #fcd34d; }
+  .rule-red    { background: #7f1d1d22; border: 1px solid #991b1b; color: #fca5a5; }
+  .rule-blue   { background: #1e3a5f22; border: 1px solid #1e40af; color: #93c5fd; }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0.75rem 0; font-size: 0.82rem; }
+  .flow-step { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.6rem; color: var(--text); }
+  .flow-arrow { color: var(--text2); font-size: 0.9rem; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0.75rem 0; }
+  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+  .sub-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+  .sub-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.72rem; font-weight: 600; margin-right: 0.25rem; }
+  .tag-new { background: var(--accent); color: white; }
+  .tag-fixed { background: #065f46; color: #6ee7b7; }
+  .tag-todo { background: #78350f; color: #fcd34d; }
+  footer { text-align: center; padding: 2rem; color: var(--text2); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 2rem; }
 </style>
 </head>
 <body>
 
-<div class="header">
-<div class="header-inner">
-  <h1><span>🧩</span> Architecture Composants Techniques</h1>
-  <div class="sub">Documentation des composants React réutilisables — Design system unifié PetSuite</div>
+<div class="hero">
+  <h1>🧩 Architecture Composants Techniques</h1>
+  <p>Documentation des composants React réutilisables — Design system unifié PetSuite</p>
   <div class="badges">
-    <span class="badge b-purple">Sprint S38</span>
-    <span class="badge b-purple">React / Next.js 15</span>
-    <span class="badge b-purple">TypeScript</span>
-    <span class="badge b-cyan">CSS Variables charte</span>
-    <span class="badge b-green">EDC → EC ✓ S39</span>
+    <span class="badge badge-new">Sprint S41</span>
+    <span class="badge badge-purple">React / Next.js 15</span>
+    <span class="badge badge-blue">TypeScript</span>
+    <span class="badge badge-green">CSS Variables charte</span>
+    <span class="badge badge-amber">custom-routes.ts 43k chars</span>
   </div>
 </div>
-</div>
+
+<nav>
+  <a href="#doc-actions">DocumentActions</a>
+  <a href="#signature-modal">SignatureModal</a>
+  <a href="#page-header">PageHeader</a>
+  <a href="#sidebar">Sidebar S41</a>
+  <a href="#charte">Charte CSS</a>
+  <a href="#custom-routes">custom-routes.ts</a>
+  <a href="#api-routes">Routes API</a>
+  <a href="#conventions">Conventions</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="index.html">← Index</a>
+</nav>
 
 <div class="container">
 
-<div class="toc">
-  <div class="toc-lbl">Sommaire</div>
-  <ul>
-    <li><a href="#doc-actions">DocumentActions</a></li>
-    <li><a href="#signature-modal">SignatureModal</a></li>
-    <li><a href="#page-header">PageHeader</a></li>
-    <li><a href="#charte">Charte CSS Variables</a></li>
-    <li><a href="#conventions">Conventions & Terminologie</a></li>
-    <li><a href="#api-keys">Interfaces API</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-  </ul>
-</div>
+  <!-- DocumentActions -->
+  <div class="section" id="doc-actions">
+    <div class="section-header">
+      <span class="section-icon">🖨️</span>
+      <div>
+        <div class="section-title">DocumentActions <span class="tag tag-fixed">S41 corrigé</span></div>
+        <div class="section-subtitle">Composant unique PDF / Email / Signature — réutilisable sur tous les écrans</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="rule-blue">💡 <strong>Règle d'or :</strong> ne jamais recoder ces boutons individuellement. Toujours utiliser <code>DocumentActions</code>. Présent sur devis, factures, avoirs, séances.</div>
 
-<!-- DocumentActions -->
-<div class="section" id="doc-actions">
-  <div class="sh"><span class="si">🖨️</span><div class="st"><h2>DocumentActions <span class="new">NEW S38</span></h2><div class="sub">Composant unique PDF / Email / Signature — réutilisable sur tous les écrans</div></div></div>
+      <h3>Corrections S41</h3>
+      <table>
+        <tr><th>Élément</th><th>Avant S41</th><th>Après S41</th></tr>
+        <tr><td>URL PDF</td><td class="err">/api/factures/:id/pdf</td><td class="ok">/api/editions/facture/:id</td></tr>
+        <tr><td>URL PDF devis</td><td class="err">/api/devis/:id/pdf</td><td class="ok">/api/editions/devis/:id</td></tr>
+        <tr><td>Affichage PDF</td><td class="err">iframe (fermeture immédiate)</td><td class="ok">object HTML + fallback lien</td></tr>
+        <tr><td>URL email</td><td class="err">/api/factures/:id/email (404)</td><td class="ok">/api/ged-factures-email</td></tr>
+        <tr><td>Bouton Signature</td><td class="err">Visible sur tous types</td><td class="ok">Uniquement sur DEVIS</td></tr>
+      </table>
 
-  <p><code>DocumentActions</code> est le composant central de toutes les actions documentaires. Il expose <strong>3 boutons</strong> : aperçu PDF (modal iframe), envoi email (modal avec sélecteur contact), envoi à la signature Yousign. Obligatoire sur <strong>tous les écrans</strong> gérant des documents : devis, factures, avoirs, achats, compta.</p>
+      <h3>Import</h3>
+      <pre><code>import { DocumentActions } from "@/components/DocumentActions";</code></pre>
 
-  <div class="alert ai">💡 <strong>Règle d'or :</strong> ne jamais recoder ces 3 boutons individuellement. Toujours utiliser <code>DocumentActions</code>.</div>
+      <h3>Usage</h3>
+      <pre><code>&lt;DocumentActions
+  docType="FACTURE"        // DEVIS | FACTURE | AVOIR | SEANCE
+  docId={fac.FAC_ID}
+  docNum={fac.FAC_NUM}
+  tieId={fac.TIE_ID}
+  clientNom={tie.TIE_RAISON_SOCIALE}
+  clientEmail={tie.TIE_EMAIL}
+  clientTel={tie.TIE_TEL}
+  size="md"               // "sm" icônes | "md" icônes + labels
+/&gt;</code></pre>
 
-  <h3>Import</h3>
-  <pre><span class="kw">import</span> { DocumentActions } <span class="kw">from</span> <span class="st">"@/components/DocumentActions"</span>;</pre>
+      <h3>Props</h3>
+      <table>
+        <tr><th>Prop</th><th>Type</th><th>Req.</th><th>Description</th></tr>
+        <tr><td>docType</td><td>DocType</td><td>✓</td><td>DEVIS, FACTURE, AVOIR, SEANCE</td></tr>
+        <tr><td>docId</td><td>number|string</td><td>✓</td><td>ID BDD du document</td></tr>
+        <tr><td>docNum</td><td>string</td><td>✓</td><td>Numéro affiché (DCE-2603-0001…)</td></tr>
+        <tr><td>tieId</td><td>number|string</td><td>opt.</td><td>Charge contacts via GET /contacts?tieId=</td></tr>
+        <tr><td>clientNom/Prenom</td><td>string</td><td>opt.</td><td>Prefill email + signature</td></tr>
+        <tr><td>clientEmail/Tel</td><td>string</td><td>opt.</td><td>Email prefill / Tel OTP Yousign</td></tr>
+        <tr><td>pdfUrl</td><td>string</td><td>opt.</td><td>URL custom PDF (auto-calculée sinon)</td></tr>
+        <tr><td>size</td><td>"sm"|"md"</td><td>opt.</td><td>sm = icônes seules, md = labels</td></tr>
+      </table>
 
-  <h3>Usage minimal</h3>
-  <pre>&lt;<span class="tp">DocumentActions</span> <span class="pr">docType</span>=<span class="st">"DEVIS"</span> <span class="pr">docId</span>={dce.DCE_ID} <span class="pr">docNum</span>={dce.DCE_NUMERO} /&gt;</pre>
+      <h3>URLs PDF auto-calculées</h3>
+      <table>
+        <tr><th>docType</th><th>URL générée</th><th>Route NestJS</th></tr>
+        <tr><td>DEVIS</td><td>/api/editions/devis/:id</td><td>GET /editions/devis/:id</td></tr>
+        <tr><td>FACTURE</td><td>/api/editions/facture/:id</td><td>GET /editions/facture/:id</td></tr>
+        <tr><td>SEANCE</td><td>/api/editions/seance/:id</td><td>GET /editions/seance/:id</td></tr>
+      </table>
 
-  <h3>Usage complet</h3>
-  <pre>&lt;<span class="tp">DocumentActions</span>
-  <span class="pr">docType</span>=<span class="st">"FACTURE"</span>       <span class="cm">// DEVIS | FACTURE | AVOIR | ACHAT | COMPTA</span>
-  <span class="pr">docId</span>={fac.FAC_ID}
-  <span class="pr">docNum</span>={fac.FAC_NUM}
-  <span class="pr">tieId</span>={fac.TIE_ID}      <span class="cm">// charge contacts via GET /api/contacts?tieId=...</span>
-  <span class="pr">clientNom</span>={tie.TIE_RAISON_SOCIALE}
-  <span class="pr">clientEmail</span>={tie.TIE_EMAIL}
-  <span class="pr">clientTel</span>={tie.TIE_TEL}
-  <span class="pr">size</span>=<span class="st">"md"</span>            <span class="cm">// "sm" icônes seules | "md" icônes + labels</span>
-/&gt;</pre>
-
-  <h3>Props</h3>
-  <table class="t">
-    <tr><th>Prop</th><th>Type</th><th>Req.</th><th>Description</th></tr>
-    <tr><td><code>docType</code></td><td><code>DocType</code></td><td class="req">✓</td><td>DEVIS, FACTURE, AVOIR, ACHAT, COMPTA</td></tr>
-    <tr><td><code>docId</code></td><td><code>number | string</code></td><td class="req">✓</td><td>Identifiant BDD du document</td></tr>
-    <tr><td><code>docNum</code></td><td><code>string</code></td><td class="req">✓</td><td>Numéro affiché (DCE-2603-0026…)</td></tr>
-    <tr><td><code>tieId</code></td><td><code>number | string</code></td><td class="opt">opt.</td><td>ID tiers — charge la liste des contacts</td></tr>
-    <tr><td><code>clientNom / clientPrenom</code></td><td><code>string</code></td><td class="opt">opt.</td><td>Prefill email + signature</td></tr>
-    <tr><td><code>clientEmail / clientTel</code></td><td><code>string</code></td><td class="opt">opt.</td><td>Email (prefill) / Téléphone (OTP Yousign)</td></tr>
-    <tr><td><code>pdfUrl / emailUrl</code></td><td><code>string</code></td><td class="opt">opt.</td><td>URLs custom (auto-calculées par défaut)</td></tr>
-    <tr><td><code>size</code></td><td><code>"sm" | "md"</code></td><td class="opt">opt.</td><td>sm = icônes seules, md = icônes + texte</td></tr>
-  </table>
-
-  <h3>Comportement des 3 boutons</h3>
-  <div class="g2">
-    <div class="mini"><h4>🖨️ PDF</h4><p>Modal avec iframe chargée depuis l'URL PDF. Boutons "Ouvrir dans un onglet ↗" et "Imprimer". Jamais de navigation nouvelle page.</p></div>
-    <div class="mini"><h4>📧 Email</h4><p>Modal avec sélecteur de destinataire (client + contacts), objet et message pré-remplis. La sélection met à jour Nom, Prénom, Email, Téléphone.</p></div>
-    <div class="mini"><h4>🖊️ Signature</h4><p>Ouvre <code>SignatureModal</code> avec prefill. Génère PDF via pdfkit, upload Yousign, crée le signataire. TTS vocal à chaque étape.</p></div>
-    <div class="mini"><h4>🔗 Sélecteur contact commun</h4><p>Email et Signature partagent la même logique : <code>GET /api/contacts?tieId=...</code> — dropdown client principal + contacts du dossier.</p></div>
+      <div class="rule-red">✗ <strong>Interdit :</strong> iframe pour les PDF (bloqué par les navigateurs modernes en mode inline). Utiliser <code>&lt;object type="application/pdf"&gt;</code> avec fallback lien.</div>
+      <div class="rule-green">✓ <strong>Obligatoire :</strong> toutes les éditions PDF dans une modal. Jamais de navigation nouvelle page.</div>
+    </div>
   </div>
 
-  <h3>Règle modale obligatoire</h3>
-  <div class="rules">
-    <div class="rule ok"><span class="rn">✓</span> Toutes les éditions PDF s'ouvrent dans une modal avec iframe</div>
-    <div class="rule warn"><span class="rn">✗</span> Ne jamais naviguer vers une nouvelle page pour afficher un PDF</div>
-    <div class="rule warn"><span class="rn">✗</span> Ne jamais utiliser <code>window.open()</code> pour les PDFs</div>
+  <!-- SignatureModal -->
+  <div class="section" id="signature-modal">
+    <div class="section-header">
+      <span class="section-icon">🖊️</span>
+      <div>
+        <div class="section-title">SignatureModal</div>
+        <div class="section-subtitle">Signature électronique Yousign avec TTS et sélecteur de contact</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <h3>Flux technique</h3>
+      <div class="flow">
+        <span class="flow-step">Formulaire signataire</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">POST /devis/:id/signature</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Génération PDF (pdfkit)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Upload PDF Yousign</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Création signataire</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">BDD signature_demande ✓</span>
+      </div>
+
+      <h3>Configuration BDD requise</h3>
+      <pre><code>-- Table param_yousign (GET/POST /api/param-yousign)
+UPDATE param_yousign SET
+  YS_API_KEY  = 'sk-sandbox-...',
+  YS_ENV      = 'sandbox',
+  YS_BASE_URL = 'https://api-sandbox.yousign.app/v3',
+  YS_ACTIF    = 1
+WHERE ID = 1;</code></pre>
+
+      <div class="rule-amber">⚠️ <strong>URL interne Docker :</strong> l'API génère le PDF via <code>http://micro_nginx/api/devis/:id/pdf</code> (nom du service nginx, pas localhost).</div>
+      <div class="rule-blue">💡 <strong>Restriction S41 :</strong> le bouton Signature n'est affiché que pour <code>docType="DEVIS"</code>. Les factures ne passent pas par Yousign.</div>
+
+      <h3>Usage</h3>
+      <pre><code>&lt;SignatureModal
+  devisId={dce.DCE_ID}
+  devisNum={dce.DCE_NUMERO}
+  tieId={dce.TIE_ID}
+  signatairePrefill={{ nom, prenom, email, mobile }}
+  onClose={() =&gt; setModal(null)}
+  onSuccess={() =&gt; setModal(null)}
+/&gt;</code></pre>
+    </div>
   </div>
-</div>
 
-<!-- SignatureModal -->
-<div class="section" id="signature-modal">
-  <div class="sh"><span class="si">🖊️</span><div class="st"><h2>SignatureModal <span class="new">NEW S38</span></h2><div class="sub">Signature électronique Yousign avec TTS et sélecteur de contact</div></div></div>
-
-  <p>Modal dédiée à l'envoi de documents à la signature via l'API Yousign. Intègre une <strong>lecture vocale TTS</strong> (Web Speech API, voix française), un sélecteur de contact et une barre de progression animée.</p>
-
-  <h3>Flux technique</h3>
-  <div class="flow">
-    <div class="fs">Formulaire signataire</div><div class="fa">→</div>
-    <div class="fs">POST /devis/:id/signature</div><div class="fa">→</div>
-    <div class="fs">Génération PDF (pdfkit)</div><div class="fa">→</div>
-    <div class="fs">Upload PDF Yousign</div><div class="fa">→</div>
-    <div class="fs">Création signataire</div><div class="fa">→</div>
-    <div class="fs ok">BDD signature_demande ✓</div>
-  </div>
-
-  <h3>Étapes TTS</h3>
-  <ul>
-    <li><strong>Étape 1 :</strong> "Formulaire de signature pour le devis [num]. Renseignez les informations du signataire."</li>
-    <li><strong>Étape 2 :</strong> "Génération du PDF et envoi à Yousign en cours. Veuillez patienter."</li>
-    <li><strong>Étape 3 :</strong> "Demande de signature créée avec succès."</li>
-    <li>Bouton <code>🔊</code> pour relire l'étape courante.</li>
-  </ul>
-
-  <h3>Configuration BDD</h3>
-  <pre><span class="cm">-- Table param_yousign</span>
-<span class="kw">UPDATE</span> param_yousign <span class="kw">SET</span>
-  YS_API_KEY  = <span class="st">'sk-sandbox-...'</span>,
-  YS_ENV      = <span class="st">'sandbox'</span>,    <span class="cm">-- ou 'production'</span>
-  YS_BASE_URL = <span class="st">'https://api-sandbox.yousign.app/v3'</span>,
-  YS_ACTIF    = <span class="nb">1</span>
-<span class="kw">WHERE</span> ID = <span class="nb">1</span>;</pre>
-
-  <div class="alert aw">⚠️ <strong>URL interne Docker :</strong> l'API génère le PDF via <code>http://micro_nginx/api/devis/:id/pdf</code> (nom du service nginx, pas localhost).</div>
-</div>
-
-<!-- PageHeader -->
-<div class="section" id="page-header">
-  <div class="sh"><span class="si">📐</span><div class="st"><h2>PageHeader</h2><div class="sub">En-tête de page standard — titre, sous-titre, actions</div></div></div>
-  <p>Composant obligatoire en haut de chaque page. Assure la cohérence typographique et le positionnement des boutons d'action.</p>
-  <pre>&lt;<span class="tp">PageHeader</span>
-  <span class="pr">title</span>=<span class="st">"Devis / Contrats"</span>
-  <span class="pr">subtitle</span>=<span class="st">"Liste des devis et contrats"</span>
-  <span class="pr">actions</span>={
-    &lt;<span class="kw">div</span> className=<span class="st">"flex items-center gap-2"</span>&gt;
-      &lt;<span class="tp">DocumentActions</span> ... /&gt;
-      &lt;<span class="kw">button</span> className=<span class="st">"btn-primary"</span>&gt;+ Nouveau&lt;/<span class="kw">button</span>&gt;
-    &lt;/<span class="kw">div</span>&gt;
+  <!-- PageHeader -->
+  <div class="section" id="page-header">
+    <div class="section-header">
+      <span class="section-icon">📐</span>
+      <div>
+        <div class="section-title">PageHeader</div>
+        <div class="section-subtitle">En-tête de page standard — titre, sous-titre, actions</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Composant obligatoire en haut de chaque page. Assure la cohérence typographique et le positionnement des boutons d'action.</p>
+      <pre><code>&lt;PageHeader
+  title="Factures"
+  subtitle="Liste des factures émises"
+  actions={
+    &lt;div className="flex items-center gap-2"&gt;
+      &lt;DocumentActions ... /&gt;
+      &lt;Link className="btn-primary" href="/app/factures/new"&gt;+ Nouvelle&lt;/Link&gt;
+    &lt;/div&gt;
   }
-/&gt;</pre>
-</div>
-
-<!-- Charte -->
-<div class="section" id="charte">
-  <div class="sh"><span class="si">🎨</span><div class="st"><h2>Charte graphique CSS Variables</h2><div class="sub">Paramétrable depuis Mes paramètres → Charte graphique</div></div></div>
-  <p>Toutes les pages utilisent <strong>exclusivement</strong> les variables CSS de la charte. Jamais de couleurs hardcodées dans le code.</p>
-  <div class="g2">
-    <div>
-      <h4>Variables CSS</h4>
-      <table class="t">
-        <tr><td><code>--accent</code></td><td>Couleur principale (#4F46E5)</td></tr>
-        <tr><td><code>--surface</code></td><td>Fond des cards et sections</td></tr>
-        <tr><td><code>--surface-page</code></td><td>Fond de page</td></tr>
-        <tr><td><code>--surface-hover</code></td><td>Fond au survol des éléments</td></tr>
-        <tr><td><code>--border-color</code></td><td>Couleur des bordures</td></tr>
-        <tr><td><code>--text-primary</code></td><td>Texte principal</td></tr>
-        <tr><td><code>--text-secondary</code></td><td>Texte secondaire</td></tr>
-        <tr><td><code>--text-muted</code></td><td>Texte atténué</td></tr>
-      </table>
-    </div>
-    <div>
-      <h4>Classes utilitaires</h4>
-      <table class="t">
-        <tr><td><code>.card</code></td><td>Card avec bordure et fond surface</td></tr>
-        <tr><td><code>.btn-primary</code></td><td>Bouton principal (accent)</td></tr>
-        <tr><td><code>.btn-ghost</code></td><td>Bouton secondaire transparent</td></tr>
-        <tr><td><code>.input</code></td><td>Champ de saisie</td></tr>
-        <tr><td><code>.label</code></td><td>Label de formulaire</td></tr>
-        <tr><td><code>.space-y-6</code></td><td>Espacement standard entre sections</td></tr>
-      </table>
+/&gt;</code></pre>
     </div>
   </div>
 
-  <h3>Pattern page standard</h3>
-  <pre><span class="kw">export default function</span> <span class="tp">MaPage</span>() {
-  <span class="kw">return</span> (
-    &lt;<span class="kw">div</span> className=<span class="st">"space-y-6"</span>&gt;
-      &lt;<span class="tp">PageHeader</span> title=<span class="st">"..."</span> subtitle=<span class="st">"..."</span> /&gt;
-      &lt;<span class="kw">div</span> className=<span class="st">"border-b border-[var(--border-color)]"</span>&gt;
-        &lt;<span class="kw">button</span> className=<span class="st">"border-b-2 border-[var(--accent)] text-[var(--accent)]"</span>&gt;Onglet actif&lt;/<span class="kw">button</span>&gt;
-      &lt;/<span class="kw">div</span>&gt;
-      &lt;<span class="kw">div</span> className=<span class="st">"card p-5"</span>&gt;
-        <span class="cm">{/* Contenu */}</span>
-      &lt;/<span class="kw">div</span>&gt;
-    &lt;/<span class="kw">div</span>&gt;
-  );
-}</pre>
+  <!-- Sidebar S41 -->
+  <div class="section" id="sidebar">
+    <div class="section-header">
+      <span class="section-icon">☰</span>
+      <div>
+        <div class="section-title">Sidebar S41 <span class="tag tag-new">Nouveau</span></div>
+        <div class="section-subtitle">Navigation groupée avec espacement — composant src/components/Sidebar.tsx</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <h3>Changements S41</h3>
+      <table>
+        <tr><th>Élément</th><th>Avant</th><th>Après S41</th></tr>
+        <tr><td>Espacement groupes</td><td class="err">mb-3 compact</td><td class="ok">mt-4 first:mt-0 aéré</td></tr>
+        <tr><td>Paramètres</td><td class="err">14 entrées dans sidebar</td><td class="ok">1 ligne → /app/parametres (tuiles)</td></tr>
+        <tr><td>Mon/Mes Métier(s)</td><td class="warn">Dans Accueil uniquement</td><td class="ok">Dans Accueil + groupe dédié avec sous-menus</td></tr>
+        <tr><td>Clients</td><td class="warn">Entrée simple</td><td class="ok">+ Carte clients dans le groupe</td></tr>
+      </table>
 
-  <div class="alert as">✅ <strong>Correct :</strong> <code>text-[var(--accent)]</code>, <code>bg-[var(--surface)]</code>, <code>border-[var(--border-color)]</code></div>
-  <div class="alert ad">✗ <strong>Interdit :</strong> <code>style={{ background: '#0f0f0f' }}</code>, <code>font-family: Georgia</code>, classes hardcodées <code>bg-gray-900</code></div>
-</div>
-
-<!-- Conventions -->
-<div class="section" id="conventions">
-  <div class="sh"><span class="si">📏</span><div class="st"><h2>Conventions &amp; Terminologie</h2><div class="sub">Règles d'uniformisation — appliquées depuis S39</div></div></div>
-
-  <h3>Remplacement terminologique S39</h3>
-  <div class="rules">
-    <div class="rule ok"><span class="rn">✓</span> <strong>EC — Étude Comportementale</strong> — terme officiel depuis S39</div>
-    <div class="rule warn"><span class="rn">✗</span> <strong>EDC — Étude de Comportement</strong> — supprimé en S39 (9 fichiers corrigés, 0 occurrence résiduelle)</div>
+      <h3>Groupes de navigation</h3>
+      <div class="grid2">
+        <div class="sub-card">
+          <h4>ACCUEIL</h4>
+          <p style="font-size:0.8rem">Tableau de bord, Agenda, Mon/Mes Métier(s)</p>
+        </div>
+        <div class="sub-card">
+          <h4>MON/MES MÉTIER(S)</h4>
+          <p style="font-size:0.8rem">Dynamique — chargé depuis /api/parametres/modules. Accordéons par métier activé.</p>
+        </div>
+        <div class="sub-card">
+          <h4>CLIENTS & ANIMAUX</h4>
+          <p style="font-size:0.8rem">Clients (3 vues), Animaux, Carte clients, CRM & Leads</p>
+        </div>
+        <div class="sub-card">
+          <h4>COMMERCIAL</h4>
+          <p style="font-size:0.8rem">Devis, Factures, Règlements, Rappels impayés, Signatures</p>
+        </div>
+        <div class="sub-card">
+          <h4>ACHATS & STOCK</h4>
+          <p style="font-size:0.8rem">Achats, Inventaires</p>
+        </div>
+        <div class="sub-card">
+          <h4>GESTION</h4>
+          <p style="font-size:0.8rem">Comptabilité, Fact. électronique, Export FEC, Statistiques, GED</p>
+        </div>
+        <div class="sub-card">
+          <h4>COMMUNAUTÉ</h4>
+          <p style="font-size:0.8rem">Réseaux sociaux, Communauté</p>
+        </div>
+        <div class="sub-card">
+          <h4>ADMINISTRATION</h4>
+          <p style="font-size:0.8rem">Utilisateurs & Rôles, Centre d'aide, <strong>Paramètres</strong> (→ page tuiles)</p>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <h3>Composants candidats S40</h3>
-  <ul>
-    <li><code>StatusBadge</code> — badge statut coloré réutilisable (BROUILLON, ENVOYE, SIGNE…)</li>
-    <li><code>ContactSelector</code> — déjà dans EmailModal + SignatureModal</li>
-    <li><code>TiersCard</code> — card client avec coordonnées</li>
-    <li><code>LignesEditor</code> — éditeur lignes devis/facture (libellé, qté, PU, TVA)</li>
-    <li><code>TabBar</code> — barre d'onglets avec style unifié</li>
-  </ul>
-
-  <h3>Split custom-routes.ts (S40)</h3>
-  <div class="g2">
-    <div class="mini"><h4>routes-commercial.ts</h4><p>Devis, factures, avoirs, règlements</p></div>
-    <div class="mini"><h4>routes-elevage.ts</h4><p>Portées, naissances, réservations, carnets</p></div>
-    <div class="mini"><h4>routes-signatures.ts</h4><p>Yousign, webhook HMAC</p></div>
-    <div class="mini"><h4>routes-parametres.ts</h4><p>param_yousign, param_smtp, param_stripe…</p></div>
+  <!-- Page Paramètres -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">⚙️</span>
+      <div>
+        <div class="section-title">Page Paramètres — Tuiles S41 <span class="tag tag-new">Nouveau</span></div>
+        <div class="section-subtitle">/app/parametres — 5 sections, toutes entrées disponibles</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Remplace la sidebar encombrante par une page de tuiles organisée en sections. Toutes les entrées "À venir" sont désormais disponibles.</p>
+      <table>
+        <tr><th>Section</th><th>Tuiles</th></tr>
+        <tr><td>Identité & Présentation</td><td>Mon entreprise, Charte graphique, Éditions & Documents</td></tr>
+        <tr><td>Métier & Activité</td><td>Sélection Métier(s), Types de séance, Races, Catalogue articles, Libellés EC, Formulaires lead</td></tr>
+        <tr><td>Comptabilité & Paiements</td><td>Taux de TVA, Plan de comptes, Modes de paiement, Facturation électronique</td></tr>
+        <tr><td>Interfaces & Communications</td><td>SMTP/Emails, SMS, Interfaces API (Yousign/Stripe/Klarna/WhatsApp)</td></tr>
+        <tr><td>Administration</td><td>Utilisateurs & Rôles</td></tr>
+      </table>
+    </div>
   </div>
-</div>
 
-<!-- API Keys -->
-<div class="section" id="api-keys">
-  <div class="sh"><span class="si">🔌</span><div class="st"><h2>Page Interfaces API <span class="new">NEW S38</span></h2><div class="sub">/app/parametres/api-keys — Configuration des services externes</div></div></div>
-  <p>Page accordéon de configuration de toutes les intégrations externes. Chaque section gère sa propre table BDD dédiée. Toggle actif/inactif par service.</p>
-  <div class="g2">
-    <div class="mini"><h4>🖊️ Yousign</h4><p>Clé API, env sandbox/prod, URL, secret webhook. Table : <code>param_yousign</code></p></div>
-    <div class="mini"><h4>📡 Pennylane (PDP)</h4><p>URL API, SIREN, TVA intracom, env TEST/PROD. Table : <code>param_pdp</code></p></div>
-    <div class="mini"><h4>📧 SMTP</h4><p>Hôte, port, utilisateur, mot de passe, TLS. Table : <code>param_smtp</code></p></div>
-    <div class="mini"><h4>💳 Stripe</h4><p>Clé publique, secrète, webhook, environnement. Table : <code>param_stripe</code></p></div>
+  <!-- Page Clients 3 vues -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">👥</span>
+      <div>
+        <div class="section-title">Page Clients — 3 vues S41 <span class="tag tag-new">Nouveau</span></div>
+        <div class="section-subtitle">/app/clients — Liste, Tuiles, Carte intégrées dans un seul composant</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>La page /app/carte est conservée mais les 3 vues sont désormais intégrées directement dans /app/clients via un switcher ☰ / ⊞ / 🗺️.</p>
+      <table>
+        <tr><th>Vue</th><th>Description</th><th>Route API</th></tr>
+        <tr><td>Liste ☰</td><td>Tableau classique avec recherche textuelle</td><td>GET /tiers?q=</td></tr>
+        <tr><td>Tuiles ⊞</td><td>Cards avec avatar initiale, coordonnées, email, tel</td><td>GET /tiers?q=</td></tr>
+        <tr><td>Carte 🗺️</td><td>Leaflet OSM + rayon Haversine + autocomplete villes</td><td>GET /tiers-avec-coords, /villes-search</td></tr>
+      </table>
+      <div class="rule-amber">⚠️ <strong>z-index autocomplete carte :</strong> utiliser <code>z-[1000]</code> (Leaflet est à z-index 400+). La classe Tailwind <code>z-50</code> est insuffisante.</div>
+    </div>
   </div>
-  <div class="alert ai">💡 Pour ajouter une intégration : créer <code>param_xxx</code>, ajouter <code>GET/POST /param-xxx</code> dans <code>custom-routes.ts</code>, et ajouter l'entrée dans <code>API_SECTIONS</code> de la page.</div>
-</div>
 
-<!-- Roadmap -->
-<div class="section" id="roadmap">
-  <div class="sh"><span class="si">🗺️</span><div class="st"><h2>Roadmap Composants</h2><div class="sub">S38 → S41 — Refactoring et uniformisation</div></div></div>
-  <table class="t">
-    <tr><th>Sprint</th><th>Action</th><th>Statut</th></tr>
-    <tr><td><strong>S38</strong></td><td>Création <code>DocumentActions</code>, <code>SignatureModal</code> v2, page Interfaces API</td><td style="color:var(--green)">✅ Livré</td></tr>
-    <tr><td><strong>S39</strong></td><td>Refonte page Élevage sur charte graphique, remplacement EDC→EC global, docs composants</td><td style="color:var(--green)">✅ Livré</td></tr>
-    <tr><td><strong>S40</strong></td><td>Split <code>custom-routes.ts</code>, extraction <code>StatusBadge</code>, <code>TabBar</code>, <code>ContactSelector</code></td><td style="color:var(--orange)">📋 Planifié</td></tr>
-    <tr><td><strong>S41</strong></td><td>Adaptation écrans par métier (Toiletteur, Pet-sitter, Éducateur), <code>LignesEditor</code></td><td style="color:var(--orange)">📋 Planifié</td></tr>
-  </table>
-</div>
+  <!-- custom-routes.ts -->
+  <div class="section" id="custom-routes">
+    <div class="section-header">
+      <span class="section-icon">⚡</span>
+      <div>
+        <div class="section-title">Architecture custom-routes.ts</div>
+        <div class="section-subtitle">Règles critiques — fichier compilé dans l'image NestJS</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <h3>Règles immuables</h3>
+      <div class="rule-red">✗ <code>inject_v4_final.js</code> — NE JAMAIS UTILISER (catch orphelin → SyntaxError crash loop)</div>
+      <div class="rule-green">✓ Toutes les routes custom vivent dans <code>api/src/custom-routes.ts</code>, compilées dans l'image Docker</div>
+      <div class="rule-amber">⚠️ <code>docker compose restart</code> efface les fichiers injectés manuellement — toujours passer par le build</div>
+
+      <h3>Pattern body parsing obligatoire</h3>
+      <p>NestJS ne parse pas le body dans <code>instance.use()</code>. Toujours utiliser ce pattern pour les POST/PUT/PATCH :</p>
+      <pre><code>// CORRECT — pour toutes les routes POST dans instance.use()
+const b: any = await new Promise&lt;any&gt;((resolve) =&gt; {
+  let s = '';
+  req.on('data', (chunk: any) =&gt; { s += chunk; });
+  req.on('end', () =&gt; {
+    try { resolve(JSON.parse(s || '{}')); } catch { resolve({}); }
+  });
+});
+
+// INTERDIT — req.body est toujours undefined dans instance.use()
+const b = req.body || {}; // ❌ ne jamais faire ça</code></pre>
+
+      <h3>Pattern TypeScript obligatoire</h3>
+      <pre><code>// Toujours typer les paramètres des callbacks
+instance.use('/ma-route', async (req: any, res: any, next: any) =&gt; {
+  // ...
+});
+
+// b doit toujours être typé any
+const b: any = await new Promise&lt;any&gt;(...);</code></pre>
+
+      <h3>Nginx — préfixe /api/</h3>
+      <div class="rule-blue">Nginx strip le préfixe <code>/api/</code> avant de transmettre à l'API. Les routes dans custom-routes.ts s'enregistrent <strong>sans</strong> <code>/api/</code>. Ex: <code>instance.use('/reglements')</code> répond à <code>/api/reglements</code>.</div>
+    </div>
+  </div>
+
+  <!-- Routes API S41 -->
+  <div class="section" id="api-routes">
+    <div class="section-header">
+      <span class="section-icon">🔌</span>
+      <div>
+        <div class="section-title">Routes API — État S41</div>
+        <div class="section-subtitle">custom-routes.ts ~43k chars — toutes les routes custom enregistrées</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <h3>Routes ajoutées en S41</h3>
+      <table>
+        <tr><th>Route</th><th>Méthodes</th><th>Description</th></tr>
+        <tr><td>/reglements</td><td>GET, POST, DELETE</td><td>Liste règlements, création, suppression — body parsing corrigé</td></tr>
+        <tr><td>/communaute</td><td>GET, POST, DELETE</td><td>Posts communauté + modération</td></tr>
+        <tr><td>/inventaires/:id</td><td>GET</td><td>Fiche entête inventaire</td></tr>
+        <tr><td>/inventaires/:id/lignes</td><td>GET, POST</td><td>Lignes inventaire — sauvegarde batch DELETE+INSERT</td></tr>
+        <tr><td>/inventaires/:id (statut)</td><td>POST</td><td>Mise à jour statut VALIDE/ANNULE</td></tr>
+        <tr><td>/parametres/smtp</td><td>GET, POST</td><td>Configuration SMTP (table param_smtp)</td></tr>
+        <tr><td>/parametres/sms</td><td>GET, POST</td><td>Configuration SMS/WhatsApp Twilio</td></tr>
+        <tr><td>/parametres/sms/test</td><td>POST</td><td>Test SMS simulé</td></tr>
+        <tr><td>/param-yousign</td><td>GET, POST</td><td>Clés Yousign (table param_yousign)</td></tr>
+        <tr><td>/ged-factures-email</td><td>POST</td><td>Envoi email simulé (SMTP à configurer)</td></tr>
+      </table>
+
+      <h3>Routes corrigées en S41</h3>
+      <table>
+        <tr><th>Route</th><th>Problème</th><th>Correction</th></tr>
+        <tr><td>/achats POST</td><td class="err">req.body vide</td><td class="ok">readBody() injecté</td></tr>
+        <tr><td>/inventaires POST</td><td class="err">req.body vide</td><td class="ok">readBody() injecté</td></tr>
+        <tr><td>/parametres/metier POST</td><td class="err">req.body vide</td><td class="ok">readBody() injecté</td></tr>
+        <tr><td>/programmes POST/PATCH</td><td class="err">req.body vide</td><td class="ok">readBody() injecté</td></tr>
+        <tr><td>/questionnaires POST/PATCH</td><td class="err">req.body vide</td><td class="ok">readBody() injecté</td></tr>
+        <tr><td>/inventaires lignes INSERT</td><td class="err">ILI_ECART colonne générée</td><td class="ok">Retiré du INSERT</td></tr>
+      </table>
+
+      <h3>Routes NestJS stables (EditionsController)</h3>
+      <table>
+        <tr><th>Route</th><th>Description</th></tr>
+        <tr><td>GET /editions/facture/:id</td><td>Génération PDF facture (pdfkit, param_editions)</td></tr>
+        <tr><td>GET /editions/devis/:id</td><td>Génération PDF devis</td></tr>
+        <tr><td>GET /editions/seance/:id</td><td>Rapport PDF séance</td></tr>
+        <tr><td>GET /editions/facture/:id/download</td><td>Téléchargement PDF facture</td></tr>
+        <tr><td>GET /editions/devis/:id/download</td><td>Téléchargement PDF devis</td></tr>
+        <tr><td>GET/PUT /editions/parametres</td><td>Paramètres d'édition (logo, couleurs, pied de page)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Charte CSS -->
+  <div class="section" id="charte">
+    <div class="section-header">
+      <span class="section-icon">🎨</span>
+      <div>
+        <div class="section-title">Charte graphique CSS Variables</div>
+        <div class="section-subtitle">Paramétrable depuis Mes Paramètres → Charte graphique</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="rule-red">✗ <strong>Interdit :</strong> couleurs hardcodées. Jamais de <code>style={{ color: '#fff' }}</code> ou <code>bg-gray-900</code>.</div>
+      <div class="rule-green">✓ <strong>Obligatoire :</strong> toujours utiliser les variables CSS et classes utilitaires.</div>
+
+      <div class="grid2">
+        <div class="sub-card">
+          <h4>Variables de couleur</h4>
+          <table style="margin:0">
+            <tr><td>--accent</td><td>Couleur principale</td></tr>
+            <tr><td>--surface</td><td>Fond des cards</td></tr>
+            <tr><td>--surface-hover</td><td>Fond au survol</td></tr>
+            <tr><td>--border-color</td><td>Bordures</td></tr>
+            <tr><td>--text-primary</td><td>Texte principal</td></tr>
+            <tr><td>--text-secondary</td><td>Texte secondaire</td></tr>
+            <tr><td>--text-muted</td><td>Texte atténué</td></tr>
+          </table>
+        </div>
+        <div class="sub-card">
+          <h4>Classes utilitaires</h4>
+          <table style="margin:0">
+            <tr><td>.card</td><td>Card avec fond et bordure</td></tr>
+            <tr><td>.btn-primary</td><td>Bouton principal (accent)</td></tr>
+            <tr><td>.btn-ghost</td><td>Bouton secondaire transparent</td></tr>
+            <tr><td>.btn-danger</td><td>Bouton destructif (rouge)</td></tr>
+            <tr><td>.input</td><td>Champ de saisie</td></tr>
+            <tr><td>.label</td><td>Label de formulaire</td></tr>
+            <tr><td>.space-y-6</td><td>Espacement standard</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conventions -->
+  <div class="section" id="conventions">
+    <div class="section-header">
+      <span class="section-icon">📏</span>
+      <div>
+        <div class="section-title">Conventions & Terminologie</div>
+        <div class="section-subtitle">Règles d'uniformisation — appliquées depuis S39</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="rule-green">✓ <strong>EC — Étude Comportementale</strong> — terme officiel depuis S39</div>
+      <div class="rule-red">✗ <strong>EDC</strong> — supprimé en S39 (0 occurrence résiduelle)</div>
+
+      <h3>Séquence de déploiement standard</h3>
+      <pre><code># 1. Copier les fichiers modifiés
+cd "$root"
+.\COPIER_TOUTES_PAGES_v2.ps1    # hydrate OneDrive avant build
+
+# 2. Build
+cd deploy
+
+# Frontend seul
+docker compose build frontend --no-cache
+docker compose up -d frontend
+docker compose restart nginx
+
+# API seule
+docker compose build api --no-cache
+docker compose up -d api
+
+# Les deux
+docker compose build api frontend --no-cache
+docker compose up -d api frontend
+docker compose restart nginx</code></pre>
+
+      <div class="rule-red">⚠️ <strong>Jamais</strong> <code>docker compose restart</code> — efface les fichiers injectés. Utiliser stop/cp/start ou rebuild.</div>
+
+      <h3>Backup BDD</h3>
+      <pre><code># Backup sans LOCK TABLES (InnoDB compatible)
+& "C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe" `
+  -h 192.168.1.62 -P 3307 -u "@lgorithme" `
+  --password="@lgoritHme+2025+977_73300" `
+  --single-transaction micro_logiciel `
+  > C:\Backup\micro_logiciel\20260322_fin_s41.sql</code></pre>
+    </div>
+  </div>
+
+  <!-- Roadmap -->
+  <div class="section" id="roadmap">
+    <div class="section-header">
+      <span class="section-icon">🗺️</span>
+      <div>
+        <div class="section-title">Roadmap Composants S38 → S43</div>
+        <div class="section-subtitle">Refactoring et uniformisation progressive</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table>
+        <tr><th>Sprint</th><th>Action</th><th>Statut</th></tr>
+        <tr><td>S38</td><td>Création DocumentActions, SignatureModal v2, page Interfaces API</td><td class="ok">✅ Livré</td></tr>
+        <tr><td>S39</td><td>Refonte page Élevage sur charte, EDC→EC global, docs composants</td><td class="ok">✅ Livré</td></tr>
+        <tr><td>S40</td><td>Sidebar groupée, Interfaces API consolidée, Élevage géniteurs/mortalité, Formulaires lead multi</td><td class="ok">✅ Livré</td></tr>
+        <tr><td>S41</td><td>Fix body parsing (7 routes), Sidebar S41 espacée, Paramètres tuiles, Clients 3 vues, DocumentActions corrigé, routes SMTP/SMS/Yousign</td><td class="ok">✅ En cours</td></tr>
+        <tr><td>S41 reste</td><td>Module Élevage profondeur (5 tables + 9 routes + 4 pages + seeds), Aides contextuelles, Docs RFE 43-48, Docs métiers 50-59</td><td class="warn">📋 Planifié</td></tr>
+        <tr><td>S42</td><td>Split custom-routes.ts, StatusBadge, TabBar, LignesEditor, seeds démo réalistes par métier</td><td class="warn">📋 Planifié</td></tr>
+        <tr><td>S43</td><td>Onboarding guidé, adaptation écrans par métier, WhatsApp Business, Factur-X/UBL, PDP Pennylane réel</td><td class="warn">📋 Planifié</td></tr>
+      </table>
+
+      <h3>Composants candidats S42</h3>
+      <div class="grid2">
+        <div class="sub-card">
+          <h4>StatusBadge</h4>
+          <p style="font-size:0.8rem">Badge statut coloré réutilisable — BROUILLON, ENVOYE, SIGNE, PAYE…</p>
+        </div>
+        <div class="sub-card">
+          <h4>TabBar</h4>
+          <p style="font-size:0.8rem">Barre d'onglets avec style unifié — déjà utilisée sur Clients S41</p>
+        </div>
+        <div class="sub-card">
+          <h4>LignesEditor</h4>
+          <p style="font-size:0.8rem">Éditeur lignes devis/facture — libellé, qté, PU HT, TVA, total</p>
+        </div>
+        <div class="sub-card">
+          <h4>ContactSelector</h4>
+          <p style="font-size:0.8rem">Déjà dans EmailModal + SignatureModal — à extraire en composant autonome</p>
+        </div>
+      </div>
+
+      <h3>Split custom-routes.ts prévu S42</h3>
+      <div class="grid2">
+        <div class="sub-card"><h4>routes-commercial.ts</h4><p style="font-size:0.8rem">Devis, factures, avoirs, règlements</p></div>
+        <div class="sub-card"><h4>routes-elevage.ts</h4><p style="font-size:0.8rem">Portées, naissances, chiots, réservations</p></div>
+        <div class="sub-card"><h4>routes-parametres.ts</h4><p style="font-size:0.8rem">param_yousign, param_smtp, param_stripe, param_sms…</p></div>
+        <div class="sub-card"><h4>routes-signatures.ts</h4><p style="font-size:0.8rem">Yousign, webhook HMAC</p></div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
 <footer>
-  PetSuite — Documentation technique composants | Sprint S38–S39 | Algorithmia 2026<br><br>
-  <a href="index.html">← Retour à l'index</a>
+  PetSuite — Documentation technique composants | Sprint S41 | Algorithmia 2026
+  &nbsp;·&nbsp;
+  <a href="index.html" style="color:var(--accent)">← Retour à l'index</a>
 </footer>
 
 </body>
