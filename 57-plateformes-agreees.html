@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Plateformes Agréées (PDP)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+  .header { background: #13131a; border-bottom: 1px solid #2a2a3a;
+            padding: 1.5rem 2rem; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+  .logo span { color: #7f77dd; }
+  .badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8;
+           padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-links a { color: #888; text-decoration: none; font-size: 0.85rem; }
+  .nav-links a:hover { color: #fff; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem;
+       padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a3a; }
+  h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 0.5rem; }
+  p { color: #9a9890; margin-bottom: 0.75rem; }
+  .subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
+          padding: 1.25rem; transition: border-color 0.2s; }
+  .card:hover { border-color: #534ab7; }
+  .card-title { font-size: 0.95rem; font-weight: 600; color: #e2e0d8; margin-bottom: 0.4rem; }
+  .card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+         font-size: 0.7rem; font-weight: 600; margin-right: 0.25rem; margin-bottom: 0.4rem; }
+  .tag-purple { background: #1a1530; color: #9d97e8; }
+  .tag-green  { background: #0a2015; color: #5dcaa5; }
+  .tag-blue   { background: #0a1525; color: #6baed6; }
+  .tag-amber  { background: #1a1205; color: #d4a44c; }
+  .tag-red    { background: #1a0a0a; color: #e06c6c; }
+  code { background: #1a1a2e; color: #9d97e8; padding: 0.1rem 0.4rem;
+         border-radius: 4px; font-size: 0.85em; font-family: 'Fira Code', monospace; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  th { background: #13131a; color: #888; font-weight: 600; padding: 0.6rem 0.8rem;
+       text-align: left; border-bottom: 1px solid #2a2a3a; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; }
+  tr:hover td { background: #0f0f18; }
+  .back-link { color: #534ab7; text-decoration: none; font-size: 0.85rem; }
+  .back-link:hover { color: #9d97e8; }
+  .alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px;
+           padding: 1rem 1.25rem; margin: 1rem 0; font-size: 0.85rem; color: #5dcaa5; }
+  .alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
+  .alert-red { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
+  .progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
+  .progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
+  footer { text-align: center; padding: 2rem; color: #333; font-size: 0.8rem;
+           border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="01-synthese-projet.html">Synthèse</a>
+    <a href="53-changelog-s43.html">S43</a>
+    <a href="06-roadmap-s43.html">Roadmap</a>
+  </div>
+  <span class="badge">#57 — S44</span>
+</header>
+<div class="container">
+
+<h1>🔌 Plateformes de Dématérialisation Partenaires (PDP)</h1>
+<p class="subtitle">Les 10 PDP de référence — Intégration PetSuite par API</p>
+
+<div class="alert alert">
+  ✅ <strong>PA par défaut PetSuite :</strong> Pennylane — API REST complète, nativement compatible TPE/indépendants, 35k+ clients en France.
+</div>
+
+<div class="section">
+  <h2>🏆 Plateformes agréées prioritaires</h2>
+  <div class="grid">
+    <div class="card" style="border-color:#534ab7">
+      <span class="tag tag-purple">PA DÉFAUT</span>
+      <div class="card-title">💜 Pennylane</div>
+      <div class="card-desc">Solution comptable SaaS française. API REST documentée. Idéale TPE/indépendants. Synchronisation automatique factures et règlements. <strong>Intégration S44.</strong></div>
+    </div>
+    <div class="card">
+      <span class="tag tag-amber">P2</span>
+      <div class="card-title">🟠 Chorus Pro (PPF)</div>
+      <div class="card-desc">Portail Public de Facturation. Gratuit. Obligatoire pour factures B2G (public). API disponible.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-blue">P3</span>
+      <div class="card-title">🔵 Sage</div>
+      <div class="card-desc">Leader logiciel comptable PME. Sage 100, Sage 50. API partenaire. Grande base installée.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-blue">P4</span>
+      <div class="card-title">🔵 Cegid</div>
+      <div class="card-desc">Expert-comptables et PME. Cegid Loop. Réseau de 40k cabinets. API REST disponible.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">P5</span>
+      <div class="card-title">🟢 Sellsy</div>
+      <div class="card-desc">CRM + facturation + comptabilité tout-en-un. API REST. Cible TPE/PME. Concurrent direct de PetSuite sur certains modules.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">P6</span>
+      <div class="card-title">🟢 Axonaut</div>
+      <div class="card-desc">ERP français tout-en-un pour TPE. API REST. Devis, factures, CRM, comptabilité.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-amber">P7</span>
+      <div class="card-title">🟡 QuickBooks</div>
+      <div class="card-desc">Intuit — leader mondial PME. API mature. Forte base en France depuis 2020.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-amber">P8</span>
+      <div class="card-title">🟡 Indy (ex Georges)</div>
+      <div class="card-desc">Comptabilité automatisée indépendants/freelance. Parfaitement adapté à notre cible métier.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-amber">P9</span>
+      <div class="card-title">🟡 Dext (ex Receipt Bank)</div>
+      <div class="card-desc">Capture et traitement automatique des factures fournisseurs. OCR + IA. Complémentaire au module Achats.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-amber">P10</span>
+      <div class="card-title">🟡 Yooz</div>
+      <div class="card-desc">Dématérialisation factures fournisseurs. Validation workflow. Intégration ERP. Fort en B2B.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🔧 Architecture d'intégration PetSuite</h2>
+  <table>
+    <tr><th>PA</th><th>Type intégration</th><th>Statut</th><th>Priorité</th></tr>
+    <tr><td><strong>Pennylane</strong></td><td>API REST bidirectionnelle</td><td><span style="color:#5dcaa5">S44 — En cours</span></td><td>P1</td></tr>
+    <tr><td>Chorus Pro</td><td>API REST + PEPPOL</td><td><span style="color:#d4a44c">S45</span></td><td>P2</td></tr>
+    <tr><td>Indy</td><td>API REST</td><td><span style="color:#d4a44c">S46</span></td><td>P3</td></tr>
+    <tr><td>Autres (7)</td><td>API REST</td><td><span style="color:#666">Backlog</span></td><td>P4+</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>📋 Paramétrage PetSuite</h2>
+  <p>Configuration dans <strong>Paramètres &gt; Comptabilité &gt; Plateforme agréée</strong> (à créer en S44)</p>
+  <div class="card">
+    <div class="card-title">Champs de configuration</div>
+    <div class="card-desc">
+      • Sélection de la PA (liste déroulante)<br>
+      • Clé API / Token<br>
+      • URL endpoint (prod/sandbox)<br>
+      • SIRET de l'entreprise<br>
+      • Numéro TVA intracommunautaire<br>
+      • Mode : émission seulement / réception seulement / les deux<br>
+      • Fréquence e-Reporting : quotidien / hebdomadaire
+    </div>
+  </div>
+</div>
+
+</div>
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
+</body></html>

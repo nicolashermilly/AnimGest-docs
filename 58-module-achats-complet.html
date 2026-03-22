@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Module Achats Complet</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+  .header { background: #13131a; border-bottom: 1px solid #2a2a3a;
+            padding: 1.5rem 2rem; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+  .logo span { color: #7f77dd; }
+  .badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8;
+           padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-links a { color: #888; text-decoration: none; font-size: 0.85rem; }
+  .nav-links a:hover { color: #fff; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem;
+       padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a3a; }
+  h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 0.5rem; }
+  p { color: #9a9890; margin-bottom: 0.75rem; }
+  .subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
+          padding: 1.25rem; transition: border-color 0.2s; }
+  .card:hover { border-color: #534ab7; }
+  .card-title { font-size: 0.95rem; font-weight: 600; color: #e2e0d8; margin-bottom: 0.4rem; }
+  .card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+         font-size: 0.7rem; font-weight: 600; margin-right: 0.25rem; margin-bottom: 0.4rem; }
+  .tag-purple { background: #1a1530; color: #9d97e8; }
+  .tag-green  { background: #0a2015; color: #5dcaa5; }
+  .tag-blue   { background: #0a1525; color: #6baed6; }
+  .tag-amber  { background: #1a1205; color: #d4a44c; }
+  .tag-red    { background: #1a0a0a; color: #e06c6c; }
+  code { background: #1a1a2e; color: #9d97e8; padding: 0.1rem 0.4rem;
+         border-radius: 4px; font-size: 0.85em; font-family: 'Fira Code', monospace; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  th { background: #13131a; color: #888; font-weight: 600; padding: 0.6rem 0.8rem;
+       text-align: left; border-bottom: 1px solid #2a2a3a; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; }
+  tr:hover td { background: #0f0f18; }
+  .back-link { color: #534ab7; text-decoration: none; font-size: 0.85rem; }
+  .back-link:hover { color: #9d97e8; }
+  .alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px;
+           padding: 1rem 1.25rem; margin: 1rem 0; font-size: 0.85rem; color: #5dcaa5; }
+  .alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
+  .alert-red { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
+  .progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
+  .progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
+  footer { text-align: center; padding: 2rem; color: #333; font-size: 0.8rem;
+           border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="01-synthese-projet.html">Synthèse</a>
+    <a href="53-changelog-s43.html">S43</a>
+    <a href="06-roadmap-s43.html">Roadmap</a>
+  </div>
+  <span class="badge">#58 — S44</span>
+</header>
+<div class="container">
+
+<h1>🛒 Module Achats — Documentation complète</h1>
+<p class="subtitle">Commandes fournisseurs, réception, pointage livraison, avoirs, règlements, réception factures PA</p>
+
+<div class="section">
+  <h2>📦 Workflow commande fournisseur</h2>
+  <table>
+    <tr><th>Étape</th><th>Statut</th><th>Action PetSuite</th></tr>
+    <tr><td>1. Création commande</td><td><code>BROUILLON</code></td><td>Saisie lignes articles, tiers fournisseur</td></tr>
+    <tr><td>2. Validation</td><td><code>VALIDE</code></td><td>Envoi fournisseur (email/PDF modal)</td></tr>
+    <tr><td>3. Réception partielle</td><td><code>EN_COURS</code></td><td>Pointage livraison article par article</td></tr>
+    <tr><td>4. Réception complète</td><td><code>RECU</code></td><td>Génération entrée stock + alerte si écart</td></tr>
+    <tr><td>5. Facturation</td><td>—</td><td>Rapprochement facture fournisseur reçue</td></tr>
+    <tr><td>6. Règlement</td><td><code>PAYE</code></td><td>Saisie paiement + export comptable</td></tr>
+    <tr><td>Avoir</td><td><code>AVOIR</code></td><td>Retour marchandise, avoir fournisseur</td></tr>
+    <tr><td>Annulation</td><td><code>ANNULE</code></td><td>Commande annulée avant réception</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>🔧 Fonctionnalités implementées</h2>
+  <div class="grid">
+    <div class="card"><span class="tag tag-green">✅ OK</span><div class="card-title">Liste commandes</div><div class="card-desc">Filtres statut, fournisseur, date. KPIs totaux. Route : <code>/app/achats</code></div></div>
+    <div class="card"><span class="tag tag-green">✅ OK</span><div class="card-title">Détail commande</div><div class="card-desc">Lignes, totaux HT/TVA/TTC, statut. Route : <code>/app/achats/[id]</code></div></div>
+    <div class="card"><span class="tag tag-green">✅ OK</span><div class="card-title">Nouvelle commande</div><div class="card-desc">Sélection fournisseur, ajout articles. Route : <code>/app/achats/new</code></div></div>
+    <div class="card"><span class="tag tag-green">✅ OK</span><div class="card-title">Règlements fournisseurs</div><div class="card-desc">Liste règlements, saisie paiement. Route : <code>/app/achats/reglements</code></div></div>
+    <div class="card"><span class="tag tag-amber">⏳ S44</span><div class="card-title">Pointage livraison</div><div class="card-desc">Cocher les lignes reçues, quantités partielles, date réception</div></div>
+    <div class="card"><span class="tag tag-amber">⏳ S44</span><div class="card-title">Réception facture PA</div><div class="card-desc">Import automatique factures reçues via Pennylane/PDP. Rapprochement commande.</div></div>
+    <div class="card"><span class="tag tag-amber">⏳ S44</span><div class="card-title">Demande d'avoir</div><div class="card-desc">Retour marchandise, avoir fournisseur, impact stock</div></div>
+    <div class="card"><span class="tag tag-red">❌ TODO</span><div class="card-title">Approbation workflow</div><div class="card-desc">Validation commande par responsable avant envoi fournisseur</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>📊 Routes API Achats</h2>
+  <table>
+    <tr><th>Route</th><th>Description</th><th>Statut</th></tr>
+    <tr><td><code>GET /achats</code></td><td>Liste commandes avec filtres</td><td>✅</td></tr>
+    <tr><td><code>GET /achats/:id</code></td><td>Détail commande + lignes</td><td>✅</td></tr>
+    <tr><td><code>POST /achats</code></td><td>Créer commande</td><td>✅</td></tr>
+    <tr><td><code>PUT /achats/:id/statut</code></td><td>Changer statut</td><td>✅</td></tr>
+    <tr><td><code>POST /achats/:id/reception</code></td><td>Pointage livraison</td><td>⏳ S44</td></tr>
+    <tr><td><code>POST /achats/:id/avoir</code></td><td>Créer avoir fournisseur</td><td>⏳ S44</td></tr>
+    <tr><td><code>POST /achats/import-facture-pa</code></td><td>Import facture depuis PDP</td><td>❌ TODO</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>🗃️ Tables BDD Achats</h2>
+  <table>
+    <tr><th>Table</th><th>Description</th><th>Lignes approx.</th></tr>
+    <tr><td><code>achat_entete</code></td><td>Entête commandes fournisseurs</td><td>~170</td></tr>
+    <tr><td><code>achat_ligne</code></td><td>Lignes de commande (ALI_*)</td><td>~500</td></tr>
+    <tr><td><code>achat_reglement</code></td><td>Règlements fournisseurs</td><td>~40</td></tr>
+    <tr><td><code>inventaire</code></td><td>Stock articles</td><td>~50</td></tr>
+    <tr><td><code>inventaire_ligne</code></td><td>Mouvements de stock</td><td>~200</td></tr>
+  </table>
+  <div class="alert-warn alert">
+    ⚠️ <strong>Important :</strong> Les colonnes de <code>achat_ligne</code> utilisent le préfixe <code>ALI_*</code> (pas <code>ACL_*</code>). Les colonnes GENERATED (<code>ILI_VALEUR_REELLE</code>, <code>ILI_ECART</code>) ne doivent jamais être dans un INSERT.
+  </div>
+</div>
+
+</div>
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
+</body></html>

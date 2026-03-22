@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Réforme Facturation Électronique</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+  .header { background: #13131a; border-bottom: 1px solid #2a2a3a;
+            padding: 1.5rem 2rem; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+  .logo span { color: #7f77dd; }
+  .badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8;
+           padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-links a { color: #888; text-decoration: none; font-size: 0.85rem; }
+  .nav-links a:hover { color: #fff; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem;
+       padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a3a; }
+  h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 0.5rem; }
+  p { color: #9a9890; margin-bottom: 0.75rem; }
+  .subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
+          padding: 1.25rem; transition: border-color 0.2s; }
+  .card:hover { border-color: #534ab7; }
+  .card-title { font-size: 0.95rem; font-weight: 600; color: #e2e0d8; margin-bottom: 0.4rem; }
+  .card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+         font-size: 0.7rem; font-weight: 600; margin-right: 0.25rem; margin-bottom: 0.4rem; }
+  .tag-purple { background: #1a1530; color: #9d97e8; }
+  .tag-green  { background: #0a2015; color: #5dcaa5; }
+  .tag-blue   { background: #0a1525; color: #6baed6; }
+  .tag-amber  { background: #1a1205; color: #d4a44c; }
+  .tag-red    { background: #1a0a0a; color: #e06c6c; }
+  code { background: #1a1a2e; color: #9d97e8; padding: 0.1rem 0.4rem;
+         border-radius: 4px; font-size: 0.85em; font-family: 'Fira Code', monospace; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  th { background: #13131a; color: #888; font-weight: 600; padding: 0.6rem 0.8rem;
+       text-align: left; border-bottom: 1px solid #2a2a3a; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; }
+  tr:hover td { background: #0f0f18; }
+  .back-link { color: #534ab7; text-decoration: none; font-size: 0.85rem; }
+  .back-link:hover { color: #9d97e8; }
+  .alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px;
+           padding: 1rem 1.25rem; margin: 1rem 0; font-size: 0.85rem; color: #5dcaa5; }
+  .alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
+  .alert-red { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
+  .progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
+  .progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
+  footer { text-align: center; padding: 2rem; color: #333; font-size: 0.8rem;
+           border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="01-synthese-projet.html">Synthèse</a>
+    <a href="53-changelog-s43.html">S43</a>
+    <a href="06-roadmap-s43.html">Roadmap</a>
+  </div>
+  <span class="badge">#56 — S44</span>
+</header>
+<div class="container">
+
+<h1>🏛️ Réforme de la Facturation Électronique</h1>
+<p class="subtitle">Obligation légale France — e-Invoicing + e-Reporting — Entrée en vigueur septembre 2026</p>
+
+<div class="alert-red alert">
+  ⚠️ <strong>Obligation légale :</strong> À partir de septembre 2026, toutes les entreprises assujetties à la TVA doivent émettre et recevoir des factures électroniques via une Plateforme de Dématérialisation Partenaire (PDP).
+</div>
+
+<div class="section">
+  <h2>📋 Périmètre de la réforme</h2>
+  <div class="grid">
+    <div class="card">
+      <span class="tag tag-red">Obligatoire</span>
+      <div class="card-title">e-Invoicing — Facturation électronique</div>
+      <div class="card-desc">Émission et réception de factures uniquement via PDP ou PPF. Format structuré obligatoire (UBL, CII, Factur-X). Les PDF simples ne seront plus acceptés.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-amber">Obligatoire</span>
+      <div class="card-title">e-Reporting — Déclaration des données</div>
+      <div class="card-desc">Transmission à la DGFiP des données de transactions B2C, international, et opérations non soumises à TVA. Délai : 10 jours après émission.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-purple">Référence</span>
+      <div class="card-title">PPF — Portail Public de Facturation</div>
+      <div class="card-desc">Chorus Pro étendu aux entreprises privées. Gratuit mais fonctionnalités limitées. Interopérable avec toutes les PDP.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🔄 Cycle de vie d'une facture (statuts normés)</h2>
+  <table>
+    <tr><th>Statut</th><th>Description</th><th>Délai max</th><th>Action PetSuite</th></tr>
+    <tr><td><code>DEPOSEE</code></td><td>Facture transmise à la PDP</td><td>Immédiat</td><td>Enregistrement automatique</td></tr>
+    <tr><td><code>MISE_EN_ATTENTE</code></td><td>PDP traite la facture</td><td>24h</td><td>Indicateur statut dashboard</td></tr>
+    <tr><td><code>PRISE_EN_CHARGE</code></td><td>PDP a reçu la facture</td><td>—</td><td>Notification email</td></tr>
+    <tr><td><code>TRANSMISE_DESTINATAIRE</code></td><td>Facture envoyée au destinataire</td><td>—</td><td>Mise à jour statut</td></tr>
+    <tr><td><code>ACQUITTEE</code></td><td>Destinataire a accepté</td><td>—</td><td>Statut : Payée possible</td></tr>
+    <tr><td><code>REJETEE</code></td><td>Rejet technique ou métier</td><td>—</td><td>Alerte + motif affiché</td></tr>
+    <tr><td><code>REFUSEE</code></td><td>Destinataire refuse</td><td>—</td><td>Alerte + avoir possible</td></tr>
+    <tr><td><code>LITIGE</code></td><td>Contestation partielle</td><td>—</td><td>Module litige intégré</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>📅 Calendrier d'entrée en vigueur</h2>
+  <table>
+    <tr><th>Date</th><th>Entreprises</th><th>Obligation</th></tr>
+    <tr><td><strong style="color:#e06c6c">Sept 2026</strong></td><td>Grandes entreprises (CA > 1.5M€)</td><td>Émission + réception</td></tr>
+    <tr><td>Sept 2027</td><td>ETI (CA 50M-1.5Md€)</td><td>Émission + réception</td></tr>
+    <tr><td>Sept 2027</td><td>PME (CA < 50M€) dont TPE/indépendants</td><td>Réception obligatoire + émission</td></tr>
+  </table>
+  <div class="alert-warn alert">
+    💡 <strong>Pour PetSuite :</strong> Nos clients (comportementalistes, toiletteurs, etc.) sont des TPE/indépendants. Obligation de <strong>réception</strong> en sept 2026, d'<strong>émission</strong> à partir de sept 2027. Mais il faut être prêt dès septembre 2026.
+  </div>
+</div>
+
+<div class="section">
+  <h2>🔌 Intégration PetSuite</h2>
+  <div class="grid">
+    <div class="card">
+      <span class="tag tag-green">Planifié S44</span>
+      <div class="card-title">Connexion Pennylane (PA par défaut)</div>
+      <div class="card-desc">API Pennylane pour émission factures, récupération statuts, e-Reporting automatique. Webhook pour mises à jour temps réel.</div>
+      <div style="margin-top:.75rem"><a href="57-plateformes-agreees.html" class="back-link">Voir les 10 PA →</a></div>
+    </div>
+    <div class="card">
+      <span class="tag tag-amber">À développer</span>
+      <div class="card-title">Format Factur-X / UBL</div>
+      <div class="card-desc">Génération de factures en format structuré. PDF/A-3 avec XML embarqué. Validateur intégré avant envoi.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-amber">À développer</span>
+      <div class="card-title">Module Litige</div>
+      <div class="card-desc">Gestion des litiges : contestation partielle, demande d'avoir, résolution via la PDP. Interface dédiée dans PetSuite.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-purple">Existant</span>
+      <div class="card-title">FEC Export</div>
+      <div class="card-desc">Export FEC conforme DGFiP existant. À connecter avec les données e-Reporting pour cohérence comptable.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>📊 Routes API prévues</h2>
+  <table>
+    <tr><th>Route</th><th>Description</th><th>Statut</th></tr>
+    <tr><td><code>POST /rfe/envoyer</code></td><td>Envoyer facture à la PDP</td><td>À créer</td></tr>
+    <tr><td><code>GET /rfe/statut/:id</code></td><td>Récupérer statut facture</td><td>À créer</td></tr>
+    <tr><td><code>POST /rfe/reporting</code></td><td>Envoi e-Reporting DGFiP</td><td>À créer</td></tr>
+    <tr><td><code>GET /rfe/litige/:id</code></td><td>Détail d'un litige</td><td>À créer</td></tr>
+    <tr><td><code>POST /rfe/refus/:id</code></td><td>Refuser une facture reçue</td><td>À créer</td></tr>
+  </table>
+</div>
+
+</div>
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
+</body></html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — ✂️ Toiletteur</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+  .header { background: #13131a; border-bottom: 1px solid #2a2a3a;
+            padding: 1.5rem 2rem; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+  .logo span { color: #7f77dd; }
+  .badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8;
+           padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-links a { color: #888; text-decoration: none; font-size: 0.85rem; }
+  .nav-links a:hover { color: #fff; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem;
+       padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a3a; }
+  h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 0.5rem; }
+  p { color: #9a9890; margin-bottom: 0.75rem; }
+  .subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
+          padding: 1.25rem; transition: border-color 0.2s; }
+  .card:hover { border-color: #534ab7; }
+  .card-title { font-size: 0.95rem; font-weight: 600; color: #e2e0d8; margin-bottom: 0.4rem; }
+  .card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+         font-size: 0.7rem; font-weight: 600; margin-right: 0.25rem; margin-bottom: 0.4rem; }
+  .tag-purple { background: #1a1530; color: #9d97e8; }
+  .tag-green  { background: #0a2015; color: #5dcaa5; }
+  .tag-blue   { background: #0a1525; color: #6baed6; }
+  .tag-amber  { background: #1a1205; color: #d4a44c; }
+  .tag-red    { background: #1a0a0a; color: #e06c6c; }
+  code { background: #1a1a2e; color: #9d97e8; padding: 0.1rem 0.4rem;
+         border-radius: 4px; font-size: 0.85em; font-family: 'Fira Code', monospace; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  th { background: #13131a; color: #888; font-weight: 600; padding: 0.6rem 0.8rem;
+       text-align: left; border-bottom: 1px solid #2a2a3a; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; }
+  tr:hover td { background: #0f0f18; }
+  .back-link { color: #534ab7; text-decoration: none; font-size: 0.85rem; }
+  .back-link:hover { color: #9d97e8; }
+  .alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px;
+           padding: 1rem 1.25rem; margin: 1rem 0; font-size: 0.85rem; color: #5dcaa5; }
+  .alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
+  .alert-red { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
+  .progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
+  .progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
+  footer { text-align: center; padding: 2rem; color: #333; font-size: 0.8rem;
+           border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="01-synthese-projet.html">Synthèse</a>
+    <a href="53-changelog-s43.html">S43</a>
+    <a href="06-roadmap-s43.html">Roadmap</a>
+  </div>
+  <span class="badge">#61 — S44</span>
+</header>
+<div class="container">
+
+<h1>✂️ Toiletteur</h1>
+<p class="subtitle">Documentation module métier — Avancement 80%</p>
+
+<div class="section" style="background:#13131a;border:1px solid #2a2a3a;border-radius:12px;padding:1.5rem;margin-bottom:2rem">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+    <strong>Avancement global</strong>
+    <span style="color:#d4a44c;font-weight:700">80%</span>
+  </div>
+  <div class="progress"><div class="progress-bar" style="width:80%;background:#d4a44c"></div></div>
+</div>
+
+<div class="section">
+  <h2>🔧 Modules & Fonctionnalités</h2>
+  <div class="grid">
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Séances toilettage</div>
+      <div class="card-desc">Planning salon, fiches toilettage par animal.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Forfaits & Abonnements</div>
+      <div class="card-desc">Forfaits mensuel/trimestriel. Tracking séances restantes.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Dashboard CEO</div>
+      <div class="card-desc">CA séances, nb clients, abonnements actifs.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Questionnaires</div>
+      <div class="card-desc">Fiche toilettage (15Q), Bilan séance (6Q)</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Planning salon</div>
+      <div class="card-desc">Gestion des créneaux, temps par prestation.</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Templates devis</div>
+      <div class="card-desc">5 modèles : Toilettage complet, Bath & Brush, Coupe seule, Bain seul, Abonnement mensuel</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">✅</span>
+      <div class="card-title">Prise de RDV Calendly</div>
+      <div class="card-desc">Types : Toilettage complet, Coupe, Bain</div>
+    </div>
+    <div class="card">
+      <span class="tag tag-amber">⏳</span>
+      <div class="card-title">Gestion races/types coat</div>
+      <div class="card-desc">Tarification par race et type de pelage — S44</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>📊 Routes API dédiées</h2>
+  <table>
+    <tr><th>Route</th><th>Description</th></tr>
+    <tr><td><code>GET /seances?type=TOILETTEUR</code></td><td>Séances du métier</td></tr>
+    <tr><td><code>GET /bilan/metier?metier=TOILETTEUR</code></td><td>KPIs dashboard</td></tr>
+    <tr><td><code>GET /devis/templates?metier=TOILETTEUR</code></td><td>Templates devis</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>🎯 Roadmap S44+</h2>
+  <div class="card">
+    <div class="card-desc">Voir <a href="06-roadmap-s43.html" class="back-link">Roadmap complète S44+</a> pour les priorités globales et le planning.</div>
+  </div>
+</div>
+
+</div>
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
+</body></html>
