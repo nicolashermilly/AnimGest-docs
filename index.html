@@ -336,7 +336,8 @@ function showPwdModal(targetPage) {
 
   function tryUnlock() {
     const pwd = normalizePwd(inp.value.trim());
-    if (pwd === normalizePwd(PROTECTED[targetPage])) {
+    const validPwds = Object.values(PROTECTED).map(normalizePwd);
+    if (validPwds.includes(pwd)) {
       setUnlocked(targetPage);
       overlay.remove();
       window.location.href = targetPage;
