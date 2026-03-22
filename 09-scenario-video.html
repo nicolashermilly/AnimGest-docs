@@ -1,75 +1,87 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>PetSuite — Scénario Vidéo Démo — Comportementaliste</title>
-<style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
-  .header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-  .logo{font-size:1.25rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
-  .badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600}
-  .badge.new{background:#0f2a1a;border-color:#0f6e56;color:#5dcaa5}
-  .nav-links{display:flex;gap:1rem;flex-wrap:wrap}.nav-links a{color:#888;text-decoration:none;font-size:.85rem}.nav-links a:hover{color:#fff}
-  .container{max-width:1100px;margin:0 auto;padding:2rem}
-  h1{font-size:2rem;font-weight:700;color:#fff;margin-bottom:.5rem}
-  h2{font-size:1.25rem;font-weight:600;color:#c8c6be;margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid #2a2a3a}
-  h3{font-size:1rem;font-weight:600;color:#a0a0a0;margin:1.5rem 0 .5rem}
-  p{color:#9a9890;margin-bottom:.75rem}.subtitle{color:#666;font-size:1rem;margin-bottom:2rem}
-  .section{margin-bottom:2.5rem}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
-  .card{background:#13131a;border:1px solid #2a2a3a;border-radius:12px;padding:1.25rem;transition:border-color .2s}.card:hover{border-color:#534ab7}
-  .card-title{font-size:.95rem;font-weight:600;color:#e2e0d8;margin-bottom:.4rem}
-  .card-desc{font-size:.8rem;color:#666;line-height:1.5}
-  .tag{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-weight:600;margin-right:.25rem;margin-bottom:.4rem}
-  .tg{background:#1a1530;color:#9d97e8}.tgreen{background:#0a2015;color:#5dcaa5}
-  .tamber{background:#1a1205;color:#d4a44c}.tred{background:#1a0a0a;color:#e06c6c}
-  .tblue{background:#0a1525;color:#6baed6}
-  code{background:#1a1a2e;color:#9d97e8;padding:.1rem .4rem;border-radius:4px;font-size:.85em;font-family:'Fira Code',monospace}
-  table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
-  th{background:#13131a;color:#888;font-weight:600;padding:.6rem .8rem;text-align:left;border-bottom:1px solid #2a2a3a}
-  td{padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890}tr:hover td{background:#0f0f18}
-  .back-link{color:#534ab7;text-decoration:none;font-size:.85rem}.back-link:hover{color:#9d97e8}
-  .alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;font-size:.85rem;color:#5dcaa5}
-  .alert-warn{background:#1a1205;border-color:#854f0b;color:#d4a44c}
-  .alert-red{background:#1a0505;border-color:#7a1515;color:#e06c6c}
-  footer{text-align:center;padding:2rem;color:#333;font-size:.8rem;border-top:1px solid #1a1a2a;margin-top:3rem}
-</style></head><body>
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PetSuite — Scénario Vidéo Démo</title><style>*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
+.header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:1.25rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
+.badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600}
+.badge.ok{background:#0a2015;border-color:#0f6e56;color:#5dcaa5}
+.nav-links{display:flex;gap:1rem;flex-wrap:wrap}.nav-links a{color:#888;text-decoration:none;font-size:.85rem}.nav-links a:hover{color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:2rem}
+h1{font-size:2rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+h2{font-size:1.25rem;font-weight:600;color:#c8c6be;margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid #2a2a3a}
+h3{font-size:1rem;font-weight:600;color:#a0a0a0;margin:1.5rem 0 .5rem}
+p{color:#9a9890;margin-bottom:.75rem}.subtitle{color:#666;font-size:1rem;margin-bottom:2rem}
+.section{margin-bottom:2.5rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+.card{background:#13131a;border:1px solid #2a2a3a;border-radius:12px;padding:1.25rem;transition:border-color .2s}.card:hover{border-color:#534ab7}
+.card-title{font-size:.95rem;font-weight:600;color:#e2e0d8;margin-bottom:.4rem}
+.card-desc{font-size:.8rem;color:#666;line-height:1.5}
+.tag{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-weight:600;margin-right:.25rem;margin-bottom:.4rem}
+.tg{background:#1a1530;color:#9d97e8}.tgreen{background:#0a2015;color:#5dcaa5}
+.tamber{background:#1a1205;color:#d4a44c}.tred{background:#1a0a0a;color:#e06c6c}.tblue{background:#0a1525;color:#6baed6}
+code{background:#1a1a2e;color:#9d97e8;padding:.1rem .4rem;border-radius:4px;font-size:.85em;font-family:'Fira Code',monospace}
+pre{background:#0f0f18;border:1px solid #2a2a3a;border-radius:8px;padding:1rem;overflow-x:auto;font-size:.8rem;color:#9d97e8;margin:1rem 0}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
+th{background:#13131a;color:#888;font-weight:600;padding:.6rem .8rem;text-align:left;border-bottom:1px solid #2a2a3a}
+td{padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890}tr:hover td{background:#0f0f18}
+td:first-child{color:#e2e0d8}
+.alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;font-size:.85rem;color:#5dcaa5}
+.alert-warn{background:#1a1205;border-color:#854f0b;color:#d4a44c}
+.alert-blue{background:#0a1525;border-color:#1e3a5f;color:#6baed6}
+footer{text-align:center;padding:2rem;color:#333;font-size:.8rem;border-top:1px solid #1a1a2a;margin-top:3rem}
+a.back{color:#534ab7;text-decoration:none;font-size:.85rem}a.back:hover{color:#9d97e8}
+.timeline{padding-left:1.5rem;border-left:2px solid #2a2a3a}
+.tl-item{position:relative;padding:.75rem 0 .75rem 1.5rem;border-bottom:1px solid #13131a}
+.tl-item::before{content:'';position:absolute;left:-1.4rem;top:1rem;width:10px;height:10px;border-radius:50%;background:#534ab7;border:2px solid #0a0a0f}
+.tl-time{font-size:.75rem;color:#534ab7;font-weight:600;margin-bottom:.25rem}
+.tl-title{font-size:.9rem;font-weight:600;color:#e2e0d8;margin-bottom:.2rem}
+.tl-desc{font-size:.8rem;color:#666}</style></head><body>
 <header class="header">
   <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
-  <div class="nav-links"><a href="index.html">Accueil</a><a href="53-changelog-s43.html">S43</a><a href="06-roadmap-s43.html">Roadmap</a></div>
-  <span class="badge">#70 — S44</span>
+  <div class="nav-links"><a href="index.html">Accueil</a><a href="06-roadmap.html">Roadmap</a><a href="73-changelog-s44.html">S44</a></div>
+  <span class="badge ok">#09 — NEW S44</span>
 </header>
 <div class="container">
+<h1>🎬 Scénario Vidéo Démo</h1>
+<p class="subtitle">Comportementaliste — 7-8 minutes — Seeds nécessaires inclus</p>
 
-<h1>🎬 Scénario Vidéo Démo — Comportementaliste</h1>
-<p class="subtitle">Démo complète utilisateur — 7 minutes — Données virtuelles BDD</p>
-<div class="alert alert">✅ Ce scénario nécessite des seeds spécifiques en BDD. Voir section Seeds ci-dessous.</div>
-<div class="section"><h2>📽️ Découpage 7 minutes</h2>
+<div class="alert alert-blue">💡 <strong>Objectif :</strong> démontrer PetSuite en conditions réelles sur un flux complet comportementaliste — de la création client à la facture signée, en passant par l'EDC et le programme de suivi.</div>
+
+<div class="section"><h2>🎯 Données seeds nécessaires</h2>
+<div class="grid">
+<div class="card"><span class="tag tgreen">✅ Présent</span><div class="card-title">Client : Dujardin Jean</div><div class="card-desc">TIE_ID=8 — jean.dujardin@cannes.fr — avec contacts et 2 animaux dont Frimousse (Malinois).</div></div>
+<div class="card"><span class="tag tgreen">✅ Présent</span><div class="card-title">Animal : Frimousse</div><div class="card-desc">ANI_ID=22 — Malinois belge — puce 250268501234567 — corrigé S44.</div></div>
+<div class="card"><span class="tag tgreen">✅ Présent</span><div class="card-title">Templates devis</div><div class="card-desc">5 modèles comportementaliste en BDD depuis S44 — EDC Standard, EDC + 3 suivis, Forfait anxiété...</div></div>
+<div class="card"><span class="tag tgreen">✅ Présent</span><div class="card-title">Paramètres Yousign</div><div class="card-desc">param_yousign en BDD — API Sandbox — signature électronique opérationnelle.</div></div>
+<div class="card"><span class="tag tamber">À vérifier</span><div class="card-title">Paramètres SMTP</div><div class="card-desc">param_smtp — serveur email configuré pour envoi réel ou simulé.</div></div>
+<div class="card"><span class="tag tamber">À vérifier</span><div class="card-title">TVA 20%</div><div class="card-desc">Table tva — taux 20% configuré dans Paramètres → TVA.</div></div>
+</div></div>
+
+<div class="section"><h2>📍 Timecodes — Vidéo 7-8 min</h2>
+<div class="timeline">
+<div class="tl-item"><div class="tl-time">00:00 – 00:30</div><div class="tl-title">🏠 Accueil & Paramétrage</div><div class="tl-desc">Connexion → Dashboard global · Paramètres → Entreprise (logo, SIRET) · SMTP · TVA 20% · Types de séance</div></div>
+<div class="tl-item"><div class="tl-time">00:30 – 01:30</div><div class="tl-title">👤 Création Client + Contacts + Animaux</div><div class="tl-desc">Client → Nouveau → "Dujardin Jean" (email, tél, adresse) · Contact 1 : "Marie Dujardin" (conjoint) · Contact 2 : "Dr. Martin" (vétérinaire) · Animal → Nouveau → "Frimousse" (Malinois, puce 15 chiffres)</div></div>
+<div class="tl-item"><div class="tl-time">01:30 – 02:30</div><div class="tl-title">📝 Questionnaire pré-séance</div><div class="tl-desc">Questionnaires → Comportementaliste → Bilan comportemental initial · Aperçu du questionnaire · Envoi futur par email</div></div>
+<div class="tl-item"><div class="tl-time">02:30 – 03:30</div><div class="tl-title">💰 Devis EDC</div><div class="tl-desc">Devis → Nouveau → Sélectionner template "EDC Standard" · Étape Client → Dujardin · Étape Lignes : EDC 180€ + Rapport 60€ · Récap → Créer · Statut BROUILLON → ENVOYÉ · Signature électronique Yousign</div></div>
+<div class="tl-item"><div class="tl-time">03:30 – 04:30</div><div class="tl-title">📅 Planification & Séance EDC</div><div class="tl-desc">Planning → Comportementaliste → Nouvelle séance · Type : Étude comportementale · Date/heure · Client : Dujardin, Animal : Frimousse</div></div>
+<div class="tl-item"><div class="tl-time">04:30 – 05:30</div><div class="tl-title">🧠 Étude de Comportement</div><div class="tl-desc">Séances → Frimousse – Étude comportementale · Remplir les 14 sections CAC · Observations fugue, réactivité laisse · Enregistrer le bilan · PDF aperçu</div></div>
+<div class="tl-item"><div class="tl-time">05:30 – 06:30</div><div class="tl-title">📋 Programme de Suivi</div><div class="tl-desc">Programmes → Nouveau programme pour Frimousse · 8 semaines · Objectifs, exercices, fréquence · Dashboard comportementaliste → visualiser le programme actif</div></div>
+<div class="tl-item"><div class="tl-time">06:30 – 07:30</div><div class="tl-title">🧾 Facturation & Clôture</div><div class="tl-desc">Factures → Depuis devis accepté → Générer facture · DocumentActions : PDF · Email au client · Règlement reçu → Bouton Payer · Facture PAYÉE · Dashboard : CA mis à jour</div></div>
+<div class="tl-item"><div class="tl-time">07:30 – 08:00</div><div class="tl-title">📊 Dashboard récapitulatif</div><div class="tl-desc">Comportementaliste → Dashboard → toggle Trimestre · CA, programmes actifs, taux de complétion · Vue d'ensemble de l'activité</div></div>
+</div></div>
+
+<div class="section"><h2>🛠️ Notes techniques réalisation</h2>
 <table>
-<tr><th>Timecode</th><th>Écran</th><th>Actions</th></tr>
-<tr><td>00:00-00:30</td><td>Dashboard global</td><td>Connexion → tableau de bord général → KPIs</td></tr>
-<tr><td>00:30-00:50</td><td>Paramètres</td><td>Entreprise, Logo, SIRET → TVA → Editions PDF</td></tr>
-<tr><td>00:50-01:30</td><td>Nouveau client</td><td>Créer "Dujardin Jean" → ajouter 2 contacts → 2 animaux (Frimousse Malinois + Kafka Berger)</td></tr>
-<tr><td>01:30-02:15</td><td>Séance EDC</td><td>Nouvelle séance > EDC > Frimousse → remplir formulaire comportemental → générer devis</td></tr>
-<tr><td>02:15-02:45</td><td>Devis</td><td>Devis EDC + Forfait 5 séances → PDF modal → Email → changer état Accepté</td></tr>
-<tr><td>02:45-03:15</td><td>Planning</td><td>Vue semaine → planifier 5 séances de suivi → vue mois</td></tr>
-<tr><td>03:15-03:45</td><td>Facture</td><td>Créer facture → PDF modal → Email → saisir règlement</td></tr>
-<tr><td>03:45-04:15</td><td>Rappels</td><td>Rappels impayés → visualiser → envoyer rappel email</td></tr>
-<tr><td>04:15-04:45</td><td>CRM</td><td>Fiche client → historique → notes CRM → opportunité</td></tr>
-<tr><td>04:45-05:15</td><td>Statistiques</td><td>CA mensuel → évolution → répartition métiers</td></tr>
-<tr><td>05:15-05:45</td><td>Comptabilité</td><td>FEC Export → générer → télécharger → vérifier équilibre</td></tr>
-<tr><td>05:45-06:15</td><td>GED + Signatures</td><td>Documents liés Frimousse → envoyer à la signature Yousign</td></tr>
-<tr><td>06:15-06:45</td><td>Dashboard métier</td><td>Dashboard Comportementaliste V2 → toggle Mois/Trimestre → programmes en cours</td></tr>
-<tr><td>06:45-07:00</td><td>Conclusion</td><td>Questionnaires → envoyer bilan programme → fin</td></tr>
-</table></div>
-<div class="section"><h2>🗃️ Seeds nécessaires pour la démo</h2>
-<div class="card"><div class="card-title">Données à préparer en BDD</div><div class="card-desc">
-• Client : Jean Dujardin, 15 rue de la Paix, Paris 75001, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="761c1317185812031c1704121f1836131b171f1a5815191b">[email&#160;protected]</a><br>
-• Contact 1 : Marie Dujardin (conjointe), Contact 2 : Dr. Martin (vétérinaire)<br>
-• Animal 1 : Frimousse — Malinois — né 15/03/2021 — puce 250268500987654<br>
-• Animal 2 : Kafka — Berger Allemand — né 02/07/2020 — puce 250268501234567<br>
-• Séance EDC : 18/03/2026 — réalisée — Frimousse<br>
-• Devis DCE-2603-DEMO : 480€ EDC + 350€ Forfait 5 séances = 830€ TTC — Accepté<br>
-• Facture FAC-2603-DEMO : 830€ — Émise<br>
-• 5 séances planifiées : avril 2026 — Frimousse<br>
-• Règlement partiel : 400€ — reste 430€ impayé<br>
-• Rappel
+<tr><th>Élément</th><th>Action</th><th>URL/Chemin</th></tr>
+<tr><td>Résolution recommandée</td><td>1920×1080 ou 1440×900</td><td>—</td></tr>
+<tr><td>Navigateur</td><td>Chrome sans extensions visibles</td><td>http://localhost/app/</td></tr>
+<tr><td>Client test</td><td>Dujardin Jean existant ou recréer</td><td>/app/clients/8</td></tr>
+<tr><td>Animal test</td><td>Frimousse (Malinois corrigé S44)</td><td>/app/animaux/22</td></tr>
+<tr><td>Dashboard final</td><td>Montrer les KPIs dynamiques</td><td>/app/comportementaliste/dashboard</td></tr>
+<tr><td>Durée cible</td><td>7 min idéal, 8 min max</td><td>—</td></tr>
+</table>
+<div class="alert-warn alert">⚠️ <strong>Avant le tournage :</strong> vérifier que la séquence des actions fonctionne de bout en bout sans erreurs. Tester le PDF devis, l'envoi email simulé et le bouton Payer sur les rappels impayés.</div>
+</div>
+</div>
+<footer>PetSuite by Algorithmia · Sprint S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
+</body></html>

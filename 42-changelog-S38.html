@@ -1,100 +1,79 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Changelog Sprint S38 — PetSuite</title>
-<style>
-  :root{--bg:#0F1923;--bg-card:#1A2332;--bg-code:#0D1117;--border:#2A3A4A;--accent:#4F46E5;--cyan:#06B6D4;--text:#E2E8F0;--muted:#94A3B8;--dim:#64748B;--green:#10B981;--orange:#F59E0B;--red:#EF4444}
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px}
-  .header{background:linear-gradient(135deg,#1a1040 0%,#0f1923 70%);border-bottom:1px solid var(--border);padding:36px 48px}
-  .header-inner{max-width:1100px;margin:0 auto}
-  .header h1{font-size:1.5rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
-  .header .sub{color:var(--muted);font-size:.875rem;margin-top:6px}
-  .badges{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-  .badge{border-radius:20px;padding:3px 12px;font-size:.72rem;font-weight:600}
-  .bp{background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.4);color:#a5b4fc}
-  .bc{background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.35);color:#67e8f9}
-  .bg{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.35);color:#6ee7b7}
-  .bw{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);color:#fde68a}
-  .container{max-width:1100px;margin:0 auto;padding:32px 48px}
-  .section{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px}
-  .st{font-size:1rem;font-weight:700;color:#fff;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-  h3{font-size:.9rem;font-weight:600;color:#fff;margin:14px 0 8px}
-  p{color:var(--muted);font-size:.875rem;margin-bottom:8px;line-height:1.7}
-  ul,ol{padding-left:18px;color:var(--muted);font-size:.875rem;margin-bottom:10px}
-  li{margin-bottom:4px}
-  strong{color:var(--text);font-weight:600}
-  code{background:rgba(255,255,255,.07);border:1px solid var(--border);color:#f0abfc;font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:2px 6px;border-radius:4px}
-  pre{background:var(--bg-code);border:1px solid var(--border);border-left:3px solid var(--accent);color:#E2E8F0;padding:16px 18px;border-radius:8px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:1.7;margin:8px 0 14px}
-  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem}
-  th{background:rgba(255,255,255,.05);padding:8px 12px;text-align:left;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);border-bottom:1px solid var(--border)}
-  td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);vertical-align:top}
-  tr:last-child td{border-bottom:none}
-  .ok{color:var(--green)} .warn{color:var(--orange)} .err{color:var(--red)}
-  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:14px 0}
-  .stat{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center}
-  .stat-val{font-size:1.8rem;font-weight:700;color:var(--cyan)}
-  .stat-lbl{font-size:.75rem;color:var(--dim);margin-top:2px}
-  footer{text-align:center;color:var(--dim);font-size:.78rem;padding:28px 48px;border-top:1px solid var(--border);margin-top:12px}
-  footer a{color:var(--cyan);text-decoration:none}
-  @media(max-width:768px){.header,.container{padding:20px}}
-</style>
-</head>
-<body>
-<div class="header"><div class="header-inner">
-  <h1><span>📋</span> Changelog Sprint S38</h1>
-  <div class="sub">Signature Yousign, DocumentActions, Élevage complet, API Keys, EDC→EC</div>
-  <div class="badges">
-    <span class="badge bc">Sprint S38</span>
-    <span class="badge bc">21-22 mars 2026</span>
-    <span class="badge bg">PetSuite by Algorithmia</span>
-  </div>
-</div></div>
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PetSuite — Changelog S38</title><style>*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
+.header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:1.25rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
+.badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600}
+.badge.ok{background:#0a2015;border-color:#0f6e56;color:#5dcaa5}
+.nav-links{display:flex;gap:1rem;flex-wrap:wrap}.nav-links a{color:#888;text-decoration:none;font-size:.85rem}.nav-links a:hover{color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:2rem}
+h1{font-size:2rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+h2{font-size:1.25rem;font-weight:600;color:#c8c6be;margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid #2a2a3a}
+h3{font-size:1rem;font-weight:600;color:#a0a0a0;margin:1.5rem 0 .5rem}
+p{color:#9a9890;margin-bottom:.75rem}.subtitle{color:#666;font-size:1rem;margin-bottom:2rem}
+.section{margin-bottom:2.5rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+.card{background:#13131a;border:1px solid #2a2a3a;border-radius:12px;padding:1.25rem;transition:border-color .2s}.card:hover{border-color:#534ab7}
+.card-title{font-size:.95rem;font-weight:600;color:#e2e0d8;margin-bottom:.4rem}
+.card-desc{font-size:.8rem;color:#666;line-height:1.5}
+.tag{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-weight:600;margin-right:.25rem;margin-bottom:.4rem}
+.tg{background:#1a1530;color:#9d97e8}.tgreen{background:#0a2015;color:#5dcaa5}
+.tamber{background:#1a1205;color:#d4a44c}.tred{background:#1a0a0a;color:#e06c6c}.tblue{background:#0a1525;color:#6baed6}
+code{background:#1a1a2e;color:#9d97e8;padding:.1rem .4rem;border-radius:4px;font-size:.85em;font-family:'Fira Code',monospace}
+pre{background:#0f0f18;border:1px solid #2a2a3a;border-radius:8px;padding:1rem;overflow-x:auto;font-size:.8rem;color:#9d97e8;margin:1rem 0}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
+th{background:#13131a;color:#888;font-weight:600;padding:.6rem .8rem;text-align:left;border-bottom:1px solid #2a2a3a}
+td{padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890}tr:hover td{background:#0f0f18}
+td:first-child{color:#e2e0d8}
+.alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;font-size:.85rem;color:#5dcaa5}
+.alert-warn{background:#1a1205;border-color:#854f0b;color:#d4a44c}
+.alert-blue{background:#0a1525;border-color:#1e3a5f;color:#6baed6}
+footer{text-align:center;padding:2rem;color:#333;font-size:.8rem;border-top:1px solid #1a1a2a;margin-top:3rem}
+a.back{color:#534ab7;text-decoration:none;font-size:.85rem}a.back:hover{color:#9d97e8}
+.timeline{padding-left:1.5rem;border-left:2px solid #2a2a3a}
+.tl-item{position:relative;padding:.75rem 0 .75rem 1.5rem;border-bottom:1px solid #13131a}
+.tl-item::before{content:'';position:absolute;left:-1.4rem;top:1rem;width:10px;height:10px;border-radius:50%;background:#534ab7;border:2px solid #0a0a0f}
+.tl-time{font-size:.75rem;color:#534ab7;font-weight:600;margin-bottom:.25rem}
+.tl-title{font-size:.9rem;font-weight:600;color:#e2e0d8;margin-bottom:.2rem}
+.tl-desc{font-size:.8rem;color:#666}</style></head><body>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links"><a href="index.html">Accueil</a><a href="06-roadmap.html">Roadmap</a><a href="73-changelog-s44.html">S44</a></div>
+  <span class="badge ">#42 — S38 ✅</span>
+</header>
 <div class="container">
-<div class="section"><div class="st">📊 Chiffres clés S38</div>
-<div class="stat-grid">
-  <div class="stat"><div class="stat-val">70</div><div class="stat-lbl">Pages UI</div></div>
-  <div class="stat"><div class="stat-val">110k</div><div class="stat-lbl">Chars API</div></div>
-  <div class="stat"><div class="stat-val">14</div><div class="stat-lbl">Routes élevage</div></div>
-  <div class="stat"><div class="stat-val">7</div><div class="stat-lbl">Routes Yousign</div></div>
+<h1>📝 Changelog Sprint S38</h1>
+<p class="subtitle">Signature Yousign, DocumentActions, Élevage 14 routes, 70 pages UI</p>
+
+<div class="section"><h2>✅ Livré en S38</h2>
+<div class="grid">
+<div class="card"><span class="tag tgreen">✅</span><div class="card-title">Signature électronique Yousign v3</div><div class="card-desc">Intégration complète : upload PDF, création signataire, envoi OTP SMS, webhook statut. Table signature_demande en BDD.</div></div>
+<div class="card"><span class="tag tgreen">✅</span><div class="card-title">DocumentActions unifié</div><div class="card-desc">Composant unique PDF / Email / Signature — réutilisable sur devis, factures, avoirs, séances. Remplace 15+ implémentations ad hoc.</div></div>
+<div class="card"><span class="tag tgreen">✅</span><div class="card-title">Module Élevage — 14 routes API</div><div class="card-desc">Géniteurs, saillies, gestations, portées, naissances, suivi chiots, LOF, réservations, déclarations. Table elevage_geniteur, portee, chiot.</div></div>
+<div class="card"><span class="tag tgreen">✅</span><div class="card-title">70 pages UI compilées</div><div class="card-desc">Next.js — 70 routes statiques/dynamiques sans erreur TypeScript.</div></div>
+<div class="card"><span class="tag tgreen">✅</span><div class="card-title">Éditions PDF (pdfkit)</div><div class="card-desc">Routes /editions/facture/:id, /editions/devis/:id, /editions/seance/:id — génération PDF côté API.</div></div>
+<div class="card"><span class="tag tgreen">✅</span><div class="card-title">Paramètres Yousign</div><div class="card-desc">Table param_yousign — GET/POST /api/param-yousign — gestion clés API sandbox/production.</div></div>
 </div></div>
-<div class="section"><div class="st">✅ Signature électronique Yousign</div>
-<ul>
-  <li>7 routes API : <code>GET/POST /signatures</code>, <code>/signatures/:id</code>, <code>/signatures/init</code>, <code>/signatures/:id/send</code>, <code>/signatures/:id/cancel</code>, <code>/devis/:id/signature</code>, <code>/signatures/webhook</code></li>
-  <li>Table <code>signature_evenement</code> créée en BDD</li>
-  <li>Génération PDF via <strong>pdfkit</strong> (déjà installé)</li>
-  <li>Upload PDF + création signataire sur Yousign sandbox</li>
-  <li>Test end-to-end réussi : SGN_ID:2, PDF uploadé, signataire créé</li>
-</ul></div>
-<div class="section"><div class="st">✅ Composant DocumentActions</div>
-<ul>
-  <li>Composant unique <code>DocumentActions</code> — 3 boutons 🖨️ PDF / 📧 Email / 🖊️ Signature</li>
-  <li>Modal PDF avec iframe, modal Email avec sélecteur contact, SignatureModal v2 avec TTS</li>
-  <li>Règle : <strong>toutes les éditions PDF = modal/iframe</strong> — jamais de nouvelle page</li>
-  <li>Sélecteur contact commun (Email + Signature) : <code>GET /api/contacts?tieId=...</code></li>
-</ul></div>
-<div class="section"><div class="st">✅ Module Élevage — 14 routes</div>
-<ul>
-  <li>Saillies, gestations, portées, naissances, poids J0→J60, vaccins, réservations, déclarations</li>
-  <li>Route <code>GET /elevage/carnet/:nai_id</code> — HTML imprimable avec courbe poids SVG</li>
-  <li>3 tables : <code>elevage_chiot_poids</code>, <code>elevage_reservation</code>, <code>elevage_vaccination</code></li>
-  <li>Seeds démo : 2 portées, 10 chiots, 8 réservations</li>
-</ul></div>
-<div class="section"><div class="st">✅ Page Interfaces API + charte S38/S39</div>
-<ul>
-  <li>Page <code>/app/parametres/api-keys</code> — 5 sections accordéon : Yousign, Pennylane, SMTP, Stripe, SMS</li>
-  <li>Refonte page Élevage sur charte CSS Variables (suppression thème dark hardcodé)</li>
-  <li>Remplacement global <strong>EDC → EC</strong> (Étude Comportementale) : 9 fichiers, 0 résiduel</li>
-  <li>Doc <code>41-composants-techniques.html</code> publié, index mis à jour 43 docs</li>
-</ul></div>
-<div class="section"><div class="st">⚠️ Routes à corriger S39</div>
+
+<div class="section"><h2>🔌 Routes API ajoutées</h2>
 <table>
-  <tr><th>Route</th><th>Erreur</th></tr>
-  <tr><td><code>POST /reglements</code></td><td class="err">400 body parsing</td></tr>
-  <tr><td><code>POST /achats</code></td><td class="err">500 undefined params</td></tr>
-  <tr><td><code>POST /seances</code></td><td class="warn">500 NestJS conflit</td></tr>
-  <tr><td><code>GET /factures/entrants</code></td><td class="err">404 à créer</td></tr>
-</table></div></div>
-<footer>PetSuite Documentation | Sprint S38 | Algorithmia 2026<br><br><a href="index.html">← Retour à l'index</a></footer>
+<tr><th>Route</th><th>Méthode</th><th>Description</th></tr>
+<tr><td>/devis/:id/signature</td><td>POST</td><td>Lancer la signature Yousign pour un devis</td></tr>
+<tr><td>/signatures/:id</td><td>GET</td><td>Statut d'une demande de signature</td></tr>
+<tr><td>/webhooks/yousign</td><td>POST</td><td>Callback Yousign — mise à jour statut BDD</td></tr>
+<tr><td>/editions/facture/:id</td><td>GET</td><td>Génération PDF facture (pdfkit)</td></tr>
+<tr><td>/editions/devis/:id</td><td>GET</td><td>Génération PDF devis</td></tr>
+<tr><td>/elevage/geniteurs</td><td>GET, POST</td><td>Liste et création géniteurs</td></tr>
+<tr><td>/elevage/saillies</td><td>GET, POST</td><td>Liste et création saillies</td></tr>
+<tr><td>/elevage/portees</td><td>GET, POST</td><td>Liste et création portées</td></tr>
+<tr><td>/elevage/portees/:id/chiots</td><td>GET, POST</td><td>Chiots d'une portée</td></tr>
+<tr><td>/elevage/alertes</td><td>GET</td><td>Alertes élevage (vaccins, vermifuges)</td></tr>
+</table></div>
+
+<div class="section"><h2>⚠️ Points d'attention</h2>
+<div class="alert-warn alert">⚠️ <strong>URL interne Docker :</strong> Yousign génère le PDF via <code>http://micro_nginx/api/devis/:id/pdf</code> (nom du service nginx). Ne pas utiliser localhost dans les appels inter-containers.</div>
+<div class="alert">✅ <strong>Convention établie en S38 :</strong> toutes les éditions PDF passent désormais par <code>/api/editions/*</code> via <code>EditionsController</code>. Les anciennes routes <code>/api/factures/:id/pdf</code> sont dépréciées.</div>
+</div>
+</div>
+<footer>PetSuite by Algorithmia · Sprint S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
 </body></html>
