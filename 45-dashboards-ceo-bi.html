@@ -2,175 +2,575 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PetSuite — Dashboards CEO & BI</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-         background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
-  .header { background: #13131a; border-bottom: 1px solid #2a2a3a;
-            padding: 1.5rem 2rem; display: flex; align-items: center;
-            justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-  .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
-  .logo span { color: #7f77dd; }
-  .badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8;
-           padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-  .badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
-  .nav-links { display: flex; gap: 1rem; }
-  .nav-links a { color: #888; text-decoration: none; font-size: 0.85rem; }
-  .nav-links a:hover { color: #fff; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-  h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
-  h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem;
-       padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a3a; }
-  h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 0.5rem; }
-  p { color: #9a9890; margin-bottom: 0.75rem; }
-  .subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
-  .section { margin-bottom: 2.5rem; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
-  .card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
-          padding: 1.25rem; transition: border-color 0.2s; }
-  .card:hover { border-color: #534ab7; }
-  .card-title { font-size: 0.95rem; font-weight: 600; color: #e2e0d8; margin-bottom: 0.4rem; }
-  .card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
-  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
-         font-size: 0.7rem; font-weight: 600; margin-right: 0.25rem; }
-  .tag-purple { background: #1a1530; color: #9d97e8; }
-  .tag-green  { background: #0a2015; color: #5dcaa5; }
-  .tag-blue   { background: #0a1525; color: #6baed6; }
-  .tag-amber  { background: #1a1205; color: #d4a44c; }
-  .tag-red    { background: #1a0a0a; color: #e06c6c; }
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
-  .kpi { background: #13131a; border: 1px solid #2a2a3a; border-radius: 10px;
-         padding: 1rem; text-align: center; }
-  .kpi-val { font-size: 1.75rem; font-weight: 700; color: #7f77dd; }
-  .kpi-lbl { font-size: 0.75rem; color: #666; margin-top: 0.25rem; }
-  .timeline { border-left: 2px solid #2a2a3a; padding-left: 1.5rem; margin: 1rem 0; }
-  .tl-item { position: relative; margin-bottom: 1.5rem; }
-  .tl-item::before { content: ''; position: absolute; left: -1.65rem; top: 0.35rem;
-                     width: 10px; height: 10px; border-radius: 50%; background: #534ab7; }
-  .tl-date { font-size: 0.75rem; color: #555; margin-bottom: 0.25rem; }
-  .tl-title { font-size: 0.9rem; font-weight: 600; color: #c8c6be; }
-  .tl-desc { font-size: 0.8rem; color: #666; margin-top: 0.2rem; }
-  code { background: #1a1a2e; color: #9d97e8; padding: 0.1rem 0.4rem;
-         border-radius: 4px; font-size: 0.85em; font-family: 'Fira Code', monospace; }
-  pre { background: #0d0d15; border: 1px solid #2a2a3a; border-radius: 8px;
-        padding: 1rem; overflow-x: auto; margin: 1rem 0; }
-  pre code { background: none; padding: 0; }
-  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
-  th { background: #13131a; color: #888; font-weight: 600; padding: 0.6rem 0.8rem;
-       text-align: left; border-bottom: 1px solid #2a2a3a; }
-  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; }
-  tr:hover td { background: #0f0f18; }
-  .status-ok  { color: #5dcaa5; }
-  .status-wip { color: #d4a44c; }
-  .status-todo{ color: #e06c6c; }
-  .back-link { color: #534ab7; text-decoration: none; font-size: 0.85rem; }
-  .back-link:hover { color: #9d97e8; }
-  .alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px;
-           padding: 1rem 1.25rem; margin: 1rem 0; font-size: 0.85rem; color: #5dcaa5; }
-  .alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
-  footer { text-align: center; padding: 2rem; color: #333; font-size: 0.8rem;
-           border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
+  .header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:1.25rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
+  .badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600}
+  .nav-links{display:flex;gap:1rem}.nav-links a{color:#888;text-decoration:none;font-size:.85rem}.nav-links a:hover{color:#fff}
+  .container{max-width:1100px;margin:0 auto;padding:2rem}
+  h1{font-size:2rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+  h2{font-size:1.3rem;font-weight:600;color:#c8c6be;margin:2.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:1px solid #2a2a3a}
+  h3{font-size:1rem;font-weight:600;color:#9d97e8;margin:1.5rem 0 .5rem}
+  p{color:#9a9890;margin-bottom:.9rem;max-width:800px}
+  .subtitle{color:#666;font-size:1rem;margin-bottom:2rem}
+  .section{margin-bottom:3rem}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+  .card{background:#13131a;border:1px solid #2a2a3a;border-radius:12px;padding:1.25rem}
+  .tag{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-weight:600;margin-right:.25rem;margin-bottom:.4rem}
+  .tg{background:#1a1530;color:#9d97e8}.tgreen{background:#0a2015;color:#5dcaa5}
+  .tamber{background:#1a1205;color:#d4a44c}.tred{background:#1a0a0a;color:#e06c6c}
+  code{background:#1a1a2e;color:#9d97e8;padding:.1rem .4rem;border-radius:4px;font-size:.85em}
+  .alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;font-size:.85rem;color:#5dcaa5}
+  .alert-warn{background:#1a1205;border-color:#854f0b;color:#d4a44c}
+
+  /* ── Maquettes écran ── */
+  .screen-wrap{background:#0f0f18;border:1px solid #2a2a3a;border-radius:16px;overflow:hidden;margin:1.5rem 0}
+  .screen-bar{background:#13131a;padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid #2a2a3a}
+  .dot{width:10px;height:10px;border-radius:50%}
+  .screen-url{background:#1a1a2e;color:#666;font-size:.75rem;padding:.2rem .8rem;border-radius:4px;flex:1;font-family:monospace}
+  .screen-body{padding:1.25rem;background:#0f0f18}
+
+  /* Sidebar simulée */
+  .mock-app{display:flex;min-height:340px}
+  .mock-sidebar{width:180px;background:#0a0a0f;border-right:1px solid #1a1a2a;padding:.75rem .5rem;flex-shrink:0}
+  .mock-sidebar .s-title{font-size:.6rem;color:#444;font-weight:700;text-transform:uppercase;padding:.4rem .5rem;letter-spacing:.08em}
+  .mock-sidebar .s-item{font-size:.72rem;padding:.3rem .6rem;border-radius:6px;color:#888;display:flex;align-items:center;gap:.4rem;cursor:pointer}
+  .mock-sidebar .s-item.active{background:#1a1530;color:#9d97e8}
+  .mock-sidebar .s-item.accent{color:#5dcaa5}
+  .mock-main{flex:1;padding:1rem;overflow:hidden}
+
+  /* KPIs */
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1rem}
+  .kpi{background:#13131a;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;text-align:center}
+  .kpi-val{font-size:1.3rem;font-weight:700;color:#fff}
+  .kpi-delta{font-size:.65rem;margin-top:.2rem}
+  .kpi-lbl{font-size:.65rem;color:#666;margin-top:.15rem}
+  .up{color:#5dcaa5}.down{color:#e06c6c}
+
+  /* Mini chart bar */
+  .chart-wrap{background:#13131a;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;margin-bottom:.6rem}
+  .chart-title{font-size:.7rem;color:#888;margin-bottom:.5rem;font-weight:600}
+  .bars{display:flex;align-items:flex-end;gap:4px;height:60px}
+  .bar{flex:1;border-radius:3px 3px 0 0;min-width:8px;transition:opacity .2s}
+  .bar:hover{opacity:.8}
+  .bar-lbl{font-size:.55rem;color:#555;text-align:center;margin-top:2px}
+  .bar-row{display:flex;gap:4px}
+
+  /* Mini donut placeholder */
+  .mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+  .stat-row{background:#13131a;border:1px solid #2a2a3a;border-radius:8px;padding:.6rem}
+  .stat-label{font-size:.65rem;color:#666}
+  .stat-val{font-size:.9rem;font-weight:700;color:#e2e0d8}
+  .prog{background:#1a1a2e;border-radius:3px;height:5px;margin-top:.3rem}
+  .prog-bar{height:5px;border-radius:3px}
+
+  /* Toggle */
+  .toggle-row{display:flex;gap:.4rem;margin-bottom:.75rem}
+  .t-btn{font-size:.65rem;padding:.25rem .6rem;border-radius:4px;background:#1a1a2e;color:#666;border:1px solid #2a2a3a;cursor:pointer}
+  .t-btn.on{background:#1a1530;color:#9d97e8;border-color:#534ab7}
+
+  /* Table mini */
+  .mini-table{width:100%;font-size:.7rem;border-collapse:collapse}
+  .mini-table th{color:#555;font-weight:600;padding:.3rem .4rem;text-align:left;border-bottom:1px solid #1a1a2a}
+  .mini-table td{padding:.3rem .4rem;border-bottom:1px solid #0f0f18;color:#888}
+  .mini-table tr:hover td{background:#0f0f18}
+  .status{display:inline-block;padding:.1rem .35rem;border-radius:3px;font-size:.6rem;font-weight:700}
+  .s-pay{background:#0a2015;color:#5dcaa5}
+  .s-pen{background:#1a1205;color:#d4a44c}
+  .s-lat{background:#1a0505;color:#e06c6c}
+
+  footer{text-align:center;padding:2rem;color:#333;font-size:.8rem;border-top:1px solid #1a1a2a;margin-top:3rem}
+  hr.section-sep{border:none;border-top:1px solid #1a1a2a;margin:3rem 0}
 </style>
-<title>PetSuite — Dashboards CEO/BI</title></head>
+</head>
 <body>
-<div class="header">
-  <div class="logo">🐾 Pet<span>Suite</span></div>
-  <div style="display:flex;gap:.75rem;align-items:center">
-    <span class="badge new">S42 — CEO/BI</span>
-    <a class="back-link" href="index.html">← Index</a>
+
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="73-changelog-s44.html">S44</a>
   </div>
-</div>
+  <span class="badge">#45 — S44 MàJ</span>
+</header>
+
 <div class="container">
-  <a class="back-link" href="index.html">← Retour à l'index</a>
-  <h1 style="margin-top:1rem">📊 Dashboards CEO / BI</h1>
-  <p class="subtitle">Architecture complète des tableaux de bord par métier — nativement intégrés sans outil externe</p>
+
+  <h1>📊 Dashboards CEO & Business Intelligence</h1>
+  <p class="subtitle">Pilotage en temps réel · KPIs métier · Analyse financière · Aide à la décision</p>
 
   <div class="alert">
-    Architecture : 1 dashboard global dans Accueil + 1 dashboard par métier accessible depuis la sidebar + généalogie conditionnelle au métier ELEVEUR.
+    ✅ <strong>Hook useDashboardMetier actif :</strong> Tous les dashboards chargent leurs données via <code>GET /api/bilan/metier?metier=X&periode=mois|trimestre|annee</code>. Les chiffres affichés sont réels, issus de la base de données.
   </div>
 
   <div class="section">
-    <h2>Architecture globale</h2>
-    <table>
-      <thead><tr><th>Route</th><th>Dashboard</th><th>KPIs principaux</th><th>Spécificité</th></tr></thead>
-      <tbody>
-        <tr><td><code>/app</code></td><td>Accueil global</td><td>CA total, clients, animaux, impayés</td><td>Raccourcis vers chaque dashboard métier</td></tr>
-        <tr><td><code>/app/comportementaliste/dashboard</code></td><td>Comportementaliste</td><td>CA 9 240€, séances EC, programmes</td><td>Barres de progression des programmes actifs</td></tr>
-        <tr><td><code>/app/pet-sitter/dashboard</code></td><td>Pet-Sitter</td><td>CA 3 010€, visites, panier moyen</td><td>Répartition par ville et par espèce</td></tr>
-        <tr><td><code>/app/toiletteur/dashboard</code></td><td>Toiletteur</td><td>CA 4 180€, abonnements, panier</td><td>Top clients avec badge Abonné</td></tr>
-        <tr><td><code>/app/elevage/dashboard</code></td><td>Éleveur</td><td>CA 6 720€, portées, réservations</td><td>Arbre généalogique SVG + toggle</td></tr>
-        <tr><td><code>/app/equestre/dashboard</code></td><td>Centre équestre</td><td>CA 1 700€, cavaliers, chevaux</td><td>Abonnements et licences FFE</td></tr>
-        <tr><td><code>/app/pension/dashboard</code></td><td>Pension / Chenil</td><td>Gardes en cours, taux occupation</td><td>Occupation mensuelle graphique</td></tr>
-      </tbody>
-    </table>
+    <p>
+      Chaque professionnel qui utilise PetSuite dispose d'un tableau de bord CEO pensé pour lui — pas un dashboard générique copié-collé d'un ERP comptable, mais une vue construite autour de ce qui compte vraiment dans son activité quotidienne. Un comportementaliste ne pilote pas son cabinet de la même façon qu'un éleveur ou qu'un centre équestre. PetSuite le sait, et chaque dashboard reflète cette réalité.
+    </p>
+    <p>
+      La logique est simple : en arrivant le matin, le professionnel doit pouvoir répondre en 30 secondes à trois questions — <em>Combien j'ai encaissé ce mois ?</em>, <em>Qui me doit de l'argent ?</em>, <em>Qu'est-ce qui est planifié cette semaine ?</em>. Tout le reste est accessible en un clic depuis ce tableau de bord central.
+    </p>
   </div>
 
-  <div class="section">
-    <h2>Sidebar — intégration</h2>
-    <p>Le lien "📊 Tableau de bord" est inséré en <strong>premier élément</strong> dans chaque accordéon métier via patch du fichier <code>Sidebar.tsx</code>.</p>
-    <pre><code>const METIER_MENUS: Record&lt;string, MenuItem[]&gt; = &#123;
-  COMPORTEMENTALISTE: [
-    &#123; label: "Tableau de bord",          href: "/app/comportementaliste/dashboard", icon: "📊" &#125;,
-    &#123; label: "Etudes Comportementales",  href: "/app/seances",                      icon: "🧠" &#125;,
-    &#123; label: "Seances de suivi",         href: "/app/programmes",                   icon: "📋" &#125;,
-    // ...
-  ],
-  // idem pour tous les métiers
-&#125;;</code></pre>
-  </div>
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2>🐕 Dashboard Comportementaliste — Vue mois</h2>
 
-  <div class="section">
-    <h2>Généalogie élevage — conditionnelle</h2>
-    <p>Le composant <code>&lt;GenealogieTree /&gt;</code> n'est visible que si :</p>
-    <ul style="color:#9a9890;padding-left:1.5rem;margin:.5rem 0">
-      <li>Le métier ELEVEUR est activé dans les modules (vérifié via <code>/api/parametres/modules</code>)</li>
-      <li>L'utilisateur est sur <code>/app/elevage/dashboard</code> (le lien sidebar n'existe que pour ce métier)</li>
-      <li>Le toggle "Voir/Masquer généalogie" est activé (état local React)</li>
-    </ul>
-    <p>L'arbre SVG représente : Luna × Arès → Portée B (sept 2023) → chiots vendus/garde + Portée O (mars 2026) → Thor/Freya réservés.</p>
-  </div>
+  <p>
+    Le comportementaliste travaille par cycles longs : une EDC (Étude de Comportement) initiale, puis un programme de suivi sur 5 à 10 séances. Son dashboard reflète cette temporalité. Les KPIs centraux sont le nombre de programmes actifs, le taux de complétion des séances planifiées, et bien sûr le chiffre d'affaires mensuel. Le toggle Mois / Trimestre / Année permet de prendre du recul instantanément sans changer de page.
+  </p>
 
-  <div class="section">
-    <h2>KPIs dynamiques vs statiques</h2>
-    <table>
-      <thead><tr><th>Données</th><th>Source</th><th>Statut</th></tr></thead>
-      <tbody>
-        <tr><td>CA total, nb clients, nb animaux</td><td>Hook <code>useDashboardData</code> → <code>/api/bilan</code></td><td><span class="status-ok">✅ Dynamique</span></td></tr>
-        <tr><td>CA par métier / espèce / prestation</td><td>Données statiques S42 (seeds)</td><td><span class="status-wip">⚡ À connecter /api/bilan?metier=X</span></td></tr>
-        <tr><td>Programmes actifs / progression</td><td>Données statiques S42</td><td><span class="status-wip">⚡ À connecter /api/programmes</span></td></tr>
-        <tr><td>Impayés top relances</td><td>Données statiques S42</td><td><span class="status-wip">⚡ À connecter /api/factures?statut=EMISE</span></td></tr>
-        <tr><td>Arbre généalogique</td><td>SVG inline statique</td><td><span class="status-ok">✅ Statique — ne change pas souvent</span></td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="screen-wrap">
+    <div class="screen-bar">
+      <div class="dot" style="background:#ff5f57"></div>
+      <div class="dot" style="background:#ffbd2e"></div>
+      <div class="dot" style="background:#28c840"></div>
+      <div class="screen-url">http://localhost/app/comportementaliste/dashboard</div>
+    </div>
+    <div class="screen-body">
+      <div class="mock-app">
+        <!-- Sidebar -->
+        <div class="mock-sidebar">
+          <div class="s-title">Mon métier</div>
+          <div class="s-item active">📊 Tableau de bord</div>
+          <div class="s-item">🔬 Études comportement</div>
+          <div class="s-item">📅 Séances de suivi</div>
+          <div class="s-item">📅 Planning</div>
+          <div class="s-item">📋 Questionnaires</div>
+          <div class="s-title" style="margin-top:.75rem">Commercial</div>
+          <div class="s-item">📄 Devis / Contrats</div>
+          <div class="s-item">🧾 Factures</div>
+          <div class="s-item accent">⚡ Rappels impayés</div>
+        </div>
+        <!-- Main -->
+        <div class="mock-main">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
+            <div>
+              <div style="font-size:.85rem;font-weight:700;color:#fff">Tableau de bord — Comportementaliste</div>
+              <div style="font-size:.65rem;color:#555">Mars 2026 · micro_logiciel_NH</div>
+            </div>
+            <div class="toggle-row" style="margin:0">
+              <div class="t-btn on">Mois</div>
+              <div class="t-btn">Trimestre</div>
+              <div class="t-btn">Année</div>
+            </div>
+          </div>
 
-  <div class="section">
-    <h2>Roadmap S43 — Dashboards</h2>
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-date">S43 — P1</div>
-        <div class="tl-title">Connexion API dynamique</div>
-        <div class="tl-desc">Brancher <code>/api/bilan?metier=X&periode=mois</code> sur chaque dashboard. Filtre Mois / Trimestre / Année.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">S43 — P2</div>
-        <div class="tl-title">Dashboards squelettes métiers restants</div>
-        <div class="tl-desc">Éducateur, Vétérinaire, Ostéopathe / Kiné, Sport canin, Naturopathe / Nutri.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">S43 — P3</div>
-        <div class="tl-title">Graphiques Chart.js / Recharts</div>
-        <div class="tl-desc">CA mensuel ligne, répartition espèces donut, réseau leads D3.js (déjà dans page Statistiques).</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">S44 — P4</div>
-        <div class="tl-title">Export PDF dashboard</div>
-        <div class="tl-desc">Génération PDF du bilan CEO mensuel via API éditions.</div>
+          <!-- KPIs -->
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-val">4 820 €</div>
+              <div class="kpi-delta up">▲ +12% vs fév.</div>
+              <div class="kpi-lbl">CA HT mars</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-val">14</div>
+              <div class="kpi-delta up">▲ +2</div>
+              <div class="kpi-lbl">Séances réalisées</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-val">6</div>
+              <div class="kpi-delta" style="color:#9d97e8">● stable</div>
+              <div class="kpi-lbl">Programmes actifs</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-val">830 €</div>
+              <div class="kpi-delta down">▼ 1 impayée</div>
+              <div class="kpi-lbl">Reste à encaisser</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:.6rem">
+            <!-- Chart CA mensuel -->
+            <div class="chart-wrap">
+              <div class="chart-title">CA mensuel (€ HT) — 6 derniers mois</div>
+              <div class="bars">
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1">
+                  <div class="bar" style="height:45px;background:#2a2a3a"></div>
+                  <div class="bar-lbl">Oct</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1">
+                  <div class="bar" style="height:52px;background:#2a2a3a"></div>
+                  <div class="bar-lbl">Nov</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1">
+                  <div class="bar" style="height:38px;background:#2a2a3a"></div>
+                  <div class="bar-lbl">Déc</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1">
+                  <div class="bar" style="height:55px;background:#3a3060"></div>
+                  <div class="bar-lbl">Jan</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1">
+                  <div class="bar" style="height:48px;background:#3a3060"></div>
+                  <div class="bar-lbl">Fév</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1">
+                  <div class="bar" style="height:60px;background:#534ab7"></div>
+                  <div class="bar-lbl" style="color:#9d97e8;font-weight:700">Mar</div>
+                </div>
+              </div>
+            </div>
+            <!-- Répartition -->
+            <div class="chart-wrap">
+              <div class="chart-title">Répartition prestations</div>
+              <div style="margin-top:.3rem">
+                <div style="font-size:.65rem;color:#888;margin-bottom:.25rem">EDC initiales</div>
+                <div class="prog"><div class="prog-bar" style="width:35%;background:#534ab7"></div></div>
+                <div style="font-size:.65rem;color:#888;margin-bottom:.25rem;margin-top:.3rem">Forfaits suivi</div>
+                <div class="prog"><div class="prog-bar" style="width:55%;background:#5dcaa5"></div></div>
+                <div style="font-size:.65rem;color:#888;margin-bottom:.25rem;margin-top:.3rem">Urgences</div>
+                <div class="prog"><div class="prog-bar" style="width:10%;background:#d4a44c"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <footer>PetSuite by Algorithmia · Sprint S42 · 22 mars 2026 · <a href="index.html" style="color:#534ab7">Index docs</a></footer>
+  <p>
+    Ce qu'on remarque immédiatement dans cette vue : le chiffre d'affaires s'affiche avec son delta par rapport au mois précédent. Ce n'est pas un chiffre brut — c'est une <em>tendance</em>. En mars, +12% par rapport à février, c'est rassurant. Si le delta passait dans le rouge, ce serait un signal d'alerte immédiat. Le reste à encaisser (830 €) pointe directement vers la facture impayée concernée en un clic.
+  </p>
+
+  <hr class="section-sep">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2>🏠 Dashboard Pet-Sitter — Vue trimestre</h2>
+
+  <p>
+    Le pet-sitter a un modèle économique différent : beaucoup de petites prestations récurrentes, une forte saisonnalité (vacances scolaires, été), et une répartition géographique des clients qui compte. Son dashboard met en avant le nombre de visites réalisées, la répartition par ville, et l'occupation du planning sur la semaine à venir.
+  </p>
+
+  <div class="screen-wrap">
+    <div class="screen-bar">
+      <div class="dot" style="background:#ff5f57"></div>
+      <div class="dot" style="background:#ffbd2e"></div>
+      <div class="dot" style="background:#28c840"></div>
+      <div class="screen-url">http://localhost/app/pet-sitter/dashboard</div>
+    </div>
+    <div class="screen-body">
+      <div class="mock-app">
+        <div class="mock-sidebar">
+          <div class="s-title">Mon métier</div>
+          <div class="s-item active">📊 Tableau de bord</div>
+          <div class="s-item">🐾 Visites & Promenades</div>
+          <div class="s-item">🏠 Gardes & Pension</div>
+          <div class="s-item">📅 Planning</div>
+          <div class="s-item">📋 Questionnaires</div>
+          <div class="s-title" style="margin-top:.75rem">Commercial</div>
+          <div class="s-item">📄 Devis</div>
+          <div class="s-item">🧾 Factures</div>
+        </div>
+        <div class="mock-main">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
+            <div>
+              <div style="font-size:.85rem;font-weight:700;color:#fff">Tableau de bord — Pet-Sitter</div>
+              <div style="font-size:.65rem;color:#555">T1 2026 (jan–mar) · micro_logiciel_NH</div>
+            </div>
+            <div class="toggle-row" style="margin:0">
+              <div class="t-btn">Mois</div>
+              <div class="t-btn on">Trimestre</div>
+              <div class="t-btn">Année</div>
+            </div>
+          </div>
+
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-val">3 240 €</div>
+              <div class="kpi-delta up">▲ +8% T4→T1</div>
+              <div class="kpi-lbl">CA TTC T1</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-val">158</div>
+              <div class="kpi-delta up">▲ +23 vs T4</div>
+              <div class="kpi-lbl">Visites réalisées</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-val">42</div>
+              <div class="kpi-delta" style="color:#9d97e8">● planifiées</div>
+              <div class="kpi-lbl">Visites à venir</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-val">28</div>
+              <div class="kpi-delta up">▲ +3</div>
+              <div class="kpi-lbl">Clients actifs</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+            <div class="chart-wrap">
+              <div class="chart-title">Visites par ville — T1 2026</div>
+              <div style="margin-top:.4rem">
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:.65rem;margin-bottom:.3rem">
+                  <span style="color:#888">Paris</span>
+                  <span style="color:#6baed6;font-weight:700">38</span>
+                </div>
+                <div class="prog"><div class="prog-bar" style="width:72%;background:#6baed6"></div></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:.65rem;margin-bottom:.3rem;margin-top:.3rem">
+                  <span style="color:#888">Lyon</span>
+                  <span style="color:#6baed6;font-weight:700">29</span>
+                </div>
+                <div class="prog"><div class="prog-bar" style="width:55%;background:#6baed6"></div></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:.65rem;margin-bottom:.3rem;margin-top:.3rem">
+                  <span style="color:#888">Marseille</span>
+                  <span style="color:#6baed6;font-weight:700">22</span>
+                </div>
+                <div class="prog"><div class="prog-bar" style="width:42%;background:#6baed6"></div></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:.65rem;margin-top:.3rem">
+                  <span style="color:#888">Autres</span>
+                  <span style="color:#555;font-weight:700">69</span>
+                </div>
+                <div class="prog"><div class="prog-bar" style="width:100%;background:#1a1a2e"></div></div>
+              </div>
+            </div>
+
+            <div class="chart-wrap">
+              <div class="chart-title">Prochaines visites (7j)</div>
+              <table class="mini-table">
+                <tr><th>Client</th><th>Animal</th><th>Date</th></tr>
+                <tr><td>Martin S.</td><td>🐕 Rex</td><td style="color:#9d97e8">Lun 10h</td></tr>
+                <tr><td>Dubois A.</td><td>🐈 Mimi</td><td style="color:#9d97e8">Lun 14h</td></tr>
+                <tr><td>Lemaire C.</td><td>🐕 Buddy</td><td style="color:#d4a44c">Mar 9h</td></tr>
+                <tr><td>Rousseau J.</td><td>🐕 Luna</td><td style="color:#d4a44c">Mer 11h</td></tr>
+                <tr><td style="color:#555">+38 autres</td><td>—</td><td>—</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p>
+    La vue trimestrielle est particulièrement utile pour le pet-sitter : elle lui permet de mesurer la progression d'un trimestre à l'autre et d'identifier les périodes creuses. La carte des visites par ville révèle ses zones de chalandise naturelles — une information précieuse au moment de décider d'élargir sa zone d'intervention ou de recruter un collaborateur.
+  </p>
+
+  <hr class="section-sep">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2>🧾 Vue Factures — Suivi financier</h2>
+
+  <p>
+    Au-delà des dashboards métier, PetSuite offre une vue financière transverse accessible depuis la section Factures. Elle regroupe toutes les factures émises, leur état de paiement, et met en évidence les impayés avec leur niveau de relance. C'est la vue privilégiée pour le travail administratif quotidien : pointer les règlements reçus, lancer les rappels, préparer le bilan mensuel.
+  </p>
+
+  <div class="screen-wrap">
+    <div class="screen-bar">
+      <div class="dot" style="background:#ff5f57"></div>
+      <div class="dot" style="background:#ffbd2e"></div>
+      <div class="dot" style="background:#28c840"></div>
+      <div class="screen-url">http://localhost/app/factures</div>
+    </div>
+    <div class="screen-body">
+      <div style="padding:.5rem 0">
+        <!-- En-tête avec KPIs résumés -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
+          <div style="font-size:.85rem;font-weight:700;color:#fff">Factures</div>
+          <button style="background:#534ab7;color:#fff;border:none;border-radius:6px;padding:.3rem .8rem;font-size:.7rem;cursor:pointer">+ Nouvelle facture</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:.75rem">
+          <div style="background:#13131a;border:1px solid #2a2a3a;border-radius:8px;padding:.6rem;text-align:center">
+            <div style="font-size:1rem;font-weight:700;color:#fff">52 340 €</div>
+            <div style="font-size:.6rem;color:#666">Total émis 2026</div>
+          </div>
+          <div style="background:#13131a;border:1px solid #0f6e56;border-radius:8px;padding:.6rem;text-align:center">
+            <div style="font-size:1rem;font-weight:700;color:#5dcaa5">48 710 €</div>
+            <div style="font-size:.6rem;color:#666">Encaissé</div>
+          </div>
+          <div style="background:#13131a;border:1px solid #854f0b;border-radius:8px;padding:.6rem;text-align:center">
+            <div style="font-size:1rem;font-weight:700;color:#d4a44c">3 630 €</div>
+            <div style="font-size:.6rem;color:#666">En attente</div>
+          </div>
+          <div style="background:#13131a;border:1px solid #7a1515;border-radius:8px;padding:.6rem;text-align:center">
+            <div style="font-size:1rem;font-weight:700;color:#e06c6c">830 €</div>
+            <div style="font-size:.6rem;color:#666">Impayé niveau 2</div>
+          </div>
+        </div>
+        <!-- Tableau factures -->
+        <table class="mini-table" style="font-size:.72rem">
+          <tr>
+            <th>Numéro</th>
+            <th>Client</th>
+            <th>Date</th>
+            <th>Montant TTC</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+          <tr>
+            <td style="color:#9d97e8">FAC-2603-0018</td>
+            <td>Dujardin Jean</td>
+            <td>18/03/26</td>
+            <td style="font-weight:600;color:#e2e0d8">830,00 €</td>
+            <td><span class="status s-lat">IMPAYÉE N2</span></td>
+            <td style="display:flex;gap:.3rem;margin-top:.15rem">
+              <span style="background:#1a1a2e;color:#9d97e8;padding:.1rem .3rem;border-radius:3px;font-size:.6rem;cursor:pointer">PDF</span>
+              <span style="background:#0a2015;color:#5dcaa5;padding:.1rem .3rem;border-radius:3px;font-size:.6rem;cursor:pointer">Relancer</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="color:#9d97e8">FAC-2603-0017</td>
+            <td>Bernard M.</td>
+            <td>15/03/26</td>
+            <td style="font-weight:600;color:#e2e0d8">480,00 €</td>
+            <td><span class="status s-pen">EN ATTENTE</span></td>
+            <td style="display:flex;gap:.3rem;margin-top:.15rem">
+              <span style="background:#1a1a2e;color:#9d97e8;padding:.1rem .3rem;border-radius:3px;font-size:.6rem;cursor:pointer">PDF</span>
+              <span style="background:#1a1a2e;color:#888;padding:.1rem .3rem;border-radius:3px;font-size:.6rem;cursor:pointer">Mail</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="color:#9d97e8">FAC-2603-0016</td>
+            <td>Lefebvre S.</td>
+            <td>12/03/26</td>
+            <td style="font-weight:600;color:#e2e0d8">350,00 €</td>
+            <td><span class="status s-pay">PAYÉE</span></td>
+            <td style="display:flex;gap:.3rem;margin-top:.15rem">
+              <span style="background:#1a1a2e;color:#9d97e8;padding:.1rem .3rem;border-radius:3px;font-size:.6rem;cursor:pointer">PDF</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="color:#9d97e8">FAC-2602-0041</td>
+            <td>Morel C.</td>
+            <td>28/02/26</td>
+            <td style="font-weight:600;color:#e2e0d8">960,00 €</td>
+            <td><span class="status s-pay">PAYÉE</span></td>
+            <td style="display:flex;gap:.3rem;margin-top:.15rem">
+              <span style="background:#1a1a2e;color:#9d97e8;padding:.1rem .3rem;border-radius:3px;font-size:.6rem;cursor:pointer">PDF</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <p>
+    La liste des factures est conçue pour l'efficacité. Les statuts sont colorés : vert pour les factures réglées, amber pour les en attente de paiement, rouge pour les impayés en cours de relance. Le numéro de facture suit le format <code>FAC-YYMM-XXXX</code> généré automatiquement par un trigger MariaDB à la création — le professionnel ne saisit jamais un numéro manuellement.
+  </p>
+
+  <hr class="section-sep">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <h2>📈 Architecture technique du BI</h2>
+
+  <p>
+    Derrière ces dashboards, l'architecture est volontairement simple et directe : pas de cube OLAP, pas de couche analytique intermédiaire. Les données sont agrégées à la volée par des requêtes SQL optimisées, servies par une route NestJS dédiée. Cette approche convient parfaitement au volume de données des TPE (quelques milliers de factures et séances par an).
+  </p>
+
+  <div class="grid2" style="margin:1.5rem 0">
+    <div class="card">
+      <span class="tag tgreen">Hook React</span>
+      <div style="font-size:.9rem;font-weight:600;color:#e2e0d8;margin:.4rem 0">useDashboardMetier</div>
+      <div style="font-size:.8rem;color:#666;font-family:monospace;background:#0f0f18;padding:.6rem;border-radius:6px;margin-top:.5rem">
+        const { data, loading } =<br>
+        &nbsp;&nbsp;useDashboardMetier(<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;"COMPORTEMENTALISTE",<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;"mois"<br>
+        &nbsp;&nbsp;);<br><br>
+        // data.ca_ttc, data.nb_seances,<br>
+        // data.nb_clients, data.ca_mensuel[]
+      </div>
+    </div>
+    <div class="card">
+      <span class="tag tg">Route API</span>
+      <div style="font-size:.9rem;font-weight:600;color:#e2e0d8;margin:.4rem 0">GET /bilan/metier</div>
+      <div style="font-size:.8rem;color:#9a9890;margin-top:.5rem">Paramètres : <code>metier</code> + <code>periode</code></div>
+      <div style="font-size:.75rem;color:#666;margin-top:.75rem">Mapping interne :</div>
+      <div style="font-size:.75rem;color:#666;background:#0f0f18;padding:.5rem;border-radius:6px;margin-top:.3rem;font-family:monospace">
+        COMPORTEMENTALISTE → [EDC, SEANCE]<br>
+        PET_SITTER → [GARDIENNAGE]<br>
+        TOILETTEUR → [TOILETTAGE]<br>
+        ELEVEUR → [ELEVAGE]<br>
+        EQUESTRE → [COURS_EQUESTRE]
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🎯 Données disponibles par dashboard</h2>
+    <table style="width:100%;border-collapse:collapse;font-size:.85rem">
+      <tr>
+        <th style="background:#13131a;color:#888;padding:.6rem .8rem;text-align:left;border-bottom:1px solid #2a2a3a">Métrique</th>
+        <th style="background:#13131a;color:#888;padding:.6rem .8rem;text-align:left;border-bottom:1px solid #2a2a3a">Source SQL</th>
+        <th style="background:#13131a;color:#888;padding:.6rem .8rem;text-align:left;border-bottom:1px solid #2a2a3a">Périodes</th>
+        <th style="background:#13131a;color:#888;padding:.6rem .8rem;text-align:left;border-bottom:1px solid #2a2a3a">Statut</th>
+      </tr>
+      <tr>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">CA HT / TTC</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890"><code>SUM(FAC_TOTAL_TTC)</code> sur factures émises</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Mois / Trimestre / Année</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a"><span class="tag tgreen">✅ Actif</span></td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Nb séances réalisées</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890"><code>COUNT(*) WHERE SST_CODE='REALISEE'</code></td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Mois / Trimestre / Année</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a"><span class="tag tgreen">✅ Actif</span></td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Clients actifs</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890"><code>COUNT(DISTINCT TIE_ID)</code> sur séances période</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Mois / Trimestre / Année</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a"><span class="tag tgreen">✅ Actif</span></td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">CA mensuel (courbe)</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890"><code>GROUP BY YEAR, MONTH</code> 6 derniers mois</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Fixe 6 mois glissants</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a"><span class="tag tgreen">✅ Actif</span></td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Reste à encaisser</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890"><code>v_facture_suivi.ResteAPayer</code></td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Temps réel</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a"><span class="tag tgreen">✅ Actif</span></td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Taux conversion devis</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Devis ACCEPTE / total émis</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890">Mois / Année</td>
+        <td style="padding:.5rem .8rem;border-bottom:1px solid #1a1a2a"><span class="tag tamber">⏳ S44</span></td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem .8rem;color:#9a9890">Export PDF dashboard</td>
+        <td style="padding:.5rem .8rem;color:#9a9890">Snapshot modal PDF</td>
+        <td style="padding:.5rem .8rem;color:#9a9890">À la demande</td>
+        <td style="padding:.5rem .8rem"><span class="tag tamber">⏳ S46</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>🔮 Perspectives BI — S45+</h2>
+    <p>
+      La prochaine évolution du module BI portera sur la mise en relation des données commerciales et opérationnelles : quel type de prestation génère le meilleur panier moyen ? Quel canal d'acquisition (Calendly, bouche-à-oreille, réseaux sociaux) produit les clients les plus fidèles ? Ces analyses dépassent les simples agrégats actuels et nécessiteront une couche de données enrichie, en partant des données déjà collectées dans PetSuite.
+    </p>
+    <div class="grid3">
+      <div class="card">
+        <span class="tag tamber">S45</span>
+        <div style="font-size:.85rem;font-weight:600;color:#e2e0d8;margin:.4rem 0">Taux de conversion</div>
+        <div style="font-size:.78rem;color:#666">Suivi devis → facture par type de prestation. Identifier les offres qui convertissent le mieux.</div>
+      </div>
+      <div class="card">
+        <span class="tag tamber">S46</span>
+        <div style="font-size:.85rem;font-weight:600;color:#e2e0d8;margin:.4rem 0">LTV client</div>
+        <div style="font-size:.78rem;color:#666">Valeur vie client par segment. Identifier les clients à fort potentiel et les programmes les plus rentables.</div>
+      </div>
+      <div class="card">
+        <span class="tag tg">S47</span>
+        <div style="font-size:.85rem;font-weight:600;color:#e2e0d8;margin:.4rem 0">Alertes prédictives</div>
+        <div style="font-size:.78rem;color:#666">Signaler un client inactif depuis 60 jours, une baisse du CA par rapport à la même période N-1.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
-</body></html>
+
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
+</body>
+</html>
