@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>PetSuite — Scénario Vidéo Démo — Comportementaliste</title>
+<title>PetSuite — Module Naturopathe / Nutrition</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
@@ -36,40 +36,19 @@
 <header class="header">
   <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
   <div class="nav-links"><a href="index.html">Accueil</a><a href="53-changelog-s43.html">S43</a><a href="06-roadmap-s43.html">Roadmap</a></div>
-  <span class="badge">#70 — S44</span>
+  <span class="badge">#69 — S44</span>
 </header>
 <div class="container">
 
-<h1>🎬 Scénario Vidéo Démo — Comportementaliste</h1>
-<p class="subtitle">Démo complète utilisateur — 7 minutes — Données virtuelles BDD</p>
-<div class="alert alert">✅ Ce scénario nécessite des seeds spécifiques en BDD. Voir section Seeds ci-dessous.</div>
-<div class="section"><h2>📽️ Découpage 7 minutes</h2>
-<table>
-<tr><th>Timecode</th><th>Écran</th><th>Actions</th></tr>
-<tr><td>00:00-00:30</td><td>Dashboard global</td><td>Connexion → tableau de bord général → KPIs</td></tr>
-<tr><td>00:30-00:50</td><td>Paramètres</td><td>Entreprise, Logo, SIRET → TVA → Editions PDF</td></tr>
-<tr><td>00:50-01:30</td><td>Nouveau client</td><td>Créer "Dujardin Jean" → ajouter 2 contacts → 2 animaux (Frimousse Malinois + Kafka Berger)</td></tr>
-<tr><td>01:30-02:15</td><td>Séance EDC</td><td>Nouvelle séance > EDC > Frimousse → remplir formulaire comportemental → générer devis</td></tr>
-<tr><td>02:15-02:45</td><td>Devis</td><td>Devis EDC + Forfait 5 séances → PDF modal → Email → changer état Accepté</td></tr>
-<tr><td>02:45-03:15</td><td>Planning</td><td>Vue semaine → planifier 5 séances de suivi → vue mois</td></tr>
-<tr><td>03:15-03:45</td><td>Facture</td><td>Créer facture → PDF modal → Email → saisir règlement</td></tr>
-<tr><td>03:45-04:15</td><td>Rappels</td><td>Rappels impayés → visualiser → envoyer rappel email</td></tr>
-<tr><td>04:15-04:45</td><td>CRM</td><td>Fiche client → historique → notes CRM → opportunité</td></tr>
-<tr><td>04:45-05:15</td><td>Statistiques</td><td>CA mensuel → évolution → répartition métiers</td></tr>
-<tr><td>05:15-05:45</td><td>Comptabilité</td><td>FEC Export → générer → télécharger → vérifier équilibre</td></tr>
-<tr><td>05:45-06:15</td><td>GED + Signatures</td><td>Documents liés Frimousse → envoyer à la signature Yousign</td></tr>
-<tr><td>06:15-06:45</td><td>Dashboard métier</td><td>Dashboard Comportementaliste V2 → toggle Mois/Trimestre → programmes en cours</td></tr>
-<tr><td>06:45-07:00</td><td>Conclusion</td><td>Questionnaires → envoyer bilan programme → fin</td></tr>
-</table></div>
-<div class="section"><h2>🗃️ Seeds nécessaires pour la démo</h2>
-<div class="card"><div class="card-title">Données à préparer en BDD</div><div class="card-desc">
-• Client : Jean Dujardin, 15 rue de la Paix, Paris 75001, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="761c1317185812031c1704121f1836131b171f1a5815191b">[email&#160;protected]</a><br>
-• Contact 1 : Marie Dujardin (conjointe), Contact 2 : Dr. Martin (vétérinaire)<br>
-• Animal 1 : Frimousse — Malinois — né 15/03/2021 — puce 250268500987654<br>
-• Animal 2 : Kafka — Berger Allemand — né 02/07/2020 — puce 250268501234567<br>
-• Séance EDC : 18/03/2026 — réalisée — Frimousse<br>
-• Devis DCE-2603-DEMO : 480€ EDC + 350€ Forfait 5 séances = 830€ TTC — Accepté<br>
-• Facture FAC-2603-DEMO : 830€ — Émise<br>
-• 5 séances planifiées : avril 2026 — Frimousse<br>
-• Règlement partiel : 400€ — reste 430€ impayé<br>
-• Rappel
+<h1>🌿 Naturopathe / Nutrition animale</h1>
+<p class="subtitle">Documentation module métier — Avancement 40%</p>
+<div class="section"><h2>🔧 Modules</h2><div class="grid">
+  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Dashboard squelette</div><div class="card-desc">À brancher sur /api/bilan/metier?metier=NATUROPATHE en S44.</div></div>
+  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Consultations</div><div class="card-desc">Page séances filtrée naturo.</div></div>
+  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Questionnaires</div><div class="card-desc">Bilan nutritionnel (22Q).</div></div>
+  <div class="card"><span class="tag tamber">⏳ S44</span><div class="card-title">Plan alimentaire</div><div class="card-desc">Génération plan nutritionnel personnalisé. Suppléments. Export PDF modal.</div></div>
+  <div class="card"><span class="tag tamber">⏳ S44</span><div class="card-title">Suivi poids / condition</div><div class="card-desc">Courbe de poids, score de condition corporelle.</div></div>
+</div></div>
+</div>
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026</footer>
+</body></html>

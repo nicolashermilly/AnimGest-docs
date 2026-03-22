@@ -5,213 +5,134 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite — Module Achats Complet</title>
 <style>
-:root{--bg:#0f1923;--bg2:#1a2332;--bg3:#1e2d3d;--border:#2a3f55;--accent:#4f46e5;--green:#10b981;--amber:#f59e0b;--red:#ef4444;--teal:#14b8a6;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--r:12px;--rs:8px}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.6}
-.header{background:linear-gradient(135deg,#1a2332 0%,#0f2418 100%);padding:48px 40px;border-bottom:1px solid var(--border)}
-.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.4);color:#6ee7b7;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
-h1{font-size:32px;font-weight:800;margin-bottom:8px}
-.subtitle{color:var(--text2);font-size:16px}
-.container{max-width:1200px;margin:0 auto;padding:40px}
-h2{font-size:20px;font-weight:700;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-h3{font-size:15px;font-weight:600;margin-bottom:12px}
-.section{margin-bottom:40px}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:24px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase}
-.tag-green{background:rgba(16,185,129,.2);color:#6ee7b7}
-.tag-amber{background:rgba(245,158,11,.2);color:#fcd34d}
-.tag-red{background:rgba(239,68,68,.2);color:#fca5a5}
-.tag-blue{background:rgba(99,102,241,.2);color:#a5b4fc}
-.flow{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:16px 0}
-.fs{padding:10px 16px;border-radius:var(--rs);font-size:13px;font-weight:600;text-align:center;min-width:110px}
-.fs-blue{background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);color:#a5b4fc}
-.fs-green{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#6ee7b7}
-.fs-amber{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#fcd34d}
-.fs-red{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
-.arr{color:var(--text3);font-size:18px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);font-size:11px;text-transform:uppercase}
-td{padding:10px 14px;border-bottom:1px solid rgba(42,63,85,.5)}
-code{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-family:monospace;font-size:12px;color:#a5b4fc}
-.feature-list{list-style:none;space-y:6px}
-.feature-list li{padding:8px 12px;background:var(--bg3);border-radius:var(--rs);font-size:13px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.sepa-card{background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(20,184,166,.05));border:1px solid rgba(16,185,129,.3);border-radius:var(--r);padding:24px}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+  .header { background: #13131a; border-bottom: 1px solid #2a2a3a;
+            padding: 1.5rem 2rem; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+  .logo span { color: #7f77dd; }
+  .badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8;
+           padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-links a { color: #888; text-decoration: none; font-size: 0.85rem; }
+  .nav-links a:hover { color: #fff; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem;
+       padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a3a; }
+  h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 0.5rem; }
+  p { color: #9a9890; margin-bottom: 0.75rem; }
+  .subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px;
+          padding: 1.25rem; transition: border-color 0.2s; }
+  .card:hover { border-color: #534ab7; }
+  .card-title { font-size: 0.95rem; font-weight: 600; color: #e2e0d8; margin-bottom: 0.4rem; }
+  .card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
+  .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+         font-size: 0.7rem; font-weight: 600; margin-right: 0.25rem; margin-bottom: 0.4rem; }
+  .tag-purple { background: #1a1530; color: #9d97e8; }
+  .tag-green  { background: #0a2015; color: #5dcaa5; }
+  .tag-blue   { background: #0a1525; color: #6baed6; }
+  .tag-amber  { background: #1a1205; color: #d4a44c; }
+  .tag-red    { background: #1a0a0a; color: #e06c6c; }
+  code { background: #1a1a2e; color: #9d97e8; padding: 0.1rem 0.4rem;
+         border-radius: 4px; font-size: 0.85em; font-family: 'Fira Code', monospace; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  th { background: #13131a; color: #888; font-weight: 600; padding: 0.6rem 0.8rem;
+       text-align: left; border-bottom: 1px solid #2a2a3a; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; }
+  tr:hover td { background: #0f0f18; }
+  .back-link { color: #534ab7; text-decoration: none; font-size: 0.85rem; }
+  .back-link:hover { color: #9d97e8; }
+  .alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px;
+           padding: 1rem 1.25rem; margin: 1rem 0; font-size: 0.85rem; color: #5dcaa5; }
+  .alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
+  .alert-red { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
+  .progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
+  .progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
+  footer { text-align: center; padding: 2rem; color: #333; font-size: 0.8rem;
+           border-top: 1px solid #1a1a2a; margin-top: 3rem; }
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="badge">🛒 Module #33 — Documentation</div>
-  <h1>🛒 Module Achats Complet</h1>
-  <p class="subtitle">Commandes fournisseurs · Pointage livraisons · Avoirs · Retours · Règlements SEPA · Réception factures PA</p>
-</div>
-
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="01-synthese-projet.html">Synthèse</a>
+    <a href="53-changelog-s43.html">S43</a>
+    <a href="06-roadmap-s43.html">Roadmap</a>
+  </div>
+  <span class="badge">#58 — S44</span>
+</header>
 <div class="container">
 
-  <!-- WORKFLOW -->
-  <div class="section">
-    <h2>🔄 Cycle de vie d'une commande achat</h2>
-    <div class="card">
-      <div class="flow">
-        <div class="fs fs-blue">BROUILLON<br><small>Création</small></div>
-        <span class="arr">→</span>
-        <div class="fs fs-blue">ENVOYÉE<br><small>Au fournisseur</small></div>
-        <span class="arr">→</span>
-        <div class="fs fs-amber">EN COURS<br><small>Livraison partielle</small></div>
-        <span class="arr">→</span>
-        <div class="fs fs-green">RÉCEPTIONNÉE<br><small>Livraison complète</small></div>
-        <span class="arr">→</span>
-        <div class="fs fs-green">VALIDÉE ✅<br><small>Règlement effectué</small></div>
-      </div>
-      <div class="flow" style="margin-top:8px">
-        <div style="width:340px"></div>
-        <span class="arr">→</span>
-        <div class="fs fs-red">LITIGE ⚠️<br><small>Problème livraison</small></div>
-        <span class="arr">→</span>
-        <div class="fs fs-amber">AVOIR DEMANDÉ<br><small>Retour fournisseur</small></div>
-      </div>
-    </div>
-  </div>
+<h1>🛒 Module Achats — Documentation complète</h1>
+<p class="subtitle">Commandes fournisseurs, réception, pointage livraison, avoirs, règlements, réception factures PA</p>
 
-  <!-- FONCTIONNALITÉS -->
-  <div class="section">
-    <h2>📋 Fonctionnalités disponibles</h2>
-    <div class="grid3">
-      <div class="card">
-        <h3>📦 Commandes</h3>
-        <ul class="feature-list">
-          <li>✅ Création bon de commande</li>
-          <li>✅ Lignes articles avec TVA snapshot</li>
-          <li>✅ Numérotation automatique</li>
-          <li>✅ Statuts workflow</li>
-          <li>📋 PDF bon de commande (modal)</li>
-          <li>📋 Email fournisseur</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>🚚 Livraisons</h3>
-        <ul class="feature-list">
-          <li>✅ Lignes d'inventaire</li>
-          <li>✅ Pointage réel vs théorique</li>
-          <li>📋 Bon de livraison partielle</li>
-          <li>📋 Relance fournisseur</li>
-          <li>📋 Réception automatique depuis PA</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>💳 Règlements</h3>
-        <ul class="feature-list">
-          <li>✅ Paiement partiel ou total</li>
-          <li>✅ Multi-modes (SEPA/CB/chèque)</li>
-          <li>✅ Suivi progression barre</li>
-          <li>✅ Mise à jour statut auto</li>
-          <li>✅ Ordre virement SEPA généré</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>🔄 Avoirs fournisseurs</h3>
-        <ul class="feature-list">
-          <li>✅ Création demande avoir</li>
-          <li>✅ Motifs : retour/erreur/remise/litige</li>
-          <li>✅ Statuts : brouillon→envoyé→accepté</li>
-          <li>📋 Lien automatique bon de retour</li>
-          <li>📋 Impact comptable avoir</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>📤 Bons de retour</h3>
-        <ul class="feature-list">
-          <li>✅ Création bon de retour</li>
-          <li>✅ Motifs : défectueux/erreur/surplus</li>
-          <li>✅ Suivi statut expédition</li>
-          <li>📋 PDF bon de retour (modal)</li>
-          <li>📋 Lien avec avoir fournisseur</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>🏛️ Réception PA (RFE)</h3>
-        <ul class="feature-list">
-          <li>✅ Structure BDD prête</li>
-          <li>📋 Inbox factures Pennylane</li>
-          <li>📋 Acceptation / refus / litige</li>
-          <li>📋 Import automatique en achat</li>
-          <li>📋 10 PA intégrées</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+<div class="section">
+  <h2>📦 Workflow commande fournisseur</h2>
+  <table>
+    <tr><th>Étape</th><th>Statut</th><th>Action PetSuite</th></tr>
+    <tr><td>1. Création commande</td><td><code>BROUILLON</code></td><td>Saisie lignes articles, tiers fournisseur</td></tr>
+    <tr><td>2. Validation</td><td><code>VALIDE</code></td><td>Envoi fournisseur (email/PDF modal)</td></tr>
+    <tr><td>3. Réception partielle</td><td><code>EN_COURS</code></td><td>Pointage livraison article par article</td></tr>
+    <tr><td>4. Réception complète</td><td><code>RECU</code></td><td>Génération entrée stock + alerte si écart</td></tr>
+    <tr><td>5. Facturation</td><td>—</td><td>Rapprochement facture fournisseur reçue</td></tr>
+    <tr><td>6. Règlement</td><td><code>PAYE</code></td><td>Saisie paiement + export comptable</td></tr>
+    <tr><td>Avoir</td><td><code>AVOIR</code></td><td>Retour marchandise, avoir fournisseur</td></tr>
+    <tr><td>Annulation</td><td><code>ANNULE</code></td><td>Commande annulée avant réception</td></tr>
+  </table>
+</div>
 
-  <!-- SEPA -->
-  <div class="section">
-    <h2>🏦 Virement SEPA</h2>
-    <div class="sepa-card">
-      <div class="grid2">
-        <div>
-          <h3 style="color:#6ee7b7;margin-bottom:12px">Fonctionnement</h3>
-          <p style="font-size:13px;color:var(--text2);margin-bottom:12px">PetSuite génère automatiquement les données d'un ordre de virement SEPA à partir de :</p>
-          <ul style="font-size:13px;color:var(--text2);list-style:disc;padding-left:20px;line-height:2">
-            <li>L'IBAN/BIC de l'entreprise (<code>param_entreprise.MET_IBAN</code>)</li>
-            <li>L'IBAN/BIC du fournisseur (<code>tiers.TIE_IBAN</code>)</li>
-            <li>Le montant restant à payer</li>
-            <li>La référence de la commande (<code>ACH_NUM</code>)</li>
-          </ul>
-        </div>
-        <div>
-          <h3 style="color:#6ee7b7;margin-bottom:12px">Données générées</h3>
-          <div style="background:var(--bg2);border-radius:var(--rs);padding:16px;font-family:monospace;font-size:12px;color:var(--text2)">
-            ÉMETTEUR: Mon entreprise<br>
-            IBAN débiteur: FR76 XXXX XXXX<br>
-            BÉNÉFICIAIRE: Fournisseur SA<br>
-            IBAN créditeur: FR76 YYYY YYYY<br>
-            BIC: BNPAFRPPXXX<br>
-            MONTANT: 1 250,00 EUR<br>
-            RÉFÉRENCE: ACH-2603-0042<br>
-          </div>
-          <button style="margin-top:12px;background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.4);color:#6ee7b7;padding:8px 16px;border-radius:var(--rs);cursor:pointer;font-size:13px">📋 Copier ordre virement</button>
-        </div>
-      </div>
-    </div>
+<div class="section">
+  <h2>🔧 Fonctionnalités implementées</h2>
+  <div class="grid">
+    <div class="card"><span class="tag tag-green">✅ OK</span><div class="card-title">Liste commandes</div><div class="card-desc">Filtres statut, fournisseur, date. KPIs totaux. Route : <code>/app/achats</code></div></div>
+    <div class="card"><span class="tag tag-green">✅ OK</span><div class="card-title">Détail commande</div><div class="card-desc">Lignes, totaux HT/TVA/TTC, statut. Route : <code>/app/achats/[id]</code></div></div>
+    <div class="card"><span class="tag tag-green">✅ OK</span><div class="card-title">Nouvelle commande</div><div class="card-desc">Sélection fournisseur, ajout articles. Route : <code>/app/achats/new</code></div></div>
+    <div class="card"><span class="tag tag-green">✅ OK</span><div class="card-title">Règlements fournisseurs</div><div class="card-desc">Liste règlements, saisie paiement. Route : <code>/app/achats/reglements</code></div></div>
+    <div class="card"><span class="tag tag-amber">⏳ S44</span><div class="card-title">Pointage livraison</div><div class="card-desc">Cocher les lignes reçues, quantités partielles, date réception</div></div>
+    <div class="card"><span class="tag tag-amber">⏳ S44</span><div class="card-title">Réception facture PA</div><div class="card-desc">Import automatique factures reçues via Pennylane/PDP. Rapprochement commande.</div></div>
+    <div class="card"><span class="tag tag-amber">⏳ S44</span><div class="card-title">Demande d'avoir</div><div class="card-desc">Retour marchandise, avoir fournisseur, impact stock</div></div>
+    <div class="card"><span class="tag tag-red">❌ TODO</span><div class="card-title">Approbation workflow</div><div class="card-desc">Validation commande par responsable avant envoi fournisseur</div></div>
   </div>
+</div>
 
-  <!-- TABLES BDD -->
-  <div class="section">
-    <h2>🗄️ Structure BDD</h2>
-    <div class="card">
-      <table>
-        <tr><th>Table</th><th>Clé</th><th>Description</th><th>Statut</th></tr>
-        <tr><td><code>achat_entete</code></td><td>ACH_ID</td><td>En-tête commande fournisseur</td><td><span class="tag tag-green">✅ OK</span></td></tr>
-        <tr><td><code>achat_ligne</code></td><td>ALI_ID</td><td>Lignes articles par commande</td><td><span class="tag tag-green">✅ OK</span></td></tr>
-        <tr><td><code>achat_reglement</code></td><td>ARG_ID</td><td>Règlements fournisseurs avec IBAN</td><td><span class="tag tag-green">✅ S37</span></td></tr>
-        <tr><td><code>achat_avoir</code></td><td>AAV_ID</td><td>Avoirs fournisseurs</td><td><span class="tag tag-green">✅ S37</span></td></tr>
-        <tr><td><code>achat_retour</code></td><td>ART_ID</td><td>Bons de retour marchandise</td><td><span class="tag tag-green">✅ S37</span></td></tr>
-        <tr><td><code>inventaire_entete</code></td><td>INV_ID</td><td>Inventaires de stock</td><td><span class="tag tag-green">✅ OK</span></td></tr>
-        <tr><td><code>inventaire_ligne</code></td><td>ILI_ID</td><td>Lignes inventaire avec écarts</td><td><span class="tag tag-green">✅ OK</span></td></tr>
-      </table>
-    </div>
-  </div>
+<div class="section">
+  <h2>📊 Routes API Achats</h2>
+  <table>
+    <tr><th>Route</th><th>Description</th><th>Statut</th></tr>
+    <tr><td><code>GET /achats</code></td><td>Liste commandes avec filtres</td><td>✅</td></tr>
+    <tr><td><code>GET /achats/:id</code></td><td>Détail commande + lignes</td><td>✅</td></tr>
+    <tr><td><code>POST /achats</code></td><td>Créer commande</td><td>✅</td></tr>
+    <tr><td><code>PUT /achats/:id/statut</code></td><td>Changer statut</td><td>✅</td></tr>
+    <tr><td><code>POST /achats/:id/reception</code></td><td>Pointage livraison</td><td>⏳ S44</td></tr>
+    <tr><td><code>POST /achats/:id/avoir</code></td><td>Créer avoir fournisseur</td><td>⏳ S44</td></tr>
+    <tr><td><code>POST /achats/import-facture-pa</code></td><td>Import facture depuis PDP</td><td>❌ TODO</td></tr>
+  </table>
+</div>
 
-  <!-- ROUTES API -->
-  <div class="section">
-    <h2>🔌 Routes API</h2>
-    <div class="card">
-      <table>
-        <tr><th>Route</th><th>Méthode</th><th>Description</th><th>Statut</th></tr>
-        <tr><td>/api/achats</td><td>GET</td><td>Liste commandes</td><td><span class="tag tag-green">✅</span></td></tr>
-        <tr><td>/api/achats</td><td>POST</td><td>Créer commande</td><td><span class="tag tag-amber">⚠️ Fix params</span></td></tr>
-        <tr><td>/api/achats/:id</td><td>GET</td><td>Détail commande</td><td><span class="tag tag-green">✅</span></td></tr>
-        <tr><td>/api/achats/:id/lignes</td><td>GET</td><td>Lignes commande</td><td><span class="tag tag-green">✅</span></td></tr>
-        <tr><td>/api/achats/:id/reglements</td><td>GET/POST</td><td>Règlements fournisseur</td><td><span class="tag tag-green">✅ S37</span></td></tr>
-        <tr><td>/api/achats/:id/avoirs</td><td>GET/POST</td><td>Avoirs fournisseur</td><td><span class="tag tag-green">✅ S37</span></td></tr>
-        <tr><td>/api/achats/:id/retours</td><td>GET/POST</td><td>Bons de retour</td><td><span class="tag tag-green">✅ S37</span></td></tr>
-        <tr><td>/api/achats/:id/sepa</td><td>GET</td><td>Données virement SEPA</td><td><span class="tag tag-green">✅ S37</span></td></tr>
-        <tr><td>/api/achats/:id/bon-a-payer</td><td>GET</td><td>PDF bon à payer (modal)</td><td><span class="tag tag-green">✅</span></td></tr>
-        <tr><td>/api/inventaires</td><td>GET</td><td>Liste inventaires</td><td><span class="tag tag-green">✅</span></td></tr>
-        <tr><td>/api/factures/entrants</td><td>GET</td><td>Inbox factures reçues PA</td><td><span class="tag tag-red">❌ À créer</span></td></tr>
-      </table>
-    </div>
+<div class="section">
+  <h2>🗃️ Tables BDD Achats</h2>
+  <table>
+    <tr><th>Table</th><th>Description</th><th>Lignes approx.</th></tr>
+    <tr><td><code>achat_entete</code></td><td>Entête commandes fournisseurs</td><td>~170</td></tr>
+    <tr><td><code>achat_ligne</code></td><td>Lignes de commande (ALI_*)</td><td>~500</td></tr>
+    <tr><td><code>achat_reglement</code></td><td>Règlements fournisseurs</td><td>~40</td></tr>
+    <tr><td><code>inventaire</code></td><td>Stock articles</td><td>~50</td></tr>
+    <tr><td><code>inventaire_ligne</code></td><td>Mouvements de stock</td><td>~200</td></tr>
+  </table>
+  <div class="alert-warn alert">
+    ⚠️ <strong>Important :</strong> Les colonnes de <code>achat_ligne</code> utilisent le préfixe <code>ALI_*</code> (pas <code>ACL_*</code>). Les colonnes GENERATED (<code>ILI_VALEUR_REELLE</code>, <code>ILI_ECART</code>) ne doivent jamais être dans un INSERT.
   </div>
+</div>
 
 </div>
-</body>
-</html>
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a></footer>
+</body></html>

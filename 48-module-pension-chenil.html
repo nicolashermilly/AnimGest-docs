@@ -1,96 +1,57 @@
-<!DOCTYPE html><html lang="fr"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PetSuite — Module Pension / Chenil</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
-.header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-size:1.1rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
-.badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600}
-.badge.new{background:#0f2a1a;border-color:#0f6e56;color:#5dcaa5}
-.container{max-width:1000px;margin:0 auto;padding:2rem}
-h1{font-size:1.75rem;font-weight:700;color:#fff;margin-bottom:.4rem}
-h2{font-size:1.1rem;font-weight:600;color:#c8c6be;margin:2rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid #2a2a3a}
-h3{font-size:.95rem;font-weight:600;color:#888;margin:1.25rem 0 .4rem}
-p{color:#9a9890;margin-bottom:.6rem;font-size:.9rem}
-.subtitle{color:#555;font-size:.9rem;margin-bottom:1.5rem}
-.section{margin-bottom:2rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem}
-.card{background:#13131a;border:1px solid #2a2a3a;border-radius:10px;padding:1rem}
-.card-title{font-size:.9rem;font-weight:600;color:#e2e0d8;margin-bottom:.3rem}
-.card-desc{font-size:.78rem;color:#666;line-height:1.5}
-.tag{display:inline-block;padding:.1rem .45rem;border-radius:4px;font-size:.68rem;font-weight:600;margin-right:.2rem}
-.tag-p{background:#1a1530;color:#9d97e8}.tag-g{background:#0a2015;color:#5dcaa5}
-.tag-b{background:#0a1525;color:#6baed6}.tag-a{background:#1a1205;color:#d4a44c}
-.tag-r{background:#1a0a0a;color:#e06c6c}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin:1rem 0}
-.kpi{background:#13131a;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;text-align:center}
-.kpi-val{font-size:1.5rem;font-weight:700;color:#7f77dd}
-.kpi-lbl{font-size:.7rem;color:#555;margin-top:.2rem}
-.timeline{border-left:2px solid #2a2a3a;padding-left:1.25rem;margin:.75rem 0}
-.tl-item{position:relative;margin-bottom:1.25rem}
-.tl-item::before{content:'';position:absolute;left:-1.52rem;top:.3rem;width:8px;height:8px;border-radius:50%;background:#534ab7}
-.tl-date{font-size:.7rem;color:#444;margin-bottom:.15rem}
-.tl-title{font-size:.85rem;font-weight:600;color:#c8c6be}
-.tl-desc{font-size:.78rem;color:#555;margin-top:.15rem}
-code{background:#1a1a2e;color:#9d97e8;padding:.1rem .35rem;border-radius:3px;font-size:.82em;font-family:'Fira Code',monospace}
-pre{background:#0d0d15;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;overflow-x:auto;margin:.75rem 0;font-size:.8rem}
-pre code{background:none;padding:0}
-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.82rem}
-th{background:#13131a;color:#666;font-weight:600;padding:.5rem .7rem;text-align:left;border-bottom:1px solid #2a2a3a}
-td{padding:.4rem .7rem;border-bottom:1px solid #1a1a2a;color:#9a9890}
-tr:hover td{background:#0f0f18}
-.ok{color:#5dcaa5}.wip{color:#d4a44c}.todo{color:#e06c6c}
-.back{color:#534ab7;text-decoration:none;font-size:.82rem}
-.back:hover{color:#9d97e8}
-.alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:.75rem 1rem;margin:.75rem 0;font-size:.82rem;color:#5dcaa5}
-.alert-w{background:#1a1205;border-color:#854f0b;color:#d4a44c}
-footer{text-align:center;padding:1.5rem;color:#333;font-size:.75rem;border-top:1px solid #1a1a2a;margin-top:2rem}
-</style>
-<title>PetSuite — Module Pension / Chenil</title></head>
-<body>
-<div class="header">
-  <div class="logo">🐾 Pet<span>Suite</span></div>
-  <div style="display:flex;gap:.6rem;align-items:center">
-    <span class="badge badge new">S42 — Pension</span>
-    <a class="back" href="index.html">← Index</a>
-  </div>
-</div>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
+  .header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .logo{font-size:1.25rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
+  .badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600}
+  .badge.new{background:#0f2a1a;border-color:#0f6e56;color:#5dcaa5}
+  .nav-links{display:flex;gap:1rem;flex-wrap:wrap}.nav-links a{color:#888;text-decoration:none;font-size:.85rem}.nav-links a:hover{color:#fff}
+  .container{max-width:1100px;margin:0 auto;padding:2rem}
+  h1{font-size:2rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+  h2{font-size:1.25rem;font-weight:600;color:#c8c6be;margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid #2a2a3a}
+  h3{font-size:1rem;font-weight:600;color:#a0a0a0;margin:1.5rem 0 .5rem}
+  p{color:#9a9890;margin-bottom:.75rem}.subtitle{color:#666;font-size:1rem;margin-bottom:2rem}
+  .section{margin-bottom:2.5rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+  .card{background:#13131a;border:1px solid #2a2a3a;border-radius:12px;padding:1.25rem;transition:border-color .2s}.card:hover{border-color:#534ab7}
+  .card-title{font-size:.95rem;font-weight:600;color:#e2e0d8;margin-bottom:.4rem}
+  .card-desc{font-size:.8rem;color:#666;line-height:1.5}
+  .tag{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-weight:600;margin-right:.25rem;margin-bottom:.4rem}
+  .tg{background:#1a1530;color:#9d97e8}.tgreen{background:#0a2015;color:#5dcaa5}
+  .tamber{background:#1a1205;color:#d4a44c}.tred{background:#1a0a0a;color:#e06c6c}
+  .tblue{background:#0a1525;color:#6baed6}
+  code{background:#1a1a2e;color:#9d97e8;padding:.1rem .4rem;border-radius:4px;font-size:.85em;font-family:'Fira Code',monospace}
+  table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
+  th{background:#13131a;color:#888;font-weight:600;padding:.6rem .8rem;text-align:left;border-bottom:1px solid #2a2a3a}
+  td{padding:.5rem .8rem;border-bottom:1px solid #1a1a2a;color:#9a9890}tr:hover td{background:#0f0f18}
+  .back-link{color:#534ab7;text-decoration:none;font-size:.85rem}.back-link:hover{color:#9d97e8}
+  .alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;font-size:.85rem;color:#5dcaa5}
+  .alert-warn{background:#1a1205;border-color:#854f0b;color:#d4a44c}
+  .alert-red{background:#1a0505;border-color:#7a1515;color:#e06c6c}
+  footer{text-align:center;padding:2rem;color:#333;font-size:.8rem;border-top:1px solid #1a1a2a;margin-top:3rem}
+</style></head><body>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links"><a href="index.html">Accueil</a><a href="53-changelog-s43.html">S43</a><a href="06-roadmap-s43.html">Roadmap</a></div>
+  <span class="badge">#65 — S44</span>
+</header>
 <div class="container">
-<a class="back" href="index.html">← Index</a>
 
-<h1 style="margin-top:1rem">🏠 Module Pension / Chenil</h1>
-<p class="subtitle">Gestion des gardes : nuit, journée, week-end, semaine — avec taux d'occupation</p>
-
-<div class="kpi-grid">
-  <div class="kpi"><div class="kpi-val">60%</div><div class="kpi-lbl">Avancement</div></div>
-  <div class="kpi"><div class="kpi-val">12</div><div class="kpi-lbl">Gardes en cours</div></div>
-  <div class="kpi"><div class="kpi-val">1 920€</div><div class="kpi-lbl">CA S42</div></div>
-  <div class="kpi"><div class="kpi-val">73%</div><div class="kpi-lbl">Taux occupation déc 2025</div></div>
+<h1>🏠 Pension / Chenil</h1>
+<p class="subtitle">Documentation module métier — Avancement 60%</p>
+<div class="alert-warn alert">⚠️ <strong>Bug S43 :</strong> "Gardes en cours" affiche le titre "Séances" — à corriger : titre "Gardes en cours" + filtre STY_CODE = 'PENSION'</div>
+<div class="section"><h2>🔧 Modules</h2><div class="grid">
+  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Dashboard CEO</div><div class="card-desc">Taux occupation, gardes en cours, CA. Données statiques → dynamiques S44.</div></div>
+  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Gardes en cours</div><div class="card-desc">Listing gardes actives. <em>Bug : titre "Séances" à corriger + filtre pension uniquement.</em></div></div>
+  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Planning</div><div class="card-desc">Visualisation occupation. Planning métier dédié à créer S44.</div></div>
+  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Questionnaires</div><div class="card-desc">Intake pension (24Q), Rapport quotidien (8Q). Filtrage métier à corriger.</div></div>
+  <div class="card"><span class="tag tamber">⏳ S44</span><div class="card-title">Forfaits pension</div><div class="card-desc">Tarifs journée, week-end, semaine, mensuel. Périodes de pointe.</div></div>
+  <div class="card"><span class="tag tamber">⏳ S44</span><div class="card-title">Rapport quotidien auto</div><div class="card-desc">Email automatique propriétaire avec activité du jour.</div></div>
+  <div class="card"><span class="tag tred">❌ S45</span><div class="card-title">Gestion box / niches</div><div class="card-desc">Plan de l'établissement, affectation box par animal.</div></div>
+</div></div>
 </div>
-
-<div class="section">
-<h2>Fonctionnalités implémentées</h2>
-<div class="grid">
-  <div class="card"><span class="tag tag-g">✅</span><div class="card-title">Gardes en cours</div><div class="card-desc">Page liste avec intitulé "Gardes en cours" (adapté au métier, pas "Séance"). Filtres statut/animal.</div></div>
-  <div class="card"><span class="tag tag-g">✅</span><div class="card-title">Planning</div><div class="card-desc">Vue jour/semaine/mois. Visualisation des gardes en cours et à venir.</div></div>
-  <div class="card"><span class="tag tag-g">✅</span><div class="card-title">Dashboard CEO</div><div class="card-desc">Taux d'occupation mensuel, CA par formule, 12 gardes en cours.</div><div style="margin-top:.5rem"><code>/app/pension/dashboard</code></div></div>
-  <div class="card"><span class="tag tag-a">⏳</span><div class="card-title">Forfaits & Abonnements</div><div class="card-desc">Templates devis multi-animaux. Garde semaine, mois, week-end récurrent.</div></div>
-  <div class="card"><span class="tag tag-a">⏳</span><div class="card-title">Contrat dépôt animal</div><div class="card-desc">Questionnaire check-in/check-out. Informations vétérinaire d'urgence.</div></div>
-</div>
-</div>
-
-<div class="section">
-<h2>Formules et tarifs démo</h2>
-<table>
-  <thead><tr><th>Formule</th><th>Prix HT</th><th>CA S42</th></tr></thead>
-  <tbody>
-    <tr><td>Garde nuit</td><td>31,25 €</td><td>888 €</td></tr>
-    <tr><td>Garde journée</td><td>25,00 €</td><td>480 €</td></tr>
-    <tr><td>Week-end (2 nuits)</td><td>62,50 €</td><td>312 €</td></tr>
-    <tr><td>Semaine (7 nuits)</td><td>200,00 €</td><td>240 €</td></tr>
-  </tbody>
-</table>
-</div>
-
-<footer>PetSuite by Algorithmia · S42 · 22 mars 2026 · <a href="index.html" style="color:#534ab7">Index</a></footer>
-</div></body></html>
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026</footer>
+</body></html>
