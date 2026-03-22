@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e2e0d8;line-height:1.7}
+.header{background:#13131a;border-bottom:1px solid #2a2a3a;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:1.1rem;font-weight:700;color:#fff}.logo span{color:#7f77dd}
+.badge{background:#1a1a2e;border:1px solid #534ab7;color:#9d97e8;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600}
+.badge.new{background:#0f2a1a;border-color:#0f6e56;color:#5dcaa5}
+.container{max-width:1000px;margin:0 auto;padding:2rem}
+h1{font-size:1.75rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+h2{font-size:1.1rem;font-weight:600;color:#c8c6be;margin:2rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid #2a2a3a}
+h3{font-size:.95rem;font-weight:600;color:#888;margin:1.25rem 0 .4rem}
+p{color:#9a9890;margin-bottom:.6rem;font-size:.9rem}
+.subtitle{color:#555;font-size:.9rem;margin-bottom:1.5rem}
+.section{margin-bottom:2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem}
+.card{background:#13131a;border:1px solid #2a2a3a;border-radius:10px;padding:1rem}
+.card-title{font-size:.9rem;font-weight:600;color:#e2e0d8;margin-bottom:.3rem}
+.card-desc{font-size:.78rem;color:#666;line-height:1.5}
+.tag{display:inline-block;padding:.1rem .45rem;border-radius:4px;font-size:.68rem;font-weight:600;margin-right:.2rem}
+.tag-p{background:#1a1530;color:#9d97e8}.tag-g{background:#0a2015;color:#5dcaa5}
+.tag-b{background:#0a1525;color:#6baed6}.tag-a{background:#1a1205;color:#d4a44c}
+.tag-r{background:#1a0a0a;color:#e06c6c}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin:1rem 0}
+.kpi{background:#13131a;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;text-align:center}
+.kpi-val{font-size:1.5rem;font-weight:700;color:#7f77dd}
+.kpi-lbl{font-size:.7rem;color:#555;margin-top:.2rem}
+.timeline{border-left:2px solid #2a2a3a;padding-left:1.25rem;margin:.75rem 0}
+.tl-item{position:relative;margin-bottom:1.25rem}
+.tl-item::before{content:'';position:absolute;left:-1.52rem;top:.3rem;width:8px;height:8px;border-radius:50%;background:#534ab7}
+.tl-date{font-size:.7rem;color:#444;margin-bottom:.15rem}
+.tl-title{font-size:.85rem;font-weight:600;color:#c8c6be}
+.tl-desc{font-size:.78rem;color:#555;margin-top:.15rem}
+code{background:#1a1a2e;color:#9d97e8;padding:.1rem .35rem;border-radius:3px;font-size:.82em;font-family:'Fira Code',monospace}
+pre{background:#0d0d15;border:1px solid #2a2a3a;border-radius:8px;padding:.75rem;overflow-x:auto;margin:.75rem 0;font-size:.8rem}
+pre code{background:none;padding:0}
+table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.82rem}
+th{background:#13131a;color:#666;font-weight:600;padding:.5rem .7rem;text-align:left;border-bottom:1px solid #2a2a3a}
+td{padding:.4rem .7rem;border-bottom:1px solid #1a1a2a;color:#9a9890}
+tr:hover td{background:#0f0f18}
+.ok{color:#5dcaa5}.wip{color:#d4a44c}.todo{color:#e06c6c}
+.back{color:#534ab7;text-decoration:none;font-size:.82rem}
+.back:hover{color:#9d97e8}
+.alert{background:#0f2a1a;border:1px solid #0f6e56;border-radius:8px;padding:.75rem 1rem;margin:.75rem 0;font-size:.82rem;color:#5dcaa5}
+.alert-w{background:#1a1205;border-color:#854f0b;color:#d4a44c}
+footer{text-align:center;padding:1.5rem;color:#333;font-size:.75rem;border-top:1px solid #1a1a2a;margin-top:2rem}
+</style>
+<title>PetSuite — Briefing Sprint S43</title></head>
+<body>
+<div class="header">
+  <div class="logo">🐾 Pet<span>Suite</span></div>
+  <div style="display:flex;gap:.6rem;align-items:center">
+    <span class="badge badge">S43 — Prochain</span>
+    <a class="back" href="index.html">← Index</a>
+  </div>
+</div>
+<div class="container">
+<a class="back" href="index.html">← Index</a>
+
+<h1 style="margin-top:1rem">📋 Briefing Sprint S43</h1>
+<p class="subtitle">État fin S42 · Priorités S43 · Règles critiques</p>
+
+<div class="alert">Build S42 final : 82 pages compilées. Backup : <code>C:\Backup\micro_logiciel\20260322_fin_s42.sql</code></div>
+
+<div class="section">
+<h2>État fin S42</h2>
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-val">82</div><div class="kpi-lbl">Pages UI</div></div>
+  <div class="kpi"><div class="kpi-val">10</div><div class="kpi-lbl">Métiers sidebar</div></div>
+  <div class="kpi"><div class="kpi-val">7</div><div class="kpi-lbl">Dashboards CEO</div></div>
+  <div class="kpi"><div class="kpi-val">200</div><div class="kpi-lbl">Animaux BDD</div></div>
+  <div class="kpi"><div class="kpi-val">11</div><div class="kpi-lbl">Types RDV Calendly</div></div>
+  <div class="kpi"><div class="kpi-val">3</div><div class="kpi-lbl">Docs HTML ajoutés</div></div>
+</div>
+</div>
+
+<div class="section">
+<h2>Priorités S43</h2>
+<div class="timeline">
+  <div class="tl-item">
+    <div class="tl-date">P1 — BLOQUANT</div>
+    <div class="tl-title">Routes API Calendly</div>
+    <div class="tl-desc">Ajouter GET/POST <code>/parametres/calendly</code> dans custom-routes.ts. Rebuild API. Table <code>param_config</code> créée S42.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date">P2 — BLOQUANT</div>
+    <div class="tl-title">Fix navigation sidebar</div>
+    <div class="tl-desc">"Séances de suivi" → <code>/app/seances?type=SEANCE</code>. "Suivi CAC" → <code>/app/mes-parametres/cac</code>.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date">P3</div>
+    <div class="tl-title">Questionnaires dans chaque sidebar métier</div>
+    <div class="tl-desc">Onglet "Questionnaires" + modèles spécifiques par métier (2-3 par métier). Comportementaliste, Éducateur, Pet-Sitter, Toiletteur, Pension, Éleveur, Centre équestre.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date">P4</div>
+    <div class="tl-title">Templates devis par métier</div>
+    <div class="tl-desc">4-5 templates par métier dans sidebar. Fonctionnalité multi-animaux sur un même devis (sélecteur checkboxes).</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date">P5</div>
+    <div class="tl-title">60 seeds visites pet-sitter</div>
+    <div class="tl-desc">60 visites/promenades sur 6 mois. Villes variées (Paris, Lyon, Marseille, Bordeaux, Lille). Types animaux variés. Filtrable par ville et ANI_ESPECE.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date">P6</div>
+    <div class="tl-title">Dashboards squelettes métiers restants</div>
+    <div class="tl-desc">Éducateur, Vétérinaire, Ostéopathe / Kiné, Sport canin, Naturopathe / Nutri.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date">P7</div>
+    <div class="tl-title">API dynamique dashboards</div>
+    <div class="tl-desc">Brancher <code>/api/bilan?metier=X&periode=mois</code>. Filtre Mois / Trimestre / Année dans chaque dashboard.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-date">P8</div>
+    <div class="tl-title">Webhook Calendly → Séance PetSuite</div>
+    <div class="tl-desc">Route POST <code>/webhooks/calendly</code> — création automatique de séance à chaque réservation confirmée.</div>
+  </div>
+</div>
+</div>
+
+<div class="section">
+<h2>Règles critiques (rappel permanent)</h2>
+<table>
+  <thead><tr><th>#</th><th>Règle</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><code>cd deploy</code> avant tout <code>docker compose</code></td></tr>
+    <tr><td>2</td><td><code>COPIER_TOUTES_PAGES_v2.ps1</code> avant chaque build frontend</td></tr>
+    <tr><td>3</td><td>Body parsing API : <code>const b: any = await new Promise&lt;any&gt;(...)</code></td></tr>
+    <tr><td>4</td><td>TypeScript callbacks : <code>(req: any, res: any, next: any)</code></td></tr>
+    <tr><td>5</td><td>Nginx strip <code>/api/</code> — routes sans préfixe dans custom-routes.ts</td></tr>
+    <tr><td>6</td><td><code>ILI_VALEUR_REELLE</code>, <code>ILI_ECART</code> = colonnes GENERATED → jamais dans INSERT</td></tr>
+    <tr><td>7</td><td><code>--single-transaction</code> pour mysqldump</td></tr>
+    <tr><td>8</td><td><code>inject_v4_final.js</code> = NE JAMAIS UTILISER</td></tr>
+    <tr><td>9</td><td>Frimousse (ANI_ID=22, Malinois, Dujardin) = toujours conserver</td></tr>
+    <tr><td>10</td><td>Colonnes achat_ligne : <code>ALI_*</code> (pas ACL_*)</td></tr>
+    <tr><td>11</td><td><code>SEW_STATUT</code> enum : A_FAIRE / EN_COURS / REALISE (pas FAIT)</td></tr>
+    <tr><td>12</td><td><code>ACH_STATUT</code> enum : BROUILLON / RECU / VALIDE / ANNULE (pas RECEPTIONNE)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="section">
+<h2>Chemins essentiels</h2>
+<pre><code>Frontend root : D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs
+Deploy        : ...\micro_logiciel_frontend_nextjs\deploy
+Sidebar       : ...\src\components\Sidebar.tsx
+custom-routes : ...\api\src\custom-routes.ts
+BDD           : 192.168.1.62:3307 / @lgorithme / micro_logiciel
+Backup S42    : C:\Backup\micro_logiciel\20260322_fin_s42.sql</code></pre>
+</div>
+
+<footer>PetSuite by Algorithmia · S42 · 22 mars 2026 · <a href="index.html" style="color:#534ab7">Index</a></footer>
+</div></body></html>
