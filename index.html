@@ -264,12 +264,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Déverrouillage global depuis le header
+  function normalizePwd(s) {
+    if (!s) return '';
+    // Normaliser : trim + forcer @ ASCII (U+0040)
+    // Sur AZERTY, AltGr peut produire des caractères parasites avant/après le @
+    let r = s.trim();
+    // Remplacer toutes les variantes unicode de @ et les caractères proches
+    r = r.replace(/[\u00C0\u00E0\u0040\u0060]/g, '@'); // à À @ `
+    r = r.replace(/&#64;|%40|&#x40;/g, '@');
+    // Supprimer les caractères de contrôle et espaces insécables
+    r = r.replace(/[\u00A0\u200B\u200C\u200D\uFEFF\u0000-\u001F]/g, '');
+    return r;
+  }
   function tryUnlockGlobal(pwd) {
     if (!pwd) return;
-    if (Object.values(PROTECTED).includes(pwd)) {
+    const normalized = normalizePwd(pwd);
+    const vals = Object.values(PROTECTED).map(normalizePwd);
+    if (vals.includes(normalized)) {
       setUnlocked('_all');
       if (hInput) hInput.value = '';
-      if (hStatus) { hStatus.textContent = '🔓 Session 5 min'; hStatus.classList.add('unlocked'); }
+      if (hStatus) { hStatus.textContent = '\uD83D\uDD13 Session 5 min'; hStatus.classList.add('unlocked'); }
       return true;
     }
     if (hInput) { hInput.classList.add('err'); setTimeout(() => hInput.classList.remove('err'), 400); }
@@ -321,8 +335,8 @@ function showPwdModal(targetPage) {
   document.getElementById('modalBtn').onmouseout  = () => document.getElementById('modalBtn').style.background = '#534ab7';
 
   function tryUnlock() {
-    const pwd = inp.value.trim();
-    if (pwd === PROTECTED[targetPage]) {
+    const pwd = normalizePwd(inp.value.trim());
+    if (pwd === normalizePwd(PROTECTED[targetPage])) {
       setUnlocked(targetPage);
       overlay.remove();
       window.location.href = targetPage;
