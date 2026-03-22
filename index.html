@@ -220,9 +220,7 @@ function filter(q) {
 </script>
 
 <script>
-// ─── Système auth PetSuite Docs ─────────────────────────────────────────────
-// Pages protégées : accès par mot de passe uniquement
-// Session de 5 minutes si authentifié depuis l'index
+// ─── Auth PetSuite Docs — tout global ───────────────────────────────────────
 const PROTECTED = {
   '07-audit-stack.html':           '@lgorithme',
   '17-api-reference-s42.html':     'Gilles',
@@ -232,7 +230,15 @@ const PROTECTED = {
   '10-modele-commercial.html':     'Gilles',
 };
 const STORE_KEY   = 'psd_auth_v2';
-const SESSION_TTL = 5 * 60 * 1000; // 5 min
+const SESSION_TTL = 5 * 60 * 1000;
+
+function normalizePwd(s) {
+  if (!s) return '';
+  return s.trim()
+    .replace(/[\u00C0\u00E0\u0040\u0060]/g, '@')
+    .replace(/&#64;|%40|&#x40;/g, '@')
+    .replace(/[\u00A0\u200B\u200C\u200D\uFEFF\u0000-\u001F]/g, '');
+}
 
 function isUnlocked(page) {
   try {
@@ -252,88 +258,30 @@ function setUnlocked(page) {
   } catch {}
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const hInput  = document.getElementById('hPwdInput');
-  const hBtn    = document.getElementById('hPwdBtn');
-  const hStatus = document.getElementById('hPwdStatus');
-
-  // Afficher l'état de session au chargement
-  if (isUnlocked('_all') && hStatus) {
-    hStatus.textContent = '🔓 Session active';
-    hStatus.classList.add('unlocked');
-  }
-
-  // Déverrouillage global depuis le header
-  function normalizePwd(s) {
-    if (!s) return '';
-    // Normaliser : trim + forcer @ ASCII (U+0040)
-    // Sur AZERTY, AltGr peut produire des caractères parasites avant/après le @
-    let r = s.trim();
-    // Remplacer toutes les variantes unicode de @ et les caractères proches
-    r = r.replace(/[\u00C0\u00E0\u0040\u0060]/g, '@'); // à À @ `
-    r = r.replace(/&#64;|%40|&#x40;/g, '@');
-    // Supprimer les caractères de contrôle et espaces insécables
-    r = r.replace(/[\u00A0\u200B\u200C\u200D\uFEFF\u0000-\u001F]/g, '');
-    return r;
-  }
-  function tryUnlockGlobal(pwd) {
-    if (!pwd) return;
-    const normalized = normalizePwd(pwd);
-    const vals = Object.values(PROTECTED).map(normalizePwd);
-    if (vals.includes(normalized)) {
-      setUnlocked('_all');
-      if (hInput) hInput.value = '';
-      if (hStatus) { hStatus.textContent = '\uD83D\uDD13 Session 5 min'; hStatus.classList.add('unlocked'); }
-      return true;
-    }
-    if (hInput) { hInput.classList.add('err'); setTimeout(() => hInput.classList.remove('err'), 400); }
-    return false;
-  }
-
-  if (hInput && hBtn) {
-    hInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlockGlobal(hInput.value.trim()); });
-    hBtn.addEventListener('click',    () => tryUnlockGlobal(hInput.value.trim()));
-  }
-
-  // Intercepter les clics sur tuiles protégées
-  document.querySelectorAll('.card a[href]').forEach(link => {
-    const href = link.getAttribute('href');
-    if (!PROTECTED[href]) return; // page libre → navigation normale
-    link.addEventListener('click', e => {
-      if (isUnlocked('_all') || isUnlocked(href)) return; // session valide → OK
-      e.preventDefault();
-      showPwdModal(href);
-    });
-  });
-});
-
-// Modal mot de passe flottant
 function showPwdModal(targetPage) {
   document.getElementById('pwdModal')?.remove();
   const overlay = document.createElement('div');
   overlay.id = 'pwdModal';
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center';
   const pageName = targetPage.replace('.html','').replace(/-/g,' ');
-  overlay.innerHTML = `<div id="pwdBox" style="background:#13131a;border:1px solid #534ab7;border-radius:16px;padding:2rem;text-align:center;max-width:340px;width:90%;box-shadow:0 0 40px rgba(83,74,183,.3)">
-    <div style="font-size:2rem;margin-bottom:.5rem">🔒</div>
-    <div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:.25rem">Accès restreint</div>
-    <div style="font-size:.8rem;color:#555;margin-bottom:1.25rem">${pageName}</div>
-    <input id="modalPwd" type="password" placeholder="Mot de passe..." autocomplete="off"
-      style="width:100%;background:#0a0a0f;border:1px solid #2a2a3a;border-radius:8px;padding:.6rem 1rem;color:#e2e0d8;font-size:.9rem;text-align:center;letter-spacing:.1em;outline:none;margin-bottom:.75rem;transition:border-color .2s;box-sizing:border-box">
-    <button id="modalBtn" style="width:100%;background:#534ab7;border:none;border-radius:8px;padding:.65rem;color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;transition:background .2s;margin-bottom:.5rem">Déverrouiller</button>
-    <div id="modalErr" style="font-size:.75rem;color:#e06c6c;display:none;margin-bottom:.5rem">Mot de passe incorrect</div>
-    <button id="modalClose" style="background:none;border:none;color:#555;font-size:.75rem;cursor:pointer;text-decoration:underline">Annuler</button>
-  </div>`;
+  overlay.innerHTML = '<div style="background:#13131a;border:1px solid #534ab7;border-radius:16px;padding:2rem;text-align:center;max-width:340px;width:90%;box-shadow:0 0 40px rgba(83,74,183,.3)">'
+    + '<div style="font-size:2rem;margin-bottom:.5rem">🔒</div>'
+    + '<div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:.25rem">Accès restreint</div>'
+    + '<div style="font-size:.8rem;color:#555;margin-bottom:1.25rem">' + pageName + '</div>'
+    + '<input id="modalPwd" type="password" placeholder="Mot de passe..." autocomplete="off"'
+    + ' style="width:100%;background:#0a0a0f;border:1px solid #2a2a3a;border-radius:8px;padding:.6rem 1rem;color:#e2e0d8;font-size:.9rem;text-align:center;letter-spacing:.1em;outline:none;margin-bottom:.75rem;transition:border-color .2s;box-sizing:border-box">'
+    + '<button id="modalBtn" style="width:100%;background:#534ab7;border:none;border-radius:8px;padding:.65rem;color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;transition:background .2s;margin-bottom:.5rem">Déverrouiller</button>'
+    + '<div id="modalErr" style="font-size:.75rem;color:#e06c6c;display:none;margin-bottom:.5rem">Mot de passe incorrect</div>'
+    + '<button id="modalClose" style="background:none;border:none;color:#555;font-size:.75rem;cursor:pointer;text-decoration:underline">Annuler</button>'
+    + '</div>';
   document.body.appendChild(overlay);
-
   const inp = document.getElementById('modalPwd');
   inp.focus();
   inp.addEventListener('focus', () => inp.style.borderColor = '#534ab7');
   inp.addEventListener('blur',  () => inp.style.borderColor = '#2a2a3a');
-  document.getElementById('modalBtn').style.cursor = 'pointer';
-  document.getElementById('modalBtn').onmouseover = () => document.getElementById('modalBtn').style.background = '#7f77dd';
-  document.getElementById('modalBtn').onmouseout  = () => document.getElementById('modalBtn').style.background = '#534ab7';
-
+  const mBtn = document.getElementById('modalBtn');
+  mBtn.onmouseover = () => mBtn.style.background = '#7f77dd';
+  mBtn.onmouseout  = () => mBtn.style.background = '#534ab7';
   function tryUnlock() {
     const pwd = normalizePwd(inp.value.trim());
     const validPwds = Object.values(PROTECTED).map(normalizePwd);
@@ -350,12 +298,43 @@ function showPwdModal(targetPage) {
       setTimeout(() => { err.style.display = 'none'; inp.style.borderColor = '#2a2a3a'; }, 2000);
     }
   }
-
   inp.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
-  document.getElementById('modalBtn').addEventListener('click', tryUnlock);
+  mBtn.addEventListener('click', tryUnlock);
   document.getElementById('modalClose').addEventListener('click', () => overlay.remove());
   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const hInput  = document.getElementById('hPwdInput');
+  const hBtn    = document.getElementById('hPwdBtn');
+  const hStatus = document.getElementById('hPwdStatus');
+  if (isUnlocked('_all') && hStatus) { hStatus.textContent = '🔓 Session active'; hStatus.classList.add('unlocked'); }
+  function tryUnlockGlobal(pwd) {
+    if (!pwd) return false;
+    const normalized = normalizePwd(pwd);
+    if (Object.values(PROTECTED).map(normalizePwd).includes(normalized)) {
+      setUnlocked('_all');
+      if (hInput) hInput.value = '';
+      if (hStatus) { hStatus.textContent = '🔓 Session 5 min'; hStatus.classList.add('unlocked'); }
+      return true;
+    }
+    if (hInput) { hInput.classList.add('err'); setTimeout(() => hInput.classList.remove('err'), 400); }
+    return false;
+  }
+  if (hInput && hBtn) {
+    hInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlockGlobal(hInput.value.trim()); });
+    hBtn.addEventListener('click', () => tryUnlockGlobal(hInput.value.trim()));
+  }
+  document.querySelectorAll('.card a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!PROTECTED[href]) return;
+    link.addEventListener('click', e => {
+      if (isUnlocked('_all') || isUnlocked(href)) return;
+      e.preventDefault();
+      showPwdModal(href);
+    });
+  });
+});
 </script>
 
 </body>
