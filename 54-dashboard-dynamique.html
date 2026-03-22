@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PetSuite — Dashboards Dynamiques</title><style>
+  :root{--primary:#534AB7;--pl:#7F77DD;--bg:#0f0e17;--bg2:#1a1828;--bg3:#252336;
+        --text:#e8e6f0;--text2:#a09cb8;--green:#5dcaa5;--orange:#f4a261;--red:#e06c6c}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .container{max-width:1100px;margin:0 auto;padding:40px 24px}
+  h1{font-size:2rem;font-weight:700;color:var(--pl);margin-bottom:8px}
+  h2{font-size:1.3rem;font-weight:600;color:var(--pl);margin:32px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--bg3)}
+  h3{font-size:1rem;font-weight:600;color:var(--text);margin:16px 0 8px}
+  p{color:var(--text2);margin-bottom:12px}
+  .subtitle{color:var(--text2);font-size:1rem;margin-bottom:32px}
+  .badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.75rem;font-weight:600;margin-right:6px}
+  .bg{background:rgba(93,202,165,.15);color:var(--green)}
+  .bp{background:rgba(83,74,183,.25);color:var(--pl)}
+  .bo{background:rgba(244,162,97,.15);color:var(--orange)}
+  .br{background:rgba(224,108,108,.15);color:var(--red)}
+  .card{background:var(--bg2);border:1px solid var(--bg3);border-radius:12px;padding:20px;margin-bottom:16px}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  table{width:100%;border-collapse:collapse;margin-bottom:20px}
+  th{background:var(--bg3);padding:10px 14px;text-align:left;font-size:.85rem;color:var(--text2);font-weight:500}
+  td{padding:10px 14px;border-bottom:1px solid var(--bg3);font-size:.9rem;vertical-align:top}
+  code{background:var(--bg3);padding:2px 7px;border-radius:4px;font-size:.85rem;font-family:monospace;color:var(--pl)}
+  .kpi{text-align:center;padding:16px}
+  .kv{font-size:2rem;font-weight:700;color:var(--pl)}
+  .kl{font-size:.8rem;color:var(--text2);margin-top:4px}
+  nav{background:var(--bg2);border-bottom:1px solid var(--bg3);padding:12px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  nav a{color:var(--text2);text-decoration:none;font-size:.85rem}
+  nav a:hover{color:var(--pl)}
+  .nb{color:var(--pl);font-weight:700;font-size:1rem;margin-right:8px}
+  ul{color:var(--text2);padding-left:20px;margin-bottom:12px}
+  li{margin-bottom:4px}
+  @media(max-width:768px){.g2,.g3{grid-template-columns:1fr}}
+</style></head><body>
+<nav>
+  <span class="nb">🐾 PetSuite Docs</span>
+  <a href="index.html">Accueil</a>
+  <a href="01-synthese-projet.html">Synthèse</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+  <a href="17-api-reference-s42.html">API Ref</a>
+  <a href="53-changelog-s43.html">S43</a>
+  <a href="06-roadmap-s43.html">Roadmap S44</a>
+</nav>
+<div class="container">
+  <h1>📊 Dashboards CEO dynamiques</h1>
+  <p class="subtitle">Architecture des dashboards par métier — données temps réel depuis la BDD</p>
+
+  <h2>Architecture</h2>
+  <div class="card">
+    <h3>Hook <code>useDashboardMetier</code></h3>
+    <p>Fichier : <code>src/hooks/useDashboardMetier.ts</code></p>
+    <p>Appelle <code>GET /api/bilan/metier?metier=X&periode=Y</code> et retourne les données typées.</p>
+    <table>
+      <tr><th>Paramètre</th><th>Valeurs</th><th>Description</th></tr>
+      <tr><td><code>metier</code></td><td>COMPORTEMENTALISTE, PET_SITTER, TOILETTEUR...</td><td>Code métier</td></tr>
+      <tr><td><code>periode</code></td><td>mois, trimestre, annee</td><td>Période de calcul</td></tr>
+    </table>
+    <h3>Données retournées</h3>
+    <table>
+      <tr><th>Champ</th><th>Type</th><th>Description</th></tr>
+      <tr><td><code>ca_ttc</code></td><td>number</td><td>CA TTC sur la période</td></tr>
+      <tr><td><code>nb_factures</code></td><td>number</td><td>Nombre de factures</td></tr>
+      <tr><td><code>nb_seances</code></td><td>number</td><td>Séances réalisées</td></tr>
+      <tr><td><code>nb_clients</code></td><td>number</td><td>Clients distincts</td></tr>
+      <tr><td><code>ca_mensuel</code></td><td>array</td><td>CA par mois (6 derniers mois)</td></tr>
+    </table>
+  </div>
+
+  <h2>Mapping métier → STY_CODE</h2>
+  <table>
+    <tr><th>Métier</th><th>STY_CODE séances</th></tr>
+    <tr><td>COMPORTEMENTALISTE</td><td><code>EDC</code>, <code>SEANCE</code></td></tr>
+    <tr><td>PET_SITTER</td><td><code>GARDIENNAGE</code></td></tr>
+    <tr><td>TOILETTEUR</td><td><code>TOILETTAGE</code></td></tr>
+    <tr><td>ELEVEUR</td><td><code>ELEVAGE</code></td></tr>
+    <tr><td>PENSION_CHENIL</td><td><code>PENSION</code></td></tr>
+    <tr><td>CENTRE_EQUESTRE</td><td><code>COURS_EQUIT</code>, <code>BALADE</code></td></tr>
+    <tr><td>EDUCATEUR</td><td><code>EDUC_COURS</code></td></tr>
+    <tr><td>VETERINAIRE</td><td><code>CONSULTATION</code></td></tr>
+  </table>
+  <p>Si le STY_CODE ne correspond pas à un type existant en BDD, le CA sera 0. Vérifier avec :<br>
+  <code>SELECT STY_CODE, COUNT(*) FROM seance_type t JOIN seance s ON s.STY_ID=t.STY_ID GROUP BY STY_CODE;</code></p>
+
+  <h2>Dashboards implémentés</h2>
+  <table>
+    <tr><th>Métier</th><th>Route</th><th>Statut</th><th>Toggle période</th></tr>
+    <tr><td>Comportementaliste</td><td><code>/app/comportementaliste/dashboard</code></td><td><span class="badge bg">V2 dynamique</span></td><td>✅</td></tr>
+    <tr><td>Pet-Sitter</td><td><code>/app/pet-sitter/dashboard</code></td><td><span class="badge bo">Statique</span></td><td>❌</td></tr>
+    <tr><td>Toiletteur</td><td><code>/app/toiletteur/dashboard</code></td><td><span class="badge bo">Statique</span></td><td>❌</td></tr>
+    <tr><td>Éleveur</td><td><code>/app/elevage/dashboard</code></td><td><span class="badge bo">Statique</span></td><td>❌</td></tr>
+    <tr><td>Centre équestre</td><td><code>/app/equestre/dashboard</code></td><td><span class="badge bo">Statique</span></td><td>❌</td></tr>
+    <tr><td>Ostéopathe/Kiné</td><td><code>/app/osteopathe/dashboard</code></td><td><span class="badge br">Squelette</span></td><td>❌</td></tr>
+    <tr><td>Éducateur</td><td><code>/app/educateur/dashboard</code></td><td><span class="badge br">Squelette</span></td><td>❌</td></tr>
+    <tr><td>Vétérinaire</td><td><code>/app/veterinaire/dashboard</code></td><td><span class="badge br">Squelette</span></td><td>❌</td></tr>
+    <tr><td>Sport canin</td><td><code>/app/sport-canin/dashboard</code></td><td><span class="badge br">Squelette</span></td><td>❌</td></tr>
+    <tr><td>Naturopathe</td><td><code>/app/naturopathe/dashboard</code></td><td><span class="badge br">Squelette</span></td><td>❌</td></tr>
+  </table>
+  <p>S44 P1 : brancher <code>useDashboardMetier</code> sur tous les dashboards statiques.</p>
+</div></body></html>
