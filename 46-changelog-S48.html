@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetSuite — Changelog S48</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&display=swap');
+  :root { --bg:#0a0a0f; --surface:#13131a; --surface2:#1a1a24; --border:#1e1e2e; --accent:#534ab7; --accent2:#7c6ff7; --text:#e2e0d8; --muted:#6b6880; --green:#3ecf8e; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:'Syne',sans-serif; font-size:14px; line-height:1.6; }
+  .wrap { max-width:860px; margin:0 auto; padding:48px 24px; }
+  header { margin-bottom:48px; }
+  .breadcrumb { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:20px; }
+  .breadcrumb a { color:var(--accent2); text-decoration:none; }
+  .sprint-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(83,74,183,.2); border:1px solid rgba(83,74,183,.4); color:var(--accent2); font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; padding:4px 12px; border-radius:4px; margin-bottom:16px; }
+  .sprint-badge::before { content:'◆'; font-size:8px; }
+  h1 { font-size:clamp(28px,5vw,42px); font-weight:800; line-height:1.1; margin-bottom:12px; }
+  h1 span { color:var(--accent2); }
+  .meta { display:flex; flex-wrap:wrap; gap:20px; align-items:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); padding-top:16px; border-top:1px solid var(--border); }
+  .dot { width:6px; height:6px; border-radius:50%; background:var(--green); display:inline-block; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:40px; }
+  .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; }
+  .stat-num { font-size:28px; font-weight:800; line-height:1; color:var(--accent2); }
+  .stat-label { font-size:11px; color:var(--muted); margin-top:4px; text-transform:uppercase; letter-spacing:.06em; }
+  section { margin-bottom:36px; }
+  .section-title { display:flex; align-items:center; gap:10px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .item { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 20px; margin-bottom:8px; display:flex; align-items:flex-start; gap:14px; }
+  .badge { flex-shrink:0; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:.06em; margin-top:1px; }
+  .badge-api { background:rgba(96,165,250,.13); color:#60a5fa; border:1px solid rgba(96,165,250,.25); }
+  .badge-fix { background:rgba(62,207,142,.13); color:#3ecf8e; border:1px solid rgba(62,207,142,.25); }
+  .item-body { flex:1; }
+  .item-title { font-weight:700; font-size:14px; color:var(--text); margin-bottom:4px; }
+  .item-desc { font-size:13px; color:var(--muted); line-height:1.5; }
+  .tag { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10px; background:var(--surface2); border:1px solid var(--border); color:var(--muted); padding:1px 6px; border-radius:3px; margin-right:4px; margin-top:6px; }
+  .route { font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(83,74,183,.1); border:1px solid rgba(83,74,183,.2); color:var(--accent2); padding:2px 8px; border-radius:4px; display:inline-block; margin:2px; }
+  .route::before { content:'✓ '; color:var(--green); }
+  .warn-block { background:rgba(245,158,11,.07); border:1px solid rgba(245,158,11,.2); border-radius:10px; padding:14px 16px; margin-bottom:8px; font-size:13px; display:flex; gap:10px; }
+  .next-sprint { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-top:32px; }
+  .next-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:12px; }
+  .next-item { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text); margin-bottom:6px; }
+  .next-item::before { content:'→'; color:var(--accent2); font-family:'JetBrains Mono',monospace; }
+  footer { margin-top:56px; padding-top:24px; border-top:1px solid var(--border); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); }
+  footer a { color:var(--accent2); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="breadcrumb"><a href="index.html">PetSuite Docs</a> / Changelog / S48</div>
+    <div class="sprint-badge">Sprint S48</div>
+    <h1>Changelog <span>S48</span></h1>
+    <div class="meta">
+      <span style="display:flex;align-items:center;gap:6px"><span class="dot"></span> 24 mars 2026</span>
+      <span>API : <strong style="color:var(--green)">6 nouvelles routes</strong></span>
+      <span>Fix : <strong style="color:var(--green)">formulaire leads + aide contextuelle</strong></span>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Routes API</div></div>
+    <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Pages aide enrichies</div></div>
+    <div class="stat-card"><div class="stat-num">77</div><div class="stat-label">Routes totales</div></div>
+    <div class="stat-card"><div class="stat-num">95</div><div class="stat-label">Pages frontend</div></div>
+  </div>
+
+  <section>
+    <div class="section-title"><span>⚡</span> Routes API S48</div>
+    <div class="item">
+      <span class="badge badge-api">API</span>
+      <div class="item-body">
+        <div class="item-title">3 routes manquantes — signatures, agenda, planning</div>
+        <div class="item-desc">Pages frontend existantes qui appelaient des routes inexistantes. Toutes retournent maintenant des donnees reelles depuis la BDD.</div>
+        <div style="margin-top:8px">
+          <span class="route">GET /api/signatures</span>
+          <span class="route">GET /api/agenda</span>
+          <span class="route">GET /api/planning-seances</span>
+        </div>
+        <span class="tag">agenda : filtre debut/fin</span>
+        <span class="tag">planning : fenetre -7j/+30j ou ?semaine=</span>
+        <span class="tag">signatures : fallback [] si table absente</span>
+      </div>
+    </div>
+    <div class="item">
+      <span class="badge badge-fix">FIX</span>
+      <div class="item-body">
+        <div class="item-title">POST /api/leads — LED_DATE_CREATION manquante</div>
+        <div class="item-desc">Le formulaire public retournait erreur 500 car la colonne LED_DATE_CREATION n avait pas de valeur par defaut. Corrige avec NOW().</div>
+      </div>
+    </div>
+    <div class="item">
+      <span class="badge badge-fix">FIX</span>
+      <div class="item-body">
+        <div class="item-title">Aide contextuelle — 4 nouvelles pages</div>
+        <div class="item-desc">5 questions/reponses ajoutees pour seances/edc, elevage, crm/leads et reseaux-sociaux. Avant : retournait les Q/R generiques.</div>
+        <span class="tag">seances/edc</span><span class="tag">elevage</span><span class="tag">crm/leads</span><span class="tag">reseaux-sociaux</span>
+      </div>
+    </div>
+    <div class="item">
+      <span class="badge badge-fix">FIX</span>
+      <div class="item-body">
+        <div class="item-title">Bouton Retour — mes-parametres/paiements</div>
+        <div class="item-desc">Derniere page sans bouton Retour. Corrigee via injection dans le PageHeader.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>🔗</span> Test formulaire public end-to-end</div>
+    <div class="item">
+      <span class="badge badge-fix">TEST</span>
+      <div class="item-body">
+        <div class="item-title">Formulaire leads active et teste</div>
+        <div class="item-desc">Token genere via POST /api/parametres/formulaire-lead/activer. URL publique : /formulaire/c57134a64ffaf3bb6ed0a928dcfc063a. Soumission cree un lead en BDD avec statut NOUVEAU.</div>
+        <span class="tag">Token actif</span><span class="tag">RGPD checkbox</span><span class="tag">Confirmation visuelle</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="next-sprint">
+    <div class="next-title">Prochaine session S49</div>
+    <div class="next-item">Page /app/agenda — affichage calendrier hebdomadaire des seances</div>
+    <div class="next-item">Page /app/planning-seances — vue semaine avec drag & drop</div>
+    <div class="next-item">Signatures electroniques — integration Yousign end-to-end</div>
+    <div class="next-item">Notice utilisateur v4 — documenter les nouvelles fonctionnalites S45-S48</div>
+    <div class="next-item">Sauvegarder custom-routes-final.ts v2 sur G:\</div>
+  </div>
+
+  <footer>
+    <span>PetSuite / Algorithmia — Sprint S48 — 24 mars 2026</span>
+    <a href="index.html">← Accueil docs</a>
+  </footer>
+</div>
+</body>
+</html>
