@@ -1,56 +1,73 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Changelog Sprint S34 — PetSuite</title>
 <style>
-  :root{--bg:#0F1923;--bg-card:#1A2332;--bg-code:#0D1117;--border:#2A3A4A;--accent:#4F46E5;--cyan:#06B6D4;--text:#E2E8F0;--muted:#94A3B8;--dim:#64748B;--green:#10B981;--orange:#F59E0B;--red:#EF4444}
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px}
-  .header{background:linear-gradient(135deg,#1a1040 0%,#0f1923 70%);border-bottom:1px solid var(--border);padding:36px 48px}
-  .header-inner{max-width:1100px;margin:0 auto}
-  .header h1{font-size:1.5rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
-  .header .sub{color:var(--muted);font-size:.875rem;margin-top:6px}
-  .badges{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-  .badge{border-radius:20px;padding:3px 12px;font-size:.72rem;font-weight:600}
-  .bp{background:rgba(79,70,229,.2);border:1px solid rgba(79,70,229,.4);color:#a5b4fc}
-  .bc{background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.35);color:#67e8f9}
-  .bg{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.35);color:#6ee7b7}
-  .bw{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);color:#fde68a}
-  .container{max-width:1100px;margin:0 auto;padding:32px 48px}
-  .section{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px}
-  .st{font-size:1rem;font-weight:700;color:#fff;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-  h3{font-size:.9rem;font-weight:600;color:#fff;margin:14px 0 8px}
-  p{color:var(--muted);font-size:.875rem;margin-bottom:8px;line-height:1.7}
-  ul,ol{padding-left:18px;color:var(--muted);font-size:.875rem;margin-bottom:10px}
-  li{margin-bottom:4px}
-  strong{color:var(--text);font-weight:600}
-  code{background:rgba(255,255,255,.07);border:1px solid var(--border);color:#f0abfc;font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:2px 6px;border-radius:4px}
-  pre{background:var(--bg-code);border:1px solid var(--border);border-left:3px solid var(--accent);color:#E2E8F0;padding:16px 18px;border-radius:8px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:1.7;margin:8px 0 14px}
-  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem}
-  th{background:rgba(255,255,255,.05);padding:8px 12px;text-align:left;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);border-bottom:1px solid var(--border)}
-  td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);vertical-align:top}
-  tr:last-child td{border-bottom:none}
-  .ok{color:var(--green)} .warn{color:var(--orange)} .err{color:var(--red)}
-  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:14px 0}
-  .stat{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center}
-  .stat-val{font-size:1.8rem;font-weight:700;color:var(--cyan)}
-  .stat-lbl{font-size:.75rem;color:var(--dim);margin-top:2px}
-  footer{text-align:center;color:var(--dim);font-size:.78rem;padding:28px 48px;border-top:1px solid var(--border);margin-top:12px}
-  footer a{color:var(--cyan);text-decoration:none}
-  @media(max-width:768px){.header,.container{padding:20px}}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+.header { background: #13131a; border-bottom: 1px solid #2a2a3a; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: .5rem; }
+.logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+.logo span { color: #7f77dd; }
+.badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8; padding: .25rem .75rem; border-radius: 20px; font-size: .75rem; font-weight: 600; }
+.badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+.badge.ok  { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+.nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.nav-links a { color: #888; text-decoration: none; font-size: .85rem; }
+.nav-links a:hover { color: #fff; }
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
+h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem; padding-bottom: .5rem; border-bottom: 1px solid #2a2a3a; }
+h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 .5rem; }
+p { color: #9a9890; margin-bottom: .75rem; }
+.subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+.section { margin-bottom: 2.5rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1.25rem; transition: border-color .2s; }
+.card:hover { border-color: #534ab7; }
+.card-title { font-size: .95rem; font-weight: 600; color: #e2e0d8; margin-bottom: .4rem; }
+.card-desc { font-size: .8rem; color: #666; line-height: 1.5; }
+.tag { display: inline-block; padding: .15rem .5rem; border-radius: 4px; font-size: .7rem; font-weight: 600; margin-right: .25rem; margin-bottom: .4rem; }
+.tag-purple, .tg   { background: #1a1530; color: #9d97e8; }
+.tag-green, .tgreen { background: #0a2015; color: #5dcaa5; }
+.tag-blue, .tblue  { background: #0a1525; color: #6baed6; }
+.tag-amber, .tamber { background: #1a1205; color: #d4a44c; }
+.tag-red, .tred    { background: #1a0a0a; color: #e06c6c; }
+code { background: #1a1a2e; color: #9d97e8; padding: .1rem .4rem; border-radius: 4px; font-size: .85em; font-family: 'Fira Code', monospace; }
+pre { background: #0f0f18; border: 1px solid #2a2a3a; border-left: 3px solid #534ab7; border-radius: 8px; padding: 1rem; overflow-x: auto; font-size: .8rem; color: #9d97e8; margin: 1rem 0; font-family: 'Fira Code', monospace; line-height: 1.6; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .85rem; }
+th { background: #13131a; color: #888; font-weight: 600; padding: .6rem .8rem; text-align: left; border-bottom: 1px solid #2a2a3a; }
+td { padding: .5rem .8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; vertical-align: top; }
+tr:hover td { background: #0f0f18; }
+.alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: .85rem; color: #5dcaa5; }
+.alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
+.alert-red  { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
+.alert-blue { background: #0a1525; border-color: #1e3a5f; color: #6baed6; }
+.progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
+.progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
+.back-link, a.back { color: #534ab7; text-decoration: none; font-size: .85rem; }
+.back-link:hover, a.back:hover { color: #9d97e8; }
+.timeline { padding-left: 1.5rem; border-left: 2px solid #2a2a3a; }
+.tl-item { position: relative; padding: .75rem 0 .75rem 1.5rem; border-bottom: 1px solid #13131a; }
+.tl-item::before { content: ''; position: absolute; left: -1.4rem; top: 1rem; width: 10px; height: 10px; border-radius: 50%; background: #534ab7; border: 2px solid #0a0a0f; }
+.tl-time  { font-size: .75rem; color: #534ab7; font-weight: 600; margin-bottom: .25rem; }
+.tl-title { font-size: .9rem; font-weight: 600; color: #e2e0d8; margin-bottom: .2rem; }
+.tl-desc  { font-size: .8rem; color: #666; }
+footer { text-align: center; padding: 2rem; color: #333; font-size: .8rem; border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+footer a { color: #534ab7; }
 </style>
 </head>
 <body>
-<div class="header"><div class="header-inner">
-  <h1><span>📋</span> Changelog Sprint S34</h1>
-  <div class="sub">Module CRM — Leads, opportunités, activités, campagnes</div>
-  <div class="badges">
-    <span class="badge bp">Sprint S34</span>
-    <span class="badge bc">Mars 2026</span>
-    <span class="badge bg">PetSuite by Algorithmia</span>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="73-changelog-s44.html">S44</a>
   </div>
-</div></div>
+  <span class="badge">#29 — Changelog S34</span>
+</header>
 <div class="container">
 <div class="section"><div class="st">📊 Chiffres clés S34</div>
 <div class="stat-grid">
@@ -85,5 +102,7 @@
   <li>Lien CRM depuis fiche client (<code>/app/clients/[id]</code>)</li>
   <li>Seeds démo : 5 leads, 3 opportunités, 8 activités</li>
 </ul></div></div>
-<footer>PetSuite Documentation | Sprint S34 | Algorithmia 2026<br><br><a href="index.html">← Retour à l'index</a></footer>
-</body></html>
+</div>
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
+</body>
+</html>

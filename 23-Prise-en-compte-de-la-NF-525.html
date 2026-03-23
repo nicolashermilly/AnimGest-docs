@@ -5,475 +5,84 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>23 — Prise en compte de la NF 525 · micro_logiciel</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
-
-  :root {
-    --bg:        #0d1117;
-    --bg2:       #161b22;
-    --bg3:       #21262d;
-    --border:    #30363d;
-    --border2:   #3d4450;
-    --text:      #e6edf3;
-    --muted:     #8b949e;
-    --accent:    #2f81f7;
-    --accent2:   #58a6ff;
-    --green:     #3fb950;
-    --green2:    #238636;
-    --orange:    #d29922;
-    --orange2:   #b08800;
-    --red:       #f85149;
-    --purple:    #bc8cff;
-    --teal:      #39d353;
-    --gold:      #e3b341;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* ── Layout ── */
-  .layout {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    min-height: 100vh;
-  }
-
-  /* ── Sidebar ── */
-  .sidebar {
-    background: var(--bg2);
-    border-right: 1px solid var(--border);
-    padding: 24px 0;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-  }
-  .sidebar-logo {
-    display: flex; align-items: center; gap: 10px;
-    padding: 0 20px 24px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 16px;
-  }
-  .sidebar-logo .icon {
-    width: 32px; height: 32px;
-    background: var(--accent);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-  }
-  .sidebar-logo span { font-size: 13px; font-weight: 700; color: var(--text); }
-  .sidebar-logo small { display: block; font-size: 10px; color: var(--muted); font-weight: 400; }
-
-  .nav-section { margin-bottom: 20px; }
-  .nav-label {
-    font-size: 10px; font-weight: 700; letter-spacing: .12em;
-    text-transform: uppercase; color: var(--muted);
-    padding: 0 20px 8px;
-  }
-  .nav-item {
-    display: flex; align-items: center; gap: 8px;
-    padding: 6px 20px;
-    font-size: 13px; color: var(--muted);
-    cursor: pointer; text-decoration: none;
-    transition: background .15s, color .15s;
-  }
-  .nav-item:hover { background: var(--bg3); color: var(--text); }
-  .nav-item.active {
-    background: rgba(47,129,247,.12);
-    color: var(--accent2);
-    border-left: 2px solid var(--accent);
-  }
-  .nav-item .dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--border2); flex-shrink: 0;
-  }
-  .nav-item.active .dot, .nav-item .dot.done { background: var(--green); }
-  .nav-item .dot.wip { background: var(--gold); }
-  .nav-item .dot.current { background: var(--accent); box-shadow: 0 0 0 3px rgba(47,129,247,.25); }
-
-  /* ── Main ── */
-  main { padding: 40px 48px; max-width: 960px; }
-
-  /* ── Breadcrumb ── */
-  .breadcrumb {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 12px; color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    margin-bottom: 28px;
-  }
-  .breadcrumb a { color: var(--accent2); text-decoration: none; }
-  .breadcrumb a:hover { text-decoration: underline; }
-  .breadcrumb span { color: var(--border2); }
-
-  /* ── Page header ── */
-  .page-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 24px;
-    align-items: start;
-    margin-bottom: 36px;
-    padding-bottom: 28px;
-    border-bottom: 1px solid var(--border);
-  }
-  .sprint-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(47,129,247,.15);
-    border: 1px solid rgba(47,129,247,.35);
-    color: var(--accent2);
-    font-size: 11px; font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-    padding: 3px 10px; border-radius: 20px;
-    margin-bottom: 12px;
-    letter-spacing: .06em;
-  }
-  .sprint-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-
-  h1 {
-    font-size: 26px; font-weight: 800; color: var(--text);
-    line-height: 1.25; margin-bottom: 8px;
-  }
-  .page-meta {
-    display: flex; gap: 16px; flex-wrap: wrap;
-    font-size: 12px; color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .page-meta span { display: flex; align-items: center; gap: 5px; }
-
-  .status-pill {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 14px; border-radius: 6px;
-    font-size: 12px; font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: .05em;
-  }
-  .status-pill.planning {
-    background: rgba(210,153,34,.12);
-    border: 1px solid rgba(210,153,34,.4);
-    color: var(--gold);
-  }
-
-  /* ── Sections ── */
-  .section { margin-bottom: 36px; }
-  .section-title {
-    font-size: 13px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .1em;
-    color: var(--muted);
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 14px;
-  }
-  .section-title::after {
-    content: ''; flex: 1; height: 1px; background: var(--border);
-  }
-
-  /* ── Alert NF525 ── */
-  .alert {
-    border-radius: 8px; padding: 14px 18px;
-    display: flex; gap: 14px; align-items: flex-start;
-    margin-bottom: 24px;
-  }
-  .alert.warn {
-    background: rgba(210,153,34,.1);
-    border: 1px solid rgba(210,153,34,.35);
-  }
-  .alert.info {
-    background: rgba(47,129,247,.08);
-    border: 1px solid rgba(47,129,247,.25);
-  }
-  .alert-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
-  .alert-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-  .alert.warn .alert-title { color: var(--gold); }
-  .alert.info .alert-title { color: var(--accent2); }
-  .alert p { font-size: 13px; color: var(--muted); line-height: 1.55; }
-
-  /* ── Cards grid ── */
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
-  .card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px 20px;
-    transition: border-color .2s;
-  }
-  .card:hover { border-color: var(--border2); }
-  .card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 6px; }
-  .card-value { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
-  .card-sub { font-size: 12px; color: var(--muted); }
-  .card-value.green { color: var(--green); }
-  .card-value.gold { color: var(--gold); }
-  .card-value.accent { color: var(--accent2); }
-
-  /* ── Conformité progress ── */
-  .compliance-grid {
-    display: grid; gap: 10px;
-    margin-bottom: 24px;
-  }
-  .compliance-row {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 16px;
-    display: grid;
-    grid-template-columns: 28px 1fr auto 80px;
-    gap: 12px;
-    align-items: center;
-  }
-  .compliance-row .check {
-    width: 26px; height: 26px; border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; flex-shrink: 0;
-  }
-  .check.done  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
-  .check.todo  { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
-  .check.wip   { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
-  .check.crit  { background: rgba(248,81,73,.12); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
-
-  .compliance-row .cr-name { font-size: 13px; font-weight: 600; color: var(--text); }
-  .compliance-row .cr-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .compliance-row .cr-tag {
-    font-size: 10px; font-weight: 700; letter-spacing: .06em;
-    padding: 3px 8px; border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    white-space: nowrap;
-  }
-  .cr-tag.done   { background: rgba(63,185,80,.15); color: var(--green); }
-  .cr-tag.todo   { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
-  .cr-tag.wip    { background: rgba(210,153,34,.12); color: var(--gold); }
-  .cr-tag.crit   { background: rgba(248,81,73,.12); color: var(--red); }
-  .compliance-row .cr-bar { height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
-  .cr-fill { height: 100%; border-radius: 2px; transition: width .5s; }
-  .cr-fill.green { background: var(--green); }
-  .cr-fill.gold  { background: var(--gold); }
-  .cr-fill.blue  { background: var(--accent); }
-  .cr-fill.red   { background: var(--red); }
-
-  /* ── User stories table ── */
-  .us-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .us-table th {
-    text-align: left; padding: 10px 14px;
-    font-size: 10px; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--muted);
-    background: var(--bg2);
-    border: 1px solid var(--border);
-  }
-  .us-table td {
-    padding: 11px 14px;
-    border: 1px solid var(--border);
-    vertical-align: top;
-    color: var(--text);
-  }
-  .us-table tr:hover td { background: rgba(255,255,255,.02); }
-  .us-id {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 700;
-    color: var(--accent2);
-    white-space: nowrap;
-  }
-  .us-points {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; font-weight: 700;
-    color: var(--purple);
-    text-align: center;
-  }
-  .prio-pill {
-    display: inline-block;
-    font-size: 10px; font-weight: 700;
-    padding: 2px 7px; border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: .04em;
-  }
-  .prio-pill.crit { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
-  .prio-pill.high { background: rgba(210,153,34,.12); color: var(--gold); border: 1px solid rgba(210,153,34,.3); }
-  .prio-pill.med  { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
-
-  .assignee {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; color: var(--muted);
-  }
-  .avatar {
-    width: 20px; height: 20px; border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 9px; font-weight: 700; color: #fff;
-    flex-shrink: 0;
-  }
-  .av-dba  { background: #8957e5; }
-  .av-dev  { background: #2f81f7; }
-  .av-fe   { background: #d29922; }
-  .av-dir  { background: #3fb950; }
-
-  /* ── Fichiers livrables ── */
-  .file-list { display: grid; gap: 8px; }
-  .file-item {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 16px;
-    display: flex; align-items: center; gap: 12px;
-    transition: border-color .2s;
-    cursor: pointer;
-  }
-  .file-item:hover { border-color: var(--accent2); }
-  .file-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
-  .file-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent2); }
-  .file-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .file-size { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-left: auto; }
-  .file-status {
-    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .file-status.ready { background: rgba(63,185,80,.12); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
-  .file-status.pending { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
-
-  /* ── Dépendances ── */
-  .dep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .dep-card {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 8px; padding: 14px 16px;
-  }
-  .dep-card .dep-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-  .dep-card .dep-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
-  .dep-badge {
-    font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
-    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
-  }
-  .dep-badge.blocker { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
-  .dep-badge.info    { background: rgba(47,129,247,.1); color: var(--accent2); border: 1px solid rgba(47,129,247,.25); }
-
-  /* ── Timeline sprint ── */
-  .timeline { display: grid; gap: 0; margin-bottom: 4px; }
-  .tl-week {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 12px;
-    align-items: start;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .tl-week:last-child { border-bottom: none; }
-  .tl-label { font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--muted); padding-top: 2px; }
-  .tl-items { display: flex; flex-direction: column; gap: 4px; }
-  .tl-item {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 6px 10px;
-    font-size: 12px; color: var(--text);
-    display: flex; align-items: center; gap: 8px;
-  }
-  .tl-item .tl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .tl-item.sql  .tl-dot { background: var(--purple); }
-  .tl-item.api  .tl-dot { background: var(--accent); }
-  .tl-item.front .tl-dot { background: var(--gold); }
-  .tl-item.test .tl-dot { background: var(--green); }
-  .tl-item.doc  .tl-dot { background: var(--muted); }
-  .tl-item.prod .tl-dot { background: var(--red); }
-
-  /* ── Checklist technique ── */
-  .checklist { display: grid; gap: 6px; }
-  .cl-item {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 13px; color: var(--text);
-    padding: 8px 12px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-  }
-  .cl-check {
-    width: 18px; height: 18px; border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; flex-shrink: 0;
-  }
-  .cl-check.ok  { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
-  .cl-check.no  { background: var(--bg3); border: 1px solid var(--border); color: transparent; }
-  .cl-item code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: var(--purple);
-    background: rgba(188,140,255,.1);
-    padding: 1px 5px; border-radius: 3px;
-  }
-
-  /* ── Scroll animation ── */
-  .section { animation: fadeUp .4s ease both; }
-  .section:nth-child(2) { animation-delay: .05s; }
-  .section:nth-child(3) { animation-delay: .1s; }
-  .section:nth-child(4) { animation-delay: .15s; }
-  .section:nth-child(5) { animation-delay: .2s; }
-  .section:nth-child(6) { animation-delay: .25s; }
-  @keyframes fadeUp {
-    from { opacity:0; transform: translateY(12px); }
-    to   { opacity:1; transform: translateY(0); }
-  }
-
-  /* ── Responsive ── */
-  @media (max-width: 860px) {
-    .layout { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
-    main { padding: 24px 20px; }
-    .cards { grid-template-columns: 1fr 1fr; }
-    .dep-grid { grid-template-columns: 1fr; }
-    .page-header { grid-template-columns: 1fr; }
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+.header { background: #13131a; border-bottom: 1px solid #2a2a3a; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: .5rem; }
+.logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+.logo span { color: #7f77dd; }
+.badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8; padding: .25rem .75rem; border-radius: 20px; font-size: .75rem; font-weight: 600; }
+.badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+.badge.ok  { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+.nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.nav-links a { color: #888; text-decoration: none; font-size: .85rem; }
+.nav-links a:hover { color: #fff; }
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
+h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem; padding-bottom: .5rem; border-bottom: 1px solid #2a2a3a; }
+h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 .5rem; }
+p { color: #9a9890; margin-bottom: .75rem; }
+.subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+.section { margin-bottom: 2.5rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1.25rem; transition: border-color .2s; }
+.card:hover { border-color: #534ab7; }
+.card-title { font-size: .95rem; font-weight: 600; color: #e2e0d8; margin-bottom: .4rem; }
+.card-desc { font-size: .8rem; color: #666; line-height: 1.5; }
+.tag { display: inline-block; padding: .15rem .5rem; border-radius: 4px; font-size: .7rem; font-weight: 600; margin-right: .25rem; margin-bottom: .4rem; }
+.tag-purple, .tg   { background: #1a1530; color: #9d97e8; }
+.tag-green, .tgreen { background: #0a2015; color: #5dcaa5; }
+.tag-blue, .tblue  { background: #0a1525; color: #6baed6; }
+.tag-amber, .tamber { background: #1a1205; color: #d4a44c; }
+.tag-red, .tred    { background: #1a0a0a; color: #e06c6c; }
+code { background: #1a1a2e; color: #9d97e8; padding: .1rem .4rem; border-radius: 4px; font-size: .85em; font-family: 'Fira Code', monospace; }
+pre { background: #0f0f18; border: 1px solid #2a2a3a; border-left: 3px solid #534ab7; border-radius: 8px; padding: 1rem; overflow-x: auto; font-size: .8rem; color: #9d97e8; margin: 1rem 0; font-family: 'Fira Code', monospace; line-height: 1.6; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .85rem; }
+th { background: #13131a; color: #888; font-weight: 600; padding: .6rem .8rem; text-align: left; border-bottom: 1px solid #2a2a3a; }
+td { padding: .5rem .8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; vertical-align: top; }
+tr:hover td { background: #0f0f18; }
+.alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: .85rem; color: #5dcaa5; }
+.alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
+.alert-red  { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
+.alert-blue { background: #0a1525; border-color: #1e3a5f; color: #6baed6; }
+.progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
+.progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
+.back-link, a.back { color: #534ab7; text-decoration: none; font-size: .85rem; }
+.back-link:hover, a.back:hover { color: #9d97e8; }
+.timeline { padding-left: 1.5rem; border-left: 2px solid #2a2a3a; }
+.tl-item { position: relative; padding: .75rem 0 .75rem 1.5rem; border-bottom: 1px solid #13131a; }
+.tl-item::before { content: ''; position: absolute; left: -1.4rem; top: 1rem; width: 10px; height: 10px; border-radius: 50%; background: #534ab7; border: 2px solid #0a0a0f; }
+.tl-time  { font-size: .75rem; color: #534ab7; font-weight: 600; margin-bottom: .25rem; }
+.tl-title { font-size: .9rem; font-weight: 600; color: #e2e0d8; margin-bottom: .2rem; }
+.tl-desc  { font-size: .8rem; color: #666; }
+footer { text-align: center; padding: 2rem; color: #333; font-size: .8rem; border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+footer a { color: #534ab7; }
+.layout { display: block; }
+.sidebar { display: none; }
+.breadcrumb { display: none; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 14px 0; }
+.stat { background: rgba(255,255,255,.04); border: 1px solid #2a2a3a; border-radius: 8px; padding: 14px; text-align: center; }
+.stat-val { font-size: 1.8rem; font-weight: 700; color: #7f77dd; }
+.stat-lbl { font-size: .75rem; color: #555; margin-top: 2px; }
+.bp { background: rgba(83,74,183,.2); border: 1px solid rgba(83,74,183,.4); color: #9d97e8; border-radius: 20px; padding: 3px 12px; font-size: .72rem; font-weight: 600; }
+.bc { background: rgba(107,174,214,.15); border: 1px solid rgba(107,174,214,.35); color: #6baed6; border-radius: 20px; padding: 3px 12px; font-size: .72rem; font-weight: 600; }
+.bg { background: rgba(93,202,165,.15); border: 1px solid rgba(93,202,165,.35); color: #5dcaa5; border-radius: 20px; padding: 3px 12px; font-size: .72rem; font-weight: 600; }
+.bw { background: rgba(212,164,76,.15); border: 1px solid rgba(212,164,76,.35); color: #d4a44c; border-radius: 20px; padding: 3px 12px; font-size: .72rem; font-weight: 600; }
+.st { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #2a2a3a; }
 </style>
 </head>
 <body>
-<div class="layout">
-
-  <!-- ─── Sidebar ─────────────────────────────────────── -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="icon">🐾</div>
-      <div>
-        <span>micro_logiciel</span>
-        <small>Backlog — Sprint S31</small>
-      </div>
-    </div>
-
-    <div class="nav-section">
-      <div class="nav-label">Sprints</div>
-      <a class="nav-item" href="#"><div class="dot done"></div>S28 — CRM & Opportunités</a>
-      <a class="nav-item" href="#"><div class="dot done"></div>S29 — FEC & Exports</a>
-      <a class="nav-item" href="#"><div class="dot done"></div>S30 — GED v3</a>
-      <a class="nav-item active" href="#"><div class="dot current"></div>S30 — NF 525</a>
-    </div>
-
-    <div class="nav-section">
-      <div class="nav-label">Pages du sprint S30</div>
-      <a class="nav-item active" href="#">23 — NF 525</a>
-      <a class="nav-item" href="#">24 — Tests intégration</a>
-      <a class="nav-item" href="#">25 — Monitoring</a>
-    </div>
-
-    <div class="nav-section">
-      <div class="nav-label">Modules</div>
-      <a class="nav-item" href="#"><div class="dot done"></div>BDD métier</a>
-      <a class="nav-item" href="#"><div class="dot done"></div>BDD GED</a>
-      <a class="nav-item" href="#"><div class="dot wip"></div>Module NF525</a>
-      <a class="nav-item" href="#"><div class="dot done"></div>API</a>
-      <a class="nav-item" href="#"><div class="dot done"></div>Front (Next.js)</a>
-    </div>
-  </aside>
-
-  <!-- ─── Contenu principal ────────────────────────────── -->
-  <main>
-
-    <!-- Breadcrumb -->
-    <nav class="breadcrumb">
-      <a href="#">micro_logiciel</a>
-      <span>/</span>
-      <a href="#">wiki</a>
-      <span>/</span>
-      <a href="#">Sprint S31</a>
-      <span>/</span>
-      <span>23 — Prise en compte de la NF 525</span>
-    <a href="24-changelog-sprint-S31.html" style="color:#4ade80;font-weight:600;">Changelog S31 🆕</a>
-</nav>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="73-changelog-s44.html">S44</a>
+  </div>
+  <span class="badge">#23 — NF 525</span>
+</header>
+<div class="container">
+<!-- Breadcrumb -->
+    
 
     <!-- En-tête de page -->
     <div class="page-header">
@@ -820,8 +429,7 @@
         <p>Le script SQL seul ne garantit pas la conformité NF525. L'appel à <strong style="color:var(--accent2);font-family:'JetBrains Mono',monospace">sp_nf525_enregistrer_encaissement</strong> doit être déclenché depuis la couche applicative, dans la même transaction que l'INSERT dans <code style="background:rgba(47,129,247,.1);padding:1px 4px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:12px">reglement</code>. C'est le point bloquant de l'US-23.2.</p>
       </div>
     </div>
-
-  </main>
 </div>
+<footer>PetSuite by Algorithmia · S44 · 24 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
 </body>
 </html>

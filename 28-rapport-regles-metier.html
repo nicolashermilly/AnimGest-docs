@@ -5,164 +5,90 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite — 28 · Rapport Règles Métier · Recettes S33</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
-  :root {
-    --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--border:#30363d;--border2:#3d4450;
-    --text:#e6edf3;--muted:#8b949e;--accent:#2f81f7;--accent2:#58a6ff;
-    --green:#3fb950;--orange:#d29922;--red:#f85149;--purple:#bc8cff;--gold:#e3b341;
-  }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-size:14px;line-height:1.6;min-height:100vh;}
-  .layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh;}
-
-  /* SIDEBAR */
-  .sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:24px 0;position:sticky;top:0;height:100vh;overflow-y:auto;}
-  .sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:16px;}
-  .sidebar-logo .icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
-  .sidebar-logo span{font-size:13px;font-weight:700;}
-  .sidebar-logo small{display:block;font-size:10px;color:var(--muted);font-weight:400;}
-  .nav-section{margin-bottom:20px;}
-  .nav-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 20px 8px;}
-  .nav-item{display:flex;align-items:center;gap:8px;padding:6px 20px;font-size:12px;color:var(--muted);cursor:pointer;text-decoration:none;transition:all .15s;}
-  .nav-item:hover{background:var(--bg3);color:var(--text);}
-  .nav-item.active{background:rgba(47,129,247,.12);color:var(--accent2);border-left:2px solid var(--accent);}
-  .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-  .dot.ok{background:var(--green);}
-  .dot.warn{background:var(--gold);}
-  .dot.crit{background:var(--red);}
-
-  /* MAIN */
-  main{padding:40px 48px;max-width:940px;}
-  .breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:28px;}
-  .breadcrumb a{color:var(--accent2);text-decoration:none;}
-  .breadcrumb span{color:var(--border2);}
-
-  /* PAGE HEADER */
-  .page-header{margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--border);}
-  .sprint-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(47,129,247,.15);border:1px solid rgba(47,129,247,.35);color:var(--accent2);font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:.06em;}
-  .sprint-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-  h1{font-size:26px;font-weight:800;color:var(--text);line-height:1.25;margin-bottom:8px;}
-  .page-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
-
-  /* SECTIONS */
-  .section{margin-bottom:40px;}
-  .section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
-  .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
-
-  /* RULE CARDS */
-  .rule-list{display:grid;gap:10px;}
-  .rule{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;border-left:3px solid var(--border);}
-  .rule.ok{border-left-color:var(--green);}
-  .rule.warn{border-left-color:var(--orange);}
-  .rule.crit{border-left-color:var(--red);}
-  .rule.info{border-left-color:var(--accent);}
-  .rule-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
-  .rule-id{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--accent2);background:rgba(47,129,247,.1);padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:1px;}
-  .rule-title{font-size:13px;font-weight:700;color:var(--text);}
-  .rule-body{font-size:12px;color:var(--muted);line-height:1.55;}
-  .rule-body strong{color:var(--text);}
-  .rule-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
-
-  /* PILLS */
-  .pill{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace;white-space:nowrap;}
-  .p-ok{background:rgba(63,185,80,.15);color:var(--green);border:1px solid rgba(63,185,80,.3);}
-  .p-warn{background:rgba(210,153,34,.12);color:var(--gold);border:1px solid rgba(210,153,34,.3);}
-  .p-crit{background:rgba(248,81,73,.12);color:var(--red);border:1px solid rgba(248,81,73,.3);}
-  .p-info{background:rgba(47,129,247,.1);color:var(--accent2);border:1px solid rgba(47,129,247,.25);}
-  .p-purple{background:rgba(188,140,255,.1);color:var(--purple);border:1px solid rgba(188,140,255,.25);}
-  .p-gray{background:var(--bg3);color:var(--muted);border:1px solid var(--border);}
-
-  /* CODE */
-  code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:1px 5px;border-radius:3px;color:var(--purple);}
-  .code-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;overflow-x:auto;margin:8px 0;color:var(--text);}
-  .cm{color:#6e7681;font-style:italic;}
-  .ck{color:var(--accent2);}
-  .cs{color:#a5d6ff;}
-  .cv{color:var(--green);}
-  .ce{color:var(--red);}
-
-  /* TABLES */
-  .tw{overflow-x:auto;margin-bottom:4px;}
-  table{width:100%;border-collapse:collapse;font-size:12px;}
-  th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg2);}
-  td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;color:var(--text);}
-  tr:last-child td{border-bottom:none;}
-  tr:hover td{background:rgba(255,255,255,.02);}
-
-  /* ALERT */
-  .alert{border-radius:8px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;}
-  .alert.warn{background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.35);}
-  .alert.info{background:rgba(47,129,247,.08);border:1px solid rgba(47,129,247,.25);}
-  .alert.ok{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.25);}
-  .alert-icon{font-size:18px;flex-shrink:0;}
-  .alert-title{font-size:13px;font-weight:700;margin-bottom:4px;}
-  .alert.warn .alert-title{color:var(--gold);}
-  .alert.info .alert-title{color:var(--accent2);}
-  .alert.ok .alert-title{color:var(--green);}
-  .alert p{font-size:12px;color:var(--muted);line-height:1.55;}
-
-  /* RECETTE CHECK */
-  .check-grid{display:grid;gap:6px;}
-  .check-item{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;display:flex;align-items:flex-start;gap:10px;}
-  .check-box{width:18px;height:18px;border-radius:4px;border:1px solid var(--border2);flex-shrink:0;margin-top:1px;}
-  .check-text{font-size:12px;color:var(--text);line-height:1.5;}
-  .check-text .sub{font-size:11px;color:var(--muted);margin-top:2px;}
-
-  /* KPI ROW */
-  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px;}
-  .kpi{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
-  .kpi-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--text);margin-bottom:3px;}
-  .kpi-num.green{color:var(--green);}
-  .kpi-num.accent{color:var(--accent2);}
-  .kpi-num.gold{color:var(--gold);}
-  .kpi-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
-
-  footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 48px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;}
-  @media(max-width:860px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}main{padding:24px 20px;}.kpi-row{grid-template-columns:1fr 1fr;}}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+.header { background: #13131a; border-bottom: 1px solid #2a2a3a; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: .5rem; }
+.logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+.logo span { color: #7f77dd; }
+.badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8; padding: .25rem .75rem; border-radius: 20px; font-size: .75rem; font-weight: 600; }
+.badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+.badge.ok  { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+.nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.nav-links a { color: #888; text-decoration: none; font-size: .85rem; }
+.nav-links a:hover { color: #fff; }
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
+h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem; padding-bottom: .5rem; border-bottom: 1px solid #2a2a3a; }
+h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 .5rem; }
+p { color: #9a9890; margin-bottom: .75rem; }
+.subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+.section { margin-bottom: 2.5rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1.25rem; transition: border-color .2s; }
+.card:hover { border-color: #534ab7; }
+.card-title { font-size: .95rem; font-weight: 600; color: #e2e0d8; margin-bottom: .4rem; }
+.card-desc { font-size: .8rem; color: #666; line-height: 1.5; }
+.tag { display: inline-block; padding: .15rem .5rem; border-radius: 4px; font-size: .7rem; font-weight: 600; margin-right: .25rem; margin-bottom: .4rem; }
+.tag-purple, .tg   { background: #1a1530; color: #9d97e8; }
+.tag-green, .tgreen { background: #0a2015; color: #5dcaa5; }
+.tag-blue, .tblue  { background: #0a1525; color: #6baed6; }
+.tag-amber, .tamber { background: #1a1205; color: #d4a44c; }
+.tag-red, .tred    { background: #1a0a0a; color: #e06c6c; }
+code { background: #1a1a2e; color: #9d97e8; padding: .1rem .4rem; border-radius: 4px; font-size: .85em; font-family: 'Fira Code', monospace; }
+pre { background: #0f0f18; border: 1px solid #2a2a3a; border-left: 3px solid #534ab7; border-radius: 8px; padding: 1rem; overflow-x: auto; font-size: .8rem; color: #9d97e8; margin: 1rem 0; font-family: 'Fira Code', monospace; line-height: 1.6; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .85rem; }
+th { background: #13131a; color: #888; font-weight: 600; padding: .6rem .8rem; text-align: left; border-bottom: 1px solid #2a2a3a; }
+td { padding: .5rem .8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; vertical-align: top; }
+tr:hover td { background: #0f0f18; }
+.alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: .85rem; color: #5dcaa5; }
+.alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
+.alert-red  { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
+.alert-blue { background: #0a1525; border-color: #1e3a5f; color: #6baed6; }
+.progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
+.progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
+.back-link, a.back { color: #534ab7; text-decoration: none; font-size: .85rem; }
+.back-link:hover, a.back:hover { color: #9d97e8; }
+.timeline { padding-left: 1.5rem; border-left: 2px solid #2a2a3a; }
+.tl-item { position: relative; padding: .75rem 0 .75rem 1.5rem; border-bottom: 1px solid #13131a; }
+.tl-item::before { content: ''; position: absolute; left: -1.4rem; top: 1rem; width: 10px; height: 10px; border-radius: 50%; background: #534ab7; border: 2px solid #0a0a0f; }
+.tl-time  { font-size: .75rem; color: #534ab7; font-weight: 600; margin-bottom: .25rem; }
+.tl-title { font-size: .9rem; font-weight: 600; color: #e2e0d8; margin-bottom: .2rem; }
+.tl-desc  { font-size: .8rem; color: #666; }
+footer { text-align: center; padding: 2rem; color: #333; font-size: .8rem; border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+footer a { color: #534ab7; }
+/* Legacy sidebar layout pages — override with simple container */
+.layout { display: block; }
+.sidebar { display: none; }
+main { padding: 0; }
+.breadcrumb { display: none; }
+/* stat grid (used in some changelogs) */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 14px 0; }
+.stat { background: rgba(255,255,255,.04); border: 1px solid #2a2a3a; border-radius: 8px; padding: 14px; text-align: center; }
+.stat-val { font-size: 1.8rem; font-weight: 700; color: #7f77dd; }
+.stat-lbl { font-size: .75rem; color: #555; margin-top: 2px; }
+/* Old changelog header style */
+.header-inner h1 { font-size: 1.5rem; font-weight: 700; color: #fff; }
+.badges { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.bp { background: rgba(83,74,183,.2); border: 1px solid rgba(83,74,183,.4); color: #9d97e8; border-radius: 20px; padding: 3px 12px; font-size: .72rem; font-weight: 600; }
+.bc { background: rgba(107,174,214,.15); border: 1px solid rgba(107,174,214,.35); color: #6baed6; border-radius: 20px; padding: 3px 12px; font-size: .72rem; font-weight: 600; }
+.bg { background: rgba(93,202,165,.15); border: 1px solid rgba(93,202,165,.35); color: #5dcaa5; border-radius: 20px; padding: 3px 12px; font-size: .72rem; font-weight: 600; }
+.bw { background: rgba(212,164,76,.15); border: 1px solid rgba(212,164,76,.35); color: #d4a44c; border-radius: 20px; padding: 3px 12px; font-size: .72rem; font-weight: 600; }
+.section.bg-card, .section { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.st { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #2a2a3a; }
 </style>
 </head>
 <body>
-<div class="layout">
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="73-changelog-s44.html">S44</a>
+  </div>
+  <span class="badge">#28b — Règles Métier</span>
+</header>
+<div class="container">
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="icon">🐾</div>
-    <div><span>PetSuite</span><small>28 · Rapport recettes · S33</small></div>
-  </div>
-  <div class="nav-section">
-    <div class="nav-label">Modules</div>
-    <a class="nav-item active" href="#animaux"><div class="dot ok"></div>Animaux & Races</a>
-    <a class="nav-item" href="#seances"><div class="dot ok"></div>Séances & Agenda</a>
-    <a class="nav-item" href="#edc"><div class="dot ok"></div>EDC / CAC</a>
-    <a class="nav-item" href="#devis"><div class="dot ok"></div>Devis & Contrats</a>
-    <a class="nav-item" href="#facturation"><div class="dot ok"></div>Facturation</a>
-    <a class="nav-item" href="#reglements"><div class="dot ok"></div>Règlements</a>
-    <a class="nav-item" href="#fec"><div class="dot ok"></div>FEC & Comptabilité</a>
-    <a class="nav-item" href="#ged"><div class="dot ok"></div>GED Documentaire</a>
-    <a class="nav-item" href="#crm"><div class="dot ok"></div>CRM</a>
-    <a class="nav-item" href="#exercices"><div class="dot ok"></div>Exercices comptables</a>
-    <a class="nav-item" href="#securite"><div class="dot warn"></div>Sécurité & Accès</a>
-    <a class="nav-item" href="#scenaries-erreur"><div class="dot crit"></div>Scénarios d'erreur</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-label">Triggers BDD</div>
-    <a class="nav-item" href="#triggers"><div class="dot ok"></div>20+ triggers actifs</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-label">Référence</div>
-    <a class="nav-item" href="index.html"><div class="dot ok"></div>← Index docs</a>
-  </div>
-</aside>
-
-<!-- MAIN -->
-<main>
-  <nav class="breadcrumb">
-    <a href="index.html">PetSuite</a><span>/</span>
-    <a href="index.html">docs</a><span>/</span>
-    <span>28 — Rapport règles métier · Recettes</span>
-  </nav>
 
   <div class="page-header">
     <div class="sprint-badge">28 · SPRINT S33 · RECETTES</div>
@@ -854,14 +780,7 @@
       </table>
     </div>
   </div>
-
-</main>
 </div>
-
-<footer>
-  <span>🐾 PetSuite · Algorithmia</span>
-  <span>Rapport règles métier · Sprint S33 · 18/03/2026</span>
-</footer>
-
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
 </body>
 </html>
