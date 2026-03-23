@@ -5,87 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite — Changelog Sprint S41</title>
 <style>
-  :root {
-    --accent: #4F46E5; --bg: #0f1117; --bg2: #1a1d2e; --bg3: #222640;
-    --border: #2d3155; --text: #e2e8f0; --text2: #94a3b8;
-    --green: #10b981; --amber: #f59e0b; --red: #ef4444; --blue: #3b82f6;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-  .hero { background: linear-gradient(135deg, #1a1d2e 0%, #0f1117 100%); border-bottom: 1px solid var(--border); padding: 3rem 2rem 2rem; text-align: center; }
-  .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .hero p { color: var(--text2); font-size: 1.05rem; margin-bottom: 1.5rem; }
-  .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
-  .badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-  .badge-purple { background: #312e81; color: #a5b4fc; }
-  .badge-green  { background: #064e3b; color: #6ee7b7; }
-  .badge-amber  { background: #78350f; color: #fcd34d; }
-  .badge-blue   { background: #1e3a5f; color: #93c5fd; }
-  .badge-red    { background: #7f1d1d; color: #fca5a5; }
-  nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0.75rem 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  nav a { color: var(--text2); text-decoration: none; font-size: 0.85rem; padding: 0.25rem 0.5rem; border-radius: 4px; transition: all 0.15s; }
-  nav a:hover { color: var(--text); background: var(--bg3); }
-  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-  .section { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 2rem; overflow: hidden; }
-  .section-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; }
-  .section-icon { font-size: 1.5rem; flex-shrink: 0; }
-  .section-title { font-size: 1.1rem; font-weight: 700; }
-  .section-subtitle { color: var(--text2); font-size: 0.85rem; margin-top: 0.15rem; }
-  .section-body { padding: 1.25rem 1.5rem; }
-  h3 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.4rem; color: var(--text); }
-  h3:first-child { margin-top: 0; }
-  p { color: var(--text2); font-size: 0.875rem; margin-bottom: 0.6rem; }
-  code { background: var(--bg3); color: #a5b4fc; padding: 0.1rem 0.4rem; border-radius: 4px; font-family: monospace; font-size: 0.8rem; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 0.6rem 0; }
-  th { background: var(--bg3); color: var(--text2); font-weight: 600; padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
-  td { padding: 0.45rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
-  td:first-child { color: var(--text); }
-  tr:last-child td { border-bottom: none; }
-  .ok   { color: var(--green); }
-  .warn { color: var(--amber); }
-  .err  { color: var(--red); }
-  .info { color: var(--blue); }
-  .tag { display: inline-block; padding: 0.1rem 0.45rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; margin-left: 0.3rem; }
-  .tag-new   { background: var(--accent); color: white; }
-  .tag-fix   { background: #064e3b; color: #6ee7b7; }
-  .tag-break { background: #7f1d1d; color: #fca5a5; }
-  ul { padding-left: 1.25rem; color: var(--text2); font-size: 0.875rem; }
-  ul li { margin-bottom: 0.3rem; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1rem 0; }
-  .stat { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
-  .stat-num { font-size: 1.75rem; font-weight: 700; color: var(--accent); }
-  .stat-label { font-size: 0.75rem; color: var(--text2); margin-top: 0.2rem; }
-  footer { text-align: center; padding: 2rem; color: var(--text2); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+.header { background: #13131a; border-bottom: 1px solid #2a2a3a; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: .5rem; }
+.logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+.logo span { color: #7f77dd; }
+.badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8; padding: .25rem .75rem; border-radius: 20px; font-size: .75rem; font-weight: 600; }
+.badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+.badge.ok  { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+.nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.nav-links a { color: #888; text-decoration: none; font-size: .85rem; }
+.nav-links a:hover { color: #fff; }
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
+h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem; padding-bottom: .5rem; border-bottom: 1px solid #2a2a3a; }
+h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 .5rem; }
+p { color: #9a9890; margin-bottom: .75rem; }
+.subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+.section { margin-bottom: 2.5rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1.25rem; transition: border-color .2s; }
+.card:hover { border-color: #534ab7; }
+.card-title { font-size: .95rem; font-weight: 600; color: #e2e0d8; margin-bottom: .4rem; }
+.card-desc { font-size: .8rem; color: #666; line-height: 1.5; }
+.tag { display: inline-block; padding: .15rem .5rem; border-radius: 4px; font-size: .7rem; font-weight: 600; margin-right: .25rem; margin-bottom: .4rem; }
+.tag-purple, .tg   { background: #1a1530; color: #9d97e8; }
+.tag-green, .tgreen { background: #0a2015; color: #5dcaa5; }
+.tag-blue, .tblue  { background: #0a1525; color: #6baed6; }
+.tag-amber, .tamber { background: #1a1205; color: #d4a44c; }
+.tag-red, .tred    { background: #1a0a0a; color: #e06c6c; }
+code { background: #1a1a2e; color: #9d97e8; padding: .1rem .4rem; border-radius: 4px; font-size: .85em; font-family: 'Fira Code', monospace; }
+pre { background: #0f0f18; border: 1px solid #2a2a3a; border-left: 3px solid #534ab7; border-radius: 8px; padding: 1rem; overflow-x: auto; font-size: .8rem; color: #9d97e8; margin: 1rem 0; font-family: 'Fira Code', monospace; line-height: 1.6; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .85rem; }
+th { background: #13131a; color: #888; font-weight: 600; padding: .6rem .8rem; text-align: left; border-bottom: 1px solid #2a2a3a; }
+td { padding: .5rem .8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; vertical-align: top; }
+tr:hover td { background: #0f0f18; }
+.alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: .85rem; color: #5dcaa5; }
+.alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
+.alert-red  { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
+.alert-blue { background: #0a1525; border-color: #1e3a5f; color: #6baed6; }
+.progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
+.progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
+.back-link, a.back { color: #534ab7; text-decoration: none; font-size: .85rem; }
+.back-link:hover, a.back:hover { color: #9d97e8; }
+.timeline { padding-left: 1.5rem; border-left: 2px solid #2a2a3a; }
+.tl-item { position: relative; padding: .75rem 0 .75rem 1.5rem; border-bottom: 1px solid #13131a; }
+.tl-item::before { content: ''; position: absolute; left: -1.4rem; top: 1rem; width: 10px; height: 10px; border-radius: 50%; background: #534ab7; border: 2px solid #0a0a0f; }
+.tl-time  { font-size: .75rem; color: #534ab7; font-weight: 600; margin-bottom: .25rem; }
+.tl-title { font-size: .9rem; font-weight: 600; color: #e2e0d8; margin-bottom: .2rem; }
+.tl-desc  { font-size: .8rem; color: #666; }
+footer { text-align: center; padding: 2rem; color: #333; font-size: .8rem; border-top: 1px solid #1a1a2a; margin-top: 3rem; }
+footer a { color: #534ab7; }
 </style>
 </head>
 <body>
-
-<div class="hero">
-  <h1>📋 Changelog Sprint S41</h1>
-  <p>Stabilisation, corrections POST body parsing, navigation S41, PDF/Email/Signature, Élevage profondeur</p>
-  <div class="badges">
-    <span class="badge badge-purple">Sprint S41</span>
-    <span class="badge badge-green">22 mars 2026</span>
-    <span class="badge badge-blue">70 pages UI</span>
-    <span class="badge badge-amber">custom-routes.ts 43k chars</span>
-    <span class="badge badge-red">12 bugs corrigés</span>
+<header class="header">
+  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="73-changelog-s44.html">S44</a>
   </div>
-</div>
-
-<nav>
-  <a href="#stats">Stats</a>
-  <a href="#fixes">Corrections</a>
-  <a href="#frontend">Frontend</a>
-  <a href="#api">API</a>
-  <a href="#bdd">BDD</a>
-  <a href="#docs">Docs</a>
-  <a href="#reste">Reste S41</a>
-  <a href="index.html">← Index</a>
-</nav>
-
+  <span class="badge">#43 — Changelog S41</span>
+</header>
 <div class="container">
-
-  <!-- Stats -->
+<!-- Stats -->
   <div class="section" id="stats">
     <div class="section-header">
       <span class="section-icon">📊</span>
@@ -328,12 +312,7 @@
   </div>
 
 </div>
-
-<footer>
-  PetSuite — Changelog Sprint S41 | 22 mars 2026 | Algorithmia
-  &nbsp;·&nbsp;
-  <a href="index.html" style="color:var(--accent)">← Retour à l'index</a>
-</footer>
-
+</div>
+<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
 </body>
 </html>
