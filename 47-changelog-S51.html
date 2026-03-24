@@ -5,175 +5,231 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PetSuite — Changelog S51</title>
 <style>
-  :root {
-    --bg: #0f1117; --surface: #1a1d2e; --surface2: #22263a;
-    --border: #2d3155; --accent: #4f46e5; --accent2: #7c3aed;
-    --green: #22c55e; --blue: #3b82f6; --orange: #f97316;
-    --red: #ef4444; --text: #e2e8f0; --muted: #94a3b8;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; padding: 2rem; }
-  .hero { background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
-    border: 1px solid var(--border); border-radius: 1.5rem; padding: 2.5rem; text-align: center; margin-bottom: 2rem; }
-  .badge { display: inline-block; background: var(--accent); color: white; font-size: .75rem;
-    font-weight: 700; padding: .35rem .9rem; border-radius: 9999px; margin-bottom: 1rem; }
-  .hero h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #818cf8, #a78bfa);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: .75rem; }
-  .hero p { color: var(--muted); font-size: 1rem; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem;
-    padding: 1.25rem; text-align: center; }
-  .stat-n { font-size: 2rem; font-weight: 800; color: var(--accent); font-family: monospace; }
-  .stat-l { font-size: .75rem; color: var(--muted); margin-top: .25rem; }
-  .section { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem;
-    padding: 1.75rem; margin-bottom: 1.5rem; }
-  .section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem;
-    display: flex; align-items: center; gap: .6rem; }
-  .item { padding: .75rem 0; border-bottom: 1px solid var(--border); display: flex; gap: .75rem; align-items: flex-start; }
-  .item:last-child { border-bottom: none; padding-bottom: 0; }
-  .tag { font-size: .7rem; font-weight: 700; padding: .2rem .55rem; border-radius: .35rem;
-    white-space: nowrap; flex-shrink: 0; margin-top: .1rem; }
-  .tag.fix { background: #dc262620; color: #f87171; border: 1px solid #dc262640; }
-  .tag.new { background: #16a34a20; color: #4ade80; border: 1px solid #16a34a40; }
-  .tag.api { background: #2563eb20; color: #60a5fa; border: 1px solid #2563eb40; }
-  .tag.ux  { background: #d97706 20; color: #fbbf24; border: 1px solid #d9770640; }
-  .tag.map { background: #059669 20; color: #34d399; border: 1px solid #05966940; }
-  .item-text { font-size: .9rem; color: var(--text); line-height: 1.5; }
-  .item-text code { background: var(--surface2); padding: .1rem .4rem; border-radius: .3rem;
-    font-size: .82rem; color: #a78bfa; font-family: monospace; }
-  .item-text .sub { color: var(--muted); font-size: .82rem; display: block; margin-top: .2rem; }
-  .sprint-badge { display: inline-flex; align-items: center; gap: .4rem; background: var(--green);
-    color: #052e16; font-size: .7rem; font-weight: 700; padding: .2rem .6rem; border-radius: 9999px; }
-  footer { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 2rem; padding-top: 1rem;
-    border-top: 1px solid var(--border); }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
+.header { background: #13131a; border-bottom: 1px solid #2a2a3a; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: .5rem; }
+.logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+.logo span { color: #7f77dd; }
+.badge { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8; padding: .25rem .75rem; border-radius: 20px; font-size: .75rem; font-weight: 600; }
+.badge.new { background: #0f2a1a; border-color: #0f6e56; color: #5dcaa5; }
+.nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.nav-links a { color: #888; text-decoration: none; font-size: .85rem; }
+.nav-links a:hover { color: #fff; }
+.container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+.hero { text-align: center; padding: 2.5rem 1rem 2rem; }
+.hero h1 { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: .5rem; }
+.hero .sub { color: #555; font-size: .95rem; margin-bottom: 1.5rem; }
+.stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+.stat { background: #13131a; border: 1px solid #2a2a3a; border-radius: 10px; padding: .7rem 1.2rem; text-align: center; min-width: 110px; }
+.stat .val { font-size: 1.5rem; font-weight: 800; color: #7f77dd; }
+.stat .lbl { font-size: .7rem; color: #555; text-transform: uppercase; letter-spacing: .05em; }
+.sprint-block { background: #13131a; border: 1px solid #2a2a3a; border-radius: 14px; padding: 1.8rem; margin-bottom: 1.5rem; }
+.sprint-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.sprint-title { font-size: 1.2rem; font-weight: 800; color: #fff; }
+.sprint-badge { font-size: .72rem; font-weight: 700; padding: .25rem .75rem; border-radius: 20px; }
+.sprint-badge.done { background: #0f2a1a; border: 1px solid #0f6e56; color: #5dcaa5; }
+.sprint-badge.wip  { background: #1a1a2e; border: 1px solid #534ab7; color: #9d97e8; }
+.entry { border-left: 2px solid #2a2a3a; padding: .8rem 0 .8rem 1.2rem; margin-bottom: .3rem; position: relative; }
+.entry:last-child { margin-bottom: 0; }
+.entry::before { content: ''; position: absolute; left: -5px; top: 1.1rem; width: 8px; height: 8px; border-radius: 50%; background: #2a2a3a; }
+.entry.fix::before  { background: #f59e0b; }
+.entry.new::before  { background: #3ecf8e; }
+.entry.tech::before { background: #534ab7; }
+.entry.rule::before { background: #6baed6; }
+.entry.doc::before  { background: #9d97e8; }
+.entry-tag { display: inline-block; font-size: .65rem; font-weight: 700; padding: .1rem .45rem; border-radius: 5px; margin-right: .4rem; text-transform: uppercase; letter-spacing: .04em; vertical-align: middle; }
+.tag-fix  { background: #1a1205; color: #f59e0b; }
+.tag-new  { background: #0a2015; color: #5dcaa5; }
+.tag-tech { background: #1a1530; color: #9d97e8; }
+.tag-rule { background: #0a1525; color: #6baed6; }
+.tag-doc  { background: #13131a; color: #9d97e8; border: 1px solid #2a2a3a; }
+.entry-title { font-weight: 700; color: #e2e0d8; font-size: .9rem; }
+.entry-body { color: #777; font-size: .83rem; margin-top: .3rem; line-height: 1.6; }
+.entry-body code { background: #1a1a2e; color: #9d97e8; padding: .1rem .35rem; border-radius: 4px; font-size: .82em; font-family: 'Fira Code', monospace; }
+.entry-body strong { color: #b0adc8; }
+.section-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: #534ab7; font-weight: 700; margin: 1.2rem 0 .6rem; display: flex; align-items: center; gap: .5rem; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: #1e1e2e; }
+.next-block { background: #0d1a0d; border: 1px solid #0f6e56; border-radius: 12px; padding: 1.4rem; margin-bottom: 1.5rem; }
+.next-block h3 { color: #5dcaa5; font-size: .85rem; font-weight: 700; margin-bottom: .8rem; }
+.next-item { display: flex; align-items: baseline; gap: .5rem; padding: .25rem 0; font-size: .83rem; color: #5dcaa5; }
+.next-item::before { content: '→'; color: #0f6e56; flex-shrink: 0; }
+.footer { text-align: center; color: #444; font-size: .78rem; padding: 3rem 1rem 2rem; border-top: 1px solid #1e1e2e; margin-top: 1rem; }
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="badge">#47 — Changelog S51</div>
-  <h1>Sprint S51</h1>
-  <p>Routes achats · Carte clients · Topbar plein écran · PDF complets</p>
+<div class="header">
+  <div class="logo">🐾 <span>PetSuite</span> Docs</div>
+  <nav class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <span class="badge">S51</span>
+    <span class="badge new">#47 — Changelog S51</span>
+  </nav>
 </div>
 
-<div class="stats">
-  <div class="stat"><div class="stat-n">3</div><div class="stat-l">Routes API ajoutées</div></div>
-  <div class="stat"><div class="stat-n">94</div><div class="stat-l">Pages UI compilées</div></div>
-  <div class="stat"><div class="stat-n">41</div><div class="stat-l">Routes API totales</div></div>
-  <div class="stat"><div class="stat-n">156</div><div class="stat-l">Clients géocodables</div></div>
-  <div class="stat"><div class="stat-n">24/03/2026</div><div class="stat-l">Date</div></div>
+<div class="container">
+
+  <div class="hero">
+    <h1>Changelog S51</h1>
+    <p class="sub">Carte clients · Uniformisation UI · Documentation v4</p>
+    <div class="stats">
+      <div class="stat"><div class="val">7</div><div class="lbl">Fichiers patchés</div></div>
+      <div class="stat"><div class="val">94</div><div class="lbl">Pages UI</div></div>
+      <div class="stat"><div class="val">41</div><div class="lbl">Routes API</div></div>
+      <div class="stat"><div class="val">2</div><div class="lbl">Docs mises à jour</div></div>
+      <div class="stat"><div class="val">25 mars 2026</div><div class="lbl">Date Sprint</div></div>
+    </div>
+  </div>
+
+  <!-- Sprint S51 -->
+  <div class="sprint-block">
+    <div class="sprint-header">
+      <div class="sprint-title">Sprint S51</div>
+      <span class="sprint-badge done">✅ COMPLÉTÉ</span>
+    </div>
+
+    <!-- Carte clients -->
+    <div class="section-label">🗺️ Carte clients — Leaflet + géocodage</div>
+
+    <div class="entry fix">
+      <span class="entry-tag tag-fix">FIX</span>
+      <span class="entry-title">Carte clients — Leaflet ne s'initialisait pas</span>
+      <div class="entry-body">
+        Le composant <code>VueCarte</code> bloquait l'affichage du <code>&lt;div ref={mapRef}&gt;</code> pendant tout le géocodage batch (<code>loading = true</code>). Résultat : <code>mapRef.current === null</code> au moment où le <code>useEffect</code> Leaflet s'exécutait → la carte n'était jamais montée.
+        <br><strong>Fix :</strong> <code>setDataLoading(false)</code> dès réception des données API, avant le géocodage. La carte s'affiche immédiatement vide, les marqueurs apparaissent progressivement au fur et à mesure du géocodage en arrière-plan.
+      </div>
+    </div>
+
+    <div class="entry fix">
+      <span class="entry-tag tag-fix">FIX</span>
+      <span class="entry-title">Carte clients — marqueurs absents (latitude/longitude null en BDD)</span>
+      <div class="entry-body">
+        La route <code>/api/tiers-avec-coords</code> retourne <code>latitude: null, longitude: null</code> pour tous les clients car <code>TIE_VILLE_ID</code> est null (jointure morte avec la table <code>ville</code>).
+        <br><strong>Fix :</strong> géocodage batch côté frontend via <code>api-adresse.data.gouv.fr</code> en utilisant <code>TIE_CP</code>. Cache par CP pour éviter les appels dupliqués — 149 clients avec CP géocodés en ~50 appels uniques.
+        <br><strong>Résultat :</strong> 140 clients affichés sur la carte sur 156 total (16 sans adresse géocodable).
+      </div>
+    </div>
+
+    <div class="entry fix">
+      <span class="entry-tag tag-fix">FIX</span>
+      <span class="entry-title">Carte clients — CDN Leaflet migré unpkg → cdnjs</span>
+      <div class="entry-body">
+        Le code source utilisait encore <code>unpkg.com/leaflet@1.9.4</code> au lieu de <code>cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js</code> (règle F5). Corrigé dans <code>src/app/app/clients/page.tsx</code>.
+      </div>
+    </div>
+
+    <div class="entry new">
+      <span class="entry-tag tag-new">NEW</span>
+      <span class="entry-title">Carte clients — indicateur de géocodage en cours</span>
+      <div class="entry-body">
+        Ajout d'un bandeau <code>⏳ Géocodage en cours... N adresses traitées</code> pendant le batch. Compteur <code>geocodedCount</code> mis à jour en temps réel. Le compteur disparaît automatiquement une fois le géocodage terminé.
+      </div>
+    </div>
+
+    <!-- Uniformisation UI -->
+    <div class="section-label">🎨 Uniformisation UI — boutons retour &amp; nouveau</div>
+
+    <div class="entry fix">
+      <span class="entry-tag tag-fix">FIX</span>
+      <span class="entry-title">Boutons ← Retour → ← [Nom page parente]</span>
+      <div class="entry-body">
+        Audit complet de toutes les sous-pages <code>[id]/page.tsx</code>. Deux non-conformités corrigées :
+        <br>• <code>factures/[id]</code> : <code>← Retour</code> → <code>← Factures</code>
+        <br>• <code>inventaires/[id]</code> : <code>← Retour</code> → <code>← Inventaires</code> (2 occurrences)
+        <br>Pages conformes : devis, clients, séances, animaux, achats, avoirs, élevage/portées, signatures.
+      </div>
+    </div>
+
+    <div class="entry fix">
+      <span class="entry-tag tag-fix">FIX</span>
+      <span class="entry-title">Boutons + Nouveau → + Nouveau [entité]</span>
+      <div class="entry-body">
+        Audit complet des pages liste. Quatre non-conformités corrigées :
+        <br>• <code>factures/page.tsx</code> : <code>+ Nouvelle</code> → <code>+ Nouvelle facture</code>
+        <br>• <code>devis/page.tsx</code> : <code>+ Nouveau</code> → <code>+ Nouveau devis</code>
+        <br>• <code>animaux/page.tsx</code> : <code>+ Nouveau</code> → <code>+ Nouvel animal</code>
+        <br>• <code>achats/page.tsx</code> : <code>+ Nouveau</code> → <code>+ Nouvel achat</code>
+        <br>Pages déjà conformes : séances (+ Nouvelle séance), inventaires (+ Nouvel inventaire), élevage (+ Nouvelle portée / + Ajouter un géniteur), clients (+ Nouveau client — corrigé S51 dans la nouvelle page carte).
+      </div>
+    </div>
+
+    <!-- Documentation -->
+    <div class="section-label">📄 Documentation GitHub Pages</div>
+
+    <div class="entry doc">
+      <span class="entry-tag tag-doc">DOC</span>
+      <span class="entry-title">Notice utilisateur v4 — modules S45-S51</span>
+      <div class="entry-body">
+        Mise à jour complète de <code>03-notice-utilisateur.html</code> (v3.1 → v4). 15 sections — 4 nouveaux modules documentés :
+        <br>• <strong>09 Élevage</strong> — géniteurs, portées, saillies, gestations, réservations, alertes
+        <br>• <strong>10 Achats</strong> — commandes fournisseurs, lignes, PDF bon de commande, règlements
+        <br>• <strong>11 Inventaires</strong> — saisie physique, écarts, validation stock
+        <br>• <strong>12 Réseaux sociaux</strong> — comptes, publications planifiées
+        <br>• <strong>13 Topbar v2</strong> — ⛶ plein écran, 🖥/☀️/🌙 thème, A−/A+ taille police
+      </div>
+    </div>
+
+    <div class="entry doc">
+      <span class="entry-tag tag-doc">DOC</span>
+      <span class="entry-title">Audit stack technique S51 — 07-audit-stack.html</span>
+      <div class="entry-body">
+        Refonte complète de la page d'audit technique (état S44 → S51) :
+        <br>• Routes API : 8 → <strong>41 routes listées</strong> avec sprint d'origine, routes S50 en vert
+        <br>• 10 règles déploiement + 5 règles frontend (dont Leaflet cdnjs, useEffect guard)
+        <br>• Charte CSS complète avec <code>--surface-input</code> mode clair/sombre
+        <br>• Classes boutons : <code>btn-primary</code>, <code>btn-ghost</code>, <code>btn-danger</code> (S50)
+        <br>• Conventions libellés UI : <code>← Factures</code>, <code>+ Nouvelle facture</code>
+        <br>• Tableau des fichiers clés de l'architecture
+        <br>• Protection par mot de passe supprimée — page interne
+      </div>
+    </div>
+
+    <!-- Règles techniques -->
+    <div class="section-label">🔧 Règles techniques confirmées S51</div>
+
+    <div class="entry rule">
+      <span class="entry-tag tag-rule">RULE</span>
+      <span class="entry-title">Leaflet en Next.js 15 — timing useEffect critique</span>
+      <div class="entry-body">
+        Le <code>div ref={mapRef}</code> doit être présent dans le DOM <strong>avant</strong> que le <code>useEffect</code> Leaflet s'exécute. Si un état <code>loading</code> conditionne le rendu du div, Leaflet ne peut pas s'initialiser.
+        <br><strong>Pattern correct :</strong> séparer <code>dataLoading</code> (masque tout) de <code>geocoding</code> (s'exécute en arrière-plan sans masquer la carte).
+      </div>
+    </div>
+
+    <div class="entry rule">
+      <span class="entry-tag tag-rule">RULE</span>
+      <span class="entry-title">Fichiers [id] sous Windows/OneDrive — lecture via System.IO</span>
+      <div class="entry-body">
+        Les fichiers <code>src/app/app/xxx/[id]/page.tsx</code> ne sont pas lisibles avec <code>Get-Content</code> (crochets filtrés par PowerShell/OneDrive). Toujours utiliser <code>[System.IO.File]::ReadAllText($path)</code> avec <code>Join-Path $base "xxx\[id]\page.tsx"</code>.
+      </div>
+    </div>
+
+    <div class="entry tech">
+      <span class="entry-tag tag-tech">TECH</span>
+      <span class="entry-title">Mode clair — --surface-input correctement défini</span>
+      <div class="entry-body">
+        Audit CSS confirmé : <code>--surface-input: #FFFFFF</code> défini dans le sélecteur racine (thème clair par défaut) et <code>--surface-input: #1E293B</code> dans <code>html.dark</code>. La classe <code>.input</code> utilise <code>var(--surface-input)</code>. Pas de bug — tâche S50 était une fausse alerte.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Prochaine session -->
+  <div class="next-block">
+    <h3>🚀 Prochaine session S52</h3>
+    <div class="next-item">Yousign end-to-end — créer enveloppe, envoyer, webhook statut (bouton "Signature" déjà présent sur fiche devis)</div>
+    <div class="next-item">Export CSV/Excel factures et séances</div>
+    <div class="next-item">Vue agenda améliorée — drag &amp; drop séances</div>
+    <div class="next-item">Guide démarrage rapide par métier (comportementaliste, toiletteur, éleveur)</div>
+    <div class="next-item">Corriger les routes <code>/api/ged-cac/animal/:id/evolution</code> (404 observé sur fiche animal)</div>
+  </div>
+
 </div>
 
-<div class="section">
-  <h2>🔌 Routes API — Module Achats <span class="sprint-badge">✓ COMPLÉTÉ</span></h2>
-
-  <div class="item">
-    <span class="tag api">API</span>
-    <div class="item-text">
-      <code>GET /api/achats/:id</code> — Fiche achat complète avec jointure tiers
-      <span class="sub">Pattern <code>instance.use('/achats', ...)</code> avec regex <code>/^\\/\\d+$/</code> — retourne <code>ACH_ID</code>, <code>ACH_NUM</code>, <code>ACH_STATUT</code>, <code>TIE_RAISON_SOCIALE</code>, totaux HT/TVA/TTC</span>
-    </div>
-  </div>
-
-  <div class="item">
-    <span class="tag api">API</span>
-    <div class="item-text">
-      <code>GET /api/achats/:id/lignes</code> — Lignes de l'achat
-      <span class="sub">Table <code>achat_ligne</code> — retourne <code>ALI_LIBELLE</code>, <code>ALI_QTE</code>, <code>ALI_PU_HT</code>, <code>ALI_TVA_TAUX</code>, <code>ALI_TOTAL_TTC</code> par ligne</span>
-    </div>
-  </div>
-
-  <div class="item">
-    <span class="tag new">NEW</span>
-    <div class="item-text">
-      Fiche achat <code>/app/achats/:id</code> — affichage complet avec tableau de lignes, totaux calculés, commentaire, règlement
-      <span class="sub">Avant : "Achat introuvable" pour tout ID. Après : fiche complète avec 4 lignes pour ACH-2603-0003 (1 080,00 €)</span>
-    </div>
-  </div>
-
-  <div class="item">
-    <span class="tag new">PDF</span>
-    <div class="item-text">
-      PDF Bon de commande — génération <code>srcdoc</code> HTML inline dans modal
-      <span class="sub">Fournisseur · Date · Statut · Tableau lignes · Total TTC en bleu — fonctionne dès que <code>/achats/:id</code> retourne les données</span>
-    </div>
-  </div>
+<div class="footer">
+  PetSuite by Algorithmia · S51 · 25 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a>
 </div>
-
-<div class="section">
-  <h2>🗺️ Carte clients — Leaflet + Géocodage <span class="sprint-badge">✓ COMPLÉTÉ</span></h2>
-
-  <div class="item">
-    <span class="tag fix">FIX</span>
-    <div class="item-text">
-      CDN Leaflet : <code>unpkg.com</code> → <code>cdnjs.cloudflare.com</code>
-      <span class="sub">Plus fiable, moins de latence, pas de rate limiting</span>
-    </div>
-  </div>
-
-  <div class="item">
-    <span class="tag map">MAP</span>
-    <div class="item-text">
-      Géocodage automatique via <code>api-adresse.data.gouv.fr</code>
-      <span class="sub">Pour chaque client sans coordonnées : requête <code>/search/?q={cp ville}&type=municipality</code> → latitude/longitude calculées côté navigateur au chargement de la vue Carte</span>
-    </div>
-  </div>
-
-  <div class="item">
-    <span class="tag fix">FIX</span>
-    <div class="item-text">
-      <code>useEffect</code> Leaflet corrigé — réinitialisation propre si remontage du composant
-      <span class="sub">Ancienne condition <code>if (mapInstanceRef.current) return</code> bloquait l'init après navigation. Nouveau : <code>map.remove()</code> + réinit systématique</span>
-    </div>
-  </div>
-
-  <div class="item">
-    <span class="tag new">NEW</span>
-    <div class="item-text">
-      Carte OSM opérationnelle — fond OpenStreetMap, zoom France entière au départ
-      <span class="sub">Marqueurs avec popup : nom, CP, ville, téléphone, lien "Voir la fiche →". Filtre par ville + rayon (5–200 km) via l'API villes-search</span>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>🖥️ Topbar — Plein écran &amp; Thème</h2>
-
-  <div class="item">
-    <span class="tag new">NEW</span>
-    <div class="item-text">
-      Bouton <code>⛶ Plein écran</code> ajouté dans la topbar
-      <span class="sub"><code>document.documentElement.requestFullscreen()</code> / <code>document.exitFullscreen()</code> avec état <code>isFullscreen</code> — icône bascule ⛶ ↔ ⊡ selon état</span>
-    </div>
-  </div>
-
-  <div class="item">
-    <span class="tag ux">UX</span>
-    <div class="item-text">
-      Tooltip thème renommé : <code>"Auto"</code> → <code>"Thème : Auto/Clair/Sombre"</code>
-      <span class="sub">Plus explicite pour l'utilisateur — tooltip dynamique selon état actuel du thème</span>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>📊 GitHub Pages — Index mis à jour</h2>
-
-  <div class="item">
-    <span class="tag ux">DOC</span>
-    <div class="item-text">
-      Index <code>index.html</code> — chiffres clés actualisés
-      <span class="sub">87 → <strong>94</strong> pages UI · ~45 → <strong>41</strong> routes API custom · 450+ → <strong>279</strong> factures · Sprint S44 → <strong>S50</strong></span>
-    </div>
-  </div>
-</div>
-
-<footer>
-  PetSuite / Algorithmia — Sprint S51 — 24 mars 2026 —
-  <a href="index.html">← Accueil docs</a>
-</footer>
 
 </body>
 </html>
