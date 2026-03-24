@@ -16,157 +16,324 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
 .nav-links a { color: #888; text-decoration: none; font-size: .85rem; }
 .nav-links a:hover { color: #fff; }
-.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
-h2 { font-size: 1.25rem; font-weight: 600; color: #c8c6be; margin: 2rem 0 1rem; padding-bottom: .5rem; border-bottom: 1px solid #2a2a3a; }
-h3 { font-size: 1rem; font-weight: 600; color: #a0a0a0; margin: 1.5rem 0 .5rem; }
-p { color: #9a9890; margin-bottom: .75rem; }
-.subtitle { color: #666; font-size: 1rem; margin-bottom: 2rem; }
-.section { margin-bottom: 2.5rem; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
-.card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1.25rem; transition: border-color .2s; }
-.card:hover { border-color: #534ab7; }
-.card-title { font-size: .95rem; font-weight: 600; color: #e2e0d8; margin-bottom: .4rem; }
-.card-desc { font-size: .8rem; color: #666; line-height: 1.5; }
-.tag { display: inline-block; padding: .15rem .5rem; border-radius: 4px; font-size: .7rem; font-weight: 600; margin-right: .25rem; margin-bottom: .4rem; }
-.tag-purple, .tg   { background: #1a1530; color: #9d97e8; }
-.tag-green, .tgreen { background: #0a2015; color: #5dcaa5; }
-.tag-blue, .tblue  { background: #0a1525; color: #6baed6; }
-.tag-amber, .tamber { background: #1a1205; color: #d4a44c; }
-.tag-red, .tred    { background: #1a0a0a; color: #e06c6c; }
-code { background: #1a1a2e; color: #9d97e8; padding: .1rem .4rem; border-radius: 4px; font-size: .85em; font-family: 'Fira Code', monospace; }
-pre { background: #0f0f18; border: 1px solid #2a2a3a; border-left: 3px solid #534ab7; border-radius: 8px; padding: 1rem; overflow-x: auto; font-size: .8rem; color: #9d97e8; margin: 1rem 0; font-family: 'Fira Code', monospace; line-height: 1.6; }
-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .85rem; }
-th { background: #13131a; color: #888; font-weight: 600; padding: .6rem .8rem; text-align: left; border-bottom: 1px solid #2a2a3a; }
-td { padding: .5rem .8rem; border-bottom: 1px solid #1a1a2a; color: #9a9890; vertical-align: top; }
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+h1 { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: .3rem; }
+.subtitle { color: #555; font-size: .88rem; margin-bottom: 2rem; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.5rem; }
+.card { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1.4rem; }
+.card h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .07em; color: #534ab7; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+th { text-align: left; color: #555; font-weight: 600; padding: .4rem .6rem; border-bottom: 1px solid #2a2a3a; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; }
+td { padding: .45rem .6rem; border-bottom: 1px solid #1a1a2a; color: #888; vertical-align: top; }
+td:first-child { color: #e2e0d8; font-family: 'Fira Code', monospace; font-size: .8rem; }
+tr:last-child td { border-bottom: none; }
 tr:hover td { background: #0f0f18; }
-.alert { background: #0f2a1a; border: 1px solid #0f6e56; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: .85rem; color: #5dcaa5; }
-.alert-warn { background: #1a1205; border-color: #854f0b; color: #d4a44c; }
-.alert-red  { background: #1a0505; border-color: #7a1515; color: #e06c6c; }
-.alert-blue { background: #0a1525; border-color: #1e3a5f; color: #6baed6; }
-.progress { background: #1a1a2e; border-radius: 6px; height: 8px; margin: 4px 0; }
-.progress-bar { height: 8px; border-radius: 6px; background: #534ab7; }
-.back-link, a.back { color: #534ab7; text-decoration: none; font-size: .85rem; }
-.back-link:hover, a.back:hover { color: #9d97e8; }
-.timeline { padding-left: 1.5rem; border-left: 2px solid #2a2a3a; }
-.tl-item { position: relative; padding: .75rem 0 .75rem 1.5rem; border-bottom: 1px solid #13131a; }
-.tl-item::before { content: ''; position: absolute; left: -1.4rem; top: 1rem; width: 10px; height: 10px; border-radius: 50%; background: #534ab7; border: 2px solid #0a0a0f; }
-.tl-time  { font-size: .75rem; color: #534ab7; font-weight: 600; margin-bottom: .25rem; }
-.tl-title { font-size: .9rem; font-weight: 600; color: #e2e0d8; margin-bottom: .2rem; }
-.tl-desc  { font-size: .8rem; color: #666; }
-footer { text-align: center; padding: 2rem; color: #333; font-size: .8rem; border-top: 1px solid #1a1a2a; margin-top: 3rem; }
-footer a { color: #534ab7; }
+.ok  { color: #3ecf8e !important; font-weight: 700; }
+.warn { color: #f59e0b !important; font-weight: 700; }
+.err { color: #ef4444 !important; font-weight: 700; }
+.new-route td:first-child { color: #5dcaa5 !important; }
+.section { background: #13131a; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1.4rem; margin-bottom: 1.5rem; }
+.section h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .07em; color: #534ab7; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+.rule { display: flex; gap: .8rem; align-items: flex-start; padding: .6rem 0; border-bottom: 1px solid #1a1a2a; font-size: .83rem; }
+.rule:last-child { border-bottom: none; }
+.rule-n { background: #1e1e2e; color: #7f77dd; border: 1px solid #534ab7; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 700; flex-shrink: 0; margin-top: .15rem; }
+.rule-text { flex: 1; color: #888; }
+.rule-text strong { color: #e2e0d8; display: block; }
+code { background: #1a1a2e; color: #9d97e8; padding: .1rem .4rem; border-radius: 4px; font-size: .82em; font-family: 'Fira Code', monospace; }
+.tag { display: inline-block; font-size: .7rem; font-weight: 600; padding: .12rem .4rem; border-radius: 5px; }
+.tg     { background: #1a1530; color: #9d97e8; }
+.tgreen { background: #0a2015; color: #5dcaa5; }
+.tred   { background: #1a0a0a; color: #e06c6c; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+.stat { background: #13131a; border: 1px solid #2a2a3a; border-radius: 10px; padding: .8rem 1.2rem; flex: 1; min-width: 120px; text-align: center; }
+.stat .val { font-size: 1.6rem; font-weight: 800; color: #7f77dd; }
+.stat .lbl { font-size: .72rem; color: #555; text-transform: uppercase; letter-spacing: .05em; }
+.footer { text-align: center; color: #444; font-size: .78rem; padding: 3rem 1rem 2rem; border-top: 1px solid #1e1e2e; margin-top: 1rem; }
+@media (max-width: 700px) { .grid2 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-<header class="header">
-  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
-  <div class="nav-links">
+
+<div class="header">
+  <div class="logo">🐾 <span>PetSuite</span> Docs</div>
+  <nav class="nav-links">
     <a href="index.html">Accueil</a>
     <a href="06-roadmap.html">Roadmap</a>
-    <a href="73-changelog-s44.html">S44</a>
-  </div>
-  <span class="badge">#7 — Stack Technique 🔒</span>
-</header>
-<div class="container">
-<h1>🔧 Audit Stack — S44</h1>
-<p class="subtitle">État de l'infrastructure technique au 22 mars 2026</p>
-<div class="section"><h2>🐳 Containers Docker</h2>
-<table>
-<tr><th>Container</th><th>Image</th><th>Rôle</th><th>Statut</th></tr>
-<tr><td><code>micro_frontend</code></td><td>deploy-frontend:latest</td><td>Next.js 15 SSR</td><td><span style="color:#5dcaa5">✅ UP</span></td></tr>
-<tr><td><code>micro_api</code></td><td>deploy-api:latest</td><td>NestJS + custom-routes</td><td><span style="color:#5dcaa5">✅ UP</span></td></tr>
-<tr><td><code>micro_nginx</code></td><td>nginx:1.27-alpine</td><td>Reverse proxy</td><td><span style="color:#5dcaa5">✅ UP</span></td></tr>
-</table></div>
-<div class="section"><h2>🗃️ Base de données</h2>
-<table>
-<tr><th>Paramètre</th><th>Valeur</th></tr>
-<tr><td>Hôte</td><td><code>192.168.1.62:3307</code></td></tr>
-<tr><td>BDD métier</td><td><code>micro_logiciel</code></td></tr>
-<tr><td>BDD GED</td><td><code>micro_logiciel_ged</code></td></tr>
-<tr><td>Utilisateur SQL</td><td><code>@lgorithme</code></td></tr>
-<tr><td>Backup S44</td><td><code>C:\Backup\micro_logiciel60322_fin_s42.sql</code> (5.5 MB)</td></tr>
-</table></div>
-<div class="section"><h2>⚙️ Règles critiques déploiement</h2>
-<pre>1. cd deploy AVANT tout docker compose
-2. .\COPIER_TOUTES_PAGES_v2.ps1 AVANT chaque build frontend
-3. Séquence rebuild : docker compose build frontend --no-cache
-                   && docker compose up -d frontend
-                   && docker compose restart nginx
-4. inject_v4_final.js = NE JAMAIS UTILISER (SyntaxError orphan catch)
-5. Nginx strip /api/ → routes sans préfixe dans custom-routes.ts
-6. DbService inaccessible après app.listen() → utiliser mysql2/promise direct
-7. PDF/Editions = TOUJOURS en Modal/Popup (PdfModal dans DocumentActions)</pre>
+    <span class="badge">S51</span>
+    <span class="badge ok">#7 — Stack Technique</span>
+  </nav>
 </div>
-<div class="section"><h2>🌐 Routes API custom actives</h2>
-<table>
-<tr><th>Route</th><th>Description</th><th>Sprint</th></tr>
-<tr><td><code>GET /bilan</code></td><td>Bilan global CA/factures</td><td>S40</td></tr>
-<tr><td><code>GET /bilan/metier</code></td><td>KPIs par métier + période</td><td>S43</td></tr>
-<tr><td><code>GET /achats</code></td><td>Commandes fournisseurs</td><td>S41</td></tr>
-<tr><td><code>GET /inventaires</code></td><td>Stock inventaires</td><td>S41</td></tr>
-<tr><td><code>GET /elevage/alertes</code></td><td>Alertes élevage</td><td>S41</td></tr>
-<tr><td><code>GET /ged-factures-impayees</code></td><td>Factures impayées GED</td><td>S40</td></tr>
-<tr><td><code>GET /devis/templates</code></td><td>Templates devis par métier</td><td>S42</td></tr>
-<tr><td><code>GET/POST /parametres/calendly</code></td><td>Config Calendly</td><td>S43</td></tr>
-</table></div></div>
-</div>
-<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
 
-<script>
-(function(){
-  var PWD = '@lgorithme';
-  var KEY = 'psd_auth_v2';
-  var TTL = 5 * 60 * 1000;
-  var PAGE = '07-audit-stack.html';
-  function norm(s){ return (s||'').trim().replace(/[\u00C0\u00E0\u0040\u0060]/g,'@').replace(/&#64;|%40|&#x40;/g,'@').replace(/[\u00A0\u200B-\u200D\uFEFF]/g,''); }
-  function isOk(){
-    try{
-      var d = JSON.parse(localStorage.getItem(KEY)||'[]'), now = Date.now();
-      return d.some(function(e){ return (e.page===PAGE||e.page==='_all') && (now-e.ts)<TTL; });
-    }catch(e){ return false; }
-  }
-  if(isOk()) return;
-  // Hide body until password entered
-  document.documentElement.style.visibility = 'hidden';
-  window.addEventListener('DOMContentLoaded', function(){
-    document.documentElement.style.visibility = '';
-    var ov = document.createElement('div');
-    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:99999;display:flex;align-items:center;justify-content:center';
-    ov.innerHTML = '<div style="background:#13131a;border:1px solid #534ab7;border-radius:16px;padding:2rem;text-align:center;max-width:340px;width:90%;box-shadow:0 0 40px rgba(83,74,183,.3)">'
-      + '<div style="font-size:2rem;margin-bottom:.5rem">🔒</div>'
-      + '<div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:.25rem">Accès restreint</div>'
-      + '<div style="font-size:.8rem;color:#555;margin-bottom:1.25rem">' + PAGE.replace('.html','').replace(/-/g,' ') + '</div>'
-      + '<input id="gPwd" type="password" placeholder="Mot de passe..." autocomplete="off"'
-      + ' style="width:100%;background:#0a0a0f;border:1px solid #2a2a3a;border-radius:8px;padding:.6rem 1rem;color:#e2e0d8;font-size:.9rem;text-align:center;letter-spacing:.1em;outline:none;margin-bottom:.75rem;box-sizing:border-box">'
-      + '<button id="gBtn" style="width:100%;background:#534ab7;border:none;border-radius:8px;padding:.65rem;color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:.5rem">Déverrouiller</button>'
-      + '<div id="gErr" style="font-size:.75rem;color:#e06c6c;display:none;margin-bottom:.5rem">Mot de passe incorrect</div>'
-      + '<a href="index.html" style="background:none;border:none;color:#555;font-size:.75rem;cursor:pointer;text-decoration:underline">← Retour à l'accueil</a>'
-      + '</div>';
-    document.body.appendChild(ov);
-    var inp = document.getElementById('gPwd');
-    inp.focus();
-    function tryUnlock(){
-      if(norm(inp.value) === norm(PWD)){
-        try{
-          var d = JSON.parse(localStorage.getItem(KEY)||'[]');
-          d = d.filter(function(e){ return (Date.now()-e.ts)<TTL; });
-          d.push({page:PAGE, ts:Date.now()});
-          localStorage.setItem(KEY, JSON.stringify(d));
-        }catch(e){}
-        ov.remove();
-      } else {
-        document.getElementById('gErr').style.display = 'block';
-        inp.style.borderColor = '#7a1515';
-        inp.value = '';
-        inp.focus();
-        setTimeout(function(){ document.getElementById('gErr').style.display='none'; inp.style.borderColor='#2a2a3a'; }, 2000);
-      }
-    }
-    inp.addEventListener('keydown', function(e){ if(e.key==='Enter') tryUnlock(); });
-    document.getElementById('gBtn').addEventListener('click', tryUnlock);
-  });
-})();
-</script>
+<div class="container">
+
+  <h1>🔧 Audit Stack — S51</h1>
+  <p class="subtitle">État de l'infrastructure technique au 25 mars 2026</p>
+
+  <!-- Chiffres clés -->
+  <div class="stats-row">
+    <div class="stat"><div class="val">94</div><div class="lbl">Pages UI</div></div>
+    <div class="stat"><div class="val">41</div><div class="lbl">Routes API</div></div>
+    <div class="stat"><div class="val">151</div><div class="lbl">Tables BDD</div></div>
+    <div class="stat"><div class="val">279</div><div class="lbl">Factures</div></div>
+    <div class="stat"><div class="val">167</div><div class="lbl">Clients</div></div>
+    <div class="stat"><div class="val">S51</div><div class="lbl">Sprint actuel</div></div>
+  </div>
+
+  <!-- Containers + BDD -->
+  <div class="grid2">
+    <div class="card">
+      <h2>🐳 Containers Docker</h2>
+      <table>
+        <thead><tr><th>Container</th><th>Image</th><th>Rôle</th><th>Statut</th></tr></thead>
+        <tbody>
+          <tr><td>micro_frontend</td><td>deploy-frontend:latest</td><td>Next.js 15 App Router</td><td class="ok">✅ UP</td></tr>
+          <tr><td>micro_api</td><td>deploy-api:latest</td><td>NestJS + custom-routes</td><td class="ok">✅ UP</td></tr>
+          <tr><td>micro_nginx</td><td>nginx:1.27-alpine</td><td>Reverse proxy</td><td class="ok">✅ UP</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h2>🗃️ Base de données</h2>
+      <table>
+        <thead><tr><th>Paramètre</th><th>Valeur</th></tr></thead>
+        <tbody>
+          <tr><td>Hôte</td><td>192.168.1.62:3307</td></tr>
+          <tr><td>BDD métier</td><td>micro_logiciel</td></tr>
+          <tr><td>BDD GED</td><td>micro_logiciel_ged</td></tr>
+          <tr><td>Tables</td><td>151 (dont ~90 commentées)</td></tr>
+          <tr><td>Backup propre</td><td>C:\Backup\micro_logiciel\20260315_0002</td></tr>
+          <tr><td>⚠️ Backups corrompus</td><td>À partir de 20260315_0042 — NE PAS UTILISER</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Règles critiques -->
+  <div class="section">
+    <h2>⚙️ Règles critiques de déploiement</h2>
+    <div class="rule">
+      <div class="rule-n">1</div>
+      <div class="rule-text"><strong>cd deploy AVANT tout docker compose</strong>Toujours se placer dans le dossier <code>deploy/</code> avant d'exécuter une commande Docker Compose.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">2</div>
+      <div class="rule-text"><strong>.\COPIER_TOUTES_PAGES_v2.ps1 AVANT chaque build frontend</strong>Copie tous les fichiers <code>page.tsx</code> dans le contexte Docker. Sans ça, les nouvelles pages ne sont pas incluses dans l'image.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">3</div>
+      <div class="rule-text"><strong>Séquence rebuild frontend</strong><code>docker compose build frontend --no-cache &amp;&amp; docker compose up -d frontend &amp;&amp; docker compose restart nginx</code></div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">4</div>
+      <div class="rule-text"><strong>Séquence rebuild API (après modif custom-routes.ts)</strong><code>docker compose build api --no-cache &amp;&amp; docker compose up -d api &amp;&amp; docker compose restart nginx</code></div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">5</div>
+      <div class="rule-text"><strong class="tred">inject_v4_final.js = NE JAMAIS UTILISER</strong>Contient un orphaned <code>catch</code> block → SyntaxError → crash loop API.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">6</div>
+      <div class="rule-text"><strong>Nginx strip /api/ → routes sans préfixe dans custom-routes.ts</strong>Nginx passe les requêtes <code>/api/xxx</code> à l'API comme <code>/xxx</code>. Ne jamais préfixer les routes avec <code>/api/</code> dans le code.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">7</div>
+      <div class="rule-text"><strong>DbService inaccessible après app.listen() → mysql2/promise direct</strong>Toutes les routes custom utilisent <code>mysql2/promise</code> avec les env vars <code>DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME</code>.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">8</div>
+      <div class="rule-text"><strong>PDF/Editions = TOUJOURS en Modal/Popup</strong>Factures : <code>fetch('/api/editions/facture/${id}')</code> → blob → <code>&lt;iframe&gt;</code> dans modal. Jamais de navigation directe.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">9</div>
+      <div class="rule-text"><strong>Ne jamais écraser layout.tsx</strong>Toujours patcher uniquement les 2 lignes nécessaires (import + usage). En cas de doute : <code>git restore src/app/app/layout.tsx</code>.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">10</div>
+      <div class="rule-text"><strong>Colonnes sans DEFAULT → toujours NOW() explicite dans les INSERT</strong>Évite les erreurs <code>Field doesn't have a default value</code>.</div>
+    </div>
+  </div>
+
+  <!-- Règles frontend -->
+  <div class="section">
+    <h2>⚛️ Règles frontend (Next.js 15)</h2>
+    <div class="rule">
+      <div class="rule-n">F1</div>
+      <div class="rule-text"><strong>"use client" — TOUJOURS première ligne</strong>Toutes les pages App Router avec hooks ou événements doivent commencer par <code>"use client";</code>.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">F2</div>
+      <div class="rule-text"><strong>import {{ api }} from "@/lib/api" — named export, jamais default</strong></div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">F3</div>
+      <div class="rule-text"><strong>Pas d'apostrophes françaises dans les strings TypeScript</strong>Utiliser <code>&amp;apos;</code> ou l'apostrophe droite <code>'</code> dans le JSX.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">F4</div>
+      <div class="rule-text"><strong>Leaflet en Next.js → charger dans useEffect avec guard mapInstanceRef.current</strong>Évite les doubles initialisations de carte en mode StrictMode.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-n">F5</div>
+      <div class="rule-text"><strong>Leaflet CDN → cdnjs.cloudflare.com (pas unpkg)</strong><code>https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js</code></div>
+    </div>
+  </div>
+
+  <!-- Routes API complètes -->
+  <div class="section">
+    <h2>🌐 41 Routes API custom actives — custom-routes.ts</h2>
+    <table>
+      <thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Sprint</th></tr></thead>
+      <tbody>
+        <!-- Core -->
+        <tr><td>GET</td><td>/bilan</td><td>Bilan global CA / factures</td><td>S40</td></tr>
+        <tr><td>GET</td><td>/bilan/metier</td><td>KPIs par métier + période</td><td>S43</td></tr>
+        <tr><td>GET</td><td>/ged-factures-impayees</td><td>Factures impayées GED</td><td>S40</td></tr>
+        <tr><td>GET</td><td>/dashboard/stats</td><td>Stats tableau de bord</td><td>S41</td></tr>
+        <!-- Tiers / Clients -->
+        <tr><td>GET</td><td>/tiers</td><td>Liste tiers avec filtre q=</td><td>S38</td></tr>
+        <tr><td>GET</td><td>/tiers/:id</td><td>Fiche tiers</td><td>S38</td></tr>
+        <tr><td>GET</td><td>/tiers-avec-coords</td><td>Tiers pour carte Leaflet</td><td>S50</td></tr>
+        <tr><td>GET</td><td>/villes-search</td><td>Recherche villes par nom/CP</td><td>S50</td></tr>
+        <!-- Animaux -->
+        <tr><td>GET</td><td>/animaux</td><td>Liste animaux</td><td>S38</td></tr>
+        <tr><td>GET</td><td>/races</td><td>Référentiel races multi-espèces</td><td>S41</td></tr>
+        <!-- Séances -->
+        <tr><td>GET</td><td>/seances</td><td>Liste séances</td><td>S38</td></tr>
+        <tr><td>GET</td><td>/seances/edc</td><td>Séances EDC</td><td>S40</td></tr>
+        <tr><td>GET</td><td>/seances/types/:id</td><td>Types de séance par métier</td><td>S42</td></tr>
+        <tr><td>GET</td><td>/planning-seances</td><td>Planning agenda</td><td>S50</td></tr>
+        <tr><td>GET</td><td>/agenda</td><td>Événements agenda</td><td>S50</td></tr>
+        <!-- Facturation -->
+        <tr><td>GET</td><td>/factures</td><td>Liste factures</td><td>S38</td></tr>
+        <tr><td>GET</td><td>/devis</td><td>Liste devis</td><td>S39</td></tr>
+        <tr><td>GET</td><td>/devis/templates</td><td>Templates devis par métier</td><td>S42</td></tr>
+        <tr><td>GET</td><td>/reglements</td><td>Liste règlements</td><td>S40</td></tr>
+        <!-- Editions PDF -->
+        <tr class="new-route"><td>GET</td><td>/editions/facture/:id</td><td>PDF facture via Puppeteer</td><td>S50</td></tr>
+        <tr class="new-route"><td>GET</td><td>/editions/devis/:id</td><td>PDF devis via Puppeteer</td><td>S50</td></tr>
+        <!-- Signatures -->
+        <tr><td>GET/POST</td><td>/signatures</td><td>Signatures Yousign</td><td>S50</td></tr>
+        <!-- Élevage -->
+        <tr><td>GET</td><td>/elevage/geniteurs</td><td>Liste géniteurs</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/elevage/portees</td><td>Liste portées</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/elevage/saillies</td><td>Saillies</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/elevage/gestations</td><td>Gestations en cours</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/elevage/reservations</td><td>Réservations chiots</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/elevage/reglements</td><td>Règlements élevage</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/elevage/alertes</td><td>Alertes élevage (terme, vaccins)</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/elevage/genealogie</td><td>Arbre généalogique</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/elevage/stats-viabilite</td><td>Stats viabilité portées</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/elevage/mortalite</td><td>Suivi mortalité</td><td>S41</td></tr>
+        <!-- Achats -->
+        <tr><td>GET</td><td>/achats</td><td>Liste achats fournisseurs</td><td>S41</td></tr>
+        <tr class="new-route"><td>GET</td><td>/achats/:id</td><td>Fiche achat par ID</td><td>S50</td></tr>
+        <tr class="new-route"><td>GET</td><td>/achats/:id/lignes</td><td>Lignes d'un achat</td><td>S50</td></tr>
+        <!-- Inventaires -->
+        <tr><td>GET</td><td>/inventaires</td><td>Liste inventaires</td><td>S41</td></tr>
+        <!-- CRM -->
+        <tr><td>GET</td><td>/leads</td><td>Liste leads CRM</td><td>S40</td></tr>
+        <tr><td>GET/POST</td><td>/crm/leads</td><td>CRUD leads</td><td>S40</td></tr>
+        <tr><td>GET</td><td>/crm/stats</td><td>Stats pipeline CRM</td><td>S43</td></tr>
+        <!-- Réseaux sociaux -->
+        <tr><td>GET</td><td>/reseaux-sociaux/comptes</td><td>Comptes RS connectés</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/reseaux-sociaux/publications</td><td>Publications planifiées</td><td>S41</td></tr>
+        <!-- Paramètres -->
+        <tr><td>GET</td><td>/parametres/editions</td><td>Config éditions PDF</td><td>S42</td></tr>
+        <tr><td>GET</td><td>/pa</td><td>Paramètres application</td><td>S40</td></tr>
+        <tr><td>GET</td><td>/modules</td><td>Modules actifs par métier</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/formulaire-lead</td><td>Config formulaire lead public</td><td>S43</td></tr>
+        <tr><td>GET</td><td>/metier</td><td>Métier de l'utilisateur</td><td>S40</td></tr>
+        <tr><td>GET</td><td>/smtp</td><td>Config SMTP</td><td>S42</td></tr>
+        <tr><td>GET/POST</td><td>/parametres/calendly</td><td>Config Calendly</td><td>S43</td></tr>
+        <!-- Aide -->
+        <tr><td>GET</td><td>/aide/contexte</td><td>Articles aide contextuels (7 contextes)</td><td>S44</td></tr>
+        <!-- Divers -->
+        <tr><td>GET</td><td>/categories</td><td>Catégories produits</td><td>S41</td></tr>
+        <tr><td>GET</td><td>/tva</td><td>Taux TVA</td><td>S38</td></tr>
+        <tr><td>GET</td><td>/plan-comptable</td><td>Plan comptable FEC</td><td>S43</td></tr>
+        <tr><td>GET</td><td>/programmes</td><td>Programmes de suivi</td><td>S40</td></tr>
+        <tr><td>GET</td><td>/questionnaires</td><td>Modèles questionnaires</td><td>S43</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:.8rem;font-size:.78rem;color:#555">
+      <span class="tag tgreen">● Vert</span> Routes ajoutées en S50 &nbsp;|&nbsp; Total : <strong style="color:#9d97e8">41 routes actives</strong>
+    </div>
+  </div>
+
+  <!-- Charte CSS -->
+  <div class="section">
+    <h2>🎨 Charte CSS (variables globales)</h2>
+    <div class="grid2" style="margin-bottom:0">
+      <table>
+        <thead><tr><th>Variable</th><th>Valeur (dark)</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td>--bg</td><td>#0a0a0f</td><td>Fond général</td></tr>
+          <tr><td>--surface</td><td>#13131a</td><td>Cards, panels</td></tr>
+          <tr><td>--border</td><td>#1e1e2e</td><td>Séparateurs</td></tr>
+          <tr><td>--accent</td><td>#534ab7</td><td>Accent principal</td></tr>
+          <tr><td>--accent2</td><td>#7c6ff7</td><td>Accent secondaire</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead><tr><th>Variable</th><th>Valeur (dark)</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td>--text</td><td>#e2e0d8</td><td>Texte principal</td></tr>
+          <tr><td>--muted</td><td>#6b6880</td><td>Texte secondaire</td></tr>
+          <tr><td>--green</td><td>#3ecf8e</td><td>Succès</td></tr>
+          <tr><td>--red</td><td>#ef4444</td><td>Erreur / danger</td></tr>
+          <tr><td>--surface-input</td><td>#1E293B (dark) / #FFF (light)</td><td>Inputs</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Classes boutons -->
+  <div class="section">
+    <h2>🖱️ Classes boutons &amp; conventions UI</h2>
+    <table>
+      <thead><tr><th>Classe</th><th>Usage</th><th>Statut</th></tr></thead>
+      <tbody>
+        <tr><td>btn-primary</td><td>Action principale (+ Nouvelle facture, Enregistrer…)</td><td class="ok">✅ OK</td></tr>
+        <tr><td>btn-ghost</td><td>Action secondaire (← Factures, Annuler…)</td><td class="ok">✅ OK</td></tr>
+        <tr><td>btn-danger</td><td>Action destructive (Supprimer, Archiver…)</td><td class="ok">✅ Créé S50</td></tr>
+        <tr><td>card</td><td>Conteneur de section</td><td class="ok">✅ OK</td></tr>
+        <tr><td>input</td><td>Champs de formulaire (utilise --surface-input)</td><td class="ok">✅ OK</td></tr>
+        <tr><td>label</td><td>Labels de formulaire</td><td class="ok">✅ OK</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:1rem;font-size:.82rem;color:#888">
+      <strong style="color:#e2e0d8">Conventions libellés :</strong>
+      <span class="tag tg">← [Nom page parente]</span>
+      <span class="tag tg">+ Nouvelle facture / + Nouvel animal</span>
+      <span class="tag tgreen">Enregistrement en cours…</span>
+    </div>
+  </div>
+
+  <!-- Fichiers clés -->
+  <div class="section">
+    <h2>📁 Fichiers clés de l'architecture</h2>
+    <table>
+      <thead><tr><th>Fichier</th><th>Rôle</th></tr></thead>
+      <tbody>
+        <tr><td>api/src/custom-routes.ts</td><td>Toutes les routes custom NestJS — compilé dans l'image Docker</td></tr>
+        <tr><td>api/src/main.ts</td><td>Point d'entrée NestJS — appelle registerCustomRoutes(app) avant listen()</td></tr>
+        <tr><td>src/app/app/layout.tsx</td><td>Layout App Router — NE JAMAIS écraser, patcher uniquement</td></tr>
+        <tr><td>src/components/Topbar.tsx</td><td>Barre d'outils — plein écran, thème, taille police, déconnexion</td></tr>
+        <tr><td>src/components/Sidebar.tsx</td><td>Navigation latérale — tous les modules</td></tr>
+        <tr><td>src/lib/api.ts</td><td>Client HTTP — named export {{ api }}</td></tr>
+        <tr><td>src/styles/globals.css</td><td>Variables CSS, classes btn-*, card, input, label</td></tr>
+        <tr><td>deploy/docker-compose.yml</td><td>Orchestration — toujours depuis deploy/</td></tr>
+        <tr><td>COPIER_TOUTES_PAGES_v2.ps1</td><td>Script copie pages → contexte Docker — OBLIGATOIRE avant build frontend</td></tr>
+        <tr><td>deploy/petsuite-docs/</td><td>Repo documentation GitHub Pages</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="footer">
+  PetSuite by Algorithmia · S51 · 25 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs" style="color:#534ab7">GitHub</a>
+</div>
+
 </body>
 </html>
