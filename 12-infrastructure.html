@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Infrastructure & Hébergement</title>
+<title>Anim'Gest — Infrastructure & Hébergement</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
@@ -79,7 +79,7 @@ main { padding: 0; }
 </head>
 <body>
 <header class="header">
-  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="logo">🐾 Anim'<span>Gest</span> Docs</div>
   <div class="nav-links">
     <a href="index.html">Accueil</a>
     <a href="06-roadmap.html">Roadmap</a>
@@ -192,7 +192,7 @@ main { padding: 0; }
       <div>
         <div class="arch-layer l-purple">
           Clients — navigateur / tablette / mobile
-          <div class="arch-sub">societe.petsuite.fr → Load Balancer Hetzner</div>
+          <div class="arch-sub">societe.Anim'Gest.fr → Load Balancer Hetzner</div>
         </div>
         <div class="arch-layer l-blue">
           Traefik reverse proxy (srv-app-01)
@@ -245,16 +245,16 @@ main { padding: 0; }
       <table class="tbl">
         <thead><tr><th>Entrée DNS</th><th>Type</th><th>Cible</th><th>Usage</th></tr></thead>
         <tbody>
-          <tr><td>petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>Site vitrine</td></tr>
-          <tr><td>*.petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>Wildcard tenants</td></tr>
-          <tr><td>app.petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>Portail super admin</td></tr>
-          <tr><td>api.petsuite.fr</td><td>A</td><td>IP Load Balancer</td><td>API plateforme</td></tr>
-          <tr><td>docs.petsuite.fr</td><td>CNAME</td><td>nicolashermilly.github.io</td><td>Documentation (GitHub Pages)</td></tr>
-          <tr><td>cabinetmartin.petsuite.fr</td><td>Wildcard résolu</td><td>IP Load Balancer</td><td>Exemple tenant</td></tr>
+          <tr><td>Anim'Gest.fr</td><td>A</td><td>IP Load Balancer</td><td>Site vitrine</td></tr>
+          <tr><td>*.Anim'Gest.fr</td><td>A</td><td>IP Load Balancer</td><td>Wildcard tenants</td></tr>
+          <tr><td>app.Anim'Gest.fr</td><td>A</td><td>IP Load Balancer</td><td>Portail super admin</td></tr>
+          <tr><td>api.Anim'Gest.fr</td><td>A</td><td>IP Load Balancer</td><td>API plateforme</td></tr>
+          <tr><td>docs.Anim'Gest.fr</td><td>CNAME</td><td>nicolashermilly.github.io</td><td>Documentation (GitHub Pages)</td></tr>
+          <tr><td>cabinetmartin.Anim'Gest.fr</td><td>Wildcard résolu</td><td>IP Load Balancer</td><td>Exemple tenant</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="alert alert-warn">Le certificat SSL wildcard *.petsuite.fr est obligatoire pour couvrir tous les sous-domaines tenants dynamiques. Let's Encrypt le supporte via challenge DNS-01.</div>
+    <div class="alert alert-warn">Le certificat SSL wildcard *.Anim'Gest.fr est obligatoire pour couvrir tous les sous-domaines tenants dynamiques. Let's Encrypt le supporte via challenge DNS-01.</div>
   </div>
 </div>
 
@@ -284,20 +284,20 @@ main { padding: 0; }
 
   <span class="cm"># Frontend Next.js</span>
   frontend:
-    image: <span class="ck">ghcr.io/nicolashermilly/petsuite-frontend:${TAG}</span>
+    image: <span class="ck">ghcr.io/nicolashermilly/Anim'Gest-frontend:${TAG}</span>
     restart: unless-stopped
     environment:
-      - <span class="cv">NEXT_PUBLIC_API_URL=https://api.petsuite.fr</span>
+      - <span class="cv">NEXT_PUBLIC_API_URL=https://api.Anim'Gest.fr</span>
       - <span class="cv">NODE_ENV=production</span>
     labels:
       - <span class="ck">"traefik.enable=true"</span>
-      - <span class="ck">"traefik.http.routers.frontend.rule=HostRegexp(`{subdomain:[a-z0-9-]+}.petsuite.fr`)"</span>
+      - <span class="ck">"traefik.http.routers.frontend.rule=HostRegexp(`{subdomain:[a-z0-9-]+}.Anim'Gest.fr`)"</span>
       - <span class="ck">"traefik.http.routers.frontend.tls.certresolver=letsencrypt"</span>
     networks: [proxy, internal]
 
   <span class="cm"># API NestJS</span>
   api:
-    image: <span class="ck">ghcr.io/nicolashermilly/petsuite-api:${TAG}</span>
+    image: <span class="ck">ghcr.io/nicolashermilly/Anim'Gest-api:${TAG}</span>
     restart: unless-stopped
     environment:
       - <span class="cv">NODE_ENV=production</span>
@@ -310,7 +310,7 @@ main { padding: 0; }
       - <span class="cv">S3_SECRET_KEY=${S3_SECRET_KEY}</span>
     labels:
       - <span class="ck">"traefik.enable=true"</span>
-      - <span class="ck">"traefik.http.routers.api.rule=Host(`api.petsuite.fr`)"</span>
+      - <span class="ck">"traefik.http.routers.api.rule=Host(`api.Anim'Gest.fr`)"</span>
       - <span class="ck">"traefik.http.routers.api.tls.certresolver=letsencrypt"</span>
     networks: [proxy, internal]
     depends_on: [redis]
@@ -325,7 +325,7 @@ main { padding: 0; }
 
   <span class="cm"># Worker queues (PDF, emails, SEPA)</span>
   worker:
-    image: <span class="ck">ghcr.io/nicolashermilly/petsuite-api:${TAG}</span>
+    image: <span class="ck">ghcr.io/nicolashermilly/Anim'Gest-api:${TAG}</span>
     restart: unless-stopped
     command: <span class="ck">node dist/worker.js</span>
     environment:
@@ -364,7 +364,7 @@ main { padding: 0; }
     acme:
       email: <span class="ck"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e5f5a5357507e4e5b4a4d4b574a5b10584c">[email&#160;protected]</a></span>
       storage: <span class="ck">/acme.json</span>
-      dnsChallenge:          <span class="cm"># DNS-01 pour wildcard *.petsuite.fr</span>
+      dnsChallenge:          <span class="cm"># DNS-01 pour wildcard *.Anim'Gest.fr</span>
         provider: <span class="ck">hetzner</span>  <span class="cm"># ou ovh selon hébergeur</span>
         delayBeforeCheck: <span class="cv">30</span>
 
@@ -433,14 +433,14 @@ main { padding: 0; }
         with:
           context: <span class="cv">./api</span>
           push: true
-          tags: <span class="cv">ghcr.io/nicolashermilly/petsuite-api:${{ github.ref_name }}</span>
+          tags: <span class="cv">ghcr.io/nicolashermilly/Anim'Gest-api:${{ github.ref_name }}</span>
 
       - <span class="cs">name:</span> Build & push Frontend
         uses: <span class="ck">docker/build-push-action@v5</span>
         with:
           context: <span class="cv">./frontend</span>
           push: true
-          tags: <span class="cv">ghcr.io/nicolashermilly/petsuite-frontend:${{ github.ref_name }}</span>
+          tags: <span class="cv">ghcr.io/nicolashermilly/Anim'Gest-frontend:${{ github.ref_name }}</span>
 
   <span class="cs">deploy:</span>
     needs: build-and-push
@@ -453,7 +453,7 @@ main { padding: 0; }
           username: <span class="cv">deploy</span>
           key: <span class="cv">${{ secrets.PROD_SSH_KEY }}</span>
           script: |
-            cd /opt/petsuite
+            cd /opt/Anim'Gest
             export TAG=<span class="cv">${{ github.ref_name }}</span>
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d --no-deps api frontend worker
@@ -491,7 +491,7 @@ main { padding: 0; }
       <div class="card-title"><div class="card-icon icon-green">🔒</div>SSL wildcard automatique</div>
       <div class="item-list">
         <div class="item"><span class="item-label">Provider</span><span class="item-val">Let's Encrypt via Traefik — challenge DNS-01</span></div>
-        <div class="item"><span class="item-label">Certificat</span><span class="item-val">*.petsuite.fr — couvre tous les sous-domaines tenants</span></div>
+        <div class="item"><span class="item-label">Certificat</span><span class="item-val">*.Anim'Gest.fr — couvre tous les sous-domaines tenants</span></div>
         <div class="item"><span class="item-label">Renouvellement</span><span class="item-val">Automatique tous les 60 jours (expiration à 90)</span></div>
         <div class="item"><span class="item-label">Stockage</span><span class="item-val">acme.json (chmod 600) — volume persistant Docker</span></div>
         <div class="item"><span class="item-label">Nouveau tenant</span><span class="item-val">Sous-domaine couvert instantanément par le wildcard</span></div>
@@ -502,7 +502,7 @@ main { padding: 0; }
       <div class="item-list">
         <div class="item"><span class="item-label">Rate limiting</span><span class="item-val">Traefik : 100 req/min par IP sur /api/auth</span></div>
         <div class="item"><span class="item-label">Headers sécurité</span><span class="item-val">HSTS · X-Frame-Options · CSP via middleware Traefik</span></div>
-        <div class="item"><span class="item-label">CORS</span><span class="item-val">Origines autorisées : *.petsuite.fr uniquement</span></div>
+        <div class="item"><span class="item-label">CORS</span><span class="item-val">Origines autorisées : *.Anim'Gest.fr uniquement</span></div>
         <div class="item"><span class="item-label">JWT</span><span class="item-val">Expiration 15 min · Refresh token 7 jours · Rotation</span></div>
         <div class="item"><span class="item-label">Fail2ban</span><span class="item-val">Banissement auto après 5 tentatives SSH échouées</span></div>
         <div class="item"><span class="item-label">Audit log</span><span class="item-val">Toutes actions critiques loggées en BDD</span></div>
@@ -518,7 +518,7 @@ main { padding: 0; }
     <div class="card">
       <div class="card-title"><div class="card-icon icon-gold">🪣</div>Structure buckets</div>
       <div class="item-list">
-        <div class="item"><span class="item-label">Bucket unique</span><span class="item-val">petsuite-ged — préfixe tenant_id dans le chemin</span></div>
+        <div class="item"><span class="item-label">Bucket unique</span><span class="item-val">Anim'Gest-ged — préfixe tenant_id dans le chemin</span></div>
         <div class="item"><span class="item-label">Arborescence</span><span class="item-val">/{tenant_id}/{type}/{YYYY}/{MM}/{uuid}.ext</span></div>
         <div class="item"><span class="item-label">Chiffrement</span><span class="item-val">SSE-S3 côté serveur — AES-256</span></div>
         <div class="item"><span class="item-label">Accès</span><span class="item-val">Privé — URLs signées 15 min pour accès client</span></div>
@@ -576,7 +576,7 @@ main { padding: 0; }
         <div class="card-title"><div class="card-icon icon-green">✅</div>Uptime Kuma</div>
         <div class="item-list">
           <div class="item"><span class="item-label">Surveillance</span><span class="item-val">Ping chaque endpoint public toutes les 60s</span></div>
-          <div class="item"><span class="item-label">Page statut</span><span class="item-val">status.petsuite.fr — accessible clients</span></div>
+          <div class="item"><span class="item-label">Page statut</span><span class="item-val">status.Anim'Gest.fr — accessible clients</span></div>
           <div class="item"><span class="item-label">Notification</span><span class="item-val">Email + SMS si downtime &gt; 2 min</span></div>
         </div>
         <div class="pill-row"><span class="pill pill-ok">Gratuit auto-hébergé</span></div>
@@ -628,7 +628,7 @@ mkdir -p <span class="cv">$BACKUP_DIR</span>
 
 <span class="cm"># Lister tous les schemas tenants</span>
 TENANTS=$(mysql -u <span class="cm"># user_technique</span> -p<span class="cv">$DB_PASS</span> \
-  -e <span class="ck">"SHOW DATABASES LIKE 'micro_logiciel_%'"</span> \
+  -e <span class="ck">"SHOW DATABASES LIKE 'anim_gest_%'"</span> \
   -s --skip-column-names)
 
 for DB in <span class="cv">$TENANTS</span>; do
@@ -641,7 +641,7 @@ done
 
 <span class="cm"># Upload vers S3</span>
 aws s3 sync <span class="cv">$BACKUP_DIR</span> \
-  s3://petsuite-backups/<span class="cv">$DATE</span>/ \
+  s3://Anim'Gest-backups/<span class="cv">$DATE</span>/ \
   --storage-class STANDARD_IA
 
 rm -rf <span class="cv">$BACKUP_DIR</span>
@@ -655,11 +655,11 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
     <div class="card">
       <div class="flow-step">
         <div class="flow-step-num">1</div>
-        <div class="flow-step-body"><div class="flow-step-title">Identifier le backup</div><div class="flow-step-desc">aws s3 ls s3://petsuite-backups/ → choisir la date/heure du backup souhaité.</div></div>
+        <div class="flow-step-body"><div class="flow-step-title">Identifier le backup</div><div class="flow-step-desc">aws s3 ls s3://Anim'Gest-backups/ → choisir la date/heure du backup souhaité.</div></div>
       </div>
       <div class="flow-step">
         <div class="flow-step-num">2</div>
-        <div class="flow-step-body"><div class="flow-step-title">Télécharger et déchiffrer</div><div class="flow-step-desc">aws s3 cp s3://petsuite-backups/{date}/{schema}.sql.gz.gpg . → gpg --decrypt → gunzip.</div></div>
+        <div class="flow-step-body"><div class="flow-step-title">Télécharger et déchiffrer</div><div class="flow-step-desc">aws s3 cp s3://Anim'Gest-backups/{date}/{schema}.sql.gz.gpg . → gpg --decrypt → gunzip.</div></div>
       </div>
       <div class="flow-step">
         <div class="flow-step-num">3</div>
@@ -716,7 +716,7 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
 <div class="section" id="s10">
   <div class="section-header"><span class="section-num">10</span><span class="section-title">Variables d'environnement production</span></div>
   <div class="code">
-<span class="cm"># /opt/petsuite/.env.prod — NE PAS COMMITTER</span>
+<span class="cm"># /opt/Anim'Gest/.env.prod — NE PAS COMMITTER</span>
 
 <span class="cm"># Application</span>
 <span class="cv">NODE_ENV</span>=<span class="ck">production</span>
@@ -724,7 +724,7 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
 
 <span class="cm"># BDD plateforme</span>
 <span class="cv">PLATFORM_DB_HOST</span>=<span class="ck">10.0.2.1</span>
-<span class="cv">PLATFORM_DB_NAME</span>=<span class="ck">petsuite_platform</span>
+<span class="cv">PLATFORM_DB_NAME</span>=<span class="ck">Anim'Gest_platform</span>
 <span class="cv">PLATFORM_DB_USER</span>=<span class="ck">[user_technique_applicatif]</span>
 <span class="cv">PLATFORM_DB_PASS</span>=<span class="ck">@lgoritHme+2025+977_73300</span>
 
@@ -740,7 +740,7 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
 <span class="cm"># S3 GED (Hetzner Object Storage)</span>
 <span class="cv">S3_ENDPOINT</span>=<span class="ck">https://fsn1.your-objectstorage.com</span>
 <span class="cv">S3_REGION</span>=<span class="ck">eu-central-1</span>
-<span class="cv">S3_BUCKET</span>=<span class="ck">petsuite-ged</span>
+<span class="cv">S3_BUCKET</span>=<span class="ck">Anim'Gest-ged</span>
 <span class="cv">S3_ACCESS_KEY</span>=<span class="ck">[clé Hetzner]</span>
 <span class="cv">S3_SECRET_KEY</span>=<span class="ck">[secret Hetzner]</span>
 
@@ -775,7 +775,7 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
         <div class="check-item">Configurer SSH clé uniquement + port non standard</div>
         <div class="check-item">Installer Fail2ban sur tous les serveurs</div>
         <div class="check-item">Créer le volume bloc persistant pour MariaDB</div>
-        <div class="check-item">Configurer les entrées DNS (A + wildcard *.petsuite.fr)</div>
+        <div class="check-item">Configurer les entrées DNS (A + wildcard *.Anim'Gest.fr)</div>
       </div>
     </div>
     <div class="card">
@@ -788,14 +788,14 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
         <div class="check-item">Premier déploiement manuel pour validation</div>
         <div class="check-item">Configurer GitHub Secrets (tous les tokens)</div>
         <div class="check-item">Tester le pipeline CI/CD sur un tag v0.1.0-test</div>
-        <div class="check-item">Vérifier SSL wildcard actif sur *.petsuite.fr</div>
+        <div class="check-item">Vérifier SSL wildcard actif sur *.Anim'Gest.fr</div>
       </div>
     </div>
     <div class="card">
       <div class="card-title"><div class="card-icon icon-green">🗄</div>BDD & données</div>
       <div class="check-list">
         <div class="check-item">Installer MariaDB 10.11+ sur srv-db-01</div>
-        <div class="check-item">Créer la BDD plateforme petsuite_platform</div>
+        <div class="check-item">Créer la BDD plateforme Anim'Gest_platform</div>
         <div class="check-item">Appliquer les migrations Flyway</div>
         <div class="check-item">Tester la création d'un premier tenant</div>
         <div class="check-item">Configurer le backup quotidien (cron workflow)</div>
@@ -807,7 +807,7 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
       <div class="card-title"><div class="card-icon icon-purple">📊</div>Monitoring & go-live</div>
       <div class="check-list">
         <div class="check-item">Déployer Prometheus + Grafana + node_exporter</div>
-        <div class="check-item">Déployer Uptime Kuma + configurer status.petsuite.fr</div>
+        <div class="check-item">Déployer Uptime Kuma + configurer status.Anim'Gest.fr</div>
         <div class="check-item">Configurer les alertes email/Slack</div>
         <div class="check-item">Intégrer Sentry pour les erreurs prod</div>
         <div class="check-item">Test de charge (k6 ou Locust) avant ouverture</div>
@@ -825,6 +825,6 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
 <footer>
   <div><strong>Pe
 </div>
-<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
+<footer>Anim'Gest by NoSage's Editor · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/Anim'Gest-docs">GitHub</a></footer>
 </body>
 </html>

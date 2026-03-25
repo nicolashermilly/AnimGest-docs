@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Architecture & Roadmap</title>
+<title>Anim'Gest — Architecture & Roadmap</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
@@ -79,7 +79,7 @@ main { padding: 0; }
 </head>
 <body>
 <header class="header">
-  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="logo">🐾 Anim'<span>Gest</span> Docs</div>
   <div class="nav-links">
     <a href="index.html">Accueil</a>
     <a href="06-roadmap.html">Roadmap</a>
@@ -94,7 +94,7 @@ main { padding: 0; }
 <div class="hero">
   <div class="hero-tag">Document technique — Architecture & Roadmap</div>
   <h1>Architecture <em>& Roadmap</em></h1>
-  <p class="hero-sub">Vision technique complète du projet PetSuite — stack, BDD, modules, multi-tenant SaaS, modèle commercial, scalabilité et feuille de route par phase.</p>
+  <p class="hero-sub">Vision technique complète du projet Anim'Gest — stack, BDD, modules, multi-tenant SaaS, modèle commercial, scalabilité et feuille de route par phase.</p>
   <div class="hero-kpis">
     <div class="kpi"><div class="kpi-num">S25</div><div class="kpi-lbl">Session courante</div></div>
     <div class="kpi"><div class="kpi-num">60+</div><div class="kpi-lbl">Tables BDD</div></div>
@@ -218,7 +218,7 @@ main { padding: 0; }
   <div class="subsection">
     <div class="subsection-title">Variables PowerShell projet</div>
     <div class="code">
-<span class="cv">$root</span> = <span class="ck">"D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs"</span>
+<span class="cv">$root</span> = <span class="ck">"D:\OneDrive_Perso\OneDrive\Documents\anim_gest\Documentation\Frontend\anim_gest_frontend_nextjs"</span>
 <span class="cv">$app</span>  = <span class="ck">"$root\src\app\app"</span>
 <span class="cv">$comp</span> = <span class="ck">"$root\src\components"</span>
 <span class="cv">$pub</span>  = <span class="ck">"$root\public\docs"</span>
@@ -228,7 +228,7 @@ main { padding: 0; }
   <div class="subsection">
     <div class="subsection-title">Sauvegarde patches (à faire avant tout rebuild)</div>
     <div class="code">
-<span class="cv">$bk</span> = <span class="ck">"C:\Backup\micro_logiciel\$(Get-Date -Format 'yyyyMMdd_HHmm')"</span>
+<span class="cv">$bk</span> = <span class="ck">"C:\Backup\anim_gest\$(Get-Date -Format 'yyyyMMdd_HHmm')"</span>
 New-Item -ItemType Directory -Force -Path <span class="cv">$bk</span>
 docker cp micro_api:/app/dist/main.js              <span class="ck">"$bk\main.js"</span>
 docker cp micro_api:/app/dist/patch_animaux_v2.js  <span class="ck">"$bk\patch_animaux_v2.js"</span>
@@ -245,10 +245,10 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
     <span class="section-title">Base de données</span>
   </div>
 
-  <div class="alert alert-info" style="margin-bottom:16px;">Connexion : 192.168.1.62:3307 — BDD : micro_logiciel (métier) + micro_logiciel_ged (GED) — Charset : utf8mb4_unicode_ci / InnoDB</div>
+  <div class="alert alert-info" style="margin-bottom:16px;">Connexion : 192.168.1.62:3307 — BDD : anim_gest (métier) + anim_gest_ged (GED) — Charset : utf8mb4_unicode_ci / InnoDB</div>
 
   <div class="subsection">
-    <div class="subsection-title">Architecture BDD complète — micro_logiciel (session 24)</div>
+    <div class="subsection-title">Architecture BDD complète — anim_gest (session 24)</div>
     <div class="grid2">
       <div>
         <div class="tbl-wrap">
@@ -343,7 +343,7 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
   </div>
   <div class="grid2">
     <div class="card">
-      <div class="card-title"><div class="card-icon icon-green">📁</div>Structure micro_logiciel_ged</div>
+      <div class="card-title"><div class="card-icon icon-green">📁</div>Structure anim_gest_ged</div>
       <div class="pill-row">
         <span class="pill pill-gray">ged_objet_type</span>
         <span class="pill pill-gray">ged_document</span>
@@ -488,12 +488,12 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
     <div>
       <div class="subsection-title">Couches d'infrastructure</div>
       <div class="arch">
-        <div class="arch-layer l-gray">Client — navigateur / tablette / mobile<div class="arch-sub">URL : societe.petsuite.fr</div></div>
+        <div class="arch-layer l-gray">Client — navigateur / tablette / mobile<div class="arch-sub">URL : societe.Anim'Gest.fr</div></div>
         <div class="arch-layer l-purple">CDN Cloudflare<div class="arch-sub">Assets statiques, vidéos GIF modules</div></div>
         <div class="arch-layer l-blue">Reverse proxy Nginx / Traefik<div class="arch-sub">Routage par sous-domaine → tenant_id</div></div>
         <div class="arch-layer l-blue">API Gateway + Auth JWT<div class="arch-sub">Injection tenant_id — zéro fuite inter-société</div></div>
         <div class="arch-layer l-teal">Shard registry<div class="arch-sub">tenant_id → host + port + schema MariaDB</div></div>
-        <div class="arch-layer l-green">Schema MariaDB par société<div class="arch-sub">micro_logiciel_{tenant_id} — isolation totale RGPD</div></div>
+        <div class="arch-layer l-green">Schema MariaDB par société<div class="arch-sub">anim_gest_{tenant_id} — isolation totale RGPD</div></div>
         <div class="arch-layer l-gold">Bucket S3 GED par société<div class="arch-sub">/{tenant_id}/{type}/{YYYY}/{MM}/fichier</div></div>
         <div class="arch-layer l-red">BDD Plateforme (super admin)<div class="arch-sub">contrats · licences · mandats SEPA · CGV · audit global</div></div>
       </div>
@@ -737,6 +737,6 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
 </div><!-- /main -->
 </div><!-- /layout --
 </div>
-<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
+<footer>Anim'Gest by NoSage's Editor · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/Anim'Gest-docs">GitHub</a></footer>
 </body>
 </html>

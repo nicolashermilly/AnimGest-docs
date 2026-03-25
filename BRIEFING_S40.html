@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Briefing Session S40 — PetSuite</title>
+<title>Briefing Session S40 — Anim'Gest</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
@@ -60,7 +60,7 @@ footer a { color: #534ab7; }
 </head>
 <body>
 <header class="header">
-  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="logo">🐾 Anim'<span>Gest</span> Docs</div>
   <div class="nav-links">
     <a href="index.html">Accueil</a>
     <a href="06-roadmap.html">Roadmap</a>
@@ -73,25 +73,25 @@ footer a { color: #534ab7; }
   <div class="st">🔑 Chemins essentiels</div>
   <table>
     <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">App locale</td><td>http://localhost/app/</td></tr>
-    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">GitHub docs</td><td>https://nicolashermilly.github.io/petsuite-docs/</td></tr>
-    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">Deploy</td><td>…\micro_logiciel_frontend_nextjs\deploy</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">GitHub docs</td><td>https://nicolashermilly.github.io/Anim'Gest-docs/</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">Deploy</td><td>…\anim_gest_frontend_nextjs\deploy</td></tr>
     <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">$apiFile</td><td>…\api\src\custom-routes.ts</td></tr>
-    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">BDD MariaDB</td><td>192.168.1.62:3307 / @lgorithme / micro_logiciel</td></tr>
-    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">Backup S39</td><td>C:\Backup\micro_logiciel\20260322_fin_s39.sql ✅</td></tr>
-    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">Docs repo local</td><td>C:\Users\AdminPC\AppData\Local\Temp\petsuite-docs-s33</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">BDD MariaDB</td><td>192.168.1.62:3307 / @lgorithme / anim_gest</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">Backup S39</td><td>C:\Backup\anim_gest\20260322_fin_s39.sql ✅</td></tr>
+    <tr><td style="color:var(--cyan);font-weight:600;white-space:nowrap">Docs repo local</td><td>C:\Users\AdminPC\AppData\Local\Temp\Anim'Gest-docs-s33</td></tr>
   </table>
 </div>
 
 <div class="section">
   <div class="st">⚙️ Règles critiques (rappel)</div>
-  <pre>cd "D:\...\micro_logiciel_frontend_nextjs"
+  <pre>cd "D:\...\anim_gest_frontend_nextjs"
 .\COPIER_TOUTES_PAGES_v2.ps1
 cd deploy
 docker compose build api --no-cache && docker compose up -d api
 # Rebuild tout
 docker compose build api frontend --no-cache && docker compose up -d api frontend && docker compose restart nginx
 # Sauvegarde début S40
-& "C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe" -h 192.168.1.62 -P 3307 -u "@lgorithme" --password="@lgoritHme+2025+977_73300" --single-transaction --skip-lock-tables micro_logiciel > C:\Backup\micro_logiciel\20260322_debut_s40.sql</pre>
+& "C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe" -h 192.168.1.62 -P 3307 -u "@lgorithme" --password="@lgoritHme+2025+977_73300" --single-transaction --skip-lock-tables anim_gest > C:\Backup\anim_gest\20260322_debut_s40.sql</pre>
   <ul>
     <li>Toujours <code>cd deploy</code> avant <code>docker compose</code></li>
     <li><strong>TOUTES les éditions PDF = Modal/Popup</strong> — jamais de navigation vers nouvelle page</li>
@@ -156,7 +156,7 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
 
 <div class="section">
   <div class="st">🚨 Priorité 3 — Déployer page Interfaces API S39</div>
-  <pre>$root = "D:\...\micro_logiciel_frontend_nextjs"
+  <pre>$root = "D:\...\anim_gest_frontend_nextjs"
 Copy-Item "C:\Users\AdminPC\Downloads\api-keys-page-s39.tsx" "$root\src\app\app\parametres\api-keys\page.tsx" -Force</pre>
   <p>Puis créer la route <code>GET/POST /param-urls</code> dans custom-routes.ts — table <code>param_url</code> à créer (PRM_KEY, PRM_VALUE).</p>
 </div>
@@ -219,12 +219,12 @@ Copy-Item "C:\Users\AdminPC\Downloads\api-keys-page-s39.tsx" "$root\src\app\app\
     <tr><th>Sprint</th><th>Objectif</th></tr>
     <tr><td><strong>S40</strong></td><td>Corrections POST body parsing, page api-keys + /param-urls, seeds RFE complets, DocumentActions tous écrans, composants StatusBadge/TabBar</td></tr>
     <tr><td><strong>S41</strong></td><td>Split custom-routes.ts, assistant vocal MCP, adaptation écrans par métier</td></tr>
-    <tr><td><strong>S42</strong></td><td>Vidéos démo par métier, préparation commerciale Algorithmia, onboarding guidé</td></tr>
+    <tr><td><strong>S42</strong></td><td>Vidéos démo par métier, préparation commerciale NoSage's Editor, onboarding guidé</td></tr>
   </table>
 </div>
 
 </div>
 </div>
-<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
+<footer>Anim'Gest by NoSage's Editor · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/Anim'Gest-docs">GitHub</a></footer>
 </body>
 </html>

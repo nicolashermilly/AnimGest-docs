@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — 28 · Rapport Règles Métier · Recettes S33</title>
+<title>Anim'Gest — 28 · Rapport Règles Métier · Recettes S33</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
@@ -79,7 +79,7 @@ main { padding: 0; }
 </head>
 <body>
 <header class="header">
-  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="logo">🐾 Anim'<span>Gest</span> Docs</div>
   <div class="nav-links">
     <a href="index.html">Accueil</a>
     <a href="06-roadmap.html">Roadmap</a>
@@ -95,7 +95,7 @@ main { padding: 0; }
     <h1>Rapport des règles métier<br>— Référentiel de recette</h1>
     <div class="page-meta">
       <span>📅 18/03/2026</span>
-      <span>⚙️ BDD micro_logiciel + micro_logiciel_ged</span>
+      <span>⚙️ BDD anim_gest + anim_gest_ged</span>
       <span>🔧 20+ triggers · 3 procédures · 10+ vues</span>
     </div>
   </div>
@@ -555,7 +555,7 @@ main { padding: 0; }
           <span class="rule-id">GED-01</span>
           <span class="rule-title">Validation inter-BDD — objet métier doit exister</span>
         </div>
-        <div class="rule-body">Avant de créer un lien document → objet métier, le trigger <code>bi_ged_document_lien_check_objet</code> vérifie que l'objet cible existe dans <code>micro_logiciel</code>. Couvre 13 types : ANIMAL, ARTICLE_PRESTATION, CONTACT, FACTURE, RACE, SEANCE, TIERS, UTILISATEUR, DEVIS_CONTRAT, AVOIR, REGLEMENT, CRM_NOTE, CRM_ACTIVITE.</div>
+        <div class="rule-body">Avant de créer un lien document → objet métier, le trigger <code>bi_ged_document_lien_check_objet</code> vérifie que l'objet cible existe dans <code>anim_gest</code>. Couvre 13 types : ANIMAL, ARTICLE_PRESTATION, CONTACT, FACTURE, RACE, SEANCE, TIERS, UTILISATEUR, DEVIS_CONTRAT, AVOIR, REGLEMENT, CRM_NOTE, CRM_ACTIVITE.</div>
         <div class="rule-meta">
           <span class="pill p-crit">bi_ged_document_lien_check_objet BEFORE INSERT</span>
           <span class="pill p-crit">bu_ged_document_lien_check_objet BEFORE UPDATE</span>
@@ -677,7 +677,7 @@ main { padding: 0; }
           <span class="rule-id">SEC-01</span>
           <span class="rule-title">Utilisateur SQL unique — Admin</span>
         </div>
-        <div class="rule-body">Un seul utilisateur SQL applicatif : <code>Admin</code> (MariaDB hors Docker, port 3307, <code>--skip-ssl</code> obligatoire). Droits : SELECT, INSERT, UPDATE, DELETE, SHOW VIEW, EXECUTE, TRIGGER, EVENT sur <code>micro_logiciel.*</code>.</div>
+        <div class="rule-body">Un seul utilisateur SQL applicatif : <code>Admin</code> (MariaDB hors Docker, port 3307, <code>--skip-ssl</code> obligatoire). Droits : SELECT, INSERT, UPDATE, DELETE, SHOW VIEW, EXECUTE, TRIGGER, EVENT sur <code>anim_gest.*</code>.</div>
         <div class="rule-meta">
           <span class="pill p-warn">Hors Docker · 192.168.1.62:3307</span>
           <span class="pill p-crit">--skip-ssl obligatoire</span>
@@ -781,6 +781,6 @@ main { padding: 0; }
     </div>
   </div>
 </div>
-<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
+<footer>Anim'Gest by NoSage's Editor · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/Anim'Gest-docs">GitHub</a></footer>
 </body>
 </html>

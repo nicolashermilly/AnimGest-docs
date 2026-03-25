@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Carte d'identité animale</title>
+<title>Anim'Gest — Carte d'identité animale</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
@@ -79,7 +79,7 @@ main { padding: 0; }
 </head>
 <body>
 <header class="header">
-  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="logo">🐾 Anim'<span>Gest</span> Docs</div>
   <div class="nav-links">
     <a href="index.html">Accueil</a>
     <a href="06-roadmap.html">Roadmap</a>
@@ -119,7 +119,7 @@ main { padding: 0; }
         <div class="item"><span class="item-label">Format</span><span class="item-val">15 chiffres — standard ISO 11784/11785</span></div>
         <div class="item"><span class="item-label">Unicité mondiale</span><span class="item-val">Identifiant implanté, non modifiable, unique</span></div>
         <div class="item"><span class="item-label">Clé primaire</span><span class="item-val">ANI_PUC — UNIQUE KEY dans la table animal</span></div>
-        <div class="item"><span class="item-label">Cross-tenant</span><span class="item-val">La puce permet de retrouver l'animal dans n'importe quelle société PetSuite</span></div>
+        <div class="item"><span class="item-label">Cross-tenant</span><span class="item-val">La puce permet de retrouver l'animal dans n'importe quelle société Anim'Gest</span></div>
         <div class="item"><span class="item-label">Vérification</span><span class="item-val">Format validé à la saisie (REGEXP '^[0-9]{15}$')</span></div>
       </div>
     </div>
@@ -218,7 +218,7 @@ main { padding: 0; }
     <!-- En-tête -->
     <div class="pdf-header">
       <div>
-        <div class="pdf-header-logo">Pet<span>Suite</span></div>
+        <div class="pdf-header-logo">Anim'<span>Gest</span></div>
         <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:4px;">Cabinet Canin Harmonie — Sophie Martin</div>
       </div>
       <div class="pdf-header-title">
@@ -290,7 +290,7 @@ main { padding: 0; }
     <!-- Pied de page -->
     <div class="pdf-footer">
       <div>
-        <div>Document généré par PetSuite · puce 250269811500001</div>
+        <div>Document généré par Anim'Gest · puce 250269811500001</div>
         <div style="margin-top:2px;">Confidentiel — partagé avec le consentement du propriétaire · Validité 30 jours</div>
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
@@ -419,7 +419,7 @@ main { padding: 0; }
 }
 
 <span class="cm">// URL partagée</span>
-https://app.petsuite.fr/api/carte/
+https://app.Anim'Gest.fr/api/carte/
   eyJhbGciOiJIUzI1NiJ9...
         </div>
       </div>
@@ -467,7 +467,7 @@ https://app.petsuite.fr/api/carte/
 <!-- 06 CROSS-TENANT -->
 <div class="section" id="s6">
   <div class="section-header"><span class="section-num">06</span><span class="section-title">Partage cross-tenant (vision SaaS)</span></div>
-  <div class="alert alert-info" style="margin-bottom:16px;">Fonctionnalité avancée — à implémenter après la mise en production mono-tenant. La puce comme clé universelle permet de retrouver un animal entre sociétés PetSuite distinctes.</div>
+  <div class="alert alert-info" style="margin-bottom:16px;">Fonctionnalité avancée — à implémenter après la mise en production mono-tenant. La puce comme clé universelle permet de retrouver un animal entre sociétés Anim'Gest distinctes.</div>
   <div class="grid2">
     <div class="card">
       <div class="card-title"><div class="card-icon icon-purple">🌐</div>Scénario type</div>
@@ -483,14 +483,14 @@ https://app.petsuite.fr/api/carte/
           <div class="flow-step-num">B</div>
           <div class="flow-step-body">
             <div class="flow-step-title">Accès via URL signée</div>
-            <div class="flow-step-desc">Le vétérinaire (Société B — autre tenant PetSuite) accède au PDF via le lien. Lecture seule des données autorisées uniquement.</div>
+            <div class="flow-step-desc">Le vétérinaire (Société B — autre tenant Anim'Gest) accède au PDF via le lien. Lecture seule des données autorisées uniquement.</div>
           </div>
         </div>
         <div class="flow-step">
           <div class="flow-step-num">C</div>
           <div class="flow-step-body">
             <div class="flow-step-title">Recherche par puce (optionnel)</div>
-            <div class="flow-step-desc">Si le vétérinaire est client PetSuite et saisit la puce dans son interface, il peut demander accès à la carte via un workflow de consentement.</div>
+            <div class="flow-step-desc">Si le vétérinaire est client Anim'Gest et saisit la puce dans son interface, il peut demander accès à la carte via un workflow de consentement.</div>
           </div>
         </div>
       </div>
@@ -599,7 +599,7 @@ https://app.petsuite.fr/api/carte/
     <div class="card">
       <div class="card-title"><div class="card-icon icon-purple">🟣</div>Phase 3 — Cross-tenant</div>
       <div class="item-list">
-        <div class="item"><span class="item-label">Recherche par puce</span><span class="item-val">Entre sociétés PetSuite</span></div>
+        <div class="item"><span class="item-label">Recherche par puce</span><span class="item-val">Entre sociétés Anim'Gest</span></div>
         <div class="item"><span class="item-label">Workflow consentement</span><span class="item-val">Demande formelle + approbation</span></div>
         <div class="item"><span class="item-label">API publique puce</span><span class="item-val">Endpoint authentifié inter-tenants</span></div>
       </div>
@@ -615,7 +615,7 @@ https://app.petsuite.fr/api/carte/
     <div class="card">
       <div class="card-title"><div class="card-icon icon-gold">🗄</div>BDD</div>
       <div class="item-list">
-        <div class="item"><span class="item-label">Table partage_carte</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer dans micro_logiciel</span></div>
+        <div class="item"><span class="item-label">Table partage_carte</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer dans anim_gest</span></div>
         <div class="item"><span class="item-label">Vue v_animal_evolution_cac</span><span class="item-val"><span class="pill pill-ok">Créée S33</span> Disponible</span></div>
         <div class="item"><span class="item-label">param_libelles_ec</span><span class="item-val"><span class="pill pill-ok">Créée S24</span> 60 libellés dont 14 CAC</span></div>
         <div class="item"><span class="item-label">seance_suivi_cac</span><span class="item-val"><span class="pill pill-ok">Créée S24</span> CAC par séance</span></div>
@@ -638,6 +638,6 @@ https://app.petsuite.fr/api/carte/
 
 </div>
 </div>
-<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
+<footer>Anim'Gest by NoSage's Editor · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/Anim'Gest-docs">GitHub</a></footer>
 </body>
 </html>

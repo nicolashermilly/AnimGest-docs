@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetSuite — Modèle commercial & licences SEPA</title>
+<title>Anim'Gest — Modèle commercial & licences SEPA</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
@@ -79,7 +79,7 @@ main { padding: 0; }
 </head>
 <body>
 <header class="header">
-  <div class="logo">🐾 Pet<span>Suite</span> Docs</div>
+  <div class="logo">🐾 Anim'<span>Gest</span> Docs</div>
   <div class="nav-links">
     <a href="index.html">Accueil</a>
     <a href="06-roadmap.html">Roadmap</a>
@@ -94,7 +94,7 @@ main { padding: 0; }
 <div class="hero">
   <div class="hero-tag">Modèle commercial — Document vivant</div>
   <h1>Licences & <em>SEPA</em></h1>
-  <p class="hero-sub">Modèle commercial complet de PetSuite — BDD plateforme, workflow de souscription, intégration paiement SEPA, cycle de vie contrat et gestion des données post-résiliation.</p>
+  <p class="hero-sub">Modèle commercial complet de Anim'Gest — BDD plateforme, workflow de souscription, intégration paiement SEPA, cycle de vie contrat et gestion des données post-résiliation.</p>
   <div class="hero-kpis">
     <div class="kpi"><div class="kpi-num">6 mois</div><div class="kpi-lbl">Engagement minimum</div></div>
     <div class="kpi"><div class="kpi-num">SEPA</div><div class="kpi-lbl">Prélèvement mensuel</div></div>
@@ -149,7 +149,7 @@ main { padding: 0; }
 <!-- 02 BDD PLATEFORME -->
 <div class="section" id="s2">
   <div class="section-header"><span class="section-num">02</span><span class="section-title">BDD plateforme — structure complète</span></div>
-  <div class="alert alert-info" style="margin-bottom:20px;">Base de données distincte de micro_logiciel — gère l'ensemble des sociétés clientes. Nom suggéré : <code>petsuite_platform</code>. Accessible uniquement depuis le service d'API plateforme, jamais depuis les API tenant.</div>
+  <div class="alert alert-info" style="margin-bottom:20px;">Base de données distincte de anim_gest — gère l'ensemble des sociétés clientes. Nom suggéré : <code>Anim'Gest_platform</code>. Accessible uniquement depuis le service d'API plateforme, jamais depuis les API tenant.</div>
 
   <!-- tenant -->
   <div class="subsection" id="s2-tenant">
@@ -160,7 +160,7 @@ main { padding: 0; }
       <div class="schema-field"><div class="sf-name">ten_raison_sociale</div><div class="sf-type">VARCHAR(150)</div><div class="sf-desc">Raison sociale officielle</div></div>
       <div class="schema-field"><div class="sf-name">ten_siret</div><div class="sf-type">CHAR(14)</div><div class="sf-desc">SIRET — vérifié format 14 chiffres (UNIQUE)</div></div>
       <div class="schema-field"><div class="sf-name">ten_email_admin</div><div class="sf-type">VARCHAR(150)</div><div class="sf-desc">Email de l'administrateur société — identifiant de connexion admin</div></div>
-      <div class="schema-field"><div class="sf-name">ten_sous_domaine</div><div class="sf-type">VARCHAR(80)</div><div class="sf-desc">Sous-domaine attribué (ex: cabinetmartin) → cabinetmartin.petsuite.fr (UNIQUE)</div></div>
+      <div class="schema-field"><div class="sf-name">ten_sous_domaine</div><div class="sf-type">VARCHAR(80)</div><div class="sf-desc">Sous-domaine attribué (ex: cabinetmartin) → cabinetmartin.Anim'Gest.fr (UNIQUE)</div></div>
       <div class="schema-field"><div class="sf-name">ten_statut</div><div class="sf-type">ENUM</div><div class="sf-desc">PROVISIONNEMENT / ACTIF / SUSPENDU / RESILIE / ARCHIVE / PURGE</div></div>
       <div class="schema-field"><div class="sf-name">ten_date_creation</div><div class="sf-type">DATETIME</div><div class="sf-desc">Date de création du tenant</div></div>
       <div class="schema-field"><div class="sf-name">ten_date_suspension</div><div class="sf-type">DATETIME NULL</div><div class="sf-desc">Date de suspension (si applicable)</div></div>
@@ -271,7 +271,7 @@ main { padding: 0; }
         <div class="schema-field"><div class="sf-name sf-pk">tenant_id</div><div class="sf-type">VARCHAR(20)</div><div class="sf-desc">PK = FK → tenant</div></div>
         <div class="schema-field"><div class="sf-name">shard_host</div><div class="sf-type">VARCHAR(100)</div><div class="sf-desc">Hostname du serveur MariaDB</div></div>
         <div class="schema-field"><div class="sf-name">shard_port</div><div class="sf-type">INT</div><div class="sf-desc">Port (défaut 3306)</div></div>
-        <div class="schema-field"><div class="sf-name">schema_name</div><div class="sf-type">VARCHAR(100)</div><div class="sf-desc">Nom du schema ex: micro_logiciel_tenant_0042</div></div>
+        <div class="schema-field"><div class="sf-name">schema_name</div><div class="sf-type">VARCHAR(100)</div><div class="sf-desc">Nom du schema ex: anim_gest_tenant_0042</div></div>
       </div>
       <div class="schema-table">
         <div class="schema-table-header"><span class="tname">audit_plateforme</span><span class="tdesc">Journal super admin</span></div>
@@ -442,7 +442,7 @@ main { padding: 0; }
 <span class="ct">POST</span> https://api.gocardless.com/redirect_flows
 {
   "session_token": <span class="cv">"uuid_session"</span>,
-  "success_redirect_url": <span class="ck">"https://app.petsuite.fr/souscription/confirmation"</span>,
+  "success_redirect_url": <span class="ck">"https://app.Anim'Gest.fr/souscription/confirmation"</span>,
   "prefilled_customer": { "email": <span class="cv">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91f2fdf8f4ffe5d1e2fef2f8f4e5f4bff7e3">[email&#160;protected]</a>"</span>, "company_name": <span class="cv">"Cabinet Martin"</span> }
 }
 <span class="cm">// → redirect_url renvoyée → client saisit IBAN sur page GoCardless</span>
@@ -457,7 +457,7 @@ main { padding: 0; }
   "amount": <span class="cv">4900</span>,  <span class="cm">// en centimes</span>
   "currency": <span class="ck">"EUR"</span>,
   "links": { "mandate": <span class="cv">"MD_XXXXXXXX"</span> },
-  "description": <span class="ck">"PetSuite - Abonnement Mars 2026"</span>
+  "description": <span class="ck">"Anim'Gest - Abonnement Mars 2026"</span>
 }
 <span class="cm">// → payment_id → stocker dans prelevement.pre_provider_id</span>
 
@@ -599,15 +599,15 @@ payments.charged_back  <span class="cm">→ statut REMBOURSE + alerte super admi
         </div>
         <div class="flow-step">
           <div class="flow-step-num">2</div>
-          <div class="flow-step-body"><div class="flow-step-title">Création schema MariaDB</div><div class="flow-step-desc">CREATE DATABASE micro_logiciel_{tenant_id}. Application migrations Flyway. Insertion dans tenant_shard.</div></div>
+          <div class="flow-step-body"><div class="flow-step-title">Création schema MariaDB</div><div class="flow-step-desc">CREATE DATABASE anim_gest_{tenant_id}. Application migrations Flyway. Insertion dans tenant_shard.</div></div>
         </div>
         <div class="flow-step">
           <div class="flow-step-num">3</div>
-          <div class="flow-step-body"><div class="flow-step-title">Création bucket S3 GED</div><div class="flow-step-desc">Bucket petsuite-ged-{tenant_id}. Politique cycle de vie hot/warm/cold. Chiffrement SSE-S3.</div></div>
+          <div class="flow-step-body"><div class="flow-step-title">Création bucket S3 GED</div><div class="flow-step-desc">Bucket Anim'Gest-ged-{tenant_id}. Politique cycle de vie hot/warm/cold. Chiffrement SSE-S3.</div></div>
         </div>
         <div class="flow-step">
           <div class="flow-step-num">4</div>
-          <div class="flow-step-body"><div class="flow-step-title">DNS + SSL</div><div class="flow-step-desc">{sous_domaine}.petsuite.fr → reverse proxy. Certificat Let's Encrypt auto via Traefik.</div></div>
+          <div class="flow-step-body"><div class="flow-step-title">DNS + SSL</div><div class="flow-step-desc">{sous_domaine}.Anim'Gest.fr → reverse proxy. Certificat Let's Encrypt auto via Traefik.</div></div>
         </div>
         <div class="flow-step">
           <div class="flow-step-num">5</div>
@@ -759,10 +759,10 @@ node tenant-cli.js purge <span class="cv">tenant_0042</span> --confirm
       <div class="card-title"><div class="card-icon icon-gold">🏗</div>Infrastructure</div>
       <div class="item-list">
         <div class="item"><span class="item-label">Choix hébergeur</span><span class="item-val"><span class="pill pill-todo">TODO</span> OVH / Hetzner / AWS — région FR obligatoire</span></div>
-        <div class="item"><span class="item-label">BDD plateforme</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer petsuite_platform + tables</span></div>
+        <div class="item"><span class="item-label">BDD plateforme</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer Anim'Gest_platform + tables</span></div>
         <div class="item"><span class="item-label">Shard MariaDB initial</span><span class="item-val"><span class="pill pill-todo">TODO</span> Premier serveur shard configuré</span></div>
         <div class="item"><span class="item-label">Bucket S3</span><span class="item-val"><span class="pill pill-todo">TODO</span> Configuration + politiques cycle de vie</span></div>
-        <div class="item"><span class="item-label">DNS wildcard</span><span class="item-val"><span class="pill pill-todo">TODO</span> *.petsuite.fr → reverse proxy</span></div>
+        <div class="item"><span class="item-label">DNS wildcard</span><span class="item-val"><span class="pill pill-todo">TODO</span> *.Anim'Gest.fr → reverse proxy</span></div>
         <div class="item"><span class="item-label">SSL auto</span><span class="item-val"><span class="pill pill-todo">TODO</span> Traefik + Let's Encrypt wildcard</span></div>
       </div>
     </div>
@@ -785,7 +785,7 @@ node tenant-cli.js purge <span class="cv">tenant_0042</span> --confirm
         <div class="item"><span class="item-label">Portail super admin</span><span class="item-val"><span class="pill pill-todo">TODO</span> Dashboard tenants + KPIs MRR</span></div>
         <div class="item"><span class="item-label">Emails transactionnels</span><span class="item-val"><span class="pill pill-todo">TODO</span> Bienvenue / Echec / Suspension / Résiliation</span></div>
         <div class="item"><span class="item-label">Script purge</span><span class="item-val"><span class="pill pill-todo">TODO</span> Cron + vérification date légale</span></div>
-        <div class="item"><span class="item-label">Nom commercial</span><span class="item-val"><span class="pill pill-wip">EN COURS</span> Décision finale sur "PetSuite"</span></div>
+        <div class="item"><span class="item-label">Nom commercial</span><span class="item-val"><span class="pill pill-wip">EN COURS</span> Décision finale sur "Anim'Gest"</span></div>
       </div>
     </div>
     <div class="card">
@@ -797,7 +797,7 @@ node tenant-cli.js purge <span class="cv">tenant_0042</span> --confirm
         <div class="item"><span class="item-label">Clients bêta</span><span class="item-val"><span class="pill pill-todo">TODO</span> 5–10 comportementalistes testeurs</span></div>
         <div class="item"><span class="item-label">Support</span><span class="item-val"><span class="pill pill-todo">TODO</span> Email support + bas
 </div>
-<footer>PetSuite by Algorithmia · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/petsuite-docs">GitHub</a></footer>
+<footer>Anim'Gest by NoSage's Editor · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/Anim'Gest-docs">GitHub</a></footer>
 
 <script>
 (function(){
