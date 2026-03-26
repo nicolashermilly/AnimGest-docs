@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetSuite — Revue de Code & Maintenance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#0D2137;--gold:#D4A843;--dark:#070F1A;--white:#F8F8F5;--muted:#8899AA;--green:#2ECC71;--red:#E74C3C;--orange:#E67E22;--surface:#112030;--border:rgba(212,168,67,0.2);--radius:8px;--font:'Inter',sans-serif;--font-heading:'Poppins',sans-serif; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--dark);color:var(--white);font-family:var(--font);font-size:15px;line-height:1.7;}
+    a{color:var(--gold);text-decoration:none;}a:hover{opacity:.85;text-decoration:underline;}
+    h1,h2,h3,h4{font-family:var(--font-heading);color:var(--gold);}
+    h1{font-size:2rem;margin-bottom:.5rem;}
+    h2{font-size:1.4rem;margin:2.5rem 0 .75rem;border-bottom:1px solid var(--border);padding-bottom:.4rem;}
+    h3{font-size:1.15rem;margin:1.5rem 0 .5rem;color:var(--white);}
+    h4{font-size:1rem;margin:1rem 0 .4rem;color:var(--muted);}
+    p{margin-bottom:1rem;color:#ccd6e0;}
+    ul,ol{margin:.5rem 0 1rem 1.5rem;}li{margin-bottom:.35rem;color:#ccd6e0;}
+    code{background:var(--surface);padding:2px 7px;border-radius:4px;font-size:.85em;color:var(--gold);font-family:'Courier New',monospace;}
+    pre{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;overflow-x:auto;margin:1rem 0;}
+    pre code{background:none;padding:0;color:#e2e8f0;}
+    table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem;}
+    th{background:var(--navy);color:var(--gold);padding:.65rem 1rem;text-align:left;font-weight:600;font-family:var(--font-heading);}
+    td{padding:.6rem 1rem;border-bottom:1px solid var(--border);color:#ccd6e0;}
+    tr:hover td{background:rgba(13,33,55,.6);}
+    .badge{display:inline-block;padding:2px 9px;border-radius:4px;font-size:.75rem;font-weight:600;}
+    .badge-green{background:rgba(46,204,113,.15);color:var(--green);border:1px solid var(--green);}
+    .badge-gold{background:rgba(212,168,67,.15);color:var(--gold);border:1px solid var(--gold);}
+    .badge-red{background:rgba(231,76,60,.15);color:var(--red);border:1px solid var(--red);}
+    .badge-blue{background:rgba(52,152,219,.15);color:#3498db;border:1px solid #3498db;}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;}
+    .hero{padding:2.5rem 0 1.5rem;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+    .hero-label{font-size:.8rem;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:.4rem;}
+    .hero-title{font-family:var(--font-heading);font-size:2rem;font-weight:700;color:var(--gold);margin-bottom:.5rem;}
+    .hero-sub{color:var(--muted);font-size:.95rem;}
+    .container{max-width:1100px;margin:0 auto;padding:0 1.5rem 4rem;}
+    .toc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;}
+    .toc h3{margin-top:0;}
+    .toc ol{margin:.5rem 0 0 1.5rem;}
+    .toc li{margin-bottom:.3rem;}
+    .score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0;}
+    .score-card{background:var(--navy);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center;}
+    .score-val{font-size:2rem;font-weight:700;font-family:var(--font-heading);}
+    .score-label{font-size:.8rem;color:var(--muted);margin-top:.25rem;}
+    .checklist-item{display:flex;align-items:flex-start;gap:.75rem;padding:.5rem 0;border-bottom:1px solid rgba(212,168,67,.08);}
+    .checklist-icon{font-size:1rem;flex-shrink:0;margin-top:.1rem;}
+    blockquote{border-left:3px solid var(--gold);padding:.5rem 1rem;margin:1rem 0;background:rgba(212,168,67,.05);color:#ccd6e0;font-style:italic;}
+    hr{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+    .tag{display:inline-block;padding:1px 8px;border-radius:4px;font-size:.72rem;font-weight:600;margin-right:.3rem;}
+    .tag-red{background:rgba(231,76,60,.15);color:var(--red);border:1px solid var(--red);}
+    .tag-orange{background:rgba(230,126,34,.15);color:var(--orange);border:1px solid var(--orange);}
+    .tag-green{background:rgba(46,204,113,.15);color:var(--green);border:1px solid var(--green);}
+  </style>
+</head>
+<body>
+<nav style="background:var(--navy);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100;flex-wrap:wrap;">
+  <span style="font-family:var(--font-heading);font-weight:700;color:var(--gold);font-size:1.1rem;">Anim'Gest</span>
+  <span style="color:var(--muted);font-size:.85rem;">Revue de Code &amp; Maintenance</span>
+  <a href="index.html" style="color:var(--muted);font-size:.85rem;margin-left:auto;">&larr; Index docs</a>
+</nav>
+
+<div class="container">
+  <div class="hero">
+    <div class="hero-label">Document de R&eacute;f&eacute;rence &mdash; Sprint S54 &middot; 26 mars 2026</div>
+    <div class="hero-title">Revue de Code &amp; Maintenance</div>
+    <div class="hero-sub">Checklist ERP &middot; M&eacute;thodologie &middot; R&egrave;gles PetSuite &middot; Audit S54 &middot; Module IA &middot; Annexes</div>
+  </div>
+
+  <!-- TABLE DES MATIERES -->
+  <div class="toc">
+    <h3>&#128221; Table des mati&egrave;res</h3>
+    <ol>
+      <li><a href="#checklist">Checklist de revue de code ERP (13 points)</a></li>
+      <li><a href="#methodologie">M&eacute;thodologie approfondie (5 axes)</a></li>
+      <li><a href="#regles">R&egrave;gles de maintenance PetSuite</a></li>
+      <li><a href="#audit-s54">Revue S54 &mdash; Audit module par module</a></li>
+      <li><a href="#audit-bdd">Audit base de donn&eacute;es &mdash; Tables et liaisons</a></li>
+      <li><a href="#module-ia">Module IA PetSuite &mdash; Conception &amp; Roadmap</a></li>
+      <li><a href="#plan-s55">Plan de refactorisation S55+</a></li>
+      <li><a href="#annexe-routes">Annexe A &mdash; Inventaire routes API (~85 routes)</a></li>
+      <li><a href="#annexe-pages">Annexe B &mdash; Inventaire pages frontend (100 pages)</a></li>
+      <li><a href="#annexe-composants">Annexe C &mdash; Composants &amp; fonctions utilitaires</a></li>
+      <li><a href="#annexe-bdd">Annexe D &mdash; Tables BDD &amp; structure</a></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 1 : CHECKLIST -->
+  <h2 id="checklist">&#9989; 1. Checklist de revue de code ERP &mdash; Back &amp; Front</h2>
+  <p>Cette checklist est le document de r&eacute;f&eacute;rence pour toute revue de code, audit de module ou validation de PR sur PetSuite.</p>
+
+  <div class="card">
+    <h3>&#129517; 1. Compr&eacute;hension globale</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Le code est compr&eacute;hensible sans explication orale</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les noms (variables, fonctions, fichiers) sont clairs et explicites</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>La responsabilit&eacute; du fichier est unique et identifiable</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>La logique m&eacute;tier est facile &agrave; suivre</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#129395; 2. Architecture &amp; structuration</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Le code respecte l'architecture d&eacute;finie (controller / service / repository)</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Front : UI vs logique m&eacute;tier bien s&eacute;par&eacute;s</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Back : API vs m&eacute;tier vs acc&egrave;s DB bien s&eacute;par&eacute;s</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Aucun fichier "fourre-tout"</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>L'arborescence est logique et homog&egrave;ne</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#128260; 3. Factorisation &amp; r&eacute;utilisation</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Aucun code dupliqu&eacute; &eacute;vident</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les logiques r&eacute;p&eacute;t&eacute;es sont mutualis&eacute;es (fonctions, services, hooks)</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les composants UI sont r&eacute;utilisables</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de copier/coller inutile</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#129521; 4. Composants Front-end</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les composants sont r&eacute;utilisables et d&eacute;coupl&eacute;s</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de composants similaires en double</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les props sont claires et bien d&eacute;finies</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Aucun composant ne contient de logique m&eacute;tier complexe</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#9881;&#65039; 5. Logique m&eacute;tier</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>La logique m&eacute;tier est centralis&eacute;e (services)</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Aucune r&egrave;gle m&eacute;tier cach&eacute;e dans les contr&ocirc;leurs ou composants UI</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les r&egrave;gles m&eacute;tier sont explicites</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les cas particuliers sont g&eacute;r&eacute;s</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#128449;&#65039; 6. Acc&egrave;s aux donn&eacute;es / base de donn&eacute;es</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les acc&egrave;s DB sont centralis&eacute;s (repository / service)</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de requ&ecirc;tes dupliqu&eacute;es</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les requ&ecirc;tes sont optimis&eacute;es</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les donn&eacute;es sont manipul&eacute;es proprement</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#128260; 7. Gestion des correctifs et &eacute;volutions</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les correctifs ne sont pas des "patchs" isol&eacute;s</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les &eacute;volutions sont int&eacute;gr&eacute;es dans l'architecture existante</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Le code ancien n'est pas contorn&eacute; mais am&eacute;lior&eacute;</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Aucun "hack temporaire" laiss&eacute; en production</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#129534; 8. Documentation &amp; commentaires</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Chaque fichier contient un commentaire d'en-t&ecirc;te</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les fonctions m&eacute;tier importantes sont document&eacute;es</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les r&egrave;gles m&eacute;tier sont expliqu&eacute;es</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les zones complexes ou sensibles sont comment&eacute;es</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de commentaires inutiles ou obsol&egrave;tes</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#128680; 9. Gestion des erreurs</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les erreurs sont g&eacute;r&eacute;es proprement</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de try/catch vides</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Messages d'erreur compr&eacute;hensibles</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas d'erreurs silencieuses &mdash; logs pr&eacute;sents si n&eacute;cessaire</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#128272; 10. S&eacute;curit&eacute; (important ERP)</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Validation des entr&eacute;es utilisateur</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas d'injection possible (SQL, XSS&hellip;)</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Gestion des droits utilisateurs respect&eacute;e</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Aucune donn&eacute;e sensible expos&eacute;e</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#9889; 11. Performance</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de requ&ecirc;tes inutiles</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de calculs r&eacute;p&eacute;t&eacute;s inutilement</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Chargement optimis&eacute; c&ocirc;t&eacute; front</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de boucle ou traitement lourd non ma&icirc;tris&eacute;</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#129514; 12. Tests (si pr&eacute;sents)</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les fonctions critiques sont test&eacute;es</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les tests sont lisibles et pertinents</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Les cas m&eacute;tier principaux sont couverts</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#127919; 13. Qualit&eacute; globale</h3>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Le code est lisible et propre</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de code mort ou inutile</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de debug laiss&eacute; (console.log, etc.)</span></div>
+    <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Respect des conventions d'&eacute;quipe</span></div>
+  </div>
+
+  <div class="card">
+    <h3>&#128104;&#8205;&#128187; BONUS &mdash; Checklist rapide PR</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;">
+      <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Code lisible</span></div>
+      <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de duplication</span></div>
+      <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Architecture respect&eacute;e</span></div>
+      <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Logique m&eacute;tier bien plac&eacute;e</span></div>
+      <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Composants r&eacute;utilisables</span></div>
+      <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de hack / patch</span></div>
+      <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Commentaires pr&eacute;sents</span></div>
+      <div class="checklist-item"><span class="checklist-icon">&#9744;</span><span>Pas de bug &eacute;vident</span></div>
+    </div>
+  </div>
+
+  <blockquote>
+    <strong>Score de production :</strong> &#9989; 90&ndash;100% OK production &middot; &#9888;&#65039; 70&ndash;90% am&eacute;liorable &middot; &#10060; &lt;70% corrections obligatoires
+  </blockquote>
+
+  <!-- SECTION 2 : METHODOLOGIE -->
+  <h2 id="methodologie">&#128269; 2. M&eacute;thodologie approfondie</h2>
+
+  <div class="card">
+    <h3>5 axes de la revue</h3>
+    <table>
+      <thead><tr><th>Axe</th><th>Objectif</th><th>Actions concr&egrave;tes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Uniformisation</strong></td><td>Convention de nommage homog&egrave;ne</td><td>Variables, fonctions, composants, patterns</td></tr>
+        <tr><td><strong>2. Factorisation</strong></td><td>Supprimer les duplications</td><td>Fonctions utilitaires, services, composants r&eacute;utilisables</td></tr>
+        <tr><td><strong>3. Structuration</strong></td><td>Organisation claire</td><td>Front: pages/composants/services/hooks &mdash; Back: controllers/services/repositories</td></tr>
+        <tr><td><strong>4. R&eacute;int&eacute;gration</strong></td><td>Supprimer les patchs bricol&eacute;s</td><td>Repenser les &eacute;volutions comme des fonctionnalit&eacute;s natives</td></tr>
+        <tr><td><strong>5. Documentation</strong></td><td>Commentaires utiles</td><td>Pourquoi (important) &middot; R&egrave;gles m&eacute;tier &middot; Points sensibles</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>8 &eacute;tapes de la m&eacute;thodologie</h3>
+    <ol style="margin-left:1.5rem;">
+      <li><strong>&Eacute;tape 1 &mdash; Cartographie</strong> : Lister modules, composants, fonctions dupliqu&eacute;es. Identifier zones critiques et instables. <em>Comprendre AVANT d'optimiser.</em></li>
+      <li><strong>&Eacute;tape 2 &mdash; D&eacute;tection duplications</strong> : Fonctions copi&eacute;es, requ&ecirc;tes SQL similaires, composants UI identiques &rarr; cr&eacute;er une version unique.</li>
+      <li><strong>&Eacute;tape 3 &mdash; Refactorisation progressive</strong> : &#9888; Ne jamais tout refaire d'un coup. Choisir un module &rarr; Nettoyer &rarr; Factoriser &rarr; Tester &rarr; Passer au suivant.</li>
+      <li><strong>&Eacute;tape 4 &mdash; Couches claires</strong> : Back: Controller &rarr; Service &rarr; Repository. Front: Pages &rarr; Components &rarr; Services &rarr; Hooks/utils.</li>
+      <li><strong>&Eacute;tape 5 &mdash; Documentation</strong> : En-t&ecirc;te de fichier + fonctions m&eacute;tier + points techniques sensibles.</li>
+      <li><strong>&Eacute;tape 6 &mdash; Tests</strong> : Au moins sur les fonctions m&eacute;tier critiques.</li>
+      <li><strong>&Eacute;tape 7 &mdash; Revue finale</strong> : Appliquer la checklist 13 points + scoring.</li>
+      <li><strong>&Eacute;tape 8 &mdash; Mise &agrave; jour documentation</strong> : Mettre &agrave; jour ce document avec les r&eacute;sultats.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>R&egrave;gles de factorisation concr&egrave;tes</h3>
+    <table>
+      <thead><tr><th>R&egrave;gle</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>&#128310; Une logique r&eacute;p&eacute;t&eacute;e 2 fois</td><td>&rarr; &Agrave; factoriser obligatoirement</td></tr>
+        <tr><td>&#128310; Une logique m&eacute;tier dans un composant UI</td><td>&rarr; Jamais &mdash; extraire dans un service</td></tr>
+        <tr><td>&#128310; Un acc&egrave;s DB dans un controller</td><td>&rarr; Jamais directement &mdash; passer par un service</td></tr>
+        <tr><td>&#128310; Un composant copi&eacute;</td><td>&rarr; Devient un composant g&eacute;n&eacute;rique avec props</td></tr>
+        <tr><td>&#128310; Un if(role === 'admin') r&eacute;p&eacute;t&eacute;</td><td>&rarr; Extraire en fonction isAdmin(user)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Pi&egrave;ges &agrave; &eacute;viter</h3>
+    <ul>
+      <li>&#10060; Tout refactorer d'un coup &rarr; casse garantie</li>
+      <li>&#10060; Sur-abstraction &rarr; code illisible</li>
+      <li>&#10060; Trop commenter &rarr; bruit inutile</li>
+      <li>&#10060; M&eacute;langer refacto + nouvelles features</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 3 : REGLES PETSUITE -->
+  <h2 id="regles">&#128295; 3. R&egrave;gles de maintenance PetSuite</h2>
+
+  <div class="card">
+    <h3>Comment le code est cr&eacute;&eacute;</h3>
+    <h4>Stack technique</h4>
+    <ul>
+      <li><strong>Frontend</strong> : Next.js 15 App Router, TypeScript, React, Tailwind CSS</li>
+      <li><strong>Backend</strong> : NestJS compil&eacute;, Node 20, mysql2/promise (pas TypeORM)</li>
+      <li><strong>BDD</strong> : MariaDB 192.168.1.62:3307, base <code>micro_logiciel</code></li>
+      <li><strong>Proxy</strong> : nginx:1.27-alpine &mdash; strip <code>/api/</code> avant transmission</li>
+      <li><strong>Orchestration</strong> : Docker Compose depuis <code>$root\deploy</code></li>
+    </ul>
+    <h4>S&eacute;quence de d&eacute;ploiement frontend (obligatoire)</h4>
+    <pre><code>cd $root
+.\COPIER_TOUTES_PAGES_v2.ps1         # Touch OneDrive - OBLIGATOIRE avant build
+cd deploy
+docker compose build frontend --no-cache
+docker compose up -d frontend
+docker compose restart nginx</code></pre>
+    <h4>S&eacute;quence de d&eacute;ploiement API</h4>
+    <pre><code>cd "$root\deploy"
+docker compose build api --no-cache
+docker compose up -d api
+docker compose restart nginx</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Comment le code est structur&eacute;</h3>
+    <table>
+      <thead><tr><th>Couche</th><th>Chemin</th><th>R&ocirc;le</th></tr></thead>
+      <tbody>
+        <tr><td>Pages frontend</td><td><code>src/app/app/[module]/page.tsx</code></td><td>Orchestration UI &mdash; fetch + affichage</td></tr>
+        <tr><td>Composants</td><td><code>src/components/</code></td><td>Sidebar, Topbar, r&eacute;utilisables</td></tr>
+        <tr><td>Librairies</td><td><code>src/lib/</code></td><td>auth, types, helpers, charte, api</td></tr>
+        <tr><td>Routes API custom</td><td><code>api/src/custom-routes.ts</code></td><td>Toutes les routes m&eacute;tier (~85 routes)</td></tr>
+        <tr><td>Auth NestJS</td><td><code>api/src/auth/</code></td><td>Login, cookies, pr&eacute;f&eacute;rences</td></tr>
+        <tr><td>Admin NestJS</td><td><code>api/src/admin/</code></td><td>Gestion utilisateurs</td></tr>
+        <tr><td>D&eacute;ploiement</td><td><code>deploy/</code></td><td>docker-compose.yml, Dockerfile</td></tr>
+        <tr><td>Documentation</td><td><code>C:\petsuite-docs</code></td><td>GitHub Pages &mdash; 90 fichiers HTML</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>R&egrave;gles critiques &mdash; INTERDICTIONS</h3>
+    <table>
+      <thead><tr><th>Interdit</th><th>Raison</th><th>Alternative</th></tr></thead>
+      <tbody>
+        <tr><td><code>inject_v4_final.js</code></td><td>Orphaned catch block &rarr; SyntaxError crash</td><td>Ne jamais utiliser</td></tr>
+        <tr><td>Apostrophes fran&ccedil;aises dans TypeScript</td><td>Corruption d'encoding</td><td>Utiliser Python pour &eacute;crire les fichiers</td></tr>
+        <tr><td><code>app.get()</code> pour routes avec query params</td><td>NestJS filtre 404</td><td>Toujours <code>app.use()</code></td></tr>
+        <tr><td>DbService dans custom-routes</td><td>Inaccessible apr&egrave;s app.listen()</td><td>mysql2/promise direct</td></tr>
+        <tr><td>docker compose restart seul</td><td>&Eacute;crase les changements inject&eacute;s</td><td>Toujours rebuild complet</td></tr>
+        <tr><td>Modifier layout.tsx automatiquement</td><td>Risque &eacute;crasement</td><td>Patch des 2 lignes uniquement</td></tr>
+        <tr><td>Prefix <code>/api/</code> dans les routes custom</td><td>Nginx le strip d&eacute;j&agrave;</td><td>Routes sans /api/</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Pattern API obligatoire</h3>
+    <pre><code>app.use('/ma-route', async (req: any, res: any) => {
+  // Body parsing manuel obligatoire pour POST/PATCH
+  const b: any = await new Promise&lt;any&gt;((resolve) => {
+    if (req.body &amp;&amp; Object.keys(req.body).length > 0) { resolve(req.body); return; }
+    let data = '';
+    req.on('data', (chunk: any) => { data += chunk; });
+    req.on('end', () => { try { resolve(JSON.parse(data)); } catch { resolve({}); } });
+  });
+  const db = await mysql.createConnection({
+    host: process.env.DB_HOST, port: Number(process.env.DB_PORT),
+    user: process.env.DB_USER, password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+  });
+  try {
+    const [rows] = await db.execute("SELECT ...", [params]);
+    res.json(rows);
+  } catch(e: any) { res.status(500).json({ error: e.message }); }
+  finally { await db.end(); }
+});</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Charte CSS PetSuite</h3>
+    <table>
+      <thead><tr><th>Variable</th><th>Valeur (dark)</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td><code>--surface-page</code></td><td>#0F172A</td><td>Fond g&eacute;n&eacute;ral</td></tr>
+        <tr><td><code>--surface-card</code></td><td>#1E293B</td><td>Cards</td></tr>
+        <tr><td><code>--text-primary</code></td><td>#F1F5F9 / #1E293B (light)</td><td>Texte principal</td></tr>
+        <tr><td><code>--text-secondary</code></td><td>#94A3B8</td><td>Texte secondaire</td></tr>
+        <tr><td><code>--color-primaire</code></td><td>#4F46E5</td><td>Accent violet</td></tr>
+        <tr><td><code>--border-color</code></td><td>rgba(255,255,255,0.08)</td><td>Bordures</td></tr>
+        <tr><td><code>--font-heading</code></td><td>Poppins</td><td>Titres</td></tr>
+        <tr><td><code>--font</code></td><td>Inter</td><td>Corps</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 4 : AUDIT S54 -->
+  <h2 id="audit-s54">&#128269; 4. Revue S54 &mdash; Audit module par module</h2>
+  <p>Audit des fichiers produits en session S54 (26 mars 2026) selon la checklist 13 points.</p>
+
+  <div class="card">
+    <h3>custom-routes.ts &mdash; Backend API</h3>
+    <table>
+      <thead><tr><th>Crit&egrave;re</th><th>Statut</th><th>Observation</th></tr></thead>
+      <tbody>
+        <tr><td>1. Compr&eacute;hension</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>2500+ lignes dans un seul fichier &mdash; difficile &agrave; naviguer</td></tr>
+        <tr><td>2. Architecture</td><td><span class="tag tag-red">&#10060; Bloquant</span></td><td>Fichier "fourre-tout" &mdash; toutes les routes dans 1 fichier</td></tr>
+        <tr><td>3. Factorisation</td><td><span class="tag tag-red">&#10060; Bloquant</span></td><td>Connexion DB dupliqu&eacute;e ~85 fois &mdash; helper getDb() manquant</td></tr>
+        <tr><td>6. Acc&egrave;s DB</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>mysql2/promise direct OK mais non centralis&eacute;</td></tr>
+        <tr><td>8. Documentation</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Commentaires de sections pr&eacute;sents, mais pas d'en-t&ecirc;te de fichier</td></tr>
+        <tr><td>9. Erreurs</td><td><span class="tag tag-green">&#9989; OK</span></td><td>try/catch + finally db.end() syst&eacute;matiques</td></tr>
+        <tr><td>10. S&eacute;curit&eacute;</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Pas de validation des entr&eacute;es &mdash; SQL via param&egrave;tres OK</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1rem;"><strong>Score : 55/100</strong> &mdash; <span class="badge badge-red">Refactorisation S55 prioritaire</span></p>
+  </div>
+
+  <div class="card">
+    <h3>auth.service.ts &mdash; Authentification</h3>
+    <table>
+      <thead><tr><th>Crit&egrave;re</th><th>Statut</th><th>Observation</th></tr></thead>
+      <tbody>
+        <tr><td>1. Compr&eacute;hension</td><td><span class="tag tag-green">&#9989; OK</span></td><td>Code clair et lisible</td></tr>
+        <tr><td>2. Architecture</td><td><span class="tag tag-green">&#9989; OK</span></td><td>Service NestJS bien structur&eacute;</td></tr>
+        <tr><td>6. Acc&egrave;s DB</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>R&eacute;f&eacute;rence &agrave; <code>utilisateur_role</code> corrig&eacute;e en S54 &rarr; <code>USR_ROLE_ID</code> direct</td></tr>
+        <tr><td>9. Erreurs</td><td><span class="tag tag-green">&#9989; OK</span></td><td>Gestion correcte avec logs</td></tr>
+        <tr><td>10. S&eacute;curit&eacute;</td><td><span class="tag tag-green">&#9989; OK</span></td><td>bcrypt, cookies SameSite=Lax</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1rem;"><strong>Score : 80/100</strong> &mdash; <span class="badge badge-gold">Améliorable</span></p>
+  </div>
+
+  <div class="card">
+    <h3>Page /app/admin &mdash; Gestion utilisateurs &amp; r&ocirc;les (cr&eacute;&eacute;e S54)</h3>
+    <table>
+      <thead><tr><th>Crit&egrave;re</th><th>Statut</th><th>Observation</th></tr></thead>
+      <tbody>
+        <tr><td>1. Compr&eacute;hension</td><td><span class="tag tag-green">&#9989; OK</span></td><td>Code lisible, interfaces TypeScript propres</td></tr>
+        <tr><td>4. Composants</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Logique UI inline &mdash; tableau + matrice extractibles</td></tr>
+        <tr><td>5. Logique m&eacute;tier</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Appels API directs dans les handlers &mdash; service manquant</td></tr>
+        <tr><td>8. Documentation</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Pas d'en-t&ecirc;te de fichier</td></tr>
+        <tr><td>9. Erreurs</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>catch vides sur toggleUserActif et changeUserRole</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1rem;"><strong>Score : 72/100</strong> &mdash; <span class="badge badge-gold">Am&eacute;liorable</span></p>
+  </div>
+
+  <div class="card">
+    <h3>Page /app/avoirs &mdash; (cr&eacute;&eacute;e S54)</h3>
+    <table>
+      <thead><tr><th>Crit&egrave;re</th><th>Statut</th><th>Observation</th></tr></thead>
+      <tbody>
+        <tr><td>1. Compr&eacute;hension</td><td><span class="tag tag-green">&#9989; OK</span></td><td>Code propre et lisible</td></tr>
+        <tr><td>3. Factorisation</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>fmtMontant et fmt dupliqu&eacute;s dans d'autres pages &rarr; helpers.ts</td></tr>
+        <tr><td>8. Documentation</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Pas d'en-t&ecirc;te de fichier</td></tr>
+        <tr><td>9. Erreurs</td><td><span class="tag tag-green">&#9989; OK</span></td><td>catch sur le fetch</td></tr>
+        <tr><td>11. Performance</td><td><span class="tag tag-green">&#9989; OK</span></td><td>Un seul appel API, filtre local</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1rem;"><strong>Score : 78/100</strong> &mdash; <span class="badge badge-gold">Am&eacute;liorable</span></p>
+  </div>
+
+  <div class="card">
+    <h3>Topbar.tsx &amp; Sidebar.tsx &mdash; Composants globaux</h3>
+    <table>
+      <thead><tr><th>Crit&egrave;re</th><th>Statut</th><th>Observation</th></tr></thead>
+      <tbody>
+        <tr><td>1. Compr&eacute;hension</td><td><span class="tag tag-green">&#9989; OK</span></td><td>Code lisible</td></tr>
+        <tr><td>4. Composants</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Sidebar non filtr&eacute;e par r&ocirc;le (Niveau 1 S55)</td></tr>
+        <tr><td>5. Logique m&eacute;tier</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Badge r&ocirc;le hardcod&eacute; dans Topbar &mdash; extractible</td></tr>
+        <tr><td>10. S&eacute;curit&eacute;</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Pas de v&eacute;rification de session &mdash; redirect login manquant</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1rem;"><strong>Score : 70/100</strong> &mdash; <span class="badge badge-gold">Am&eacute;liorable &mdash; Sidebar filtrage S55</span></p>
+  </div>
+
+  <!-- SECTION 5 : AUDIT BDD -->
+  <h2 id="audit-bdd">&#128449;&#65039; 5. Audit base de donn&eacute;es &mdash; Tables et liaisons</h2>
+
+  <blockquote>R&egrave;gle : toute table sans FK entrante ET sans FK sortante ET vide &rarr; &agrave; justifier ou supprimer.</blockquote>
+
+  <div class="card">
+    <h3>Tables identifi&eacute;es &mdash; Statut S54</h3>
+    <table>
+      <thead><tr><th>Table</th><th>Statut</th><th>FK</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><code>utilisateur_role</code></td><td><span class="tag tag-red">Orpheline &mdash; vide</span></td><td>Aucune FK active</td><td>&#10060; Supprim&eacute;e en S54</td></tr>
+        <tr><td><code>role</code></td><td><span class="tag tag-green">Active</span></td><td>FK depuis utilisateur + role_permission</td><td>&#9989; OK</td></tr>
+        <tr><td><code>role_permission</code></td><td><span class="tag tag-green">Active &mdash; 56 lignes</span></td><td>FK vers role</td><td>&#9989; OK</td></tr>
+        <tr><td><code>forfait</code></td><td><span class="tag tag-green">Active &mdash; 12 lignes</span></td><td>FK depuis forfait_client</td><td>&#9989; OK</td></tr>
+        <tr><td><code>signature_demande</code></td><td><span class="tag tag-orange">Active &mdash; vide</span></td><td>FK vers tiers</td><td>&#9888; Yousign non configur&eacute;</td></tr>
+        <tr><td><code>user_preferences</code></td><td><span class="tag tag-orange">Active</span></td><td>FK vers utilisateur</td><td>&#9989; OK &mdash; &agrave; v&eacute;rifier</td></tr>
+        <tr><td><code>audit_log</code></td><td><span class="tag tag-green">Active</span></td><td>FK vers utilisateur</td><td>&#9989; OK</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Tables secondaires &agrave; auditer en S55</h3>
+    <p>Ces tables existent en BDD mais ne sont pas encore utilis&eacute;es par l'application :</p>
+    <ul>
+      <li><code>article_prestation</code> &mdash; articles pour facturation</li>
+      <li><code>crm_lead</code> &mdash; leads CRM</li>
+      <li><code>facture_ligne</code> &mdash; lignes de facture</li>
+      <li><code>devis_ligne</code> &mdash; lignes de devis (retourne [] en API)</li>
+    </ul>
+    <p>&#128680; <strong>Action S55</strong> : audit complet des 151 tables avec d&eacute;tection automatique des tables orphelines.</p>
+  </div>
+
+  <!-- SECTION 6 : MODULE IA -->
+  <h2 id="module-ia">&#129302; 6. Module IA PetSuite &mdash; Conception &amp; Roadmap</h2>
+  <p>Int&eacute;gration de l'IA Claude directement dans PetSuite, accessible uniquement via les droits <strong>SuperAdmin</strong> pour la configuration, et disponible pour tous les utilisateurs autoris&eacute;s.</p>
+
+  <div class="card">
+    <h3>Capacit&eacute;s sans modifier les &eacute;crans ni la BDD</h3>
+    <table>
+      <thead><tr><th>Cat&eacute;gorie</th><th>Exemples de commandes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Assistant conversationnel</strong></td><td>"Cr&eacute;e un devis pour Dupont Jean, chien Jazz, consultation 2h, 120&euro;, remise 10%"</td></tr>
+        <tr><td><strong>G&eacute;n&eacute;ration documents</strong></td><td>"Pr&eacute;pare le devis en PDF pour validation et envoi par mail"</td></tr>
+        <tr><td><strong>Analyse donn&eacute;es</strong></td><td>"Quelles sont mes factures impay&eacute;es de plus de 30 jours ?"</td></tr>
+        <tr><td><strong>Alertes proactives</strong></td><td>"3 clients sans s&eacute;ance depuis 60 jours" &mdash; "Stock X sous le seuil"</td></tr>
+        <tr><td><strong>R&eacute;daction</strong></td><td>"R&eacute;dige le compte-rendu de la s&eacute;ance de ce matin"</td></tr>
+        <tr><td><strong>Rapport EC</strong></td><td>"G&eacute;n&egrave;re le rapport comportemental de Jazz &agrave; partir de mes notes"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Architecture technique</h3>
+    <pre><code>Composant : &lt;AIAssistant /&gt;
+- Bouton flottant persistent (bas droite)
+- Panel lateral coulissant
+- Acces aux routes API existantes (/api/...)
+- Appel Anthropic API (claude-sonnet-4-20250514)
+- Rendu resultats en contexte (modal PDF, pre-remplissage)
+- Historique conversation en session
+- Logs interactions en BDD (table ia_log)</code></pre>
+
+    <h4>Acc&egrave;s SuperAdmin uniquement</h4>
+    <ul>
+      <li>Configuration cl&eacute; API Anthropic dans <code>param_config</code></li>
+      <li>Activation/d&eacute;sactivation par utilisateur</li>
+      <li>Logs des interactions IA</li>
+      <li>Param&egrave;tres du prompt syst&egrave;me (ton, langue, r&egrave;gles m&eacute;tier)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Roadmap d'impl&eacute;mentation</h3>
+    <table>
+      <thead><tr><th>Sprint</th><th>Livrable</th><th>Priorit&eacute;</th></tr></thead>
+      <tbody>
+        <tr><td>S55</td><td>Widget flottant + chat simple + lecture donn&eacute;es via API</td><td><span class="badge badge-red">Haute</span></td></tr>
+        <tr><td>S56</td><td>G&eacute;n&eacute;ration devis/facture PDF via IA + validation + envoi mail</td><td><span class="badge badge-red">Haute</span></td></tr>
+        <tr><td>S57</td><td>R&eacute;daction compte-rendu s&eacute;ance + rapport EC automatis&eacute;</td><td><span class="badge badge-gold">Moyenne</span></td></tr>
+        <tr><td>S58</td><td>Alertes proactives + analyse CA + suggestions</td><td><span class="badge badge-gold">Moyenne</span></td></tr>
+        <tr><td>S59+</td><td>Actions directes (cr&eacute;er s&eacute;ance, devis, r&egrave;glement via chat)</td><td><span class="badge badge-green">Future</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 7 : PLAN S55 -->
+  <h2 id="plan-s55">&#127919; 7. Plan de refactorisation S55+</h2>
+
+  <div class="card">
+    <table>
+      <thead><tr><th>Priorit&eacute;</th><th>Module</th><th>Action</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tag-red">&#128308; Critique</span></td><td>custom-routes.ts</td><td>Extraire en modules routes/factures.ts, routes/seances.ts, etc.</td><td>Maintenabilit&eacute;</td></tr>
+        <tr><td><span class="tag tag-red">&#128308; Critique</span></td><td>custom-routes.ts</td><td>Cr&eacute;er helper <code>getDb()</code> unique &mdash; factoriser les ~85 connexions</td><td>DRY</td></tr>
+        <tr><td><span class="tag tag-orange">&#128992; Important</span></td><td>Sidebar</td><td>Filtrage par r&ocirc;le via <code>can_read</code> des permissions</td><td>S&eacute;curit&eacute;</td></tr>
+        <tr><td><span class="tag tag-orange">&#128992; Important</span></td><td>Pages TSX</td><td>Extraire <code>&lt;DataTable /&gt;</code>, <code>&lt;KpiCard /&gt;</code>, <code>&lt;StatusBadge /&gt;</code> g&eacute;n&eacute;riques</td><td>R&eacute;utilisabilit&eacute;</td></tr>
+        <tr><td><span class="tag tag-orange">&#128992; Important</span></td><td>lib/helpers.ts</td><td>Centraliser fmtDate, fmtMontant utilis&eacute;s dans toutes les pages</td><td>DRY</td></tr>
+        <tr><td><span class="tag tag-orange">&#128992; Important</span></td><td>BDD</td><td>Audit complet 151 tables &mdash; d&eacute;tection orphelines</td><td>Propret&eacute;</td></tr>
+        <tr><td><span class="tag tag-green">&#128994; Normal</span></td><td>Pages TSX</td><td>Ajouter en-t&ecirc;tes JSDoc sur chaque fichier</td><td>Documentation</td></tr>
+        <tr><td><span class="tag tag-green">&#128994; Normal</span></td><td>custom-routes.ts</td><td>Ajouter validation des entr&eacute;es (Zod ou validation manuelle)</td><td>S&eacute;curit&eacute;</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Architecture cible</h3>
+    <pre><code>api/src/routes/
+  &boxur;&boxh;&boxh; factures.ts
+  &boxur;&boxh;&boxh; seances.ts
+  &boxur;&boxh;&boxh; elevage.ts
+  &boxur;&boxh;&boxh; roles.ts
+  &boxur;&boxh;&boxh; inventaires.ts
+  &boxvr;&boxh;&boxh; ...
+api/src/lib/
+  &boxur;&boxh;&boxh; db.ts          &larr; helper getDb() unique
+  &boxvr;&boxh;&boxh; validators.ts  &larr; validation entr&eacute;es
+
+src/components/
+  &boxur;&boxh;&boxh; DataTable.tsx     &larr; tableau g&eacute;n&eacute;rique
+  &boxur;&boxh;&boxh; KpiCard.tsx       &larr; tuile KPI r&eacute;utilisable
+  &boxur;&boxh;&boxh; StatusBadge.tsx   &larr; badge statut g&eacute;n&eacute;rique
+  &boxvr;&boxh;&boxh; PageHeader.tsx    &larr; header de page standard</code></pre>
+  </div>
+
+  <!-- ANNEXE A : ROUTES API -->
+  <h2 id="annexe-routes">&#128196; Annexe A &mdash; Inventaire routes API (~85 routes)</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Groupe</th><th>Routes</th><th>Statut</th></tr></thead>
+      <tbody>
+        <tr><td>Core</td><td>GET /bilan, /inventaires, /achats, /seances, /factures, /animaux, /tiers, /devis, /reglements, /races, /avoirs, /contacts</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>S&eacute;ances</td><td>GET/PATCH /seances/:id, GET /seances/edc, /seances/types/:id, /planning-seances</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>&Eacute;levage</td><td>/elevage/geniteurs, /genealogie, /reservations, /reglements, /alertes, /portees, /saillies, /gestations, /stats-viabilite, /mortalite</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>CRM</td><td>/leads, /crm/leads, /crm/stats</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>R&eacute;seaux</td><td>/reseaux-sociaux/comptes, /reseaux-sociaux/publications</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>Param&egrave;tres</td><td>/parametres/editions, /modules, /formulaire-lead, /metier, /param-smtp, /param-stripe, /param-klarna, /param-sms, /param-urls, /param-pdp, /param-yousign</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>Forfaits</td><td>GET/POST /forfaits, GET/PATCH/DELETE /forfaits/:id, GET/POST /forfaits/clients</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>Signatures</td><td>POST /signatures, POST /signatures/:id/envoyer, POST /signatures/webhook</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>R&ocirc;les S54</td><td>GET /roles, GET/PUT /roles/:id/permissions, GET /utilisateurs, PUT /utilisateurs/:id/role, PATCH /utilisateurs/:id/actif</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>Stats</td><td>/stats/kpis, /stats/seances-par-type, /dashboard/stats</td><td><span class="badge badge-gold">&#9888; Bug KPIs</span></td></tr>
+        <tr><td>GED</td><td>/ged-factures-impayees, /ged-edc, /ged-cac/animal/:id/evolution, /ged-cac/animal/:id/score</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>Aide</td><td>/aide/contexte (7 contextes)</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+        <tr><td>Communaut&eacute;</td><td>GET /communaute</td><td><span class="badge badge-green">&#9989; Actif</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ANNEXE B : PAGES -->
+  <h2 id="annexe-pages">&#128196; Annexe B &mdash; Inventaire pages frontend (100 pages)</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Module</th><th>Pages</th></tr></thead>
+      <tbody>
+        <tr><td>Core</td><td>/app, /app/tableau-de-bord, /login, /</td></tr>
+        <tr><td>Clients</td><td>/app/clients, /app/clients/[id], /app/clients/[id]/edit, /app/clients/new, /app/carte</td></tr>
+        <tr><td>Animaux</td><td>/app/animaux, /app/animaux/[id], /app/animaux/[id]/edit, /app/animaux/new</td></tr>
+        <tr><td>S&eacute;ances</td><td>/app/seances, /app/seances/[id], /app/seances/[id]/etude-comportementale, /app/seances/[id]/suivi-cac, /app/seances/edc, /app/seances/new</td></tr>
+        <tr><td>Planning</td><td>/app/planning-seances, /app/agenda</td></tr>
+        <tr><td>Facturation</td><td>/app/factures, /app/factures/[id], /app/factures/new, /app/factures/avoir, /app/factures/avoir/[id], /app/factures/rappels, /app/factures/rfe</td></tr>
+        <tr><td>Avoirs</td><td>/app/avoirs (S54 &#128197;)</td></tr>
+        <tr><td>Devis</td><td>/app/devis, /app/devis/[id], /app/devis/new, /app/devis/templates</td></tr>
+        <tr><td>Comptabilit&eacute;</td><td>/app/reglements, /app/comptabilite, /app/compta-fec, /app/bilan</td></tr>
+        <tr><td>CRM</td><td>/app/crm, /app/crm/leads</td></tr>
+        <tr><td>&Eacute;levage</td><td>/app/elevage, /app/elevage/dashboard, /app/elevage/portees, /app/elevage/portees/[id], /app/elevage/portees/new, /app/elevage/saillies, /app/elevage/saillie/new, /app/elevage/geniteurs, /app/elevage/genealogie, /app/elevage/reservations, /app/elevage/reglements, /app/elevage/mortalite, /app/eleveur/dashboard</td></tr>
+        <tr><td>Programmes</td><td>/app/programmes, /app/programmes/new</td></tr>
+        <tr><td>Forfaits</td><td>/app/forfaits (S53 &#128197;)</td></tr>
+        <tr><td>Questionnaires</td><td>/app/questionnaires, /app/questionnaires/modele, /questionnaire</td></tr>
+        <tr><td>Dashboards m&eacute;tiers</td><td>/app/comportementaliste/dashboard, /app/educateur/dashboard, /app/toiletteur/dashboard, /app/pet-sitter/dashboard, /app/pension/dashboard, /app/equestre/dashboard, /app/osteopathe/dashboard, /app/sport-canin/dashboard, /app/naturopathe/dashboard, /app/veterinaire/dashboard</td></tr>
+        <tr><td>Param&egrave;tres</td><td>/app/parametres, /app/parametres/[section], /app/parametres/api-keys, /app/parametres/articles, /app/parametres/calendly, /app/parametres/charte, /app/parametres/editions, /app/parametres/entreprise, /app/parametres/formulaire-lead, /app/parametres/libelles-ec, /app/parametres/pdp, /app/parametres/plan-comptable, /app/parametres/races, /app/parametres/reseaux-sociaux, /app/parametres/sms, /app/parametres/smtp, /app/parametres/tva, /app/parametres/types-seance</td></tr>
+        <tr><td>Mon m&eacute;tier</td><td>/app/mes-parametres, /app/mes-parametres/cac, /app/mes-parametres/messages, /app/mes-parametres/metier, /app/mes-parametres/paiements</td></tr>
+        <tr><td>Admin</td><td>/app/admin (S54 &#128197;)</td></tr>
+        <tr><td>Divers</td><td>/app/ged, /app/signatures, /app/signatures/[id], /app/reseaux-sociaux, /app/communaute, /app/aide, /app/inventaires, /app/inventaires/[id], /app/achats, /app/achats/[id], /app/achats/new, /app/achats/reglements, /app/toilettage, /app/visites, /app/templates, /app/tiers/[id], /app/statistiques</td></tr>
+        <tr><td>Public</td><td>/client/[token], /formulaire/[token], /reservation, /carte, /comptabilite, /mes-parametres/messages</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ANNEXE C : COMPOSANTS -->
+  <h2 id="annexe-composants">&#128196; Annexe C &mdash; Composants &amp; fonctions utilitaires</h2>
+  <div class="card">
+    <h3>Composants (src/components/)</h3>
+    <table>
+      <thead><tr><th>Fichier</th><th>R&ocirc;le</th><th>Statut</th></tr></thead>
+      <tbody>
+        <tr><td>Sidebar.tsx</td><td>Navigation principale &mdash; 100+ liens, sections m&eacute;tiers</td><td><span class="badge badge-gold">&#9888; Filtrage r&ocirc;le S55</span></td></tr>
+        <tr><td>Topbar.tsx</td><td>Barre sup&eacute;rieure &mdash; badge r&ocirc;le, th&egrave;me, police, d&eacute;connexion</td><td><span class="badge badge-green">&#9989; OK S54</span></td></tr>
+        <tr><td>AideContextuelle.tsx</td><td>Aide contextuelle par page</td><td><span class="badge badge-green">&#9989; OK</span></td></tr>
+      </tbody>
+    </table>
+    <h3>Fonctions utilitaires (src/lib/)</h3>
+    <table>
+      <thead><tr><th>Fichier</th><th>Fonctions export&eacute;es</th></tr></thead>
+      <tbody>
+        <tr><td>helpers.ts</td><td>eur(), fmtDate(), fmtDateTime(), fmtSize(), STATUT_COLORS</td></tr>
+        <tr><td>auth.ts</td><td>setRoleCookie(), clearRoleCookie(), getRoleFromCookie(), ROLES[]</td></tr>
+        <tr><td>types.ts</td><td>Role, NavItem, Tiers, Seance, Facture</td></tr>
+        <tr><td>api.ts</td><td>apiFetch(), api.get/post/put/patch/delete()</td></tr>
+        <tr><td>charte.tsx</td><td>CharteProvider, useCharte(), deriveBrandShades()</td></tr>
+        <tr><td>nav.ts</td><td>NAV[], filterNavByRole()</td></tr>
+        <tr><td>help-content.ts</td><td>HELP_ARTICLES[], HELP_MODULES[], searchHelp(), getHelpForPage()</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ANNEXE D : BDD -->
+  <h2 id="annexe-bdd">&#128196; Annexe D &mdash; Tables BDD &amp; structure</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Table</th><th>R&ocirc;le</th><th>Cl&eacute; principale</th><th>Statut</th></tr></thead>
+      <tbody>
+        <tr><td>tiers</td><td>Clients, fournisseurs, prospects</td><td>TIE_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>animal</td><td>Animaux li&eacute;s aux clients</td><td>ANI_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>seance</td><td>Consultations et s&eacute;ances</td><td>SEA_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>seance_type</td><td>Types de s&eacute;ances (consultation, bilan&hellip;)</td><td>STY_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>seance_statut</td><td>Statuts s&eacute;ances (PLANIFIEE, REALISEE&hellip;)</td><td>SST_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>facture</td><td>Factures clients</td><td>FAC_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>avoir</td><td>Avoirs sur factures</td><td>AVO_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>reglement</td><td>R&egrave;glements et encaissements</td><td>REG_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>devis_contrat_entete</td><td>Devis et contrats</td><td>DCE_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>utilisateur</td><td>Comptes utilisateurs + USR_ROLE_ID (S54)</td><td>USR_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>role</td><td>4 r&ocirc;les : ADMIN, GESTION, CONSULT, COMPTA</td><td>ROL_ID</td><td><span class="badge badge-green">Active S54</span></td></tr>
+        <tr><td>role_permission</td><td>56 permissions (14 modules x 4 r&ocirc;les)</td><td>perm_id</td><td><span class="badge badge-green">Active S54</span></td></tr>
+        <tr><td>elevage_portee</td><td>Port&eacute;es &eacute;levage</td><td>POR_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>elevage_saillie</td><td>Saillies &eacute;levage</td><td>SAI_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>forfait</td><td>Forfaits et abonnements (S53)</td><td>FOR_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>forfait_client</td><td>Souscriptions clients aux forfaits</td><td>FCL_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>inventaire_entete</td><td>Inventaires stock</td><td>INV_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>achat_entete</td><td>Achats fournisseurs</td><td>ACH_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>rs_post</td><td>Publications r&eacute;seaux sociaux</td><td>RSP_ID</td><td><span class="badge badge-green">Active</span></td></tr>
+        <tr><td>signature_demande</td><td>Demandes de signature Yousign</td><td>SIG_ID</td><td><span class="badge badge-gold">&#9888; Vide &mdash; Yousign non configur&eacute;</span></td></tr>
+        <tr><td>utilisateur_role</td><td>Table many-to-many orpheline</td><td>&mdash;</td><td><span class="badge badge-red">&#10060; Supprim&eacute;e S54</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+  <p style="text-align:center;color:var(--muted);font-size:.85rem;">
+    PetSuite by Algorithmia &middot; Document de r&eacute;f&eacute;rence S54 &middot; 26 mars 2026 &middot; Mis &agrave; jour &agrave; chaque sprint
+  </p>
+</div>
+</body>
+</html>
