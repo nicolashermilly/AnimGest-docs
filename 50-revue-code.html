@@ -536,6 +536,75 @@ docker compose restart nginx</code></pre>
   </div>
 
   <!-- SECTION 7 : PLAN S55 -->
+  
+  <h2 id="audit-reel">&#128202; Audit r&eacute;el S54 &mdash; Chiffres mesur&eacute;s</h2>
+  <p>Audit automatique effectu&eacute; le 26 mars 2026 sur les fichiers source.</p>
+
+  <div class="card">
+    <h3>Backend &mdash; custom-routes.ts (2625 lignes)</h3>
+    <table>
+      <thead><tr><th>M&eacute;trique</th><th>Valeur</th><th>Score</th><th>Action S55</th></tr></thead>
+      <tbody>
+        <tr><td>Lignes totales</td><td>2625</td><td><span class="tag tag-red">&#128308; Critique</span></td><td>D&eacute;couper en modules routes/</td></tr>
+        <tr><td>createConnection dupliqu&eacute;</td><td>82 fois</td><td><span class="tag tag-red">&#128308; Critique</span></td><td>Cr&eacute;er helper getDb() unique</td></tr>
+        <tr><td>Routes app.use()</td><td>80 routes</td><td><span class="tag tag-green">&#9989; OK</span></td><td>&mdash;</td></tr>
+        <tr><td>Routes app.get()</td><td>0</td><td><span class="tag tag-green">&#9989; OK</span></td><td>&mdash;</td></tr>
+        <tr><td>Blocs try/catch</td><td>89</td><td><span class="tag tag-green">&#9989; OK</span></td><td>&mdash;</td></tr>
+        <tr><td>Catch vides</td><td>56</td><td><span class="tag tag-red">&#128308; Critique</span></td><td>Ajouter logs d'erreur</td></tr>
+        <tr><td>console.log</td><td>1</td><td><span class="tag tag-green">&#9989; OK</span></td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1rem;"><strong>Score global : 35/100</strong> &mdash; <span class="badge badge-red">Refactorisation S55 prioritaire</span></p>
+  </div>
+
+  <div class="card">
+    <h3>Frontend &mdash; 137 fichiers TSX</h3>
+    <table>
+      <thead><tr><th>M&eacute;trique</th><th>Valeur</th><th>Score</th><th>Action S55</th></tr></thead>
+      <tbody>
+        <tr><td>En-t&ecirc;tes JSDoc</td><td>2 / 137 (1%)</td><td><span class="tag tag-red">&#128308; Critique</span></td><td>Ajouter en-t&ecirc;te sur tous les fichiers</td></tr>
+        <tr><td>fmtDate dupliqu&eacute;</td><td>48 fichiers</td><td><span class="tag tag-red">&#128308; Critique</span></td><td>Utiliser helpers.ts syst&eacute;matiquement</td></tr>
+        <tr><td>fmtMontant dupliqu&eacute;</td><td>4 fichiers</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Centraliser dans helpers.ts</td></tr>
+        <tr><td>fetch() direct (hors apiFetch)</td><td>17 fichiers</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Migrer vers apiFetch()</td></tr>
+        <tr><td>apiFetch/api.get utilis&eacute;</td><td>97 fichiers</td><td><span class="tag tag-green">&#9989; OK</span></td><td>&mdash;</td></tr>
+        <tr><td>Catch vides</td><td>10 fichiers</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Ajouter gestion erreur</td></tr>
+        <tr><td>Fichiers &gt; 300 lignes</td><td>33 fichiers</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>D&eacute;couper en composants</td></tr>
+        <tr><td>Plus gros fichier</td><td>840 lignes</td><td><span class="tag tag-red">&#128308; Critique</span></td><td>D&eacute;couper en priorit&eacute;</td></tr>
+        <tr><td>console.log</td><td>0</td><td><span class="tag tag-green">&#9989; Parfait</span></td><td>&mdash;</td></tr>
+        <tr><td>TODO/FIXME/HACK</td><td>0</td><td><span class="tag tag-green">&#9989; Parfait</span></td><td>&mdash;</td></tr>
+        <tr><td>Styles inline excessifs</td><td>2 fichiers</td><td><span class="tag tag-orange">&#9888; Moyen</span></td><td>Extraire en CSS</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1rem;"><strong>Score global : 52/100</strong> &mdash; <span class="badge badge-gold">Am&eacute;liorable &mdash; plan S55</span></p>
+  </div>
+
+  <div class="card">
+    <h3>Base de donn&eacute;es &mdash; Colonnes sans commentaires</h3>
+    <table>
+      <thead><tr><th>Table/Vue</th><th>Total colonnes</th><th>Sans commentaire</th><th>%</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>v_fec_reglements / v_fec_ventes / v_fec_achats / v_fec_complet</td><td>18</td><td>18</td><td><span class="tag tag-red">100%</span></td><td>Commenter en S55</td></tr>
+        <tr><td>forfait + forfait_client</td><td>11</td><td>11</td><td><span class="tag tag-red">100%</span></td><td>Commenter en S55</td></tr>
+        <tr><td>role_permission</td><td>6</td><td>6</td><td><span class="tag tag-red">100%</span></td><td>Commenter en S55</td></tr>
+        <tr><td>v_export_compta_*</td><td>13</td><td>7-13</td><td><span class="tag tag-red">54-100%</span></td><td>Commenter en S55</td></tr>
+        <tr><td>v_geniteurs_liste</td><td>22</td><td>8</td><td><span class="tag tag-orange">36%</span></td><td>Compl&eacute;ter en S55</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1rem;"><strong>Score global : 40/100</strong> &mdash; <span class="badge badge-red">Commentaires BDD prioritaires S55</span></p>
+  </div>
+
+  <div class="card">
+    <h3>Score global revue de code S54</h3>
+    <div class="score-grid">
+      <div class="score-card"><div class="score-val" style="color:var(--red)">35</div><div class="score-label">Backend API /100</div></div>
+      <div class="score-card"><div class="score-val" style="color:var(--gold)">52</div><div class="score-label">Frontend TSX /100</div></div>
+      <div class="score-card"><div class="score-val" style="color:var(--red)">40</div><div class="score-label">BDD /100</div></div>
+      <div class="score-card"><div class="score-val" style="color:var(--green)">85</div><div class="score-label">Auth/S&eacute;curit&eacute; /100</div></div>
+      <div class="score-card"><div class="score-val" style="color:var(--gold)">53</div><div class="score-label">Score global /100</div></div>
+    </div>
+    <blockquote style="margin-top:1rem;">&#9888;&#65039; Score 53/100 &mdash; En dessous du seuil de production (70%). Refactorisation S55 obligatoire avant toute mise en production.</blockquote>
+  </div>
+
   <h2 id="plan-s55">&#127919; 7. Plan de refactorisation S55+</h2>
 
   <div class="card">
