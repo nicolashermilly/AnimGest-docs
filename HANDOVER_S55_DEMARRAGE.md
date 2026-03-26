@@ -3,6 +3,41 @@
 **Sprint :** S55
 **Auteur :** Session Claude S54
 
+## ⚡ PREMIERE ACTION S55 — Reconstruction du code
+
+**Avant tout developpement, lancer la reconstruction selon les regles de 50-revue-code.html**
+
+### Ordre de reconstruction
+
+**Etape 1 — Backend : factoriser custom-routes.ts**
+- Creer `api/src/lib/db.ts` avec helper `getDb()` unique
+- Remplacer les 82 `createConnection` par `getDb()`
+- Corriger les 56 catch vides -> ajouter `res.status(500).json({ error: e.message })`
+- Decouper en modules : `api/src/routes/factures.ts`, `seances.ts`, `elevage.ts`, `roles.ts`, etc.
+
+**Etape 2 — Frontend : centraliser les utilitaires**
+- Verifier que `src/lib/helpers.ts` exporte bien `fmtDate`, `fmtMontant`
+- Remplacer les 48 definitions locales de `fmtDate` par import depuis helpers.ts
+- Ajouter en-tetes JSDoc sur les 135 fichiers TSX sans en-tete
+- Corriger les 10 catch vides dans les pages TSX
+
+**Etape 3 — BDD : commenter toutes les colonnes**
+- Convention FK : `Relation NomTable - description`
+- Convention champ : description de l'attendu
+- Priorite : forfait, forfait_client, role_permission, vues FEC
+
+**Etape 4 — Composants generiques**
+- Creer `src/components/DataTable.tsx`
+- Creer `src/components/KpiCard.tsx`
+- Creer `src/components/StatusBadge.tsx`
+- Creer `src/components/PageHeader.tsx`
+
+**Reference :** https://nicolashermilly.github.io/petsuite-docs/50-revue-code.html
+**Score actuel :** 53/100 — **Objectif S55 : 75/100**
+
+---
+
+
 ---
 
 ## URLs & chemins essentiels
