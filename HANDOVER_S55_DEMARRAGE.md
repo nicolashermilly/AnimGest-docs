@@ -256,3 +256,22 @@ Dossier : D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation
 - Verifier que le drop calcule correctement le slot cible (snap 30 min)
 - Verifier que le PATCH envoie les bonnes dates SEA_DATE_DEBUT / SEA_DATE_FIN
 - Tester avec console.log dans le handler drop avant de patcher
+
+## Roadmap supplementaire identifiee en S54
+
+### Nouveaux modules a developper
+| Sujet | Details |
+|---|---|
+| Carnet de suivi chien | Document PDF de progression - genere depuis les seances et CAC |
+| Programmes multi-seances | Planification de parcours sur plusieurs seances |
+| Forfaits cours collectifs | Gestion des cours en groupe avec inscriptions |
+
+### Audit charte graphique HTML — A faire en S55
+Certaines pages n'ont pas la bonne charte graphique et les bonnes dispositions.
+Exemple identifie : 47-changelog-S51.html
+Action : Faire un tour complet de toutes les pages HTML du repo et verifier :
+- Presence de la charte navy/gold
+- Disposition correcte (hero, container, nav, footer)
+- Pas de doublons de nav ou de style
+- Coherence visuelle avec index.html
+Script a utiliser : update_html_charte_s53.py (deja dans le repo)
