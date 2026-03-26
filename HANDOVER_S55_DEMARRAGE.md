@@ -243,3 +243,16 @@ Dossier : D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation
 - Deplacer tout ce qui ne sert pas dans _archives\\
 - Ne jamais supprimer - archiver uniquement
 - Documenter ce qui a ete archive dans un fichier _archives\\ARCHIVE_LOG.md
+
+## Bug connu — Drag & Drop agenda non fonctionnel
+
+**Page :** http://localhost/app/planning-seances
+**Symptome :** Le drag & drop HTML5 natif (v2 slot-drop, snap 30 min) ne fonctionne pas
+**Route API :** PATCH /seances/:id retourne bien 200 (verifie en S54)
+**Composant :** src/app/app/planning-seances/page.tsx
+**Piste :** Le handler onDrop ou onDragOver ne declenche pas correctement le PATCH
+**Action S55 :** Debugger les evenements HTML5 drag & drop dans la page planning-seances
+- Verifier que dragover appelle preventDefault()
+- Verifier que le drop calcule correctement le slot cible (snap 30 min)
+- Verifier que le PATCH envoie les bonnes dates SEA_DATE_DEBUT / SEA_DATE_FIN
+- Tester avec console.log dans le handler drop avant de patcher
