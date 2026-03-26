@@ -231,3 +231,15 @@ Exemple :
 ## Backup propre
 `C:\\Backup\\micro_logiciel\\20260315_0002`
 ATTENTION : Backups a partir de 20260315_0042 = code corrompu — ne pas utiliser
+
+## Actions post-protection HTML (fin de session protection)
+- DROP TABLE micro_logiciel.mdp apres application protection sur toutes les pages
+- Verifier que toutes les pages protegees fonctionnent avant suppression
+
+## Session dediee nettoyage frontend (S56+)
+Dossier : D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs
+- Identifier tous les fichiers inutiles (scripts obsoletes, fichiers de test, inject_*.js, etc.)
+- Creer un dossier _archives\\ a la racine
+- Deplacer tout ce qui ne sert pas dans _archives\\
+- Ne jamais supprimer - archiver uniquement
+- Documenter ce qui a ete archive dans un fichier _archives\\ARCHIVE_LOG.md

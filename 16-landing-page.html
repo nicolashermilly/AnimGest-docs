@@ -493,5 +493,63 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAl
 </div>
 <footer>Anim'Gest by NoSage's Editor · S44 · 24 mars 2026 · <a href="https://github.com/nicolashermilly/Anim'Gest-docs">GitHub</a></footer>
+
+<script>
+(function(){
+  var PWDS = ['@lgorithme','@Edith','@Gilles','@Chaton'];
+  var KEY = 'psd_auth_v2';
+  var TTL = 5 * 60 * 1000;
+  var PAGE = '16-landing-page.html';
+  function norm(s){ return (s||'').trim(); }
+  function isOk(){
+    try{
+      var d = JSON.parse(localStorage.getItem(KEY)||'[]'), now = Date.now();
+      return d.some(function(e){ return (e.page===PAGE||e.page==='_all') && (now-e.ts)<TTL; });
+    }catch(e){ return false; }
+  }
+  if(isOk()) return;
+  document.documentElement.style.visibility = 'hidden';
+  window.addEventListener('DOMContentLoaded', function(){
+    document.documentElement.style.visibility = '';
+    var ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:99999;display:flex;align-items:center;justify-content:center';
+    ov.innerHTML = '<div style="background:#13131a;border:1px solid #534ab7;border-radius:16px;padding:2rem;text-align:center;max-width:340px;width:90%;box-shadow:0 0 40px rgba(83,74,183,.3)">'
+      + '<div style="font-size:2rem;margin-bottom:.5rem">\uD83D\uDD12</div>'
+      + '<div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:.25rem">Acc\u00e8s restreint</div>'
+      + '<div style="font-size:.8rem;color:#555;margin-bottom:1.25rem">' + PAGE.replace('.html','').replace(/-/g,' ') + '</div>'
+      + '<input id="gPwd" type="password" placeholder="Mot de passe..." autocomplete="off"'
+      + ' style="width:100%;background:#0a0a0f;border:1px solid #2a2a3a;border-radius:8px;padding:.6rem 1rem;color:#e2e0d8;font-size:.9rem;text-align:center;letter-spacing:.1em;outline:none;margin-bottom:.75rem;box-sizing:border-box">'
+      + '<button id="gBtn" style="width:100%;background:#534ab7;border:none;border-radius:8px;padding:.65rem;color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:.5rem">D\u00e9verrouiller</button>'
+      + '<div id="gErr" style="font-size:.75rem;color:#e06c6c;display:none;margin-bottom:.5rem">Mot de passe incorrect</div>'
+      + '<a href="index.html" style="background:none;border:none;color:#555;font-size:.75rem;cursor:pointer;text-decoration:underline">\u2190 Retour \u00e0 l\'accueil</a>'
+      + '</div>';
+    document.body.appendChild(ov);
+    var inp = document.getElementById('gPwd');
+    inp.focus();
+    function tryUnlock(){
+      var entered = norm(inp.value);
+      var ok = PWDS.some(function(p){ return entered === norm(p); });
+      if(ok){
+        try{
+          var d = JSON.parse(localStorage.getItem(KEY)||'[]');
+          d = d.filter(function(e){ return (Date.now()-e.ts)<TTL; });
+          d.push({page:PAGE, ts:Date.now()});
+          localStorage.setItem(KEY, JSON.stringify(d));
+        }catch(e){}
+        ov.remove();
+      } else {
+        document.getElementById('gErr').style.display = 'block';
+        inp.style.borderColor = '#7a1515';
+        inp.value = '';
+        inp.focus();
+        setTimeout(function(){ document.getElementById('gErr').style.display='none'; inp.style.borderColor='#2a2a3a'; }, 2000);
+      }
+    }
+    inp.addEventListener('keydown', function(e){ if(e.key==='Enter') tryUnlock(); });
+    document.getElementById('gBtn').addEventListener('click', tryUnlock);
+  });
+})();
+</script>
+
 </body>
 </html>
