@@ -432,5 +432,50 @@ function render(){
   document.getElementById('main-content').innerHTML=html;
 }
 </script>
+
+<div id="dash-footer" style="display:none;background:#112840;border-top:1px solid rgba(212,168,67,.28);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;bottom:0;z-index:100">
+  <a href="index.html" style="font-size:.78rem;font-weight:600;color:var(--gold);text-decoration:none;opacity:.85">
+    ← Index documentation
+  </a>
+  <div style="display:flex;gap:10px">
+    <a href="SAV_Pilotage_Qualite.html" style="font-size:.75rem;color:var(--muted);text-decoration:none;padding:.35rem .85rem;border:1px solid rgba(255,255,255,.08);border-radius:6px;transition:all .2s"
+      onmouseover="this.style.borderColor='rgba(212,168,67,.28)';this.style.color='#e8edf2'"
+      onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.color='#8fa3b8'">
+      📐 Pilotage Qualité
+    </a>
+    <a href="SAV_Generator_Handover.html" style="font-size:.75rem;color:var(--muted);text-decoration:none;padding:.35rem .85rem;border:1px solid rgba(255,255,255,.08);border-radius:6px;transition:all .2s"
+      onmouseover="this.style.borderColor='rgba(212,168,67,.28)';this.style.color='#e8edf2'"
+      onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.color='#8fa3b8'">
+      📋 Générateur Handover
+    </a>
+  </div>
+</div>
+
+<script>
+window.addEventListener('DOMContentLoaded', function(){
+  if(sessionStorage.getItem('ag_qual')==='1'){
+    document.getElementById('dash-footer').style.display='flex';
+  }
+  // Lecture params URL pour pré-remplir depuis le générateur
+  var params = new URLSearchParams(window.location.search);
+  if(params.get('sprint')){
+    setTimeout(function(){
+      var f = document.getElementById('sprint-form');
+      if(f){
+        f.classList.add('open');
+        var set = function(id, val){ var el=document.getElementById(id); if(el && val) el.value=val; };
+        set('f-sprint',  params.get('sprint'));
+        set('f-back',    params.get('back'));
+        set('f-front',   params.get('front'));
+        set('f-bdd',     params.get('bdd'));
+        set('f-routes',  params.get('routes'));
+        set('f-pages',   params.get('pages'));
+        set('f-jsdoc',   params.get('jsdoc'));
+        set('f-cols',    params.get('cols'));
+      }
+    }, 100);
+  }
+});
+</script>
 </body>
 </html>

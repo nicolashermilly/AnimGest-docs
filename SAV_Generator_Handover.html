@@ -504,6 +504,7 @@ function renderAll(){
       +'<button class="btn-dl" onclick="dlMD()">Télécharger HANDOVER_'+sp+'_FIN.md</button>'
       +'</div>'
       +'<button class="btn-reset" onclick="resetState()">Réinitialiser avec les données S57 par défaut</button>'
+      +'<div id="scores-summary" style="display:none"></div>'
       +'</div>';
   }
 
@@ -633,6 +634,32 @@ function generate(){
   document.getElementById('out-zone').style.display = 'block';
   window._md = md;
   window._sp = sp;
+
+  // Résumé scores + lien dashboard
+  var dashUrl = 'SAV_Dashboard_Qualite.html'
+    +'?sprint='+encodeURIComponent(sp)
+    +'&back='+S.sb
+    +'&front='+S.sf
+    +'&bdd='+S.sd
+    +'&routes='+S.nb_routes
+    +'&pages='+S.nb_pages
+    +'&jsdoc='+S.nb_jsdoc
+    +'&cols='+S.nb_cols;
+
+  var scoreColor = function(v){ return v>=80?'#4caf82':v>=60?'#e8a84a':'#e05c5c'; };
+
+  document.getElementById('scores-summary').innerHTML =
+    '<div style="background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.28);border-radius:10px;padding:1rem 1.25rem;margin-top:1rem">'
+   +'<div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#4a6a82;margin-bottom:.75rem">Scores de ce sprint — à reporter dans le Dashboard</div>'
+   +'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1rem">'
+   +'<div style="flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center"><div style="font-size:1.4rem;font-weight:700;font-family:serif;color:'+scoreColor(S.sb)+'">'+S.sb+'</div><div style="font-size:.65rem;color:#8fa3b8;margin-top:.2rem">Backend</div></div>'
+   +'<div style="flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center"><div style="font-size:1.4rem;font-weight:700;font-family:serif;color:'+scoreColor(S.sf)+'">'+S.sf+'</div><div style="font-size:.65rem;color:#8fa3b8;margin-top:.2rem">Frontend</div></div>'
+   +'<div style="flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center"><div style="font-size:1.4rem;font-weight:700;font-family:serif;color:'+scoreColor(S.sd)+'">'+S.sd+'</div><div style="font-size:.65rem;color:#8fa3b8;margin-top:.2rem">BDD</div></div>'
+   +'<div style="flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center"><div style="font-size:1.4rem;font-weight:700;font-family:serif;color:'+scoreColor(glo())+'">'+glo()+'</div><div style="font-size:.65rem;color:#8fa3b8;margin-top:.2rem">Global</div></div>'
+   +'</div>'
+   +'<a href="'+dashUrl+'" style="display:block;width:100%;padding:.7rem;background:#D4A843;color:#0D2137;border:none;border-radius:8px;font-size:.85rem;font-weight:700;text-align:center;text-decoration:none;cursor:pointer">📊 Ouvrir le Dashboard Qualité avec ces scores →</a>'
+   +'</div>';
+  document.getElementById('scores-summary').style.display = 'block';
 }
 
 function copyMD(){
@@ -653,6 +680,32 @@ function dlMD(){
   a.download = 'HANDOVER_'+sp+'_FIN.md';
   a.click();
 }
+</script>
+
+<div id="app-footer" style="display:none;background:#112840;border-top:1px solid rgba(212,168,67,.28);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;bottom:0;z-index:100">
+  <a href="index.html" style="font-size:.78rem;font-weight:600;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:6px;opacity:.85">
+    ← Index documentation
+  </a>
+  <div style="display:flex;gap:10px">
+    <a href="SAV_Pilotage_Qualite.html" style="font-size:.75rem;color:var(--muted);text-decoration:none;padding:.35rem .85rem;border:1px solid rgba(255,255,255,.08);border-radius:6px;transition:all .2s"
+      onmouseover="this.style.borderColor='rgba(212,168,67,.28)';this.style.color='#e8edf2'"
+      onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.color='#8fa3b8'">
+      📐 Pilotage Qualité
+    </a>
+    <a href="SAV_Dashboard_Qualite.html" style="font-size:.75rem;color:var(--muted);text-decoration:none;padding:.35rem .85rem;border:1px solid rgba(255,255,255,.08);border-radius:6px;transition:all .2s"
+      onmouseover="this.style.borderColor='rgba(212,168,67,.28)';this.style.color='#e8edf2'"
+      onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.color='#8fa3b8'">
+      📊 Dashboard Qualité
+    </a>
+  </div>
+</div>
+
+<script>
+window.addEventListener('DOMContentLoaded', function(){
+  if(sessionStorage.getItem('ag_ok')==='1'){
+    document.getElementById('app-footer').style.display='flex';
+  }
+});
 </script>
 </body>
 </html>
