@@ -403,12 +403,16 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
 
   <!-- QUALITE S58 -->
   <div id="s58-qualite" class="subsection on">
-    <div class="placeholder-card">
-      <h3>Qualité code S58 — En cours</h3>
-      <p>Ce sprint est en cours de développement.</p>
-      <p>La revue sera complétée en fin de sprint via le Générateur de Handover.</p>
-      <div class="placeholder-hint">→ <a href="SAV_Generator_Handover.html">Générateur Handover</a> → Onglet Qualité → scores reportés automatiquement dans <a href="SAV_Dashboard_Qualite.html">Dashboard Qualité</a></div>
+    <div id="s58q-import-zone">
+      <div class="placeholder-card" id="s58q-placeholder">
+        <h3>Qualité code S58</h3>
+        <p>Cliquez le bouton ci-dessous pour importer automatiquement les données depuis le Dashboard Qualité Code.</p>
+        <div class="placeholder-hint">Les données sont lues depuis le localStorage du Dashboard Qualité (même domaine GitHub Pages).</div>
+        <button onclick="importQualite()" style="margin-top:1rem;background:var(--gold);color:var(--navy);border:none;border-radius:8px;padding:.7rem 1.5rem;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit">⬇ Importer depuis Dashboard Qualité</button>
+        <a href="SAV_Dashboard_Qualite.html" style="display:block;margin-top:.6rem;font-size:.72rem;color:var(--muted)">Ouvrir le Dashboard Qualité d'abord si les données ne s'importent pas →</a>
+      </div>
     </div>
+    <div id="s58q-content" style="display:none"></div>
 
     <div class="sec-title">🎯 Objectifs qualité S58</div>
     <div class="kpi-grid">
@@ -417,36 +421,39 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
       <div class="kpi-card"><div class="kpi-val" style="color:var(--info)">87</div><div class="kpi-lbl">Cible BDD</div><div class="kpi-desc">Colonnes restantes</div></div>
       <div class="kpi-card"><div class="kpi-val" style="color:var(--info)">85</div><div class="kpi-lbl">Cible Global</div><div class="kpi-desc">+3 pts vs S57</div></div>
     </div>
-
     <div class="sec-title">📋 Priorités qualité S58</div>
-    <div class="rm-item"><div class="prio-dot p-red">1</div><div><div class="rm-title">Audit PDF → Modal — remplacer window.open()</div><div class="rm-detail">Toutes les générations PDF doivent passer par une modale avec blob URL</div></div></div>
-    <div class="rm-item"><div class="prio-dot p-red">2</div><div><div class="rm-title">Module Formules/Abonnements</div><div class="rm-detail">Tables formule_ligne + client_formule — page /app/forfaits</div></div></div>
-    <div class="rm-item"><div class="prio-dot p-orange">3</div><div><div class="rm-title">Extraire factures.ts → api/src/routes/</div><div class="rm-detail">Première étape de modularisation du monolithe 2736 lignes</div></div></div>
-    <div class="rm-item"><div class="prio-dot p-orange">4</div><div><div class="rm-title">Créer src/services/ (api.ts, factures.ts, seances.ts)</div><div class="rm-detail">Centraliser les appels fetch côté frontend</div></div></div>
-    <div class="rm-item"><div class="prio-dot p-yellow">5</div><div><div class="rm-title">Compléter les 4 fichiers TSX sans JSDoc</div><div class="rm-detail">Passer de 133/137 à 137/137</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-red">1</div><div><div class="rm-title">Audit PDF → Modal</div><div class="rm-detail">Toutes les générations PDF via modale blob URL</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-red">2</div><div><div class="rm-title">Module Formules/Abonnements</div><div class="rm-detail">formule_ligne + client_formule — /app/forfaits</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">3</div><div><div class="rm-title">Extraire factures.ts → api/src/routes/</div><div class="rm-detail">Modularisation du monolithe 2736 lignes</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">4</div><div><div class="rm-title">Créer src/services/</div><div class="rm-detail">api.ts, factures.ts, seances.ts, clients.ts</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-yellow">5</div><div><div class="rm-title">JSDoc — 4 fichiers TSX restants</div><div class="rm-detail">Passer de 133/137 à 137/137</div></div></div>
   </div>
 
   <!-- MAINTENANCE S58 -->
   <div id="s58-maintenance" class="subsection">
-    <div class="placeholder-card">
-      <h3>Maintenance S58 — En cours</h3>
-      <p>Le bilan maintenance sera saisi en fin de sprint.</p>
-      <div class="placeholder-hint">→ <a href="SAV_Generator_Maintenance.html">Générateur Maintenance</a> → scores reportés automatiquement dans <a href="SAV_Dashboard_Maintenance.html">Dashboard Maintenance</a></div>
+    <div id="s58m-import-zone">
+      <div class="placeholder-card" id="s58m-placeholder">
+        <h3>Maintenance S58</h3>
+        <p>Cliquez le bouton ci-dessous pour importer automatiquement les données depuis le Dashboard Maintenance.</p>
+        <div class="placeholder-hint">Les données sont lues depuis le localStorage du Dashboard Maintenance (même domaine GitHub Pages).</div>
+        <button onclick="importMaintenance()" style="margin-top:1rem;background:var(--gold);color:var(--navy);border:none;border-radius:8px;padding:.7rem 1.5rem;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit">⬇ Importer depuis Dashboard Maintenance</button>
+        <a href="SAV_Dashboard_Maintenance.html" style="display:block;margin-top:.6rem;font-size:.72rem;color:var(--muted)">Ouvrir le Dashboard Maintenance d'abord si les données ne s'importent pas →</a>
+      </div>
     </div>
+    <div id="s58m-content" style="display:none"></div>
 
     <div class="sec-title">🎯 Objectifs maintenance S58</div>
     <div class="status-grid">
-      <div class="stat-card"><div class="stat-icon">🐳</div><div class="stat-lbl">Infra cible</div><div class="stat-val" style="color:var(--info)">92</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">3/3 + sauvegarde < 24h</div></div>
+      <div class="stat-card"><div class="stat-icon">🐳</div><div class="stat-lbl">Infra cible</div><div class="stat-val" style="color:var(--info)">92</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">3/3 + sauvegarde &lt; 24h</div></div>
       <div class="stat-card"><div class="stat-icon">🔌</div><div class="stat-lbl">API cible</div><div class="stat-val" style="color:var(--info)">90</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">10/10 routes OK</div></div>
       <div class="stat-card"><div class="stat-icon">🗂️</div><div class="stat-lbl">Dette cible</div><div class="stat-val" style="color:var(--info)">75</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">Nettoyage .bak</div></div>
       <div class="stat-card"><div class="stat-icon">🔒</div><div class="stat-lbl">Sécu cible</div><div class="stat-val" style="color:var(--info)">85</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">Audit complet</div></div>
     </div>
-
     <div class="sec-title">📋 Priorités maintenance S58</div>
-    <div class="rm-item"><div class="prio-dot p-red">1</div><div><div class="rm-title">Nettoyage des 45 fichiers .bak</div><div class="rm-detail">Session archivage → dossier _archives/ — ne jamais supprimer</div></div></div>
-    <div class="rm-item"><div class="prio-dot p-red">2</div><div><div class="rm-title">Supprimer les scripts inject_*.py obsolètes</div><div class="rm-detail">api/src/inject_communaute.py, inject_routes.py, inject_rs.py → _archives/</div></div></div>
-    <div class="rm-item"><div class="prio-dot p-orange">3</div><div><div class="rm-title">Tester la route /formules automatiquement</div><div class="rm-detail">Ajouter à la liste des routes critiques de animgest_maintenance.py</div></div></div>
-    <div class="rm-item"><div class="prio-dot p-yellow">4</div><div><div class="rm-title">Lancer animgest_quality.py --apply</div><div class="rm-detail">Appliquer les patches non-risqués identifiés en S57</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-red">1</div><div><div class="rm-title">Nettoyage des 45 fichiers .bak</div><div class="rm-detail">→ _archives/ — ne jamais supprimer</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-red">2</div><div><div class="rm-title">Archiver les scripts inject_*.py obsolètes</div><div class="rm-detail">inject_communaute.py, inject_routes.py, inject_rs.py → _archives/</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">3</div><div><div class="rm-title">Ajouter /formules aux routes testées</div><div class="rm-detail">animgest_maintenance.py — liste ROUTES_CRITIQUES</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-yellow">4</div><div><div class="rm-title">Lancer animgest_quality.py --apply</div><div class="rm-detail">Patches non-risqués identifiés en S57</div></div></div>
   </div>
 </div>
 
@@ -477,6 +484,116 @@ function showSection(sprint, section, btn){
   document.getElementById(sprint+'-'+section).classList.add('on');
   btn.classList.add('on');
 }
+
+function sc(v){ return v>=80?'var(--ok)':v>=60?'var(--warn)':'var(--err)'; }
+
+/* ══ IMPORT QUALITÉ depuis ag_qual_data (SAV_Dashboard_Qualite localStorage) ══ */
+function importQualite(){
+  try{
+    var raw = localStorage.getItem('ag_qual_data');
+    if(!raw){ alert('Aucune donnée trouvée.\nOuvrez d\'abord SAV_Dashboard_Qualite.html et saisissez le sprint S58.'); return; }
+    var data = JSON.parse(raw);
+    var sprint = data.sprints && data.sprints.find(function(s){ return s.sprint==='S58'; });
+    if(!sprint){ alert('Sprint S58 non trouvé dans le Dashboard Qualité.\nOuvrez SAV_Dashboard_Qualite.html et saisissez les données S58.'); return; }
+
+    var sc_b = sprint.scores.backend||0;
+    var sc_f = sprint.scores.frontend||0;
+    var sc_d = sprint.scores.bdd||0;
+    var glo  = Math.round((sc_b+sc_f+sc_d)/3);
+    var m    = sprint.metrics||{};
+
+    var html =
+      '<div class="prog-bar-wrap">'
+      +'<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem">'
+      +'<div><span style="font-family:\'Playfair Display\',serif;font-size:2.5rem;font-weight:700;color:'+sc(glo)+'">'+glo+'</span>'
+      +'<span style="color:var(--muted);font-size:.85rem">/100 — Sprint S58 — '+sprint.date+'</span></div>'
+      +'<span class="badge b-ok">Données importées depuis Dashboard Qualité</span>'
+      +'</div>'
+      +'<div class="prog-bar-bg"><div class="prog-bar" style="width:'+glo+'%"></div></div>'
+      +'</div>'
+      +'<div class="kpi-grid" style="margin-top:1rem">'
+      +'<div class="kpi-card"><div class="kpi-val" style="color:'+sc(sc_b)+'">'+sc_b+'</div><div class="kpi-lbl">Backend</div><div class="kpi-desc">'+( m.routes||'—')+' routes API</div></div>'
+      +'<div class="kpi-card"><div class="kpi-val" style="color:'+sc(sc_f)+'">'+sc_f+'</div><div class="kpi-lbl">Frontend</div><div class="kpi-desc">'+( m.pages||'—')+' pages UI</div></div>'
+      +'<div class="kpi-card"><div class="kpi-val" style="color:'+sc(sc_d)+'">'+sc_d+'</div><div class="kpi-lbl">BDD</div><div class="kpi-desc">'+( m.cols||'—')+'/241 cols commentées</div></div>'
+      +'<div class="kpi-card"><div class="kpi-val" style="color:'+sc(glo)+'">'+glo+'</div><div class="kpi-lbl">Global</div><div class="kpi-desc">Score calculé</div></div>'
+      +'<div class="kpi-card"><div class="kpi-val gold">'+( m.jsdoc||'—')+'</div><div class="kpi-lbl">JSDoc</div><div class="kpi-desc">/137 fichiers</div></div>'
+      +'<div class="kpi-card"><div class="kpi-val gold">'+( m.routes||'—')+'</div><div class="kpi-lbl">Routes API</div><div class="kpi-desc">custom-routes.ts</div></div>'
+      +'</div>'
+      +'<button onclick="importQualite()" style="margin-top:.75rem;background:transparent;border:1px solid var(--bdr);border-radius:7px;padding:.45rem .85rem;color:var(--muted);font-size:.72rem;cursor:pointer;font-family:inherit">↺ Réimporter</button>';
+
+    document.getElementById('s58q-placeholder').style.display='none';
+    document.getElementById('s58q-content').innerHTML=html;
+    document.getElementById('s58q-content').style.display='block';
+  } catch(e){
+    alert('Erreur lors de l\'import : '+e.message);
+  }
+}
+
+/* ══ IMPORT MAINTENANCE depuis ag_maint_data (SAV_Dashboard_Maintenance localStorage) ══ */
+function importMaintenance(){
+  try{
+    var raw = localStorage.getItem('ag_maint_data');
+    if(!raw){ alert('Aucune donnée trouvée.\nOuvrez d\'abord SAV_Dashboard_Maintenance.html et saisissez le bilan S58.'); return; }
+    var data = JSON.parse(raw);
+    var sprint = data.sprints && data.sprints.find(function(s){ return s.sprint==='S58'; });
+    if(!sprint){ alert('Sprint S58 non trouvé dans le Dashboard Maintenance.\nOuvrez SAV_Dashboard_Maintenance.html et saisissez les données S58.'); return; }
+
+    var scores = sprint.scores||{};
+    var glo    = sprint.global||Math.round((scores.infrastructure+scores.api+scores.dette+scores.securite)/4);
+    var m      = sprint.metrics||{};
+    var issues = sprint.issues||[];
+
+    function statClass(v){ return v>=80?'s-ok':v>=60?'s-warn':'s-err'; }
+
+    var html =
+      '<div class="prog-bar-wrap">'
+      +'<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem">'
+      +'<div><span style="font-family:\'Playfair Display\',serif;font-size:2.5rem;font-weight:700;color:'+sc(glo)+'">'+glo+'</span>'
+      +'<span style="color:var(--muted);font-size:.85rem">/100 — Bilan maintenance S58 — '+sprint.date+'</span></div>'
+      +'<span class="badge b-ok">Données importées depuis Dashboard Maintenance</span>'
+      +'</div>'
+      +'<div class="prog-bar-bg"><div class="prog-bar" style="width:'+glo+'%"></div></div>'
+      +'<div style="font-size:.72rem;color:var(--dim);margin-top:.35rem">Containers : '+( m.containers!=null?m.containers+'/3':'—')+' &nbsp;|&nbsp; Routes OK : '+( m.routes_ok||'—')+' &nbsp;|&nbsp; Fichiers .bak : '+( m.bak_files!=null?m.bak_files:'—')+'</div>'
+      +'</div>'
+      +'<div class="status-grid" style="margin-top:1rem">'
+      +'<div class="stat-card '+statClass(scores.infrastructure||0)+'"><div class="stat-icon">🐳</div><div class="stat-lbl">Infrastructure</div><div class="stat-val" style="color:'+sc(scores.infrastructure||0)+'">'+(scores.infrastructure||'—')+'</div></div>'
+      +'<div class="stat-card '+statClass(scores.api||0)+'"><div class="stat-icon">🔌</div><div class="stat-lbl">Routes API</div><div class="stat-val" style="color:'+sc(scores.api||0)+'">'+(scores.api||'—')+'</div></div>'
+      +'<div class="stat-card '+statClass(scores.dette||0)+'"><div class="stat-icon">🗂️</div><div class="stat-lbl">Dette technique</div><div class="stat-val" style="color:'+sc(scores.dette||0)+'">'+(scores.dette||'—')+'</div></div>'
+      +'<div class="stat-card '+statClass(scores.securite||0)+'"><div class="stat-icon">🔒</div><div class="stat-lbl">Sécurité</div><div class="stat-val" style="color:'+sc(scores.securite||0)+'">'+(scores.securite||'—')+'</div></div>'
+      +'</div>';
+
+    if(issues.length){
+      html += '<div class="sec-title" style="margin-top:1.5rem">⚠️ Points d\'action S58</div>';
+      issues.forEach(function(issue){
+        var isCrit = issue.indexOf('CRITIQUE')>=0||issue.indexOf('exposé')>=0;
+        html += '<div class="issue-item"><div class="issue-dot '+(isCrit?'d-err':'d-warn')+'"></div>'
+          +'<div style="flex:1;color:var(--muted)">'+issue+'</div></div>';
+      });
+    }
+
+    html += '<button onclick="importMaintenance()" style="margin-top:.75rem;background:transparent;border:1px solid var(--bdr);border-radius:7px;padding:.45rem .85rem;color:var(--muted);font-size:.72rem;cursor:pointer;font-family:inherit">↺ Réimporter</button>';
+
+    document.getElementById('s58m-placeholder').style.display='none';
+    document.getElementById('s58m-content').innerHTML=html;
+    document.getElementById('s58m-content').style.display='block';
+  } catch(e){
+    alert('Erreur lors de l\'import : '+e.message);
+  }
+}
+
+/* Auto-import au chargement si données déjà présentes */
+window.addEventListener('DOMContentLoaded', function(){
+  try{
+    var qd = localStorage.getItem('ag_qual_data');
+    if(qd && JSON.parse(qd).sprints && JSON.parse(qd).sprints.find(function(s){return s.sprint==='S58';})){
+      importQualite();
+    }
+    var md = localStorage.getItem('ag_maint_data');
+    if(md && JSON.parse(md).sprints && JSON.parse(md).sprints.find(function(s){return s.sprint==='S58';})){
+      importMaintenance();
+    }
+  } catch(e){}
+});
 </script>
 </body>
 </html>
