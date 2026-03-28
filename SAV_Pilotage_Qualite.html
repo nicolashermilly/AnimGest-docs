@@ -113,9 +113,9 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
 
 <div class="wrap">
 
-  <!-- LES 3 OUTILS -->
-  <div class="sec-title">Les 3 outils du pilotage qualité</div>
-  <div class="tools-grid">
+  <!-- LES 4 OUTILS -->
+  <div class="sec-title">Les 4 outils du pilotage &amp; maintenance</div>
+  <div class="tools-grid" style="grid-template-columns:repeat(2,1fr)">
 
     <div class="tool-card highlight">
       <div class="tool-header">
@@ -210,6 +210,28 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
       <a href="SAV_Dashboard_Qualite.html" class="tool-link">Ouvrir le dashboard →</a>
     </div>
 
+    <div class="tool-card highlight">
+      <div class="tool-header">
+        <span class="tool-icon">🔧</span>
+        <span class="tool-name">SAV_Dashboard_Maintenance</span>
+        <span class="tool-type type-html">HTML</span>
+      </div>
+      <div class="tool-desc">Dashboard de maintenance sécurisé — suit la santé de l'infrastructure Docker, les régressions API, la dette technique (fichiers .bak, inject_) et les risques sécurité sprint par sprint.</div>
+      <div class="tool-loc">
+        <div class="tool-loc-label">Localisation GitHub Pages</div>
+        <div class="tool-loc-path">https://nicolashermilly.github.io/petsuite-docs/SAV_Dashboard_Maintenance.html</div>
+      </div>
+      <div class="tool-loc" style="margin-top:.5rem">
+        <div class="tool-loc-label">Fichier source local</div>
+        <div class="tool-loc-path">C:\petsuite-docs\SAV_Dashboard_Maintenance.html</div>
+      </div>
+      <div class="tool-actions" style="margin-top:.5rem">
+        <div class="tool-loc-label">Script associé</div>
+        <span class="cmd">python animgest_maintenance.py --sprint SXX</span>
+      </div>
+      <a href="SAV_Dashboard_Maintenance.html" class="tool-link">Ouvrir le dashboard →</a>
+    </div>
+
   </div>
 
   <!-- PROCESS FIN DE SPRINT -->
@@ -221,7 +243,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
       <div class="step-body">
         <div class="step-when">5 min avant la fin</div>
         <div class="step-title">Lancer l'analyse qualité</div>
-        <div class="step-desc">Exécuter le script Python depuis le dossier racine du projet. L'analyse est non-destructive — lecture seule. Elle produit un rapport et identifie les patches disponibles.</div>
+        <div class="step-desc">Exécuter le script Python depuis le dossier racine du projet. Lecture seule — produit un rapport et identifie les patches disponibles.</div>
         <div class="step-cmd">cd "D:\...\micro_logiciel_frontend_nextjs"</div>
         <div class="step-cmd">python animgest_quality.py --sprint S58</div>
         <div style="margin-top:.5rem"><span class="step-tool">🐍 animgest_quality.py</span></div>
@@ -231,41 +253,64 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
-        <div class="step-when">Optionnel — patches non-risqués</div>
-        <div class="step-title">Appliquer les patches validés</div>
-        <div class="step-desc">Si des patches sont disponibles, relancer en mode <code>--apply</code>. Chaque patch est présenté avec son niveau de risque (NULS / FAIBLE / MOYEN). Tu valides ou refuses chacun individuellement. Un backup automatique est créé avant toute modification.</div>
-        <div class="step-cmd">python animgest_quality.py --apply --sprint S58</div>
-        <div class="step-desc" style="margin-top:.5rem">Patches auto-applicables sans risque : injection JSDoc, création src/services/. Patches manuels : refacto routes, window.open() → Modal, SQL commentaires.</div>
+        <div class="step-when">5 min — fin de sprint</div>
+        <div class="step-title">Lancer le diagnostic maintenance</div>
+        <div class="step-desc">Vérifie les conteneurs Docker, les 10 routes API critiques, les fichiers .bak et les credentials exposés. Génère maintenance_report.json.</div>
+        <div class="step-cmd">python animgest_maintenance.py --sprint S58</div>
+        <div style="margin-top:.5rem"><span class="step-tool">🐍 animgest_maintenance.py</span></div>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
-        <div class="step-when">5-10 min — obligatoire</div>
-        <div class="step-title">Remplir le Générateur de Handover</div>
-        <div class="step-desc">Ouvrir la page GitHub Pages, s'identifier, parcourir les 7 onglets. Les données du sprint précédent sont pré-remplies — il suffit de mettre à jour ce qui a changé, modifier les statuts des bugs, renseigner les priorités du prochain sprint.</div>
-        <div style="margin-top:.35rem"><span class="step-tool">📋 SAV_Generator_Handover.html</span></div>
-        <div class="step-cmd" style="margin-top:.35rem">→ Onglet Générer → Télécharger HANDOVER_S58_FIN.md</div>
+        <div class="step-when">Optionnel — patches non-risqués</div>
+        <div class="step-title">Appliquer les patches qualité validés</div>
+        <div class="step-desc">Relancer en mode <code>--apply</code>. Chaque patch est présenté avec son niveau de risque. Un backup automatique est créé avant toute modification.</div>
+        <div class="step-cmd">python animgest_quality.py --apply --sprint S58</div>
+        <div class="step-desc" style="margin-top:.5rem">Auto-applicables sans risque : JSDoc, src/services/. Manuels : refacto routes, window.open() → Modal, SQL commentaires.</div>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-body">
-        <div class="step-when">2 min</div>
-        <div class="step-title">Mettre à jour le Dashboard Qualité</div>
-        <div class="step-desc">Ouvrir le dashboard, cliquer sur "+ Saisir sprint", entrer les scores Backend / Frontend / BDD récupérés depuis l'analyse Python (étape 1) et les métriques du sprint.</div>
-        <div style="margin-top:.35rem"><span class="step-tool">📊 SAV_Dashboard_Qualite.html</span></div>
+        <div class="step-when">5-10 min — obligatoire</div>
+        <div class="step-title">Remplir le Générateur de Handover</div>
+        <div class="step-desc">Ouvrir le générateur, parcourir les 7 onglets. En fin de génération, un bloc de scores apparaît automatiquement avec un bouton pour ouvrir le Dashboard Qualité avec les données pré-remplies.</div>
+        <div style="margin-top:.35rem"><span class="step-tool">📋 SAV_Generator_Handover.html</span></div>
+        <div class="step-cmd" style="margin-top:.35rem">→ Onglet Générer → Télécharger .md → Bouton "📊 Ouvrir Dashboard Qualité avec ces scores"</div>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">5</div>
       <div class="step-body">
+        <div class="step-when">1 min — automatique depuis étape 4</div>
+        <div class="step-title">Enregistrer dans le Dashboard Qualité</div>
+        <div class="step-desc">Le formulaire est pré-rempli avec les scores du sprint. Vérifier les valeurs, puis cliquer Enregistrer. Le graphique d'évolution se met à jour automatiquement.</div>
+        <div style="margin-top:.35rem"><span class="step-tool">📊 SAV_Dashboard_Qualite.html</span></div>
+        <div class="step-cmd" style="margin-top:.35rem">→ Formulaire pré-rempli → Enregistrer</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-when">2 min</div>
+        <div class="step-title">Saisir le bilan de maintenance</div>
+        <div class="step-desc">Ouvrir le Dashboard Maintenance, cliquer sur "+ Saisir bilan", entrer les scores issus du diagnostic Python (étape 2) : infrastructure, API, dette, sécurité.</div>
+        <div style="margin-top:.35rem"><span class="step-tool">🔧 SAV_Dashboard_Maintenance.html</span></div>
+        <div class="step-cmd" style="margin-top:.35rem">→ Bouton "+ Saisir bilan" → scores du diagnostic → Enregistrer</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
         <div class="step-when">2 min — si nouveaux fichiers docs</div>
         <div class="step-title">Pousser sur GitHub Pages</div>
-        <div class="step-desc">Si des fichiers HTML de documentation ont été générés ou modifiés pendant le sprint, les pousser sur le repo docs.</div>
+        <div class="step-desc">Si des fichiers HTML ont été générés ou modifiés pendant le sprint, les pousser sur le repo docs.</div>
         <div class="step-cmd">cd C:\petsuite-docs</div>
         <div class="step-cmd">git pull --rebase</div>
         <div class="step-cmd">git add -A</div>
@@ -275,11 +320,11 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
     </div>
 
     <div class="step">
-      <div class="step-num">6</div>
+      <div class="step-num">8</div>
       <div class="step-body">
         <div class="step-when">1 min</div>
         <div class="step-title">Lancer la sauvegarde manuelle</div>
-        <div class="step-desc">Exécuter le script de sauvegarde v7 pour déclencher un Full_Copy + backup BDD avant de fermer la session.</div>
+        <div class="step-desc">Exécuter le script de sauvegarde v7 — Full_Copy + backup BDD avant de fermer la session.</div>
         <div class="step-cmd">PowerShell -ExecutionPolicy Bypass -File "G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1"</div>
       </div>
     </div>
@@ -432,6 +477,24 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
         <td style="font-size:.75rem;color:var(--muted)">Backups auto avant patch</td>
       </tr>
       <tr>
+        <td><strong>animgest_maintenance.py</strong></td>
+        <td><span class="badge b-warn">Python</span></td>
+        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
+        <td style="font-size:.75rem;color:var(--muted)">Terminal PowerShell</td>
+      </tr>
+      <tr>
+        <td><strong>SAV_Dashboard_Maintenance.html</strong></td>
+        <td><span class="badge b-ok">HTML</span></td>
+        <td style="font-family:'Courier New',monospace;font-size:.72rem">C:\petsuite-docs\ + GitHub Pages</td>
+        <td><a href="SAV_Dashboard_Maintenance.html" style="font-size:.75rem">Ouvrir →</a></td>
+      </tr>
+      <tr>
+        <td><strong>maintenance_report.json</strong></td>
+        <td><span class="badge b-warn">JSON</span></td>
+        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
+        <td style="font-size:.75rem;color:var(--muted)">Généré par animgest_maintenance.py</td>
+      </tr>
+      <tr>
         <td><strong>Sauvegarde_micro_logiciel.ps1</strong></td>
         <td><span class="badge b-warn">PS1</span></td>
         <td style="font-family:'Courier New',monospace;font-size:.72rem">G:\Sauvegarde_micro_logiciel\</td>
@@ -444,7 +507,12 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
 
 <footer>
   <span>Anim'Gest — NoSage's Editor &copy; 2026</span>
-  <span><a href="index.html" style="color:var(--gold)">← Retour à l'index</a></span>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap">
+    <a href="index.html" style="color:var(--gold)">← Index</a>
+    <a href="SAV_Generator_Handover.html" style="color:var(--muted)">📋 Handover</a>
+    <a href="SAV_Dashboard_Qualite.html" style="color:var(--muted)">📊 Qualité</a>
+    <a href="SAV_Dashboard_Maintenance.html" style="color:var(--muted)">🔧 Maintenance</a>
+  </div>
 </footer>
 
 <script>
