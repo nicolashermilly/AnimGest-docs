@@ -98,6 +98,13 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
 </style>
 </head>
 <body>
+<div id="sprint-bar" style="display:flex;align-items:center;gap:10px;padding:8px 20px;background:rgba(212,168,67,.08);border-bottom:1px solid rgba(212,168,67,.2);font-size:.85rem;color:#D4A843">
+  <span style="font-weight:500">Sprint en cours :</span>
+  <input id="sprint-input" type="text" value="S59" maxlength="6"
+    style="width:64px;padding:3px 8px;border-radius:6px;border:1px solid rgba(212,168,67,.4);background:#0D2137;color:#D4A843;font-weight:700;text-align:center;font-size:.85rem"
+    oninput="updateAllSprints(this.value)">
+  <span style="color:#6b7a8d;font-size:.78rem">Modifier met à jour toutes les commandes ci-dessous</span>
+</div>
 
 <nav>
   <span class="nav-logo">Anim'Gest</span>
@@ -149,15 +156,15 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
       <div class="tool-loc-label" style="margin-top:.75rem">Lancer dans PowerShell — cliquer pour copier</div>
       <div class="tool-actions" style="gap:7px">
 
-        <div class="cmd-btn" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --sprint S58')">
+        <div class="cmd-btn" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --sprint <span class="dyn-sprint">S59</span>')">
           <div class="cmd-btn-label">Analyse complète</div>
-          <div class="cmd-btn-code">python animgest_quality.py --sprint S58</div>
+          <div class="cmd-btn-code">python animgest_quality.py --sprint <span class="dyn-sprint">S59</span></div>
           <div class="cmd-btn-copy">Copier</div>
         </div>
 
-        <div class="cmd-btn" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --apply --sprint S58')">
+        <div class="cmd-btn" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --apply --sprint <span class="dyn-sprint">S59</span>')">
           <div class="cmd-btn-label">Appliquer les patches</div>
-          <div class="cmd-btn-code">python animgest_quality.py --apply --sprint S58</div>
+          <div class="cmd-btn-code">python animgest_quality.py --apply --sprint <span class="dyn-sprint">S59</span></div>
           <div class="cmd-btn-copy">Copier</div>
         </div>
 
@@ -274,7 +281,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
         <div class="step-title">Lancer l'analyse qualité</div>
         <div class="step-desc">Exécuter le script Python depuis le dossier racine du projet. Lecture seule — produit un rapport et identifie les patches disponibles.</div>
         <div class="step-cmd">cd "D:\...\micro_logiciel_frontend_nextjs"</div>
-        <div class="step-cmd">python animgest_quality.py --sprint S58</div>
+        <div class="step-cmd">python animgest_quality.py --sprint <span class="dyn-sprint">S59</span></div>
         <div style="margin-top:.5rem"><span class="step-tool">🐍 animgest_quality.py</span></div>
       </div>
     </div>
@@ -285,7 +292,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
         <div class="step-when">5 min — fin de sprint</div>
         <div class="step-title">Lancer le diagnostic maintenance</div>
         <div class="step-desc">Vérifie les conteneurs Docker, les 10 routes API critiques, les fichiers .bak et les credentials exposés. Génère maintenance_report.json.</div>
-        <div class="step-cmd">python animgest_maintenance.py --sprint S58</div>
+        <div class="step-cmd">python animgest_maintenance.py --sprint <span class="dyn-sprint">S59</span></div>
         <div style="margin-top:.5rem"><span class="step-tool">🐍 animgest_maintenance.py</span></div>
       </div>
     </div>
@@ -296,7 +303,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
         <div class="step-when">Optionnel — patches non-risqués</div>
         <div class="step-title">Appliquer les patches qualité validés</div>
         <div class="step-desc">Relancer en mode <code>--apply</code>. Chaque patch est présenté avec son niveau de risque. Un backup automatique est créé avant toute modification.</div>
-        <div class="step-cmd">python animgest_quality.py --apply --sprint S58</div>
+        <div class="step-cmd">python animgest_quality.py --apply --sprint <span class="dyn-sprint">S59</span></div>
         <div class="step-desc" style="margin-top:.5rem">Auto-applicables sans risque : JSDoc, src/services/. Manuels : refacto routes, window.open() → Modal, SQL commentaires.</div>
       </div>
     </div>
@@ -343,7 +350,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
         <div class="step-cmd">cd C:\AnimGest_Sav</div>
         <div class="step-cmd">git pull --rebase</div>
         <div class="step-cmd">git add -A</div>
-        <div class="step-cmd">git commit -m "docs: handover S58 + changelog"</div>
+        <div class="step-cmd">git commit -m "docs: handover <span class="dyn-sprint">S59</span> + changelog"</div>
         <div class="step-cmd">git push</div>
       </div>
     </div>
@@ -574,6 +581,52 @@ function copyCmd(el, text){
       if(copyEl){ copyEl.textContent = 'Copier'; }
     }, 2000);
   });
+}
+</script>
+
+<script>
+function updateAllSprints(val){
+  val=(val||'S59').trim().toUpperCase();
+  if(!val.startsWith('S')) val='S'+val;
+  document.querySelectorAll('.dyn-sprint').forEach(function(el){
+    el.textContent=val;
+  });
+  // Mettre aussi à jour les data-cmd inline (boutons copyCmd)
+  document.querySelectorAll('[onclick*="sprint"]').forEach(function(el){
+    var oc=el.getAttribute('onclick');
+    if(oc){
+      el.setAttribute('onclick', oc.replace(/--sprint S\d+/g,'--sprint '+val));
+    }
+  });
+  // Mettre à jour les textes visibles dans .cmd-btn-code
+  document.querySelectorAll('.cmd-btn-code,.step-cmd').forEach(function(el){
+    el.innerHTML=el.innerHTML.replace(/--sprint S\d+/g,'--sprint <span class="dyn-sprint">'+val+'</span>');
+  });
+}
+
+// copyCmd avec fallback execCommand
+function copyCmd(card,text){
+  if(typeof text==='string'){
+    text=text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
+    // Remplacer sprint dynamiquement
+    var sp=document.getElementById('sprint-input');
+    if(sp) text=text.replace(/--sprint S\d+/g,'--sprint '+sp.value.trim());
+  }
+  function doFeedback(){
+    var old=card.querySelector('.cmd-btn-label');
+    if(old){var prev=old.textContent;old.textContent='Copié ✓';setTimeout(function(){old.textContent=prev;},2000);}
+    card.classList.add('copied');
+    setTimeout(function(){card.classList.remove('copied');},2000);
+  }
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(text).then(doFeedback).catch(function(){
+      var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);doFeedback();
+    });
+  } else {
+    var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);doFeedback();
+  }
 }
 </script>
 </body>

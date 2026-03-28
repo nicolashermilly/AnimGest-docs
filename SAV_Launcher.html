@@ -106,14 +106,14 @@ nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:1rem 
 .cmd-main-body{flex:1;min-width:0}
 .cmd-main-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:.3rem}
 .cmd-main-code{font-family:'Courier New',monospace;font-size:.82rem;color:var(--ok);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;white-space:pre-wrap;word-break:break-all}
 .cmd-main.copied .cmd-main-code{color:var(--ok)}
 .cmd-copy-badge{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:6px;
   padding:.2rem .65rem;font-size:.68rem;font-weight:600;color:var(--gold);flex-shrink:0;white-space:nowrap}
 .cmd-main.copied .cmd-copy-badge{background:rgba(76,175,130,.15);border-color:rgba(76,175,130,.3);color:var(--ok)}
 
 .cmd-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.6rem}
-.cmd-tile{background:rgba(0,0,0,.25);border:1px solid var(--bdr);border-radius:8px;
+.cmd-tile{min-height:unset;height:auto;background:rgba(0,0,0,.25);border:1px solid var(--bdr);border-radius:8px;
   padding:.85rem 1rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.75rem;user-select:none}
 .cmd-tile:hover{border-color:var(--gold-b);background:rgba(212,168,67,.06)}
 .cmd-tile.copied{border-color:var(--ok);background:rgba(76,175,130,.06)}
@@ -189,7 +189,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--gold-b);padding:1rem 
 <!-- SPRINT BAR -->
 <div class="sprint-bar">
   <span class="sprint-bar-label">Sprint en cours</span>
-  <input class="sprint-input" type="text" id="sprint-val" value="S58"
+  <input class="sprint-input" type="text" id="sprint-val" value="S59"
     oninput="updateSprint(this.value)" />
   <span class="sprint-note">Modifier le numéro met à jour toutes les commandes</span>
 </div>
@@ -215,7 +215,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--gold-b);padding:1rem 
         <span class="cmd-main-icon">🐍</span>
         <div class="cmd-main-body">
           <div class="cmd-main-label">Analyse complète — recommandé</div>
-          <div class="cmd-main-code" id="qual-full">python animgest_quality.py --sprint S58</div>
+          <div class="cmd-main-code" id="qual-full">python animgest_quality.py --sprint S59</div>
         </div>
         <span class="cmd-copy-badge">Copier</span>
       </div>
@@ -274,7 +274,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--gold-b);padding:1rem 
         <span class="cmd-main-icon">🐍</span>
         <div class="cmd-main-body">
           <div class="cmd-main-label">Diagnostic complet — recommandé</div>
-          <div class="cmd-main-code" id="maint-full">python animgest_maintenance.py --sprint S58</div>
+          <div class="cmd-main-code" id="maint-full">python animgest_maintenance.py --sprint S59</div>
         </div>
         <span class="cmd-copy-badge">Copier</span>
       </div>
@@ -333,7 +333,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--gold-b);padding:1rem 
         <span class="cmd-main-icon">🐍</span>
         <div class="cmd-main-body">
           <div class="cmd-main-label">Mode interactif — valider patch par patch</div>
-          <div class="cmd-main-code" id="patch-full">python animgest_quality.py --apply --sprint S58</div>
+          <div class="cmd-main-code" id="patch-full">python animgest_quality.py --apply --sprint S59</div>
         </div>
         <span class="cmd-copy-badge">Copier</span>
       </div>
@@ -403,7 +403,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--gold-b);padding:1rem 
       <span class="step-chevron">▼</span>
     </div>
     <div class="step-body">
-      <div class="step-desc">La Revue de Code importe automatiquement les données S58 depuis les dashboards dès l'ouverture de la page.</div>
+      <div class="step-desc">La Revue de Code importe automatiquement les données du sprint en cours depuis les dashboards dès l'ouverture de la page.</div>
       <div class="link-row">
         <a href="SAV_Dashboard_Qualite.html" class="link-tile">
           <span class="link-tile-icon">📊</span>
@@ -448,7 +448,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--gold-b);padding:1rem 
         <span class="cmd-main-icon">📤</span>
         <div class="cmd-main-body">
           <div class="cmd-main-label">Push GitHub Pages docs</div>
-          <div class="cmd-main-code" id="cmd-git">cd C:\AnimGest_Sav &amp;&amp; git add -A &amp;&amp; git commit -m "docs: handover S58" &amp;&amp; git pull --rebase &amp;&amp; git push</div>
+          <div class="cmd-main-code" id="cmd-git">cd C:\AnimGest_Sav &amp;&amp; git add -A &amp;&amp; git commit -m "docs: handover <span class=\"dyn-sprint\">S59</span>" &amp;&amp; git pull --rebase &amp;&amp; git push</div>
         </div>
         <span class="cmd-copy-badge">Copier</span>
       </div>
@@ -551,11 +551,11 @@ function initSprint(){
     var d=localStorage.getItem('ag_hov');
     if(d){ var sp=JSON.parse(d).sprint; if(sp){ document.getElementById('sprint-val').value=sp; updateSprint(sp); return; } }
   }catch(e){}
-  updateSprint('S58');
+  updateSprint('S59');
 }
 
 function updateSprint(val){
-  val=(val||'S58').trim();
+  val=(val||'S59').trim();
   Object.keys(CMDS).forEach(function(id){
     var el=document.getElementById(id);
     if(el){
@@ -571,18 +571,33 @@ function updateSprint(val){
 function copyCmd(card, id){
   var el=document.getElementById(id);
   if(!el) return;
-  var sp=document.getElementById('sprint-val').value.trim()||'S58';
+  var sp=document.getElementById('sprint-val').value.trim()||'S59';
   var text=CMDS[id]?CMDS[id](sp):(el.getAttribute('data-full')||el.textContent);
   text=text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
-  navigator.clipboard.writeText(text).then(function(){
+  function doFeedback(){
     card.classList.add('copied');
     var badge=card.querySelector('.cmd-copy-badge,.tile-copy');
     if(badge){badge.textContent='Copié ✓';}
     setTimeout(function(){
       card.classList.remove('copied');
-      if(badge){badge.textContent=badge.classList.contains('tile-copy')?'Copier':'Copier';}
+      if(badge){badge.textContent='Copier';}
     },2000);
-  });
+  }
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(text).then(doFeedback).catch(function(){
+      var ta=document.createElement('textarea');
+      ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();
+      document.execCommand('copy');document.body.removeChild(ta);
+      doFeedback();
+    });
+  } else {
+    var ta=document.createElement('textarea');
+    ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+    doFeedback();
+  }
 }
 
 /* ══ ACCORDION ══ */
