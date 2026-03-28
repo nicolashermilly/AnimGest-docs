@@ -28,21 +28,21 @@ nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85re
 .kpi-l{font-size:.65rem;color:var(--muted);margin-top:.3rem;text-transform:uppercase;letter-spacing:.05em}
 
 .wrap{max-width:1140px;margin:0 auto;padding:2.5rem 2rem 5rem}
-
-/* SAV TOOLS */
-.sav-section{margin-bottom:2.5rem}
 .sec-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--gold-b)}
-.sav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
-.sav-card{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:var(--r);padding:1.1rem 1.25rem;display:flex;align-items:flex-start;gap:12px;transition:all .2s;cursor:pointer}
+.sav-section{margin-bottom:2.5rem}
+
+/* SAV TOOLS — 4 cartes */
+.sav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.sav-card{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:var(--r);padding:1.1rem 1.25rem;display:flex;align-items:flex-start;gap:12px;transition:all .2s}
 .sav-card:hover{background:rgba(212,168,67,.2);border-color:var(--gold)}
-.sav-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}
+.sav-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
 .sav-body{}
-.sav-title{font-weight:600;font-size:.9rem;color:var(--gold-l);margin-bottom:.25rem}
-.sav-desc{font-size:.75rem;color:var(--muted)}
+.sav-title{font-weight:600;font-size:.88rem;color:var(--gold-l);margin-bottom:.25rem}
+.sav-desc{font-size:.73rem;color:var(--muted)}
 
 /* CATEGORY CARDS */
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-bottom:2.5rem}
-.cat-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1.4rem 1.5rem;transition:all .2s;cursor:pointer;display:flex;flex-direction:column;gap:.75rem}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;margin-bottom:2.5rem}
+.cat-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1.4rem 1.5rem;transition:all .2s;display:flex;flex-direction:column;gap:.75rem}
 .cat-card:hover{border-color:var(--gold-b);background:rgba(17,40,64,.9)}
 .cat-header{display:flex;align-items:center;gap:10px}
 .cat-icon{font-size:1.4rem;flex-shrink:0}
@@ -52,7 +52,6 @@ nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85re
 .cat-tags{display:flex;gap:5px;flex-wrap:wrap}
 .cat-tag{font-size:.65rem;padding:.15rem .55rem;border-radius:5px;background:rgba(255,255,255,.06);color:var(--muted)}
 .cat-btn{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:600;color:var(--gold);margin-top:.25rem}
-.cat-btn:hover{opacity:.8}
 
 /* RECENT */
 .recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
@@ -67,7 +66,6 @@ nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85re
 .tag.upd{background:rgba(76,175,130,.12);color:var(--ok)}
 
 footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1.1rem 2rem;font-size:.72rem;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
-
 @media(max-width:640px){.wrap{padding:1.5rem 1rem 3rem}.hero{padding:2rem 1rem 1.75rem}.cat-grid{grid-template-columns:1fr}.kpis{gap:6px}}
 </style>
 </head>
@@ -76,7 +74,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1.1rem 2
 <nav>
   <span class="nav-logo">Anim'Gest</span>
   <span class="nav-sprint">Sprint S57</span>
-  <span class="nav-right">NoSage's Editor &middot; 28 mars 2026 &middot; 95+ pages</span>
+  <span class="nav-right">NoSage's Editor &middot; 28 mars 2026 &middot; 98+ pages</span>
 </nav>
 
 <div class="hero">
@@ -99,6 +97,15 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1.1rem 2
   <div class="sav-section">
     <div class="sec-title">🛠️ Outils de pilotage (SAV)</div>
     <div class="sav-grid">
+
+      <a href="SAV_Pilotage_Qualite.html" class="sav-card">
+        <span class="sav-icon">📐</span>
+        <div class="sav-body">
+          <div class="sav-title">Pilotage Qualité</div>
+          <div class="sav-desc">Process complet fin de sprint, localisation des 3 outils, règles, objectifs de score</div>
+        </div>
+      </a>
+
       <a href="SAV_Generator_Handover.html" class="sav-card">
         <span class="sav-icon">📋</span>
         <div class="sav-body">
@@ -106,6 +113,7 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1.1rem 2
           <div class="sav-desc">Remplir et télécharger le fichier .md de fin de sprint en 5 min</div>
         </div>
       </a>
+
       <a href="SAV_Dashboard_Qualite.html" class="sav-card">
         <span class="sav-icon">📊</span>
         <div class="sav-body">
@@ -113,13 +121,15 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1.1rem 2
           <div class="sav-desc">Suivi des scores Backend / Frontend / BDD sprint par sprint</div>
         </div>
       </a>
+
       <a href="50-revue-code-S56.html" class="sav-card">
         <span class="sav-icon">🔍</span>
         <div class="sav-body">
           <div class="sav-title">Revue de Code S56</div>
-          <div class="sav-desc">Checklist qualité, règles architecture, audit S56</div>
+          <div class="sav-desc">Checklist qualité, règles architecture, audit S56 — score 80/100</div>
         </div>
       </a>
+
     </div>
   </div>
 
@@ -211,8 +221,13 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1.1rem 2
   <div class="sec-title">🆕 Récents — S57</div>
   <div class="recent-grid">
     <div class="doc-card">
-      <a href="SAV_Generator_Handover.html">🛠️ Générateur Handover</a>
-      <div class="desc">Outil de génération automatique du .md de fin de sprint</div>
+      <a href="SAV_Pilotage_Qualite.html">📐 Pilotage Qualité</a>
+      <div class="desc">Process fin de sprint, 3 outils, localisations, règles, objectifs de score</div>
+      <div class="tags"><span class="tag new">S57</span><span class="tag new">Nouveau</span></div>
+    </div>
+    <div class="doc-card">
+      <a href="SAV_Generator_Handover.html">📋 Générateur Handover</a>
+      <div class="desc">Génération automatique du .md de fin de sprint</div>
       <div class="tags"><span class="tag new">S57</span><span class="tag new">Nouveau</span></div>
     </div>
     <div class="doc-card">
@@ -235,18 +250,13 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1.1rem 2
       <div class="desc">2736 lignes, 87+ getDb(), ~90 routes API</div>
       <div class="tags"><span class="tag upd">MàJ S57</span></div>
     </div>
-    <div class="doc-card">
-      <a href="49-changelog-S53.html">49 — Changelog S53</a>
-      <div class="desc">Audit BDD, nouvelles routes, documentation harmonisée</div>
-      <div class="tags"><span class="tag new">S53</span></div>
-    </div>
   </div>
 
 </div>
 
 <footer>
   <span>Anim'Gest — NoSage's Editor &copy; 2026</span>
-  <span>Sprint S57 &mdash; 28 mars 2026 &mdash; 95+ pages de documentation</span>
+  <span>Sprint S57 &mdash; 28 mars 2026 &mdash; 98+ pages de documentation</span>
 </footer>
 
 </body>
