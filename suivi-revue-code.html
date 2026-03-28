@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anim'Gest — Suivi Revue de Code</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0D2137;--navy-l:#112840;--navy-m:#1a3a5c;
+  --gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);
+  --text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;
+  --bdr:rgba(255,255,255,.08);
+  --ok:#4caf82;--warn:#e8a84a;--err:#e05c5c;--info:#5b9bd5;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.65}
+a{color:var(--gold);text-decoration:none}
+a:hover{opacity:.8}
+code{font-family:'Courier New',monospace;font-size:.78rem;background:rgba(255,255,255,.07);padding:.1rem .45rem;border-radius:4px;color:var(--gold-l)}
+
+/* NAV */
+nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;
+  display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;flex-wrap:wrap}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold)}
+.nav-back{font-size:.75rem;color:var(--muted)}
+.nav-back:hover{color:var(--gold)}
+.nav-right{margin-left:auto;font-size:.7rem;color:var(--dim)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:2.5rem 2rem 2rem;border-bottom:1px solid var(--gold-b)}
+.hero-eye{font-size:.68rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2.4rem);margin-bottom:.5rem}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{font-size:.85rem;color:var(--muted);max-width:680px}
+
+/* SPRINT TABS */
+.sprint-tabs{display:flex;gap:0;border-bottom:2px solid var(--gold-b);background:var(--navy-l)}
+.sp-tab{padding:.75rem 1.75rem;font-size:.82rem;font-weight:600;cursor:pointer;
+  color:var(--muted);border:none;background:transparent;font-family:inherit;
+  transition:all .2s;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.sp-tab:hover{color:var(--text)}
+.sp-tab.on{color:var(--gold);border-bottom-color:var(--gold);background:var(--gold-p)}
+
+/* WRAP */
+.wrap{max-width:1100px;margin:0 auto;padding:2rem 2rem 5rem}
+.sprint-panel{display:none}
+.sprint-panel.on{display:block}
+
+/* SECTION TABS (qualite / maintenance) */
+.section-tabs{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap}
+.sec-tab{padding:.38rem .95rem;border-radius:20px;border:1px solid var(--bdr);
+  background:transparent;color:var(--muted);font-size:.75rem;font-weight:500;
+  cursor:pointer;transition:all .2s;font-family:inherit}
+.sec-tab:hover{border-color:var(--gold-b);color:var(--text)}
+.sec-tab.on{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:700}
+.subsection{display:none}
+.subsection.on{display:block}
+
+/* SCORE ROW */
+.score-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:1.5rem}
+.score-box{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1rem;text-align:center}
+.score-box.featured{border-color:var(--gold-b);background:var(--gold-p)}
+.sb-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1}
+.sb-lbl{font-size:.68rem;color:var(--muted);margin-top:.3rem;text-transform:uppercase;letter-spacing:.06em}
+.sb-delta{font-size:.7rem;font-weight:600;margin-top:.25rem}
+.delta-up{color:var(--ok)}
+.delta-flat{color:var(--muted)}
+.delta-down{color:var(--err)}
+
+/* PROGRESS BAR */
+.prog-bar-wrap{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:1rem}
+.prog-bar-bg{height:8px;background:rgba(0,0,0,.3);border-radius:4px;overflow:hidden;margin:.5rem 0 .35rem}
+.prog-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--gold-l))}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:9px;margin-bottom:1.25rem}
+.kpi-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:.9rem 1rem}
+.kpi-val{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;line-height:1}
+.kpi-val.ok{color:var(--ok)}.kpi-val.warn{color:var(--warn)}.kpi-val.err{color:var(--err)}.kpi-val.gold{color:var(--gold)}
+.kpi-lbl{font-size:.7rem;font-weight:600;color:var(--muted);margin:.25rem 0 .15rem}
+.kpi-desc{font-size:.67rem;color:var(--dim);line-height:1.4}
+
+/* SECTION TITLE */
+.sec-title{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--gold);
+  margin:1.75rem 0 .85rem;padding-bottom:.5rem;border-bottom:1px solid var(--gold-b)}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:.77rem;margin:.6rem 0 1rem}
+.tbl th{background:rgba(0,0,0,.25);color:var(--gold);text-align:left;padding:.55rem .85rem;
+  font-size:.67rem;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gold-b)}
+.tbl td{padding:.55rem .85rem;border-bottom:1px solid var(--bdr);color:var(--muted);vertical-align:top}
+.tbl tr:hover td{background:rgba(255,255,255,.02)}
+.tbl td:first-child{color:var(--text)}
+.ok{color:var(--ok);font-weight:600}.warn{color:var(--warn);font-weight:600}.err{color:var(--err);font-weight:600}
+
+/* BADGES */
+.badge{display:inline-block;padding:.12rem .55rem;border-radius:10px;font-size:.66rem;font-weight:600}
+.b-ok{background:rgba(76,175,130,.15);color:var(--ok);border:1px solid rgba(76,175,130,.25)}
+.b-warn{background:rgba(232,168,74,.15);color:var(--warn);border:1px solid rgba(232,168,74,.25)}
+.b-err{background:rgba(224,92,92,.15);color:var(--err);border:1px solid rgba(224,92,92,.25)}
+.b-info{background:rgba(91,155,213,.15);color:var(--info);border:1px solid rgba(91,155,213,.25)}
+
+/* ROADMAP */
+.rm-item{display:flex;gap:10px;padding:.75rem 0;border-bottom:1px solid var(--bdr);align-items:flex-start}
+.rm-item:last-child{border-bottom:none}
+.prio-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;font-weight:700;flex-shrink:0;margin-top:2px}
+.p-red{background:rgba(224,92,92,.2);color:var(--err)}
+.p-orange{background:rgba(232,168,74,.2);color:var(--warn)}
+.p-yellow{background:rgba(234,179,8,.2);color:#eab308}
+.p-green{background:rgba(76,175,130,.2);color:var(--ok)}
+.rm-title{font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:.15rem}
+.rm-detail{font-size:.72rem;color:var(--muted)}
+
+/* STATUS CARDS */
+.status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:1.25rem}
+.stat-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1rem}
+.stat-card.s-ok{border-color:rgba(76,175,130,.35);background:rgba(76,175,130,.06)}
+.stat-card.s-warn{border-color:rgba(232,168,74,.35);background:rgba(232,168,74,.06)}
+.stat-card.s-err{border-color:rgba(224,92,92,.35);background:rgba(224,92,92,.06)}
+.stat-icon{font-size:1.2rem;margin-bottom:.35rem}
+.stat-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:.25rem}
+.stat-val{font-size:1.6rem;font-weight:700;font-family:'Playfair Display',serif;line-height:1}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:.5rem 0}
+.chip{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:5px;padding:.2rem .65rem;font-size:.68rem;color:var(--gold-l)}
+
+/* ISSUES */
+.issue-item{display:flex;align-items:flex-start;gap:8px;padding:.5rem 0;border-bottom:1px solid var(--bdr);font-size:.78rem}
+.issue-item:last-child{border-bottom:none}
+.issue-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.d-err{background:var(--err)}.d-warn{background:var(--warn)}.d-ok{background:var(--ok)}
+.ib{font-size:.62rem;font-weight:600;padding:.1rem .4rem;border-radius:4px;flex-shrink:0}
+.ib-api{background:rgba(76,175,130,.15);color:var(--ok)}
+.ib-infra{background:rgba(91,155,213,.15);color:var(--info)}
+.ib-dette{background:rgba(232,168,74,.15);color:var(--warn)}
+.ib-secu{background:rgba(224,92,92,.15);color:var(--err)}
+
+/* PLACEHOLDER */
+.placeholder-card{background:var(--gold-p);border:2px dashed var(--gold-b);border-radius:var(--r);
+  padding:2.5rem;text-align:center;margin:1.5rem 0}
+.placeholder-card h3{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;margin-bottom:.75rem}
+.placeholder-card p{font-size:.82rem;color:var(--muted);margin-bottom:.4rem}
+.placeholder-hint{font-size:.72rem;color:var(--dim);margin-top:.85rem;font-style:italic}
+
+footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2rem;
+  font-size:.72rem;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+
+@media(max-width:768px){.status-grid{grid-template-columns:repeat(2,1fr)}.score-row{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">Anim'Gest</span>
+  <a href="index.html" class="nav-back">← Index docs</a>
+  <span style="color:var(--bdr)">›</span>
+  <span style="font-size:.75rem;color:var(--text)">Suivi Revue de Code</span>
+  <span class="nav-right">NoSage's Editor — S54 → S58</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-eye">Document de référence</div>
+  <h1>Suivi <em>Revue de Code</em></h1>
+  <p>Qualité du code + état de la maintenance par sprint — scores mesurés, métriques, réalisations, points d'action et roadmap.</p>
+</div>
+
+<div class="sprint-tabs">
+  <button class="sp-tab" onclick="showSprint('s54',this)">S54 — 53/100</button>
+  <button class="sp-tab" onclick="showSprint('s56',this)">S56 — 80/100</button>
+  <button class="sp-tab on" onclick="showSprint('s57',this)">S57 — 82/100</button>
+  <button class="sp-tab" onclick="showSprint('s58',this)">S58 — En cours</button>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════════════════════════════════
+     S54
+══════════════════════════════════════ -->
+<div id="panel-s54" class="sprint-panel">
+  <div class="section-tabs">
+    <button class="sec-tab on" onclick="showSection('s54','qualite',this)">📊 Qualité code</button>
+    <button class="sec-tab" onclick="showSection('s54','maintenance',this)">🔧 Maintenance</button>
+  </div>
+
+  <!-- QUALITE S54 -->
+  <div id="s54-qualite" class="subsection on">
+    <div class="prog-bar-wrap">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <div><span style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--err)">53</span><span style="color:var(--muted);font-size:.85rem">/100 — Sprint S54 — 26 mars 2026</span></div>
+        <span class="badge b-err">Score initial</span>
+      </div>
+      <div class="prog-bar-bg"><div class="prog-bar" style="width:53%"></div></div>
+      <div style="font-size:.72rem;color:var(--dim)">Objectif S55 : 75/100 &nbsp;·&nbsp; Objectif S56 : 80/100</div>
+    </div>
+
+    <div class="sec-title">📊 Chiffres clés</div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-val err">82</div><div class="kpi-lbl">createConnection</div><div class="kpi-desc">Aucun helper centralisé</div></div>
+      <div class="kpi-card"><div class="kpi-val err">0</div><div class="kpi-lbl">JSDoc TSX</div><div class="kpi-desc">0/137 fichiers documentés</div></div>
+      <div class="kpi-card"><div class="kpi-val err">0</div><div class="kpi-lbl">Colonnes BDD</div><div class="kpi-desc">0 commentaires BDD</div></div>
+      <div class="kpi-card"><div class="kpi-val warn">48</div><div class="kpi-lbl">fmtDate locaux</div><div class="kpi-desc">Dupliqués dans chaque page</div></div>
+      <div class="kpi-card"><div class="kpi-val warn">10</div><div class="kpi-lbl">Catch vides</div><div class="kpi-desc">Erreurs silencieuses</div></div>
+      <div class="kpi-card"><div class="kpi-val err">0</div><div class="kpi-lbl">Composants génériques</div><div class="kpi-desc">Pas de DataTable, KpiCard…</div></div>
+    </div>
+
+    <div class="sec-title">🔥 Dette technique</div>
+    <table class="tbl">
+      <thead><tr><th>Problème</th><th>Impact</th><th>Priorité</th></tr></thead>
+      <tbody>
+        <tr><td>82 createConnection directes</td><td class="err">Fuites mémoire, connexions non fermées</td><td><span class="badge b-err">Bloquant</span></td></tr>
+        <tr><td>10 catch vides</td><td class="warn">Erreurs silencieuses impossibles à diagnostiquer</td><td><span class="badge b-err">Critique</span></td></tr>
+        <tr><td>48 fmtDate locaux dupliqués</td><td class="warn">Maintenance impossible, bugs incohérents</td><td><span class="badge b-warn">Important</span></td></tr>
+        <tr><td>0 fichier TSX documenté</td><td>Onboarding et maintenance impossibles</td><td><span class="badge b-warn">Important</span></td></tr>
+        <tr><td>0 colonne BDD commentée</td><td>Schéma incompréhensible</td><td><span class="badge b-warn">Important</span></td></tr>
+        <tr><td>Pas de composants génériques</td><td>Code dupliqué dans 100 pages</td><td><span class="badge b-info">Moyen</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-title">🗺️ Roadmap S55+</div>
+    <div class="rm-item"><div class="prio-dot p-red">1</div><div><div class="rm-title">Créer getDb() — remplacer les 82 createConnection</div><div class="rm-detail">api/src/lib/db.ts — connexion centralisée</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-red">2</div><div><div class="rm-title">Corriger les 10 catch vides</div><div class="rm-detail">→ res.status(500).json({ error: e.message })</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">3</div><div><div class="rm-title">JSDoc sur les 137 fichiers TSX</div><div class="rm-detail">@file @module @description</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">4</div><div><div class="rm-title">Centraliser fmtDate/fmtMontant</div><div class="rm-detail">src/lib/helpers.ts</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">5</div><div><div class="rm-title">Commenter les 241 colonnes BDD</div><div class="rm-detail">Convention FK + champ ordinaire</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-yellow">6</div><div><div class="rm-title">Composants génériques</div><div class="rm-detail">DataTable, KpiCard, StatusBadge, PageHeader</div></div></div>
+  </div>
+
+  <!-- MAINTENANCE S54 -->
+  <div id="s54-maintenance" class="subsection">
+    <div class="prog-bar-wrap">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <div><span style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--warn)">N/A</span><span style="color:var(--muted);font-size:.85rem">&nbsp;— Bilan maintenance non disponible pour S54</span></div>
+      </div>
+      <div style="font-size:.75rem;color:var(--dim);margin-top:.5rem">Le suivi de maintenance a été mis en place à partir de S57.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S56
+══════════════════════════════════════ -->
+<div id="panel-s56" class="sprint-panel">
+  <div class="section-tabs">
+    <button class="sec-tab on" onclick="showSection('s56','qualite',this)">📊 Qualité code</button>
+    <button class="sec-tab" onclick="showSection('s56','maintenance',this)">🔧 Maintenance</button>
+  </div>
+
+  <!-- QUALITE S56 -->
+  <div id="s56-qualite" class="subsection on">
+    <div class="prog-bar-wrap">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem">
+        <div><span style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--ok)">80</span><span style="color:var(--muted);font-size:.85rem">/100 — Sprint S56 — 27 mars 2026</span></div>
+        <span class="badge b-ok">▲ +27 pts vs S54</span>
+      </div>
+      <div class="prog-bar-bg"><div class="prog-bar" style="width:80%"></div></div>
+      <div style="font-size:.72rem;color:var(--dim)">Objectif S57 : 85/100 &nbsp;·&nbsp; Objectif S58 : 90/100</div>
+      <div class="chips" style="margin-top:.6rem">
+        <span class="chip">✅ Architecture</span><span class="chip">✅ BDD documentée</span>
+        <span class="chip">✅ JSDoc 133 TSX</span><span class="chip">⏳ Routes modulaires</span>
+        <span class="chip">⏳ Tests unitaires</span>
+      </div>
+    </div>
+
+    <div class="sec-title">📊 Chiffres clés S56</div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-val ok">87</div><div class="kpi-lbl">getDb()</div><div class="kpi-desc">0 createConnection restant. db.ts centralisé</div></div>
+      <div class="kpi-card"><div class="kpi-val ok">241</div><div class="kpi-lbl">Colonnes BDD</div><div class="kpi-desc">18 tables — convention FK respectée</div></div>
+      <div class="kpi-card"><div class="kpi-val ok">133</div><div class="kpi-lbl">JSDoc TSX</div><div class="kpi-desc">133/137 fichiers documentés</div></div>
+      <div class="kpi-card"><div class="kpi-val ok">4</div><div class="kpi-lbl">Composants génériques</div><div class="kpi-desc">DataTable, KpiCard, StatusBadge, PageHeader</div></div>
+      <div class="kpi-card"><div class="kpi-val ok">10</div><div class="kpi-lbl">Catch vides corrigés</div><div class="kpi-desc">→ res.status(500).json()</div></div>
+      <div class="kpi-card"><div class="kpi-val ok">21</div><div class="kpi-lbl">fmtDate centralisés</div><div class="kpi-desc">helpers.ts — fmtDate, fmtMontant, fmtTel</div></div>
+    </div>
+
+    <div class="sec-title">✅ Score détaillé par critère</div>
+    <table class="tbl">
+      <thead><tr><th>Critère</th><th>Avant S55</th><th>Après S56</th><th>Delta</th><th>Statut</th></tr></thead>
+      <tbody>
+        <tr><td>getDb() centralisé</td><td class="err">❌ 82 createConnection</td><td class="ok">✅ 87 getDb()</td><td class="ok">+8</td><td><span class="badge b-ok">Fait</span></td></tr>
+        <tr><td>Catch vides corrigés</td><td class="err">❌ 10 catch {}</td><td class="ok">✅ 0 vide</td><td class="ok">+5</td><td><span class="badge b-ok">Fait</span></td></tr>
+        <tr><td>JSDoc TSX</td><td class="err">❌ 0/137</td><td class="ok">✅ 133/137</td><td class="ok">+6</td><td><span class="badge b-ok">Fait</span></td></tr>
+        <tr><td>fmtDate/fmtMontant centralisés</td><td class="err">❌ 48 locaux</td><td class="ok">✅ helpers.ts</td><td class="ok">+4</td><td><span class="badge b-ok">Fait</span></td></tr>
+        <tr><td>Composants UI génériques</td><td class="err">❌ 0</td><td class="ok">✅ 4 créés</td><td class="ok">+4</td><td><span class="badge b-ok">Fait</span></td></tr>
+        <tr><td>BDD colonnes commentées</td><td class="err">❌ 0</td><td class="ok">✅ 241</td><td class="ok">+5</td><td><span class="badge b-ok">Fait</span></td></tr>
+        <tr><td>Routes modulaires api/src/routes/</td><td class="err">❌</td><td class="warn">⏳ Squelettes</td><td class="warn">+0</td><td><span class="badge b-warn">S57</span></td></tr>
+        <tr><td>Services frontend src/services/</td><td class="err">❌</td><td class="err">❌</td><td>+0</td><td><span class="badge b-warn">S57</span></td></tr>
+        <tr><td>Tests unitaires</td><td class="err">❌</td><td class="err">❌</td><td>+0</td><td><span class="badge b-err">S58+</span></td></tr>
+        <tr><td>ESLint/Prettier</td><td class="err">❌</td><td class="err">❌</td><td>+0</td><td><span class="badge b-err">S58+</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MAINTENANCE S56 -->
+  <div id="s56-maintenance" class="subsection">
+    <div class="prog-bar-wrap">
+      <div style="font-size:.75rem;color:var(--dim)">Le suivi de maintenance formalisé a été mis en place à partir de S57. Les données S56 sont partielles.</div>
+    </div>
+    <div class="sec-title">⚠️ Points connus S56</div>
+    <div class="issue-item"><div class="issue-dot d-warn"></div><div style="flex:1;color:var(--muted)">~40 fichiers .bak accumulés dans le projet</div><span class="ib ib-dette">Dette</span></div>
+    <div class="issue-item"><div class="issue-dot d-warn"></div><div style="flex:1;color:var(--muted)">Scripts inject_*.py présents dans api/src/ — non utilisés</div><span class="ib ib-dette">Dette</span></div>
+    <div class="issue-item"><div class="issue-dot d-ok"></div><div style="flex:1;color:var(--muted)">3 conteneurs Docker opérationnels (micro_api, micro_frontend, micro_nginx)</div><span class="ib ib-infra">Infra</span></div>
+    <div class="issue-item"><div class="issue-dot d-ok"></div><div style="flex:1;color:var(--muted)">API accessible — GET /api/bilan → 200</div><span class="ib ib-api">API</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S57
+══════════════════════════════════════ -->
+<div id="panel-s57" class="sprint-panel on">
+  <div class="section-tabs">
+    <button class="sec-tab on" onclick="showSection('s57','qualite',this)">📊 Qualité code</button>
+    <button class="sec-tab" onclick="showSection('s57','maintenance',this)">🔧 Maintenance</button>
+  </div>
+
+  <!-- QUALITE S57 -->
+  <div id="s57-qualite" class="subsection on">
+    <div class="prog-bar-wrap">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem">
+        <div><span style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--ok)">82</span><span style="color:var(--muted);font-size:.85rem">/100 — Sprint S57 — 28 mars 2026</span></div>
+        <span class="badge b-ok">▲ +2 pts vs S56</span>
+      </div>
+      <div class="prog-bar-bg"><div class="prog-bar" style="width:82%"></div></div>
+      <div style="font-size:.72rem;color:var(--dim)">Objectif S58 : 85/100 &nbsp;·&nbsp; Objectif S59 : 90/100</div>
+      <div class="chips" style="margin-top:.6rem">
+        <span class="chip">✅ 87+ getDb()</span><span class="chip">✅ RBAC 4 rôles</span>
+        <span class="chip">✅ Routes permissions corrigées</span><span class="chip">⏳ Routes modulaires</span>
+        <span class="chip">⏳ src/services/</span>
+      </div>
+    </div>
+
+    <div class="sec-title">📊 Chiffres clés S57</div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-val gold">2736</div><div class="kpi-lbl">Lignes custom-routes.ts</div><div class="kpi-desc">87+ getDb(), 0 createConnection</div></div>
+      <div class="kpi-card"><div class="kpi-val gold">~90</div><div class="kpi-lbl">Routes API</div><div class="kpi-desc">GET /seances/:id ajouté S57</div></div>
+      <div class="kpi-card"><div class="kpi-val ok">100</div><div class="kpi-lbl">Pages UI</div><div class="kpi-desc">100 pages compilées</div></div>
+      <div class="kpi-card"><div class="kpi-val ok">133</div><div class="kpi-lbl">JSDoc TSX</div><div class="kpi-desc">133/137 fichiers</div></div>
+      <div class="kpi-card"><div class="kpi-val ok">241</div><div class="kpi-lbl">Colonnes BDD</div><div class="kpi-desc">18 tables commentées</div></div>
+      <div class="kpi-card"><div class="kpi-val ok">56</div><div class="kpi-lbl">Permissions RBAC</div><div class="kpi-desc">14 modules × 4 rôles</div></div>
+    </div>
+
+    <div class="sec-title">🔧 Réalisations S57</div>
+    <table class="tbl">
+      <thead><tr><th>Élément</th><th>Détail</th><th>Statut</th></tr></thead>
+      <tbody>
+        <tr><td>GET /roles/:id/permissions</td><td>Colonnes RPM_* → vrais noms BDD (module_code, can_read, can_write, can_delete)</td><td class="ok">✅</td></tr>
+        <tr><td>GET /user-permissions</td><td>Détection auto colonnes → noms directs</td><td class="ok">✅</td></tr>
+        <tr><td>GET /seances/:id</td><td>Route manquante — SELECT avec jointures STY/SST/tiers/animal/contact</td><td class="ok">✅</td></tr>
+        <tr><td>KPIs dashboard</td><td>nb_seances_a_venir → nb_seances — 159 séances affichées</td><td class="ok">✅</td></tr>
+        <tr><td>Sidebar comportementaliste</td><td>Lien "Suivi CAC" supprimé (règle CAC S57)</td><td class="ok">✅</td></tr>
+        <tr><td>/parametres/editions</td><td>Nouvelle page : Logo, Couleurs, Police, En-tête, CGV, Filigrane</td><td class="ok">✅</td></tr>
+        <tr><td>Routes modulaires api/src/routes/</td><td>Squelettes créés — à alimenter</td><td class="warn">⏳ S58</td></tr>
+        <tr><td>Services frontend src/services/</td><td>Non commencé</td><td class="warn">⏳ S58</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-title">⚠️ Points en attente S58</div>
+    <div class="rm-item"><div class="prio-dot p-red">1</div><div><div class="rm-title">Git push S57</div><div class="rm-detail">Fichiers modifiés non encore poussés</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-red">2</div><div><div class="rm-title">Module Formules/Abonnements</div><div class="rm-detail">/app/forfaits — Essentiel / Professionnel / Expert</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-red">3</div><div><div class="rm-title">Audit PDF → Modal complet</div><div class="rm-detail">Remplacer tous les window.open() par modales blob URL</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">4</div><div><div class="rm-title">Extraire factures.ts vers api/src/routes/</div><div class="rm-detail">Commencer la modularisation du monolithe 2736 lignes</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">5</div><div><div class="rm-title">Créer src/services/</div><div class="rm-detail">api.ts, factures.ts, seances.ts, clients.ts</div></div></div>
+  </div>
+
+  <!-- MAINTENANCE S57 -->
+  <div id="s57-maintenance" class="subsection">
+    <div class="prog-bar-wrap">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem">
+        <div><span style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--warn)">79</span><span style="color:var(--muted);font-size:.85rem">/100 — Bilan maintenance S57 — 28 mars 2026</span></div>
+        <span class="badge b-warn">Score maintenance</span>
+      </div>
+      <div class="prog-bar-bg"><div class="prog-bar" style="width:79%"></div></div>
+      <div style="font-size:.72rem;color:var(--dim)">Objectif S58 : 83/100 — Principal frein : 45 fichiers .bak</div>
+    </div>
+
+    <div class="sec-title">🐳 État infrastructure S57</div>
+    <div class="status-grid">
+      <div class="stat-card s-ok"><div class="stat-icon">🐳</div><div class="stat-lbl">Infrastructure</div><div class="stat-val" style="color:var(--ok)">90</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">3/3 containers up</div></div>
+      <div class="stat-card s-ok"><div class="stat-icon">🔌</div><div class="stat-lbl">Routes API</div><div class="stat-val" style="color:var(--ok)">85</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">9/10 routes OK</div></div>
+      <div class="stat-card s-err"><div class="stat-icon">🗂️</div><div class="stat-lbl">Dette technique</div><div class="stat-val" style="color:var(--err)">60</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">45 fichiers .bak</div></div>
+      <div class="stat-card s-ok"><div class="stat-icon">🔒</div><div class="stat-lbl">Sécurité</div><div class="stat-val" style="color:var(--ok)">80</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">Aucun token exposé</div></div>
+    </div>
+
+    <div class="sec-title">⚠️ Points d'action maintenance S57</div>
+    <div class="issue-item"><div class="issue-dot d-err"></div><div style="flex:1;color:var(--muted)">45 fichiers .bak accumulés — session de nettoyage nécessaire</div><span class="ib ib-dette">Dette</span></div>
+    <div class="issue-item"><div class="issue-dot d-warn"></div><div style="flex:1;color:var(--muted)">Route /formules non testée automatiquement</div><span class="ib ib-api">API</span></div>
+    <div class="issue-item"><div class="issue-dot d-warn"></div><div style="flex:1;color:var(--muted)">Scripts inject_*.py présents dans api/src/ — obsolètes</div><span class="ib ib-dette">Dette</span></div>
+    <div class="issue-item"><div class="issue-dot d-ok"></div><div style="flex:1;color:var(--muted)">Sauvegarde v7 déployée — Full_Copy 28/03 OK (643+96+713 fichiers sur G:)</div><span class="ib ib-infra">Infra</span></div>
+    <div class="issue-item"><div class="issue-dot d-ok"></div><div style="flex:1;color:var(--muted)">Restauration src/ depuis backup 20260326_2317 — parasites éliminés</div><span class="ib ib-infra">Infra</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     S58
+══════════════════════════════════════ -->
+<div id="panel-s58" class="sprint-panel">
+  <div class="section-tabs">
+    <button class="sec-tab on" onclick="showSection('s58','qualite',this)">📊 Qualité code</button>
+    <button class="sec-tab" onclick="showSection('s58','maintenance',this)">🔧 Maintenance</button>
+  </div>
+
+  <!-- QUALITE S58 -->
+  <div id="s58-qualite" class="subsection on">
+    <div class="placeholder-card">
+      <h3>Qualité code S58 — En cours</h3>
+      <p>Ce sprint est en cours de développement.</p>
+      <p>La revue sera complétée en fin de sprint via le Générateur de Handover.</p>
+      <div class="placeholder-hint">→ <a href="SAV_Generator_Handover.html">Générateur Handover</a> → Onglet Qualité → scores reportés automatiquement dans <a href="SAV_Dashboard_Qualite.html">Dashboard Qualité</a></div>
+    </div>
+
+    <div class="sec-title">🎯 Objectifs qualité S58</div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-val" style="color:var(--info)">85</div><div class="kpi-lbl">Cible Backend</div><div class="kpi-desc">Refacto factures.ts → routes/</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:var(--info)">82</div><div class="kpi-lbl">Cible Frontend</div><div class="kpi-desc">window.open() → Modal</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:var(--info)">87</div><div class="kpi-lbl">Cible BDD</div><div class="kpi-desc">Colonnes restantes</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:var(--info)">85</div><div class="kpi-lbl">Cible Global</div><div class="kpi-desc">+3 pts vs S57</div></div>
+    </div>
+
+    <div class="sec-title">📋 Priorités qualité S58</div>
+    <div class="rm-item"><div class="prio-dot p-red">1</div><div><div class="rm-title">Audit PDF → Modal — remplacer window.open()</div><div class="rm-detail">Toutes les générations PDF doivent passer par une modale avec blob URL</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-red">2</div><div><div class="rm-title">Module Formules/Abonnements</div><div class="rm-detail">Tables formule_ligne + client_formule — page /app/forfaits</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">3</div><div><div class="rm-title">Extraire factures.ts → api/src/routes/</div><div class="rm-detail">Première étape de modularisation du monolithe 2736 lignes</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">4</div><div><div class="rm-title">Créer src/services/ (api.ts, factures.ts, seances.ts)</div><div class="rm-detail">Centraliser les appels fetch côté frontend</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-yellow">5</div><div><div class="rm-title">Compléter les 4 fichiers TSX sans JSDoc</div><div class="rm-detail">Passer de 133/137 à 137/137</div></div></div>
+  </div>
+
+  <!-- MAINTENANCE S58 -->
+  <div id="s58-maintenance" class="subsection">
+    <div class="placeholder-card">
+      <h3>Maintenance S58 — En cours</h3>
+      <p>Le bilan maintenance sera saisi en fin de sprint.</p>
+      <div class="placeholder-hint">→ <a href="SAV_Generator_Maintenance.html">Générateur Maintenance</a> → scores reportés automatiquement dans <a href="SAV_Dashboard_Maintenance.html">Dashboard Maintenance</a></div>
+    </div>
+
+    <div class="sec-title">🎯 Objectifs maintenance S58</div>
+    <div class="status-grid">
+      <div class="stat-card"><div class="stat-icon">🐳</div><div class="stat-lbl">Infra cible</div><div class="stat-val" style="color:var(--info)">92</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">3/3 + sauvegarde < 24h</div></div>
+      <div class="stat-card"><div class="stat-icon">🔌</div><div class="stat-lbl">API cible</div><div class="stat-val" style="color:var(--info)">90</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">10/10 routes OK</div></div>
+      <div class="stat-card"><div class="stat-icon">🗂️</div><div class="stat-lbl">Dette cible</div><div class="stat-val" style="color:var(--info)">75</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">Nettoyage .bak</div></div>
+      <div class="stat-card"><div class="stat-icon">🔒</div><div class="stat-lbl">Sécu cible</div><div class="stat-val" style="color:var(--info)">85</div><div style="font-size:.68rem;color:var(--muted);margin-top:.2rem">Audit complet</div></div>
+    </div>
+
+    <div class="sec-title">📋 Priorités maintenance S58</div>
+    <div class="rm-item"><div class="prio-dot p-red">1</div><div><div class="rm-title">Nettoyage des 45 fichiers .bak</div><div class="rm-detail">Session archivage → dossier _archives/ — ne jamais supprimer</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-red">2</div><div><div class="rm-title">Supprimer les scripts inject_*.py obsolètes</div><div class="rm-detail">api/src/inject_communaute.py, inject_routes.py, inject_rs.py → _archives/</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-orange">3</div><div><div class="rm-title">Tester la route /formules automatiquement</div><div class="rm-detail">Ajouter à la liste des routes critiques de animgest_maintenance.py</div></div></div>
+    <div class="rm-item"><div class="prio-dot p-yellow">4</div><div><div class="rm-title">Lancer animgest_quality.py --apply</div><div class="rm-detail">Appliquer les patches non-risqués identifiés en S57</div></div></div>
+  </div>
+</div>
+
+</div><!-- end .wrap -->
+
+<footer>
+  <span>Anim'Gest — NoSage's Editor &copy; 2026</span>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap">
+    <a href="index.html" style="color:var(--gold)">← Index</a>
+    <a href="SAV_Dashboard_Qualite.html" style="color:var(--muted)">📊 Dashboard Qualité</a>
+    <a href="SAV_Dashboard_Maintenance.html" style="color:var(--muted)">🔧 Dashboard Maintenance</a>
+    <a href="SAV_Pilotage_Qualite.html" style="color:var(--muted)">📐 Pilotage</a>
+  </div>
+</footer>
+
+<script>
+function showSprint(id, btn){
+  document.querySelectorAll('.sprint-panel').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.sp-tab').forEach(function(t){t.classList.remove('on');});
+  document.getElementById('panel-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+function showSection(sprint, section, btn){
+  var panel = document.getElementById('panel-'+sprint);
+  panel.querySelectorAll('.subsection').forEach(function(s){s.classList.remove('on');});
+  panel.querySelectorAll('.sec-tab').forEach(function(t){t.classList.remove('on');});
+  document.getElementById(sprint+'-'+section).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>
