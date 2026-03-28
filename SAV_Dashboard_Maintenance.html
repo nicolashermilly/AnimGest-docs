@@ -192,18 +192,23 @@ window.addEventListener('DOMContentLoaded',function(){
     document.getElementById('auth').style.display='none';
     document.getElementById('app').style.display='block';
     document.getElementById('dash-footer').style.display='flex';
-    // Lecture params URL depuis le générateur
+    // Lecture params URL depuis SAV_Generator_Maintenance
     var params = new URLSearchParams(window.location.search);
     if(params.get('sprint')){
       setTimeout(function(){
         var f=document.getElementById('sprint-form');
         if(f){ f.classList.add('open'); }
-        var set=function(id,val){var el=document.getElementById(id);if(el&&val)el.value=val;};
-        set('f-sprint', params.get('sprint'));
-        set('f-infra',  params.get('infra'));
-        set('f-api',    params.get('api'));
-        set('f-dette',  params.get('dette'));
-        set('f-secu',   params.get('secu'));
+        var set=function(id,val){var el=document.getElementById(id);if(el&&val!==null&&val!=='')el.value=val;};
+        set('f-sprint',     params.get('sprint'));
+        set('f-infra',      params.get('infra'));
+        set('f-api',        params.get('api'));
+        set('f-dette',      params.get('dette'));
+        set('f-secu',       params.get('secu'));
+        set('f-containers', params.get('containers'));
+        set('f-routes-ok',  params.get('routes_ok'));
+        set('f-bak',        params.get('bak'));
+        var issues=params.get('issues');
+        if(issues){ var el=document.getElementById('f-issues'); if(el) el.value=decodeURIComponent(issues); }
       },100);
     }
     loadState(); render();
