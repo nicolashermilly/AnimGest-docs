@@ -76,6 +76,22 @@ nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85re
 .b-warn{background:rgba(232,168,74,.15);color:var(--warn)}
 .b-err{background:rgba(224,92,92,.15);color:var(--err)}
 
+/* CMD BOUTONS COPIE */
+.cmd-btn{background:rgba(0,0,0,.35);border:1px solid var(--bdr);border-radius:7px;
+  padding:.55rem .85rem;cursor:pointer;transition:all .2s;position:relative;
+  display:flex;flex-direction:column;gap:2px;user-select:none}
+.cmd-btn:hover{border-color:var(--gold-b);background:rgba(212,168,67,.08)}
+.cmd-btn.copied{border-color:var(--ok);background:rgba(76,175,130,.1)}
+.cmd-btn-label{font-size:.65rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--dim)}
+.cmd-btn-code{font-family:'Courier New',monospace;font-size:.7rem;color:var(--ok);line-height:1.4}
+.cmd-btn-copy{position:absolute;top:.45rem;right:.7rem;font-size:.62rem;
+  font-weight:600;color:var(--gold);opacity:.6;transition:opacity .2s}
+.cmd-btn:hover .cmd-btn-copy{opacity:1}
+.cmd-btn.copied .cmd-btn-copy{color:var(--ok);opacity:1}
+.cmd-btn-sm{flex:1;min-width:0}
+.cmd-btn-sm .cmd-btn-label{font-size:.62rem}
+
 footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2rem;font-size:.72rem;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
 
 @media(max-width:768px){.tools-grid{grid-template-columns:1fr}.rules-grid{grid-template-columns:1fr}}
@@ -112,16 +128,42 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
         <div class="tool-loc-label">Localisation</div>
         <div class="tool-loc-path">D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs\animgest_quality.py</div>
       </div>
-      <div class="tool-actions">
-        <div class="tool-loc-label" style="margin-top:.5rem">Commandes</div>
-        <span class="cmd">python animgest_quality.py --sprint S58</span>
-        <span class="cmd">python animgest_quality.py --apply --sprint S58</span>
-        <span class="cmd">python animgest_quality.py --backend</span>
-        <span class="cmd">python animgest_quality.py --frontend</span>
-        <span class="cmd">python animgest_quality.py --bdd</span>
+      <div class="tool-loc-label" style="margin-top:.75rem">Lancer dans PowerShell — cliquer pour copier</div>
+      <div class="tool-actions" style="gap:7px">
+
+        <div class="cmd-btn" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --sprint S58')">
+          <div class="cmd-btn-label">Analyse complète</div>
+          <div class="cmd-btn-code">python animgest_quality.py --sprint S58</div>
+          <div class="cmd-btn-copy">Copier</div>
+        </div>
+
+        <div class="cmd-btn" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --apply --sprint S58')">
+          <div class="cmd-btn-label">Appliquer les patches</div>
+          <div class="cmd-btn-code">python animgest_quality.py --apply --sprint S58</div>
+          <div class="cmd-btn-copy">Copier</div>
+        </div>
+
+        <div style="display:flex;gap:7px">
+          <div class="cmd-btn cmd-btn-sm" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --backend')">
+            <div class="cmd-btn-label">Backend</div>
+            <div class="cmd-btn-copy">Copier</div>
+          </div>
+          <div class="cmd-btn cmd-btn-sm" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --frontend')">
+            <div class="cmd-btn-label">Frontend</div>
+            <div class="cmd-btn-copy">Copier</div>
+          </div>
+          <div class="cmd-btn cmd-btn-sm" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --bdd')">
+            <div class="cmd-btn-label">BDD</div>
+            <div class="cmd-btn-copy">Copier</div>
+          </div>
+        </div>
+
       </div>
-      <div class="tool-loc-label" style="margin-top:.5rem">Prérequis</div>
-      <span class="cmd">pip install pymysql --break-system-packages</span>
+      <div class="tool-loc-label" style="margin-top:.6rem">Prérequis (1 fois)</div>
+      <div class="cmd-btn" onclick="copyCmd(this,'pip install pymysql --break-system-packages')">
+        <div class="cmd-btn-code">pip install pymysql --break-system-packages</div>
+        <div class="cmd-btn-copy">Copier</div>
+      </div>
     </div>
 
     <div class="tool-card highlight">
@@ -405,5 +447,35 @@ footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2re
   <span><a href="index.html" style="color:var(--gold)">← Retour à l'index</a></span>
 </footer>
 
+<script>
+function copyCmd(el, text){
+  // Decode HTML entities pour la commande
+  var decoded = text.replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  navigator.clipboard.writeText(decoded).then(function(){
+    el.classList.add('copied');
+    var copyEl = el.querySelector('.cmd-btn-copy');
+    if(copyEl){ copyEl.textContent = 'Copié ✓'; }
+    setTimeout(function(){
+      el.classList.remove('copied');
+      if(copyEl){ copyEl.textContent = 'Copier'; }
+    }, 2000);
+  }).catch(function(){
+    // Fallback
+    var ta = document.createElement('textarea');
+    ta.value = decoded;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    el.classList.add('copied');
+    var copyEl = el.querySelector('.cmd-btn-copy');
+    if(copyEl){ copyEl.textContent = 'Copié ✓'; }
+    setTimeout(function(){
+      el.classList.remove('copied');
+      if(copyEl){ copyEl.textContent = 'Copier'; }
+    }, 2000);
+  });
+}
+</script>
 </body>
 </html>
