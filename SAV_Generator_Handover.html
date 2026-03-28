@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Générateur Handover — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0D2137;--navy-l:#112840;--navy-m:#1a3a5c;
+  --gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);
+  --text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;
+  --bdr:rgba(255,255,255,.08);
+  --ok:#4caf82;--warn:#e8a84a;--err:#e05c5c;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+
+/* AUTH */
+#auth{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;
+  background:radial-gradient(ellipse at 30% 40%,rgba(212,168,67,.07) 0%,transparent 60%),var(--navy)}
+.auth-box{background:var(--navy-l);border:1px solid var(--gold-b);border-radius:18px;
+  padding:3rem 2.5rem;max-width:400px;width:100%;text-align:center;
+  box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.auth-logo{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);margin-bottom:.2rem}
+.auth-tag{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2.5rem}
+.auth-input{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--gold-b);border-radius:9px;
+  padding:.8rem 1rem;color:var(--text);font-size:1.1rem;font-family:inherit;
+  text-align:center;letter-spacing:.3em;outline:none;margin-bottom:1rem;transition:border-color .2s}
+.auth-input:focus{border-color:var(--gold)}
+.auth-btn{width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:9px;
+  padding:.8rem;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:opacity .2s}
+.auth-btn:hover{opacity:.85}
+.auth-err{color:var(--err);font-size:.78rem;margin-top:.8rem;min-height:1.2rem}
+.auth-hint{font-size:.68rem;color:var(--dim);margin-top:1.5rem}
+
+/* LAYOUT */
+#app{display:none;min-height:100vh}
+header{background:var(--navy-l);border-bottom:1px solid var(--gold-b);
+  padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100}
+.h-brand{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.15rem}
+.h-brand small{font-family:'DM Sans',sans-serif;font-size:.72rem;color:var(--muted);margin-left:.75rem;font-weight:300}
+.h-right{display:flex;align-items:center;gap:.75rem}
+.sprint-chip{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:20px;
+  padding:.28rem 1rem;font-size:.72rem;font-weight:600;color:var(--gold);letter-spacing:.05em}
+.logout-btn{background:none;border:none;color:var(--dim);font-size:.72rem;cursor:pointer;font-family:inherit}
+.logout-btn:hover{color:var(--muted)}
+
+.wrap{max-width:980px;margin:0 auto;padding:1.75rem 1.5rem 3rem}
+
+/* TABS */
+.tabs{display:flex;gap:5px;margin-bottom:1.25rem;flex-wrap:wrap}
+.t-btn{padding:.4rem 1rem;border-radius:20px;border:1px solid var(--bdr);
+  background:transparent;color:var(--muted);font-size:.75rem;font-weight:500;
+  cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap}
+.t-btn:hover{border-color:var(--gold-b);color:var(--text)}
+.t-btn.on{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:700}
+
+/* PROGRESS */
+.prog{display:flex;gap:4px;margin-bottom:1.5rem}
+.ps{flex:1;height:3px;border-radius:2px;background:var(--bdr);transition:background .3s}
+.ps.on{background:var(--gold)}
+
+/* CARD */
+.card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1.4rem 1.5rem;margin-bottom:1rem}
+.card-hd{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);
+  margin-bottom:1.1rem;padding-bottom:.75rem;border-bottom:1px solid var(--gold-b)}
+.sec-lbl{font-size:.67rem;font-weight:600;color:var(--dim);text-transform:uppercase;
+  letter-spacing:.1em;margin:1.1rem 0 .55rem}
+.sec-lbl:first-child{margin-top:0}
+
+/* FORM */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px}
+.f{margin-bottom:.8rem}
+.lbl{display:block;font-size:.72rem;color:var(--muted);margin-bottom:.3rem}
+input[type=text],input[type=number],input[type=password],select,textarea{
+  width:100%;background:rgba(0,0,0,.25);border:1px solid var(--bdr);
+  border-radius:8px;padding:.52rem .85rem;color:var(--text);font-size:.83rem;
+  font-family:inherit;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--gold-b)}
+select option{background:#0D2137}
+textarea{resize:vertical;min-height:58px;line-height:1.5}
+
+/* LIST EDITOR */
+.ri{display:flex;gap:6px;align-items:center;margin-bottom:5px}
+.ri input,.ri select{flex:1;min-width:0}
+.del{flex-shrink:0;background:none;border:none;color:var(--err);cursor:pointer;
+  font-size:1.25rem;padding:1px 5px;opacity:.6;transition:opacity .2s;line-height:1}
+.del:hover{opacity:1}
+.add{display:inline-flex;align-items:center;gap:5px;font-size:.75rem;color:var(--gold);
+  background:none;border:none;cursor:pointer;padding:.28rem 0;font-family:inherit;opacity:.8}
+.add:hover{opacity:1}
+
+/* BUGS */
+.bug-hd{display:grid;grid-template-columns:2fr 1fr 110px 100px 28px;gap:6px;
+  font-size:.65rem;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:5px;padding:0 2px}
+.bug-row{display:grid;grid-template-columns:2fr 1fr 110px 100px 28px;gap:6px;
+  align-items:center;margin-bottom:6px}
+.bug-row input,.bug-row select{min-width:0}
+
+/* SCORES */
+.sc-row{display:flex;align-items:center;gap:12px;margin-bottom:.9rem}
+.sc-lbl{width:78px;font-size:.78rem;color:var(--muted);flex-shrink:0}
+.sc-row input[type=range]{flex:1;accent-color:var(--gold)}
+.sc-val{width:52px;text-align:right;font-weight:600;font-size:.9rem;color:var(--gold)}
+.global-score{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:8px;
+  padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
+.global-lbl{font-size:.8rem;color:var(--muted)}
+.global-val{font-size:1.4rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif}
+
+/* CHECKBOXES */
+.chk{display:flex;align-items:center;gap:.6rem;margin-bottom:.45rem;font-size:.83rem;cursor:pointer}
+.chk input{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.25rem}
+.chip{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:5px;
+  padding:.22rem .65rem;font-size:.68rem;color:var(--gold-l);font-family:'Courier New',monospace}
+
+/* OUTPUT */
+.out-box{background:rgba(0,0,0,.4);border:1px solid var(--bdr);border-radius:8px;
+  padding:1rem 1.25rem;font-family:'Courier New',monospace;font-size:.7rem;
+  line-height:1.7;white-space:pre-wrap;word-break:break-word;
+  max-height:440px;overflow-y:auto;margin-top:1rem;color:#7aafc8}
+.btn-gen{display:block;width:100%;padding:.85rem;background:var(--gold);color:var(--navy);
+  border:none;border-radius:var(--r);font-size:.95rem;font-weight:700;cursor:pointer;
+  font-family:inherit;letter-spacing:.03em;transition:opacity .2s;margin-bottom:.75rem}
+.btn-gen:hover{opacity:.85}
+.btn-copy{display:block;width:100%;padding:.68rem;background:rgba(76,175,130,.13);
+  color:var(--ok);border:1px solid rgba(76,175,130,.3);border-radius:8px;
+  font-size:.83rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:.6rem;transition:all .2s}
+.btn-copy:hover{background:rgba(76,175,130,.22)}
+.btn-dl{display:block;width:100%;padding:.68rem;background:transparent;color:var(--muted);
+  border:1px solid var(--bdr);border-radius:8px;font-size:.83rem;cursor:pointer;
+  font-family:inherit;margin-top:.5rem;transition:all .2s}
+.btn-dl:hover{border-color:var(--gold-b);color:var(--text)}
+
+/* NAV BUTTONS */
+.navb{display:flex;gap:10px;margin-top:1.5rem}
+.nb{flex:1;padding:.65rem;border-radius:8px;font-size:.83rem;cursor:pointer;
+  font-family:inherit;font-weight:500;transition:all .2s;border:none}
+.nb.prev{background:transparent;border:1px solid var(--bdr);color:var(--muted)}
+.nb.prev:hover{border-color:var(--gold-b);color:var(--text)}
+.nb.next{background:var(--gold);color:var(--navy);font-weight:700}
+.nb.next:hover{opacity:.85}
+
+/* SAVE TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--navy-l);
+  border:1px solid var(--gold-b);border-radius:8px;padding:.5rem 1.1rem;
+  font-size:.75rem;color:var(--gold);opacity:0;transition:opacity .3s;
+  pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="auth">
+  <div class="auth-box">
+    <div class="auth-logo">Anim'Gest</div>
+    <div class="auth-tag">NoSage's Editor &middot; Générateur de Handover</div>
+    <input class="auth-input" type="password" id="pwd"
+      placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+      onkeydown="if(event.key==='Enter')login()" autofocus />
+    <button class="auth-btn" onclick="login()">Accéder &rarr;</button>
+    <div class="auth-err" id="auth-err"></div>
+    <div class="auth-hint">Accès réservé &mdash; NoSage's Editor</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="h-brand">Anim'Gest <small>Générateur de Handover</small></div>
+    <div class="h-right">
+      <div class="sprint-chip" id="h-sprint">S57</div>
+      <button class="logout-btn" onclick="logout()">Déconnexion</button>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="tabs" id="tabs"></div>
+    <div class="prog" id="prog"></div>
+    <div id="content"></div>
+  </div>
+</div>
+<div class="toast" id="toast">Sauvegardé &#10003;</div>
+
+<script>
+/* ══════════════════════════════
+   AUTH
+══════════════════════════════ */
+const SECRET = '@lgoritHme+977_73300';
+
+function login(){
+  const v = document.getElementById('pwd').value;
+  if(v === SECRET){
+    sessionStorage.setItem('ag_ok','1');
+    document.getElementById('auth').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadState(); renderAll();
+  } else {
+    const el = document.getElementById('auth-err');
+    el.textContent = 'Mot de passe incorrect';
+    document.getElementById('pwd').value = '';
+    setTimeout(()=>{ el.textContent=''; }, 3000);
+  }
+}
+
+function logout(){
+  sessionStorage.removeItem('ag_ok');
+  location.reload();
+}
+
+window.addEventListener('DOMContentLoaded', function(){
+  if(sessionStorage.getItem('ag_ok') === '1'){
+    document.getElementById('auth').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadState(); renderAll();
+  }
+});
+
+/* ══════════════════════════════
+   STATE
+══════════════════════════════ */
+const TABS = [
+  {id:'meta',   lbl:'📅 En-tête'},
+  {id:'done',   lbl:'✅ Accompli'},
+  {id:'files',  lbl:'📦 Fichiers'},
+  {id:'bugs',   lbl:'🔥 Bugs'},
+  {id:'scores', lbl:'📊 Qualité'},
+  {id:'road',   lbl:'🚀 Roadmap'},
+  {id:'out',    lbl:'📄 Générer'}
+];
+
+var cur = 0;
+var S = {
+  sprint:'S57', date: new Date().toLocaleDateString('fr-FR'),
+  objectif:'', statut:'Terminé',
+  done_front:[], done_back:[], done_bdd:[], done_refacto:[], done_fix:[],
+  ps:[], tsx:[], api:[], sql:[], py:[],
+  bugs:[
+    {l:'KPI stats -> zero',          m:'Dashboard', c:'Haute',   s:'Ouvert'},
+    {l:'Redirects CAC tracking',     m:'CAC',       c:'Haute',   s:'Ouvert'},
+    {l:'Formules/Abonnements',       m:'Forfaits',  c:'Moyenne', s:'Ouvert'},
+    {l:'/app/parametres/editions',   m:'Editions',  c:'Basse',   s:'A tester'}
+  ],
+  sb:80, sf:80, sd:80,
+  nb_routes:90, nb_pages:100, nb_jsdoc:133, nb_cols:241,
+  frimousse:true,
+  ph:[], pm:[], pl:[], blk:[], aml:[],
+  obj_next:''
+};
+
+var saveTimer = null;
+function saveState(){
+  try{ localStorage.setItem('ag_hov', JSON.stringify(S)); } catch(e){}
+  clearTimeout(saveTimer);
+  var t = document.getElementById('toast');
+  t.classList.add('show');
+  saveTimer = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+}
+function loadState(){
+  try{
+    var d = localStorage.getItem('ag_hov');
+    if(d){ var p = JSON.parse(d); Object.keys(p).forEach(function(k){ S[k]=p[k]; }); }
+  } catch(e){}
+}
+
+/* ══════════════════════════════
+   HELPERS
+══════════════════════════════ */
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+function upd(k,v){ S[k]=v; saveState(); }
+function addI(k){ S[k].push(''); saveState(); renderAll(); }
+function delI(k,i){ S[k].splice(i,1); saveState(); renderAll(); }
+function updI(k,i,v){ S[k][i]=v; saveState(); }
+function addB(){ S.bugs.push({l:'',m:'',c:'Moyenne',s:'Ouvert'}); saveState(); renderAll(); }
+function delB(i){ S.bugs.splice(i,1); saveState(); renderAll(); }
+function updB(i,f,v){ S.bugs[i][f]=v; saveState(); }
+function goTo(i){ cur=i; renderAll(); }
+function glo(){ return Math.round((S.sb+S.sf+S.sd)/3); }
+function nxt(){
+  var n = parseInt(S.sprint.replace(/\D/g,''))||57;
+  return 'S'+(n+1);
+}
+function li(a){
+  if(!a||!a.length) return '- (aucun)';
+  var f = a.filter(function(v){ return (v||'').trim(); });
+  return f.length ? f.map(function(v){ return '- '+v; }).join('\n') : '- (aucun)';
+}
+function crit_icon(c){
+  if(c==='Haute') return 'HAUTE';
+  if(c==='Basse') return 'BASSE';
+  return 'MOYENNE';
+}
+
+function listEd(k, ph){
+  var rows = (S[k]||[]).map(function(v,i){
+    return '<div class="ri"><input type="text" value="'+esc(v)+'" placeholder="'+ph+'" oninput="updI(\''+k+'\','+i+',this.value)" /><button class="del" onclick="delI(\''+k+'\','+i+')">x</button></div>';
+  }).join('');
+  return rows + '<button class="add" onclick="addI(\''+k+'\')">+ Ajouter</button>';
+}
+
+/* ══════════════════════════════
+   RENDER
+══════════════════════════════ */
+function renderAll(){
+  document.getElementById('h-sprint').textContent = S.sprint||'SXX';
+
+  document.getElementById('tabs').innerHTML = TABS.map(function(t,i){
+    return '<button class="t-btn'+(i===cur?' on':'')+'" onclick="goTo('+i+')">'+t.lbl+'</button>';
+  }).join('');
+
+  document.getElementById('prog').innerHTML = TABS.map(function(_,i){
+    return '<div class="ps'+(i<=cur?' on':'')+'"></div>';
+  }).join('');
+
+  var id = TABS[cur].id;
+  var h = '';
+
+  if(id === 'meta'){
+    h = '<div class="card">'
+      + '<div class="card-hd">Informations de session</div>'
+      + '<div class="g2">'
+      + '<div class="f"><label class="lbl">Sprint</label><input type="text" value="'+esc(S.sprint)+'" placeholder="S57" oninput="upd(\'sprint\',this.value)" /></div>'
+      + '<div class="f"><label class="lbl">Date</label><input type="text" value="'+esc(S.date)+'" oninput="upd(\'date\',this.value)" /></div>'
+      + '</div>'
+      + '<div class="f"><label class="lbl">Objectif de la session</label><input type="text" value="'+esc(S.objectif)+'" placeholder="ex : Refacto routes factures + correction KPIs dashboard" oninput="upd(\'objectif\',this.value)" /></div>'
+      + '<div class="f"><label class="lbl">Statut global</label><select onchange="upd(\'statut\',this.value)">'
+      + '<option'+(S.statut==='Terminé'?' selected':'')+'>Terminé</option>'
+      + '<option'+(S.statut==='Partiellement terminé'?' selected':'')+'>Partiellement terminé</option>'
+      + '<option'+(S.statut==='A reprendre'?' selected':'')+'>A reprendre</option>'
+      + '</select></div>'
+      + '<div class="sec-lbl">Regles projet — rappel</div>'
+      + '<div class="chips">'
+      + ['cd deploy avant docker compose','COPIER_TOUTES_PAGES_v2.ps1 avant build frontend','app.use() jamais app.get()','getDb() jamais createConnection','build --no-cache puis up -d api','restart nginx apres rebuild','PDF = Modal uniquement','"use client" = ligne 1','TSX via scripts Python','Pas de backtick dans SQL','inject_v4_final.js INTERDIT','git pull --rebase avant push'].map(function(r){ return '<span class="chip">'+r+'</span>'; }).join('')
+      + '</div></div>';
+  }
+
+  if(id === 'done'){
+    h = '<div class="card"><div class="card-hd">Ce qui a ete accompli</div>'
+      + '<div class="sec-lbl">Front-end (.tsx)</div>'+listEd('done_front','ex : /app/roles/page.tsx — liste + modale creation')
+      + '<div class="sec-lbl">Back-end / API</div>'+listEd('done_back','ex : GET /roles/:id/permissions — fix parsing parts[2]')
+      + '<div class="sec-lbl">Base de donnees</div>'+listEd('done_bdd','ex : ALTER TABLE utilisateur ADD COLUMN USR_ROLE_ID')
+      + '<div class="sec-lbl">Refactorisations</div>'+listEd('done_refacto','ex : factures.ts migre dans api/src/routes/')
+      + '<div class="sec-lbl">Corrections de bugs</div>'+listEd('done_fix','ex : route ordering /roles — prefix-match reordonne')
+      + '</div>';
+  }
+
+  if(id === 'files'){
+    h = '<div class="card"><div class="card-hd">Fichiers generes / modifies</div>'
+      + '<div class="sec-lbl">PowerShell .ps1 — C:\\Users\\AdminPC\\Downloads</div>'+listEd('ps','ex : s57_migration_roles.ps1')
+      + '<div class="sec-lbl">Pages front .tsx — src/app/app/</div>'+listEd('tsx','ex : roles/page.tsx')
+      + '<div class="sec-lbl">Routes API .ts — custom-routes.ts ou api/src/routes/</div>'+listEd('api','ex : GET /roles, POST /roles/:id/permissions')
+      + '<div class="sec-lbl">SQL .sql — execution manuelle HeidiSQL</div>'+listEd('sql','ex : s57_alter_utilisateur_role.sql')
+      + '<div class="sec-lbl">Python .py</div>'+listEd('py','ex : s57_fix_permissions.py')
+      + '</div>';
+  }
+
+  if(id === 'bugs'){
+    var bugRows = S.bugs.map(function(b,i){
+      return '<div class="bug-row">'
+        + '<input type="text" value="'+esc(b.l)+'" placeholder="Description" oninput="updB('+i+',\'l\',this.value)" />'
+        + '<input type="text" value="'+esc(b.m)+'" placeholder="Module" oninput="updB('+i+',\'m\',this.value)" />'
+        + '<select onchange="updB('+i+',\'c\',this.value)">'
+        + '<option'+(b.c==='Haute'?' selected':'')+'>Haute</option>'
+        + '<option'+(b.c==='Moyenne'?' selected':'')+'>Moyenne</option>'
+        + '<option'+(b.c==='Basse'?' selected':'')+'>Basse</option>'
+        + '</select>'
+        + '<select onchange="updB('+i+',\'s\',this.value)">'
+        + '<option'+(b.s==='Ouvert'?' selected':'')+'>Ouvert</option>'
+        + '<option'+(b.s==='Resolu'?' selected':'')+'>Resolu</option>'
+        + '<option'+(b.s==='A tester'?' selected':'')+'>A tester</option>'
+        + '<option'+(b.s==='Reporte'?' selected':'')+'>Reporte</option>'
+        + '</select>'
+        + '<button class="del" onclick="delB('+i+')">x</button>'
+        + '</div>';
+    }).join('');
+    h = '<div class="card"><div class="card-hd">Bugs connus — etat fin de session</div>'
+      + '<div class="bug-hd"><span>Description</span><span>Module</span><span>Criticite</span><span>Statut</span><span></span></div>'
+      + bugRows
+      + '<button class="add" onclick="addB()">+ Ajouter un bug</button>'
+      + '</div>';
+  }
+
+  if(id === 'scores'){
+    var g = glo();
+    h = '<div class="card"><div class="card-hd">Score qualite et metriques</div>'
+      + [['sb','Backend'],['sf','Frontend'],['sd','BDD']].map(function(pair){
+          var k=pair[0], lbl=pair[1];
+          return '<div class="sc-row"><span class="sc-lbl">'+lbl+'</span>'
+            +'<input type="range" min="0" max="100" value="'+S[k]+'" oninput="upd(\''+k+'\',+this.value);renderAll()" />'
+            +'<span class="sc-val">'+S[k]+'/100</span></div>';
+        }).join('')
+      + '<div class="global-score"><span class="global-lbl">Score global</span><span class="global-val">'+g+'/100</span></div>'
+      + '<div class="sec-lbl" style="margin-top:1.25rem">Metriques projet</div>'
+      + '<div class="g4">'
+      + '<div class="f"><label class="lbl">Routes API</label><input type="number" value="'+S.nb_routes+'" oninput="upd(\'nb_routes\',+this.value)" /></div>'
+      + '<div class="f"><label class="lbl">Pages UI</label><input type="number" value="'+S.nb_pages+'" oninput="upd(\'nb_pages\',+this.value)" /></div>'
+      + '<div class="f"><label class="lbl">JSDoc (/ 137)</label><input type="number" value="'+S.nb_jsdoc+'" oninput="upd(\'nb_jsdoc\',+this.value)" /></div>'
+      + '<div class="f"><label class="lbl">Colonnes (/ 241)</label><input type="number" value="'+S.nb_cols+'" oninput="upd(\'nb_cols\',+this.value)" /></div>'
+      + '</div>'
+      + '<div class="sec-lbl">Garde-fous</div>'
+      + '<label class="chk"><input type="checkbox" '+(S.frimousse?'checked':'')+' onchange="upd(\'frimousse\',this.checked)" /> Frimousse (ANI_ID=22, Malinois, Jean Dujardin) preserve</label>'
+      + '</div>';
+  }
+
+  if(id === 'road'){
+    h = '<div class="card"><div class="card-hd">Feuille de route — prochaine session</div>'
+      + '<div class="sec-lbl">Priorite haute</div>'+listEd('ph','ex : Corriger KPI stats dashboard')
+      + '<div class="sec-lbl">Priorite moyenne</div>'+listEd('pm','ex : Auditer PDFs -> convertir en modales')
+      + '<div class="sec-lbl">Priorite basse</div>'+listEd('pl','ex : Nettoyage _archives/ frontend')
+      + '<div class="sec-lbl">Blocages identifies</div>'+listEd('blk','ex : WireGuard port 51820 bloque')
+      + '<div class="sec-lbl">Ameliorations proposees</div>'+listEd('aml','ex : Module B — Carte identite animale')
+      + '<div class="sec-lbl">Objectif declare prochaine session</div>'
+      + '<input type="text" value="'+esc(S.obj_next)+'" placeholder="ex : Finaliser refacto routes + corriger les KPIs dashboard" oninput="upd(\'obj_next\',this.value)" style="margin-top:.2rem" />'
+      + '</div>';
+  }
+
+  if(id === 'out'){
+    var sp = esc(S.sprint)||'SXX';
+    h = '<div class="card"><div class="card-hd">Generation du fichier Handover</div>'
+      + '<button class="btn-gen" onclick="generate()">Generer HANDOVER_'+sp+'_FIN.md</button>'
+      + '<div id="out-zone" style="display:none">'
+      + '<div class="out-box" id="out-content"></div>'
+      + '<button class="btn-copy" onclick="copyMD()">Copier dans le presse-papier</button>'
+      + '<button class="btn-dl" onclick="dlMD()">Telecharger HANDOVER_'+sp+'_FIN.md</button>'
+      + '</div></div>';
+  }
+
+  var nav = '<div class="navb">';
+  if(cur > 0) nav += '<button class="nb prev" onclick="goTo('+(cur-1)+')">Precedent</button>';
+  if(cur < TABS.length-1) nav += '<button class="nb next" onclick="goTo('+(cur+1)+')">Suivant</button>';
+  nav += '</div>';
+
+  document.getElementById('content').innerHTML = h + nav;
+}
+
+/* ══════════════════════════════
+   GENERATE MARKDOWN
+══════════════════════════════ */
+function generate(){
+  var sp = S.sprint||'SXX';
+  var nx = nxt();
+  var g  = glo();
+
+  var bugTable = S.bugs.map(function(b){
+    return '| '+(b.l||'—')+' | '+(b.m||'—')+' | '+b.c+' | '+b.s+' |';
+  }).join('\n');
+
+  var md = '# Anim\'Gest — Handover '+sp+'\n'
+    + '> NoSage\'s Editor · Genere le '+S.date+'\n\n'
+    + '---\n\n'
+    + '## En-tete session\n\n'
+    + '| Champ | Valeur |\n|---|---|\n'
+    + '| Date | '+S.date+' |\n'
+    + '| Sprint | '+sp+' -> '+nx+' |\n'
+    + '| Auteur | Session Claude '+sp+' |\n'
+    + '| Objectif | '+(S.objectif||'—')+' |\n'
+    + '| Statut | '+S.statut+' |\n\n'
+    + '---\n\n'
+    + '## Chemins et URLs\n\n'
+    + '| Ressource | Valeur |\n|---|---|\n'
+    + '| App locale | http://localhost/app/ |\n'
+    + '| API test | http://localhost/api/bilan |\n'
+    + '| Docs GitHub | https://github.com/nicolashermilly/petsuite-docs |\n'
+    + '| GitHub Pages | https://nicolashermilly.github.io/petsuite-docs/ |\n'
+    + '| Frontend | D:\\OneDrive_Perso\\...\\micro_logiciel_frontend_nextjs |\n'
+    + '| Deploy | ...\\micro_logiciel_frontend_nextjs\\deploy |\n'
+    + '| API source | ...\\api\\src\\custom-routes.ts |\n'
+    + '| Routes | ...\\api\\src\\routes\\ |\n'
+    + '| Docs local | C:\\petsuite-docs |\n'
+    + '| Backup | C:\\Backup\\micro_logiciel\\20260315_0002 |\n'
+    + '| BDD | 192.168.1.62:3307 — micro_logiciel |\n\n'
+    + '---\n\n'
+    + '## 1. Accompli\n\n'
+    + '### Front-end\n'+li(S.done_front)+'\n\n'
+    + '### Back-end / API\n'+li(S.done_back)+'\n\n'
+    + '### Base de donnees\n'+li(S.done_bdd)+'\n\n'
+    + '### Refactorisations\n'+li(S.done_refacto)+'\n\n'
+    + '### Corrections de bugs\n'+li(S.done_fix)+'\n\n'
+    + '---\n\n'
+    + '## 2. Fichiers generes\n\n'
+    + '### PowerShell .ps1 -> C:\\Users\\AdminPC\\Downloads\n'+li(S.ps)+'\n\n'
+    + '### Pages front .tsx -> src/app/app/\n'+li(S.tsx)+'\n\n'
+    + '### Routes API .ts\n'+li(S.api)+'\n\n'
+    + '### SQL .sql -> HeidiSQL\n'+li(S.sql)+'\n\n'
+    + '### Python .py\n'+li(S.py)+'\n\n'
+    + '---\n\n'
+    + '## 3. Bugs connus\n\n'
+    + '| Bug | Module | Criticite | Statut |\n|---|---|---|---|\n'
+    + bugTable+'\n\n'
+    + '---\n\n'
+    + '## 4. Score qualite\n\n'
+    + '| Axe | Score |\n|---|---|\n'
+    + '| Backend | '+S.sb+' / 100 |\n'
+    + '| Frontend | '+S.sf+' / 100 |\n'
+    + '| BDD | '+S.sd+' / 100 |\n'
+    + '| Global | '+g+' / 100 |\n\n'
+    + '> Routes API : '+S.nb_routes+' | Pages UI : '+S.nb_pages+' | JSDoc : '+S.nb_jsdoc+'/137 | Colonnes BDD : '+S.nb_cols+'/241\n\n'
+    + 'Frimousse (ANI_ID=22) : '+(S.frimousse?'Preserve':'A VERIFIER')+'\n\n'
+    + '---\n\n'
+    + '## 5. Roadmap — '+nx+'\n\n'
+    + '### Priorite haute\n'+li(S.ph)+'\n\n'
+    + '### Priorite moyenne\n'+li(S.pm)+'\n\n'
+    + '### Priorite basse\n'+li(S.pl)+'\n\n'
+    + '### Blocages\n'+li(S.blk)+'\n\n'
+    + '### Ameliorations\n'+li(S.aml)+'\n\n'
+    + '---\n\n'
+    + '## 6. Objectif '+nx+'\n\n'
+    + '> '+(S.obj_next||'(a completer)')+'\n\n'
+    + '---\n\n'
+    + '## 7. Commandes de redemarrage\n\n'
+    + '```powershell\n'
+    + '# Verification conteneurs\n'
+    + 'docker ps\n\n'
+    + '# Rebuild API\n'
+    + 'cd "D:\\...\\deploy"\n'
+    + 'docker compose build api --no-cache\n'
+    + 'docker compose up -d api\n'
+    + 'docker compose restart nginx\n\n'
+    + '# Rebuild Frontend\n'
+    + 'cd "D:\\...\\micro_logiciel_frontend_nextjs"\n'
+    + '.\\COPIER_TOUTES_PAGES_v2.ps1\n'
+    + 'cd deploy\n'
+    + 'docker compose build frontend --no-cache\n'
+    + 'docker compose up -d frontend\n'
+    + 'docker compose restart nginx\n\n'
+    + '# Verification API\n'
+    + 'Invoke-RestMethod "http://localhost/api/bilan"\n\n'
+    + '# Nettoyage cache\n'
+    + 'docker builder prune --force\n'
+    + '```\n\n'
+    + '---\n\n'
+    + '## 8. Arborescence\n\n'
+    + '```powershell\n'
+    + 'tree "D:\\...\\micro_logiciel_frontend_nextjs" /F > "D:\\...\\Documentation\\arborescence.txt"\n'
+    + '```\n\n'
+    + '---\n\n'
+    + '## 9. Prompt de demarrage '+nx+'\n\n'
+    + '```\n'
+    + 'Reprendre handover '+sp+'.\n'
+    + 'Lire section 1 (accompli) et section 5 (roadmap).\n'
+    + 'Verifier coherence architecture (routes, services, pages).\n'
+    + 'Proposer plan d\'action structure pour '+nx+'.\n'
+    + 'Ne jamais patcher — integrer proprement dans l\'architecture.\n'
+    + 'Analyser arborescence.txt si disponible.\n'
+    + '```\n\n'
+    + '---\n'
+    + '*Anim\'Gest — NoSage\'s Editor — Handover '+sp+' — '+S.date+'*';
+
+  document.getElementById('out-content').textContent = md;
+  document.getElementById('out-zone').style.display = 'block';
+  window._md = md;
+  window._sp = sp;
+}
+
+function copyMD(){
+  if(!window._md) return;
+  navigator.clipboard.writeText(window._md).then(function(){
+    var b = document.querySelector('.btn-copy');
+    b.textContent = 'Copie !';
+    setTimeout(function(){ b.textContent = 'Copier dans le presse-papier'; }, 2000);
+  });
+}
+
+function dlMD(){
+  if(!window._md) return;
+  var sp = window._sp||'SXX';
+  var blob = new Blob([window._md], {type:'text/markdown;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'HANDOVER_'+sp+'_FIN.md';
+  a.click();
+}
+</script>
+</body>
+</html>
