@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Pilotage Qualité — Anim'Gest</title>
+<style>
+:root{--navy:#0D2137;--navy-l:#112840;--navy-m:#1a3a5c;--gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);--text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;--bdr:rgba(255,255,255,.08);--ok:#4caf82;--warn:#e8a84a;--err:#e05c5c;--info:#5b9bd5;--r:10px;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+a:hover{opacity:.8}
+
+nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold)}
+.nav-back{font-size:.75rem;color:var(--muted);margin-left:.5rem}
+.nav-back:hover{color:var(--gold)}
+.nav-right{margin-left:auto;font-size:.7rem;color:var(--dim)}
+
+.hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:2.5rem 2rem 2rem;border-bottom:1px solid var(--gold-b)}
+.hero-eye{font-size:.68rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2.4rem);margin-bottom:.5rem;line-height:1.1}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{font-size:.85rem;color:var(--muted);max-width:680px}
+
+.wrap{max-width:1100px;margin:0 auto;padding:2rem 2rem 5rem}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.6rem;border-bottom:1px solid var(--gold-b)}
+
+/* OUTILS CARDS */
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:2rem}
+.tool-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1.4rem;display:flex;flex-direction:column;gap:.75rem}
+.tool-card.highlight{border-color:var(--gold-b);background:var(--gold-p)}
+.tool-header{display:flex;align-items:center;gap:10px}
+.tool-icon{font-size:1.5rem;flex-shrink:0}
+.tool-name{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--gold)}
+.tool-type{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.18rem .55rem;border-radius:4px;margin-left:auto;flex-shrink:0}
+.type-py{background:rgba(91,155,213,.15);color:var(--info)}
+.type-html{background:var(--gold-p);color:var(--gold)}
+.tool-desc{font-size:.8rem;color:var(--muted);line-height:1.55}
+.tool-loc{background:rgba(0,0,0,.3);border:1px solid var(--bdr);border-radius:6px;padding:.6rem .85rem}
+.tool-loc-label{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:.3rem}
+.tool-loc-path{font-family:'Courier New',monospace;font-size:.72rem;color:var(--gold-l);word-break:break-all;line-height:1.5}
+.tool-actions{display:flex;flex-direction:column;gap:5px;margin-top:.25rem}
+.cmd{font-family:'Courier New',monospace;font-size:.7rem;background:rgba(0,0,0,.3);border:1px solid var(--bdr);border-radius:5px;padding:.4rem .7rem;color:var(--ok)}
+.tool-link{display:inline-flex;align-items:center;gap:5px;font-size:.75rem;font-weight:600;color:var(--gold);margin-top:.25rem}
+
+/* PROCESS TIMELINE */
+.process{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:16px;padding:1.1rem 0;border-bottom:1px solid var(--bdr)}
+.step:last-child{border-bottom:none}
+.step-num{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--gold-p);border:1px solid var(--gold-b);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--gold);margin-top:2px}
+.step-body{flex:1}
+.step-title{font-weight:600;font-size:.9rem;margin-bottom:.3rem;color:var(--gold-l)}
+.step-desc{font-size:.78rem;color:var(--muted);line-height:1.55;margin-bottom:.4rem}
+.step-cmd{font-family:'Courier New',monospace;font-size:.7rem;background:rgba(0,0,0,.3);border:1px solid var(--bdr);border-radius:5px;padding:.4rem .75rem;color:var(--ok);display:inline-block;margin-top:.25rem}
+.step-tool{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;background:var(--gold-p);border:1px solid var(--gold-b);border-radius:4px;padding:.2rem .6rem;color:var(--gold);margin-top:.3rem}
+.step-when{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);margin-bottom:.35rem}
+
+/* RÈGLES CARDS */
+.rules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.rule-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:8px;padding:1rem 1.15rem}
+.rule-title{font-size:.82rem;font-weight:600;margin-bottom:.4rem;color:var(--gold-l)}
+.rule-items{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.rule-items li{font-size:.75rem;color:var(--muted);display:flex;gap:6px;align-items:flex-start}
+.rule-items li::before{content:"→";color:var(--gold);flex-shrink:0;font-size:.72rem;margin-top:1px}
+
+/* SCORE TABLE */
+.score-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.score-table th{text-align:left;padding:.5rem .75rem;font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);border-bottom:1px solid var(--bdr)}
+.score-table td{padding:.55rem .75rem;border-bottom:1px solid var(--bdr)}
+.score-table tr:last-child td{border-bottom:none}
+.score-table tr:hover td{background:rgba(255,255,255,.02)}
+.badge{display:inline-block;padding:.15rem .55rem;border-radius:4px;font-size:.65rem;font-weight:600}
+.b-ok{background:rgba(76,175,130,.15);color:var(--ok)}
+.b-warn{background:rgba(232,168,74,.15);color:var(--warn)}
+.b-err{background:rgba(224,92,92,.15);color:var(--err)}
+
+footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2rem;font-size:.72rem;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+
+@media(max-width:768px){.tools-grid{grid-template-columns:1fr}.rules-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">Anim'Gest</span>
+  <a href="index.html" class="nav-back">← Retour à l'index</a>
+  <span class="nav-right">Pilotage Qualité — NoSage's Editor</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-eye">Pilotage &amp; Qualité code</div>
+  <h1>📐 Pilotage <em>Qualité</em></h1>
+  <p>Process complet de fin de sprint — outils, localisations, commandes et règles pour maintenir et améliorer la qualité du code sans déstabiliser le logiciel.</p>
+</div>
+
+<div class="wrap">
+
+  <!-- LES 3 OUTILS -->
+  <div class="sec-title">Les 3 outils du pilotage qualité</div>
+  <div class="tools-grid">
+
+    <div class="tool-card highlight">
+      <div class="tool-header">
+        <span class="tool-icon">🐍</span>
+        <span class="tool-name">animgest_quality.py</span>
+        <span class="tool-type type-py">Python</span>
+      </div>
+      <div class="tool-desc">Analyse automatique du code — détecte catch vides, backticks SQL, window.open(), fmtDate locales, colonnes BDD non commentées. Propose des patches que tu valides un par un avant application. Génère un rapport JSON et un fichier SQL pour HeidiSQL.</div>
+      <div class="tool-loc">
+        <div class="tool-loc-label">Localisation</div>
+        <div class="tool-loc-path">D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs\animgest_quality.py</div>
+      </div>
+      <div class="tool-actions">
+        <div class="tool-loc-label" style="margin-top:.5rem">Commandes</div>
+        <span class="cmd">python animgest_quality.py --sprint S58</span>
+        <span class="cmd">python animgest_quality.py --apply --sprint S58</span>
+        <span class="cmd">python animgest_quality.py --backend</span>
+        <span class="cmd">python animgest_quality.py --frontend</span>
+        <span class="cmd">python animgest_quality.py --bdd</span>
+      </div>
+      <div class="tool-loc-label" style="margin-top:.5rem">Prérequis</div>
+      <span class="cmd">pip install pymysql --break-system-packages</span>
+    </div>
+
+    <div class="tool-card highlight">
+      <div class="tool-header">
+        <span class="tool-icon">📋</span>
+        <span class="tool-name">SAV_Generator_Handover</span>
+        <span class="tool-type type-html">HTML</span>
+      </div>
+      <div class="tool-desc">Application web sécurisée (MDP) pour remplir et générer le fichier .md de fin de sprint en 5 minutes. Pré-remplie avec les données du sprint précédent. Sauvegarde automatique dans le navigateur. Télécharge directement HANDOVER_SXX_FIN.md.</div>
+      <div class="tool-loc">
+        <div class="tool-loc-label">Localisation GitHub Pages</div>
+        <div class="tool-loc-path">https://nicolashermilly.github.io/petsuite-docs/SAV_Generator_Handover.html</div>
+      </div>
+      <div class="tool-loc" style="margin-top:.5rem">
+        <div class="tool-loc-label">Fichier source local</div>
+        <div class="tool-loc-path">C:\petsuite-docs\SAV_Generator_Handover.html</div>
+      </div>
+      <div class="tool-actions" style="margin-top:.5rem">
+        <div class="tool-loc-label">7 onglets à remplir</div>
+        <span class="cmd">En-tête → Accompli → Fichiers → Bugs → Qualité → Roadmap → Générer</span>
+      </div>
+      <a href="SAV_Generator_Handover.html" class="tool-link">Ouvrir le générateur →</a>
+    </div>
+
+    <div class="tool-card highlight">
+      <div class="tool-header">
+        <span class="tool-icon">📊</span>
+        <span class="tool-name">SAV_Dashboard_Qualite</span>
+        <span class="tool-type type-html">HTML</span>
+      </div>
+      <div class="tool-desc">Dashboard visuel sécurisé (MDP) qui suit l'évolution des scores qualité Backend / Frontend / BDD sprint par sprint. Graphique d'évolution, KPIs avec delta, barres de progression, patches en attente, tableau historique complet.</div>
+      <div class="tool-loc">
+        <div class="tool-loc-label">Localisation GitHub Pages</div>
+        <div class="tool-loc-path">https://nicolashermilly.github.io/petsuite-docs/SAV_Dashboard_Qualite.html</div>
+      </div>
+      <div class="tool-loc" style="margin-top:.5rem">
+        <div class="tool-loc-label">Fichier source local</div>
+        <div class="tool-loc-path">C:\petsuite-docs\SAV_Dashboard_Qualite.html</div>
+      </div>
+      <div class="tool-actions" style="margin-top:.5rem">
+        <div class="tool-loc-label">Mise à jour fin de sprint</div>
+        <span class="cmd">Bouton "+ Saisir sprint" → entrer les scores → Enregistrer</span>
+      </div>
+      <a href="SAV_Dashboard_Qualite.html" class="tool-link">Ouvrir le dashboard →</a>
+    </div>
+
+  </div>
+
+  <!-- PROCESS FIN DE SPRINT -->
+  <div class="sec-title">Process complet — fin de sprint (ordre à respecter)</div>
+  <div class="process">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-when">5 min avant la fin</div>
+        <div class="step-title">Lancer l'analyse qualité</div>
+        <div class="step-desc">Exécuter le script Python depuis le dossier racine du projet. L'analyse est non-destructive — lecture seule. Elle produit un rapport et identifie les patches disponibles.</div>
+        <div class="step-cmd">cd "D:\...\micro_logiciel_frontend_nextjs"</div>
+        <div class="step-cmd">python animgest_quality.py --sprint S58</div>
+        <div style="margin-top:.5rem"><span class="step-tool">🐍 animgest_quality.py</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-when">Optionnel — patches non-risqués</div>
+        <div class="step-title">Appliquer les patches validés</div>
+        <div class="step-desc">Si des patches sont disponibles, relancer en mode <code>--apply</code>. Chaque patch est présenté avec son niveau de risque (NULS / FAIBLE / MOYEN). Tu valides ou refuses chacun individuellement. Un backup automatique est créé avant toute modification.</div>
+        <div class="step-cmd">python animgest_quality.py --apply --sprint S58</div>
+        <div class="step-desc" style="margin-top:.5rem">Patches auto-applicables sans risque : injection JSDoc, création src/services/. Patches manuels : refacto routes, window.open() → Modal, SQL commentaires.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-when">5-10 min — obligatoire</div>
+        <div class="step-title">Remplir le Générateur de Handover</div>
+        <div class="step-desc">Ouvrir la page GitHub Pages, s'identifier, parcourir les 7 onglets. Les données du sprint précédent sont pré-remplies — il suffit de mettre à jour ce qui a changé, modifier les statuts des bugs, renseigner les priorités du prochain sprint.</div>
+        <div style="margin-top:.35rem"><span class="step-tool">📋 SAV_Generator_Handover.html</span></div>
+        <div class="step-cmd" style="margin-top:.35rem">→ Onglet Générer → Télécharger HANDOVER_S58_FIN.md</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-when">2 min</div>
+        <div class="step-title">Mettre à jour le Dashboard Qualité</div>
+        <div class="step-desc">Ouvrir le dashboard, cliquer sur "+ Saisir sprint", entrer les scores Backend / Frontend / BDD récupérés depuis l'analyse Python (étape 1) et les métriques du sprint.</div>
+        <div style="margin-top:.35rem"><span class="step-tool">📊 SAV_Dashboard_Qualite.html</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-when">2 min — si nouveaux fichiers docs</div>
+        <div class="step-title">Pousser sur GitHub Pages</div>
+        <div class="step-desc">Si des fichiers HTML de documentation ont été générés ou modifiés pendant le sprint, les pousser sur le repo docs.</div>
+        <div class="step-cmd">cd C:\petsuite-docs</div>
+        <div class="step-cmd">git pull --rebase</div>
+        <div class="step-cmd">git add -A</div>
+        <div class="step-cmd">git commit -m "docs: handover S58 + changelog"</div>
+        <div class="step-cmd">git push</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-when">1 min</div>
+        <div class="step-title">Lancer la sauvegarde manuelle</div>
+        <div class="step-desc">Exécuter le script de sauvegarde v7 pour déclencher un Full_Copy + backup BDD avant de fermer la session.</div>
+        <div class="step-cmd">PowerShell -ExecutionPolicy Bypass -File "G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1"</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCORES CIBLES -->
+  <div class="sec-title">Objectifs de score par sprint</div>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>Sprint</th>
+        <th>Backend</th>
+        <th>Frontend</th>
+        <th>BDD</th>
+        <th>Global</th>
+        <th>Priorité qualité</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:var(--gold)">S57</strong> (actuel)</td>
+        <td>82/100</td>
+        <td>80/100</td>
+        <td>85/100</td>
+        <td><span class="badge b-ok">82/100</span></td>
+        <td style="color:var(--muted);font-size:.75rem">RBAC, fix routes permissions, editions</td>
+      </tr>
+      <tr>
+        <td><strong>S58</strong></td>
+        <td>84/100</td>
+        <td>82/100</td>
+        <td>87/100</td>
+        <td><span class="badge b-ok">84/100</span></td>
+        <td style="color:var(--muted);font-size:.75rem">Refacto factures.ts, window.open() → Modal</td>
+      </tr>
+      <tr>
+        <td><strong>S59</strong></td>
+        <td>87/100</td>
+        <td>85/100</td>
+        <td>90/100</td>
+        <td><span class="badge b-ok">87/100</span></td>
+        <td style="color:var(--muted);font-size:.75rem">src/services/, JSDoc complet, modules routes</td>
+      </tr>
+      <tr>
+        <td><strong>S60</strong></td>
+        <td>90/100</td>
+        <td>88/100</td>
+        <td>92/100</td>
+        <td><span class="badge b-ok">90/100</span></td>
+        <td style="color:var(--muted);font-size:.75rem">Objectif score 90 global</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- RÈGLES -->
+  <div class="sec-title">Règles qualité — ne jamais enfreindre</div>
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-title">Règles architecture</div>
+      <ul class="rule-items">
+        <li><code>cd deploy</code> obligatoire avant tout docker compose</li>
+        <li><code>COPIER_TOUTES_PAGES_v2.ps1</code> avant build frontend</li>
+        <li><code>app.use()</code> jamais <code>app.get()</code> — nginx strips /api/</li>
+        <li><code>getDb()</code> uniquement — jamais createConnection</li>
+        <li>build <code>--no-cache</code> puis <code>up -d</code> — jamais restart</li>
+        <li><code>restart nginx</code> après chaque rebuild</li>
+      </ul>
+    </div>
+    <div class="rule-card">
+      <div class="rule-title">Règles code</div>
+      <ul class="rule-items">
+        <li>PDF / éditions : Modal uniquement — jamais window.open()</li>
+        <li><code>"use client"</code> : ligne 1 absolue de tout fichier TSX</li>
+        <li>Modifications TSX : via scripts Python (apostrophes FR)</li>
+        <li>Pas de backtick dans les strings SQL</li>
+        <li><code>inject_v4_final.js</code> : ne jamais utiliser</li>
+        <li>CAC : accessible uniquement depuis fiche séance — pas de lien sidebar</li>
+      </ul>
+    </div>
+    <div class="rule-card">
+      <div class="rule-title">Règles BDD</div>
+      <ul class="rule-items">
+        <li>FK : <code>Relation NomTable - description</code></li>
+        <li>Champ ordinaire : description de la valeur attendue</li>
+        <li>Colonnes sans DEFAULT : <code>NOW()</code> explicite dans INSERT</li>
+        <li>ENUM migration : VARCHAR → UPDATE → ENUM (3 étapes)</li>
+        <li>ALTER CHANGE : ne pas reconstruire la clause DEFAULT</li>
+        <li>Frimousse ANI_ID=22 : ne jamais supprimer</li>
+      </ul>
+    </div>
+    <div class="rule-card">
+      <div class="rule-title">Règles Git &amp; docs</div>
+      <ul class="rule-items">
+        <li><code>git pull --rebase</code> avant tout push sur petsuite-docs</li>
+        <li>Délai déploiement GitHub Pages : 3-5 min après push</li>
+        <li>Backup propre : <code>C:\Backup\micro_logiciel\20260315_0002</code></li>
+        <li>Backups à partir de 20260315_0042 : code corrompu — ne pas utiliser</li>
+        <li>Script sauvegarde v7 : lancer en fin de chaque session</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LOCALISATION SYNTHESE -->
+  <div class="sec-title">Récapitulatif des localisations</div>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>Fichier</th>
+        <th>Type</th>
+        <th>Localisation</th>
+        <th>Accès</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>animgest_quality.py</strong></td>
+        <td><span class="badge b-warn">Python</span></td>
+        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
+        <td style="font-size:.75rem;color:var(--muted)">Terminal PowerShell</td>
+      </tr>
+      <tr>
+        <td><strong>SAV_Generator_Handover.html</strong></td>
+        <td><span class="badge b-ok">HTML</span></td>
+        <td style="font-family:'Courier New',monospace;font-size:.72rem">C:\petsuite-docs\ + GitHub Pages</td>
+        <td><a href="SAV_Generator_Handover.html" style="font-size:.75rem">Ouvrir →</a></td>
+      </tr>
+      <tr>
+        <td><strong>SAV_Dashboard_Qualite.html</strong></td>
+        <td><span class="badge b-ok">HTML</span></td>
+        <td style="font-family:'Courier New',monospace;font-size:.72rem">C:\petsuite-docs\ + GitHub Pages</td>
+        <td><a href="SAV_Dashboard_Qualite.html" style="font-size:.75rem">Ouvrir →</a></td>
+      </tr>
+      <tr>
+        <td><strong>quality_report.json</strong></td>
+        <td><span class="badge b-warn">JSON</span></td>
+        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
+        <td style="font-size:.75rem;color:var(--muted)">Généré par animgest_quality.py</td>
+      </tr>
+      <tr>
+        <td><strong>quality_bdd_comments.sql</strong></td>
+        <td><span class="badge b-err">SQL</span></td>
+        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
+        <td style="font-size:.75rem;color:var(--muted)">Exécuter via HeidiSQL</td>
+      </tr>
+      <tr>
+        <td><strong>_quality_backups\</strong></td>
+        <td><span class="badge" style="background:rgba(255,255,255,.07);color:var(--muted)">Dossier</span></td>
+        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
+        <td style="font-size:.75rem;color:var(--muted)">Backups auto avant patch</td>
+      </tr>
+      <tr>
+        <td><strong>Sauvegarde_micro_logiciel.ps1</strong></td>
+        <td><span class="badge b-warn">PS1</span></td>
+        <td style="font-family:'Courier New',monospace;font-size:.72rem">G:\Sauvegarde_micro_logiciel\</td>
+        <td style="font-size:.75rem;color:var(--muted)">Lancer en fin de session</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<footer>
+  <span>Anim'Gest — NoSage's Editor &copy; 2026</span>
+  <span><a href="index.html" style="color:var(--gold)">← Retour à l'index</a></span>
+</footer>
+
+</body>
+</html>
