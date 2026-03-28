@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Changelogs & Sprints — Anim'Gest</title>
+<style>
+:root{--navy:#0D2137;--navy-l:#112840;--gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);--text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;--bdr:rgba(255,255,255,.08);--ok:#4caf82;--r:10px;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold)}
+.nav-back{font-size:.75rem;color:var(--muted);margin-left:.5rem}.nav-back:hover{color:var(--gold)}
+.nav-right{margin-left:auto;font-size:.7rem;color:var(--dim)}
+.hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:2.5rem 2rem;border-bottom:1px solid var(--gold-b)}
+.hero-eye{font-size:.68rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2.2rem);margin-bottom:.5rem}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{font-size:.85rem;color:var(--muted);max-width:600px}
+.wrap{max-width:1100px;margin:0 auto;padding:2rem 2rem 5rem}
+.sec-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);margin:2rem 0 1rem;padding-bottom:.6rem;border-bottom:1px solid var(--gold-b)}
+.timeline{display:flex;flex-direction:column;gap:6px}
+.sprint-row{display:flex;align-items:center;gap:14px;background:var(--navy-l);border:1px solid var(--bdr);border-radius:8px;padding:.85rem 1.1rem;transition:all .2s}
+.sprint-row:hover{border-color:var(--gold-b);background:rgba(212,168,67,.04)}
+.sprint-row.recent{border-color:var(--gold-b);background:var(--gold-p)}
+.sprint-badge{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:6px;padding:.25rem .7rem;font-size:.72rem;font-weight:700;color:var(--gold);flex-shrink:0;min-width:48px;text-align:center}
+.sprint-row.recent .sprint-badge{background:var(--gold);color:var(--navy)}
+.sprint-title{font-size:.85rem;font-weight:600;flex:1}
+.sprint-title a{color:var(--text)}.sprint-title a:hover{color:var(--gold)}
+.sprint-desc{font-size:.72rem;color:var(--muted);flex:2}
+.sprint-tag{font-size:.62rem;padding:.12rem .45rem;border-radius:4px;background:rgba(255,255,255,.07);color:var(--muted);flex-shrink:0}
+.sprint-tag.new{background:var(--gold-p);color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.doc-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1rem 1.15rem;transition:all .2s;display:flex;flex-direction:column;gap:.4rem}
+.doc-card:hover{border-color:var(--gold-b);background:rgba(212,168,67,.04)}
+.doc-card a{font-size:.85rem;font-weight:600;color:var(--text)}.doc-card a:hover{color:var(--gold)}
+.doc-card .desc{font-size:.73rem;color:var(--muted)}
+footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2rem;font-size:.72rem;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+</style>
+</head>
+<body>
+<nav>
+  <span class="nav-logo">Anim'Gest</span>
+  <a href="index.html" class="nav-back">← Retour à l'index</a>
+  <span class="nav-right">Changelogs &amp; Sprints — S30→S57</span>
+</nav>
+<div class="hero">
+  <div class="hero-eye">Historique du projet</div>
+  <h1>📄 Changelogs &amp; <em>Sprints</em></h1>
+  <p>Journal de bord complet du projet — du sprint S30 au sprint S57 actuel. Changelogs, briefings de démarrage et handovers.</p>
+</div>
+<div class="wrap">
+
+  <div class="sec-title">Changelogs — du plus récent au plus ancien</div>
+  <div class="timeline">
+    <div class="sprint-row recent">
+      <span class="sprint-badge">S57</span>
+      <div class="sprint-title"><a href="SAV_Generator_Handover.html">Handover S57 — Générateur</a></div>
+      <div class="sprint-desc">Fix routes permissions, KPIs dashboard, sidebar CAC, /parametres/editions, script sauvegarde v7</div>
+      <span class="sprint-tag new">Actuel</span>
+    </div>
+    <div class="sprint-row recent">
+      <span class="sprint-badge">S56</span>
+      <div class="sprint-title"><a href="50-revue-code-S56.html">Revue de code S56</a></div>
+      <div class="sprint-desc">Score qualité 80/100 — RBAC, JSDoc, commentaires BDD, refacto routes</div>
+      <span class="sprint-tag new">S56</span>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S53</span>
+      <div class="sprint-title"><a href="49-changelog-S53.html">49 — Changelog S53</a></div>
+      <div class="sprint-desc">Audit BDD, nouvelles routes API, documentation harmonisée charte navy/gold</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S52</span>
+      <div class="sprint-title"><a href="48-changelog-S52.html">48 — Changelog S52</a></div>
+      <div class="sprint-desc">Planning vue Jour, dashboard fusionné, questionnaires, généalogie éleveur, dashboards métiers</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S51</span>
+      <div class="sprint-title"><a href="47-changelog-S51.html">47 — Changelog S51</a></div>
+      <div class="sprint-desc">Carte Leaflet géocodage, export CSV, GED CAC, routes déclarations élevage</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S50</span>
+      <div class="sprint-title"><a href="46-changelog-S50.html">46 — Changelog S50</a></div>
+      <div class="sprint-desc">Sprint S50</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S48</span>
+      <div class="sprint-title"><a href="46-changelog-S48.html">46 — Changelog S48</a></div>
+      <div class="sprint-desc">Signatures, agenda, planning séances</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S47</span>
+      <div class="sprint-title"><a href="45-changelog-S47.html">45 — Changelog S47</a></div>
+      <div class="sprint-desc">Sprint S47</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S46</span>
+      <div class="sprint-title"><a href="44-changelog-S46.html">44 — Changelog S46</a></div>
+      <div class="sprint-desc">Sprint S46</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S44</span>
+      <div class="sprint-title"><a href="73-changelog-s44.html">73 — Changelog S44</a></div>
+      <div class="sprint-desc">Sprint S44</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S43</span>
+      <div class="sprint-title"><a href="53-changelog-s43.html">53 — Changelog S43</a></div>
+      <div class="sprint-desc">Sprint S43</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S42</span>
+      <div class="sprint-title"><a href="44-changelog-s42.html">44 — Changelog S42</a></div>
+      <div class="sprint-desc">Sprint S42</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S41</span>
+      <div class="sprint-title"><a href="43-changelog-S41.html">43 — Changelog S41</a></div>
+      <div class="sprint-desc">Carte géolocalisation clients, formulaires leads</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S38</span>
+      <div class="sprint-title"><a href="42-changelog-S38.html">42 — Changelog S38</a></div>
+      <div class="sprint-desc">Sprint S38</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S37</span>
+      <div class="sprint-title"><a href="31-changelog-S37.html">31 — Changelog S37</a></div>
+      <div class="sprint-desc">Sprint S37</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S36</span>
+      <div class="sprint-title"><a href="28-changelog-S36.html">28 — Changelog S36</a></div>
+      <div class="sprint-desc">Sprint S36</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S35</span>
+      <div class="sprint-title"><a href="30-changelog-S35.html">30 — Changelog S35</a></div>
+      <div class="sprint-desc">Sprint S35</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S34</span>
+      <div class="sprint-title"><a href="29-changelog-S34.html">29 — Changelog S34</a></div>
+      <div class="sprint-desc">Sprint S34</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S33</span>
+      <div class="sprint-title"><a href="26-changelog-S33.html">26 — Changelog S33</a></div>
+      <div class="sprint-desc">Sprint S33</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S32</span>
+      <div class="sprint-title"><a href="25-changelog-sprint-S32.html">25 — Changelog S32</a></div>
+      <div class="sprint-desc">Stabilisation, Seeds multi-espèces</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S31</span>
+      <div class="sprint-title"><a href="24-changelog-sprint-S31.html">24 — Changelog S31</a></div>
+      <div class="sprint-desc">Modules réseaux sociaux, élevage, inventaires</div>
+    </div>
+    <div class="sprint-row">
+      <span class="sprint-badge">S30</span>
+      <div class="sprint-title"><a href="27-changelog-S30.html">27 — Changelog S30</a></div>
+      <div class="sprint-desc">Portée/new, routes inventaires</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Briefings de démarrage</div>
+  <div class="grid">
+    <div class="doc-card"><a href="BRIEFING_S40.html">Briefing S40</a><div class="desc">Brief de démarrage sprint S40</div></div>
+    <div class="doc-card"><a href="BRIEFING_S39.html">Briefing S39</a><div class="desc">Brief de démarrage sprint S39</div></div>
+    <div class="doc-card"><a href="BRIEFING_S38.html">Briefing S38</a><div class="desc">Brief de démarrage sprint S38</div></div>
+    <div class="doc-card"><a href="BRIEFING_S37.html">Briefing S37</a><div class="desc">Brief de démarrage sprint S37</div></div>
+    <div class="doc-card"><a href="S43-briefing.html">Briefing S43</a><div class="desc">Brief de démarrage sprint S43</div></div>
+  </div>
+
+</div>
+<footer>
+  <span>Anim'Gest — NoSage's Editor &copy; 2026</span>
+  <span><a href="index.html" style="color:var(--gold)">← Retour à l'index</a></span>
+</footer>
+</body>
+</html>
