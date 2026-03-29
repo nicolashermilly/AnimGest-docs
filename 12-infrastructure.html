@@ -1,56 +1,179 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anim'Gest — Infrastructure & Hébergement</title>
-<style>
-:root{--navy:#0D2137;--gold:#D4A843;--dark:#070F1A;--dark2:#0A1520;--white:#F8F8F5;--green:#27AE60;--red:#E74C3C;--orange:#E67E22;--blue:#1A5276;--sky:#2E86AB;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:"Inter",sans-serif;background:var(--dark);color:var(--white);line-height:1.65;font-size:15px;}
-a{color:var(--gold);text-decoration:none;}a:hover{text-decoration:underline;}
-nav{background:rgba(10,21,32,.97);border-bottom:1px solid rgba(212,168,67,.18);padding:13px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
-.nav-logo{font-family:"Poppins",sans-serif;font-size:17px;font-weight:700;color:var(--white);}
-.nav-logo span{color:var(--gold);}
-.nav-badge{background:rgba(212,168,67,.15);color:var(--gold);border:1px solid rgba(212,168,67,.3);border-radius:20px;padding:3px 11px;font-size:11px;font-weight:600;letter-spacing:.04em;}
-.nav-back{margin-left:auto;color:rgba(255,255,255,.4);font-size:13px;}
-.nav-back:hover{color:var(--gold);}
-.hero{background:linear-gradient(135deg,var(--dark) 0%,var(--navy) 100%);padding:52px 32px 40px;border-bottom:1px solid rgba(212,168,67,.12);}
-.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-.hero-title{font-family:"Poppins",sans-serif;font-size:clamp(26px,4vw,42px);font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.15;}
-.hero-title em{color:var(--gold);font-style:normal;}
-.hero-sub{font-size:15px;color:rgba(248,248,245,.5);max-width:720px;}
-.hero-meta{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap;}
-.hmeta{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 14px;font-size:12px;color:rgba(255,255,255,.55);}
-.hmeta strong{color:var(--white);}
-.content{max-width:1100px;margin:0 auto;padding:40px 32px 80px;}
-.section{margin-bottom:40px;}
-.section-title{font-family:"Poppins",sans-serif;font-size:19px;font-weight:700;color:var(--white);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.07);}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
-.card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px 22px;}
-.card:hover{border-color:rgba(212,168,67,.3);background:rgba(212,168,67,.04);}
-.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-bottom:8px;}
-.tag-gold{background:rgba(212,168,67,.15);color:var(--gold);}
-.tag-green{background:rgba(39,174,96,.15);color:#2ecc71;}
-.tag-red{background:rgba(231,76,60,.15);color:#e74c3c;}
-.tag-blue{background:rgba(46,134,171,.15);color:#5dade2;}
-.tag-orange{background:rgba(230,126,34,.15);color:#f0a500;}
-table{width:100%;border-collapse:collapse;font-size:14px;}
-th{background:rgba(255,255,255,.05);padding:10px 14px;text-align:left;font-weight:600;color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.06em;text-transform:uppercase;}
-td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.8);}
-tr:hover td{background:rgba(212,168,67,.03);}
-code{background:rgba(255,255,255,.08);padding:2px 7px;border-radius:4px;font-family:monospace;font-size:13px;color:#7ec8e3;}
-pre{background:#0A1520;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:18px 20px;overflow-x:auto;font-size:13px;line-height:1.6;}
-pre code{background:none;padding:0;color:#a8d8ea;}
-.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--gold);font-size:13px;font-weight:500;}
-.alert{padding:14px 18px;border-radius:8px;margin:16px 0;font-size:14px;}
-.alert-warning{background:rgba(230,126,34,.1);border:1px solid rgba(230,126,34,.3);color:#f0a500;}
-.alert-info{background:rgba(46,134,171,.1);border:1px solid rgba(46,134,171,.3);color:#5dade2;}
-.alert-success{background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);color:#2ecc71;}
-</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* === CHARTE ANIM'GEST - NoSage's Editor === */
+    :root {
+      --navy: #0D2137;
+      --navy-l: #122840;
+      --navy-ll: #1a3550;
+      --gold: #D4A843;
+      --gold-l: #e8c068;
+      --gold-p: rgba(212,168,67,0.1);
+      --gold-b: rgba(212,168,67,0.2);
+      --dark: #070F1A;
+      --white: #F8F8F5;
+      --muted: #7a8fa6;
+      --green: #3ecf8e;
+      --red: #ef4444;
+      --orange: #f59e0b;
+      --blue: #60a5fa;
+      --purple: #a78bfa;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { color: var(--gold-l); }
+    /* Nav */
+    nav.doc-nav {
+      background: var(--navy);
+      border-bottom: 1px solid var(--gold-b);
+      padding: .85rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav.doc-nav .brand {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    nav.doc-nav .nav-links { display: flex; gap: .5rem; flex-wrap: wrap; }
+    nav.doc-nav .nav-links a {
+      color: var(--muted);
+      font-size: .8rem;
+      padding: .25rem .6rem;
+      border-radius: 4px;
+      transition: .2s;
+    }
+    nav.doc-nav .nav-links a:hover { color: var(--white); background: rgba(255,255,255,.06); }
+    nav.doc-nav .nav-badge {
+      margin-left: auto;
+      background: var(--gold-p);
+      border: 1px solid var(--gold-b);
+      color: var(--gold);
+      font-size: .7rem;
+      font-weight: 600;
+      padding: .2rem .75rem;
+      border-radius: 20px;
+    }
+    /* Hero */
+    .doc-hero {
+      background: linear-gradient(135deg, #070F1A 0%, #0D2137 100%);
+      padding: 3rem 2rem 2.5rem;
+      border-bottom: 2px solid var(--gold);
+      text-align: center;
+    }
+    .doc-hero-tag {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .3rem .9rem;
+      border-radius: 20px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .doc-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: .5rem;
+    }
+    .doc-hero h1 span { color: var(--gold); }
+    .doc-hero .doc-sub { color: var(--muted); font-size: .95rem; max-width: 600px; margin: 0 auto; }
+    /* Container */
+    .doc-container { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    /* Section */
+    .doc-section { margin-bottom: 2.5rem; }
+    .doc-section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      border-bottom: 1px solid var(--gold-b);
+      padding-bottom: .5rem;
+      margin-bottom: 1rem;
+    }
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; margin-bottom: 1rem; }
+    th {
+      background: var(--navy);
+      color: var(--gold);
+      font-weight: 600;
+      padding: .65rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gold-b);
+    }
+    td {
+      padding: .6rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      color: var(--muted);
+      vertical-align: top;
+    }
+    tr:hover td { background: rgba(255,255,255,.02); }
+    /* Code */
+    pre, code {
+      font-family: 'Courier New', monospace;
+      font-size: .83rem;
+    }
+    pre {
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+    /* Cards */
+    .doc-card {
+      background: var(--navy);
+      border: 1px solid var(--gold-b);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin-bottom: .7rem;
+    }
+    /* Footer */
+    footer.doc-footer {
+      background: var(--navy);
+      border-top: 1px solid var(--gold-b);
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: .82rem;
+      margin-top: 3rem;
+    }
+    footer.doc-footer strong { color: var(--gold); }
+  </style>
 </head>
 <body>
+<nav class="doc-nav">
+  <span class="brand">Anim'Gest Docs</span>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="07-audit-stack.html">Audit Stack</a>
+    <a href="17-api-reference.html">API</a>
+    <a href="20-pilotage-projet.html">Pilotage</a>
+    <a href="docs-changelog.html">Changelogs</a>
+  </div>
+  <span class="nav-badge">S61</span>
+</nav>
 <header class="header">
   <div class="logo">🐾 Anim'<span>Gest</span> Docs</div>
   <div class="nav-links">
@@ -795,9 +918,10 @@ echo <span class="ck">"Backup $DATE terminé — $(ls $BACKUP_DIR | wc -l) tenan
 </div>
 </div>
 
-<footer>
-  <div><strong>Pe
-</div>
-<footer>Anim'Gest by NoSage's Editor · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/Anim'Gest-docs">GitHub</a></footer>
+
+<footer class="doc-footer">
+  <strong>Anim'Gest</strong> &mdash; NoSage's Editor &mdash; Documentation technique<br>
+  <small>Plateforme SaaS ERP pour professionnels du soin animal &mdash; 10 metiers &mdash; Sprint S61</small>
+</footer>
 </body>
 </html>
