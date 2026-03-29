@@ -1,725 +1,441 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anim'Gest — Pilotage Projet Dev</title>
-<style>
-:root{--navy:#0D2137;--gold:#D4A843;--dark:#070F1A;--dark2:#0A1520;--white:#F8F8F5;--green:#27AE60;--red:#E74C3C;--orange:#E67E22;--blue:#1A5276;--sky:#2E86AB;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:"Inter",sans-serif;background:var(--dark);color:var(--white);line-height:1.65;font-size:15px;}
-a{color:var(--gold);text-decoration:none;}a:hover{text-decoration:underline;}
-nav{background:rgba(10,21,32,.97);border-bottom:1px solid rgba(212,168,67,.18);padding:13px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
-.nav-logo{font-family:"Poppins",sans-serif;font-size:17px;font-weight:700;color:var(--white);}
-.nav-logo span{color:var(--gold);}
-.nav-badge{background:rgba(212,168,67,.15);color:var(--gold);border:1px solid rgba(212,168,67,.3);border-radius:20px;padding:3px 11px;font-size:11px;font-weight:600;letter-spacing:.04em;}
-.nav-back{margin-left:auto;color:rgba(255,255,255,.4);font-size:13px;}
-.nav-back:hover{color:var(--gold);}
-.hero{background:linear-gradient(135deg,var(--dark) 0%,var(--navy) 100%);padding:52px 32px 40px;border-bottom:1px solid rgba(212,168,67,.12);}
-.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-.hero-title{font-family:"Poppins",sans-serif;font-size:clamp(26px,4vw,42px);font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.15;}
-.hero-title em{color:var(--gold);font-style:normal;}
-.hero-sub{font-size:15px;color:rgba(248,248,245,.5);max-width:720px;}
-.hero-meta{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap;}
-.hmeta{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 14px;font-size:12px;color:rgba(255,255,255,.55);}
-.hmeta strong{color:var(--white);}
-.content{max-width:1100px;margin:0 auto;padding:40px 32px 80px;}
-.section{margin-bottom:40px;}
-.section-title{font-family:"Poppins",sans-serif;font-size:19px;font-weight:700;color:var(--white);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.07);}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
-.card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:20px 22px;}
-.card:hover{border-color:rgba(212,168,67,.3);background:rgba(212,168,67,.04);}
-.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-bottom:8px;}
-.tag-gold{background:rgba(212,168,67,.15);color:var(--gold);}
-.tag-green{background:rgba(39,174,96,.15);color:#2ecc71;}
-.tag-red{background:rgba(231,76,60,.15);color:#e74c3c;}
-.tag-blue{background:rgba(46,134,171,.15);color:#5dade2;}
-.tag-orange{background:rgba(230,126,34,.15);color:#f0a500;}
-table{width:100%;border-collapse:collapse;font-size:14px;}
-th{background:rgba(255,255,255,.05);padding:10px 14px;text-align:left;font-weight:600;color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.06em;text-transform:uppercase;}
-td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.8);}
-tr:hover td{background:rgba(212,168,67,.03);}
-code{background:rgba(255,255,255,.08);padding:2px 7px;border-radius:4px;font-family:monospace;font-size:13px;color:#7ec8e3;}
-pre{background:#0A1520;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:18px 20px;overflow-x:auto;font-size:13px;line-height:1.6;}
-pre code{background:none;padding:0;color:#a8d8ea;}
-.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--gold);font-size:13px;font-weight:500;}
-.alert{padding:14px 18px;border-radius:8px;margin:16px 0;font-size:14px;}
-.alert-warning{background:rgba(230,126,34,.1);border:1px solid rgba(230,126,34,.3);color:#f0a500;}
-.alert-info{background:rgba(46,134,171,.1);border:1px solid rgba(46,134,171,.3);color:#5dade2;}
-.alert-success{background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);color:#2ecc71;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pilotage Projet — Anim'Gest Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#0D2137;--navy-l:#122840;--gold:#D4A843;--gold-l:#e8c068;--gold-p:rgba(212,168,67,.1);--gold-b:rgba(212,168,67,.2);--dark:#070F1A;--white:#F8F8F5;--muted:#7a8fa6;--green:#3ecf8e;--red:#ef4444;--orange:#f59e0b;--blue:#60a5fa;--purple:#a78bfa}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--white);line-height:1.7;font-size:14px}
+    a{color:var(--gold);text-decoration:none}
+    nav{background:var(--navy);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+    .brand{font-family:'Playfair Display',serif;color:var(--gold);font-weight:700;font-size:1.1rem}
+    .nav-links{display:flex;gap:.5rem;flex-wrap:wrap}
+    .nav-links a{color:var(--muted);font-size:.8rem;padding:.25rem .6rem;border-radius:4px;transition:.2s}
+    .nav-links a:hover{color:var(--white);background:rgba(255,255,255,.06)}
+    .nav-badge{margin-left:auto;background:var(--gold-p);border:1px solid var(--gold-b);color:var(--gold);font-size:.7rem;font-weight:600;padding:.2rem .75rem;border-radius:20px}
+    .hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:3rem 2rem 2.5rem;border-bottom:2px solid var(--gold);text-align:center}
+    .hero-tag{display:inline-block;background:var(--gold);color:var(--dark);font-size:.72rem;font-weight:700;padding:.3rem .9rem;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+    .hero h1{font-family:'Playfair Display',serif;font-size:2.4rem;margin-bottom:.5rem}
+    .hero h1 span{color:var(--gold)}
+    .hero .sub{color:var(--muted);font-size:.95rem}
+    .hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-top:1.5rem}
+    .hs{text-align:center}
+    .hs-v{font-size:1.5rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;display:block}
+    .hs-l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    .container{max-width:1000px;margin:0 auto;padding:2.5rem 1.5rem}
+    .section{margin-bottom:3rem}
+    .sec-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);border-bottom:1px solid var(--gold-b);padding-bottom:.5rem;margin-bottom:1.2rem}
+
+    /* TIMELINE */
+    .timeline{display:flex;flex-direction:column;gap:0}
+    .tl-item{display:flex;gap:1.2rem;padding-bottom:1.5rem;position:relative}
+    .tl-item:not(:last-child)::before{content:'';position:absolute;left:10px;top:24px;bottom:0;width:1px;background:var(--gold-b)}
+    .tl-dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--gold);background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;color:var(--gold);flex-shrink:0;margin-top:2px;z-index:1;position:relative}
+    .tl-dot.current{background:var(--gold);color:var(--dark)}
+    .tl-dot.future{border-color:var(--muted);color:var(--muted)}
+    .tl-body{flex:1}
+    .tl-header{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:.4rem}
+    .tl-sprint{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white)}
+    .tl-date{color:var(--muted);font-size:.78rem}
+    .tl-badge{display:inline-block;font-size:.68rem;font-weight:600;padding:.15rem .5rem;border-radius:3px}
+    .done{background:rgba(60,207,142,.15);color:var(--green);border:1px solid rgba(60,207,142,.3)}
+    .current-b{background:var(--gold);color:var(--dark)}
+    .planned{background:rgba(167,139,250,.15);color:var(--purple);border:1px solid rgba(167,139,250,.3)}
+    .tl-content{color:var(--muted);font-size:.85rem;line-height:1.6}
+    .tl-content ul{list-style:none;padding:0}
+    .tl-content ul li::before{content:"·";color:var(--gold);margin-right:.4rem}
+    .tl-scores{display:flex;gap:.6rem;margin-top:.5rem;flex-wrap:wrap}
+    .score-pill{background:var(--navy-l);border:1px solid var(--gold-b);border-radius:20px;padding:.2rem .7rem;font-size:.72rem;color:var(--muted)}
+    .score-pill span{color:var(--gold);font-weight:600}
+
+    /* ROADMAP FUTURE */
+    .module-card{background:var(--navy);border:1px solid var(--gold-b);border-radius:8px;padding:1rem 1.2rem;margin-bottom:.7rem}
+    .mc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}
+    .mc-title{font-weight:600;color:var(--white);font-size:.9rem}
+    .mc-sprint{font-size:.72rem;color:var(--muted)}
+    .mc-desc{color:var(--muted);font-size:.83rem}
+
+    footer{background:var(--navy);border-top:1px solid var(--gold-b);text-align:center;padding:2rem;color:var(--muted);font-size:.82rem;margin-top:3rem}
+    footer strong{color:var(--gold)}
+  </style>
 </head>
 <body>
-<header class="header">
-  <div class="logo">🐾 Anim'<span>Gest</span> Docs</div>
+
+<nav>
+  <span class="brand">Anim'Gest Docs</span>
   <div class="nav-links">
     <a href="index.html">Accueil</a>
-    <a href="06-roadmap.html">Roadmap</a>
-    <a href="73-changelog-s44.html">S44</a>
+    <a href="07-audit-stack.html">Audit Stack</a>
+    <a href="17-api-reference.html">API Reference</a>
+    <a href="docs-changelog.html">Changelogs</a>
   </div>
-  <span class="badge">#20 — Pilotage</span>
-</header>
-<div class="container">
+  <span class="nav-badge">MàJ S61</span>
+</nav>
 
-<main>
-    
-<!-- NAV -->
-<div class="main">
-
-  <!-- HERO -->
-  <div class="hero">
-    <h1>Pilotage<br><em>projet dev</em></h1>
-    <p class="hero-sub">Vue de synthèse — session S25 · Stack NestJS + Next.js 15 + MariaDB · Multi-tenant SaaS cible</p>
-  </div>
-
-  <!-- KPIs -->
-  <div id="kpis" class="section">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <span class="section-title">Indicateurs clés</span>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="kpi-grid">
-      <div class="kpi accent">
-        <div class="kpi-num">S33</div>
-        <div class="kpi-lbl">Sprint courant</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-num">32</div>
-        <div class="kpi-lbl">Sprints réalisés</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-num">3</div>
-        <div class="kpi-lbl">Sprints planifiés</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-num">65+</div>
-        <div class="kpi-lbl">Tables BDD</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-num">18+</div>
-        <div class="kpi-lbl">Triggers SQL</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-num">90+</div>
-        <div class="kpi-lbl">Endpoints API</div>
-      </div>
-    </div>
-
-    <!-- BARRE AVANCEMENT GLOBALE -->
-    <div class="progress-wrap">
-      <div class="progress-label">
-        <span>Avancement global — S1 → S12+</span>
-        <strong>S33 en cours</strong>
-      </div>
-      <div class="progress-track">
-        <!-- S1-S9 complets : 9/12 = 75% -->
-        <div class="progress-seg seg-ok" style="width:75%;"></div>
-        <!-- S10-S11 planifiés -->
-        <div class="progress-seg seg-wip" style="width:12%;background:var(--amber);opacity:.5;"></div>
-        <!-- S12+ SaaS -->
-        <div class="progress-seg seg-todo" style="width:13%;"></div>
-      </div>
-    </div>
-
-    <!-- TABLEAU SPRINTS S1→S12 -->
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;">
-      <table class="sprint-table">
-        <thead>
-          <tr>
-            <th style="width:60px;">Sprint</th>
-            <th>Contenu</th>
-            <th style="width:100px;">État</th>
-            <th style="width:80px;">Sessions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="s-num">S1</td><td class="s-desc">Setup BDD, Auth, CRUD tiers/animaux</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">1–3</td></tr>
-          <tr><td class="s-num">S2</td><td class="s-desc">PDF factures/devis, Upload photos</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">4–5</td></tr>
-          <tr><td class="s-num">S3</td><td class="s-desc">Agenda visuel, Rappels impayés, Templates devis</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">6–7</td></tr>
-          <tr><td class="s-num">S4</td><td class="s-desc">Portail client + signature Yousign + Stripe</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">8–9</td></tr>
-          <tr><td class="s-num">S5</td><td class="s-desc">Programmes suivi comportemental, SMS Twilio</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">10–11</td></tr>
-          <tr><td class="s-num">S6</td><td class="s-desc">Statistiques avancées, Questionnaires, CRM</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">12–13</td></tr>
-          <tr><td class="s-num">S7</td><td class="s-desc">PWA mobile, Backup BDD, Animal V2+V3</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">16–17</td></tr>
-          <tr><td class="s-num">S8</td><td class="s-desc">Fix crashes, audit visuel, PATCH animaux, couleurs agenda</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">18–22</td></tr>
-          <tr><td class="s-num">S9</td><td class="s-desc">EC, CAC, param_libelles_ec, achats, stock, tarif, bilan</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">23–25</td></tr>
-          <tr><td class="s-num">S10→S32</td><td class="s-desc">Frontend achats, stock, tarification, NF525, élevage, aide intégrée (199 articles/15 modules), formulaire lead CRM, PUT /animaux/:id, questionnaires multi-type, agenda semaine/mois</td><td><span class="pill pill-ok">COMPLET</span></td><td class="s-sess">26–32</td></tr>
-          <tr><td class="s-num" style="color:var(--amber);">S33</td><td class="s-desc">Templates devis métier · NF525 clôture Z · Élevage portée/new · Documentation v4.0 · Historique admin · Charte graphique</td><td><span class="pill pill-wip">EN COURS</span></td><td class="s-sess">33→</td></tr>
-          <tr><td class="s-num" style="color:var(--purple);">S12+</td><td class="s-desc">SaaS multi-tenant, provisionnement, SEPA, production</td><td><span class="pill pill-spec">SaaS PROD</span></td><td class="s-sess">—</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- KANBAN ACTIONS PRIORITAIRES -->
-  <div id="actions" class="section">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <span class="section-title">Actions prioritaires — S25</span>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="kanban">
-
-      <!-- COL 1 : URGENT -->
-      <div class="kanban-col" style="border-top:2px solid var(--red);">
-        <div class="kanban-col-header">
-          <div class="kanban-col-title">
-            <div class="kanban-dot" style="background:var(--red);"></div>
-            Priorité immédiate
-          </div>
-          <span class="kanban-count">4</span>
-        </div>
-
-        <div class="kanban-card urgent">
-          <div class="kanban-card-title">Templates devis par métier</div>
-          <div class="kanban-card-sub">/app/devis/templates — séparateurs Comportementaliste / Équestre / Toiletteur / Pet-sitter</div>
-          <div class="kanban-card-tags">
-            <span class="pill pill-urgent">Frontend</span>
-            <span class="pill pill-later">API</span>
-          </div>
-        </div>
-
-        <div class="kanban-card urgent">
-          <div class="kanban-card-title">NF525 — Clôture Z caisse</div>
-          <div class="kanban-card-sub">sp_nf525_enregistrer_encaissement + interface /app/comptabilite + dashboard conformité</div>
-          <div class="kanban-card-tags">
-            <span class="pill pill-urgent">BDD</span>
-            <span class="pill pill-urgent">Frontend</span>
-          </div>
-        </div>
-
-        <div class="kanban-card urgent">
-          <div class="kanban-card-title">Élevage — Portée/new</div>
-          <div class="kanban-card-sub">/app/elevage/portees/new — saisie individuelle naissances, puce chiot, lien DDPP</div>
-          <div class="kanban-card-tags">
-            <span class="pill pill-urgent">Frontend</span>
-            <span class="pill pill-later">BDD</span>
-          </div>
-        </div>
-
-        <div class="kanban-card urgent">
-          <div class="kanban-card-title">Uploader HTML S33 sur GitHub Pages</div>
-          <div class="kanban-card-sub">03, 01, 06, 07, 17, 20, 11, 26, index — docs mis à jour S33</div>
-          <div class="kanban-card-tags">
-            <span class="pill pill-urgent">Docs</span>
-            <span class="pill pill-later">GitHub</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="kanban-col" style="border-top:2px solid var(--amber);">
-        <div class="kanban-col-header">
-          <div class="kanban-col-title">
-            <div class="kanban-dot" style="background:var(--amber);"></div>
-            À faire
-          </div>
-          <span class="kanban-count">6</span>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Historique admin — colonne commentaires</div>
-          <div class="kanban-card-sub">audit_log.AUD_COMMENTAIRE + filtres INSERT/UPDATE/DELETE/LOGIN</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">Frontend</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Charte graphique — upload logo</div>
-          <div class="kanban-card-sub">app_charte_graphique + apparition sur factures PDF et devis</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">Frontend</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Redirect /app → /app/tableau-de-bord</div>
-          <div class="kanban-card-sub">Vérifier middleware Next.js — signalé S31</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">Frontend</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Fix doublons animaux programmes</div>
-          <div class="kanban-card-sub">Ajouter DISTINCT / GROUP BY ANI_ID dans la requête</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">BDD</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Créer table partage_carte</div>
-          <div class="kanban-card-sub">Carte identité animale — partage RGPD propriétaire</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">BDD</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Créer table portail_magic_link</div>
-          <div class="kanban-card-sub">Portail client accès sans mot de passe</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">BDD</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Ajouter colonnes portail</div>
-          <div class="kanban-card-sub">sea_partager_cr · doc_partage_client · tie_email_portail</div>
-          <div class="kanban-card-tags"><span class="pill pill-blue">BDD</span><span class="pill pill-later">ALTER</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Finaliser nom commercial</div>
-          <div class="kanban-card-sub">Provisoire : Anim'Gest — dépôt INPI à prévoir</div>
-          <div class="kanban-card-tags"><span class="pill pill-spec">Commercial</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Rédiger CGV v1.0</div>
-          <div class="kanban-card-sub">Engagement 6 mois · résiliation · rétention 5 ans · tarifs plans</div>
-          <div class="kanban-card-tags"><span class="pill pill-spec">Juridique</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Ouvrir compte GoCardless + choisir hébergeur</div>
-          <div class="kanban-card-sub">SEPA mensuel · Hetzner recommandé ~35€/mois phase 1</div>
-          <div class="kanban-card-tags"><span class="pill pill-spec">SaaS</span><span class="pill pill-later">Infra</span></div>
-        </div>
-      </div>
-
-      <!-- COL 3 : SPRINT SUIVANT -->
-      <div class="kanban-col" style="border-top:2px solid var(--ink3);">
-        <div class="kanban-col-header">
-          <div class="kanban-col-title">
-            <div class="kanban-dot" style="background:var(--ink3);"></div>
-            Sprint suivant (S10+)
-          </div>
-          <span class="kanban-count">5</span>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Tables questionnaires (4 tables)</div>
-          <div class="kanban-card-sub">questionnaire · qst_question · qst_reponse · qst_session</div>
-          <div class="kanban-card-tags"><span class="pill pill-later">S10</span><span class="pill pill-blue">BDD</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Frontend achats fournisseurs</div>
-          <div class="kanban-card-sub">Script BDD prêt — frontend à implémenter</div>
-          <div class="kanban-card-tags"><span class="pill pill-later">S10</span><span class="pill pill-later">Frontend</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Vidéos GIF commerciales</div>
-          <div class="kanban-card-sub">Après déploiement S25 complet — labels CAC corrigés</div>
-          <div class="kanban-card-tags"><span class="pill pill-later">post-S25</span><span class="pill pill-spec">Marketing</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Table onboarding_step</div>
-          <div class="kanban-card-sub">BDD plateforme — parcours J0→J30 tenant</div>
-          <div class="kanban-card-tags"><span class="pill pill-later">S12+</span><span class="pill pill-blue">BDD</span></div>
-        </div>
-
-        <div class="kanban-card">
-          <div class="kanban-card-title">Infrastructure Hetzner + CI/CD</div>
-          <div class="kanban-card-sub">GitHub Actions · Docker prod · Backup quotidien S3</div>
-          <div class="kanban-card-tags"><span class="pill pill-later">S12+</span><span class="pill pill-later">DevOps</span></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- SPRINT 9 DETAIL -->
-  <div id="s9" class="section">
-    <div class="section-header">
-      <span class="section-num">03</span>
-      <span class="section-title">Sprint S33 — En cours · 18/03/2026</span>
-      <div class="section-line"></div>
-      <span class="pill pill-ok">COMPLET</span>
-    </div>
-
-    <div class="sprint-detail-grid">
-
-      <div class="detail-card">
-        <div class="detail-card-title">
-          <span style="color:var(--green);">◆</span> BDD — Tables créées
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">edc_fiche</div><div class="detail-row-sub">Fiche Étude Comportementale — 60+ champs</div></div>
-          <span class="pill pill-ok">S24</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">edc_probleme</div><div class="detail-row-sub">Grille comportementale — multi-lignes par fiche</div></div>
-          <span class="pill pill-ok">S24</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">seance_suivi_cac</div><div class="detail-row-sub">14 Critères d'Aptitude au Contact par séance</div></div>
-          <span class="pill pill-ok">S24</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">param_libelles_ec</div><div class="detail-row-sub">64 libellés paramétrables — dont 14 CAC</div></div>
-          <span class="pill pill-ok">S24</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">v_animal_evolution_cac</div><div class="detail-row-sub">Vue évolution CAC par séance</div></div>
-          <span class="pill pill-ok">S24</span>
-        </div>
-      </div>
-
-      <div class="detail-card">
-        <div class="detail-card-title">
-          <span style="color:var(--amber);">◆</span> API — Routes injectées (patch_edc_cac_s25.js)
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET/PUT /api/ged-libelles-ec</div><div class="detail-row-sub">64 libellés EC paramétrables</div></div>
-          <span class="pill pill-ok">S24 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET/POST/PUT /api/ged-edc</div><div class="detail-row-sub">CRUD fiche Étude Comportementale</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET/POST/PUT/DELETE /api/ged-edc/:id/problemes</div><div class="detail-row-sub">Grille comportementale</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET/POST /api/ged-cac/:id</div><div class="detail-row-sub">CAC séance — upsert</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET /api/ged-cac/:id/initial</div><div class="detail-row-sub">Pré-remplissage depuis dernière séance</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">GET /api/ged-evolution-cac/:ani_id</div><div class="detail-row-sub">Historique CAC toutes séances</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-      </div>
-
-      <div class="detail-card">
-        <div class="detail-card-title">
-          <span style="color:var(--blue);">◆</span> Frontend — Pages déployées S25
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">page-edc.tsx</div><div class="detail-row-sub">7 sections · ScaleInput · RadioGroup · CRUD problèmes inline</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">page-cac.tsx</div><div class="detail-row-sub">14 critères toggle · score temps réel · onglet Évolution</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Paramètres libellés EC</div><div class="detail-row-sub">/app/parametres/libelles-ec — 64 libellés modifiables</div></div>
-          <span class="pill pill-ok">S24 ✓</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Bug B2 corrigé</div><div class="detail-row-sub">Labels CAC "CAC 1..."→ param_libelles_ec via page-cac.tsx</div></div>
-          <span class="pill pill-ok">S25 ✓</span>
-        </div>
-      </div>
-
-      <div class="detail-card">
-        <div class="detail-card-title">
-          <span style="color:var(--ink3);">◆</span> Modules S9 restants (S10)
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Achats fournisseurs</div><div class="detail-row-sub">Script BDD prêt — frontend à faire S10</div></div>
-          <span class="pill pill-wip">S10</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Stock PMP/FIFO/LIFO</div><div class="detail-row-sub">Script BDD prêt — spec frontend prête</div></div>
-          <span class="pill pill-wip">S10</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Tarification 3 méthodes</div><div class="detail-row-sub">Script BDD prêt — frontend à faire</div></div>
-          <span class="pill pill-wip">S10</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Bilan PCG 2025</div><div class="detail-row-sub">Script BDD prêt — frontend à faire</div></div>
-          <span class="pill pill-wip">S10</span>
-        </div>
-        <div class="detail-row">
-          <div><div class="detail-row-label">Signature Yousign</div><div class="detail-row-sub">Script BDD prêt — spec frontend prête</div></div>
-          <span class="pill pill-wip">S10</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ROADMAP S10 → S12+ -->
-  <div id="roadmap" class="section">
-    <div class="section-header">
-      <span class="section-num">04</span>
-      <span class="section-title">Roadmap — Sprints planifiés</span>
-      <div class="section-line"></div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot wip"></div>
-          <div class="tl-header">
-            <span class="tl-sprint" style="color:var(--amber);">S10</span>
-            <span class="tl-title">Frontend modules S9</span>
-            <span class="pill pill-wip">PLANIFIÉ</span>
-          </div>
-          <div class="tl-desc">Achats fournisseurs · Stock PMP/FIFO · Tarification · Bilan PCG · Yousign signature · Questionnaires BDD + frontend</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot wip"></div>
-          <div class="tl-header">
-            <span class="tl-sprint" style="color:var(--amber);">S11</span>
-            <span class="tl-title">PDF & mobile</span>
-            <span class="pill pill-wip">PLANIFIÉ</span>
-          </div>
-          <div class="tl-desc">PDF tous types (EDC, CAC, devis, facture) · Responsive mobile complet · PWA notifications push · Carte identité animale</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot todo"></div>
-          <div class="tl-header">
-            <span class="tl-sprint" style="color:var(--purple);">S12+</span>
-            <span class="tl-title">SaaS production</span>
-            <span class="pill pill-spec">SaaS PROD</span>
-          </div>
-          <div class="tl-desc">Multi-tenant MariaDB · Provisionnement automatique · Prélèvement SEPA · Portail super admin MRR · CI/CD GitHub Actions · Hetzner Cloud</div>
-        </div>
-      </div>
-
-      <!-- BUGS & TECH DEBT -->
-      <div>
-        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px;">
-          <div class="detail-card-title" style="margin-bottom:12px;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;">
-            <span style="color:var(--green);">◆</span> Bugs résolus
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">B1 — Restart loop API</div><div class="detail-row-sub">PUT /seances/types — fix_main_s24.ps1</div></div>
-            <span class="pill pill-ok">Fix S24</span>
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">B2 — Labels CAC génériques</div><div class="detail-row-sub">page-cac.tsx utilise param_libelles_ec</div></div>
-            <span class="pill pill-ok">Fix S25</span>
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">B3 — Titre "Mes paramètres"</div><div class="detail-row-sub">Renommé "Paramètres" en S24</div></div>
-            <span class="pill pill-ok">Fix S24</span>
-          </div>
-        </div>
-        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;">
-          <div class="detail-card-title" style="margin-bottom:12px;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;">
-            <span style="color:var(--amber);">◆</span> Patches actifs (volatils)
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">main.js</div><div class="detail-row-sub">Bootstrap NestJS + PATCH_ROUTES_S56</div></div>
-            <span class="pill pill-ok">actif</span>
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">patch_edc_cac_s25.js</div><div class="detail-row-sub">CRUD EDC + CAC + évolution — S25</div></div>
-            <span class="pill pill-urgent">à déployer</span>
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">patch_animaux_v2.js</div><div class="detail-row-sub">PATCH /api/animaux/:id</div></div>
-            <span class="pill pill-ok">actif</span>
-          </div>
-          <div class="detail-row">
-            <div><div class="detail-row-label">smtp_server.js</div><div class="detail-row-sub">Express port 8081 — SMTP + photo animal</div></div>
-            <span class="pill pill-ok">actif</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INFRASTRUCTURE -->
-  <div id="infra" class="section">
-    <div class="section-header">
-      <span class="section-num">05</span>
-      <span class="section-title">Infrastructure</span>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="infra-grid">
-      <div class="infra-card">
-        <span class="infra-card-icon">🐳</span>
-        <div class="infra-card-title">Stack locale (actuelle)</div>
-        <div class="infra-item">NestJS compilé CommonJS — dist/main.js</div>
-        <div class="infra-item">Next.js 15 App Router + TypeScript</div>
-        <div class="infra-item">MariaDB 192.168.1.62:3307</div>
-        <div class="infra-item">Nginx 1.27-alpine (proxy + strip /api/)</div>
-        <div class="infra-item">Docker Compose — 3 containers</div>
-        <div class="infra-item">smtp_server Express port 8081</div>
-      </div>
-      <div class="infra-card">
-        <span class="infra-card-icon">☁️</span>
-        <div class="infra-card-title">Cible SaaS (Hetzner — S12+)</div>
-        <div class="infra-item">srv-app-01 CX32 — Next.js + NestJS</div>
-        <div class="infra-item">srv-db-01 CX32 — MariaDB + volume</div>
-        <div class="infra-item">srv-cache-01 CX22 — Redis + RabbitMQ</div>
-        <div class="infra-item">Load Balancer + Object Storage S3</div>
-        <div class="infra-item">~35€/mois — 500 premiers clients</div>
-        <div class="infra-item">Wildcard SSL *.Anim'Gest.fr (Let's Encrypt)</div>
-      </div>
-      <div class="infra-card">
-        <span class="infra-card-icon">⚙️</span>
-        <div class="infra-card-title">CI/CD & Monitoring (S12+)</div>
-        <div class="infra-item">GitHub Actions → build GHCR → SSH deploy</div>
-        <div class="infra-item">Prometheus + Grafana + Uptime Kuma</div>
-        <div class="infra-item">Backup mysqldump 02h00 UTC → S3 GPG</div>
-        <div class="infra-item">Rétention 7j / 4sem / 12mois</div>
-        <div class="infra-item">Traefik — routage {societe}.Anim'Gest.fr</div>
-        <div class="infra-item">Un schema MariaDB + un bucket S3 par tenant</div>
-      </div>
-      <div class="infra-card">
-        <span class="infra-card-icon">🗄️</span>
-        <div class="infra-card-title">BDD — État actuel</div>
-        <div class="infra-item">anim_gest — 60+ tables métier</div>
-        <div class="infra-item">anim_gest_ged — 5 tables GED</div>
-        <div class="infra-item">18+ triggers SQL actifs</div>
-        <div class="infra-item">3 procédures stockées (FEC, clôture, devis)</div>
-        <div class="infra-item">7 vues utilitaires</div>
-        <div class="infra-item">Anim'Gest_platform — BDD SaaS (S12+)</div>
-      </div>
-      <div class="infra-card">
-        <span class="infra-card-icon">🔐</span>
-        <div class="infra-card-title">Sécurité & RGPD</div>
-        <div class="infra-item">JWT Bearer — TTL 15 min (Redis)</div>
-        <div class="infra-item">Hash SHA-256 lignes FEC + global</div>
-        <div class="infra-item">Audit log générique (audit_log)</div>
-        <div class="infra-item">Registre traitements 6 types de données</div>
-        <div class="infra-item">DPA sous-traitants à signer</div>
-        <div class="infra-item">Rétention 5 ans post-résiliation (L123-22)</div>
-      </div>
-      <div class="infra-card">
-        <span class="infra-card-icon">📡</span>
-        <div class="infra-card-title">Règles critiques dev</div>
-        <div class="infra-item">Patches volatils — sauvegarder avant rebuild</div>
-        <div class="infra-item">DECIMAL MariaDB → parseFloat() avant .toFixed()</div>
-        <div class="infra-item">Routes → _h56.use() uniquement (jamais .get/.post)</div>
-        <div class="infra-item">Nginx strip /api/ — routes sans ce préfixe en interne</div>
-        <div class="infra-item">Rebuild frontend → restart nginx obligatoire</div>
-        <div class="infra-item">Chemins PS avec [id] → -LiteralPath</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- COMMERCIAL & JURIDIQUE -->
-  <div id="commercial" class="section">
-    <div class="section-header">
-      <span class="section-num">06</span>
-      <span class="section-title">Commercial & juridique</span>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="commercial-grid">
-
-      <div class="com-card">
-        <div class="com-card-title">
-          <span style="color:var(--green);">●</span> Modèle commercial
-        </div>
-        <div class="com-item">
-          <span class="com-label">Prélèvement</span>
-          <span class="com-val">SEPA mensuel (GoCardless)</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Engagement</span>
-          <span class="com-val">6 mois minimum</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Suspension</span>
-          <span class="com-val">2 prélèvements échoués</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Rétention données</span>
-          <span class="com-val">5 ans post-résiliation</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Plans</span>
-          <span class="com-val">SOLO / CABINET / MULTI</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">CGV</span>
-          <div style="text-align:right;"><span class="com-val">v1.0</span> <span class="pill pill-urgent">à rédiger</span></div>
-        </div>
-      </div>
-
-      <div class="com-card">
-        <div class="com-card-title">
-          <span style="color:var(--amber);">●</span> Actions commerciales en cours
-        </div>
-        <div class="com-item">
-          <span class="com-label">Nom commercial</span>
-          <div style="text-align:right;"><span class="com-val">Anim'Gest</span> <span class="pill pill-urgent">INPI à faire</span></div>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Compte GoCardless</span>
-          <span class="pill pill-urgent">à ouvrir</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Hébergeur</span>
-          <div style="text-align:right;"><span class="com-val">Hetzner</span> <span class="pill pill-urgent">à choisir</span></div>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Vidéos GIF modules</span>
-          <span class="pill pill-later">post-S25</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Landing page</span>
-          <span class="pill pill-ok">16-landing-page.html ✓</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Cible clients (10 ans)</span>
-          <span class="com-val">5 000 – 20 000</span>
-        </div>
-      </div>
-
-      <div class="com-card">
-        <div class="com-card-title">
-          <span style="color:var(--blue);">●</span> Documentation GitHub Pages (19 docs)
-        </div>
-        <div class="com-item"><span class="com-label">Synthèse projet</span><span class="pill pill-ok">01 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">Architecture + roadmap</span><span class="pill pill-ok">05 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">Roadmap sprints</span><span class="pill pill-ok">06 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">Audit stack</span><span class="pill pill-ok">07 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">Projet référence</span><span class="pill pill-ok">08 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">Scénario vidéo</span><span class="pill pill-ok">09 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">API Reference</span><span class="pill pill-ok">17 ✓ S25</span></div>
-        <div class="com-item"><span class="com-label">À uploader sur GitHub</span><span class="pill pill-urgent">7 fichiers</span></div>
-      </div>
-
-      <div class="com-card">
-        <div class="com-card-title">
-          <span style="color:var(--purple);">●</span> Architecture SaaS cible
-        </div>
-        <div class="com-item">
-          <span class="com-label">Multi-tenant</span>
-          <span class="com-val">1 schema MariaDB / tenant</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">GED</span>
-          <span class="com-val">1 bucket S3 / tenant</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Routing</span>
-          <span class="com-val">{societe}.Anim'Gest.fr</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Shard registry</span>
-          <span class="com-val">tenant_id → host+port+schema</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">BDD plateforme</span>
-          <span class="com-val">Anim'Gest_platform</span>
-        </div>
-        <div class="com-item">
-          <span class="com-label">Sprint cible</span>
-          <span class="pill pill-spec">S12+</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <div class="page-footer">
-    <div class="footer-brand">Anim'Gest</div>
-    <div class="footer-meta">pilotage-projet · session S33 · 18/03/2026 · Anim'Gest-docs/20-pilotage-projet.html</div>
+<div class="hero">
+  <div class="hero-tag">Suivi de Projet</div>
+  <h1>Pilotage <span>Projet</span></h1>
+  <p class="sub">Historique des sprints, avancement fonctionnel et roadmap — Anim'Gest by NoSage's Editor</p>
+  <div class="hero-stats">
+    <div class="hs"><span class="hs-v">S61</span><span class="hs-l">Sprint actuel</span></div>
+    <div class="hs"><span class="hs-v">105</span><span class="hs-l">Pages UI</span></div>
+    <div class="hs"><span class="hs-v">90+</span><span class="hs-l">Routes API</span></div>
+    <div class="hs"><span class="hs-v">82/100</span><span class="hs-l">Score qualité</span></div>
+    <div class="hs"><span class="hs-v">10</span><span class="hs-l">Métiers couverts</span></div>
   </div>
 </div>
-<footer>Anim'Gest by NoSage's Editor · S44 · 22 mars 2026 · <a href="https://github.com/nicolashermilly/Anim'Gest-docs">GitHub</a></footer>
+
+<div class="container">
+
+  <!-- HISTORIQUE SPRINTS -->
+  <div class="section">
+    <div class="sec-title">Historique des sprints</div>
+    <div class="timeline">
+
+      <!-- S61 -->
+      <div class="tl-item">
+        <div class="tl-dot current">61</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S61</span>
+            <span class="tl-date">29/03/2026</span>
+            <span class="tl-badge current-b">En cours</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Portail Client v2 — tables BDD (4 tables), routes API (9 endpoints), pages TSX</li>
+              <li>Git rattrapage S52-S60 : commit S61a (80 pages UI + API), S61b (nettoyage)</li>
+              <li>Documentation : 9 changelogs S52-S60, index 105 pages, audit-stack/api-reference/pilotage MàJ</li>
+              <li>Spec + maquette HTML Portail Client</li>
+            </ul>
+          </div>
+          <div class="tl-scores">
+            <div class="score-pill">Backend <span>82</span>/100</div>
+            <div class="score-pill">Frontend <span>80</span>/100</div>
+            <div class="score-pill">BDD <span>85</span>/100</div>
+            <div class="score-pill">Global <span>82</span>/100</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S60 -->
+      <div class="tl-item">
+        <div class="tl-dot">60</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S60</span>
+            <span class="tl-date">29/03/2026</span>
+            <span class="tl-badge done">Terminé</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Réseaux sociaux — fix colonnes _URL, migration rs_publication → rs_post</li>
+              <li>Devis — transitions statut + bouton Email + création facture (routes PUT/POST)</li>
+              <li>Paramètres éditions — nouvelle page : Logo, Couleurs, Police, En-tête, CGV, Filigrane</li>
+              <li>Fix KPIs dashboard : nb_seances_a_venir → nb_seances (159 séances)</li>
+              <li>Fix routes /roles/:id/permissions et /user-permissions</li>
+              <li>Ajout route GET /seances/:id manquante avec jointures</li>
+              <li>Script sauvegarde v7 déployé</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S59 -->
+      <div class="tl-item">
+        <div class="tl-dot">59</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S59</span>
+            <span class="tl-date">29/03/2026</span>
+            <span class="tl-badge done">Terminé</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Fix dashboard ged-edc-sans-devis + correction syntaxe devis/[id]/page.tsx</li>
+              <li>Nettoyage repo : suppression archives et fichiers .bak commités par erreur</li>
+              <li>Migration repo docs local : C:\petsuite-docs → C:\AnimGest_Repo_Git\petsuite-docs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S58 -->
+      <div class="tl-item">
+        <div class="tl-dot">58</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S58</span>
+            <span class="tl-date">28/03/2026</span>
+            <span class="tl-badge done">Terminé</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Module Formules/Abonnements complet — 10 routes API, page /app/formules</li>
+              <li>RBAC — tables role + role_permission, 56 permissions sur 14 modules</li>
+              <li>Badge rôle coloré dans la Topbar, colonne USR_ROLE_ID</li>
+              <li>4 rôles : ADMIN, GESTION, CONSULT, COMPTA</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S57 -->
+      <div class="tl-item">
+        <div class="tl-dot">57</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S57</span>
+            <span class="tl-date">28/03/2026</span>
+            <span class="tl-badge done">Terminé</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Fix GET /roles/:id/permissions — vrais noms colonnes BDD</li>
+              <li>Fix GET /user-permissions — détection auto colonnes</li>
+              <li>Ajout route GET /seances/:id manquante</li>
+              <li>Sidebar comportementaliste : suppression lien Suivi CAC (règle définitive)</li>
+              <li>Fix KPIs dashboard nb_seances</li>
+              <li>Restauration src/ depuis backup — élimination parasites</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S56 -->
+      <div class="tl-item">
+        <div class="tl-dot">56</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S56</span>
+            <span class="tl-date">27/03/2026</span>
+            <span class="tl-badge done">Terminé</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Suppression code mort — imports inutilisés, composants orphelins</li>
+              <li>100 pages UI compilées — objectif atteint</li>
+              <li>Formules/Abonnements : page + tables formule_ligne / client_formule</li>
+              <li>Paramètres éditions : Logo, Couleurs, Police, En-tête, Pied de page, CGV, Filigrane</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S55 -->
+      <div class="tl-item">
+        <div class="tl-dot">55</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S55</span>
+            <span class="tl-date">27/03/2026</span>
+            <span class="tl-badge done">Terminé</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Score qualité global 80/100 atteint</li>
+              <li>getDb() centralisé — 0 createConnection() direct restant</li>
+              <li>JSDoc 133/137 fichiers TSX couverts</li>
+              <li>241/241 colonnes BDD commentées (convention FK "Relation NomTable")</li>
+              <li>Backticks SQL éliminés de custom-routes.ts</li>
+            </ul>
+          </div>
+          <div class="tl-scores">
+            <div class="score-pill">Global <span>80</span>/100</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S54 -->
+      <div class="tl-item">
+        <div class="tl-dot">54</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S54</span>
+            <span class="tl-date">26/03/2026</span>
+            <span class="tl-badge done">Terminé</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Audit qualité formel — score initial 53/100</li>
+              <li>Début refactorisation : getDb() centralisé, JSDoc, composants génériques</li>
+              <li>Fix CSS mode clair : h1/h2 invisibles, textes tableaux pâles</li>
+              <li>DataTable, KpiCard, StatusBadge, PageHeader créés</li>
+            </ul>
+          </div>
+          <div class="tl-scores">
+            <div class="score-pill">Global <span>53</span>/100 → objectif 75</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S53 -->
+      <div class="tl-item">
+        <div class="tl-dot">53</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S53</span>
+            <span class="tl-date">25-26/03/2026</span>
+            <span class="tl-badge done">Terminé</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Drag & Drop planning v2 — DnD HTML5 natif, ghost bleu, snap 30min, optimistic update</li>
+              <li>Programmes — tuiles modèles (5 comportementaliste + 3 éducateur), modale duplication</li>
+              <li>Forfaits & Abonnements — tables BDD + 12 seeds + page /app/forfaits</li>
+              <li>Yousign — 4 routes API (login, envoyer, webhook, param)</li>
+              <li>Pattern body parsing manuel établi pour POST/PATCH</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S52 -->
+      <div class="tl-item">
+        <div class="tl-dot">52</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S52</span>
+            <span class="tl-date">25/03/2026</span>
+            <span class="tl-badge done">Terminé</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Audit 404 complet — ~110 pages vérifiées</li>
+              <li>Carte clients Leaflet v2 — géocodage batch, 140/167 clients localisés</li>
+              <li>Planning journalier — vue Jour avec grille 7h-20h30</li>
+              <li>Dashboards 9 métiers alimentés en données réelles</li>
+              <li>20 nouvelles routes stats (kpis, ca-par-mois, especes, top-clients, villes…)</li>
+              <li>Page statistiques opérationnelle — CA 48 014 €, panier moyen 231 €</li>
+              <li>Export CSV factures et séances (UTF-8 BOM, séparateur ;)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S51 -->
+      <div class="tl-item">
+        <div class="tl-dot">51</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprint S51</span>
+            <span class="tl-date">25/03/2026</span>
+            <span class="tl-badge done">Terminé</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>Carte clients Leaflet v1 — géocodage batch via api-adresse.data.gouv.fr</li>
+              <li>Routes GED CAC — /ged-cac/animal/:id/evolution + /score (vue v_animal_evolution_cac)</li>
+              <li>Notice utilisateur v4 — élevage, achats, inventaires, RS, topbar v2</li>
+              <li>Uniformisation boutons ← Retour et + Nouveau sur toutes les pages</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- S32-S50 synthèse -->
+      <div class="tl-item">
+        <div class="tl-dot">50</div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <span class="tl-sprint">Sprints S32 → S50</span>
+            <span class="tl-date">Mars 2026</span>
+            <span class="tl-badge done">Terminés</span>
+          </div>
+          <div class="tl-content">
+            <ul>
+              <li>S50 — Charte graphique globale, doublon AideContextuelle, btn-danger, PDF modal</li>
+              <li>S49 — Commentaires BDD 241/241 colonnes, pages S46-S48</li>
+              <li>S48 — Agenda planning séances, signatures Yousign UI, pages paiements</li>
+              <li>S47 — CRM complet (leads, opportunités, activités), GED documents</li>
+              <li>S46 — Élevage complet (portées, géniteurs, réservations, saillies)</li>
+              <li>S44-S45 — EDC/CAC complet, 60 libellés paramétrables, grille 14 critères</li>
+              <li>S40-S43 — RFE facturation électronique, achats fournisseurs, stocks PMP</li>
+              <li>S35-S39 — Questionnaires, programmes suivi, modules métiers, seeds BDD</li>
+              <li>S32-S34 — PDF factures/devis, routes PUT animaux, agenda couleurs dynamiques</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ROADMAP FUTURE -->
+  <div class="section">
+    <div class="sec-title">Roadmap S61 → S65</div>
+
+    <div class="module-card">
+      <div class="mc-header">
+        <div class="mc-title">🌐 Module A — Portail Client v2</div>
+        <div class="mc-sprint">S61 → S63</div>
+      </div>
+      <div class="mc-desc">Espace sécurisé client — séances, CAC, devis/factures, confirmation RDV, notifications email/SMS. BDD créée en S61, routes fondations déployées.</div>
+    </div>
+
+    <div class="module-card">
+      <div class="mc-header">
+        <div class="mc-title">🐾 Module B — Carte Identité Animale</div>
+        <div class="mc-sprint">S61 → S63</div>
+      </div>
+      <div class="mc-desc">Page publique accessible par scan puce électronique — fiche animal, vaccins, propriétaire, QR code. URL : /animal/[puce].</div>
+    </div>
+
+    <div class="module-card">
+      <div class="mc-header">
+        <div class="mc-title">🤖 Widget Claude IA "Eliot"</div>
+        <div class="mc-sprint">S61</div>
+      </div>
+      <div class="mc-desc">Widget flottant IA dans l'application — proxy /ia/chat vers Anthropic API. Composants ClaudeWidget.tsx + ClaudeWidgetWrapper.tsx créés. ANTHROPIC_API_KEY à configurer.</div>
+    </div>
+
+    <div class="module-card">
+      <div class="mc-header">
+        <div class="mc-title">📐 Refactorisation architecture API</div>
+        <div class="mc-sprint">S61 → S62</div>
+      </div>
+      <div class="mc-desc">Migration routes de custom-routes.ts vers api/src/routes/ — commencer par factures.ts. Services frontend src/services/. Suppression code mort restant.</div>
+    </div>
+
+    <div class="module-card">
+      <div class="mc-header">
+        <div class="mc-title">✍ Yousign end-to-end sandbox</div>
+        <div class="mc-sprint">S62</div>
+      </div>
+      <div class="mc-desc">Test complet Yousign sandbox : clé API dans param_yousign, signature depuis fiche devis, webhook statut, tests end-to-end.</div>
+    </div>
+
+  </div>
+
+  <!-- CHIFFRES CLES -->
+  <div class="section">
+    <div class="sec-title">Chiffres clés au 29/03/2026</div>
+    <table style="font-size:.85rem">
+      <tr><th>Métrique</th><th>Valeur</th></tr>
+      <tr><td>Pages UI compilées</td><td style="color:var(--white)">105</td></tr>
+      <tr><td>Routes API custom-routes.ts</td><td style="color:var(--white)">90+ (~2800 lignes)</td></tr>
+      <tr><td>Métiers couverts</td><td style="color:var(--white)">10 (comportementaliste, toiletteur, pet-sitter, eleveur, equestre, pension, osteopathe, sport canin, naturopathe, veterinaire)</td></tr>
+      <tr><td>Tables BDD</td><td style="color:var(--white)">~155 (micro_logiciel + 4 nouvelles portail S61)</td></tr>
+      <tr><td>Colonnes BDD commentées</td><td style="color:var(--white)">241/241 (100%)</td></tr>
+      <tr><td>JSDoc fichiers TSX</td><td style="color:var(--white)">133/137</td></tr>
+      <tr><td>Pages documentation GitHub Pages</td><td style="color:var(--white)">105+</td></tr>
+      <tr><td>Score qualité global</td><td style="color:var(--white)">82/100 (Backend 82, Frontend 80, BDD 85)</td></tr>
+      <tr><td>Séances en BDD</td><td style="color:var(--white)">159</td></tr>
+      <tr><td>Factures en BDD</td><td style="color:var(--white)">279</td></tr>
+      <tr><td>CA 12 mois</td><td style="color:var(--white)">48 014 €</td></tr>
+      <tr><td>Clients/tiers</td><td style="color:var(--white)">167 (140 géocodés sur carte)</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  <strong>Anim'Gest</strong> &mdash; NoSage's Editor &mdash; Pilotage Projet<br>
+  <small>MàJ Sprint S61 &mdash; 29/03/2026 &mdash; S32 → S61 documentés</small>
+</footer>
 </body>
 </html>
