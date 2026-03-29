@@ -210,87 +210,126 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-/* ══ STATE PAR DEFAUT — S57 PRE-REMPLI ══ */
+/* ══ STATE PAR DEFAUT — S60 PRE-REMPLI ══ */
 var DEFAULT = {
-  sprint:'S58', date: new Date().toLocaleDateString('fr-FR'),
-  objectif:'', statut:'Terminé',
+  sprint:'S61', date: new Date().toLocaleDateString('fr-FR'),
+  objectif:'Recette S59 — corrections bugs + routes API devis', statut:'Terminé',
 
   done_front:[
-    'KPIs dashboard : nb_seances_a_venir -> nb_seances — 159 séances affichées',
-    'Sidebar comportementaliste : lien "Suivi CAC" supprimé (règle CAC S57)',
-    '/app/parametres/editions : nouvelle page Logo, Couleurs, Police, En-tête, Pied de page, CGV, Filigrane'
+    'Fix RS comptes/publications : PUT /parametres/reseaux-sociaux route + colonnes _URL',
+    'Fix RS state React : setData(d.raw) pour pre-remplir au chargement',
+    'Sidebar — lien Nouveau devis ajouté dans 7 métiers (/app/devis/new)',
+    'Devis/[id] — transitions statut (BROUILLON/ENVOYE/ACCEPTE/REFUSE/ANNULE) + onClick',
+    'Devis/[id] — bouton Email (mailto: pre-rempli) + bouton Créer la facture',
+    'Fix formules/page.tsx — imports PageHeader + StatusBadge corrigés'
   ],
   done_back:[
-    'GET /roles/:id/permissions : colonnes RPM_* -> vrais noms BDD (module_code, can_read, can_write, can_delete)',
-    'GET /user-permissions : détection auto colonnes -> noms directs',
-    'GET /seances/:id : route manquante ajoutée — SELECT avec jointures STY/SST/tiers/animal/contact'
+    'PUT /devis/:id — mise à jour DCE_STATUT, DCE_COMMENTAIRE, DCE_DATE_VALIDITE',
+    'POST /devis/:id/facturer — création facture depuis devis ACCEPTE (⚠ colonnes à corriger S61)',
+    'Fix RS migration rs_publication -> rs_post (SELECT + INSERT)',
+    'Fix SQL guillemets simples dans string TS ligne 2206'
   ],
   done_bdd:[],
   done_refacto:[
-    'Restauration src/ depuis backup 20260326_2317_avant_revue_code (parasites } / ); éliminés)',
-    'Script sauvegarde v7 déployé sur G:\\Sauvegarde_micro_logiciel\\'
+    'Dossiers réorganisés : C:\\AnimGest_Sav\\ C:\\AnimGest_Repo_Git\\ C:\\AnimGest_Start\\',
+    'C:\\PetSuite et C:\\petsuite-docs supprimés — tâche planifiée mise à jour',
+    'START_ANIM_GEST.bat créé dans C:\\AnimGest_Start\\'
   ],
   done_fix:[
-    'Route /roles/:id/permissions : parsing parts[2] corrigé (nginx strips /api/)',
-    'Route /user-permissions : deux requêtes sans JOIN alias'
+    'RS PUT : route /reseaux-sociaux/comptes utilisée (au lieu de /parametres/reseaux-sociaux)',
+    'RS colonnes : RS_FACEBOOK -> RS_FACEBOOK_URL (et tous les réseaux)',
+    'RS state : setData(d) -> setData(d.raw) — pré-remplissage champs',
+    'RS SQL : guillemets simples dans string TS corrigés (ligne 2206)'
   ],
 
-  ps:[
-    'Sauvegarde_micro_logiciel.ps1 v7 — FULL_KEEP=30, Full_Copy inclut C:\\Backup\\micro_logiciel'
+  commits:[
+    'c6e046c — S60a : Fix PUT reseaux-sociaux + lien Nouveau devis dans sidebar',
+    '6cc4050 — S60b : Fix RS colonnes _URL + migration rs_publication -> rs_post',
+    '7712b33 — S60c : Fix API RS guillemets SQL ligne 2206',
+    '389a1cf — S60d : Fix RS setData(d.raw) pour pré-remplir les champs',
+    'c8c9d2d — S60e : Devis transitions statut + Email + Creer facture + routes PUT/POST'
   ],
+
+  ps:[],
   tsx:[
-    'src/app/app/parametres/editions/page.tsx — nouvelle page éditions',
-    'src/components/Sidebar.tsx — suppression lien Suivi CAC comportementaliste',
-    'src/app/app/page.tsx — fix KPI nb_seances'
+    'src/app/app/parametres/reseaux-sociaux/page.tsx — fix PUT route + colonnes + state',
+    'src/components/Sidebar.tsx — lien Nouveau devis 7 métiers',
+    'src/app/app/devis/[id]/page.tsx — transitions statut + email + créer facture',
+    'src/app/app/formules/page.tsx — fix imports PageHeader + StatusBadge'
   ],
   api:[
-    'GET /roles/:id/permissions — fix noms colonnes BDD',
-    'GET /user-permissions — fix noms colonnes directs',
-    'GET /seances/:id — ajout route manquante avec jointures'
+    'PUT /devis/:id — mise à jour statut + commentaire + date validité',
+    'POST /devis/:id/facturer — création facture (⚠ colonnes incorrectes, fix S61)',
+    'Fix RS migration rs_publication -> rs_post dans GET/POST reseaux-sociaux/publications'
   ],
   sql:[], py:[],
 
   bugs:[
-    {l:'Formules/Abonnements — page non mise à jour', m:'Forfaits',   c:'Haute',   s:'Ouvert'},
-    {l:'Audit PDF -> window.open() à remplacer',      m:'Editions',   c:'Haute',   s:'Ouvert'},
-    {l:'Drag & Drop agenda non fonctionnel',           m:'Planning',   c:'Moyenne', s:'Ouvert'},
-    {l:'devis_ligne inexistante — retourne []',        m:'Devis',      c:'Moyenne', s:'Ouvert'},
-    {l:'Export CSV règlements manquant',               m:'Règlements', c:'Basse',   s:'Ouvert'},
-    {l:'/app/elevage/declarations — page manquante',   m:'Elevage',    c:'Basse',   s:'Ouvert'}
+    {l:'POST /devis/:id/facturer — colonnes INSERT incorrectes (FAC_NUMERO_INT inexistant)', m:'API', c:'Haute', s:'Ouvert'},
+    {l:'Factures/[id] — lignes non affichées, bouton Payer erreur', m:'Factures', c:'Haute', s:'Ouvert'},
+    {l:'RS Publications — GET ne retourne pas les posts créés', m:'Communauté', c:'Haute', s:'Ouvert'},
+    {l:'RS Comptes — (2) affiché, comptes sans URL visibles', m:'Communauté', c:'Moyenne', s:'Ouvert'},
+    {l:'Animaux — races mal catégorisées, ~0 chiens en BDD', m:'Animaux', c:'Moyenne', s:'Ouvert'},
+    {l:'Carte client — fond transparent dropdown CP + carte Leaflet vide', m:'Clients', c:'Moyenne', s:'Ouvert'},
+    {l:'Achat — Column ACH_DATE cannot be null', m:'Achats', c:'Moyenne', s:'Ouvert'},
+    {l:'Inventaire — valorisation 0.852.0.1415 + lignes disparaissent', m:'Inventaire', c:'Moyenne', s:'Ouvert'},
+    {l:'9 dashboards métiers vides — seeds multi-métiers manquants', m:'Dashboards', c:'Moyenne', s:'Ouvert'},
+    {l:'Drag & Drop agenda non fonctionnel', m:'Planning', c:'Basse', s:'Ouvert'},
+    {l:'/app/elevage/declarations — page manquante', m:'Elevage', c:'Basse', s:'Ouvert'}
+  ],
+
+  evolutions:[
+    'Nouveau client selon module Achat — sans Achat: client simple; avec Achat: client/fournisseur SIRET',
+    'Contacts multiples par tiers — sous-formulaire dans Coordonnées',
+    'Fiche animal — GED carnet santé (scan/import glisser-déposer)',
+    'Formules — refonte UI + flux devis/contrat à valider par souscription',
+    'Races indexées par catégorie/type animal — corriger seeds (~80 chiens / 48 chats)',
+    'Numérotation chrono devis/factures non conforme — numéros liens hypertextes',
+    'Commande provisoire PDF filigrane rouge PROVISOIRE + bouton Valider avec chrono'
+  ],
+
+  tables_bdd:[
+    'facture : FAC_ID, FAC_NUM, FAC_DATE, TIE_ID, FAC_TOTAL_TTC, FAC_STATUT — MANQUENT: FAC_TOTAL_HT, DCE_ID',
+    'devis_contrat_entete : DCE_ID, DCE_NUMERO, DCE_STATUT(BROUILLON/ENVOYE/ACCEPTE/REFUSE/ANNULE/FACTURE)',
+    'rs_compte : RSC_ID, RSC_RESEAU, RSC_NOM, RSC_HANDLE, RSC_ACTIF',
+    'rs_post : RSP_ID, RSC_ID, RSP_STATUT, RSP_DATE_PUBLICATION, RSP_TITRE, RSP_CONTENU',
+    'param_reseaux_sociaux : RS_FACEBOOK_URL, RS_INSTAGRAM_URL, RS_X_URL, RS_ACTIF'
   ],
 
   sb:82, sf:80, sd:85,
-  nb_routes:90, nb_pages:100, nb_jsdoc:133, nb_cols:241,
+  nb_routes:90, nb_pages:101, nb_jsdoc:133, nb_cols:241,
   frimousse:true,
 
   ph:[
-    'Git push S57 (commit custom-routes + sidebar)',
-    'Module Formules/Abonnements (Essentiel / Professionnel / Expert)',
-    'Audit PDF -> Modal : remplacer tous les window.open()'
+    'Corriger POST /devis/:id/facturer — adapter INSERT aux vraies colonnes table facture',
+    'Fix factures/[id] — lignes non affichées (GET /factures/:id/lignes)',
+    'Fix bouton Payer facture',
+    'Fix RS Publications — GET ne retourne pas les posts',
+    'Fix RS Comptes — affichage conditionnel URL renseignée seulement'
   ],
   pm:[
-    'Widget Claude IA — widget flottant + chat',
-    'Suivi CAC depuis fiche séance /app/seances/[id]',
-    'Suivi CAC depuis EDC /app/seances/[id]/etude-comportementale',
-    'Déplacer routes dans api/src/routes/ — commencer par factures.ts',
-    'Services frontend src/services/',
-    'Supprimer code mort'
+    'Fix animaux — races/catégories + seeds 80 chiens / 48 chats',
+    'Fix carte client — fond dropdown CP + carte droite Leaflet',
+    'Seeds dashboards multi-métiers (9 métiers vides)',
+    'Fix chrono devis/factures + liens hypertextes',
+    'Fix ACH_DATE achat + règlement achats'
   ],
   pl:[
-    '/app/elevage/declarations — page manquante (route API présente)',
-    'devis_ligne inexistante — /api/devis/:id/lignes retourne []',
-    'Export CSV règlements — bouton manquant',
-    'Drag & Drop agenda — /app/planning-seances'
+    'Sidebar EDC comportementaliste (/seances/edc)',
+    'Drag & drop agenda REALISEE bloqué',
+    'Programmes de suivi — bouton Créer inactif',
+    'Fix inventaire lignes + valorisation',
+    '/app/elevage/declarations — page manquante'
   ],
   blk:[
     'WireGuard VPN port 51820 — partiellement configuré, non opérationnel'
   ],
   aml:[
-    'S59-S60 : Portail Client — espace séances/CAC avec login client',
-    'S61-S63 : Carte Identité Animale — page publique liée à la puce'
+    'S61-S63 : Portail Client — espace séances/CAC avec login client',
+    'S63-S65 : Carte Identité Animale — page publique liée à la puce'
   ],
 
-  obj_next:'Git push S57 + démarrer Module Formules/Abonnements + Audit PDF->Modal'
+  obj_next:'PRIORITÉ ABSOLUE : corriger POST /devis/:id/facturer colonnes table facture + fix factures/[id] lignes'
 };
 
 var S = JSON.parse(JSON.stringify(DEFAULT));
@@ -377,7 +416,7 @@ function renderAll(){
   if(id === 'meta'){
     h = '<div class="card"><div class="card-hd">Informations de session</div>'
       +'<div class="g2">'
-      +'<div class="f"><label class="lbl">Sprint</label><input type="text" value="'+esc(S.sprint)+'" placeholder="S58" oninput="upd(\'sprint\',this.value)" /></div>'
+      +'<div class="f"><label class="lbl">Sprint</label><input type="text" value="'+esc(S.sprint)+'" placeholder="S61" oninput="upd(\'sprint\',this.value)" /></div>'
       +'<div class="f"><label class="lbl">Date</label><input type="text" value="'+esc(S.date)+'" oninput="upd(\'date\',this.value)" /></div>'
       +'</div>'
       +'<div class="f"><label class="lbl">Objectif de la session</label>'
@@ -431,6 +470,13 @@ function renderAll(){
       +'<div class="sec-lbl">Routes API .ts — custom-routes.ts ou api/src/routes/</div>'+listEd('api','ex : GET /roles — custom-routes.ts')
       +'<div class="sec-lbl">SQL .sql — exécution manuelle HeidiSQL</div>'+listEd('sql','ex : s58_alter_xxx.sql')
       +'<div class="sec-lbl">Python .py</div>'+listEd('py','ex : s58_fix_xxx.py')
+      +'<div class="sec-lbl">Commits (hash + description)</div>'+listEd('commits','ex : abc1234 — S60a : description')
+      +'</div>'
+      +'<div class="card">'
+      +'<div class="card-hd">Demandes d\'évolution identifiées</div>'
+      +listEd('evolutions','ex : Contacts multiples par tiers')
+      +'<div class="sec-lbl">Tables BDD utiles (colonnes / manquants)</div>'
+      +listEd('tables_bdd','ex : facture : FAC_ID, FAC_NUM — MANQUE: FAC_TOTAL_HT')
       +'</div>';
   }
 
@@ -525,6 +571,17 @@ function generate(){
     return '| '+(b.l||'—')+' | '+(b.m||'—')+' | '+b.c+' | '+b.s+' |';
   }).join('\n');
 
+  var commitLines = (S.commits||[]).map(function(c){ return '| '+c.split(' — ')[0]+' | '+(c.split(' — ')[1]||c)+' |'; }).join('\n');
+  var hasCommits = commitLines.length > 0;
+
+  var evolLines = li(S.evolutions||[]);
+  var tableLines = li(S.tables_bdd||[]);
+
+  // Chemins dynamiques depuis le DEFAULT mis à jour
+  var docsLocal = 'C:\\\\AnimGest_Repo_Git\\\\petsuite-docs';
+  var savScript = 'C:\\\\AnimGest_Sav\\\\Sauvegarde_micro_logiciel.ps1';
+  var apiLines = S.nb_routes + ' (~' + (S.nb_routes > 85 ? '2800' : '2736') + ' lignes)';
+
   var md =
     '# Anim\'Gest — Handover '+sp+'\n'
    +'> NoSage\'s Editor — Généré le '+S.date+'\n\n'
@@ -532,7 +589,7 @@ function generate(){
    +'## En-tête session\n\n'
    +'| Champ | Valeur |\n|---|---|\n'
    +'| Date | '+S.date+' |\n'
-   +'| Sprint | '+sp+' -> passe à '+nx+' |\n'
+   +'| Sprint | '+sp+' → passe à '+nx+' |\n'
    +'| Auteur | Session Claude '+sp+' |\n'
    +'| Objectif | '+(S.objectif||'—')+' |\n'
    +'| Statut | '+S.statut+' |\n\n'
@@ -543,92 +600,109 @@ function generate(){
    +'| API test | http://localhost/api/bilan |\n'
    +'| Docs GitHub | https://github.com/nicolashermilly/petsuite-docs |\n'
    +'| GitHub Pages | https://nicolashermilly.github.io/petsuite-docs/ |\n'
-   +'| Frontend | D:\\OneDrive_Perso\\...\\micro_logiciel_frontend_nextjs |\n'
-   +'| Deploy | ...\\micro_logiciel_frontend_nextjs\\deploy |\n'
-   +'| API source | ...\\api\\src\\custom-routes.ts (2736 lignes, 87+ getDb()) |\n'
-   +'| Routes | ...\\api\\src\\routes\\ |\n'
-   +'| Docs local | C:\\petsuite-docs |\n'
-   +'| Backup propre | C:\\Backup\\micro_logiciel\\20260315_0002 |\n'
-   +'| Sauvegarde script | G:\\Sauvegarde_micro_logiciel\\Sauvegarde_micro_logiciel.ps1 |\n'
-   +'| BDD | 192.168.1.62:3307 — micro_logiciel |\n\n'
+   +'| Frontend | D:\\\\OneDrive_Perso\\\\OneDrive\\\\Documents\\\\Micro_Logiciel\\\\Documentation\\\\Frontend\\\\micro_logiciel_frontend_nextjs |\n'
+   +'| Deploy | ...\\\\micro_logiciel_frontend_nextjs\\\\deploy |\n'
+   +'| API source | ...\\\\api\\\\src\\\\custom-routes.ts (~'+S.nb_routes*30+' lignes) |\n'
+   +'| Docs local | '+docsLocal+' |\n'
+   +'| Backup propre | C:\\\\AnimGest_Sav\\\\ (nightly) |\n'
+   +'| Sauvegarde script | '+savScript+' |\n'
+   +'| BDD | 192.168.1.62:3307 — micro_logiciel |\n'
+   +'| Scripts Python | $env:USERPROFILE\\\\Downloads\\\\ (jamais dans OneDrive) |\n\n'
    +'---\n\n'
-   +'## 1. Ce qui a été accompli\n\n'
+   +'## 1. Ce qui a été accompli en '+sp+'\n\n'
    +'### Front-end\n'+li(S.done_front)+'\n\n'
    +'### Back-end / API\n'+li(S.done_back)+'\n\n'
-   +'### Base de données\n'+li(S.done_bdd)+'\n\n'
-   +'### Refactorisations\n'+li(S.done_refacto)+'\n\n'
+   +'### Base de données\n'+(S.done_bdd.length?li(S.done_bdd):'- (aucun)')+'\n\n'
+   +'### Refactorisations\n'+(S.done_refacto.length?li(S.done_refacto):'- (aucune)')+'\n\n'
    +'### Corrections de bugs\n'+li(S.done_fix)+'\n\n'
    +'---\n\n'
-   +'## 2. Fichiers générés\n\n'
-   +'### PowerShell .ps1 -> C:\\Users\\AdminPC\\Downloads\n'+li(S.ps)+'\n\n'
-   +'### Pages front .tsx -> src/app/app/\n'+li(S.tsx)+'\n\n'
-   +'### Routes API .ts\n'+li(S.api)+'\n\n'
-   +'### SQL .sql -> exécution manuelle HeidiSQL\n'+li(S.sql)+'\n\n'
-   +'### Python .py\n'+li(S.py)+'\n\n'
+   +'## 2. Commits '+sp+'\n\n'
+   +(hasCommits
+     ? '| Commit | Description |\n|---|---|\n'+commitLines+'\n\n'
+     : '_(aucun commit listé)_\n\n')
    +'---\n\n'
-   +'## 3. Bugs connus\n\n'
+   +'## 3. Fichiers générés\n\n'
+   +'### PowerShell .ps1 → C:\\\\Users\\\\AdminPC\\\\Downloads\n'+(S.ps.length?li(S.ps):'- (aucun)')+'\n\n'
+   +'### Pages front .tsx → src/app/app/\n'+li(S.tsx)+'\n\n'
+   +'### Routes API .ts\n'+li(S.api)+'\n\n'
+   +'### SQL .sql → exécution manuelle HeidiSQL\n'+(S.sql.length?li(S.sql):'- (aucun)')+'\n\n'
+   +'### Python .py\n'+(S.py.length?li(S.py):'- (aucun)')+'\n\n'
+   +'---\n\n'
+   +'## 4. Bugs connus et recette '+sp+' complète\n\n'
+   +'### Bloquant — à corriger en '+nx+'\n\n'
    +'| Bug | Module | Criticité | Statut |\n|---|---|---|---|\n'
    +bugTable+'\n\n'
    +'---\n\n'
-   +'## 4. Score qualité\n\n'
+   +'## 5. Demandes d\'évolution identifiées en '+sp+'\n\n'
+   +(S.evolutions&&S.evolutions.length
+     ? '| Évolution | Module |\n|---|---|\n'
+       + (S.evolutions||[]).map(function(e){ return '| '+e+' | — |'; }).join('\n')+'\n\n'
+     : '_(aucune)_\n\n')
+   +'---\n\n'
+   +'## 6. Score qualité\n\n'
    +'| Axe | Score |\n|---|---|\n'
    +'| Backend | '+S.sb+' / 100 |\n'
    +'| Frontend | '+S.sf+' / 100 |\n'
    +'| BDD | '+S.sd+' / 100 |\n'
    +'| Global | '+g+' / 100 |\n\n'
-   +'> Routes API : '+S.nb_routes+' (~2736 lignes) | Pages UI : '+S.nb_pages+' | JSDoc : '+S.nb_jsdoc+'/137 | Colonnes BDD : '+S.nb_cols+'/241\n\n'
+   +'> Routes API : '+apiLines+' | Pages UI : '+S.nb_pages+' | JSDoc : '+S.nb_jsdoc+'/137 | Colonnes BDD : '+S.nb_cols+'/241\n\n'
    +'Frimousse (ANI_ID=22, Malinois, Jean Dujardin) : '+(S.frimousse?'PRESERVE':'A VERIFIER')+'\n\n'
    +'---\n\n'
-   +'## 5. Roadmap — '+nx+'\n\n'
-   +'### ROUGE — Priorité haute (bloquant)\n'+li(S.ph)+'\n\n'
-   +'### ORANGE — Priorité moyenne (fonctionnel)\n'+li(S.pm)+'\n\n'
+   +'## 7. Roadmap '+nx+'\n\n'
+   +'### ROUGE — Priorité absolue (à faire en premier)\n'+li(S.ph)+'\n\n'
+   +'### ORANGE — Priorité haute\n'+li(S.pm)+'\n\n'
    +'### JAUNE — Backlog\n'+li(S.pl)+'\n\n'
-   +'### Blocages identifiés\n'+li(S.blk)+'\n\n'
-   +'### VERT — Nouveaux modules (S59+)\n'+li(S.aml)+'\n\n'
+   +'### Blocages identifiés\n'+(S.blk&&S.blk.length?li(S.blk):'- (aucun)')+'\n\n'
+   +'### VERT — Nouveaux modules\n'+li(S.aml)+'\n\n'
    +'---\n\n'
-   +'## 6. Objectif '+nx+'\n\n'
-   +'> '+(S.obj_next||'(à compléter)')+'\n\n'
-   +'---\n\n'
-   +'## 7. Règles critiques\n\n'
+   +(S.tables_bdd&&S.tables_bdd.length
+     ? '## 8. Tables BDD utiles\n\n'+tableLines+'\n\n---\n\n'
+     : '')
+   +'## '+(S.tables_bdd&&S.tables_bdd.length?'9':'8')+'. Règles critiques\n\n'
    +'```\n'
    +'PDF/Editions  : Modal uniquement — jamais window.open()\n'
    +'CAC           : accessible UNIQUEMENT depuis /app/seances/[id] — pas de lien sidebar\n'
-   +'custom-routes : 2736 lignes, 87+ getDb(), 0 createConnection\n'
-   +'TSX           : via scripts Python (apostrophes FR, backticks)\n'
-   +'Docker        : cd deploy OBLIGATOIRE, COPIER_TOUTES_PAGES_v2.ps1 avant build frontend\n'
+   +'custom-routes : ~'+S.nb_routes*30+' lignes — utiliser getDb() uniquement\n'
+   +'TSX           : modifications via scripts Python (apostrophes FR, backticks)\n'
+   +'Docker        : cd deploy OBLIGATOIRE avant docker compose\n'
+   +'              COPIER_TOUTES_PAGES_v2.ps1 OBLIGATOIRE avant build frontend\n'
+   +'API rebuild   : build --no-cache PUIS up -d PUIS restart nginx\n'
+   +'Scripts Python : $env:USERPROFILE\\\\Downloads\\\\ (jamais dans OneDrive)\n'
+   +'SQL TypeScript : jamais de guillemets simples dans string TS déjà délimitée\n'
+   +'Prefix-match  : routes spécifiques avant routes génériques\n'
    +'```\n\n'
    +'---\n\n'
-   +'## 8. Commandes de redémarrage\n\n'
+   +'## '+(S.tables_bdd&&S.tables_bdd.length?'10':'9')+'. Commandes de redémarrage\n\n'
    +'```powershell\n'
+   +'# Vérification\n'
    +'docker ps\n'
    +'Invoke-RestMethod "http://localhost/api/bilan"\n\n'
    +'# Rebuild API\n'
-   +'cd "D:\\...\\deploy"\n'
+   +'cd "D:\\\\OneDrive_Perso\\\\OneDrive\\\\Documents\\\\Micro_Logiciel\\\\Documentation\\\\Frontend\\\\micro_logiciel_frontend_nextjs\\\\deploy"\n'
    +'docker compose build api --no-cache\n'
    +'docker compose up -d api\n'
    +'docker compose restart nginx\n\n'
    +'# Rebuild Frontend\n'
-   +'cd "D:\\...\\micro_logiciel_frontend_nextjs"\n'
-   +'.\\COPIER_TOUTES_PAGES_v2.ps1\n'
+   +'cd "D:\\\\OneDrive_Perso\\\\OneDrive\\\\Documents\\\\Micro_Logiciel\\\\Documentation\\\\Frontend\\\\micro_logiciel_frontend_nextjs"\n'
+   +'.\\\\COPIER_TOUTES_PAGES_v2.ps1\n'
    +'cd deploy\n'
    +'docker compose build frontend --no-cache\n'
    +'docker compose up -d frontend\n'
    +'docker compose restart nginx\n\n'
    +'# Sauvegarde manuelle\n'
-   +'PowerShell -ExecutionPolicy Bypass -File "G:\\Sauvegarde_micro_logiciel\\Sauvegarde_micro_logiciel.ps1"\n'
+   +'PowerShell -ExecutionPolicy Bypass -File "'+savScript+'"\n'
    +'```\n\n'
    +'---\n\n'
-   +'## 9. Prompt de démarrage '+nx+'\n\n'
+   +'## '+(S.tables_bdd&&S.tables_bdd.length?'11':'10')+'. Prompt de démarrage '+nx+'\n\n'
    +'```\n'
-   +'Reprendre handover '+sp+'.\n'
-   +'Lire section 1 (accompli) et section 5 (roadmap).\n'
-   +'Vérifier cohérence architecture (routes, services, pages).\n'
-   +'Proposer plan d\'action structuré pour '+nx+'.\n'
+   +'Reprendre handover '+sp+' FIN.\n'
+   +(S.ph&&S.ph.length ? 'PRIORITÉ ABSOLUE : '+S.ph[0]+'\n' : '')
+   +'Ensuite : suivre roadmap section 7 dans l\'ordre ROUGE > ORANGE > JAUNE.\n'
    +'Ne jamais patcher — intégrer proprement dans l\'architecture.\n'
-   +'Analyser arborescence.txt si disponible.\n'
+   +'Scripts Python dans $env:USERPROFILE\\\\Downloads\\\\ uniquement.\n'
    +'```\n\n'
    +'---\n'
-   +'*Anim\'Gest — NoSage\'s Editor — Handover '+sp+' — '+S.date+'*';
+   +'*Anim\'Gest — NoSage\'s Editor — Handover '+sp+' FIN — '+S.date+'*';
 
   document.getElementById('out-content').textContent = md;
   document.getElementById('out-zone').style.display = 'block';
@@ -638,26 +712,22 @@ function generate(){
   // Résumé scores + lien dashboard
   var dashUrl = 'SAV_Dashboard_Qualite.html'
     +'?sprint='+encodeURIComponent(sp)
-    +'&back='+S.sb
-    +'&front='+S.sf
-    +'&bdd='+S.sd
-    +'&routes='+S.nb_routes
-    +'&pages='+S.nb_pages
-    +'&jsdoc='+S.nb_jsdoc
-    +'&cols='+S.nb_cols;
+    +'&back='+S.sb+'&front='+S.sf+'&bdd='+S.sd
+    +'&routes='+S.nb_routes+'&pages='+S.nb_pages
+    +'&jsdoc='+S.nb_jsdoc+'&cols='+S.nb_cols;
 
   var scoreColor = function(v){ return v>=80?'#4caf82':v>=60?'#e8a84a':'#e05c5c'; };
 
   document.getElementById('scores-summary').innerHTML =
     '<div style="background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.28);border-radius:10px;padding:1rem 1.25rem;margin-top:1rem">'
-   +'<div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#4a6a82;margin-bottom:.75rem">Scores de ce sprint — à reporter dans le Dashboard</div>'
+   +'<div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#4a6a82;margin-bottom:.75rem">Scores '+sp+' — à reporter dans le Dashboard</div>'
    +'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1rem">'
    +'<div style="flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center"><div style="font-size:1.4rem;font-weight:700;font-family:serif;color:'+scoreColor(S.sb)+'">'+S.sb+'</div><div style="font-size:.65rem;color:#8fa3b8;margin-top:.2rem">Backend</div></div>'
    +'<div style="flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center"><div style="font-size:1.4rem;font-weight:700;font-family:serif;color:'+scoreColor(S.sf)+'">'+S.sf+'</div><div style="font-size:.65rem;color:#8fa3b8;margin-top:.2rem">Frontend</div></div>'
    +'<div style="flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center"><div style="font-size:1.4rem;font-weight:700;font-family:serif;color:'+scoreColor(S.sd)+'">'+S.sd+'</div><div style="font-size:.65rem;color:#8fa3b8;margin-top:.2rem">BDD</div></div>'
    +'<div style="flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center"><div style="font-size:1.4rem;font-weight:700;font-family:serif;color:'+scoreColor(glo())+'">'+glo()+'</div><div style="font-size:.65rem;color:#8fa3b8;margin-top:.2rem">Global</div></div>'
    +'</div>'
-   +'<a href="'+dashUrl+'" style="display:block;width:100%;padding:.7rem;background:#D4A843;color:#0D2137;border:none;border-radius:8px;font-size:.85rem;font-weight:700;text-align:center;text-decoration:none;cursor:pointer">📊 Ouvrir le Dashboard Qualité avec ces scores →</a>'
+   +'<a href="'+dashUrl+'" style="display:block;width:100%;padding:.7rem;background:#D4A843;color:#0D2137;border:none;border-radius:8px;font-size:.85rem;font-weight:700;text-align:center;text-decoration:none;cursor:pointer">Ouvrir le Dashboard Qualité avec ces scores →</a>'
    +'</div>';
   document.getElementById('scores-summary').style.display = 'block';
 }
