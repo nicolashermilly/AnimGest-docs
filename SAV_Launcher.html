@@ -1,630 +1,362 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<title>Launcher — Anim'Gest</title>
-<style>
-:root{
-  --navy:#0D2137;--navy-l:#112840;
-  --gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);
-  --text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;
-  --bdr:rgba(255,255,255,.08);
-  --ok:#4caf82;--warn:#e8a84a;--err:#e05c5c;--info:#5b9bd5;
-  --r:12px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Launcher — Anim'Gest SAV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#070F1A; --surface:#0D2137; --surface2:#122840; --surface3:#1a3550;
+      --gold:#D4A843; --gold-l:#e8c068; --gold-p:rgba(212,168,67,.1); --gold-b:rgba(212,168,67,.2);
+      --text:#F8F8F5; --muted:#7a8fa6; --border:rgba(255,255,255,.07);
+      --green:#3ecf8e; --red:#ef4444; --orange:#f59e0b; --blue:#60a5fa; --purple:#a78bfa;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+    .header{background:var(--surface);border-bottom:2px solid var(--gold-b);padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between}
+    .header-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold)}
+    .header-sub{color:var(--muted);font-size:.78rem}
+    .header-badge{background:var(--gold-p);border:1px solid var(--gold-b);color:var(--gold);font-size:.72rem;font-weight:600;padding:.3rem .8rem;border-radius:20px}
+    .main{max-width:1000px;margin:0 auto;padding:2rem 1.5rem}
 
-/* AUTH */
-#auth{display:flex;align-items:center;justify-content:center;min-height:100vh;
-  background:radial-gradient(ellipse at 30% 40%,rgba(212,168,67,.07) 0%,transparent 60%),var(--navy)}
-.auth-box{background:var(--navy-l);border:1px solid var(--gold-b);border-radius:18px;
-  padding:3rem 2.5rem;max-width:400px;width:100%;text-align:center}
-.auth-logo{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);margin-bottom:.2rem}
-.auth-tag{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2.5rem}
-.auth-input{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--gold-b);border-radius:9px;
-  padding:.8rem 1rem;color:var(--text);font-size:1.1rem;font-family:inherit;
-  text-align:center;letter-spacing:.3em;outline:none;margin-bottom:1rem;transition:border-color .2s}
-.auth-input:focus{border-color:var(--gold)}
-.auth-btn{width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:9px;
-  padding:.8rem;font-weight:700;cursor:pointer;font-family:inherit}
-.auth-err{color:var(--err);font-size:.78rem;margin-top:.6rem;min-height:1rem}
+    /* OUTILS PILOTAGE */
+    .section-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);border-bottom:1px solid var(--gold-b);padding-bottom:.5rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
+    .section{margin-bottom:2.5rem}
 
-/* APP */
-#app{display:none}
-nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:1rem 2rem;
-  display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100;flex-wrap:wrap}
-.nav-logo{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.15rem}
-.nav-logo small{font-family:'DM Sans',sans-serif;font-size:.72rem;color:var(--muted);margin-left:.6rem;font-weight:300}
-.nav-right{margin-left:auto;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
-.nav-btn{font-size:.75rem;color:var(--muted);text-decoration:none;padding:.3rem .8rem;
-  border:1px solid var(--bdr);border-radius:6px;transition:all .2s;background:none;cursor:pointer;font-family:inherit}
-.nav-btn:hover{border-color:var(--gold-b);color:var(--text)}
+    .tools-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:.5rem}
+    .tool-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;flex-direction:column;gap:.4rem;cursor:pointer;transition:all .2s;text-decoration:none}
+    .tool-card:hover{border-color:var(--gold-b);background:var(--surface2);transform:translateY(-1px)}
+    .tool-card.highlight{border-color:var(--gold-b);background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%)}
+    .tool-icon{font-size:1.6rem}
+    .tool-title{font-weight:600;color:var(--text);font-size:.85rem;line-height:1.3}
+    .tool-sub{color:var(--muted);font-size:.75rem;line-height:1.4}
+    .badge{display:inline-block;font-size:.65rem;font-weight:600;padding:.1rem .4rem;border-radius:3px}
+    .b-new{background:var(--gold);color:var(--bg)}
+    .b-red{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+    .b-orange{background:rgba(245,158,11,.1);color:var(--orange);border:1px solid rgba(245,158,11,.3)}
+    .b-blue{background:rgba(96,165,250,.1);color:var(--blue);border:1px solid rgba(96,165,250,.3)}
+    .b-green{background:rgba(60,207,142,.1);color:var(--green);border:1px solid rgba(60,207,142,.3)}
+    .b-gold{background:var(--gold-p);color:var(--gold);border:1px solid var(--gold-b)}
 
-/* SPRINT BAR */
-.sprint-bar{background:linear-gradient(135deg,var(--gold-p),rgba(212,168,67,.06));
-  border-bottom:1px solid var(--gold-b);padding:1.25rem 2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
-.sprint-bar-label{font-size:.78rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.sprint-input{background:rgba(0,0,0,.3);border:2px solid var(--gold-b);border-radius:10px;
-  padding:.5rem 1rem;color:var(--gold);font-size:1.1rem;font-weight:700;font-family:inherit;
-  outline:none;width:110px;text-align:center;transition:border-color .2s}
-.sprint-input:focus{border-color:var(--gold)}
-.sprint-note{font-size:.75rem;color:var(--dim)}
+    /* COMMANDES */
+    .cmd-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .cmd-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem}
+    .cmd-title{font-weight:600;color:var(--gold);font-size:.85rem;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem}
+    .cmd-block{background:#050d14;border:1px solid var(--border);border-radius:6px;padding:.75rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text);line-height:1.7;position:relative;margin-bottom:.5rem;cursor:pointer}
+    .cmd-block:hover{border-color:var(--gold-b)}
+    .cmd-comment{color:#5a8a5a}
+    .cmd-copy{position:absolute;top:.4rem;right:.5rem;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.15rem .4rem;font-size:.65rem;color:var(--muted);cursor:pointer;display:none}
+    .cmd-block:hover .cmd-copy{display:block}
+    .cmd-copy:hover{color:var(--gold)}
 
-/* MAIN WRAP */
-.wrap{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 6rem}
+    /* LIENS RAPIDES */
+    .links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+    .link-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.65rem 1rem;display:flex;align-items:center;gap:.6rem;text-decoration:none;transition:all .2s}
+    .link-card:hover{border-color:var(--gold-b);background:var(--surface2)}
+    .link-icon{font-size:1rem;flex-shrink:0}
+    .link-title{font-size:.82rem;font-weight:500;color:var(--text)}
+    .link-url{font-size:.7rem;color:var(--muted);font-family:'JetBrains Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* STEP CARD */
-.step-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);
-  margin-bottom:1.5rem;overflow:hidden}
-.step-card.step-launcher{border-color:var(--gold-b);background:var(--gold-p)}
+    /* CHEMINS */
+    .path-list{display:flex;flex-direction:column;gap:.4rem}
+    .path-item{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.5rem .9rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;cursor:pointer}
+    .path-item:hover{border-color:var(--gold-b)}
+    .path-lbl{font-size:.75rem;color:var(--muted);flex-shrink:0;width:130px}
+    .path-val{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .path-copy{font-size:.65rem;color:var(--muted);flex-shrink:0}
 
-.step-header{padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;cursor:pointer;
-  transition:background .2s;user-select:none}
-.step-header:hover{background:rgba(255,255,255,.03)}
-.step-card.step-launcher .step-header:hover{background:rgba(212,168,67,.08)}
+    .toast{position:fixed;bottom:2rem;right:2rem;background:var(--surface);border:1px solid var(--gold-b);border-radius:8px;padding:.8rem 1.2rem;font-size:.85rem;display:none;z-index:999}
+    .toast.show{display:block}
 
-.step-num{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-size:.9rem;font-weight:700;flex-shrink:0}
-.num-qual{background:rgba(91,155,213,.2);color:var(--info);border:1px solid rgba(91,155,213,.35)}
-.num-maint{background:rgba(232,168,74,.2);color:var(--warn);border:1px solid rgba(232,168,74,.35)}
-.num-patch{background:rgba(76,175,130,.2);color:var(--ok);border:1px solid rgba(76,175,130,.35)}
-.num-hand{background:var(--gold-p);color:var(--gold);border:1px solid var(--gold-b)}
-.num-dash{background:rgba(212,168,67,.15);color:var(--gold-l);border:1px solid var(--gold-b)}
-.num-git{background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--bdr)}
-
-.step-info{flex:1}
-.step-title{font-weight:600;font-size:1rem;color:var(--text);margin-bottom:.2rem}
-.step-card.step-launcher .step-title{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.05rem}
-.step-when{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;
-  display:inline-block;padding:.18rem .6rem;border-radius:10px}
-.when-qual{background:rgba(91,155,213,.12);color:var(--info)}
-.when-maint{background:rgba(232,168,74,.12);color:var(--warn)}
-.when-patch{background:rgba(255,255,255,.07);color:var(--muted)}
-.when-hand{background:var(--gold-p);color:var(--gold)}
-.when-git{background:rgba(255,255,255,.06);color:var(--muted)}
-
-.step-chevron{color:var(--dim);font-size:1rem;transition:transform .25s;flex-shrink:0}
-.step-card.open .step-chevron{transform:rotate(180deg)}
-
-/* STEP BODY */
-.step-body{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid var(--bdr)}
-.step-card.open .step-body{display:block}
-.step-card.step-launcher .step-body{border-top-color:var(--gold-b)}
-
-.step-desc{font-size:.82rem;color:var(--muted);margin:1rem 0 1.25rem;line-height:1.65}
-
-/* CMD TILES */
-.cmd-main{background:rgba(0,0,0,.35);border:1px solid var(--gold-b);border-radius:10px;
-  padding:1rem 1.25rem;margin-bottom:.75rem;cursor:pointer;transition:all .2s;
-  display:flex;align-items:center;gap:1rem;user-select:none}
-.cmd-main:hover{border-color:var(--gold);background:rgba(212,168,67,.1)}
-.cmd-main.copied{border-color:var(--ok);background:rgba(76,175,130,.08)}
-.cmd-main-icon{font-size:1.3rem;flex-shrink:0}
-.cmd-main-body{flex:1;min-width:0}
-.cmd-main-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:.3rem}
-.cmd-main-code{font-family:'Courier New',monospace;font-size:.82rem;color:var(--ok);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;white-space:pre-wrap;word-break:break-all}
-.cmd-main.copied .cmd-main-code{color:var(--ok)}
-.cmd-copy-badge{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:6px;
-  padding:.2rem .65rem;font-size:.68rem;font-weight:600;color:var(--gold);flex-shrink:0;white-space:nowrap}
-.cmd-main.copied .cmd-copy-badge{background:rgba(76,175,130,.15);border-color:rgba(76,175,130,.3);color:var(--ok)}
-
-.cmd-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.6rem}
-.cmd-tile{min-height:unset;height:auto;background:rgba(0,0,0,.25);border:1px solid var(--bdr);border-radius:8px;
-  padding:.85rem 1rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.75rem;user-select:none}
-.cmd-tile:hover{border-color:var(--gold-b);background:rgba(212,168,67,.06)}
-.cmd-tile.copied{border-color:var(--ok);background:rgba(76,175,130,.06)}
-.cmd-tile-icon{font-size:1rem;flex-shrink:0}
-.cmd-tile-body{flex:1;min-width:0}
-.cmd-tile-label{font-size:.68rem;font-weight:600;color:var(--dim);margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.06em}
-.cmd-tile-code{font-family:'Courier New',monospace;font-size:.75rem;color:var(--ok);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cmd-tile.copied .cmd-tile-code{color:var(--ok)}
-.tile-copy{font-size:.6rem;color:var(--gold);opacity:.5;flex-shrink:0}
-.cmd-tile:hover .tile-copy{opacity:1}
-.cmd-tile.copied .tile-copy{opacity:1;color:var(--ok)}
-
-/* LINK TILES */
-.link-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1rem}
-.link-tile{background:rgba(0,0,0,.2);border:1px solid var(--bdr);border-radius:10px;
-  padding:1rem 1.15rem;text-decoration:none;transition:all .2s;display:flex;align-items:center;gap:.85rem}
-.link-tile:hover{border-color:var(--gold-b);background:rgba(212,168,67,.06)}
-.link-tile-icon{font-size:1.4rem;flex-shrink:0}
-.link-tile-title{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.15rem}
-.link-tile-desc{font-size:.7rem;color:var(--muted)}
-.link-tile-arrow{margin-left:auto;color:var(--gold);opacity:.6;flex-shrink:0}
-
-/* OPEN ALL */
-.expand-all{background:transparent;border:1px solid var(--bdr);border-radius:8px;
-  padding:.5rem 1.1rem;font-size:.78rem;color:var(--muted);cursor:pointer;font-family:inherit;
-  margin-bottom:1.5rem;transition:all .2s}
-.expand-all:hover{border-color:var(--gold-b);color:var(--text)}
-
-/* FOOTER */
-footer{background:var(--navy-l);border-top:1px solid var(--gold-b);padding:1rem 2rem;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;
-  position:sticky;bottom:0;z-index:100}
-.f-left{font-size:.78rem;font-weight:600;color:var(--gold)}
-.f-links{display:flex;gap:.5rem;flex-wrap:wrap}
-.f-link{font-size:.72rem;color:var(--muted);text-decoration:none;padding:.28rem .7rem;
-  border:1px solid var(--bdr);border-radius:5px;transition:all .2s}
-.f-link:hover{border-color:var(--gold-b);color:var(--text)}
-
-@media(max-width:600px){
-  .cmd-row,.link-row{grid-template-columns:1fr}
-  .sprint-bar{gap:.75rem}
-}
-</style>
+    @media(max-width:768px){.tools-grid{grid-template-columns:repeat(2,1fr)}.cmd-grid{grid-template-columns:1fr}.links-grid{grid-template-columns:1fr 1fr}}
+  </style>
 </head>
 <body>
 
-<!-- AUTH -->
-<div id="auth">
-  <div class="auth-box">
-    <div class="auth-logo">Anim'Gest</div>
-    <div class="auth-tag">NoSage's Editor &middot; Launcher</div>
-    <input class="auth-input" type="password" id="pwd"
-      placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-      onkeydown="if(event.key==='Enter')login()" autofocus />
-    <button class="auth-btn" onclick="login()">Accéder &rarr;</button>
-    <div class="auth-err" id="auth-err"></div>
+<div class="header">
+  <div style="display:flex;align-items:center;gap:.8rem">
+    <span style="font-size:1.5rem">🚀</span>
+    <div>
+      <div class="header-title">Launcher — Fin de Sprint</div>
+      <div class="header-sub">Toutes les commandes Python + liens outils en une seule page — Sprint S61</div>
+    </div>
   </div>
+  <div class="header-badge">NoSage's Editor</div>
 </div>
 
-<!-- APP -->
-<div id="app">
+<div class="main">
 
-<nav>
-  <div class="nav-logo">Anim'Gest <small>Launcher — Fin de Sprint</small></div>
-  <div class="nav-right">
-    <a href="index.html" class="nav-btn">← Index</a>
-    <a href="SAV_Pilotage_Qualite.html" class="nav-btn">📐 Process complet</a>
-    <button class="nav-btn" onclick="logout()">Déconnexion</button>
+  <!-- ===== OUTILS DE PILOTAGE ===== -->
+  <div class="section">
+    <div class="section-title">🛠 Outils de pilotage (SAV)</div>
+    <!-- Ligne 1 : Pilotage + Launcher + Générateur Maintenance + Analyseur Dette -->
+    <div class="tools-grid">
+      <a class="tool-card highlight" href="SAV_Pilotage_Qualite.html">
+        <span class="tool-icon">📐</span>
+        <div class="tool-title">Pilotage Qualité</div>
+        <div class="tool-sub">Process fin de sprint — scores, checklist, objectifs S62</div>
+      </a>
+      <a class="tool-card highlight" href="SAV_Launcher.html">
+        <span class="tool-icon">🚀</span>
+        <div class="tool-title">Launcher — Fin de Sprint</div>
+        <div class="tool-sub">Toutes les commandes Python + liens outils en une seule page</div>
+      </a>
+      <a class="tool-card" href="SAV_Generator_Maintenance.html">
+        <span class="tool-icon">🔧</span>
+        <div class="tool-title">Générateur de Bilan Maintenance</div>
+        <div class="tool-sub">Saisir scores, métriques, points d'action → Dashboard</div>
+      </a>
+      <a class="tool-card" href="SAV_Analyseur_Dette_Technique.html" style="border-color:var(--gold-b)">
+        <span class="tool-icon">⚙️</span>
+        <div class="tool-title">Analyseur Dette Technique <span class="badge b-new">NEW</span></div>
+        <div class="tool-sub">Catalogue · Refactorisation interactive · Détecteur patterns</div>
+      </a>
+    </div>
+    <!-- Ligne 2 : Règles Métier + Générateur Handover + Dashboard Revue de Code (large) -->
+    <div class="tools-grid" style="margin-top:.8rem">
+      <a class="tool-card" href="SAV_Regles_Metier.html" style="border-color:var(--gold-b)">
+        <span class="tool-icon">📜</span>
+        <div class="tool-title">Référentiel Règles Métier <span class="badge b-new">NEW</span></div>
+        <div class="tool-sub">15 règles actives · Exemples OK/NOK · Export Handover</div>
+      </a>
+      <a class="tool-card" href="SAV_Generator_Handover.html">
+        <span class="tool-icon">📋</span>
+        <div class="tool-title">Générateur de Handover</div>
+        <div class="tool-sub">Fichier .md fin de sprint en 5 min — pré-rempli S61</div>
+      </a>
+      <a class="tool-card" href="SAV_Dashboard_Revue_Code.html" style="grid-column:span 2;border-color:var(--gold-b);background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%)">
+        <span class="tool-icon">🔍</span>
+        <div>
+          <div class="tool-title">Dashboard Revue de Code <span class="badge b-new">FUSION</span></div>
+          <div class="tool-sub">Qualité · Maintenance · Dette · Règles — un onglet par sprint · graphique évolution S54→S61</div>
+        </div>
+      </a>
+    </div>
+    <!-- Flux SAV recommandé -->
+    <div style="background:var(--surface);border:1px solid var(--gold-b);border-radius:10px;padding:.8rem 1.2rem;margin-top:.8rem">
+      <div style="font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.6rem">Flux SAV recommandé — fin de sprint</div>
+      <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.8rem;color:var(--text)">
+        <span style="background:var(--surface2);padding:.2rem .6rem;border-radius:4px">1. Analyseur Dette</span>
+        <span style="color:var(--muted)">→</span>
+        <span style="background:var(--surface2);padding:.2rem .6rem;border-radius:4px">2. Règles Métier</span>
+        <span style="color:var(--muted)">→</span>
+        <span style="background:var(--surface2);padding:.2rem .6rem;border-radius:4px">3. Générateur Maintenance</span>
+        <span style="color:var(--muted)">→</span>
+        <span style="background:var(--surface2);padding:.2rem .6rem;border-radius:4px">4. Générateur Handover</span>
+        <span style="color:var(--muted)">→</span>
+        <span style="background:var(--gold-p);color:var(--gold);padding:.2rem .6rem;border-radius:4px;border:1px solid var(--gold-b)">5. Dashboard Revue de Code</span>
+        <span style="color:var(--muted)">→</span>
+        <span style="background:var(--gold-p);color:var(--gold);padding:.2rem .6rem;border-radius:4px;border:1px solid var(--gold-b)">6. Pilotage Qualité</span>
+      </div>
+    </div>
   </div>
-</nav>
 
-<!-- SPRINT BAR -->
-<div class="sprint-bar">
-  <span class="sprint-bar-label">Sprint en cours</span>
-  <input class="sprint-input" type="text" id="sprint-val" value="S59"
-    oninput="updateSprint(this.value)" />
-  <span class="sprint-note">Modifier le numéro met à jour toutes les commandes</span>
+  <!-- ===== COMMANDES DOCKER ===== -->
+  <div class="section">
+    <div class="section-title">🐳 Commandes Docker</div>
+    <div class="cmd-grid">
+      <div class="cmd-card">
+        <div class="cmd-title">⚡ Rebuild API</div>
+        <div class="cmd-block" onclick="copierCmd(this)">
+          <span class="cmd-copy">copier</span>
+          <span class="cmd-comment"># Depuis le dossier deploy</span><br>
+          cd "D:\...\micro_logiciel_frontend_nextjs\deploy"<br>
+          docker compose build api --no-cache<br>
+          docker compose up -d api<br>
+          docker compose restart nginx
+        </div>
+        <div class="cmd-block" onclick="copierCmd(this)">
+          <span class="cmd-copy">copier</span>
+          <span class="cmd-comment"># Si --no-cache insuffisant</span><br>
+          docker builder prune --force<br>
+          docker compose build api --no-cache<br>
+          docker compose up -d api<br>
+          docker compose restart nginx
+        </div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-title">🖥 Rebuild Frontend</div>
+        <div class="cmd-block" onclick="copierCmd(this)">
+          <span class="cmd-copy">copier</span>
+          <span class="cmd-comment"># 1. Script OBLIGATOIRE depuis racine</span><br>
+          cd "D:\...\micro_logiciel_frontend_nextjs"<br>
+          .\COPIER_TOUTES_PAGES_v2.ps1<br>
+          <span class="cmd-comment"># Vérifier : "transferring context: ~1MB"</span><br>
+          cd deploy<br>
+          docker compose build frontend --no-cache<br>
+          docker compose up -d frontend<br>
+          docker compose restart nginx
+        </div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-title">🔍 Vérification</div>
+        <div class="cmd-block" onclick="copierCmd(this)">
+          <span class="cmd-copy">copier</span>
+          docker ps<br>
+          Invoke-RestMethod "http://localhost/api/bilan"<br>
+          <span class="cmd-comment"># Test route spécifique</span><br>
+          Invoke-RestMethod "http://localhost/api/seances"
+        </div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-title">💾 Sauvegarde</div>
+        <div class="cmd-block" onclick="copierCmd(this)">
+          <span class="cmd-copy">copier</span>
+          PowerShell -ExecutionPolicy Bypass -File "C:\AnimGest_Sav\Sauvegarde_micro_logiciel.ps1"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== COMMANDES GIT ===== -->
+  <div class="section">
+    <div class="section-title">📦 Commandes Git</div>
+    <div class="cmd-grid">
+      <div class="cmd-card">
+        <div class="cmd-title">📂 Code source — micro_logiciel</div>
+        <div class="cmd-block" onclick="copierCmd(this)">
+          <span class="cmd-copy">copier</span>
+          cd "D:\...\micro_logiciel_frontend_nextjs"<br>
+          git add -A<br>
+          git commit -m "feat: description S61"<br>
+          git push
+        </div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-title">📚 Docs — petsuite-docs</div>
+        <div class="cmd-block" onclick="copierCmd(this)">
+          <span class="cmd-copy">copier</span>
+          cd "C:\AnimGest_Repo_Git\petsuite-docs"<br>
+          git pull --rebase<br>
+          <span class="cmd-comment"># TOUJOURS avant push</span><br>
+          git add -A<br>
+          git commit -m "doc: description S61"<br>
+          git push
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== COMMANDES PYTHON ===== -->
+  <div class="section">
+    <div class="section-title">🐍 Scripts Python utiles</div>
+    <div class="cmd-grid">
+      <div class="cmd-card">
+        <div class="cmd-title">🔍 Inspection custom-routes.ts</div>
+        <div class="cmd-block" onclick="copierCmd(this)">
+          <span class="cmd-copy">copier</span>
+          <span class="cmd-comment"># Toujours dans Downloads</span><br>
+          C:\Python314\python.exe "$env:USERPROFILE\Downloads\mon_script.py"
+        </div>
+        <div class="cmd-block" onclick="copierCmd(this)">
+          <span class="cmd-copy">copier</span>
+          <span class="cmd-comment"># Compter les createConnection restants</span><br>
+          python -c "f=open('api/src/custom-routes.ts');c=f.read();print(c.count('createConnection'),'occurrences')"
+        </div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-title">📄 Harmonisation docs HTML</div>
+        <div class="cmd-block" onclick="copierCmd(this)">
+          <span class="cmd-copy">copier</span>
+          <span class="cmd-comment"># Appliquer charte sur toutes les pages</span><br>
+          C:\Python314\python.exe "$env:USERPROFILE\Downloads\harmoniser_charte.py"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LIENS RAPIDES ===== -->
+  <div class="section">
+    <div class="section-title">🔗 Liens rapides</div>
+    <div class="links-grid">
+      <a class="link-card" href="http://localhost/app/" target="_blank">
+        <span class="link-icon">🖥</span>
+        <div><div class="link-title">Application locale</div><div class="link-url">localhost/app/</div></div>
+      </a>
+      <a class="link-card" href="http://localhost/api/bilan" target="_blank">
+        <span class="link-icon">📡</span>
+        <div><div class="link-title">API bilan</div><div class="link-url">localhost/api/bilan</div></div>
+      </a>
+      <a class="link-card" href="https://nicolashermilly.github.io/petsuite-docs/" target="_blank">
+        <span class="link-icon">📚</span>
+        <div><div class="link-title">GitHub Pages docs</div><div class="link-url">nicolashermilly.github.io/petsuite-docs/</div></div>
+      </a>
+      <a class="link-card" href="https://github.com/nicolashermilly/petsuite-docs" target="_blank">
+        <span class="link-icon">🐙</span>
+        <div><div class="link-title">Repo petsuite-docs</div><div class="link-url">github.com/nicolashermilly/petsuite-docs</div></div>
+      </a>
+      <a class="link-card" href="https://github.com/nicolashermilly/micro_logiciel" target="_blank">
+        <span class="link-icon">🐙</span>
+        <div><div class="link-title">Repo micro_logiciel</div><div class="link-url">github.com/nicolashermilly/micro_logiciel</div></div>
+      </a>
+      <a class="link-card" href="https://nicolashermilly.github.io/petsuite-docs/57-module-portail-client.html" target="_blank">
+        <span class="link-icon">🌐</span>
+        <div><div class="link-title">Portail Client v2 doc</div><div class="link-url">57-module-portail-client.html</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ===== CHEMINS ESSENTIELS ===== -->
+  <div class="section">
+    <div class="section-title">📁 Chemins essentiels</div>
+    <div class="path-list">
+      <div class="path-item" onclick="copierPath(this)">
+        <span class="path-lbl">Frontend racine</span>
+        <span class="path-val">D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs</span>
+        <span class="path-copy">copier</span>
+      </div>
+      <div class="path-item" onclick="copierPath(this)">
+        <span class="path-lbl">Deploy dir</span>
+        <span class="path-val">...\micro_logiciel_frontend_nextjs\deploy</span>
+        <span class="path-copy">copier</span>
+      </div>
+      <div class="path-item" onclick="copierPath(this)">
+        <span class="path-lbl">API source</span>
+        <span class="path-val">...\api\src\custom-routes.ts</span>
+        <span class="path-copy">copier</span>
+      </div>
+      <div class="path-item" onclick="copierPath(this)">
+        <span class="path-lbl">Docs local</span>
+        <span class="path-val">C:\AnimGest_Repo_Git\petsuite-docs</span>
+        <span class="path-copy">copier</span>
+      </div>
+      <div class="path-item" onclick="copierPath(this)">
+        <span class="path-lbl">Scripts Python</span>
+        <span class="path-val">$env:USERPROFILE\Downloads\</span>
+        <span class="path-copy">copier</span>
+      </div>
+      <div class="path-item" onclick="copierPath(this)">
+        <span class="path-lbl">Backup propre</span>
+        <span class="path-val">C:\AnimGest_Sav\ (nightly)</span>
+        <span class="path-copy">copier</span>
+      </div>
+      <div class="path-item" onclick="copierPath(this)">
+        <span class="path-lbl">BDD MariaDB</span>
+        <span class="path-val">192.168.1.62:3307 — micro_logiciel — user: optimbtp</span>
+        <span class="path-copy">copier</span>
+      </div>
+    </div>
+  </div>
+
 </div>
-
-<div class="wrap">
-
-  <button class="expand-all" onclick="toggleAll()">▼ Tout ouvrir</button>
-
-  <!-- ═══ ÉTAPE 1 — QUALITÉ ═══ -->
-  <div class="step-card" id="step1">
-    <div class="step-header" onclick="toggle('step1')">
-      <div class="step-num num-qual">1</div>
-      <div class="step-info">
-        <div class="step-title">Lancer l'analyse qualité</div>
-        <span class="step-when when-qual">5 min avant la fin</span>
-      </div>
-      <span class="step-chevron">▼</span>
-    </div>
-    <div class="step-body">
-      <div class="step-desc">Exécuter depuis le dossier racine du projet. Lecture seule — détecte catch vides, backticks SQL, window.open(), fmtDate locaux, colonnes BDD non commentées.</div>
-
-      <div class="cmd-main" onclick="copyCmd(this,'qual-full')">
-        <span class="cmd-main-icon">🐍</span>
-        <div class="cmd-main-body">
-          <div class="cmd-main-label">Analyse complète — recommandé</div>
-          <div class="cmd-main-code" id="qual-full">python animgest_quality.py --sprint S59</div>
-        </div>
-        <span class="cmd-copy-badge">Copier</span>
-      </div>
-
-      <div class="cmd-row">
-        <div class="cmd-tile" onclick="copyCmd(this,'qual-back')">
-          <span class="cmd-tile-icon">⚙️</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">Backend</div>
-            <div class="cmd-tile-code" id="qual-back">python animgest_quality.py --backend</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-        <div class="cmd-tile" onclick="copyCmd(this,'qual-front')">
-          <span class="cmd-tile-icon">🖥️</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">Frontend</div>
-            <div class="cmd-tile-code" id="qual-front">python animgest_quality.py --frontend</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-        <div class="cmd-tile" onclick="copyCmd(this,'qual-bdd')">
-          <span class="cmd-tile-icon">🗄️</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">BDD uniquement</div>
-            <div class="cmd-tile-code" id="qual-bdd">python animgest_quality.py --bdd</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-        <div class="cmd-tile" onclick="copyCmd(this,'cmd-cd')">
-          <span class="cmd-tile-icon">📁</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">Se placer dans le dossier</div>
-            <div class="cmd-tile-code" id="cmd-cd">cd "D:\...\micro_logiciel_frontend_nextjs"</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ ÉTAPE 2 — MAINTENANCE ═══ -->
-  <div class="step-card" id="step2">
-    <div class="step-header" onclick="toggle('step2')">
-      <div class="step-num num-maint">2</div>
-      <div class="step-info">
-        <div class="step-title">Lancer le diagnostic maintenance</div>
-        <span class="step-when when-maint">5 min — fin de sprint</span>
-      </div>
-      <span class="step-chevron">▼</span>
-    </div>
-    <div class="step-body">
-      <div class="step-desc">Vérifie les conteneurs Docker, les routes API critiques, les fichiers .bak et les credentials exposés. Génère maintenance_report.json.</div>
-
-      <div class="cmd-main" onclick="copyCmd(this,'maint-full')">
-        <span class="cmd-main-icon">🐍</span>
-        <div class="cmd-main-body">
-          <div class="cmd-main-label">Diagnostic complet — recommandé</div>
-          <div class="cmd-main-code" id="maint-full">python animgest_maintenance.py --sprint S59</div>
-        </div>
-        <span class="cmd-copy-badge">Copier</span>
-      </div>
-
-      <div class="cmd-row">
-        <div class="cmd-tile" onclick="copyCmd(this,'maint-infra')">
-          <span class="cmd-tile-icon">🐳</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">Infrastructure</div>
-            <div class="cmd-tile-code" id="maint-infra">python animgest_maintenance.py --infra</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-        <div class="cmd-tile" onclick="copyCmd(this,'maint-api')">
-          <span class="cmd-tile-icon">🔌</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">Routes API</div>
-            <div class="cmd-tile-code" id="maint-api">python animgest_maintenance.py --api</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-        <div class="cmd-tile" onclick="copyCmd(this,'maint-dette')">
-          <span class="cmd-tile-icon">🗂️</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">Dette technique</div>
-            <div class="cmd-tile-code" id="maint-dette">python animgest_maintenance.py --dette</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-        <div class="cmd-tile" onclick="copyCmd(this,'maint-secu')">
-          <span class="cmd-tile-icon">🔒</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">Sécurité</div>
-            <div class="cmd-tile-code" id="maint-secu">python animgest_maintenance.py --securite</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ ÉTAPE 3 — PATCHES ═══ -->
-  <div class="step-card" id="step3">
-    <div class="step-header" onclick="toggle('step3')">
-      <div class="step-num num-patch">3</div>
-      <div class="step-info">
-        <div class="step-title">Appliquer les patches qualité validés</div>
-        <span class="step-when when-patch">Optionnel — patches non-risqués</span>
-      </div>
-      <span class="step-chevron">▼</span>
-    </div>
-    <div class="step-body">
-      <div class="step-desc">Mode interactif — chaque patch est présenté avec son niveau de risque. Tu valides ou refuses individuellement. Backup automatique avant toute modification.</div>
-
-      <div class="cmd-main" onclick="copyCmd(this,'patch-full')">
-        <span class="cmd-main-icon">🐍</span>
-        <div class="cmd-main-body">
-          <div class="cmd-main-label">Mode interactif — valider patch par patch</div>
-          <div class="cmd-main-code" id="patch-full">python animgest_quality.py --apply --sprint S59</div>
-        </div>
-        <span class="cmd-copy-badge">Copier</span>
-      </div>
-
-      <div class="cmd-row">
-        <div class="cmd-tile" onclick="copyCmd(this,'patch-jsdoc')">
-          <span class="cmd-tile-icon">📝</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">JSDoc auto (risque nul)</div>
-            <div class="cmd-tile-code" id="patch-jsdoc">python animgest_quality.py --apply --frontend</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-        <div class="cmd-tile" onclick="copyCmd(this,'patch-docker')">
-          <span class="cmd-tile-icon">🐳</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">Nettoyage cache Docker</div>
-            <div class="cmd-tile-code" id="patch-docker">docker builder prune --force</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ ÉTAPE 4 — HANDOVER ═══ -->
-  <div class="step-card" id="step4">
-    <div class="step-header" onclick="toggle('step4')">
-      <div class="step-num num-hand">4</div>
-      <div class="step-info">
-        <div class="step-title">Remplir les générateurs</div>
-        <span class="step-when when-hand">5-10 min — obligatoire</span>
-      </div>
-      <span class="step-chevron">▼</span>
-    </div>
-    <div class="step-body">
-      <div class="step-desc">Le Générateur Handover produit le .md de fin de sprint et ouvre automatiquement le Dashboard Qualité pré-rempli. Le Générateur Maintenance alimente le Dashboard Maintenance.</div>
-      <div class="link-row">
-        <a href="SAV_Generator_Maintenance.html" class="link-tile">
-          <span class="link-tile-icon">🛠️</span>
-          <div>
-            <div class="link-tile-title">Générateur Maintenance</div>
-            <div class="link-tile-desc">Scores + métriques → Dashboard Maintenance</div>
-          </div>
-          <span class="link-tile-arrow">→</span>
-        </a>
-        <a href="SAV_Generator_Handover.html" class="link-tile">
-          <span class="link-tile-icon">📋</span>
-          <div>
-            <div class="link-tile-title">Générateur Handover</div>
-            <div class="link-tile-desc">7 onglets → .md + scores → Dashboard Qualité</div>
-          </div>
-          <span class="link-tile-arrow">→</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ ÉTAPE 5 — DASHBOARDS ═══ -->
-  <div class="step-card" id="step5">
-    <div class="step-header" onclick="toggle('step5')">
-      <div class="step-num num-dash">5</div>
-      <div class="step-info">
-        <div class="step-title">Vérifier les dashboards et la revue de code</div>
-        <span class="step-when when-hand">2 min</span>
-      </div>
-      <span class="step-chevron">▼</span>
-    </div>
-    <div class="step-body">
-      <div class="step-desc">La Revue de Code importe automatiquement les données du sprint en cours depuis les dashboards dès l'ouverture de la page.</div>
-      <div class="link-row">
-        <a href="SAV_Dashboard_Qualite.html" class="link-tile">
-          <span class="link-tile-icon">📊</span>
-          <div>
-            <div class="link-tile-title">Dashboard Qualité</div>
-            <div class="link-tile-desc">Scores Backend / Frontend / BDD</div>
-          </div>
-          <span class="link-tile-arrow">→</span>
-        </a>
-        <a href="SAV_Dashboard_Maintenance.html" class="link-tile">
-          <span class="link-tile-icon">🔧</span>
-          <div>
-            <div class="link-tile-title">Dashboard Maintenance</div>
-            <div class="link-tile-desc">Infra, API, Dette, Sécurité</div>
-          </div>
-          <span class="link-tile-arrow">→</span>
-        </a>
-        <a href="suivi-revue-code.html" class="link-tile" style="grid-column:1/-1">
-          <span class="link-tile-icon">🔍</span>
-          <div>
-            <div class="link-tile-title">Suivi Revue de Code</div>
-            <div class="link-tile-desc">Qualité + maintenance par sprint — import automatique depuis les dashboards</div>
-          </div>
-          <span class="link-tile-arrow">→</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ ÉTAPE 6 — GIT + SAUVEGARDE ═══ -->
-  <div class="step-card" id="step6">
-    <div class="step-header" onclick="toggle('step6')">
-      <div class="step-num num-git">6</div>
-      <div class="step-info">
-        <div class="step-title">Git push docs + Sauvegarde manuelle</div>
-        <span class="step-when when-git">3 min — fin de session</span>
-      </div>
-      <span class="step-chevron">▼</span>
-    </div>
-    <div class="step-body">
-      <div class="cmd-main" onclick="copyCmd(this,'cmd-git')">
-        <span class="cmd-main-icon">📤</span>
-        <div class="cmd-main-body">
-          <div class="cmd-main-label">Push GitHub Pages docs</div>
-          <div class="cmd-main-code" id="cmd-git">cd C:\AnimGest_Sav &amp;&amp; git add -A &amp;&amp; git commit -m "docs: handover <span class=\"dyn-sprint\">S59</span>" &amp;&amp; git pull --rebase &amp;&amp; git push</div>
-        </div>
-        <span class="cmd-copy-badge">Copier</span>
-      </div>
-
-      <div class="cmd-main" onclick="copyCmd(this,'cmd-save')">
-        <span class="cmd-main-icon">💾</span>
-        <div class="cmd-main-body">
-          <div class="cmd-main-label">Sauvegarde manuelle v7</div>
-          <div class="cmd-main-code" id="cmd-save">PowerShell -ExecutionPolicy Bypass -File "G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1"</div>
-        </div>
-        <span class="cmd-copy-badge">Copier</span>
-      </div>
-
-      <div class="cmd-row">
-        <div class="cmd-tile" onclick="copyCmd(this,'cmd-tree')">
-          <span class="cmd-tile-icon">🌳</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">Générer arborescence</div>
-            <div class="cmd-tile-code" id="cmd-tree">tree "D:\...\micro_logiciel_frontend_nextjs" /F > arborescence.txt</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-        <div class="cmd-tile" onclick="copyCmd(this,'cmd-docker-ps')">
-          <span class="cmd-tile-icon">🐳</span>
-          <div class="cmd-tile-body">
-            <div class="cmd-tile-label">Vérifier les conteneurs</div>
-            <div class="cmd-tile-code" id="cmd-docker-ps">docker ps</div>
-          </div>
-          <span class="tile-copy">Copier</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div><!-- end .wrap -->
-
-<footer>
-  <a href="index.html" class="f-left">← Index documentation</a>
-  <div class="f-links">
-    <a href="SAV_Pilotage_Qualite.html" class="f-link">📐 Process</a>
-    <a href="SAV_Generator_Handover.html" class="f-link">📋 Handover</a>
-    <a href="SAV_Dashboard_Qualite.html" class="f-link">📊 Qualité</a>
-    <a href="SAV_Dashboard_Maintenance.html" class="f-link">🔧 Maintenance</a>
-    <a href="suivi-revue-code.html" class="f-link">🔍 Revue de Code</a>
-  </div>
-</footer>
-
-</div><!-- end #app -->
+<div class="toast" id="toast"></div>
 
 <script>
-var SECRET = '@lgoritHme+977_73300';
-var ROOT = 'D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs';
-
-function login(){
-  var v=document.getElementById('pwd').value;
-  if(v===SECRET){
-    sessionStorage.setItem('ag_launch','1');
-    document.getElementById('auth').style.display='none';
-    document.getElementById('app').style.display='block';
-    initSprint();
-  } else {
-    var el=document.getElementById('auth-err');
-    el.textContent='Mot de passe incorrect';
-    document.getElementById('pwd').value='';
-    setTimeout(function(){el.textContent='';},3000);
-  }
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 1800);
 }
-function logout(){ sessionStorage.removeItem('ag_launch'); location.reload(); }
-window.addEventListener('DOMContentLoaded',function(){
-  if(sessionStorage.getItem('ag_launch')==='1'){
-    document.getElementById('auth').style.display='none';
-    document.getElementById('app').style.display='block';
-    initSprint();
-  }
-});
-
-/* ══ SPRINT ══ */
-var CMDS = {
-  'qual-full':   function(sp){ return 'cd "'+ROOT+'" && python animgest_quality.py --sprint '+sp; },
-  'qual-back':   function(sp){ return 'cd "'+ROOT+'" && python animgest_quality.py --backend --sprint '+sp; },
-  'qual-front':  function(sp){ return 'cd "'+ROOT+'" && python animgest_quality.py --frontend --sprint '+sp; },
-  'qual-bdd':    function(sp){ return 'cd "'+ROOT+'" && python animgest_quality.py --bdd --sprint '+sp; },
-  'cmd-cd':      function(){   return 'cd "'+ROOT+'"'; },
-  'maint-full':  function(sp){ return 'cd "'+ROOT+'" && python animgest_maintenance.py --sprint '+sp; },
-  'maint-infra': function(sp){ return 'cd "'+ROOT+'" && python animgest_maintenance.py --infra --sprint '+sp; },
-  'maint-api':   function(sp){ return 'cd "'+ROOT+'" && python animgest_maintenance.py --api --sprint '+sp; },
-  'maint-dette': function(sp){ return 'cd "'+ROOT+'" && python animgest_maintenance.py --dette --sprint '+sp; },
-  'maint-secu':  function(sp){ return 'cd "'+ROOT+'" && python animgest_maintenance.py --securite --sprint '+sp; },
-  'patch-full':  function(sp){ return 'cd "'+ROOT+'" && python animgest_quality.py --apply --sprint '+sp; },
-  'patch-jsdoc': function(sp){ return 'cd "'+ROOT+'" && python animgest_quality.py --apply --frontend --sprint '+sp; },
-  'patch-docker':function(){   return 'docker builder prune --force'; },
-  'cmd-git':     function(sp){ return 'cd C:\\AnimGest_Sav && git add -A && git commit -m "docs: handover '+sp+'" && git pull --rebase && git push'; },
-  'cmd-save':    function(){   return 'PowerShell -ExecutionPolicy Bypass -File "G:\\Sauvegarde_micro_logiciel\\Sauvegarde_micro_logiciel.ps1"'; },
-  'cmd-tree':    function(){   return 'tree "'+ROOT+'" /F > "D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\arborescence.txt"'; },
-  'cmd-docker-ps':function(){  return 'docker ps'; }
-};
-
-function initSprint(){
-  try{
-    var d=localStorage.getItem('ag_hov');
-    if(d){ var sp=JSON.parse(d).sprint; if(sp){ document.getElementById('sprint-val').value=sp; updateSprint(sp); return; } }
-  }catch(e){}
-  updateSprint('S59');
+function copierCmd(el) {
+  var txt = el.innerText.replace(/copier\n?/, '').trim();
+  navigator.clipboard.writeText(txt).then(function() { toast('Commande copiée'); });
 }
-
-function updateSprint(val){
-  val=(val||'S59').trim();
-  Object.keys(CMDS).forEach(function(id){
-    var el=document.getElementById(id);
-    if(el){
-      var cmd=CMDS[id](val);
-      // Affichage court pour les tuiles
-      el.textContent=cmd.split('&&').pop().trim();
-      // Stocker la commande complète en data
-      el.setAttribute('data-full',cmd);
-    }
-  });
+function copierPath(el) {
+  var txt = el.querySelector('.path-val').textContent.trim();
+  navigator.clipboard.writeText(txt).then(function() { toast('Chemin copié'); });
 }
-
-function copyCmd(card, id){
-  var el=document.getElementById(id);
-  if(!el) return;
-  var sp=document.getElementById('sprint-val').value.trim()||'S59';
-  var text=CMDS[id]?CMDS[id](sp):(el.getAttribute('data-full')||el.textContent);
-  text=text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
-  function doFeedback(){
-    card.classList.add('copied');
-    var badge=card.querySelector('.cmd-copy-badge,.tile-copy');
-    if(badge){badge.textContent='Copié ✓';}
-    setTimeout(function(){
-      card.classList.remove('copied');
-      if(badge){badge.textContent='Copier';}
-    },2000);
-  }
-  if(navigator.clipboard&&window.isSecureContext){
-    navigator.clipboard.writeText(text).then(doFeedback).catch(function(){
-      var ta=document.createElement('textarea');
-      ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
-      document.body.appendChild(ta);ta.select();
-      document.execCommand('copy');document.body.removeChild(ta);
-      doFeedback();
-    });
-  } else {
-    var ta=document.createElement('textarea');
-    ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
-    document.body.appendChild(ta);ta.select();
-    document.execCommand('copy');document.body.removeChild(ta);
-    doFeedback();
-  }
-}
-
-/* ══ ACCORDION ══ */
-function toggle(id){
-  var card=document.getElementById(id);
-  card.classList.toggle('open');
-}
-
-var allOpen=false;
-function toggleAll(){
-  allOpen=!allOpen;
-  document.querySelectorAll('.step-card').forEach(function(c){
-    if(allOpen) c.classList.add('open');
-    else c.classList.remove('open');
-  });
-  document.querySelector('.expand-all').textContent=allOpen?'▲ Tout fermer':'▼ Tout ouvrir';
-}
-
-// Ouvrir les étapes 1 et 2 par défaut
-window.addEventListener('DOMContentLoaded',function(){
-  setTimeout(function(){
-    if(sessionStorage.getItem('ag_launch')==='1'){
-      document.getElementById('step1').classList.add('open');
-      document.getElementById('step2').classList.add('open');
-    }
-  },100);
-});
 </script>
 </body>
 </html>

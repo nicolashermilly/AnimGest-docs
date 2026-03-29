@@ -1,633 +1,430 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<title>Pilotage Qualité — Anim'Gest</title>
-<style>
-:root{--navy:#0D2137;--navy-l:#112840;--navy-m:#1a3a5c;--gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);--text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;--bdr:rgba(255,255,255,.08);--ok:#4caf82;--warn:#e8a84a;--err:#e05c5c;--info:#5b9bd5;--r:10px;}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
-a{color:var(--gold);text-decoration:none}
-a:hover{opacity:.8}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pilotage Qualité — Anim'Gest SAV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#070F1A; --surface:#0D2137; --surface2:#122840; --surface3:#1a3550;
+      --gold:#D4A843; --gold-l:#e8c068; --gold-p:rgba(212,168,67,.1); --gold-b:rgba(212,168,67,.2);
+      --text:#F8F8F5; --muted:#7a8fa6; --border:rgba(255,255,255,.07);
+      --green:#3ecf8e; --red:#ef4444; --orange:#f59e0b; --blue:#60a5fa; --purple:#a78bfa;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+    .header{background:var(--surface);border-bottom:2px solid var(--gold-b);padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between}
+    .header-brand{display:flex;align-items:center;gap:.8rem}
+    .header-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold)}
+    .header-sub{color:var(--muted);font-size:.78rem}
+    .header-badge{background:var(--gold-p);border:1px solid var(--gold-b);color:var(--gold);font-size:.72rem;font-weight:600;padding:.3rem .8rem;border-radius:20px}
+    .main{max-width:900px;margin:0 auto;padding:2rem 1.5rem}
 
-nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
-.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold)}
-.nav-back{font-size:.75rem;color:var(--muted);margin-left:.5rem}
-.nav-back:hover{color:var(--gold)}
-.nav-right{margin-left:auto;font-size:.7rem;color:var(--dim)}
+    /* SECTION */
+    .section{margin-bottom:2.5rem}
+    .section-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);border-bottom:1px solid var(--gold-b);padding-bottom:.5rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
+    .sec-icon{font-size:1.1rem}
 
-.hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:2.5rem 2rem 2rem;border-bottom:1px solid var(--gold-b)}
-.hero-eye{font-size:.68rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2.4rem);margin-bottom:.5rem;line-height:1.1}
-.hero h1 em{color:var(--gold);font-style:normal}
-.hero p{font-size:.85rem;color:var(--muted);max-width:680px}
+    /* SPRINT SELECTOR */
+    .sprint-bar{background:var(--surface);border:1px solid var(--gold-b);border-radius:10px;padding:1rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+    .sprint-label{color:var(--muted);font-size:.85rem;font-weight:500}
+    .sprint-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:.4rem .8rem;color:var(--text);font-size:.88rem;outline:none;font-weight:600;width:80px}
+    .sprint-input:focus{border-color:var(--gold-b)}
 
-.wrap{max-width:1100px;margin:0 auto;padding:2rem 2rem 5rem}
-.sec-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.6rem;border-bottom:1px solid var(--gold-b)}
+    /* SCORE GRID */
+    .score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+    .score-card{background:var(--surface);border:1px solid var(--gold-b);border-radius:10px;padding:1rem;text-align:center}
+    .score-lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+    .score-val{font-size:2.2rem;font-weight:700;font-family:'Playfair Display',serif;display:block;margin-bottom:.3rem}
+    .score-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:.35rem;color:var(--text);font-size:1.1rem;font-weight:700;width:70px;text-align:center;outline:none}
+    .score-input:focus{border-color:var(--gold-b)}
+    .progress-bar{background:var(--surface3);border-radius:4px;height:6px;margin-top:.4rem}
+    .progress-fill{height:6px;border-radius:4px;transition:width .5s}
 
-/* OUTILS CARDS */
-.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:2rem}
-.tool-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1.4rem;display:flex;flex-direction:column;gap:.75rem}
-.tool-card.highlight{border-color:var(--gold-b);background:var(--gold-p)}
-.tool-header{display:flex;align-items:center;gap:10px}
-.tool-icon{font-size:1.5rem;flex-shrink:0}
-.tool-name{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--gold)}
-.tool-type{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.18rem .55rem;border-radius:4px;margin-left:auto;flex-shrink:0}
-.type-py{background:rgba(91,155,213,.15);color:var(--info)}
-.type-html{background:var(--gold-p);color:var(--gold)}
-.tool-desc{font-size:.8rem;color:var(--muted);line-height:1.55}
-.tool-loc{background:rgba(0,0,0,.3);border:1px solid var(--bdr);border-radius:6px;padding:.6rem .85rem}
-.tool-loc-label{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:.3rem}
-.tool-loc-path{font-family:'Courier New',monospace;font-size:.72rem;color:var(--gold-l);word-break:break-all;line-height:1.5}
-.tool-actions{display:flex;flex-direction:column;gap:5px;margin-top:.25rem}
-.cmd{font-family:'Courier New',monospace;font-size:.7rem;background:rgba(0,0,0,.3);border:1px solid var(--bdr);border-radius:5px;padding:.4rem .7rem;color:var(--ok)}
-.tool-link{display:inline-flex;align-items:center;gap:5px;font-size:.75rem;font-weight:600;color:var(--gold);margin-top:.25rem}
+    /* CHECKLIST */
+    .checklist{display:flex;flex-direction:column;gap:.5rem}
+    .check-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;display:flex;align-items:flex-start;gap:.8rem;cursor:pointer;transition:background .15s}
+    .check-item:hover{background:var(--surface2)}
+    .check-item.done{border-color:rgba(60,207,142,.25);background:rgba(60,207,142,.04)}
+    .check-item.done .check-box{background:var(--green);border-color:var(--green)}
+    .check-box{width:20px;height:20px;border-radius:4px;border:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;margin-top:.1rem;transition:all .2s}
+    .check-text{flex:1}
+    .check-title{font-weight:500;color:var(--text);font-size:.88rem;margin-bottom:.1rem}
+    .check-detail{color:var(--muted);font-size:.78rem}
+    .badge{display:inline-block;font-size:.67rem;font-weight:600;padding:.12rem .45rem;border-radius:3px;margin-left:.4rem}
+    .b-red{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+    .b-orange{background:rgba(245,158,11,.1);color:var(--orange);border:1px solid rgba(245,158,11,.3)}
+    .b-blue{background:rgba(96,165,250,.1);color:var(--blue);border:1px solid rgba(96,165,250,.3)}
+    .b-green{background:rgba(60,207,142,.1);color:var(--green);border:1px solid rgba(60,207,142,.3)}
+    .b-gold{background:var(--gold-p);color:var(--gold);border:1px solid var(--gold-b)}
+    .b-new{background:var(--gold);color:var(--bg)}
 
-/* PROCESS TIMELINE */
-.process{display:flex;flex-direction:column;gap:0}
-.step{display:flex;gap:16px;padding:1.1rem 0;border-bottom:1px solid var(--bdr)}
-.step:last-child{border-bottom:none}
-.step-num{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--gold-p);border:1px solid var(--gold-b);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--gold);margin-top:2px}
-.step-body{flex:1}
-.step-title{font-weight:600;font-size:.9rem;margin-bottom:.3rem;color:var(--gold-l)}
-.step-desc{font-size:.78rem;color:var(--muted);line-height:1.55;margin-bottom:.4rem}
-.step-cmd{font-family:'Courier New',monospace;font-size:.7rem;background:rgba(0,0,0,.3);border:1px solid var(--bdr);border-radius:5px;padding:.4rem .75rem;color:var(--ok);display:inline-block;margin-top:.25rem}
-.step-tool{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;background:var(--gold-p);border:1px solid var(--gold-b);border-radius:4px;padding:.2rem .6rem;color:var(--gold);margin-top:.3rem}
-.step-when{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);margin-bottom:.35rem}
+    /* METRICS ROW */
+    .metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-bottom:1rem}
+    .metric{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem}
+    .metric-lbl{font-size:.7rem;color:var(--muted);margin-bottom:.3rem}
+    .metric-input{background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:.95rem;font-weight:600;width:100%;outline:none;padding:.1rem 0}
+    .metric-input:focus{border-bottom-color:var(--gold)}
 
-/* RÈGLES CARDS */
-.rules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.rule-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:8px;padding:1rem 1.15rem}
-.rule-title{font-size:.82rem;font-weight:600;margin-bottom:.4rem;color:var(--gold-l)}
-.rule-items{list-style:none;display:flex;flex-direction:column;gap:.3rem}
-.rule-items li{font-size:.75rem;color:var(--muted);display:flex;gap:6px;align-items:flex-start}
-.rule-items li::before{content:"→";color:var(--gold);flex-shrink:0;font-size:.72rem;margin-top:1px}
+    /* OBJECTIFS */
+    .obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem}
+    .obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem}
+    .obj-title{font-size:.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+    .obj-text{color:var(--text);font-size:.85rem;line-height:1.5}
 
-/* SCORE TABLE */
-.score-table{width:100%;border-collapse:collapse;font-size:.8rem}
-.score-table th{text-align:left;padding:.5rem .75rem;font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);border-bottom:1px solid var(--bdr)}
-.score-table td{padding:.55rem .75rem;border-bottom:1px solid var(--bdr)}
-.score-table tr:last-child td{border-bottom:none}
-.score-table tr:hover td{background:rgba(255,255,255,.02)}
-.badge{display:inline-block;padding:.15rem .55rem;border-radius:4px;font-size:.65rem;font-weight:600}
-.b-ok{background:rgba(76,175,130,.15);color:var(--ok)}
-.b-warn{background:rgba(232,168,74,.15);color:var(--warn)}
-.b-err{background:rgba(224,92,92,.15);color:var(--err)}
+    /* BOUTONS */
+    .btn{padding:.55rem 1.1rem;border-radius:6px;font-size:.83rem;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+    .btn-primary{background:var(--gold);color:var(--bg)}
+    .btn-primary:hover{background:var(--gold-l)}
+    .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--gold-b)}
+    .btn-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
 
-/* CMD BOUTONS COPIE */
-.cmd-btn{background:rgba(0,0,0,.35);border:1px solid var(--bdr);border-radius:7px;
-  padding:.55rem .85rem;cursor:pointer;transition:all .2s;position:relative;
-  display:flex;flex-direction:column;gap:2px;user-select:none}
-.cmd-btn:hover{border-color:var(--gold-b);background:rgba(212,168,67,.08)}
-.cmd-btn.copied{border-color:var(--ok);background:rgba(76,175,130,.1)}
-.cmd-btn-label{font-size:.65rem;font-weight:600;text-transform:uppercase;
-  letter-spacing:.07em;color:var(--dim)}
-.cmd-btn-code{font-family:'Courier New',monospace;font-size:.7rem;color:var(--ok);line-height:1.4}
-.cmd-btn-copy{position:absolute;top:.45rem;right:.7rem;font-size:.62rem;
-  font-weight:600;color:var(--gold);opacity:.6;transition:opacity .2s}
-.cmd-btn:hover .cmd-btn-copy{opacity:1}
-.cmd-btn.copied .cmd-btn-copy{color:var(--ok);opacity:1}
-.cmd-btn-sm{flex:1;min-width:0}
-.cmd-btn-sm .cmd-btn-label{font-size:.62rem}
+    /* SCORE GLOBAL */
+    .global-score{background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%);border:2px solid var(--gold-b);border-radius:12px;padding:1.5rem;text-align:center;margin-bottom:1.5rem}
+    .gs-val{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;display:block;margin-bottom:.3rem}
+    .gs-lbl{color:var(--muted);font-size:.85rem}
+    .gs-prog{background:var(--surface3);border-radius:6px;height:10px;margin:.8rem auto 0;max-width:300px}
+    .gs-fill{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--gold),var(--gold-l));transition:width .7s}
 
-footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2rem;font-size:.72rem;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+    /* OUTILS RAPIDES */
+    .tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}
+    .tool-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;display:flex;align-items:center;gap:.7rem;cursor:pointer;transition:all .2s;text-decoration:none}
+    .tool-card:hover{border-color:var(--gold-b);background:var(--surface2)}
+    .tool-icon{font-size:1.3rem;flex-shrink:0}
+    .tool-title{font-weight:600;color:var(--text);font-size:.82rem}
+    .tool-sub{color:var(--muted);font-size:.72rem}
 
-@media(max-width:768px){.tools-grid{grid-template-columns:1fr}.rules-grid{grid-template-columns:1fr}}
-</style>
+    .toast{position:fixed;bottom:2rem;right:2rem;background:var(--surface);border:1px solid var(--gold-b);border-radius:8px;padding:.8rem 1.2rem;font-size:.85rem;display:none;z-index:999}
+    .toast.show{display:block}
+
+    @media(max-width:640px){.score-grid,.metrics-row,.obj-grid,.tools-grid{grid-template-columns:1fr 1fr}}
+  </style>
 </head>
 <body>
-<div id="sprint-bar" style="display:flex;align-items:center;gap:10px;padding:8px 20px;background:rgba(212,168,67,.08);border-bottom:1px solid rgba(212,168,67,.2);font-size:.85rem;color:#D4A843">
-  <span style="font-weight:500">Sprint en cours :</span>
-  <input id="sprint-input" type="text" value="S59" maxlength="6"
-    style="width:64px;padding:3px 8px;border-radius:6px;border:1px solid rgba(212,168,67,.4);background:#0D2137;color:#D4A843;font-weight:700;text-align:center;font-size:.85rem"
-    oninput="updateAllSprints(this.value)">
-  <span style="color:#6b7a8d;font-size:.78rem">Modifier met à jour toutes les commandes ci-dessous</span>
+
+<div class="header">
+  <div class="header-brand">
+    <span style="font-size:1.4rem">📐</span>
+    <div>
+      <div class="header-title">Pilotage Qualité</div>
+      <div class="header-sub">Process complet fin de sprint — scores, métriques, objectifs, outils — Anim'Gest SAV</div>
+    </div>
+  </div>
+  <div class="header-badge">NoSage's Editor</div>
 </div>
 
-<nav>
-  <span class="nav-logo">Anim'Gest</span>
-  <a href="index.html" class="nav-back">← Retour à l'index</a>
-  <span class="nav-right">Pilotage Qualité — NoSage's Editor</span>
-</nav>
+<div class="main">
 
-<div class="hero">
-  <div class="hero-eye">Pilotage &amp; Qualité code</div>
-  <h1>📐 Pilotage <em>Qualité</em></h1>
-  <p>Process complet de fin de sprint — outils, localisations, commandes et règles pour maintenir et améliorer la qualité du code sans déstabiliser le logiciel.</p>
-</div>
+  <!-- SPRINT -->
+  <div class="sprint-bar">
+    <span class="sprint-label">Sprint actuel :</span>
+    <input type="text" class="sprint-input" id="sprint-num" value="S61" oninput="majTout()">
+    <span class="sprint-label">Date :</span>
+    <input type="text" class="sprint-input" id="sprint-date" value="29/03/2026" style="width:100px">
+    <button class="btn btn-secondary" style="margin-left:auto" onclick="reinitChecklist()">🔄 Nouveau sprint</button>
+    <button class="btn btn-primary" onclick="exporterBilan()">📤 Exporter bilan</button>
+  </div>
 
-<div class="wrap">
+  <!-- SCORES -->
+  <div class="section">
+    <div class="section-title"><span class="sec-icon">🎯</span> Scores qualité</div>
+    <div class="score-grid">
+      <div class="score-card">
+        <div class="score-lbl">Backend</div>
+        <input type="number" class="score-input" id="score-backend" value="82" min="0" max="100" oninput="majScores()">
+        <div class="progress-bar"><div class="progress-fill" id="pb-backend" style="background:var(--blue)"></div></div>
+      </div>
+      <div class="score-card">
+        <div class="score-lbl">Frontend</div>
+        <input type="number" class="score-input" id="score-frontend" value="80" min="0" max="100" oninput="majScores()">
+        <div class="progress-bar"><div class="progress-fill" id="pb-frontend" style="background:var(--purple)"></div></div>
+      </div>
+      <div class="score-card">
+        <div class="score-lbl">BDD</div>
+        <input type="number" class="score-input" id="score-bdd" value="85" min="0" max="100" oninput="majScores()">
+        <div class="progress-bar"><div class="progress-fill" id="pb-bdd" style="background:var(--orange)"></div></div>
+      </div>
+      <div class="score-card">
+        <div class="score-lbl">Global calculé</div>
+        <span class="score-val" id="score-global" style="color:var(--gold)">82</span>
+        <div class="progress-bar"><div class="progress-fill" id="pb-global" style="background:linear-gradient(90deg,var(--gold),var(--gold-l))"></div></div>
+      </div>
+    </div>
 
-  <!-- LES 4 OUTILS -->
-  <div class="sec-title">Les 5 outils du pilotage &amp; maintenance</div>
-  <div class="tools-grid" style="grid-template-columns:repeat(2,1fr)">
+    <div class="global-score">
+      <span class="gs-val" id="gs-display" style="color:var(--gold)">82</span>
+      <div class="gs-lbl">Score global <span id="gs-sprint">S61</span> — objectif ≥ 85/100</div>
+      <div class="gs-prog"><div class="gs-fill" id="gs-fill"></div></div>
+    </div>
+  </div>
 
-    <div class="tool-card highlight" style="border-color:var(--gold);grid-column:1/-1">
-      <div class="tool-header">
+  <!-- MÉTRIQUES -->
+  <div class="section">
+    <div class="section-title"><span class="sec-icon">📊</span> Métriques techniques</div>
+    <div class="metrics-row">
+      <div class="metric"><div class="metric-lbl">Routes API</div><input class="metric-input" id="m-routes" value="90+" oninput="sauvegarder()"></div>
+      <div class="metric"><div class="metric-lbl">Lignes custom-routes</div><input class="metric-input" id="m-lignes" value="~2800" oninput="sauvegarder()"></div>
+      <div class="metric"><div class="metric-lbl">Pages UI</div><input class="metric-input" id="m-pages" value="105" oninput="sauvegarder()"></div>
+      <div class="metric"><div class="metric-lbl">JSDoc couverture</div><input class="metric-input" id="m-jsdoc" value="133/137" oninput="sauvegarder()"></div>
+    </div>
+    <div class="metrics-row">
+      <div class="metric"><div class="metric-lbl">Colonnes BDD</div><input class="metric-input" id="m-colonnes" value="241/241" oninput="sauvegarder()"></div>
+      <div class="metric"><div class="metric-lbl">getDb() calls</div><input class="metric-input" id="m-getdb" value="87+" oninput="sauvegarder()"></div>
+      <div class="metric"><div class="metric-lbl">createConnection()</div><input class="metric-input" id="m-create" value="0" oninput="sauvegarder()"></div>
+      <div class="metric"><div class="metric-lbl">window.open() restants</div><input class="metric-input" id="m-wopen" value="?" oninput="sauvegarder()"></div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST FIN DE SPRINT -->
+  <div class="section">
+    <div class="section-title"><span class="sec-icon">✅</span> Checklist fin de sprint <span id="check-progress" style="margin-left:auto;font-size:.8rem;color:var(--muted)">0/0</span></div>
+    <div class="checklist" id="checklist"></div>
+  </div>
+
+  <!-- OBJECTIFS SPRINT SUIVANT -->
+  <div class="section">
+    <div class="section-title"><span class="sec-icon">🚀</span> Objectifs sprint suivant</div>
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-title">🔴 ROUGE — Bloquant</div>
+        <div class="obj-text" id="obj-rouge" contenteditable="true" style="outline:none;min-height:40px" oninput="sauvegarder()">Aucun item bloquant identifié</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-title">🟡 ORANGE — Priorité haute</div>
+        <div class="obj-text" id="obj-orange" contenteditable="true" style="outline:none;min-height:40px" oninput="sauvegarder()">Widget Claude IA "Eliot"
+Suivi CAC fiche séance
+Migration routes api/src/routes/</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-title">🔵 JAUNE — Backlog</div>
+        <div class="obj-text" id="obj-jaune" contenteditable="true" style="outline:none;min-height:40px" oninput="sauvegarder()">Export CSV règlements
+/app/elevage/declarations
+devis_ligne inexistante</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-title">🟢 VERT — Nouveaux modules</div>
+        <div class="obj-text" id="obj-vert" contenteditable="true" style="outline:none;min-height:40px" oninput="sauvegarder()">Portail Client S62 (animaux/CAC/docs)
+Carte Identité Animale S63</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTILS RAPIDES -->
+  <div class="section">
+    <div class="section-title"><span class="sec-icon">🔧</span> Outils SAV</div>
+    <div class="tools-grid" style="grid-template-columns:repeat(4,1fr)">
+      <a class="tool-card" href="SAV_Pilotage_Qualite.html">
+        <span class="tool-icon">📐</span>
+        <div><div class="tool-title">Pilotage Qualité</div><div class="tool-sub">Process fin de sprint · scores · checklist</div></div>
+      </a>
+      <a class="tool-card" href="SAV_Launcher.html">
         <span class="tool-icon">🚀</span>
-        <span class="tool-name">SAV_Launcher</span>
-        <span class="tool-type type-html">HTML</span>
-      </div>
-      <div class="tool-desc">Point d'entrée unique pour toutes les fins de sprint — 6 étapes, toutes les commandes Python avec boutons copie, liens vers tous les outils. Le numéro de sprint se met à jour dynamiquement dans toutes les commandes.</div>
-      <div class="tool-loc">
-        <div class="tool-loc-label">Localisation GitHub Pages</div>
-        <div class="tool-loc-path">https://nicolashermilly.github.io/petsuite-docs/SAV_Launcher.html</div>
-      </div>
-      <div class="tool-loc" style="margin-top:.5rem">
-        <div class="tool-loc-label">Fichier source local</div>
-        <div class="tool-loc-path">C:\AnimGest_Sav\SAV_Launcher.html</div>
-      </div>
-      <a href="SAV_Launcher.html" class="tool-link" style="font-size:.85rem;font-weight:700;color:var(--gold)">🚀 Ouvrir le Launcher →</a>
-    </div>
-
-    <div class="tool-card highlight">
-      <div class="tool-header">
-        <span class="tool-icon">🐍</span>
-        <span class="tool-name">animgest_quality.py</span>
-        <span class="tool-type type-py">Python</span>
-      </div>
-      <div class="tool-desc">Analyse automatique du code — détecte catch vides, backticks SQL, window.open(), fmtDate locales, colonnes BDD non commentées. Propose des patches que tu valides un par un avant application. Génère un rapport JSON et un fichier SQL pour HeidiSQL.</div>
-      <div class="tool-loc">
-        <div class="tool-loc-label">Localisation</div>
-        <div class="tool-loc-path">D:\OneDrive_Perso\OneDrive\Documents\Micro_Logiciel\Documentation\Frontend\micro_logiciel_frontend_nextjs\animgest_quality.py</div>
-      </div>
-      <div class="tool-loc-label" style="margin-top:.75rem">Lancer dans PowerShell — cliquer pour copier</div>
-      <div class="tool-actions" style="gap:7px">
-
-        <div class="cmd-btn" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --sprint <span class="dyn-sprint">S59</span>')">
-          <div class="cmd-btn-label">Analyse complète</div>
-          <div class="cmd-btn-code">python animgest_quality.py --sprint <span class="dyn-sprint">S59</span></div>
-          <div class="cmd-btn-copy">Copier</div>
-        </div>
-
-        <div class="cmd-btn" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --apply --sprint <span class="dyn-sprint">S59</span>')">
-          <div class="cmd-btn-label">Appliquer les patches</div>
-          <div class="cmd-btn-code">python animgest_quality.py --apply --sprint <span class="dyn-sprint">S59</span></div>
-          <div class="cmd-btn-copy">Copier</div>
-        </div>
-
-        <div style="display:flex;gap:7px">
-          <div class="cmd-btn cmd-btn-sm" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --backend')">
-            <div class="cmd-btn-label">Backend</div>
-            <div class="cmd-btn-copy">Copier</div>
-          </div>
-          <div class="cmd-btn cmd-btn-sm" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --frontend')">
-            <div class="cmd-btn-label">Frontend</div>
-            <div class="cmd-btn-copy">Copier</div>
-          </div>
-          <div class="cmd-btn cmd-btn-sm" onclick="copyCmd(this,'cd &quot;D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs&quot;\npython animgest_quality.py --bdd')">
-            <div class="cmd-btn-label">BDD</div>
-            <div class="cmd-btn-copy">Copier</div>
-          </div>
-        </div>
-
-      </div>
-      <div class="tool-loc-label" style="margin-top:.6rem">Prérequis (1 fois)</div>
-      <div class="cmd-btn" onclick="copyCmd(this,'pip install pymysql --break-system-packages')">
-        <div class="cmd-btn-code">pip install pymysql --break-system-packages</div>
-        <div class="cmd-btn-copy">Copier</div>
-      </div>
-    </div>
-
-    <div class="tool-card highlight">
-      <div class="tool-header">
-        <span class="tool-icon">📋</span>
-        <span class="tool-name">SAV_Generator_Handover</span>
-        <span class="tool-type type-html">HTML</span>
-      </div>
-      <div class="tool-desc">Application web sécurisée (MDP) pour remplir et générer le fichier .md de fin de sprint en 5 minutes. Pré-remplie avec les données du sprint précédent. Sauvegarde automatique dans le navigateur. Télécharge directement HANDOVER_SXX_FIN.md.</div>
-      <div class="tool-loc">
-        <div class="tool-loc-label">Localisation GitHub Pages</div>
-        <div class="tool-loc-path">https://nicolashermilly.github.io/petsuite-docs/SAV_Generator_Handover.html</div>
-      </div>
-      <div class="tool-loc" style="margin-top:.5rem">
-        <div class="tool-loc-label">Fichier source local</div>
-        <div class="tool-loc-path">C:\petsuite-docs\SAV_Generator_Handover.html</div>
-      </div>
-      <div class="tool-actions" style="margin-top:.5rem">
-        <div class="tool-loc-label">7 onglets à remplir</div>
-        <span class="cmd">En-tête → Accompli → Fichiers → Bugs → Qualité → Roadmap → Générer</span>
-      </div>
-      <a href="SAV_Generator_Handover.html" class="tool-link">Ouvrir le générateur →</a>
-    </div>
-
-    <div class="tool-card highlight">
-      <div class="tool-header">
-        <span class="tool-icon">📊</span>
-        <span class="tool-name">SAV_Dashboard_Qualite</span>
-        <span class="tool-type type-html">HTML</span>
-      </div>
-      <div class="tool-desc">Dashboard visuel sécurisé (MDP) qui suit l'évolution des scores qualité Backend / Frontend / BDD sprint par sprint. Graphique d'évolution, KPIs avec delta, barres de progression, patches en attente, tableau historique complet.</div>
-      <div class="tool-loc">
-        <div class="tool-loc-label">Localisation GitHub Pages</div>
-        <div class="tool-loc-path">https://nicolashermilly.github.io/petsuite-docs/SAV_Dashboard_Qualite.html</div>
-      </div>
-      <div class="tool-loc" style="margin-top:.5rem">
-        <div class="tool-loc-label">Fichier source local</div>
-        <div class="tool-loc-path">C:\petsuite-docs\SAV_Dashboard_Qualite.html</div>
-      </div>
-      <div class="tool-actions" style="margin-top:.5rem">
-        <div class="tool-loc-label">Mise à jour fin de sprint</div>
-        <span class="cmd">Bouton "+ Saisir sprint" → entrer les scores → Enregistrer</span>
-      </div>
-      <a href="SAV_Dashboard_Qualite.html" class="tool-link">Ouvrir le dashboard →</a>
-    </div>
-
-    <div class="tool-card highlight">
-      <div class="tool-header">
+        <div><div class="tool-title">Launcher</div><div class="tool-sub">Toutes les commandes + liens</div></div>
+      </a>
+      <a class="tool-card" href="SAV_Generator_Maintenance.html">
         <span class="tool-icon">🔧</span>
-        <span class="tool-name">SAV_Dashboard_Maintenance</span>
-        <span class="tool-type type-html">HTML</span>
-      </div>
-      <div class="tool-desc">Dashboard de maintenance sécurisé — suit la santé de l'infrastructure Docker, les régressions API, la dette technique (fichiers .bak, inject_) et les risques sécurité sprint par sprint.</div>
-      <div class="tool-loc">
-        <div class="tool-loc-label">Localisation GitHub Pages</div>
-        <div class="tool-loc-path">https://nicolashermilly.github.io/petsuite-docs/SAV_Dashboard_Maintenance.html</div>
-      </div>
-      <div class="tool-loc" style="margin-top:.5rem">
-        <div class="tool-loc-label">Fichier source local</div>
-        <div class="tool-loc-path">C:\petsuite-docs\SAV_Dashboard_Maintenance.html</div>
-      </div>
-      <div class="tool-actions" style="margin-top:.5rem">
-        <div class="tool-loc-label">Script associé</div>
-        <span class="cmd">python animgest_maintenance.py --sprint SXX</span>
-      </div>
-      <a href="SAV_Dashboard_Maintenance.html" class="tool-link">Ouvrir le dashboard →</a>
+        <div><div class="tool-title">Générateur Maintenance</div><div class="tool-sub">Scores + métriques → Dashboard</div></div>
+      </a>
+      <a class="tool-card" href="SAV_Analyseur_Dette_Technique.html">
+        <span class="tool-icon">⚙️</span>
+        <div><div class="tool-title">Analyseur Dette Technique <span class="badge b-new">NEW</span></div><div class="tool-sub">Catalogue · Refactorisation interactive</div></div>
+      </a>
     </div>
-
-  </div>
-
-  <!-- PROCESS FIN DE SPRINT -->
-  <div class="sec-title">Process complet — fin de sprint (ordre à respecter)</div>
-  <div class="process">
-
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-when">Point d'entrée unique</div>
-        <div class="step-title">Ouvrir le Launcher</div>
-        <div class="step-desc">Le Launcher regroupe toutes les étapes de fin de sprint en une seule page — commandes Python avec boutons copie, liens vers tous les outils. Le numéro de sprint se met à jour dynamiquement dans toutes les commandes.</div>
-        <div style="margin-top:.5rem"><span class="step-tool">🚀 SAV_Launcher.html</span></div>
-        <div class="step-cmd" style="margin-top:.35rem"><a href="SAV_Launcher.html" style="color:var(--ok)">→ Ouvrir directement le Launcher</a></div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-when">5 min avant la fin</div>
-        <div class="step-title">Lancer l'analyse qualité</div>
-        <div class="step-desc">Exécuter le script Python depuis le dossier racine du projet. Lecture seule — produit un rapport et identifie les patches disponibles.</div>
-        <div class="step-cmd">cd "D:\...\micro_logiciel_frontend_nextjs"</div>
-        <div class="step-cmd">python animgest_quality.py --sprint <span class="dyn-sprint">S59</span></div>
-        <div style="margin-top:.5rem"><span class="step-tool">🐍 animgest_quality.py</span></div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <div class="step-when">5 min — fin de sprint</div>
-        <div class="step-title">Lancer le diagnostic maintenance</div>
-        <div class="step-desc">Vérifie les conteneurs Docker, les 10 routes API critiques, les fichiers .bak et les credentials exposés. Génère maintenance_report.json.</div>
-        <div class="step-cmd">python animgest_maintenance.py --sprint <span class="dyn-sprint">S59</span></div>
-        <div style="margin-top:.5rem"><span class="step-tool">🐍 animgest_maintenance.py</span></div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-body">
-        <div class="step-when">Optionnel — patches non-risqués</div>
-        <div class="step-title">Appliquer les patches qualité validés</div>
-        <div class="step-desc">Relancer en mode <code>--apply</code>. Chaque patch est présenté avec son niveau de risque. Un backup automatique est créé avant toute modification.</div>
-        <div class="step-cmd">python animgest_quality.py --apply --sprint <span class="dyn-sprint">S59</span></div>
-        <div class="step-desc" style="margin-top:.5rem">Auto-applicables sans risque : JSDoc, src/services/. Manuels : refacto routes, window.open() → Modal, SQL commentaires.</div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">6</div>
-      <div class="step-body">
-        <div class="step-when">5-10 min — obligatoire</div>
-        <div class="step-title">Remplir le Générateur de Handover</div>
-        <div class="step-desc">Ouvrir le générateur, parcourir les 7 onglets. En fin de génération, un bloc de scores apparaît automatiquement avec un bouton pour ouvrir le Dashboard Qualité avec les données pré-remplies.</div>
-        <div style="margin-top:.35rem"><span class="step-tool">📋 SAV_Generator_Handover.html</span></div>
-        <div class="step-cmd" style="margin-top:.35rem">→ Onglet Générer → Télécharger .md → Bouton "📊 Ouvrir Dashboard Qualité avec ces scores"</div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">7</div>
-      <div class="step-body">
-        <div class="step-when">1 min — automatique depuis étape 6</div>
-        <div class="step-title">Enregistrer dans le Dashboard Qualité</div>
-        <div class="step-desc">Le formulaire est pré-rempli avec les scores du sprint. Vérifier les valeurs, puis cliquer Enregistrer. Le graphique d'évolution se met à jour automatiquement.</div>
-        <div style="margin-top:.35rem"><span class="step-tool">📊 SAV_Dashboard_Qualite.html</span></div>
-        <div class="step-cmd" style="margin-top:.35rem">→ Formulaire pré-rempli → Enregistrer</div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">8</div>
-      <div class="step-body">
-        <div class="step-when">2 min</div>
-        <div class="step-title">Saisir le bilan de maintenance</div>
-        <div class="step-desc">Ouvrir le Dashboard Maintenance, cliquer sur "+ Saisir bilan", entrer les scores issus du diagnostic Python (étape 4) : infrastructure, API, dette, sécurité.</div>
-        <div style="margin-top:.35rem"><span class="step-tool">🔧 SAV_Dashboard_Maintenance.html</span></div>
-        <div class="step-cmd" style="margin-top:.35rem">→ Bouton "+ Saisir bilan" → scores du diagnostic → Enregistrer</div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">9</div>
-      <div class="step-body">
-        <div class="step-when">2 min — si nouveaux fichiers docs</div>
-        <div class="step-title">Pousser sur GitHub Pages</div>
-        <div class="step-desc">Si des fichiers HTML ont été générés ou modifiés pendant le sprint, les pousser sur le repo docs.</div>
-        <div class="step-cmd">cd C:\AnimGest_Sav</div>
-        <div class="step-cmd">git pull --rebase</div>
-        <div class="step-cmd">git add -A</div>
-        <div class="step-cmd">git commit -m "docs: handover <span class="dyn-sprint">S59</span> + changelog"</div>
-        <div class="step-cmd">git push</div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">10</div>
-      <div class="step-body">
-        <div class="step-when">1 min</div>
-        <div class="step-title">Lancer la sauvegarde manuelle</div>
-        <div class="step-desc">Exécuter le script de sauvegarde v7 — Full_Copy + backup BDD avant de fermer la session.</div>
-        <div class="step-cmd">PowerShell -ExecutionPolicy Bypass -File "G:\Sauvegarde_micro_logiciel\Sauvegarde_micro_logiciel.ps1"</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- SCORES CIBLES -->
-  <div class="sec-title">Objectifs de score par sprint</div>
-  <table class="score-table">
-    <thead>
-      <tr>
-        <th>Sprint</th>
-        <th>Backend</th>
-        <th>Frontend</th>
-        <th>BDD</th>
-        <th>Global</th>
-        <th>Priorité qualité</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong style="color:var(--gold)">S57</strong> (actuel)</td>
-        <td>82/100</td>
-        <td>80/100</td>
-        <td>85/100</td>
-        <td><span class="badge b-ok">82/100</span></td>
-        <td style="color:var(--muted);font-size:.75rem">RBAC, fix routes permissions, editions</td>
-      </tr>
-      <tr>
-        <td><strong>S58</strong></td>
-        <td>84/100</td>
-        <td>82/100</td>
-        <td>87/100</td>
-        <td><span class="badge b-ok">84/100</span></td>
-        <td style="color:var(--muted);font-size:.75rem">Refacto factures.ts, window.open() → Modal</td>
-      </tr>
-      <tr>
-        <td><strong>S59</strong></td>
-        <td>87/100</td>
-        <td>85/100</td>
-        <td>90/100</td>
-        <td><span class="badge b-ok">87/100</span></td>
-        <td style="color:var(--muted);font-size:.75rem">src/services/, JSDoc complet, modules routes</td>
-      </tr>
-      <tr>
-        <td><strong>S60</strong></td>
-        <td>90/100</td>
-        <td>88/100</td>
-        <td>92/100</td>
-        <td><span class="badge b-ok">90/100</span></td>
-        <td style="color:var(--muted);font-size:.75rem">Objectif score 90 global</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- RÈGLES -->
-  <div class="sec-title">Règles qualité — ne jamais enfreindre</div>
-  <div class="rules-grid">
-    <div class="rule-card">
-      <div class="rule-title">Règles architecture</div>
-      <ul class="rule-items">
-        <li><code>cd deploy</code> obligatoire avant tout docker compose</li>
-        <li><code>COPIER_TOUTES_PAGES_v2.ps1</code> avant build frontend</li>
-        <li><code>app.use()</code> jamais <code>app.get()</code> — nginx strips /api/</li>
-        <li><code>getDb()</code> uniquement — jamais createConnection</li>
-        <li>build <code>--no-cache</code> puis <code>up -d</code> — jamais restart</li>
-        <li><code>restart nginx</code> après chaque rebuild</li>
-      </ul>
-    </div>
-    <div class="rule-card">
-      <div class="rule-title">Règles code</div>
-      <ul class="rule-items">
-        <li>PDF / éditions : Modal uniquement — jamais window.open()</li>
-        <li><code>"use client"</code> : ligne 1 absolue de tout fichier TSX</li>
-        <li>Modifications TSX : via scripts Python (apostrophes FR)</li>
-        <li>Pas de backtick dans les strings SQL</li>
-        <li><code>inject_v4_final.js</code> : ne jamais utiliser</li>
-        <li>CAC : accessible uniquement depuis fiche séance — pas de lien sidebar</li>
-      </ul>
-    </div>
-    <div class="rule-card">
-      <div class="rule-title">Règles BDD</div>
-      <ul class="rule-items">
-        <li>FK : <code>Relation NomTable - description</code></li>
-        <li>Champ ordinaire : description de la valeur attendue</li>
-        <li>Colonnes sans DEFAULT : <code>NOW()</code> explicite dans INSERT</li>
-        <li>ENUM migration : VARCHAR → UPDATE → ENUM (3 étapes)</li>
-        <li>ALTER CHANGE : ne pas reconstruire la clause DEFAULT</li>
-        <li>Frimousse ANI_ID=22 : ne jamais supprimer</li>
-      </ul>
-    </div>
-    <div class="rule-card">
-      <div class="rule-title">Règles Git &amp; docs</div>
-      <ul class="rule-items">
-        <li><code>git pull --rebase</code> avant tout push sur petsuite-docs</li>
-        <li>Délai déploiement GitHub Pages : 3-5 min après push</li>
-        <li>Backup propre : <code>C:\Backup\micro_logiciel\20260315_0002</code></li>
-        <li>Backups à partir de 20260315_0042 : code corrompu — ne pas utiliser</li>
-        <li>Script sauvegarde v7 : lancer en fin de chaque session</li>
-      </ul>
+    <div class="tools-grid" style="grid-template-columns:repeat(4,1fr);margin-top:.7rem">
+      <a class="tool-card" href="SAV_Regles_Metier.html">
+        <span class="tool-icon">📜</span>
+        <div><div class="tool-title">Règles Métier <span class="badge b-new">NEW</span></div><div class="tool-sub">15 règles actives · Exemples OK/NOK</div></div>
+      </a>
+      <a class="tool-card" href="SAV_Generator_Handover.html">
+        <span class="tool-icon">📋</span>
+        <div><div class="tool-title">Générateur Handover</div><div class="tool-sub">Fichier .md fin de sprint en 5 min</div></div>
+      </a>
+      <a class="tool-card" href="SAV_Dashboard_Revue_Code.html" style="grid-column:span 2;border-color:var(--gold-b);background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%)">
+        <span class="tool-icon">🔍</span>
+        <div>
+          <div class="tool-title">Dashboard Revue de Code <span class="badge b-new">FUSION</span></div>
+          <div class="tool-sub">Qualité · Maintenance · Dette · Règles — un onglet par sprint · graphique évolution</div>
+        </div>
+      </a>
     </div>
   </div>
-
-  <!-- LOCALISATION SYNTHESE -->
-  <div class="sec-title">Récapitulatif des localisations</div>
-  <table class="score-table">
-    <thead>
-      <tr>
-        <th>Fichier</th>
-        <th>Type</th>
-        <th>Localisation</th>
-        <th>Accès</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>animgest_quality.py</strong></td>
-        <td><span class="badge b-warn">Python</span></td>
-        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
-        <td style="font-size:.75rem;color:var(--muted)">Terminal PowerShell</td>
-      </tr>
-      <tr>
-        <td><strong>SAV_Generator_Handover.html</strong></td>
-        <td><span class="badge b-ok">HTML</span></td>
-        <td style="font-family:'Courier New',monospace;font-size:.72rem">C:\petsuite-docs\ + GitHub Pages</td>
-        <td><a href="SAV_Generator_Handover.html" style="font-size:.75rem">Ouvrir →</a></td>
-      </tr>
-      <tr>
-        <td><strong>SAV_Dashboard_Qualite.html</strong></td>
-        <td><span class="badge b-ok">HTML</span></td>
-        <td style="font-family:'Courier New',monospace;font-size:.72rem">C:\petsuite-docs\ + GitHub Pages</td>
-        <td><a href="SAV_Dashboard_Qualite.html" style="font-size:.75rem">Ouvrir →</a></td>
-      </tr>
-      <tr>
-        <td><strong>quality_report.json</strong></td>
-        <td><span class="badge b-warn">JSON</span></td>
-        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
-        <td style="font-size:.75rem;color:var(--muted)">Généré par animgest_quality.py</td>
-      </tr>
-      <tr>
-        <td><strong>quality_bdd_comments.sql</strong></td>
-        <td><span class="badge b-err">SQL</span></td>
-        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
-        <td style="font-size:.75rem;color:var(--muted)">Exécuter via HeidiSQL</td>
-      </tr>
-      <tr>
-        <td><strong>_quality_backups\</strong></td>
-        <td><span class="badge" style="background:rgba(255,255,255,.07);color:var(--muted)">Dossier</span></td>
-        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
-        <td style="font-size:.75rem;color:var(--muted)">Backups auto avant patch</td>
-      </tr>
-      <tr>
-        <td><strong>animgest_maintenance.py</strong></td>
-        <td><span class="badge b-warn">Python</span></td>
-        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
-        <td style="font-size:.75rem;color:var(--muted)">Terminal PowerShell</td>
-      </tr>
-      <tr>
-        <td><strong>SAV_Dashboard_Maintenance.html</strong></td>
-        <td><span class="badge b-ok">HTML</span></td>
-        <td style="font-family:'Courier New',monospace;font-size:.72rem">C:\petsuite-docs\ + GitHub Pages</td>
-        <td><a href="SAV_Dashboard_Maintenance.html" style="font-size:.75rem">Ouvrir →</a></td>
-      </tr>
-      <tr>
-        <td><strong>maintenance_report.json</strong></td>
-        <td><span class="badge b-warn">JSON</span></td>
-        <td style="font-family:'Courier New',monospace;font-size:.72rem">D:\...\micro_logiciel_frontend_nextjs\</td>
-        <td style="font-size:.75rem;color:var(--muted)">Généré par animgest_maintenance.py</td>
-      </tr>
-      <tr>
-        <td><strong>Sauvegarde_micro_logiciel.ps1</strong></td>
-        <td><span class="badge b-warn">PS1</span></td>
-        <td style="font-family:'Courier New',monospace;font-size:.72rem">G:\Sauvegarde_micro_logiciel\</td>
-        <td style="font-size:.75rem;color:var(--muted)">Lancer en fin de session</td>
-      </tr>
-    </tbody>
-  </table>
 
 </div>
-
-<footer>
-  <span>Anim'Gest — NoSage's Editor &copy; 2026</span>
-  <div style="display:flex;gap:1rem;flex-wrap:wrap">
-    <a href="index.html" style="color:var(--gold)">← Index</a>
-    <a href="SAV_Launcher.html" style="color:var(--gold);font-weight:600">🚀 Launcher</a>
-    <a href="SAV_Generator_Handover.html" style="color:var(--muted)">📋 Handover</a>
-    <a href="SAV_Dashboard_Qualite.html" style="color:var(--muted)">📊 Qualité</a>
-    <a href="SAV_Generator_Maintenance.html" style="color:var(--muted)">🛠️ Bilan Maintenance</a>
-    <a href="SAV_Dashboard_Maintenance.html" style="color:var(--muted)">🔧 Dashboard Maintenance</a>
-  </div>
-</footer>
+<div class="toast" id="toast"></div>
 
 <script>
-function copyCmd(el, text){
-  // Decode HTML entities pour la commande
-  var decoded = text.replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-  navigator.clipboard.writeText(decoded).then(function(){
-    el.classList.add('copied');
-    var copyEl = el.querySelector('.cmd-btn-copy');
-    if(copyEl){ copyEl.textContent = 'Copié ✓'; }
-    setTimeout(function(){
-      el.classList.remove('copied');
-      if(copyEl){ copyEl.textContent = 'Copier'; }
-    }, 2000);
-  }).catch(function(){
-    // Fallback
-    var ta = document.createElement('textarea');
-    ta.value = decoded;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    el.classList.add('copied');
-    var copyEl = el.querySelector('.cmd-btn-copy');
-    if(copyEl){ copyEl.textContent = 'Copié ✓'; }
-    setTimeout(function(){
-      el.classList.remove('copied');
-      if(copyEl){ copyEl.textContent = 'Copier'; }
-    }, 2000);
-  });
-}
-</script>
+var CHECKLIST = [
+  // GIT
+  { id:'git1', cat:'Git', titre:'git pull --rebase avant tout push petsuite-docs', detail:'Toujours depuis C:\\AnimGest_Repo_Git\\petsuite-docs', badge:'critique' },
+  { id:'git2', cat:'Git', titre:'Commit code source micro_logiciel pushé', detail:'Vérifier les commits S61a, S61b', badge:'critique' },
+  { id:'git3', cat:'Git', titre:'Commit petsuite-docs pushé', detail:'Changelogs + pages mises à jour', badge:'critique' },
+  // DOCKER
+  { id:'dock1', cat:'Docker', titre:'docker ps — tous les containers UP', detail:'micro_api, micro_frontend, micro_nginx', badge:'critique' },
+  { id:'dock2', cat:'Docker', titre:'GET /api/bilan → 200 OK', detail:'Invoke-RestMethod http://localhost/api/bilan', badge:'critique' },
+  { id:'dock3', cat:'Docker', titre:'Rebuild API avec --no-cache si routes modifiées', detail:'build → up -d → restart nginx', badge:'attention' },
+  // QUALITE
+  { id:'qual1', cat:'Qualité', titre:'0 createConnection() dans custom-routes.ts', detail:'grep -n "createConnection" api/src/custom-routes.ts', badge:'critique' },
+  { id:'qual2', cat:'Qualité', titre:'0 window.open() dans les pages TSX', detail:'Toutes les éditions PDF en Modal srcdoc', badge:'critique' },
+  { id:'qual3', cat:'Qualité', titre:'"use client" ligne 1 sur tous les TSX modifiés', detail:'Vérifier les fichiers créés ou modifiés ce sprint', badge:'attention' },
+  { id:'qual4', cat:'Qualité', titre:'JSDoc présent sur tous les nouveaux fichiers', detail:'Objectif : 137/137 à terme', badge:'info' },
+  // DETTE
+  { id:'dette1', cat:'Dette', titre:'Analyseur Dette mis à jour', detail:'Items résolus cochés, nouveaux items ajoutés', badge:'info' },
+  { id:'dette2', cat:'Dette', titre:'Règles Métier vérifiées', detail:'Aucune règle critique violée ce sprint', badge:'attention' },
+  // BDD
+  { id:'bdd1', cat:'BDD', titre:'Frimousse (ANI_ID=22) préservé', detail:'SELECT ANI_ID, ANI_NOM FROM animal WHERE ANI_ID=22', badge:'critique' },
+  { id:'bdd2', cat:'BDD', titre:'Nouvelles colonnes commentées', detail:'Convention : "Relation NomTable - description"', badge:'attention' },
+  // DOCS
+  { id:'doc1', cat:'Docs', titre:'Changelog sprint HTML généré et pushé', detail:'fichier XX-changelog-S61.html dans petsuite-docs', badge:'attention' },
+  { id:'doc2', cat:'Docs', titre:'index.html mis à jour (nb pages, sprint actuel)', detail:'kpi-v sprint badge + nombre total pages', badge:'attention' },
+  { id:'doc3', cat:'Docs', titre:'API Reference + Audit Stack + Pilotage à jour', detail:'07, 17, 20 — MàJ S61 confirmée', badge:'info' },
+  // SAV
+  { id:'sav1', cat:'SAV', titre:'Dashboard Qualité alimenté (scores S61)', detail:'Via Générateur Maintenance', badge:'info' },
+  { id:'sav2', cat:'SAV', titre:'Handover S61 généré et téléchargé', detail:'Via Générateur Handover', badge:'attention' },
+  { id:'sav3', cat:'SAV', titre:'Suivi Revue de Code mis à jour', detail:'Entrée S61 ajoutée avec résultats', badge:'info' },
+];
 
-<script>
-function updateAllSprints(val){
-  val=(val||'S59').trim().toUpperCase();
-  if(!val.startsWith('S')) val='S'+val;
-  document.querySelectorAll('.dyn-sprint').forEach(function(el){
-    el.textContent=val;
-  });
-  // Mettre aussi à jour les data-cmd inline (boutons copyCmd)
-  document.querySelectorAll('[onclick*="sprint"]').forEach(function(el){
-    var oc=el.getAttribute('onclick');
-    if(oc){
-      el.setAttribute('onclick', oc.replace(/--sprint S\d+/g,'--sprint '+val));
+var checks = JSON.parse(localStorage.getItem('animgest_pq_checks_S61') || '{}');
+var sprint = 'S61';
+
+function sauvegarder() {
+  localStorage.setItem('animgest_pq_checks_' + sprint, JSON.stringify(checks));
+  var data = {
+    sprint: document.getElementById('sprint-num').value,
+    date: document.getElementById('sprint-date').value,
+    scores: {
+      backend: document.getElementById('score-backend').value,
+      frontend: document.getElementById('score-frontend').value,
+      bdd: document.getElementById('score-bdd').value
+    },
+    metriques: {
+      routes: document.getElementById('m-routes').value,
+      lignes: document.getElementById('m-lignes').value,
+      pages: document.getElementById('m-pages').value,
+      jsdoc: document.getElementById('m-jsdoc').value,
+      colonnes: document.getElementById('m-colonnes').value
     }
-  });
-  // Mettre à jour les textes visibles dans .cmd-btn-code
-  document.querySelectorAll('.cmd-btn-code,.step-cmd').forEach(function(el){
-    el.innerHTML=el.innerHTML.replace(/--sprint S\d+/g,'--sprint <span class="dyn-sprint">'+val+'</span>');
-  });
+  };
+  localStorage.setItem('animgest_pq_data', JSON.stringify(data));
 }
 
-// copyCmd avec fallback execCommand
-function copyCmd(card,text){
-  if(typeof text==='string'){
-    text=text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
-    // Remplacer sprint dynamiquement
-    var sp=document.getElementById('sprint-input');
-    if(sp) text=text.replace(/--sprint S\d+/g,'--sprint '+sp.value.trim());
-  }
-  function doFeedback(){
-    var old=card.querySelector('.cmd-btn-label');
-    if(old){var prev=old.textContent;old.textContent='Copié ✓';setTimeout(function(){old.textContent=prev;},2000);}
-    card.classList.add('copied');
-    setTimeout(function(){card.classList.remove('copied');},2000);
-  }
-  if(navigator.clipboard&&window.isSecureContext){
-    navigator.clipboard.writeText(text).then(doFeedback).catch(function(){
-      var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
-      document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);doFeedback();
-    });
-  } else {
-    var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
-    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);doFeedback();
-  }
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2000);
 }
+
+function majScores() {
+  var b = parseInt(document.getElementById('score-backend').value) || 0;
+  var f = parseInt(document.getElementById('score-frontend').value) || 0;
+  var d = parseInt(document.getElementById('score-bdd').value) || 0;
+  var g = Math.round((b + f + d) / 3);
+  document.getElementById('score-global').textContent = g;
+  document.getElementById('gs-display').textContent = g;
+
+  var c = g >= 90 ? 'var(--green)' : g >= 75 ? 'var(--gold)' : 'var(--orange)';
+  document.getElementById('gs-display').style.color = c;
+
+  document.getElementById('pb-backend').style.width = b + '%';
+  document.getElementById('pb-frontend').style.width = f + '%';
+  document.getElementById('pb-bdd').style.width = d + '%';
+  document.getElementById('pb-global').style.width = g + '%';
+  document.getElementById('gs-fill').style.width = g + '%';
+  sauvegarder();
+}
+
+function majTout() {
+  sprint = document.getElementById('sprint-num').value || 'S61';
+  document.getElementById('gs-sprint').textContent = sprint;
+  checks = JSON.parse(localStorage.getItem('animgest_pq_checks_' + sprint) || '{}');
+  renderChecklist();
+}
+
+function renderChecklist() {
+  var cats = {};
+  CHECKLIST.forEach(function(item) {
+    if (!cats[item.cat]) cats[item.cat] = [];
+    cats[item.cat].push(item);
+  });
+  var done = Object.values(checks).filter(Boolean).length;
+  document.getElementById('check-progress').textContent = done + '/' + CHECKLIST.length;
+
+  var html = '';
+  Object.entries(cats).forEach(function(entry) {
+    var cat = entry[0], items = entry[1];
+    html += '<div style="color:var(--muted);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin:.8rem 0 .3rem;padding-left:.2rem">' + cat + '</div>';
+    items.forEach(function(item) {
+      var isDone = checks[item.id];
+      var badgeClass = { critique: 'b-red', attention: 'b-orange', info: 'b-blue' }[item.badge] || '';
+      html += '<div class="check-item ' + (isDone ? 'done' : '') + '" onclick="toggleCheck(\'' + item.id + '\')">' +
+        '<div class="check-box">' + (isDone ? '✓' : '') + '</div>' +
+        '<div class="check-text">' +
+          '<div class="check-title">' + item.titre + '<span class="badge ' + badgeClass + '">' + item.badge + '</span></div>' +
+          '<div class="check-detail">' + item.detail + '</div>' +
+        '</div>' +
+        '</div>';
+    });
+  });
+  document.getElementById('checklist').innerHTML = html;
+}
+
+function toggleCheck(id) {
+  checks[id] = !checks[id];
+  sauvegarder();
+  renderChecklist();
+}
+
+function reinitChecklist() {
+  if (!confirm('Remettre à zéro la checklist pour ' + sprint + ' ?')) return;
+  checks = {};
+  sauvegarder();
+  renderChecklist();
+  toast('Checklist réinitialisée');
+}
+
+function exporterBilan() {
+  var b = document.getElementById('score-backend').value;
+  var f = document.getElementById('score-frontend').value;
+  var d = document.getElementById('score-bdd').value;
+  var g = Math.round((parseInt(b)+parseInt(f)+parseInt(d))/3);
+  var done = Object.values(checks).filter(Boolean).length;
+  var sp = document.getElementById('sprint-num').value;
+  var dt = document.getElementById('sprint-date').value;
+
+  var txt = '## Bilan Qualité ' + sp + ' — ' + dt + '\n\n';
+  txt += '| Axe | Score |\n|---|---|\n';
+  txt += '| Backend | ' + b + '/100 |\n';
+  txt += '| Frontend | ' + f + '/100 |\n';
+  txt += '| BDD | ' + d + '/100 |\n';
+  txt += '| Global | ' + g + '/100 |\n\n';
+  txt += '> Routes : ' + document.getElementById('m-routes').value;
+  txt += ' | Pages : ' + document.getElementById('m-pages').value;
+  txt += ' | JSDoc : ' + document.getElementById('m-jsdoc').value;
+  txt += ' | Colonnes BDD : ' + document.getElementById('m-colonnes').value + '\n\n';
+  txt += 'Checklist : ' + done + '/' + CHECKLIST.length + ' points validés\n';
+
+  navigator.clipboard.writeText(txt).then(function() { toast('Bilan copié ✓'); });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var saved = JSON.parse(localStorage.getItem('animgest_pq_data') || 'null');
+  if (saved) {
+    if (saved.scores) {
+      document.getElementById('score-backend').value = saved.scores.backend || 82;
+      document.getElementById('score-frontend').value = saved.scores.frontend || 80;
+      document.getElementById('score-bdd').value = saved.scores.bdd || 85;
+    }
+    if (saved.metriques) {
+      document.getElementById('m-routes').value = saved.metriques.routes || '90+';
+      document.getElementById('m-pages').value = saved.metriques.pages || '105';
+      document.getElementById('m-jsdoc').value = saved.metriques.jsdoc || '133/137';
+      document.getElementById('m-colonnes').value = saved.metriques.colonnes || '241/241';
+    }
+  }
+  majScores();
+  renderChecklist();
+});
 </script>
 </body>
 </html>

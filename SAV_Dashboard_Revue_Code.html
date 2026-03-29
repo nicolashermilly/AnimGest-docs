@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Revue de Code — Anim'Gest SAV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#070F1A; --surface:#0D2137; --surface2:#122840; --surface3:#1a3550;
+      --gold:#D4A843; --gold-l:#e8c068; --gold-p:rgba(212,168,67,.1); --gold-b:rgba(212,168,67,.2);
+      --text:#F8F8F5; --muted:#7a8fa6; --border:rgba(255,255,255,.07);
+      --green:#3ecf8e; --red:#ef4444; --orange:#f59e0b; --blue:#60a5fa; --purple:#a78bfa;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
+
+    /* HEADER */
+    .header{background:var(--surface);border-bottom:2px solid var(--gold-b);padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+    .header-brand{display:flex;align-items:center;gap:.8rem}
+    .header-title{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--gold)}
+    .header-sub{color:var(--muted);font-size:.75rem}
+    .header-right{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+    .header-badge{background:var(--gold-p);border:1px solid var(--gold-b);color:var(--gold);font-size:.7rem;font-weight:600;padding:.25rem .7rem;border-radius:20px}
+    .btn-import{background:var(--surface2);border:1px solid var(--gold-b);color:var(--gold);font-size:.75rem;font-weight:600;padding:.35rem .8rem;border-radius:6px;cursor:pointer;transition:.2s}
+    .btn-import:hover{background:var(--surface3)}
+
+    /* SPRINT TABS */
+    .sprint-tabs-wrap{background:var(--surface);border-bottom:1px solid var(--gold-b);display:flex;align-items:stretch;overflow-x:auto;position:sticky;top:0;z-index:50}
+    .sprint-tab{padding:.7rem 1.2rem;font-size:.82rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;font-weight:500;transition:.2s;display:flex;align-items:center;gap:.4rem;flex-shrink:0}
+    .sprint-tab:hover{color:var(--text);background:rgba(255,255,255,.03)}
+    .sprint-tab.active{color:var(--gold);border-bottom-color:var(--gold);font-weight:600}
+    .sprint-tab .tab-score{font-size:.7rem;padding:.1rem .4rem;border-radius:3px;font-weight:700}
+    .sprint-tab-add{padding:.7rem 1rem;color:var(--muted);cursor:pointer;font-size:1rem;flex-shrink:0;transition:.2s}
+    .sprint-tab-add:hover{color:var(--gold)}
+
+    /* MAIN */
+    .main{max-width:1100px;margin:0 auto;padding:1.5rem}
+
+    /* PANEL */
+    .panel{display:none}
+    .panel.active{display:block}
+
+    /* SCORE HERO */
+    .score-hero{background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%);border:1px solid var(--gold-b);border-radius:12px;padding:1.4rem 1.8rem;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .score-hero-val{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;line-height:1}
+    .score-hero-meta{color:var(--muted);font-size:.82rem;margin-top:.3rem}
+    .score-hero-bar{flex:1;min-width:200px}
+    .progress-bg{background:var(--surface3);border-radius:6px;height:10px;margin-top:.5rem}
+    .progress-fill{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--gold),var(--gold-l));transition:width .7s}
+    .score-hero-badge{background:rgba(60,207,142,.1);border:1px solid rgba(60,207,142,.25);color:var(--green);font-size:.72rem;font-weight:600;padding:.25rem .7rem;border-radius:20px}
+
+    /* SCORE CARDS */
+    .score-cards{display:grid;grid-template-columns:repeat(6,1fr);gap:.7rem;margin-bottom:1.2rem}
+    .score-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem}
+    .sc-val{font-size:1.5rem;font-weight:700;font-family:'Playfair Display',serif;display:block;margin-bottom:.1rem}
+    .sc-lbl{font-size:.72rem;font-weight:600;color:var(--text);display:block}
+    .sc-sub{font-size:.68rem;color:var(--muted)}
+
+    /* SUB TABS */
+    .sub-tabs{display:flex;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1.2rem}
+    .sub-tab{padding:.55rem 1.1rem;font-size:.8rem;color:var(--muted);cursor:pointer;border-right:1px solid var(--border);font-weight:500;transition:.2s;flex:1;text-align:center}
+    .sub-tab:last-child{border-right:none}
+    .sub-tab:hover{color:var(--text);background:rgba(255,255,255,.03)}
+    .sub-tab.active{background:var(--surface2);color:var(--gold);font-weight:600}
+
+    /* SECTION */
+    .section{margin-bottom:1.4rem}
+    .section-title{font-size:.8rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.7rem;padding-bottom:.35rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .items{display:flex;flex-direction:column;gap:.35rem}
+    .item{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.55rem 1rem;font-size:.83rem;display:flex;align-items:flex-start;gap:.6rem;line-height:1.5}
+    .item-icon{flex-shrink:0;margin-top:.05rem}
+    .item-body{flex:1;color:var(--text)}
+    .item-sub{color:var(--muted);font-size:.75rem;margin-top:.1rem}
+    .item code{font-family:'JetBrains Mono',monospace;font-size:.77rem;background:rgba(255,255,255,.06);padding:.05rem .3rem;border-radius:3px}
+    .item.rouge{border-left:3px solid var(--red)}
+    .item.orange{border-left:3px solid var(--orange)}
+    .item.bleu{border-left:3px solid var(--blue)}
+    .item.vert{border-left:3px solid var(--green)}
+
+    /* BADGES */
+    .badge{display:inline-block;font-size:.65rem;font-weight:600;padding:.1rem .42rem;border-radius:3px;margin-left:.3rem;vertical-align:middle}
+    .b-red{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+    .b-orange{background:rgba(245,158,11,.1);color:var(--orange);border:1px solid rgba(245,158,11,.25)}
+    .b-blue{background:rgba(96,165,250,.1);color:var(--blue);border:1px solid rgba(96,165,250,.25)}
+    .b-green{background:rgba(60,207,142,.1);color:var(--green);border:1px solid rgba(60,207,142,.25)}
+    .b-gold{background:var(--gold-p);color:var(--gold);border:1px solid var(--gold-b)}
+    .b-new{background:var(--gold);color:var(--bg)}
+    .b-muted{background:rgba(122,143,166,.08);color:var(--muted);border:1px solid rgba(122,143,166,.2)}
+
+    /* CHARTS */
+    .chart-card{background:var(--surface);border:1px solid var(--gold-b);border-radius:10px;padding:1.2rem 1.5rem;margin-bottom:1.2rem}
+    .chart-title{font-weight:600;color:var(--gold);margin-bottom:1rem;font-size:.9rem}
+    .chart-bars{display:flex;align-items:flex-end;gap:6px;height:100px}
+    .chart-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1}
+    .chart-bar-group{display:flex;gap:2px;align-items:flex-end;height:80px}
+    .chart-bar{width:10px;border-radius:3px 3px 0 0;transition:height .5s}
+    .chart-lbl{font-size:.62rem;color:var(--muted);text-align:center}
+    .chart-legend{display:flex;gap:1rem;margin-top:.7rem;flex-wrap:wrap}
+    .chart-leg{display:flex;align-items:center;gap:.3rem;font-size:.72rem;color:var(--muted)}
+    .chart-leg-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+    /* GRID */
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.2rem}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-bottom:1.2rem}
+    .mini-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem}
+    .mini-card-val{font-size:1.3rem;font-weight:700;font-family:'Playfair Display',serif;display:block;margin-bottom:.15rem}
+    .mini-card-lbl{font-size:.7rem;color:var(--muted)}
+
+    /* FORM */
+    .form-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:.7rem}
+    .form-group{display:flex;flex-direction:column;gap:.25rem}
+    .form-label{font-size:.72rem;color:var(--muted);font-weight:500}
+    .form-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:.5rem .8rem;color:var(--text);font-size:.85rem;outline:none}
+    .form-input:focus{border-color:var(--gold-b)}
+    textarea.form-input{resize:vertical;font-family:'DM Sans',sans-serif;min-height:60px}
+
+    /* DETTE ITEMS */
+    .dette-item{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:.6rem 1rem;margin-bottom:.35rem;display:flex;align-items:center;gap:.8rem}
+    .dette-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+    /* MODAL NOUVEAU SPRINT */
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem}
+    .modal-bg.open{display:flex}
+    .modal{background:var(--surface);border:1px solid var(--gold-b);border-radius:12px;padding:1.5rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto}
+    .modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:1rem}
+    .btn{padding:.5rem 1rem;border-radius:6px;font-size:.82rem;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+    .btn-primary{background:var(--gold);color:var(--bg)}
+    .btn-primary:hover{background:var(--gold-l)}
+    .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--gold-b)}
+    .btn-danger{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+    .btn-sm{padding:.3rem .65rem;font-size:.75rem}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:2rem;right:2rem;background:var(--surface);border:1px solid var(--gold-b);border-radius:8px;padding:.8rem 1.2rem;font-size:.85rem;display:none;z-index:999}
+    .toast.show{display:block}
+
+    /* SUB PANEL */
+    .sub-panel{display:none}
+    .sub-panel.active{display:block}
+
+    @media(max-width:768px){
+      .score-cards{grid-template-columns:repeat(3,1fr)}
+      .grid2,.grid3,.grid4{grid-template-columns:1fr 1fr}
+      .form-row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">
+    <span style="font-size:1.4rem">🔍</span>
+    <div>
+      <div class="header-title">Dashboard Revue de Code</div>
+      <div class="header-sub">Qualité · Maintenance · Dette · Règles — un onglet par sprint — Anim'Gest SAV</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn-import" onclick="importerDonnees()">⟳ Importer depuis outils SAV</button>
+    <button class="btn-import" onclick="ouvrirModalSprint()">+ Nouveau sprint</button>
+    <div class="header-badge">NoSage's Editor</div>
+  </div>
+</div>
+
+<!-- ONGLETS SPRINTS -->
+<div class="sprint-tabs-wrap" id="sprint-tabs">
+  <!-- généré par JS -->
+  <div class="sprint-tab-add" onclick="ouvrirModalSprint()" title="Ajouter un sprint">＋</div>
+</div>
+
+<div class="main" id="panels-container">
+  <!-- généré par JS -->
+</div>
+
+<!-- MODAL NOUVEAU SPRINT -->
+<div class="modal-bg" id="modal-sprint">
+  <div class="modal">
+    <div class="modal-title">+ Nouveau sprint</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Numéro sprint *</label>
+        <input type="text" class="form-input" id="ns-num" placeholder="S62">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Date</label>
+        <input type="text" class="form-input" id="ns-date" placeholder="29/03/2026">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Statut</label>
+        <select class="form-input" id="ns-statut">
+          <option value="en-cours">En cours</option>
+          <option value="termine">Terminé</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Score Backend</label>
+        <input type="number" class="form-input" id="ns-backend" placeholder="82" min="0" max="100">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Score Frontend</label>
+        <input type="number" class="form-input" id="ns-frontend" placeholder="80" min="0" max="100">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Score BDD</label>
+        <input type="number" class="form-input" id="ns-bdd" placeholder="85" min="0" max="100">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Routes API</label>
+        <input type="text" class="form-input" id="ns-routes" placeholder="90+">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Pages UI</label>
+        <input type="text" class="form-input" id="ns-pages" placeholder="105">
+      </div>
+      <div class="form-group">
+        <label class="form-label">JSDoc</label>
+        <input type="text" class="form-input" id="ns-jsdoc" placeholder="133/137">
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:.7rem">
+      <label class="form-label">Réalisations principales (une par ligne)</label>
+      <textarea class="form-input" id="ns-realisations" placeholder="Fix critique X&#10;Nouveau module Y&#10;BDD : table Z créée"></textarea>
+    </div>
+    <div class="form-group" style="margin-bottom:.7rem">
+      <label class="form-label">Bugs connus (une par ligne, préfixe 🔴/🟡/🔵)</label>
+      <textarea class="form-input" id="ns-bugs" placeholder="🔴 Audit PDF window.open()&#10;🟡 Drag Drop agenda"></textarea>
+    </div>
+    <div class="form-group" style="margin-bottom:1rem">
+      <label class="form-label">Commits principaux (une par ligne)</label>
+      <textarea class="form-input" id="ns-commits" placeholder="e660f5f — S61a description&#10;c9acf70 — Module portail"></textarea>
+    </div>
+    <div style="display:flex;gap:.6rem;justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="fermerModal()">Annuler</button>
+      <button class="btn btn-primary" onclick="creerSprint()">Créer le sprint</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// DONNÉES INITIALES
+// ============================================================
+var SPRINTS_DEFAUT = [
+  {
+    id: 'S54', num: 'S54', date: '25/03/2026', statut: 'termine',
+    scores: { backend: 53, frontend: 55, bdd: 70, global: 59 },
+    metriques: { routes: '45', pages: '70', jsdoc: '0/137', colonnes: '180/241' },
+    realisations: [
+      'Audit qualite formel — score initial 53/100',
+      'Debut refactorisation : getDb() centralise, JSDoc, composants generiques',
+      'Fix CSS mode clair : h1/h2 invisibles, textes tableaux pales',
+      'DataTable, KpiCard, StatusBadge, PageHeader crees'
+    ],
+    bugs: ['🟡 Mode clair non complet', '🔵 JSDoc absent sur la majorite des fichiers'],
+    commits: [],
+    dette: [],
+    regles_violations: []
+  },
+  {
+    id: 'S56', num: 'S56', date: '27/03/2026', statut: 'termine',
+    scores: { backend: 78, frontend: 76, bdd: 82, global: 79 },
+    metriques: { routes: '70', pages: '100', jsdoc: '90/137', colonnes: '220/241' },
+    realisations: [
+      '100 pages UI compilees — objectif atteint',
+      'Formules/Abonnements : page + tables formule_ligne / client_formule',
+      'Suppression code mort — imports inutilises, composants orphelins',
+      'Parametres editions : Logo, Couleurs, Police, En-tete, CGV, Filigrane'
+    ],
+    bugs: ['🔴 Audit PDF window.open() a remplacer', '🟡 devis_ligne inexistante'],
+    commits: [],
+    dette: ['window.open() present dans editions', 'JSDoc incomplet 90/137'],
+    regles_violations: []
+  },
+  {
+    id: 'S57', num: 'S57', date: '28/03/2026', statut: 'termine',
+    scores: { backend: 80, frontend: 78, bdd: 83, global: 80 },
+    metriques: { routes: '80', pages: '100', jsdoc: '120/137', colonnes: '235/241' },
+    realisations: [
+      'Fix GET /roles/:id/permissions — vrais noms colonnes BDD',
+      'Fix GET /user-permissions — detection auto colonnes',
+      'Sidebar comportementaliste : suppression lien Suivi CAC (regle definitive)',
+      'Fix KPIs dashboard nb_seances',
+      'Restauration src/ depuis backup — elimination parasites'
+    ],
+    bugs: ['🔴 Audit PDF window.open()', '🟡 Drag Drop agenda', '🟡 devis_ligne inexistante'],
+    commits: [],
+    dette: ['window.open() encore present', 'JSDoc 120/137'],
+    regles_violations: []
+  },
+  {
+    id: 'S58', num: 'S58', date: '28/03/2026', statut: 'termine',
+    scores: { backend: 82, frontend: 80, bdd: 85, global: 82 },
+    metriques: { routes: '87', pages: '100', jsdoc: '133/137', colonnes: '241/241' },
+    realisations: [
+      'Module Formules/Abonnements complet — 10 routes API, page /app/formules',
+      'RBAC — tables role + role_permission, 56 permissions sur 14 modules',
+      'Badge role colore dans Topbar, colonne USR_ROLE_ID',
+      '4 roles : ADMIN, GESTION, CONSULT, COMPTA',
+      'getDb() centralise — 0 createConnection() restant',
+      'JSDoc 133/137 fichiers couverts',
+      '241/241 colonnes BDD commentees'
+    ],
+    bugs: ['🔴 Audit PDF window.open()', '🟡 Drag Drop agenda', '🟡 devis_ligne inexistante', '🔵 Export CSV reglements'],
+    commits: [],
+    dette: ['window.open() encore present', '4 fichiers JSDoc manquants'],
+    regles_violations: []
+  },
+  {
+    id: 'S59', num: 'S59', date: '29/03/2026', statut: 'termine',
+    scores: { backend: 82, frontend: 80, bdd: 85, global: 82 },
+    metriques: { routes: '88', pages: '100', jsdoc: '133/137', colonnes: '241/241' },
+    realisations: [
+      'Fix dashboard ged-edc-sans-devis + correction syntaxe devis/[id]/page.tsx',
+      'Nettoyage repo — suppression archives et fichiers .bak commites par erreur',
+      'Migration repo docs local : C:\\petsuite-docs → C:\\AnimGest_Repo_Git\\petsuite-docs'
+    ],
+    bugs: ['🔴 Audit PDF window.open()', '🟡 Drag Drop agenda', '🟡 devis_ligne inexistante', '🔵 Export CSV reglements', '🔵 /app/elevage/declarations manquante'],
+    commits: [],
+    dette: ['window.open() encore present'],
+    regles_violations: []
+  },
+  {
+    id: 'S60', num: 'S60', date: '29/03/2026', statut: 'termine',
+    scores: { backend: 82, frontend: 80, bdd: 85, global: 82 },
+    metriques: { routes: '90', pages: '100', jsdoc: '133/137', colonnes: '241/241' },
+    realisations: [
+      'Fix PUT reseaux-sociaux + migration rs_publication → rs_post',
+      'Fix RS colonnes _URL + guillemets SQL ligne 2206',
+      'Devis : transitions statut BROUILLON→ENVOYE→ACCEPTE→FACTURE',
+      'Devis : bouton Email + bouton Creer facture fonctionnels',
+      'Page /app/parametres/editions — Logo, Couleurs, Police, En-tete, CGV, Filigrane',
+      'Route GET /seances/:id ajoutee avec jointures STY/SST/tiers/animal/contact',
+      'Fix /roles/:id/permissions et /user-permissions colonnes reelles BDD',
+      'Script sauvegarde v7 deploye — FULL_KEEP=30'
+    ],
+    bugs: ['🔴 Audit PDF window.open()', '🟡 Drag Drop agenda', '🟡 devis_ligne inexistante', '🔵 Export CSV reglements', '🔵 /app/elevage/declarations manquante'],
+    commits: [
+      'c6e046c — S60a : Fix PUT reseaux-sociaux + lien Nouveau devis sidebar',
+      '6cc4050 — S60b : Fix RS colonnes _URL + migration rs_publication → rs_post',
+      '7712b33 — S60c : Fix API RS guillemets SQL ligne 2206',
+      '389a1cf — S60d : Fix RS setData(d.raw) pour pre-remplir les champs',
+      'c8c9d2d — S60e : Devis transitions statut + Email + Creer facture + routes PUT/POST'
+    ],
+    dette: ['window.open() encore present dans pages Editions'],
+    regles_violations: []
+  },
+  {
+    id: 'S61', num: 'S61', date: '29/03/2026', statut: 'en-cours',
+    scores: { backend: 82, frontend: 80, bdd: 85, global: 82 },
+    metriques: { routes: '90+', pages: '105', jsdoc: '133/137', colonnes: '241/241' },
+    realisations: [
+      'Git rattrapage S52-S60 : commit S61a (80 pages UI + API), S61b nettoyage .gltf + archives',
+      'Portail Client v2 : 4 tables BDD creees (FK corrigees INT/BIGINT signes)',
+      'Portail Client S61 : 9 routes API (auth + seances + admin)',
+      'Portail Client S62 : 7 routes API supplementaires (animaux/CAC + devis/factures + PDF modal)',
+      'Page /client/[token] v2 : 4 onglets, modal CAC graphique, modal PDF srcdoc',
+      'Page /app/parametres/portail : gestion acces praticien',
+      'Documentation : 9 changelogs S52→S60 generes + index 105 pages',
+      '83 pages petsuite-docs harmonisees — charte navy/gold + nav sticky',
+      '07-audit-stack + 17-api-reference + 20-pilotage-projet mis a jour S61',
+      'SAV : Analyseur Dette Technique cree (5 onglets + refactorisation interactive)',
+      'SAV : Referentiel Regles Metier cree (15 regles + matrice couverture)',
+      'SAV : Pilotage Qualite + Launcher + Revue de Code mis a jour'
+    ],
+    bugs: ['🔴 Audit PDF window.open() pages Editions', '🟡 Drag Drop agenda /app/planning-seances', '🟡 devis_ligne inexistante — GET /api/devis/:id/lignes retourne []', '🔵 Export CSV reglements manquant', '🔵 /app/elevage/declarations page manquante'],
+    commits: [
+      'e660f5f — S61a : 80 pages UI + API + .gitignore mis a jour',
+      'c597f73 — S61b : Suppression 12 modeles .gltf',
+      '039b9ba — S61b : Suppression dossier _A_SUPPRIMER/',
+      '6d3ba1c — docs : 9 changelogs S52→S60 generes',
+      'fa0dc6b — docs : index.html 105 pages + docs-changelog',
+      '557a682 — docs : .gitignore petsuite-docs',
+      'c9acf70 — docs : Module A Portail Client v2 spec initiale',
+      'ec36021 — docs : audit-stack + api-reference + pilotage S61',
+      '9957788 — docs : harmonisation charte graphique 83 pages',
+      '0e8f6ee — docs : Portail Client v2 MaJ S62 (16 routes, CAC, PDF)'
+    ],
+    dette: [
+      'window.open() encore present dans pages Editions [HAUTE]',
+      'Drag Drop agenda non fonctionnel [MOYENNE]',
+      'devis_ligne inexistante [MOYENNE]',
+      'Migration routes vers api/src/routes/ non faite [MOYENNE]',
+      'Export CSV reglements manquant [BASSE]',
+      '4 fichiers JSDoc manquants [BASSE]'
+    ],
+    regles_violations: [],
+    regles_ok: [
+      'app.use() uniquement — 0 app.get/post/put',
+      'getDb() centralise — 87+ appels, 0 createConnection()',
+      'CAC uniquement depuis /app/seances/[id] — sidebar nettoyee',
+      'PDF portail en iframe srcdoc — window.open() absent portail',
+      'sessionStorage uniquement portail — localStorage absent',
+      'Scripts Python dans Downloads — 0 OneDrive',
+      'FK BDD types alignes — TIE_ID INT(11), SEA_ID BIGINT(20)'
+    ]
+  }
+];
+
+var sprints = JSON.parse(localStorage.getItem('animgest_drc_sprints') || 'null') || SPRINTS_DEFAUT;
+var sprintActif = sprints[sprints.length - 1].id;
+
+function sauvegarder() {
+  localStorage.setItem('animgest_drc_sprints', JSON.stringify(sprints));
+}
+
+function toast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.borderColor = type === 'success' ? 'rgba(60,207,142,.4)' : 'rgba(212,168,67,.2)';
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2200);
+}
+
+// ============================================================
+// IMPORT DEPUIS LES OUTILS SAV
+// ============================================================
+function importerDonnees() {
+  var imported = false;
+
+  // Import depuis Pilotage Qualité
+  var pqData = JSON.parse(localStorage.getItem('animgest_pq_data') || 'null');
+  if (pqData && pqData.sprint) {
+    var s = trouverOuCreerSprint(pqData.sprint);
+    if (pqData.scores) {
+      s.scores.backend = parseInt(pqData.scores.backend) || s.scores.backend;
+      s.scores.frontend = parseInt(pqData.scores.frontend) || s.scores.frontend;
+      s.scores.bdd = parseInt(pqData.scores.bdd) || s.scores.bdd;
+      s.scores.global = Math.round((s.scores.backend + s.scores.frontend + s.scores.bdd) / 3);
+    }
+    if (pqData.metriques) {
+      s.metriques.routes = pqData.metriques.routes || s.metriques.routes;
+      s.metriques.pages = pqData.metriques.pages || s.metriques.pages;
+      s.metriques.jsdoc = pqData.metriques.jsdoc || s.metriques.jsdoc;
+    }
+    imported = true;
+  }
+
+  // Import depuis Analyseur Dette
+  var dette = JSON.parse(localStorage.getItem('animgest_dette') || 'null');
+  if (dette && dette.length > 0) {
+    var sp = trouverSprint(sprintActif);
+    if (sp) {
+      sp.dette = dette.filter(function(d) { return !d.resolue; }).map(function(d) {
+        return d.titre + ' [' + d.priorite.toUpperCase() + ']';
+      });
+      imported = true;
+    }
+  }
+
+  // Import depuis Règles Métier
+  var regles = JSON.parse(localStorage.getItem('animgest_regles') || 'null');
+  if (regles && regles.length > 0) {
+    var sp2 = trouverSprint(sprintActif);
+    if (sp2) {
+      sp2.regles_ok = regles.filter(function(r) { return r.statut === 'active'; }).map(function(r) { return r.titre; });
+      imported = true;
+    }
+  }
+
+  if (imported) {
+    sauvegarder();
+    renderAll();
+    toast('Donnees importees depuis les outils SAV', 'success');
+  } else {
+    toast('Aucune donnee SAV trouvee — utilisez les autres outils d\'abord');
+  }
+}
+
+function trouverSprint(id) {
+  return sprints.find(function(s) { return s.id === id; }) || null;
+}
+
+function trouverOuCreerSprint(num) {
+  var existing = sprints.find(function(s) { return s.num === num; });
+  if (existing) return existing;
+  var ns = creerSprintVide(num);
+  sprints.push(ns);
+  return ns;
+}
+
+function creerSprintVide(num) {
+  return {
+    id: num, num: num, date: new Date().toLocaleDateString('fr-FR'), statut: 'en-cours',
+    scores: { backend: 0, frontend: 0, bdd: 0, global: 0 },
+    metriques: { routes: '-', pages: '-', jsdoc: '-', colonnes: '-' },
+    realisations: [], bugs: [], commits: [], dette: [], regles_violations: [], regles_ok: []
+  };
+}
+
+// ============================================================
+// MODAL NOUVEAU SPRINT
+// ============================================================
+function ouvrirModalSprint() {
+  document.getElementById('modal-sprint').classList.add('open');
+  document.getElementById('ns-date').value = new Date().toLocaleDateString('fr-FR');
+}
+
+function fermerModal() {
+  document.getElementById('modal-sprint').classList.remove('open');
+}
+
+function creerSprint() {
+  var num = document.getElementById('ns-num').value.trim();
+  if (!num) { toast('Le numero de sprint est obligatoire'); return; }
+
+  var b = parseInt(document.getElementById('ns-backend').value) || 0;
+  var f = parseInt(document.getElementById('ns-frontend').value) || 0;
+  var d = parseInt(document.getElementById('ns-bdd').value) || 0;
+
+  var real = document.getElementById('ns-realisations').value.split('\n').filter(Boolean);
+  var bugs = document.getElementById('ns-bugs').value.split('\n').filter(Boolean);
+  var commits = document.getElementById('ns-commits').value.split('\n').filter(Boolean);
+
+  var ns = {
+    id: num, num: num,
+    date: document.getElementById('ns-date').value,
+    statut: document.getElementById('ns-statut').value,
+    scores: { backend: b, frontend: f, bdd: d, global: Math.round((b+f+d)/3) },
+    metriques: {
+      routes: document.getElementById('ns-routes').value || '-',
+      pages: document.getElementById('ns-pages').value || '-',
+      jsdoc: document.getElementById('ns-jsdoc').value || '-',
+      colonnes: '-'
+    },
+    realisations: real, bugs: bugs, commits: commits, dette: [], regles_violations: [], regles_ok: []
+  };
+
+  var existing = sprints.findIndex(function(s) { return s.id === num; });
+  if (existing >= 0) {
+    sprints[existing] = ns;
+  } else {
+    sprints.push(ns);
+  }
+  sauvegarder();
+  sprintActif = num;
+  fermerModal();
+  renderAll();
+  toast('Sprint ' + num + ' cree', 'success');
+}
+
+// ============================================================
+// RENDU
+// ============================================================
+function getScoreColor(score) {
+  if (score >= 90) return 'var(--green)';
+  if (score >= 80) return 'var(--gold)';
+  if (score >= 70) return 'var(--orange)';
+  return 'var(--red)';
+}
+
+function renderTabs() {
+  var container = document.getElementById('sprint-tabs');
+  var addBtn = container.querySelector('.sprint-tab-add');
+
+  // Supprimer les anciens tabs
+  container.querySelectorAll('.sprint-tab').forEach(function(t) { t.remove(); });
+
+  // Onglet evolution
+  var evolTab = document.createElement('div');
+  evolTab.className = 'sprint-tab' + (sprintActif === '__evol' ? ' active' : '');
+  evolTab.innerHTML = '📈 Evolution';
+  evolTab.onclick = function() { activerSprint('__evol'); };
+  container.insertBefore(evolTab, addBtn);
+
+  // Un onglet par sprint
+  sprints.forEach(function(s) {
+    var tab = document.createElement('div');
+    tab.className = 'sprint-tab' + (s.id === sprintActif ? ' active' : '');
+    var scoreColor = getScoreColor(s.scores.global);
+    var statutBadge = s.statut === 'en-cours' ? '<span style="background:var(--gold);color:var(--bg);font-size:.62rem;padding:.1rem .35rem;border-radius:3px;font-weight:700">EN COURS</span>' : '';
+    tab.innerHTML = s.num + ' — <span style="color:' + scoreColor + ';font-weight:700">' + s.scores.global + '</span>' + statutBadge;
+    tab.onclick = (function(id) { return function() { activerSprint(id); }; })(s.id);
+    container.insertBefore(tab, addBtn);
+  });
+}
+
+function activerSprint(id) {
+  sprintActif = id;
+  renderTabs();
+  renderPanels();
+}
+
+function renderPanels() {
+  var container = document.getElementById('panels-container');
+  container.querySelectorAll('.panel').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  var panel = document.getElementById('panel-' + sprintActif);
+  if (panel) panel.classList.add('active');
+}
+
+function renderAll() {
+  var container = document.getElementById('panels-container');
+  container.innerHTML = '';
+
+  // Panel évolution
+  var evolPanel = document.createElement('div');
+  evolPanel.className = 'panel' + (sprintActif === '__evol' ? ' active' : '');
+  evolPanel.id = 'panel-__evol';
+  evolPanel.innerHTML = renderEvolution();
+  container.appendChild(evolPanel);
+
+  // Panels sprints
+  sprints.forEach(function(s) {
+    var panel = document.createElement('div');
+    panel.className = 'panel' + (s.id === sprintActif ? ' active' : '');
+    panel.id = 'panel-' + s.id;
+    panel.innerHTML = renderSprint(s);
+    container.appendChild(panel);
+  });
+
+  renderTabs();
+  // Activer les sub-tabs sur le panel actif
+  setTimeout(function() {
+    var activePanel = document.querySelector('.panel.active');
+    if (activePanel) {
+      var firstSubTab = activePanel.querySelector('.sub-tab');
+      if (firstSubTab) firstSubTab.click();
+    }
+  }, 50);
+}
+
+// ============================================================
+// PANEL EVOLUTION
+// ============================================================
+function renderEvolution() {
+  var max = 100;
+  var barsHtml = sprints.map(function(s) {
+    return '<div class="chart-col">' +
+      '<div class="chart-bar-group">' +
+        '<div class="chart-bar" style="height:' + (s.scores.backend/max*80) + 'px;background:var(--blue)"></div>' +
+        '<div class="chart-bar" style="height:' + (s.scores.frontend/max*80) + 'px;background:var(--purple)"></div>' +
+        '<div class="chart-bar" style="height:' + (s.scores.bdd/max*80) + 'px;background:var(--orange)"></div>' +
+      '</div>' +
+      '<div class="chart-lbl">' + s.num + '<br><span style="color:' + getScoreColor(s.scores.global) + ';font-weight:700">' + s.scores.global + '</span></div>' +
+    '</div>';
+  }).join('');
+
+  var lastTwo = sprints.slice(-2);
+  var progression = lastTwo.length === 2 ? (lastTwo[1].scores.global - lastTwo[0].scores.global) : 0;
+  var progSign = progression >= 0 ? '+' : '';
+  var progColor = progression > 0 ? 'var(--green)' : progression < 0 ? 'var(--red)' : 'var(--muted)';
+
+  var tableHtml = '<table style="width:100%;border-collapse:collapse;font-size:.82rem;margin-top:1rem">' +
+    '<tr style="border-bottom:1px solid var(--gold-b)">' +
+    '<th style="padding:.5rem .8rem;text-align:left;color:var(--gold);background:var(--surface2)">Sprint</th>' +
+    '<th style="padding:.5rem .8rem;color:var(--blue);background:var(--surface2)">Backend</th>' +
+    '<th style="padding:.5rem .8rem;color:var(--purple);background:var(--surface2)">Frontend</th>' +
+    '<th style="padding:.5rem .8rem;color:var(--orange);background:var(--surface2)">BDD</th>' +
+    '<th style="padding:.5rem .8rem;color:var(--gold);background:var(--surface2)">Global</th>' +
+    '<th style="padding:.5rem .8rem;text-align:left;color:var(--muted);background:var(--surface2)">Routes</th>' +
+    '<th style="padding:.5rem .8rem;text-align:left;color:var(--muted);background:var(--surface2)">Pages</th>' +
+    '</tr>' +
+    sprints.map(function(s) {
+      var g = s.scores.global;
+      return '<tr style="border-bottom:1px solid var(--border)">' +
+        '<td style="padding:.5rem .8rem;color:var(--text);font-weight:600">' + s.num + '<br><span style="color:var(--muted);font-size:.7rem;font-weight:400">' + s.date + '</span></td>' +
+        '<td style="padding:.5rem .8rem;text-align:center;color:' + getScoreColor(s.scores.backend) + ';font-weight:700">' + s.scores.backend + '</td>' +
+        '<td style="padding:.5rem .8rem;text-align:center;color:' + getScoreColor(s.scores.frontend) + ';font-weight:700">' + s.scores.frontend + '</td>' +
+        '<td style="padding:.5rem .8rem;text-align:center;color:' + getScoreColor(s.scores.bdd) + ';font-weight:700">' + s.scores.bdd + '</td>' +
+        '<td style="padding:.5rem .8rem;text-align:center;color:' + getScoreColor(g) + ';font-size:1.1rem;font-weight:700">' + g + '</td>' +
+        '<td style="padding:.5rem .8rem;color:var(--muted)">' + s.metriques.routes + '</td>' +
+        '<td style="padding:.5rem .8rem;color:var(--muted)">' + s.metriques.pages + '</td>' +
+        '</tr>';
+    }).join('') +
+    '</table>';
+
+  return '<div class="chart-card">' +
+    '<div class="chart-title">📈 Evolution des scores — ' + sprints[0].num + ' → ' + sprints[sprints.length-1].num + ' <span style="margin-left:1rem;font-size:.8rem;color:' + progColor + '">' + progSign + progression + ' pts vs sprint precedent</span></div>' +
+    '<div class="chart-bars">' + barsHtml + '</div>' +
+    '<div class="chart-legend">' +
+      '<div class="chart-leg"><div class="chart-leg-dot" style="background:var(--blue)"></div>Backend</div>' +
+      '<div class="chart-leg"><div class="chart-leg-dot" style="background:var(--purple)"></div>Frontend</div>' +
+      '<div class="chart-leg"><div class="chart-leg-dot" style="background:var(--orange)"></div>BDD</div>' +
+    '</div>' +
+    '</div>' +
+    '<div style="background:var(--surface);border:1px solid var(--gold-b);border-radius:10px;overflow:hidden">' +
+    '<div style="padding:.8rem 1.2rem;background:var(--surface2);font-weight:600;color:var(--gold);font-size:.88rem">Tableau de bord historique</div>' +
+    tableHtml +
+    '</div>';
+}
+
+// ============================================================
+// PANEL SPRINT
+// ============================================================
+function renderSprint(s) {
+  var global = s.scores.global || Math.round((s.scores.backend + s.scores.frontend + s.scores.bdd) / 3);
+  var gc = getScoreColor(global);
+  var statutBadge = s.statut === 'en-cours'
+    ? '<span class="badge b-new">En cours</span>'
+    : '<span class="badge b-green">Termine</span>';
+
+  // Score hero
+  var hero = '<div class="score-hero">' +
+    '<div>' +
+      '<div style="display:flex;align-items:baseline;gap:.4rem">' +
+        '<span class="score-hero-val" style="color:' + gc + '">' + global + '</span>' +
+        '<span style="color:var(--muted);font-size:.9rem">/100</span>' +
+      '</div>' +
+      '<div class="score-hero-meta">Sprint ' + s.num + ' — ' + s.date + ' ' + statutBadge + '</div>' +
+    '</div>' +
+    '<div class="score-hero-bar">' +
+      '<div style="color:var(--muted);font-size:.75rem;margin-bottom:.2rem">Score global</div>' +
+      '<div class="progress-bg"><div class="progress-fill" style="width:' + global + '%"></div></div>' +
+    '</div>' +
+  '</div>';
+
+  // Score cards
+  var cards = '<div class="score-cards">' +
+    renderScoreCard(s.scores.backend, 'Backend', 'var(--blue)', s.metriques.routes + ' routes') +
+    renderScoreCard(s.scores.frontend, 'Frontend', 'var(--purple)', s.metriques.pages + ' pages') +
+    renderScoreCard(s.scores.bdd, 'BDD', 'var(--orange)', s.metriques.colonnes + ' cols') +
+    renderScoreCard(global, 'Global', gc, 'Score calcule') +
+    '<div class="score-card"><span class="sc-val" style="color:var(--green)">' + (s.metriques.jsdoc || '-') + '</span><span class="sc-lbl">JSDoc</span><span class="sc-sub">/137 fichiers</span></div>' +
+    '<div class="score-card"><span class="sc-val" style="color:var(--blue)">' + (s.metriques.routes || '-') + '</span><span class="sc-lbl">Routes API</span><span class="sc-sub">custom-routes.ts</span></div>' +
+  '</div>';
+
+  // Sub tabs
+  var pid = 'sp-' + s.id;
+  var subTabs = '<div class="sub-tabs">' +
+    '<div class="sub-tab active" onclick="showSubTab(\'' + pid + '\', \'real\', this)">✅ Realisations</div>' +
+    '<div class="sub-tab" onclick="showSubTab(\'' + pid + '\', \'commits\', this)">📦 Commits</div>' +
+    '<div class="sub-tab" onclick="showSubTab(\'' + pid + '\', \'bugs\', this)">🐛 Bugs</div>' +
+    '<div class="sub-tab" onclick="showSubTab(\'' + pid + '\', \'dette\', this)">⚙️ Dette</div>' +
+    '<div class="sub-tab" onclick="showSubTab(\'' + pid + '\', \'regles\', this)">📜 Regles</div>' +
+  '</div>';
+
+  // Sub panels
+  var realHtml = renderItems(s.realisations, '✅', 'Aucune realisation enregistree');
+  var commitsHtml = renderCommits(s.commits);
+  var bugsHtml = renderBugs(s.bugs);
+  var detteHtml = renderDette(s.dette);
+  var reglesHtml = renderRegles(s);
+
+  var subPanels = '<div id="' + pid + '-real" class="sub-panel active"><div class="section"><div class="section-title">Realisations ' + s.num + '</div><div class="items">' + realHtml + '</div></div></div>' +
+    '<div id="' + pid + '-commits" class="sub-panel"><div class="section"><div class="section-title">Commits</div><div class="items">' + commitsHtml + '</div></div></div>' +
+    '<div id="' + pid + '-bugs" class="sub-panel"><div class="section"><div class="section-title">Bugs connus</div><div class="items">' + bugsHtml + '</div></div></div>' +
+    '<div id="' + pid + '-dette" class="sub-panel"><div class="section"><div class="section-title">Dette technique</div>' + detteHtml + '</div></div>' +
+    '<div id="' + pid + '-regles" class="sub-panel"><div class="section"><div class="section-title">Regles critiques</div>' + reglesHtml + '</div></div>';
+
+  return hero + cards + subTabs + subPanels;
+}
+
+function renderScoreCard(val, lbl, color, sub) {
+  return '<div class="score-card"><span class="sc-val" style="color:' + color + '">' + (val || '—') + '</span><span class="sc-lbl">' + lbl + '</span><span class="sc-sub">' + (sub || '') + '</span></div>';
+}
+
+function renderItems(arr, icon, empty) {
+  if (!arr || arr.length === 0) return '<div class="item"><span class="item-icon">—</span><div class="item-body" style="color:var(--muted)">' + empty + '</div></div>';
+  return arr.map(function(t) {
+    return '<div class="item"><span class="item-icon">' + (icon || '•') + '</span><div class="item-body">' + t + '</div></div>';
+  }).join('');
+}
+
+function renderCommits(arr) {
+  if (!arr || arr.length === 0) return '<div class="item"><span class="item-icon">—</span><div class="item-body" style="color:var(--muted)">Aucun commit enregistre</div></div>';
+  return arr.map(function(c) {
+    var parts = c.split(' — ');
+    var hash = parts[0] || '';
+    var desc = parts.slice(1).join(' — ') || c;
+    return '<div class="item"><span class="item-icon">📦</span><div class="item-body"><code>' + hash + '</code> ' + desc + '</div></div>';
+  }).join('');
+}
+
+function renderBugs(arr) {
+  if (!arr || arr.length === 0) return '<div class="item vert"><span class="item-icon">✅</span><div class="item-body">Aucun bug connu enregistre</div></div>';
+  return arr.map(function(b) {
+    var cls = b.startsWith('🔴') ? 'rouge' : b.startsWith('🟡') ? 'orange' : 'bleu';
+    return '<div class="item ' + cls + '"><span class="item-icon">' + b[0] + '</span><div class="item-body">' + b.slice(2).trim() + '</div></div>';
+  }).join('');
+}
+
+function renderDette(arr) {
+  if (!arr || arr.length === 0) {
+    return '<div class="item vert"><span class="item-icon">✅</span><div class="item-body">Aucune dette technique enregistree — utilisez l\'Analyseur Dette pour importer</div></div>' +
+      '<div style="margin-top:.7rem;padding:.6rem 1rem;background:rgba(212,168,67,.06);border:1px solid var(--gold-b);border-radius:6px;font-size:.8rem;color:var(--muted)">Alimenter depuis : <a href="SAV_Analyseur_Dette_Technique.html" style="color:var(--gold)">Analyseur Dette Technique</a> → Exporter → bouton "Importer" en haut</div>';
+  }
+  var haute = arr.filter(function(d) { return d.includes('[HAUTE]'); });
+  var moyenne = arr.filter(function(d) { return d.includes('[MOYENNE]'); });
+  var basse = arr.filter(function(d) { return !d.includes('[HAUTE]') && !d.includes('[MOYENNE]'); });
+  var score = Math.max(0, 100 - haute.length * 15 - moyenne.length * 7 - basse.length * 3);
+
+  return '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:.8rem">' +
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.7rem;text-align:center"><div style="font-size:1.2rem;font-weight:700;color:var(--red)">' + haute.length + '</div><div style="font-size:.7rem;color:var(--muted)">Haute</div></div>' +
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.7rem;text-align:center"><div style="font-size:1.2rem;font-weight:700;color:var(--orange)">' + moyenne.length + '</div><div style="font-size:.7rem;color:var(--muted)">Moyenne</div></div>' +
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.7rem;text-align:center"><div style="font-size:1.2rem;font-weight:700;color:var(--blue)">' + basse.length + '</div><div style="font-size:.7rem;color:var(--muted)">Basse</div></div>' +
+    '<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.7rem;text-align:center"><div style="font-size:1.2rem;font-weight:700;color:var(--gold)">' + score + '/100</div><div style="font-size:.7rem;color:var(--muted)">Score dette</div></div>' +
+    '</div>' +
+    '<div class="items">' + arr.map(function(d) {
+      var cls = d.includes('[HAUTE]') ? 'rouge' : d.includes('[MOYENNE]') ? 'orange' : 'bleu';
+      var icon = d.includes('[HAUTE]') ? '🔴' : d.includes('[MOYENNE]') ? '🟡' : '🔵';
+      return '<div class="dette-item"><div class="dette-dot" style="background:' + (cls === 'rouge' ? 'var(--red)' : cls === 'orange' ? 'var(--orange)' : 'var(--blue)') + '"></div><div style="flex:1;font-size:.83rem">' + d.replace('[HAUTE]','').replace('[MOYENNE]','').replace('[BASSE]','').trim() + '</div></div>';
+    }).join('') +
+    '</div>';
+}
+
+function renderRegles(s) {
+  var violations = s.regles_violations || [];
+  var ok = s.regles_ok || [];
+
+  var html = '';
+  if (violations.length > 0) {
+    html += '<div style="margin-bottom:.7rem"><div style="color:var(--red);font-size:.78rem;font-weight:600;margin-bottom:.4rem">Violations detectees</div>' +
+      violations.map(function(v) { return '<div class="item rouge"><span class="item-icon">🚫</span><div class="item-body">' + v + '</div></div>'; }).join('') +
+      '</div>';
+  }
+  if (ok.length > 0) {
+    html += '<div><div style="color:var(--green);font-size:.78rem;font-weight:600;margin-bottom:.4rem">Regles respectees</div>' +
+      ok.map(function(r) { return '<div class="item vert"><span class="item-icon">✅</span><div class="item-body">' + r + '</div></div>'; }).join('') +
+      '</div>';
+  }
+  if (!html) {
+    html = '<div class="item"><span class="item-icon">—</span><div class="item-body" style="color:var(--muted)">Aucune information de regles enregistree — alimenter depuis Referentiel Regles Metier</div></div>' +
+      '<div style="margin-top:.7rem;padding:.6rem 1rem;background:rgba(212,168,67,.06);border:1px solid var(--gold-b);border-radius:6px;font-size:.8rem;color:var(--muted)">Alimenter depuis : <a href="SAV_Regles_Metier.html" style="color:var(--gold)">Referentiel Regles Metier</a> → Export → bouton "Importer" en haut</div>';
+  }
+  return html;
+}
+
+function showSubTab(prefix, name, el) {
+  // Desactiver les autres sub-tabs dans le meme panel
+  var parentPanel = el.closest('.panel');
+  if (!parentPanel) return;
+  parentPanel.querySelectorAll('.sub-tab').forEach(function(t) { t.classList.remove('active'); });
+  parentPanel.querySelectorAll('.sub-panel').forEach(function(p) { p.classList.remove('active'); });
+  el.classList.add('active');
+  var target = document.getElementById(prefix + '-' + name);
+  if (target) target.classList.add('active');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+  sprintActif = sprints[sprints.length - 1].id;
+  renderAll();
+});
+</script>
+</body>
+</html>
