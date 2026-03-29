@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA Générative dans Anim'Gest — NoSage's Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ── VARIABLES & RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:    #0D2137;
+  --navy2:   #102844;
+  --navy3:   #143356;
+  --gold:    #D4A843;
+  --gold2:   #e8c060;
+  --gold-dim: rgba(212,168,67,0.15);
+  --text:    #E8E0CE;
+  --muted:   #8A9BB5;
+  --border:  rgba(212,168,67,0.18);
+  --surface: rgba(255,255,255,0.04);
+  --accent:  #534ab7;
+  --accent2: #7c6fe0;
+  --success: #4ade80;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* ── NAVIGATION ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(13,33,55,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 60px;
+  display: flex; align-items: center; gap: 32px;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; flex-shrink: 0;
+}
+.nav-logo-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.nav-logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; font-weight: 700; color: var(--text);
+  letter-spacing: -0.3px;
+}
+.nav-logo-sub { font-size: 9px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.nav-links { display: flex; gap: 6px; flex: 1; }
+.nav-link {
+  font-size: 12px; color: var(--muted); text-decoration: none;
+  padding: 5px 10px; border-radius: 6px; transition: all 0.15s;
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+.nav-cta {
+  background: var(--gold-dim);
+  border: 1px solid var(--border);
+  color: var(--gold); font-size: 11px; font-weight: 500;
+  padding: 5px 14px; border-radius: 20px; text-decoration: none;
+  transition: all 0.15s; white-space: nowrap;
+}
+.nav-cta:hover { background: rgba(212,168,67,0.25); color: var(--gold2); }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  padding: 140px 40px 100px;
+  overflow: hidden;
+  z-index: 1;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(83,74,183,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 60%, rgba(212,168,67,0.06) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(212,168,67,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,168,67,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 80%);
+}
+.hero-content {
+  position: relative; z-index: 1;
+  max-width: 900px; margin: 0 auto; text-align: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-dim); border: 1px solid var(--border);
+  border-radius: 20px; padding: 6px 14px; margin-bottom: 28px;
+  font-size: 11px; color: var(--gold); font-weight: 500; letter-spacing: 0.04em;
+}
+.hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: 900; line-height: 1.08;
+  letter-spacing: -1.5px;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub {
+  font-size: 17px; color: var(--muted); font-weight: 300;
+  max-width: 620px; margin: 0 auto 40px;
+  line-height: 1.65;
+}
+.hero-stats {
+  display: flex; justify-content: center; gap: 48px; margin-top: 52px;
+}
+.hero-stat { text-align: center; }
+.hero-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; font-weight: 700; color: var(--gold);
+  display: block; line-height: 1;
+}
+.hero-stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: 0.05em; }
+.hero-sep {
+  width: 1px; height: 50px; background: var(--border);
+  align-self: center;
+}
+
+/* ── SECTION CONTAINER ── */
+.section {
+  padding: 80px 40px;
+  position: relative; z-index: 1;
+}
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-eyebrow {
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); font-weight: 500; margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4vw, 42px);
+  font-weight: 700; line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+.section-sub {
+  font-size: 15px; color: var(--muted); margin-top: 12px;
+  max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.6;
+}
+
+/* ── SEPARATOR ── */
+.sep {
+  height: 1px; background: var(--border);
+  max-width: 1100px; margin: 0 auto;
+  position: relative; z-index: 1;
+}
+
+/* ── FEATURES GRID ── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative; overflow: hidden;
+}
+.feature-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  opacity: 0; transition: opacity 0.2s;
+}
+.feature-card:hover { border-color: rgba(212,168,67,0.35); transform: translateY(-2px); }
+.feature-card:hover::before { opacity: 1; }
+.feature-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+.feature-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.feature-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.feature-badge {
+  display: inline-block; margin-top: 12px;
+  font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  background: var(--gold-dim); border: 1px solid var(--border);
+  color: var(--gold); border-radius: 10px; padding: 2px 8px;
+}
+
+/* ── VIDEO SECTION ── */
+.video-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.video-header {
+  padding: 20px 28px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.video-header-left { display: flex; align-items: center; gap: 12px; }
+.video-title-block {}
+.video-title-text { font-size: 13px; font-weight: 600; color: var(--text); }
+.video-title-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.video-tag {
+  background: rgba(83,74,183,0.2); border: 1px solid rgba(83,74,183,0.4);
+  color: #a09be0; font-size: 9px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; border-radius: 6px; padding: 3px 8px;
+}
+.video-wrap {
+  position: relative;
+  background: #020408;
+}
+.video-wrap video {
+  width: 100%;
+  display: block;
+  max-height: 540px;
+  object-fit: contain;
+}
+.video-caption {
+  padding: 14px 28px;
+  font-size: 11px; color: var(--muted);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.video-caption::before { content: '🎬'; font-size: 13px; }
+
+/* ── POC SECTION ── */
+.poc-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.poc-header {
+  padding: 20px 28px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.poc-header-left { display: flex; align-items: center; gap: 12px; }
+.poc-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.poc-title-text { font-size: 13px; font-weight: 600; color: var(--text); }
+.poc-title-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.poc-live-dot {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; color: var(--success); font-weight: 500;
+}
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); animation: pulse 1.8s infinite; }
+.poc-actions {
+  display: flex; gap: 8px;
+}
+.poc-action-btn {
+  background: var(--gold-dim); border: 1px solid var(--border);
+  color: var(--gold); font-size: 10px; font-weight: 500;
+  padding: 5px 12px; border-radius: 16px; cursor: pointer;
+  font-family: inherit; transition: all 0.15s; text-decoration: none;
+  display: flex; align-items: center; gap: 5px;
+}
+.poc-action-btn:hover { background: rgba(212,168,67,0.25); }
+.poc-iframe-wrap {
+  position: relative;
+  height: 620px;
+  background: #0a0a0f;
+}
+.poc-iframe-wrap iframe {
+  width: 100%; height: 100%; border: none; display: block;
+}
+.poc-caption {
+  padding: 14px 28px;
+  font-size: 11px; color: var(--muted);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+  flex-wrap: wrap;
+}
+.poc-hint {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(83,74,183,0.12); border: 1px solid rgba(83,74,183,0.3);
+  border-radius: 6px; padding: 3px 9px; font-size: 10px; color: #a09be0;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── ROADMAP ── */
+.roadmap-list {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+}
+.roadmap-item {
+  display: flex; align-items: flex-start; gap: 20px;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.roadmap-item:last-child { border-bottom: none; }
+.roadmap-item:hover { background: rgba(255,255,255,0.02); }
+.roadmap-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700; color: var(--border);
+  min-width: 36px; line-height: 1;
+  padding-top: 2px;
+}
+.roadmap-content { flex: 1; }
+.roadmap-phase {
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); font-weight: 600; margin-bottom: 4px;
+}
+.roadmap-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.roadmap-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.roadmap-status {
+  font-size: 9px; font-weight: 600; padding: 3px 10px; border-radius: 10px;
+  white-space: nowrap; align-self: flex-start; margin-top: 4px;
+}
+.status-done { background: rgba(74,222,128,0.12); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+.status-wip  { background: rgba(212,168,67,0.12); color: var(--gold); border: 1px solid rgba(212,168,67,0.3); }
+.status-next { background: rgba(83,74,183,0.12); color: #a09be0; border: 1px solid rgba(83,74,183,0.3); }
+.status-plan { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border); }
+
+/* ── METRICS ── */
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.metric-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 24px 20px; text-align: center;
+}
+.metric-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px; font-weight: 700; color: var(--gold);
+  line-height: 1; display: block;
+}
+.metric-unit { font-size: 14px; color: var(--muted); font-weight: 400; }
+.metric-label { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+
+/* ── FOOTER ── */
+.footer {
+  padding: 48px 40px 32px;
+  border-top: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+.footer-brand {}
+.footer-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px;
+}
+.footer-brand-sub { font-size: 11px; color: var(--muted); }
+.footer-links { display: flex; gap: 20px; align-items: center; }
+.footer-link { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.footer-link:hover { color: var(--gold); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 20px; border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--muted);
+}
+.footer-sprint {
+  background: var(--gold-dim); border: 1px solid var(--border);
+  color: var(--gold); font-size: 9px; font-weight: 600; letter-spacing: 0.08em;
+  border-radius: 10px; padding: 2px 8px; text-transform: uppercase;
+}
+
+/* ── ANIMATIONS ── */
+.fade-up {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up:nth-child(2) { transition-delay: 0.1s; }
+.fade-up:nth-child(3) { transition-delay: 0.2s; }
+.fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box {
+  background: rgba(212,168,67,0.06);
+  border: 1px solid rgba(212,168,67,0.2);
+  border-radius: 16px; padding: 28px 32px;
+  margin: 48px 0;
+  display: flex; gap: 20px; align-items: flex-start;
+}
+.highlight-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+.highlight-content {}
+.highlight-title { font-size: 14px; font-weight: 600; color: var(--gold); margin-bottom: 6px; }
+.highlight-text { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  .hero-stats { gap: 24px; flex-wrap: wrap; }
+  .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  .section { padding: 56px 20px; }
+  .hero { padding: 100px 20px 60px; }
+  .nav { padding: 0 20px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  .poc-iframe-wrap { height: 480px; }
+  .video-wrap video { max-height: 280px; }
+  .footer-top { flex-direction: column; gap: 20px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav class="nav">
+  <a class="nav-brand" href="https://nicolashermilly.github.io/petsuite-docs/" target="_blank">
+    <div class="nav-logo-icon">🐾</div>
+    <div>
+      <div class="nav-logo-text">Anim'Gest</div>
+      <div class="nav-logo-sub">NoSage's Editor</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#presentation">Présentation</a>
+    <a class="nav-link" href="#demo-video">Démo vidéo</a>
+    <a class="nav-link" href="#poc-interactif">POC interactif</a>
+    <a class="nav-link" href="#roadmap">Feuille de route</a>
+    <a class="nav-link" href="https://nicolashermilly.github.io/petsuite-docs/" target="_blank">Documentation</a>
+  </div>
+  <a class="nav-cta" href="https://nicolashermilly.github.io/petsuite-docs/" target="_blank">↗ Docs</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Sprint S61 — Intégration IA en cours
+    </div>
+    <h1 class="hero-title">
+      L'Intelligence Artificielle<br>au service des <em>professionnels<br>animaliers</em>
+    </h1>
+    <p class="hero-sub">
+      Anim'Gest intègre un assistant IA vocal et textuel directement dans votre ERP —
+      sans quitter votre interface, sans friction, sans compromis sur la confidentialité.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">10</span>
+        <div class="hero-stat-label">Métiers couverts</div>
+      </div>
+      <div class="hero-sep"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">90+</span>
+        <div class="hero-stat-label">Routes API</div>
+      </div>
+      <div class="hero-sep"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">100+</span>
+        <div class="hero-stat-label">Pages UI</div>
+      </div>
+      <div class="hero-sep"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">82<small style="font-size:18px">/100</small></span>
+        <div class="hero-stat-label">Score qualité</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ── PRÉSENTATION ── -->
+<section class="section" id="presentation">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Pourquoi l'IA dans Anim'Gest</div>
+      <h2 class="section-title">Un assistant qui connaît<br>votre métier</h2>
+      <p class="section-sub">
+        Eliot, l'assistant IA d'Anim'Gest, est entraîné sur vos données métier —
+        clients, animaux, séances, formules — et répond en langue naturelle, à la voix ou au clavier.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <span class="feature-icon">🎙️</span>
+        <div class="feature-title">Interface vocale native</div>
+        <div class="feature-desc">
+          Parlez naturellement à Eliot : "Propose une formule F5 pour Frimousse" —
+          l'assistant comprend le contexte métier et agit directement dans l'ERP.
+        </div>
+        <span class="feature-badge">Web Speech API</span>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon">🗂️</span>
+        <div class="feature-title">Accès aux données temps réel</div>
+        <div class="feature-desc">
+          Eliot lit vos clients, animaux, séances et factures via les mêmes routes API
+          que l'interface — toujours à jour, jamais en cache approximatif.
+        </div>
+        <span class="feature-badge">90+ routes API</span>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon">📋</span>
+        <div class="feature-title">Génération de documents</div>
+        <div class="feature-desc">
+          Devis, comptes rendus de séance, fiches EDC, programmes —
+          demandez-les en langage naturel et Eliot les prépare en un clic.
+        </div>
+        <span class="feature-badge">Modal PDF intégré</span>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon">✍️</span>
+        <div class="feature-title">Signature électronique intégrée</div>
+        <div class="feature-desc">
+          Depuis l'assistant, envoyez un devis par email ou déclenchez une demande
+          Yousign — sans sortir du chat, sans dupliquer l'action dans l'ERP.
+        </div>
+        <span class="feature-badge">Yousign API</span>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon">🔒</span>
+        <div class="feature-title">Contrôle des accès RBAC</div>
+        <div class="feature-desc">
+          L'assistant respecte les rôles de l'utilisateur connecté — ADMIN, GESTION,
+          CONSULT, COMPTA — et ne divulgue que ce que le profil autorise.
+        </div>
+        <span class="feature-badge">4 rôles, 56 permissions</span>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon">⚡</span>
+        <div class="feature-title">Widget flottant non intrusif</div>
+        <div class="feature-desc">
+          Accessible depuis n'importe quelle page de l'ERP via un bouton flottant,
+          sans redirection ni rechargement — l'interface reste en place.
+        </div>
+        <span class="feature-badge">POC validé S60</span>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-icon">💡</div>
+      <div class="highlight-content">
+        <div class="highlight-title">Architecture de confiance</div>
+        <div class="highlight-text">
+          L'IA ne remplace pas votre logiciel — elle s'y intègre. Eliot utilise exactement les mêmes
+          routes API que vos pages métier. Aucune donnée n'est envoyée à un tiers sans votre accord.
+          Le module Claude IA est activable indépendamment par tier commercial (Essentiel, Professionnel, Expert).
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ── MÉTRIQUES ── -->
+<section class="section" style="padding-top: 60px; padding-bottom: 60px;">
+  <div class="section-inner">
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <span class="metric-val">3<span class="metric-unit">tiers</span></span>
+        <div class="metric-label">Essentiel · Professionnel · Expert</div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-val">S61</span>
+        <div class="metric-label">Sprint d'intégration widget flottant</div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-val">0<span class="metric-unit">ms</span></span>
+        <div class="metric-label">Latence widget — toujours dans la page</div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-val">FR</span>
+        <div class="metric-label">Langue native — voix et texte en français</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ── DÉMO VIDÉO ── -->
+<section class="section" id="demo-video">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Démonstration</div>
+      <h2 class="section-title">Eliot en action</h2>
+      <p class="section-sub">
+        Enregistrement d'une session de démonstration — assistant vocal, génération de devis,
+        envoi par email et signature Yousign depuis l'interface ERP.
+      </p>
+    </div>
+
+    <div class="video-block fade-up">
+      <div class="video-header">
+        <div class="video-header-left">
+          <div class="video-title-block">
+            <div class="video-title-text">🐾 Eliot — Démo assistant vocal Anim'Gest</div>
+            <div class="video-title-sub">Scénario complet : proposition formule F5 → devis → Yousign</div>
+          </div>
+        </div>
+        <span class="video-tag">POC S60 — 29/03/2026</span>
+      </div>
+      <div class="video-wrap">
+        <video controls preload="metadata" poster="">
+          <source src="2026-03-29_11h45_25.mp4" type="video/mp4">
+          <p style="color:var(--muted);padding:40px;text-align:center;">
+            Votre navigateur ne supporte pas la lecture vidéo HTML5.<br>
+            <a href="2026-03-29_11h45_25.mp4" style="color:var(--gold)">Télécharger la vidéo</a>
+          </p>
+        </video>
+      </div>
+      <div class="video-caption">
+        Enregistrement réalisé le 29 mars 2026 — Interface Anim'Gest locale (http://localhost/app) —
+        Données fictives à titre de démonstration. Scénario : Jean Dujardin / Frimousse (Malinois) / Formule F5 Éducation Expert.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ── POC INTERACTIF ── -->
+<section class="section" id="poc-interactif">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">POC interactif</div>
+      <h2 class="section-title">Testez Eliot en direct</h2>
+      <p class="section-sub">
+        Le prototype fonctionnel ci-dessous reproduit l'interface ERP avec le widget Eliot intégré.
+        Essayez les suggestions vocales ou tapez votre demande directement.
+      </p>
+    </div>
+
+    <div class="poc-block fade-up">
+      <div class="poc-header">
+        <div class="poc-header-left">
+          <div class="poc-icon">🤖</div>
+          <div>
+            <div class="poc-title-text">Eliot — Prototype interactif</div>
+            <div class="poc-title-sub">Interface ERP Anim'Gest simulée avec assistant IA vocal</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div class="poc-live-dot">
+            <span class="live-dot"></span>
+            Interactif
+          </div>
+          <a class="poc-action-btn" href="eliot_poc_vocal.html" target="_blank">
+            ↗ Ouvrir plein écran
+          </a>
+        </div>
+      </div>
+      <div class="poc-iframe-wrap">
+        <iframe
+          src="eliot_poc_vocal.html"
+          title="Eliot — Assistant IA Anim'Gest (POC interactif)"
+          allow="microphone"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+        ></iframe>
+      </div>
+      <div class="poc-caption">
+        <span>🎙️ Activez le micro dans Chrome pour tester l'interface vocale —</span>
+        <span class="poc-hint">💬 "Propose une formule F5 pour Frimousse"</span>
+        <span class="poc-hint">📋 "Montre les séances à venir"</span>
+        <span class="poc-hint">💶 "Solde Jean Dujardin"</span>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 32px;">
+      <div class="highlight-icon">🔧</div>
+      <div class="highlight-content">
+        <div class="highlight-title">Ce que simule ce POC</div>
+        <div class="highlight-text">
+          Ce prototype reproduit fidèlement l'interface Anim'Gest (sidebar, topbar, dashboard KPIs, tableaux séances et impayés)
+          avec le widget Eliot intégré en bas à droite. Les données sont statiques à des fins de démonstration.
+          La version production se connectera aux 90+ routes API réelles via le module Claude IA d'Anthropic.
+          La reconnaissance vocale utilise l'API Web Speech native du navigateur (Chrome requis).
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ── ROADMAP ── -->
+<section class="section" id="roadmap">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Feuille de route IA</div>
+      <h2 class="section-title">Du POC à la production</h2>
+      <p class="section-sub">
+        Intégration progressive de l'IA générative dans Anim'Gest,
+        alignée sur les sprints de développement et les retours terrain.
+      </p>
+    </div>
+
+    <div class="roadmap-list">
+      <div class="roadmap-item">
+        <div class="roadmap-num">01</div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">S60 — Terminé</div>
+          <div class="roadmap-name">POC widget vocal Eliot</div>
+          <div class="roadmap-desc">
+            Prototype complet avec interface ERP simulée, assistant vocal (Web Speech API),
+            génération de devis, modal envoi email + Yousign. Démonstration enregistrée.
+          </div>
+        </div>
+        <span class="roadmap-status status-done">✓ Validé</span>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">02</div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">S61 — En cours</div>
+          <div class="roadmap-name">Widget flottant production + chat textuel</div>
+          <div class="roadmap-desc">
+            Intégration du widget Eliot dans le vrai frontend Next.js 15 —
+            composant flottant persistant sur toutes les pages, chat textuel connecté aux routes API réelles,
+            état de session partagé avec l'utilisateur connecté.
+          </div>
+        </div>
+        <span class="roadmap-status status-wip">⚡ En cours</span>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">03</div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">S62 — Planifié</div>
+          <div class="roadmap-name">Connexion Claude API — données réelles</div>
+          <div class="roadmap-desc">
+            Remplacement de la logique de conversation simulée par l'API Anthropic Claude Sonnet.
+            L'assistant lit les données réelles de la BDD (clients, séances, formules, factures)
+            et répond avec une compréhension contextuelle du métier.
+          </div>
+        </div>
+        <span class="roadmap-status status-next">→ Planifié</span>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">04</div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">S63 — Backlog</div>
+          <div class="roadmap-name">Actions IA — écriture dans l'ERP</div>
+          <div class="roadmap-desc">
+            L'assistant passe de la lecture à l'écriture : créer une séance, modifier un statut,
+            déclencher un envoi de devis, générer un CR — validé par confirmation explicite de l'utilisateur.
+          </div>
+        </div>
+        <span class="roadmap-status status-plan">◦ Backlog</span>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">05</div>
+        <div class="roadmap-content">
+          <div class="roadmap-phase">S64+ — Vision</div>
+          <div class="roadmap-name">IA Portail Client + Carte Identité Animale</div>
+          <div class="roadmap-desc">
+            Extension de l'assistant au Portail Client (espace séances, CAC, suivi) et à la
+            Carte Identité Animale publique — agrégation multi-professionnels avec consentement de publication par praticien.
+          </div>
+        </div>
+        <span class="roadmap-status status-plan">◦ Vision</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">🐾 Anim'Gest</div>
+        <div class="footer-brand-sub">NoSage's Editor — ERP pour professionnels animaliers</div>
+      </div>
+      <div class="footer-links">
+        <a class="footer-link" href="https://nicolashermilly.github.io/petsuite-docs/" target="_blank">Documentation</a>
+        <a class="footer-link" href="https://nicolashermilly.github.io/petsuite-docs/ROADMAP.html" target="_blank">Roadmap</a>
+        <a class="footer-link" href="https://github.com/nicolashermilly" target="_blank">GitHub</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Nicolas Hermilly — NoSage's Editor. Tous droits réservés.</div>
+      <span class="footer-sprint">Sprint S60 — 29 mars 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Intersection Observer pour les animations fade-up
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Smooth scroll pour les liens de navigation
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const id = link.getAttribute('href').slice(1);
+    const target = document.getElementById(id);
+    if (target) {
+      const offset = 80;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
