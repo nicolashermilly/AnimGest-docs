@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Changelog S52 - Anim'Gest</title>
+  <title>Changelog S60 - Anim'Gest</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -166,66 +166,57 @@ footer strong { color: var(--gold); }
 
   <div class="page-header">
     <div class="sprint-badge">Release Notes</div>
-    <h1>Changelog S52</h1>
-    <div class="subtitle">Audit 404 complet, carte clients Leaflet, planning Jour, dashboards 9 metiers, routes stats</div>
-    <div class="meta">Date : 25 mars 2026 &mdash; NoSage's Editor &mdash; Anim'Gest</div>
+    <h1>Changelog S60</h1>
+    <div class="subtitle">Reseaux sociaux, transitions devis, page editions parametres, fix KPIs</div>
+    <div class="meta">Date : 29 mars 2026 &mdash; NoSage's Editor &mdash; Anim'Gest</div>
   </div>
 
   <div class="container">
 
     <div class="stats-bar">
-    <div class="stat-item"><span class="stat-num">96</span><span class="stat-lbl">Pages UI</span></div>
-    <div class="stat-item"><span class="stat-num">~70</span><span class="stat-lbl">Routes API</span></div>
-    <div class="stat-item"><span class="stat-num">9</span><span class="stat-lbl">Metiers actifs</span></div>
-    <div class="stat-item"><span class="stat-num">167</span><span class="stat-lbl">Clients</span></div>
-    <div class="stat-item"><span class="stat-num">279</span><span class="stat-lbl">Factures</span></div>
+    <div class="stat-item"><span class="stat-num">100</span><span class="stat-lbl">Pages UI</span></div>
+    <div class="stat-item"><span class="stat-num">~2800</span><span class="stat-lbl">Lignes custom-routes</span></div>
+    <div class="stat-item"><span class="stat-num">82</span><span class="stat-lbl">Score global</span></div>
+    <div class="stat-item"><span class="stat-num">5</span><span class="stat-lbl">Commits</span></div>
     </div>
 
 
   <div class="section">
     <div class="section-title">&#128207; Frontend</div>
     <div class="items-grid">
-      <div class="item-card "><div class="item-title">Planning journalier - vue Jour</div><div class="item-desc">Grille horaire 7h-20h30, slots 30 min, ligne 'maintenant', navigation Jour prev/suiv</div></div>
-      <div class="item-card "><div class="item-title">Dashboard fusionne /app</div><div class="item-desc">/app/page.tsx unique avec KPIs reels, EC sans devis, factures impayees</div></div>
-      <div class="item-card "><div class="item-title">Questionnaires - 3 boutons</div><div class="item-desc">Apercu (modal scrollable), Envoyer (modal email), Modifier (modal editeur complet)</div></div>
-      <div class="item-card "><div class="item-title">Genealogie eleveur restauree</div><div class="item-desc">Bloc Genealogie dans dashboard eleveur, arbre visuel mere/pere/portee depuis API</div></div>
-      <div class="item-card "><div class="item-title">Saillies et portees eleveur</div><div class="item-desc">/app/elevage/saillies + /app/elevage/portees en tuiles avec stats males/femelles</div></div>
-      <div class="item-card "><div class="item-title">Reservations eleveur</div><div class="item-desc">Stats en attente/confirmees, modale nouvelle reservation, bouton acompte auto-statut</div></div>
-      <div class="item-card "><div class="item-title">Dashboards 9 metiers alimentes</div><div class="item-desc">Pet-sitter, Toiletteur, Pension, Equestre, Osteopathe, Sport canin, Naturopathe, Educateur, Veterinaire</div></div>
-      <div class="item-card "><div class="item-title">Audit 404 complet</div><div class="item-desc">~110 pages auditees, boutons CSV factures/seances, uniformisation libelles</div></div>
-      <div class="item-card "><div class="item-title">Carte clients Leaflet v2</div><div class="item-desc">Panneau gauche recherche+legende+distances, marqueurs colores, marqueur cabinet, export CSV</div></div>
-      <div class="item-card "><div class="item-title">Nouvelles pages</div><div class="item-desc">/app/programmes/new, /app/elevage/mortalite (squelette), /app/eleveur/dashboard</div></div>
+      <div class="item-card "><div class="item-title">KPIs dashboard</div><div class="item-desc">nb_seances_a_venir -> nb_seances - 159 seances correctement affichees</div></div>
+      <div class="item-card "><div class="item-title">Sidebar comportementaliste</div><div class="item-desc">Lien 'Suivi CAC' supprime conformement a la regle CAC etablie en S57</div></div>
+      <div class="item-card "><div class="item-title">/app/parametres/editions</div><div class="item-desc">Nouvelle page : Logo, Couleurs, Police, En-tete, Pied de page, CGV, Filigrane</div></div>
+      <div class="item-card "><div class="item-title">Reseaux sociaux</div><div class="item-desc">Fix setData(d.raw) pour pre-remplir les champs du formulaire d'edition</div></div>
     </div>
   </div>
   <div class="section">
-    <div class="section-title">&#9881; API - Nouvelles routes</div>
+    <div class="section-title">&#9881; API - Corrections</div>
     <div class="items-grid">
-      <div class="item-card api"><div class="item-title">GET /elevage/declarations</div><div class="item-desc">Declarations DDPP/SCC/LOOF/ICAD</div></div>
-      <div class="item-card api"><div class="item-title">GET /ged-edc</div><div class="item-desc">Fiche EDC par seance (?sea_id=)</div></div>
-      <div class="item-card api"><div class="item-title">GET /ged-cac/:id + /initial</div><div class="item-desc">Score CAC par seance et valeurs initiales animal</div></div>
-      <div class="item-card api"><div class="item-title">GET /ged-evolution-cac/:ani_id</div><div class="item-desc">Historique CAC animal</div></div>
-      <div class="item-card api"><div class="item-title">GET /avoirs + /avoirs/:id</div><div class="item-desc">Liste et detail des avoirs</div></div>
-      <div class="item-card api"><div class="item-title">GET /stats/kpis + /ca-par-mois + /seances-par-type + /especes + /top-clients + /villes</div><div class="item-desc">Statistiques dashboard</div></div>
-      <div class="item-card api"><div class="item-title">GET /devis/:id/lignes</div><div class="item-desc">Lignes devis (retourne [] si table absente)</div></div>
-      <div class="item-card api"><div class="item-title">GET /contacts + /communaute + /param-pdp + /param-smtp + /param-stripe + /param-klarna + /param-sms + /param-urls</div><div class="item-desc">Parametres et donnees de reference</div></div>
-      <div class="item-card api"><div class="item-title">GET /elevage/saillies</div><div class="item-desc">Liste des saillies</div></div>
-      <div class="item-card api"><div class="item-title">Fix SQL stats</div><div class="item-desc">SST_CODE inexistant -> jointure seance_statut via SST_ID</div></div>
+      <div class="item-card api"><div class="item-title">PUT /reseaux-sociaux</div><div class="item-desc">Fix colonnes _URL et migration rs_publication -> rs_post</div></div>
+      <div class="item-card api"><div class="item-title">GET /roles/:id/permissions</div><div class="item-desc">Fix guillemets SQL ligne 2206, parsing parts[2] corrige</div></div>
+      <div class="item-card api"><div class="item-title">GET /user-permissions</div><div class="item-desc">Detection auto colonnes -> noms directs</div></div>
+      <div class="item-card api"><div class="item-title">POST /devis/:id/facturer</div><div class="item-desc">Transition statut ACCEPTE -> FACTURE + creation facture</div></div>
+      <div class="item-card api"><div class="item-title">PUT /devis/:id/statut</div><div class="item-desc">Transitions statut avec validation metier</div></div>
+      <div class="item-card api"><div class="item-title">POST /devis/:id/email</div><div class="item-desc">Envoi email devis au client</div></div>
     </div>
   </div>
   <div class="section">
-    <div class="section-title">&#128295; Corrections de bugs</div>
+    <div class="section-title">&#128190; Infrastructure</div>
     <div class="items-grid">
-      <div class="item-card fix"><div class="item-title">Carte clients - 3 bugs Leaflet</div><div class="item-desc">loading=true bloquait le mount, latitude/longitude null en BDD, CDN unpkg -> cdnjs</div></div>
-      <div class="item-card fix"><div class="item-title">Export CSV factures</div><div class="item-desc">Fonction exportCSV manquante inseree dans /app/factures/page.tsx</div></div>
-      <div class="item-card fix"><div class="item-title">Sidebar dashboards metiers</div><div class="item-desc">/tableau-de-bord -> /dashboard pour tous les liens metiers</div></div>
-      <div class="item-card fix"><div class="item-title">Stats KPIs</div><div class="item-desc">CA total 48 014 EUR, panier moyen 231 EUR depuis BDD</div></div>
+      <div class="item-card "><div class="item-title">Script sauvegarde v7</div><div class="item-desc">Deploye sur C:\AnimGest_Sav\, FULL_KEEP=30</div></div>
+      <div class="item-card "><div class="item-title">Restauration src/</div><div class="item-desc">Depuis backup 20260326_2317_avant_revue_code - parasites elimines</div></div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">&#128196; Commits</div>
     <div class="commit-list">
-      <div class="commit-item"><span class="commit-msg" style="color:var(--muted)">Commits integres dans le rattrapage S61a</span></div>
+      <div class="commit-item"><span class="commit-hash">c6e046c</span><span class="commit-msg">S60a - Fix PUT reseaux-sociaux + lien Nouveau devis sidebar</span></div>
+      <div class="commit-item"><span class="commit-hash">6cc4050</span><span class="commit-msg">S60b - Fix RS colonnes _URL + migration rs_publication -> rs_post</span></div>
+      <div class="commit-item"><span class="commit-hash">7712b33</span><span class="commit-msg">S60c - Fix API RS guillemets SQL ligne 2206</span></div>
+      <div class="commit-item"><span class="commit-hash">389a1cf</span><span class="commit-msg">S60d - Fix RS setData utilise d.raw pour pre-remplir les champs</span></div>
+      <div class="commit-item"><span class="commit-hash">c8c9d2d</span><span class="commit-msg">S60e - Devis transitions statut + Email + Creer facture + routes PUT/POST</span></div>
     </div>
   </div>
 

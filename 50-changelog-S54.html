@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Changelog S52 - Anim'Gest</title>
+  <title>Changelog S54 - Anim'Gest</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -166,59 +166,42 @@ footer strong { color: var(--gold); }
 
   <div class="page-header">
     <div class="sprint-badge">Release Notes</div>
-    <h1>Changelog S52</h1>
-    <div class="subtitle">Audit 404 complet, carte clients Leaflet, planning Jour, dashboards 9 metiers, routes stats</div>
-    <div class="meta">Date : 25 mars 2026 &mdash; NoSage's Editor &mdash; Anim'Gest</div>
+    <h1>Changelog S54</h1>
+    <div class="subtitle">Audit qualite code, refactorisation, score qualite 53/100 -> objectif 75</div>
+    <div class="meta">Date : 26 mars 2026 &mdash; NoSage's Editor &mdash; Anim'Gest</div>
   </div>
 
   <div class="container">
 
     <div class="stats-bar">
-    <div class="stat-item"><span class="stat-num">96</span><span class="stat-lbl">Pages UI</span></div>
-    <div class="stat-item"><span class="stat-num">~70</span><span class="stat-lbl">Routes API</span></div>
-    <div class="stat-item"><span class="stat-num">9</span><span class="stat-lbl">Metiers actifs</span></div>
-    <div class="stat-item"><span class="stat-num">167</span><span class="stat-lbl">Clients</span></div>
-    <div class="stat-item"><span class="stat-num">279</span><span class="stat-lbl">Factures</span></div>
+    <div class="stat-item"><span class="stat-num">53</span><span class="stat-lbl">Score qualite initial</span></div>
+    <div class="stat-item"><span class="stat-num">75</span><span class="stat-lbl">Objectif cible</span></div>
+    <div class="stat-item"><span class="stat-num">137</span><span class="stat-lbl">Fichiers JSDoc</span></div>
+    <div class="stat-item"><span class="stat-num">241</span><span class="stat-lbl">Colonnes BDD</span></div>
     </div>
 
 
   <div class="section">
-    <div class="section-title">&#128207; Frontend</div>
+    <div class="section-title">&#128269; Audit qualite</div>
     <div class="items-grid">
-      <div class="item-card "><div class="item-title">Planning journalier - vue Jour</div><div class="item-desc">Grille horaire 7h-20h30, slots 30 min, ligne 'maintenant', navigation Jour prev/suiv</div></div>
-      <div class="item-card "><div class="item-title">Dashboard fusionne /app</div><div class="item-desc">/app/page.tsx unique avec KPIs reels, EC sans devis, factures impayees</div></div>
-      <div class="item-card "><div class="item-title">Questionnaires - 3 boutons</div><div class="item-desc">Apercu (modal scrollable), Envoyer (modal email), Modifier (modal editeur complet)</div></div>
-      <div class="item-card "><div class="item-title">Genealogie eleveur restauree</div><div class="item-desc">Bloc Genealogie dans dashboard eleveur, arbre visuel mere/pere/portee depuis API</div></div>
-      <div class="item-card "><div class="item-title">Saillies et portees eleveur</div><div class="item-desc">/app/elevage/saillies + /app/elevage/portees en tuiles avec stats males/femelles</div></div>
-      <div class="item-card "><div class="item-title">Reservations eleveur</div><div class="item-desc">Stats en attente/confirmees, modale nouvelle reservation, bouton acompte auto-statut</div></div>
-      <div class="item-card "><div class="item-title">Dashboards 9 metiers alimentes</div><div class="item-desc">Pet-sitter, Toiletteur, Pension, Equestre, Osteopathe, Sport canin, Naturopathe, Educateur, Veterinaire</div></div>
-      <div class="item-card "><div class="item-title">Audit 404 complet</div><div class="item-desc">~110 pages auditees, boutons CSV factures/seances, uniformisation libelles</div></div>
-      <div class="item-card "><div class="item-title">Carte clients Leaflet v2</div><div class="item-desc">Panneau gauche recherche+legende+distances, marqueurs colores, marqueur cabinet, export CSV</div></div>
-      <div class="item-card "><div class="item-title">Nouvelles pages</div><div class="item-desc">/app/programmes/new, /app/elevage/mortalite (squelette), /app/eleveur/dashboard</div></div>
+      <div class="item-card "><div class="item-title">Score global 53/100</div><div class="item-desc">Backend 55, Frontend 50, BDD 60 - audit formel de la codebase</div></div>
+      <div class="item-card "><div class="item-title">Problemes identifies</div><div class="item-desc">createConnection() direct non centralise, JSDoc manquants, composants generiques absents, helpers disperses</div></div>
     </div>
   </div>
   <div class="section">
-    <div class="section-title">&#9881; API - Nouvelles routes</div>
+    <div class="section-title">&#128296; Refactorisations ciblees</div>
     <div class="items-grid">
-      <div class="item-card api"><div class="item-title">GET /elevage/declarations</div><div class="item-desc">Declarations DDPP/SCC/LOOF/ICAD</div></div>
-      <div class="item-card api"><div class="item-title">GET /ged-edc</div><div class="item-desc">Fiche EDC par seance (?sea_id=)</div></div>
-      <div class="item-card api"><div class="item-title">GET /ged-cac/:id + /initial</div><div class="item-desc">Score CAC par seance et valeurs initiales animal</div></div>
-      <div class="item-card api"><div class="item-title">GET /ged-evolution-cac/:ani_id</div><div class="item-desc">Historique CAC animal</div></div>
-      <div class="item-card api"><div class="item-title">GET /avoirs + /avoirs/:id</div><div class="item-desc">Liste et detail des avoirs</div></div>
-      <div class="item-card api"><div class="item-title">GET /stats/kpis + /ca-par-mois + /seances-par-type + /especes + /top-clients + /villes</div><div class="item-desc">Statistiques dashboard</div></div>
-      <div class="item-card api"><div class="item-title">GET /devis/:id/lignes</div><div class="item-desc">Lignes devis (retourne [] si table absente)</div></div>
-      <div class="item-card api"><div class="item-title">GET /contacts + /communaute + /param-pdp + /param-smtp + /param-stripe + /param-klarna + /param-sms + /param-urls</div><div class="item-desc">Parametres et donnees de reference</div></div>
-      <div class="item-card api"><div class="item-title">GET /elevage/saillies</div><div class="item-desc">Liste des saillies</div></div>
-      <div class="item-card api"><div class="item-title">Fix SQL stats</div><div class="item-desc">SST_CODE inexistant -> jointure seance_statut via SST_ID</div></div>
+      <div class="item-card refacto"><div class="item-title">Centralisation getDb()</div><div class="item-desc">Remplacement de tous les createConnection() directs par getDb() dans custom-routes.ts</div></div>
+      <div class="item-card refacto"><div class="item-title">JSDoc headers TSX</div><div class="item-desc">Ajout en-tetes JSDoc sur les fichiers .tsx principaux</div></div>
+      <div class="item-card refacto"><div class="item-title">Composants generiques</div><div class="item-desc">Creation DataTable, KpiCard, StatusBadge, PageHeader</div></div>
+      <div class="item-card refacto"><div class="item-title">Helpers centralises</div><div class="item-desc">Regroupement des fonctions utilitaires dispersees</div></div>
     </div>
   </div>
   <div class="section">
-    <div class="section-title">&#128295; Corrections de bugs</div>
+    <div class="section-title">&#128295; Fix CSS mode clair</div>
     <div class="items-grid">
-      <div class="item-card fix"><div class="item-title">Carte clients - 3 bugs Leaflet</div><div class="item-desc">loading=true bloquait le mount, latitude/longitude null en BDD, CDN unpkg -> cdnjs</div></div>
-      <div class="item-card fix"><div class="item-title">Export CSV factures</div><div class="item-desc">Fonction exportCSV manquante inseree dans /app/factures/page.tsx</div></div>
-      <div class="item-card fix"><div class="item-title">Sidebar dashboards metiers</div><div class="item-desc">/tableau-de-bord -> /dashboard pour tous les liens metiers</div></div>
-      <div class="item-card fix"><div class="item-title">Stats KPIs</div><div class="item-desc">CA total 48 014 EUR, panier moyen 231 EUR depuis BDD</div></div>
+      <div class="item-card fix"><div class="item-title">h1 invisible mode clair</div><div class="item-desc">data-theme='light' -> color: var(--text) !important sur h1, h2, table td/th</div></div>
+      <div class="item-card fix"><div class="item-title">Textes tableaux pales</div><div class="item-desc">Correction contraste en mode clair</div></div>
     </div>
   </div>
 

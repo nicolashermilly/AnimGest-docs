@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Changelog S53 - Anim'Gest</title>
+  <title>Changelog S57 - Anim'Gest</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -166,60 +166,51 @@ footer strong { color: var(--gold); }
 
   <div class="page-header">
     <div class="sprint-badge">Release Notes</div>
-    <h1>Changelog S53</h1>
-    <div class="subtitle">Drag & Drop planning, forfaits/abonnements BDD, Yousign routes, programmes modeles</div>
-    <div class="meta">Date : 25-26 mars 2026 &mdash; NoSage's Editor &mdash; Anim'Gest</div>
+    <h1>Changelog S57</h1>
+    <div class="subtitle">Fix roles/permissions, route seances/:id manquante, sidebar CAC, sauvegarde v7</div>
+    <div class="meta">Date : 28 mars 2026 &mdash; NoSage's Editor &mdash; Anim'Gest</div>
   </div>
 
   <div class="container">
 
     <div class="stats-bar">
-    <div class="stat-item"><span class="stat-num">96+</span><span class="stat-lbl">Pages UI</span></div>
-    <div class="stat-item"><span class="stat-num">~80</span><span class="stat-lbl">Routes API</span></div>
-    <div class="stat-item"><span class="stat-num">12</span><span class="stat-lbl">Forfaits seeds</span></div>
-    <div class="stat-item"><span class="stat-num">4</span><span class="stat-lbl">Routes Yousign</span></div>
+    <div class="stat-item"><span class="stat-num">90</span><span class="stat-lbl">Routes API</span></div>
+    <div class="stat-item"><span class="stat-num">~2736</span><span class="stat-lbl">Lignes custom-routes</span></div>
+    <div class="stat-item"><span class="stat-num">100</span><span class="stat-lbl">Pages UI</span></div>
+    <div class="stat-item"><span class="stat-num">82</span><span class="stat-lbl">Score global</span></div>
     </div>
 
 
+  <div class="section">
+    <div class="section-title">&#9881; API - Corrections routes</div>
+    <div class="items-grid">
+      <div class="item-card api"><div class="item-title">GET /roles/:id/permissions</div><div class="item-desc">Colonnes RPM_* -> vrais noms BDD : module_code, can_read, can_write, can_delete</div></div>
+      <div class="item-card api"><div class="item-title">GET /user-permissions</div><div class="item-desc">Detection auto colonnes -> noms directs, deux requetes sans JOIN alias</div></div>
+      <div class="item-card api"><div class="item-title">GET /seances/:id</div><div class="item-desc">Route manquante ajoutee - SELECT avec jointures STY/SST/tiers/animal/contact</div></div>
+      <div class="item-card api"><div class="item-title">Fix parsing parts[2]</div><div class="item-desc">nginx strips /api/ -> correction du parsing de l'URL dans /roles/:id/permissions</div></div>
+    </div>
+  </div>
   <div class="section">
     <div class="section-title">&#128207; Frontend</div>
     <div class="items-grid">
-      <div class="item-card "><div class="item-title">Planning - Drag & Drop v2</div><div class="item-desc">DnD natif HTML5, ghost bleu pointille, snap 30 min, optimistic update + rollback, vues Jour et Semaine</div></div>
-      <div class="item-card "><div class="item-title">Programmes - tuiles modeles</div><div class="item-desc">5 modeles Comportementaliste + 3 Educateur, objectif, liste seances, badge niveau, modale duplication</div></div>
-      <div class="item-card "><div class="item-title">Forfaits & Abonnements /app/forfaits</div><div class="item-desc">Catalogue par metier, onglet souscriptions, modales creation + souscription, prix TTC temps reel</div></div>
+      <div class="item-card "><div class="item-title">KPIs dashboard</div><div class="item-desc">nb_seances_a_venir -> nb_seances - 159 seances affichees</div></div>
+      <div class="item-card "><div class="item-title">Sidebar comportementaliste</div><div class="item-desc">Lien 'Suivi CAC' supprime - regle : CAC accessible uniquement depuis /app/seances/[id]</div></div>
+      <div class="item-card "><div class="item-title">Regle CAC etablie</div><div class="item-desc">CAC accessible UNIQUEMENT depuis fiche seance ou EDC - pas de lien sidebar</div></div>
     </div>
   </div>
   <div class="section">
-    <div class="section-title">&#9881; API - Nouvelles routes</div>
+    <div class="section-title">&#128190; Infrastructure</div>
     <div class="items-grid">
-      <div class="item-card api"><div class="item-title">GET/POST /forfaits</div><div class="item-desc">CRUD catalogue forfaits</div></div>
-      <div class="item-card api"><div class="item-title">GET/PATCH/DELETE /forfaits/:id</div><div class="item-desc">Detail et gestion forfait</div></div>
-      <div class="item-card api"><div class="item-title">GET/POST /forfaits/clients</div><div class="item-desc">Souscriptions clients</div></div>
-      <div class="item-card api"><div class="item-title">GET/PUT /param-yousign</div><div class="item-desc">Lecture/mise a jour config Yousign</div></div>
-      <div class="item-card api"><div class="item-title">POST /signatures</div><div class="item-desc">Cree demande BDD + appel Yousign API v3</div></div>
-      <div class="item-card api"><div class="item-title">POST /signatures/:id/envoyer</div><div class="item-desc">Active la demande + recupere lien signataire</div></div>
-      <div class="item-card api"><div class="item-title">POST /signatures/webhook</div><div class="item-desc">Recoit evenements Yousign -> mise a jour statut</div></div>
-      <div class="item-card api"><div class="item-title">PATCH /seances/:id</div><div class="item-desc">Drag & Drop persistance - champs SEA_DATE_DEBUT/FIN/OBJET/MONTANT/LIEU/SST_ID</div></div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-title">&#128200; Base de donnees</div>
-    <div class="items-grid">
-      <div class="item-card bdd"><div class="item-title">Tables forfait + forfait_client</div><div class="item-desc">Creation et seeds : 4 Toiletteur + 4 Pension + 4 Equestre</div></div>
-      <div class="item-card bdd"><div class="item-title">Tables Yousign existantes</div><div class="item-desc">param_yousign, signature_demande, signature_demande_doc, signature_evenement deja presentes</div></div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-title">&#128295; Body parsing Manuel</div>
-    <div class="items-grid">
-      <div class="item-card fix"><div class="item-title">req.body undefined dans app.use()</div><div class="item-desc">Pattern body parsing manuel via req.on('data') obligatoire pour POST/PATCH dans custom-routes.ts</div></div>
+      <div class="item-card "><div class="item-title">Script sauvegarde v7</div><div class="item-desc">FULL_KEEP=30, Full_Copy inclut C:\Backup\micro_logiciel</div></div>
+      <div class="item-card "><div class="item-title">Tache planifiee recreee</div><div class="item-desc">ExecutionPolicy Bypass, Full_Copy 643+96+713 fichiers sur G:</div></div>
+      <div class="item-card "><div class="item-title">Restauration src/</div><div class="item-desc">Backup 20260326_2317_avant_revue_code - elimination parasites } et );</div></div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">&#128196; Commits</div>
     <div class="commit-list">
-      <div class="commit-item"><span class="commit-msg" style="color:var(--muted)">Commits integres dans le rattrapage S61a</span></div>
+      <div class="commit-item"><span class="commit-hash">(S61a)</span><span class="commit-msg">Commits S57 integres dans le rattrapage S61a du 29/03/2026</span></div>
     </div>
   </div>
 

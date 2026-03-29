@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Changelog S53 - Anim'Gest</title>
+  <title>Changelog S58 - Anim'Gest</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -166,60 +166,60 @@ footer strong { color: var(--gold); }
 
   <div class="page-header">
     <div class="sprint-badge">Release Notes</div>
-    <h1>Changelog S53</h1>
-    <div class="subtitle">Drag & Drop planning, forfaits/abonnements BDD, Yousign routes, programmes modeles</div>
-    <div class="meta">Date : 25-26 mars 2026 &mdash; NoSage's Editor &mdash; Anim'Gest</div>
+    <h1>Changelog S58</h1>
+    <div class="subtitle">Module Formules/Abonnements complet, 10 routes API, RBAC role_permission</div>
+    <div class="meta">Date : 28 mars 2026 &mdash; NoSage's Editor &mdash; Anim'Gest</div>
   </div>
 
   <div class="container">
 
     <div class="stats-bar">
-    <div class="stat-item"><span class="stat-num">96+</span><span class="stat-lbl">Pages UI</span></div>
-    <div class="stat-item"><span class="stat-num">~80</span><span class="stat-lbl">Routes API</span></div>
-    <div class="stat-item"><span class="stat-num">12</span><span class="stat-lbl">Forfaits seeds</span></div>
-    <div class="stat-item"><span class="stat-num">4</span><span class="stat-lbl">Routes Yousign</span></div>
+    <div class="stat-item"><span class="stat-num">10</span><span class="stat-lbl">Routes Formules</span></div>
+    <div class="stat-item"><span class="stat-num">56</span><span class="stat-lbl">Permissions RBAC</span></div>
+    <div class="stat-item"><span class="stat-num">4</span><span class="stat-lbl">Roles utilisateur</span></div>
+    <div class="stat-item"><span class="stat-num">100</span><span class="stat-lbl">Pages UI</span></div>
     </div>
 
 
   <div class="section">
-    <div class="section-title">&#128207; Frontend</div>
+    <div class="section-title">&#128207; Frontend - Module Formules</div>
     <div class="items-grid">
-      <div class="item-card "><div class="item-title">Planning - Drag & Drop v2</div><div class="item-desc">DnD natif HTML5, ghost bleu pointille, snap 30 min, optimistic update + rollback, vues Jour et Semaine</div></div>
-      <div class="item-card "><div class="item-title">Programmes - tuiles modeles</div><div class="item-desc">5 modeles Comportementaliste + 3 Educateur, objectif, liste seances, badge niveau, modale duplication</div></div>
-      <div class="item-card "><div class="item-title">Forfaits & Abonnements /app/forfaits</div><div class="item-desc">Catalogue par metier, onglet souscriptions, modales creation + souscription, prix TTC temps reel</div></div>
+      <div class="item-card "><div class="item-title">Page /app/formules complete</div><div class="item-desc">3 onglets : Catalogue, Souscriptions actives, Historique</div></div>
+      <div class="item-card "><div class="item-title">Catalogue formules</div><div class="item-desc">Affichage par metier, prix TTC, nombre de seances, badge statut</div></div>
+      <div class="item-card "><div class="item-title">Souscriptions actives</div><div class="item-desc">Liste clients abonnes, progression seances consommees/totales</div></div>
+      <div class="item-card "><div class="item-title">Historique</div><div class="item-desc">Formules expirees et epuisees avec date fin</div></div>
+      <div class="item-card "><div class="item-title">Sidebar patche</div><div class="item-desc">Lien Formules ajoute pour les 5 metiers concernes</div></div>
     </div>
   </div>
   <div class="section">
-    <div class="section-title">&#9881; API - Nouvelles routes</div>
+    <div class="section-title">&#9881; API - Routes Formules</div>
     <div class="items-grid">
-      <div class="item-card api"><div class="item-title">GET/POST /forfaits</div><div class="item-desc">CRUD catalogue forfaits</div></div>
-      <div class="item-card api"><div class="item-title">GET/PATCH/DELETE /forfaits/:id</div><div class="item-desc">Detail et gestion forfait</div></div>
-      <div class="item-card api"><div class="item-title">GET/POST /forfaits/clients</div><div class="item-desc">Souscriptions clients</div></div>
-      <div class="item-card api"><div class="item-title">GET/PUT /param-yousign</div><div class="item-desc">Lecture/mise a jour config Yousign</div></div>
-      <div class="item-card api"><div class="item-title">POST /signatures</div><div class="item-desc">Cree demande BDD + appel Yousign API v3</div></div>
-      <div class="item-card api"><div class="item-title">POST /signatures/:id/envoyer</div><div class="item-desc">Active la demande + recupere lien signataire</div></div>
-      <div class="item-card api"><div class="item-title">POST /signatures/webhook</div><div class="item-desc">Recoit evenements Yousign -> mise a jour statut</div></div>
-      <div class="item-card api"><div class="item-title">PATCH /seances/:id</div><div class="item-desc">Drag & Drop persistance - champs SEA_DATE_DEBUT/FIN/OBJET/MONTANT/LIEU/SST_ID</div></div>
+      <div class="item-card api"><div class="item-title">GET/POST /formules</div><div class="item-desc">Liste et creation de formules</div></div>
+      <div class="item-card api"><div class="item-title">GET/PUT/DELETE /formules/:id</div><div class="item-desc">Detail, modification, suppression</div></div>
+      <div class="item-card api"><div class="item-title">GET /formules/:id/lignes</div><div class="item-desc">Lignes d'une formule</div></div>
+      <div class="item-card api"><div class="item-title">POST/GET /formules/:id/souscrire</div><div class="item-desc">Souscription client</div></div>
+      <div class="item-card api"><div class="item-title">POST /formules/:id/consommer</div><div class="item-desc">Consommation seance avec auto-statut EPUISEE</div></div>
+      <div class="item-card api"><div class="item-title">GET /client-formules</div><div class="item-desc">Toutes les souscriptions actives</div></div>
+      <div class="item-card api"><div class="item-title">GET /client-formules/:id/historique</div><div class="item-desc">Historique souscriptions client</div></div>
     </div>
   </div>
   <div class="section">
-    <div class="section-title">&#128200; Base de donnees</div>
+    <div class="section-title">&#128272; RBAC - Roles et permissions</div>
     <div class="items-grid">
-      <div class="item-card bdd"><div class="item-title">Tables forfait + forfait_client</div><div class="item-desc">Creation et seeds : 4 Toiletteur + 4 Pension + 4 Equestre</div></div>
-      <div class="item-card bdd"><div class="item-title">Tables Yousign existantes</div><div class="item-desc">param_yousign, signature_demande, signature_demande_doc, signature_evenement deja presentes</div></div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-title">&#128295; Body parsing Manuel</div>
-    <div class="items-grid">
-      <div class="item-card fix"><div class="item-title">req.body undefined dans app.use()</div><div class="item-desc">Pattern body parsing manuel via req.on('data') obligatoire pour POST/PATCH dans custom-routes.ts</div></div>
+      <div class="item-card bdd"><div class="item-title">Tables role + role_permission</div><div class="item-desc">ADMIN, GESTION, CONSULT, COMPTA avec 56 permissions sur 14 modules</div></div>
+      <div class="item-card bdd"><div class="item-title">USR_ROLE_ID sur utilisateur</div><div class="item-desc">Colonne ajoutee, badge role colore dans la Topbar</div></div>
+      <div class="item-card bdd"><div class="item-title">GET /roles + /roles/:id/permissions</div><div class="item-desc">Routes de lecture des roles et permissions</div></div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">&#128196; Commits</div>
     <div class="commit-list">
-      <div class="commit-item"><span class="commit-msg" style="color:var(--muted)">Commits integres dans le rattrapage S61a</span></div>
+      <div class="commit-item"><span class="commit-hash">c6e046c</span><span class="commit-msg">S60a - Fix PUT reseaux-sociaux + lien Nouveau devis sidebar</span></div>
+      <div class="commit-item"><span class="commit-hash">6cc4050</span><span class="commit-msg">S60b - Fix RS colonnes _URL + migration rs_publication -> rs_post</span></div>
+      <div class="commit-item"><span class="commit-hash">7712b33</span><span class="commit-msg">S60c - Fix API RS guillemets SQL ligne 2206</span></div>
+      <div class="commit-item"><span class="commit-hash">389a1cf</span><span class="commit-msg">S60d - Fix RS setData utilise d.raw pour pre-remplir les champs</span></div>
+      <div class="commit-item"><span class="commit-hash">c8c9d2d</span><span class="commit-msg">S60e - Devis transitions statut + Email + Creer facture + routes PUT/POST</span></div>
     </div>
   </div>
 
