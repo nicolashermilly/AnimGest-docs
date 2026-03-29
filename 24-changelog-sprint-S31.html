@@ -231,10 +231,10 @@
           <tr><td><strong>Liste animaux</strong></td><td class="diff-added">Format puce : 250-269-811-400-001 (groupes de 3)</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
           <tr><td><strong>Fiche animal</strong></td><td class="diff-added">Photo Frimousse insérée (ANI_ID=22, miniature base64)</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
           <tr><td><strong>Questionnaires</strong></td><td class="diff-added">7 modèles métier : Comportementaliste, Centre équestre, Maréchal ferrant, Toiletteur, Pet-sitter, Suivi inter-séances, Stage vacances</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
-          <tr><td><strong>Centre d'aide</strong></td><td class="diff-added">200 articles / 15 modules (Animaux, Clients, Séances, EDC/CAC, Facturation, Paramètres, CRM, Agenda, Questionnaires, Programmes, GED, Comptabilité, Réglements, Élevage, Administration)</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
+          <tr><td><strong>Centre d'aide</strong></td><td class="diff-added">200 articles / 15 modules (Animaux, Clients, Séances, BC/CAC, Facturation, Paramètres, CRM, Agenda, Questionnaires, Programmes, GED, Comptabilité, Réglements, Élevage, Administration)</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
           <tr><td><strong>Centre d'aide</strong></td><td class="diff-changed">Fix : titres des accordéons vides (mismatch titre/question)</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
           <tr><td><strong>Bouton Aide ?</strong></td><td class="diff-changed">Pointe vers /app/aide au lieu de /docs/notice_utilisateur.html (404)</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
-          <tr><td><strong>Libellés EDC</strong></td><td class="diff-added">Route /ged-libelles-ec GET/PUT (table param_libelles_ec, 81 libellés)</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
+          <tr><td><strong>Libellés BC</strong></td><td class="diff-added">Route /ged-libelles-ec GET/PUT (table param_libelles_ec, 81 libellés)</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
           <tr><td><strong>Contacts tiers</strong></td><td class="diff-added">createContact + updateContact : ajout LinkedIn, Facebook, Instagram, WhatsApp</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
           <tr><td><strong>Sidebar Export FEC</strong></td><td class="diff-changed">Pointe vers /app/comptabilite (anciennement /app/compta-fec)</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
           <tr><td><strong>animaux.service.ts</strong></td><td class="diff-added">ANI_ESPECE ajouté dans findAll() SQL</td><td><span class="tag tag-green">✅ Livré</span></td></tr>
@@ -257,12 +257,12 @@
           <div class="tl-item">
             <div class="tl-dot blue"></div>
             <div class="tl-title">GET /ged-libelles-ec?groupe=xxx</div>
-            <div class="tl-desc">Liste des libellés EDC filtrables par groupe (CAC, COMPORTEMENT, ALIMENTATION…)</div>
+            <div class="tl-desc">Liste des libellés BC filtrables par groupe (CAC, COMPORTEMENT, ALIMENTATION…)</div>
           </div>
           <div class="tl-item">
             <div class="tl-dot blue"></div>
             <div class="tl-title">PUT /ged-libelles-ec</div>
-            <div class="tl-desc">Mise à jour d'un libellé EDC (PLE_LIBELLE, PLE_LIBELLE_COURT, PLE_AIDE)</div>
+            <div class="tl-desc">Mise à jour d'un libellé BC (PLE_LIBELLE, PLE_LIBELLE_COURT, PLE_AIDE)</div>
           </div>
           <div class="tl-item">
             <div class="tl-dot blue"></div>
@@ -318,7 +318,7 @@
         <div class="bdd-item"><div class="bdd-icon">🐕</div><div><div class="bdd-name">race</div><div class="bdd-count">392 races</div></div><div class="bdd-status status-ok"></div></div>
         <div class="bdd-item"><div class="bdd-icon">📋</div><div><div class="bdd-name">devis_contrat</div><div class="bdd-count">15 devis</div></div><div class="bdd-status status-ok"></div></div>
         <div class="bdd-item"><div class="bdd-icon">🛒</div><div><div class="bdd-name">article_prestation</div><div class="bdd-count">143 → 224 articles</div></div><div class="bdd-status status-new"></div></div>
-        <div class="bdd-item"><div class="bdd-icon">🧠</div><div><div class="bdd-name">param_libelles_ec</div><div class="bdd-count">81 libellés EDC</div></div><div class="bdd-status status-ok"></div></div>
+        <div class="bdd-item"><div class="bdd-icon">🧠</div><div><div class="bdd-name">param_libelles_ec</div><div class="bdd-count">81 libellés BC</div></div><div class="bdd-status status-ok"></div></div>
         <div class="bdd-item"><div class="bdd-icon">☑️</div><div><div class="bdd-name">ani_cac_config</div><div class="bdd-count">14 cases CAC</div></div><div class="bdd-status status-ok"></div></div>
         <div class="bdd-item"><div class="bdd-icon">📊</div><div><div class="bdd-name">crm_lead</div><div class="bdd-count">5 leads</div></div><div class="bdd-status status-ok"></div></div>
         <div class="bdd-item"><div class="bdd-icon">🏙️</div><div><div class="bdd-name">ville</div><div class="bdd-count">34 602 villes</div></div><div class="bdd-status status-ok"></div></div>
@@ -348,7 +348,7 @@
     <div class="grid3">
       <div class="card">
         <div class="card-title">🐕 Comportementaliste</div>
-        <div style="font-size:12px;color:var(--ink3);">10 articles — EDC, consultations, suivis, gardiennage, téléconsultation</div>
+        <div style="font-size:12px;color:var(--ink3);">10 articles — BC, consultations, suivis, gardiennage, téléconsultation</div>
         <div style="margin-top:8px;"><span class="tag tag-green">CAT 20-22</span></div>
       </div>
       <div class="card">

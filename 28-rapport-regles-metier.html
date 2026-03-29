@@ -287,9 +287,9 @@
       <div class="rule crit">
         <div class="rule-header">
           <span class="rule-id">SEA-01</span>
-          <span class="rule-title">Unicité EDC par animal — trigger BDD</span>
+          <span class="rule-title">Unicité BC par animal — trigger BDD</span>
         </div>
-        <div class="rule-body">Une seule séance de type <strong>EDC (Étude de comportement)</strong> peut exister par animal, hors statut ANNULÉE. Géré par <strong>2 triggers</strong> (<code>BEFORE INSERT</code> et <code>BEFORE UPDATE</code>). L'animal est obligatoire pour ce type de séance.</div>
+        <div class="rule-body">Une seule séance de type <strong>BC (Étude de comportement)</strong> peut exister par animal, hors statut ANNULÉE. Géré par <strong>2 triggers</strong> (<code>BEFORE INSERT</code> et <code>BEFORE UPDATE</code>). L'animal est obligatoire pour ce type de séance.</div>
         <div class="rule-meta">
           <span class="pill p-crit">trg_sea_unique_par_animal_ins</span>
           <span class="pill p-crit">trg_sea_unique_par_animal_upd</span>
@@ -301,9 +301,9 @@
 <span class="ce">SQLSTATE 45000 : 'Type de séance unique par animal : ANI_ID obligatoire'</span>
         </div>
         <div class="check-grid" style="margin-top:10px;">
-          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer une 2ème EDC pour le même animal → message d'erreur attendu<div class="sub">L'erreur doit s'afficher clairement côté frontend</div></div></div>
-          <div class="check-item"><div class="check-box"></div><div class="check-text">Annuler l'EDC existante → recréer une nouvelle EDC pour le même animal → doit être accepté</div></div>
-          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer une EDC sans sélectionner d'animal → rejet BDD + message frontend</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer une 2ème BC pour le même animal → message d'erreur attendu<div class="sub">L'erreur doit s'afficher clairement côté frontend</div></div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Annuler l'BC existante → recréer une nouvelle BC pour le même animal → doit être accepté</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Créer une BC sans sélectionner d'animal → rejet BDD + message frontend</div></div>
         </div>
       </div>
 
@@ -342,7 +342,7 @@
           <span class="rule-id">SEA-04</span>
           <span class="rule-title">Statuts de séance</span>
         </div>
-        <div class="rule-body">4 statuts possibles : <code>PLANIFIÉE</code> · <code>RÉALISÉE</code> · <code>ANNULÉE</code> (statut final) · <code>NO_SHOW</code> (statut final). Le statut ANNULÉE est exclu de la règle d'unicité EDC.</div>
+        <div class="rule-body">4 statuts possibles : <code>PLANIFIÉE</code> · <code>RÉALISÉE</code> · <code>ANNULÉE</code> (statut final) · <code>NO_SHOW</code> (statut final). Le statut ANNULÉE est exclu de la règle d'unicité BC.</div>
         <div class="rule-meta">
           <span class="pill p-gray">SST_FINAL = 1 pour ANNULEE et NO_SHOW</span>
         </div>
@@ -352,24 +352,24 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════ -->
-  <!-- 3. EDC / CAC -->
+  <!-- 3. BC / CAC -->
   <!-- ═══════════════════════════════════════════════ -->
-  <div class="section" id="edc">
-    <div class="section-title">3 — Étude Comportementale (EDC) & Suivi CAC</div>
+  <div class="section" id="bc">
+    <div class="section-title">3 — Bilan Comportemental (BC) & Suivi CAC</div>
     <div class="rule-list">
 
       <div class="rule crit">
         <div class="rule-header">
-          <span class="rule-id">EDC-01</span>
-          <span class="rule-title">Une seule fiche EDC par animal</span>
+          <span class="rule-id">BC-01</span>
+          <span class="rule-title">Une seule fiche BC par animal</span>
         </div>
-        <div class="rule-body">La fiche EDC est <strong>unique par animal</strong>. Elle est partagée entre toutes les séances EDC de cet animal. Elle comporte 7 sections : Identité · Alimentation · Comportement · Mode de vie · Antécédents · Grille comportementale · Attentes. La grille comportementale est multi-lignes (CRUD).</div>
+        <div class="rule-body">La fiche BC est <strong>unique par animal</strong>. Elle est partagée entre toutes les séances BC de cet animal. Elle comporte 7 sections : Identité · Alimentation · Comportement · Mode de vie · Antécédents · Grille comportementale · Attentes. La grille comportementale est multi-lignes (CRUD).</div>
         <div class="rule-meta">
           <span class="pill p-crit">Unicité garantie par SEA-01</span>
           <span class="pill p-gray">Sauvegarde partielle autorisée</span>
         </div>
         <div class="check-grid" style="margin-top:10px;">
-          <div class="check-item"><div class="check-box"></div><div class="check-text">Ouvrir l'EDC depuis une séance → la même fiche s'affiche (pas de doublon)</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Ouvrir l'BC depuis une séance → la même fiche s'affiche (pas de doublon)</div></div>
           <div class="check-item"><div class="check-box"></div><div class="check-text">Sauvegarder partiellement (section 1 seulement) → reprendre depuis section 2 lors d'une séance ultérieure</div></div>
         </div>
       </div>
@@ -437,14 +437,14 @@
         <div class="rule-body">La procédure <code>sp_dce_creer_depuis_seance(p_sea_id, p_forcer)</code> génère un devis depuis une séance avec 3 règles bloquantes :
           <br>1. La séance doit exister
           <br>2. Si un devis est déjà lié et <code>p_forcer = 0</code> → erreur
-          <br>3. Pour une EDC, l'animal est obligatoire
+          <br>3. Pour une BC, l'animal est obligatoire
           <br>Le devis créé a une validité de <strong>30 jours</strong> à partir de la date de séance. Les lignes de séance sont copiées dans le devis.</div>
         <div class="rule-meta">
           <span class="pill p-crit">sp_dce_creer_depuis_seance</span>
           <span class="pill p-warn">Validité +30j auto</span>
         </div>
         <div class="check-grid" style="margin-top:10px;">
-          <div class="check-item"><div class="check-box"></div><div class="check-text">Générer devis depuis séance EDC sans animal → erreur attendue</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Générer devis depuis séance BC sans animal → erreur attendue</div></div>
           <div class="check-item"><div class="check-box"></div><div class="check-text">Générer un 2ème devis sans forcer → message "Un devis est déjà lié"</div></div>
           <div class="check-item"><div class="check-box"></div><div class="check-text">Vérifier que la date de validité = date séance + 30j</div></div>
           <div class="check-item"><div class="check-box"></div><div class="check-text">Vérifier que les lignes de séance sont bien copiées dans le devis</div></div>
@@ -826,10 +826,10 @@
         <tbody>
           <tr><td><code>ANI-01</code></td><td>Créer un animal</td><td>Puce ≠ 15 chiffres exactement</td><td>CHECK violation</td><td>"Le numéro de puce doit contenir exactement 15 chiffres"</td></tr>
           <tr><td><code>ANI-01</code></td><td>Créer un animal</td><td>Puce déjà utilisée</td><td>UNIQUE KEY violation</td><td>"Un animal avec cette puce existe déjà"</td></tr>
-          <tr><td><code>SEA-01</code></td><td>Créer une séance EDC</td><td>EDC déjà existante pour l'animal (non annulée)</td><td>SQLSTATE 45000</td><td>"Une étude comportementale existe déjà pour cet animal"</td></tr>
-          <tr><td><code>SEA-01</code></td><td>Créer une séance EDC</td><td>Aucun animal sélectionné</td><td>SQLSTATE 45000</td><td>"L'animal est obligatoire pour ce type de séance"</td></tr>
+          <tr><td><code>SEA-01</code></td><td>Créer une séance BC</td><td>BC déjà existante pour l'animal (non annulée)</td><td>SQLSTATE 45000</td><td>"Une Bilan Comportemental existe déjà pour cet animal"</td></tr>
+          <tr><td><code>SEA-01</code></td><td>Créer une séance BC</td><td>Aucun animal sélectionné</td><td>SQLSTATE 45000</td><td>"L'animal est obligatoire pour ce type de séance"</td></tr>
           <tr><td><code>DCE-03</code></td><td>Générer devis depuis séance</td><td>Devis déjà lié + forcer=false</td><td>SQLSTATE 45000</td><td>"Un devis est déjà associé à cette séance"</td></tr>
-          <tr><td><code>DCE-03</code></td><td>Générer devis EDC</td><td>Pas d'animal sur la séance EDC</td><td>SQLSTATE 45000</td><td>"L'animal est obligatoire pour générer un devis EDC"</td></tr>
+          <tr><td><code>DCE-03</code></td><td>Générer devis BC</td><td>Pas d'animal sur la séance BC</td><td>SQLSTATE 45000</td><td>"L'animal est obligatoire pour générer un devis BC"</td></tr>
           <tr><td><code>REG-01</code></td><td>Saisir un règlement</td><td>Somme règlements > TTC facture</td><td>SQLSTATE 45000</td><td>"Le montant dépasse le total de la facture"</td></tr>
           <tr><td><code>FAC-03</code></td><td>Modifier une facture</td><td>Exercice de la facture clôturé</td><td>SQLSTATE 45000</td><td>"Cette facture appartient à un exercice clôturé"</td></tr>
           <tr><td><code>FAC-03</code></td><td>Supprimer une facture</td><td>Exercice de la facture clôturé</td><td>SQLSTATE 45000</td><td>"Impossible de supprimer une facture d'un exercice clôturé"</td></tr>
@@ -868,8 +868,8 @@
           <tr><td><code>trg_sel_after_insert</code></td><td>seance_ligne</td><td>AFTER INSERT</td><td>Mise à jour totaux séance parente</td></tr>
           <tr><td><code>trg_sel_after_update</code></td><td>seance_ligne</td><td>AFTER UPDATE</td><td>Mise à jour totaux séance parente</td></tr>
           <tr><td><code>trg_sel_after_delete</code></td><td>seance_ligne</td><td>AFTER DELETE</td><td>Mise à jour totaux séance parente (→ 0 si vide)</td></tr>
-          <tr><td><code>trg_sea_unique_par_animal_ins</code></td><td>seance</td><td>BEFORE INSERT</td><td>Unicité EDC par animal</td></tr>
-          <tr><td><code>trg_sea_unique_par_animal_upd</code></td><td>seance</td><td>BEFORE UPDATE</td><td>Unicité EDC par animal</td></tr>
+          <tr><td><code>trg_sea_unique_par_animal_ins</code></td><td>seance</td><td>BEFORE INSERT</td><td>Unicité BC par animal</td></tr>
+          <tr><td><code>trg_sea_unique_par_animal_upd</code></td><td>seance</td><td>BEFORE UPDATE</td><td>Unicité BC par animal</td></tr>
           <tr><td><code>bi_ged_document_lien_check_objet</code></td><td>ged_document_lien</td><td>BEFORE INSERT</td><td>Validation inter-BDD objet métier (13 types)</td></tr>
           <tr><td><code>bu_ged_document_lien_check_objet</code></td><td>ged_document_lien</td><td>BEFORE UPDATE</td><td>Revalidation si objet cible change</td></tr>
         </tbody>

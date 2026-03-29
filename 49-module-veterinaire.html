@@ -1,165 +1,88 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anim'Gest — Module Vétérinaire</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veterinaire — Anim'Gest Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* === CHARTE ANIM'GEST - NoSage's Editor === */
-    :root {
-      --navy: #0D2137;
-      --navy-l: #122840;
-      --navy-ll: #1a3550;
-      --gold: #D4A843;
-      --gold-l: #e8c068;
-      --gold-p: rgba(212,168,67,0.1);
-      --gold-b: rgba(212,168,67,0.2);
-      --dark: #070F1A;
-      --white: #F8F8F5;
-      --muted: #7a8fa6;
-      --green: #3ecf8e;
-      --red: #ef4444;
-      --orange: #f59e0b;
-      --blue: #60a5fa;
-      --purple: #a78bfa;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--dark);
-      color: var(--white);
-      line-height: 1.7;
-      font-size: 14px;
-    }
-    a { color: var(--gold); text-decoration: none; }
-    a:hover { color: var(--gold-l); }
-    /* Nav */
-    nav.doc-nav {
-      background: var(--navy);
-      border-bottom: 1px solid var(--gold-b);
-      padding: .85rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    nav.doc-nav .brand {
-      font-family: 'Playfair Display', serif;
-      color: var(--gold);
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-    nav.doc-nav .nav-links { display: flex; gap: .5rem; flex-wrap: wrap; }
-    nav.doc-nav .nav-links a {
-      color: var(--muted);
-      font-size: .8rem;
-      padding: .25rem .6rem;
-      border-radius: 4px;
-      transition: .2s;
-    }
-    nav.doc-nav .nav-links a:hover { color: var(--white); background: rgba(255,255,255,.06); }
-    nav.doc-nav .nav-badge {
-      margin-left: auto;
-      background: var(--gold-p);
-      border: 1px solid var(--gold-b);
-      color: var(--gold);
-      font-size: .7rem;
-      font-weight: 600;
-      padding: .2rem .75rem;
-      border-radius: 20px;
-    }
-    /* Hero */
-    .doc-hero {
-      background: linear-gradient(135deg, #070F1A 0%, #0D2137 100%);
-      padding: 3rem 2rem 2.5rem;
-      border-bottom: 2px solid var(--gold);
-      text-align: center;
-    }
-    .doc-hero-tag {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--dark);
-      font-size: .72rem;
-      font-weight: 700;
-      padding: .3rem .9rem;
-      border-radius: 20px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .doc-hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      margin-bottom: .5rem;
-    }
-    .doc-hero h1 span { color: var(--gold); }
-    .doc-hero .doc-sub { color: var(--muted); font-size: .95rem; max-width: 600px; margin: 0 auto; }
-    /* Container */
-    .doc-container { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.5rem; }
-    /* Section */
-    .doc-section { margin-bottom: 2.5rem; }
-    .doc-section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      color: var(--gold);
-      border-bottom: 1px solid var(--gold-b);
-      padding-bottom: .5rem;
-      margin-bottom: 1rem;
-    }
-    /* Tables */
-    table { width: 100%; border-collapse: collapse; font-size: .85rem; margin-bottom: 1rem; }
-    th {
-      background: var(--navy);
-      color: var(--gold);
-      font-weight: 600;
-      padding: .65rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid var(--gold-b);
-    }
-    td {
-      padding: .6rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,.04);
-      color: var(--muted);
-      vertical-align: top;
-    }
-    tr:hover td { background: rgba(255,255,255,.02); }
-    /* Code */
-    pre, code {
-      font-family: 'Courier New', monospace;
-      font-size: .83rem;
-    }
-    pre {
-      background: var(--navy);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 8px;
-      padding: 1rem 1.2rem;
-      overflow-x: auto;
-      margin-bottom: 1rem;
-    }
-    /* Cards */
-    .doc-card {
-      background: var(--navy);
-      border: 1px solid var(--gold-b);
-      border-radius: 8px;
-      padding: 1rem 1.2rem;
-      margin-bottom: .7rem;
-    }
-    /* Footer */
-    footer.doc-footer {
-      background: var(--navy);
-      border-top: 1px solid var(--gold-b);
-      text-align: center;
-      padding: 2rem;
-      color: var(--muted);
-      font-size: .82rem;
-      margin-top: 3rem;
-    }
-    footer.doc-footer strong { color: var(--gold); }
+    :root{--navy:#0D2137;--navy-l:#122840;--navy-ll:#1a3550;--gold:#D4A843;--gold-l:#e8c068;--gold-p:rgba(212,168,67,.1);--gold-b:rgba(212,168,67,.2);--dark:#070F1A;--white:#F8F8F5;--muted:#7a8fa6;--green:#3ecf8e;--red:#ef4444;--orange:#f59e0b;--blue:#60a5fa;--purple:#a78bfa}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--white);line-height:1.7;font-size:14px}
+    a{color:var(--gold);text-decoration:none}
+    a:hover{color:var(--gold-l)}
+    nav.doc-nav{background:var(--navy);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+    .brand{font-family:'Playfair Display',serif;color:var(--gold);font-weight:700;font-size:1.1rem}
+    .nav-links{display:flex;gap:.5rem;flex-wrap:wrap}
+    .nav-links a{color:var(--muted);font-size:.8rem;padding:.25rem .6rem;border-radius:4px;transition:.2s}
+    .nav-links a:hover{color:var(--white);background:rgba(255,255,255,.06)}
+    .nav-badge{margin-left:auto;background:var(--gold-p);border:1px solid var(--gold-b);color:var(--gold);font-size:.7rem;font-weight:600;padding:.2rem .75rem;border-radius:20px}
+    .hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 60%,#122840 100%);padding:3.5rem 2rem 3rem;border-bottom:2px solid var(--gold);text-align:center}
+    .hero-tag{display:inline-block;background:var(--gold);color:var(--dark);font-size:.72rem;font-weight:700;padding:.3rem .9rem;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+    .hero-emoji{font-size:3.5rem;display:block;margin-bottom:.8rem}
+    .hero h1{font-family:'Playfair Display',serif;font-size:2.6rem;margin-bottom:.5rem}
+    .hero h1 span{color:var(--gold)}
+    .hero .sub{color:var(--muted);font-size:.95rem;max-width:600px;margin:0 auto 1.5rem}
+    .hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+    .hs{text-align:center}
+    .hs-v{font-size:1.5rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;display:block}
+    .hs-l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    .container{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem}
+    .section{margin-bottom:3rem}
+    .sec-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);border-bottom:1px solid var(--gold-b);padding-bottom:.5rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
+    .av-card{background:var(--navy);border:1px solid var(--gold-b);border-radius:10px;padding:1rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:1.5rem}
+    .av-label{font-weight:600;color:var(--white);font-size:.9rem;white-space:nowrap;min-width:130px}
+    .av-track{flex:1;background:var(--navy-ll);border-radius:4px;height:10px}
+    .av-fill{height:10px;border-radius:4px}
+    .av-pct{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;white-space:nowrap}
+    .modules-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1rem}
+    .module-card{background:var(--navy);border:1px solid rgba(255,255,255,.06);border-left:3px solid;border-radius:10px;padding:1rem 1.2rem;transition:background .2s}
+    .module-card:hover{background:var(--navy-l)}
+    .module-card.done{border-left-color:var(--green)}
+    .module-card.pending{border-left-color:var(--orange)}
+    .module-card.planned{border-left-color:var(--muted)}
+    .module-header{display:flex;align-items:center;gap:.6rem;margin-bottom:.4rem}
+    .module-name{font-weight:600;color:var(--white);font-size:.9rem;flex:1}
+    .badge{display:inline-block;font-size:.67rem;font-weight:600;padding:.12rem .45rem;border-radius:3px}
+    .b-done{background:rgba(60,207,142,.12);color:var(--green);border:1px solid rgba(60,207,142,.3)}
+    .b-pending{background:rgba(245,158,11,.12);color:var(--orange);border:1px solid rgba(245,158,11,.3)}
+    .b-planned{background:rgba(122,143,166,.1);color:var(--muted);border:1px solid rgba(122,143,166,.25)}
+    .b-new{background:var(--gold);color:var(--dark)}
+    .b-soon{background:rgba(167,139,250,.12);color:var(--purple);border:1px solid rgba(167,139,250,.3)}
+    .module-desc{color:var(--muted);font-size:.82rem;line-height:1.55}
+    .module-detail{margin-top:.4rem;font-size:.78rem;color:var(--muted)}
+    code{font-family:'JetBrains Mono',monospace;font-size:.77rem;background:rgba(255,255,255,.05);padding:.05rem .3rem;border-radius:3px}
+    table{width:100%;border-collapse:collapse;font-size:.84rem;margin-bottom:1rem}
+    th{background:var(--navy);color:var(--gold);font-weight:600;padding:.65rem 1rem;text-align:left;border-bottom:1px solid var(--gold-b)}
+    td{padding:.6rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);vertical-align:top}
+    td:first-child{color:var(--white);font-family:'JetBrains Mono',monospace;font-size:.78rem}
+    tr:hover td{background:rgba(255,255,255,.02)}
+    .method{display:inline-block;font-size:.68rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;margin-right:.3rem}
+    .get{background:rgba(60,207,142,.12);color:var(--green)}
+    .post{background:rgba(96,165,250,.12);color:var(--blue)}
+    .put{background:rgba(245,158,11,.12);color:var(--orange)}
+    .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-bottom:1rem}
+    .info-card{background:var(--navy);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:1rem 1.2rem}
+    .ic-icon{font-size:1.4rem;margin-bottom:.5rem}
+    .ic-title{font-weight:600;color:var(--white);font-size:.88rem;margin-bottom:.3rem}
+    .ic-desc{color:var(--muted);font-size:.8rem;line-height:1.5}
+    .roadmap-list{display:flex;flex-direction:column;gap:0}
+    .rl-item{display:flex;gap:1rem;padding-bottom:1rem;position:relative}
+    .rl-item:not(:last-child)::before{content:'';position:absolute;left:9px;top:22px;bottom:0;width:1px;background:var(--gold-b)}
+    .rl-dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--gold);background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--gold);flex-shrink:0;z-index:1}
+    .rl-dot.done{background:var(--green);border-color:var(--green);color:var(--dark)}
+    .rl-body{flex:1}
+    .rl-title{font-weight:600;color:var(--white);font-size:.88rem;margin-bottom:.2rem}
+    .rl-desc{color:var(--muted);font-size:.82rem}
+    .links-row{display:flex;gap:.7rem;flex-wrap:wrap}
+    .link-card{background:var(--navy);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.65rem 1rem;display:flex;align-items:center;gap:.6rem;transition:.2s}
+    .link-card:hover{border-color:var(--gold-b);background:var(--navy-l)}
+    .link-card span{color:var(--muted);font-size:.82rem}
+    .link-card strong{color:var(--white);font-size:.82rem}
+    footer.doc-footer{background:var(--navy);border-top:1px solid var(--gold-b);text-align:center;padding:2rem;color:var(--muted);font-size:.82rem;margin-top:3rem}
+    footer.doc-footer strong{color:var(--gold)}
+    @media(max-width:640px){.modules-grid,.info-grid{grid-template-columns:1fr}.hero h1{font-size:2rem}.av-card{flex-direction:column;gap:.7rem}}
   </style>
 </head>
 <body>
@@ -174,34 +97,169 @@
   </div>
   <span class="nav-badge">S61</span>
 </nav>
-<header class="header">
-  <div class="logo">🐾 Anim'<span>Gest</span> Docs</div>
-  <div class="nav-links">
-    <a href="index.html">Accueil</a>
-    <a href="06-roadmap.html">Roadmap</a>
-    <a href="73-changelog-s44.html">S44</a>
+
+<div class="hero">
+  <div class="hero-tag">Module Metier #49</div>
+  <span class="hero-emoji">🩺</span>
+  <h1><span>Veterinaire</span></h1>
+  <p class="sub">ERP pour veterinaires liberaux — consultations, ordonnances, suivi sante animal</p>
+  <div class="hero-stats">
+    <div class="hs"><span class="hs-v">6</span><span class="hs-l">Modules actifs</span></div>
+    <div class="hs"><span class="hs-v">75%</span><span class="hs-l">Avancement</span></div>
+    <div class="hs"><span class="hs-v">5</span><span class="hs-l">Routes API</span></div>
+    <div class="hs"><span class="hs-v">S61</span><span class="hs-l">MaJ sprint</span></div>
   </div>
-  <span class="badge">#49b — Vétérinaire</span>
-</header>
-<div class="container">
-<h1>🩺 Vétérinaire</h1>
-<p class="subtitle">Documentation module métier — Avancement 40%</p>
-<div class="alert alert">ℹ️ Module en phase initiale. Dashboard squelette disponible. Données dynamiques S44.</div>
-<div class="section"><h2>🔧 Modules</h2><div class="grid">
-  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Dashboard squelette</div><div class="card-desc">KPIs vides. À brancher sur /api/bilan/metier?metier=VETERINAIRE en S44.</div></div>
-  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Consultations (page Séances)</div><div class="card-desc">Utilise la page séances générale. Filtrage VETERINAIRE à améliorer.</div></div>
-  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Planning</div><div class="card-desc">Planning général. Planning métier dédié à créer S44.</div></div>
-  <div class="card"><span class="tag tgreen">✅</span><div class="card-title">Questionnaires</div><div class="card-desc">Anamnèse (20Q), Suivi pathologie (10Q).</div></div>
-  <div class="card"><span class="tag tamber">⏳ S44</span><div class="card-title">Fiche médicale animal</div><div class="card-desc">Historique consultations, vaccins, traitements, ordonnances.</div></div>
-  <div class="card"><span class="tag tamber">⏳ S44</span><div class="card-title">Ordonnances PDF</div><div class="card-desc">Génération ordonnance en modal PDF avec signature vétérinaire.</div></div>
-  <div class="card"><span class="tag tred">❌ S45</span><div class="card-title">Protocoles de soins</div><div class="card-desc">Protocoles standardisés par pathologie. Base de connaissances.</div></div>
-</div></div>
-</div>
 </div>
 
+<div class="container">
+
+  <div class="av-card">
+    <span class="av-label">Avancement global</span>
+    <div class="av-track"><div class="av-fill" style="width:75%;background:linear-gradient(90deg,#D4A843,#D4A843cc)"></div></div>
+    <span class="av-pct" style="color:#D4A843">75%</span>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">Vue d'ensemble</div>
+    <div class="info-grid">
+            <div class="info-card">
+        <div class="ic-icon">🩺</div>
+        <div class="ic-title">Specialite principale</div>
+        <div class="ic-desc">Cabinet veterinaire liberal — consultations, chirurgie, suivi post-op, ordonnances</div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">💊</div>
+        <div class="ic-title">Pharmacie interne</div>
+        <div class="ic-desc">Gestion medicaments, ordonnances, stock. Alertes DLU. Traçabilite lots.</div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">📋</div>
+        <div class="ic-title">Conformite</div>
+        <div class="ic-desc">Ordonnances conformes, registre des stupefiants, factures NF525.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">Modules &amp; Fonctionnalites</div>
+    <div class="modules-grid">
+      <div class="module-card done">
+        <div class="module-header">
+          <span>✅</span>
+          <span class="module-name">Consultations</span>
+          <span class="badge b-done">Actif</span>
+        </div>
+        <div class="module-desc">Gestion actes : consultation, chirurgie, radiographie, analyse. Compte-rendu medical.</div>
+        
+      </div>
+      <div class="module-card done">
+        <div class="module-header">
+          <span>✅</span>
+          <span class="module-name">Ordonnances</span>
+          <span class="badge b-done">Actif</span>
+        </div>
+        <div class="module-desc">Generation ordonnances conformes. Historique par animal. Renouvellement simplifie.</div>
+        
+      </div>
+      <div class="module-card done">
+        <div class="module-header">
+          <span>✅</span>
+          <span class="module-name">Gestion pharmacie</span>
+          <span class="badge b-done">Actif</span>
+        </div>
+        <div class="module-desc">Stock medicaments, DLU, alertes reapprovisionnement. Traçabilite lots.</div>
+        
+      </div>
+      <div class="module-card done">
+        <div class="module-header">
+          <span>✅</span>
+          <span class="module-name">Carnet sante numerique</span>
+          <span class="badge b-done">Actif</span>
+        </div>
+        <div class="module-desc">Vaccinations, depar, chirurgies. Rappels automatiques proprietaire.</div>
+        
+      </div>
+      <div class="module-card done">
+        <div class="module-header">
+          <span>✅</span>
+          <span class="module-name">Facturation actes</span>
+          <span class="badge b-done">Actif</span>
+        </div>
+        <div class="module-desc">Nomenclature actes veterinaires. Depassements. Prise en charge mutuelle.</div>
+        
+      </div>
+      <div class="module-card pending">
+        <div class="module-header">
+          <span>⏳</span>
+          <span class="module-name">Portail Proprietaire</span>
+          <span class="badge b-soon">S62+</span>
+        </div>
+        <div class="module-desc">Carnet sante, rappels vaccins, ordonnances, factures.</div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">Routes API dediees</div>
+    <table>
+      <tr><th>Methode</th><th>Route</th><th>Description</th></tr>
+      <tr><td><span class="method get">GET</span></td><td>/seances?metier=VETERINAIRE</td><td>Consultations et actes</td></tr>
+      <tr><td><span class="method get">GET</span></td><td>/animaux/:id</td><td>Fiche animal complete</td></tr>
+      <tr><td><span class="method get">GET</span></td><td>/elevage/alertes</td><td>Alertes vaccins et soins</td></tr>
+      <tr><td><span class="method get">GET</span></td><td>/articles?categorie=MEDICAMENT</td><td>Pharmacie interne</td></tr>
+      <tr><td><span class="method get">GET</span></td><td>/stats/ca-par-mois</td><td>CA mensuel cabinet</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">Roadmap module</div>
+    <div class="roadmap-list">
+      <div class="rl-item">
+        <div class="rl-dot done">V</div>
+        <div class="rl-body">
+          <div class="rl-title">Consultations + ordonnances + pharmacie</div>
+          <div class="rl-desc">Coeur metier — S43-S47</div>
+        </div>
+      </div>
+      <div class="rl-item">
+        <div class="rl-dot done">V</div>
+        <div class="rl-body">
+          <div class="rl-title">Carnet sante numerique</div>
+          <div class="rl-desc">Suivi vaccinal — S49</div>
+        </div>
+      </div>
+      <div class="rl-item">
+        <div class="rl-dot ">S63</div>
+        <div class="rl-body">
+          <div class="rl-title">Portail Proprietaire</div>
+          <div class="rl-desc">Module A S63</div>
+        </div>
+      </div>
+      <div class="rl-item">
+        <div class="rl-dot ">S64</div>
+        <div class="rl-body">
+          <div class="rl-title">Integration mutuelle et tiers payant</div>
+          <div class="rl-desc">Prise en charge automatique — S64</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">Ressources associees</div>
+    <div class="links-row">
+      <a class="link-card" href="17-api-reference.html"><span>📋</span><strong>API Reference</strong></a>
+      <a class="link-card" href="20-pilotage-projet.html"><span>🗺</span><strong>Pilotage &amp; Roadmap</strong></a>
+      <a class="link-card" href="07-audit-stack.html"><span>🔍</span><strong>Audit Stack</strong></a>
+      <a class="link-card" href="57-module-portail-client.html"><span>🌐</span><strong>Portail Client v2</strong></a>
+    </div>
+  </div>
+
+</div>
 <footer class="doc-footer">
-  <strong>Anim'Gest</strong> &mdash; NoSage's Editor &mdash; Documentation technique<br>
-  <small>Plateforme SaaS ERP pour professionnels du soin animal &mdash; 10 metiers &mdash; Sprint S61</small>
+  <strong>Anim'Gest</strong> &mdash; NoSage's Editor &mdash; Module Veterinaire<br>
+  <small>MaJ Sprint S61 &mdash; 29/03/2026 &mdash; 6 modules actifs &mdash; 75% d'avancement</small>
 </footer>
 </body>
 </html>

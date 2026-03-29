@@ -354,7 +354,7 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
               <tr><td>Référentiels</td><td>ville, condition_paiement, tva_taux, categorie, compte_compta, mode_paiement, role, seance_type (+STY_COULEUR), seance_statut, race</td></tr>
               <tr><td>Tiers & Contacts</td><td>tiers, contact</td></tr>
               <tr><td>Animaux</td><td>animal (+ANI_SCORE_CAC, ANI_DERNIERE_SEA_ID, ANI_DERNIERE_SEA_DATE)</td></tr>
-              <tr><td>Étude Comportementale</td><td>edc_fiche, edc_probleme (S24)</td></tr>
+              <tr><td>Bilan Comportemental</td><td>bc_fiche, bc_probleme (S24)</td></tr>
               <tr><td>Suivi CAC</td><td>seance_suivi_cac, param_libelles_ec (S24)</td></tr>
               <tr><td>Ventes</td><td>article_prestation, devis_contrat_entete/ligne, facture/ligne, reglement, avoir/ligne, acompte, remise, commande_client/ligne</td></tr>
               <tr><td>Achats</td><td>demande_prix, commande_fournisseur, bon_livraison_fourn, facture_fournisseur, avoir_fournisseur, bon_retour, reglement_fournisseur</td></tr>
@@ -397,7 +397,7 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
           <span class="pill pill-blue">v_facture_totaux</span>
           <span class="pill pill-blue">v_facture_suivi</span>
           <span class="pill pill-blue">v_encours_client</span>
-          <span class="pill pill-blue">v_edc_sans_devis</span>
+          <span class="pill pill-blue">v_bc_sans_devis</span>
           <span class="pill pill-blue">v_fec_complet</span>
           <span class="pill pill-blue">v_fec_export_non_equilibre</span>
           <span class="pill pill-blue">v_ged_pj_animal</span>
@@ -449,7 +449,7 @@ docker cp micro_api:/app/dist/factures             <span class="ck">"$bk\facture
         <span class="pill pill-gray">ged_document_version</span>
       </div>
       <div class="div"></div>
-      <div style="font-size:11px;color:var(--ink3);">13 types d'objets liables : ANIMAL, FACTURE, SEANCE, TIERS, CONTACT, RACE, ARTICLE_PRESTATION, UTILISATEUR, DEVIS_CONTRAT, AVOIR, REGLEMENT, EDC_FICHE, SEANCE_SUIVI</div>
+      <div style="font-size:11px;color:var(--ink3);">13 types d'objets liables : ANIMAL, FACTURE, SEANCE, TIERS, CONTACT, RACE, ARTICLE_PRESTATION, UTILISATEUR, DEVIS_CONTRAT, AVOIR, REGLEMENT, BC_FICHE, SEANCE_SUIVI</div>
     </div>
     <div class="card">
       <div class="card-title"><div class="card-icon icon-gold">🏗</div>Arborescence SaaS cible</div>
@@ -500,13 +500,13 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
           <table class="tbl">
             <thead><tr><th>Route</th><th>Statut</th></tr></thead>
             <tbody>
-              <tr><td>GET/POST/PUT /api/edc/*</td><td><span class="pill pill-spec">SPEC</span></td></tr>
-              <tr><td>GET/POST /api/edc/:id/problemes</td><td><span class="pill pill-spec">SPEC</span></td></tr>
+              <tr><td>GET/POST/PUT /api/bc/*</td><td><span class="pill pill-spec">SPEC</span></td></tr>
+              <tr><td>GET/POST /api/bc/:id/problemes</td><td><span class="pill pill-spec">SPEC</span></td></tr>
               <tr><td>GET/POST /api/seances/:id/cac</td><td><span class="pill pill-spec">SPEC</span></td></tr>
               <tr><td>GET /api/seances/:id/cac-initial</td><td><span class="pill pill-spec">SPEC</span></td></tr>
               <tr><td>GET /api/ged-libelles-ec, PUT /api/ged-libelles-ec/:id</td><td><span class="pill pill-ok">S24 ✓</span></td></tr>
-              <tr><td>GET/POST/PUT /api/ged-edc — CRUD fiche EDC</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
-              <tr><td>GET/POST/PUT/DELETE /api/ged-edc/:id/problemes</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>GET/POST/PUT /api/ged-bc — CRUD fiche BC</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
+              <tr><td>GET/POST/PUT/DELETE /api/ged-bc/:id/problemes</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
               <tr><td>GET/POST /api/ged-cac/:id — CAC séance</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
               <tr><td>GET /api/ged-cac/:id/initial — CAC pré-remplis</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
               <tr><td>GET /api/ged-evolution-cac/:ani_id — Historique CAC</td><td><span class="pill pill-ok">S25 ✓</span></td></tr>
@@ -526,7 +526,7 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
         <thead><tr><th>Fichier</th><th>Contenu</th></tr></thead>
         <tbody>
           <tr><td>main.js</td><td>Bootstrap NestJS + PATCH_ROUTES_S56 (reconstruit S24)</td></tr>
-          <tr><td>patch_edc_cac_s25.js</td><td>CRUD EDC + CAC séance + évolution CAC (S25)</td></tr>
+          <tr><td>patch_bc_cac_s25.js</td><td>CRUD BC + CAC séance + évolution CAC (S25)</td></tr>
           <tr><td>patch_animaux_v2.js</td><td>PATCH /api/animaux/:id</td></tr>
           <tr><td>patch_rappels.js</td><td>Routes rappels impayés</td></tr>
           <tr><td>smtp_server.js</td><td>Express port 8081 (SMTP + photo animal)</td></tr>
@@ -550,7 +550,7 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
       <tbody>
         <tr><td>Tiers / Clients</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
         <tr><td>Animaux</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Étude Comportementale</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">COMPLET</span></td><td><span class="pill pill-ok">S25</span></td></tr>
+        <tr><td>Bilan Comportemental</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">COMPLET</span></td><td><span class="pill pill-ok">S25</span></td></tr>
         <tr><td>Suivi CAC par séance</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">S25 ✓</span></td><td><span class="pill pill-ok">COMPLET</span></td><td><span class="pill pill-ok">S25</span></td></tr>
         <tr><td>Séances / Agenda</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
         <tr><td>Devis / Contrats</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
@@ -749,7 +749,7 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
         <span class="pill pill-gray">Intro / Dashboard (0:25)</span>
         <span class="pill pill-gray">Paramétrage (0:35)</span>
         <span class="pill pill-gray">Client + Animal (0:45)</span>
-        <span class="pill pill-gray">Séance EDC (0:45)</span>
+        <span class="pill pill-gray">Séance BC (0:45)</span>
         <span class="pill pill-gray">Devis (0:45)</span>
         <span class="pill pill-gray">Réalisation + CAC (0:35)</span>
         <span class="pill pill-gray">Suivi + Programme (0:40)</span>
@@ -772,9 +772,9 @@ Ex: /tenant_0042/seances/2025/09/uuid.pdf</span>
   </div>
   <div class="sprint-row">
     <div class="sprint"><div class="sprint-num" style="background:var(--accent2);">S1–S8</div><div class="sprint-content"><div class="sprint-title">Sprints 1 à 8 — <span class="pill pill-ok">COMPLETS</span></div><div class="sprint-desc">Setup BDD · Auth · CRUD tiers/animaux · PDF/SMTP · Agenda · Rappels · Portail client · Stripe · SMS · CRM · GED · FEC · PWA · Fix crashes · Audit visuel · Couleurs agenda</div></div></div>
-    <div class="sprint"><div class="sprint-num" style="background:var(--gold);">S9</div><div class="sprint-content"><div class="sprint-title">Sprint 9 — <span class="pill pill-ok">COMPLET</span> · Sessions 24–25</div><div class="sprint-desc">Étude Comportementale (edc_fiche, edc_probleme) · Suivi CAC par séance (seance_suivi_cac) · Libellés paramétrables (param_libelles_ec) · Fix API PATCH_ROUTES_S56 · Frontend EDC + CAC déployés S25</div></div></div>
+    <div class="sprint"><div class="sprint-num" style="background:var(--gold);">S9</div><div class="sprint-content"><div class="sprint-title">Sprint 9 — <span class="pill pill-ok">COMPLET</span> · Sessions 24–25</div><div class="sprint-desc">Bilan Comportemental (bc_fiche, bc_probleme) · Suivi CAC par séance (seance_suivi_cac) · Libellés paramétrables (param_libelles_ec) · Fix API PATCH_ROUTES_S56 · Frontend BC + CAC déployés S25</div></div></div>
     <div class="sprint"><div class="sprint-num" style="background:var(--blue);">S10</div><div class="sprint-content"><div class="sprint-title">Sprint 10 — <span class="pill pill-todo">PLANIFIÉ</span></div><div class="sprint-desc">Frontend modules S9 : EC complet · Suivi CAC · Tarification 3 méthodes · Achats fournisseurs · Stock PMP/FIFO/LIFO · Bilan PCG 2025 · Signature Yousign · Cycles documents</div></div></div>
-    <div class="sprint"><div class="sprint-num" style="background:var(--blue);">S11</div><div class="sprint-content"><div class="sprint-title">Sprint 11 — <span class="pill pill-todo">PLANIFIÉ</span></div><div class="sprint-desc">Éditions PDF tous types (DMP, BLIV, BRET, CMD, AVR, AVF…) · PDF Étude Comportementale · Responsive mobile complet · PWA notifications push · Export CSV tous modules</div></div></div>
+    <div class="sprint"><div class="sprint-num" style="background:var(--blue);">S11</div><div class="sprint-content"><div class="sprint-title">Sprint 11 — <span class="pill pill-todo">PLANIFIÉ</span></div><div class="sprint-desc">Éditions PDF tous types (DMP, BLIV, BRET, CMD, AVR, AVF…) · PDF Bilan Comportemental · Responsive mobile complet · PWA notifications push · Export CSV tous modules</div></div></div>
     <div class="sprint"><div class="sprint-num" style="background:var(--purple);">S12+</div><div class="sprint-content"><div class="sprint-title">Sprint 12+ — <span class="pill pill-spec">SaaS / PROD</span></div><div class="sprint-desc">Passage multi-tenant · Provisionnement tenant auto · BDD plateforme · Contrats SEPA · Portail super admin · Infrastructure hébergement · CI/CD · Monitoring · Vidéos commerciales GIF</div></div></div>
   </div>
 </div>

@@ -190,7 +190,7 @@
 <div class="hero">
   <div class="hero-tag">Spécification fonctionnelle — Document vivant</div>
   <h1>Questionnaires <em>comportementaux</em></h1>
-  <p class="hero-sub">Moteur de questionnaires dynamiques — pré-visite EDC, suivi intermédiaire, satisfaction fin de programme. Envoyés par email, remplis en ligne par le propriétaire, résultats intégrés dans le dossier animal.</p>
+  <p class="hero-sub">Moteur de questionnaires dynamiques — pré-visite BC, suivi intermédiaire, satisfaction fin de programme. Envoyés par email, remplis en ligne par le propriétaire, résultats intégrés dans le dossier animal.</p>
   <div class="hero-kpis">
     <div class="kpi"><div class="kpi-num">3</div><div class="kpi-lbl">Types de questionnaire</div></div>
     <div class="kpi"><div class="kpi-num">7</div><div class="kpi-lbl">Types de question</div></div>
@@ -212,7 +212,7 @@
     <div class="card">
       <div class="card-title"><div class="card-icon icon-gold">🎯</div>Pourquoi des questionnaires ?</div>
       <div class="item-list">
-        <div class="item"><span class="item-label">Gagner du temps</span><span class="item-val">Anamnèse EDC collectée AVANT la visite — arriver informé</span></div>
+        <div class="item"><span class="item-label">Gagner du temps</span><span class="item-val">Anamnèse BC collectée AVANT la visite — arriver informé</span></div>
         <div class="item"><span class="item-label">Standardiser</span><span class="item-val">Même grille pour tous les clients — données comparables</span></div>
         <div class="item"><span class="item-label">Engager</span><span class="item-val">Le propriétaire se prépare — meilleure qualité séance</span></div>
         <div class="item"><span class="item-label">Suivre</span><span class="item-val">Mesurer l'évolution entre les séances via scores</span></div>
@@ -247,16 +247,16 @@
   <div class="section-header"><span class="section-num">02</span><span class="section-title">Types de questionnaires</span></div>
 
   <div class="grid2">
-    <!-- PRE-EDC -->
-    <div class="card" id="s2-preedc">
-      <div class="card-title"><div class="card-icon icon-purple">📝</div>Pré-EDC — Questionnaire de pré-visite</div>
+    <!-- PRE-BC -->
+    <div class="card" id="s2-prebc">
+      <div class="card-title"><div class="card-icon icon-purple">📝</div>Pré-BC — Questionnaire de pré-visite</div>
       <div class="item-list">
-        <div class="item"><span class="item-label">Déclencheur</span><span class="item-val">Automatique J-2 avant une séance de type EDC</span></div>
+        <div class="item"><span class="item-label">Déclencheur</span><span class="item-val">Automatique J-2 avant une séance de type BC</span></div>
         <div class="item"><span class="item-label">Destinataire</span><span class="item-val">Propriétaire de l'animal</span></div>
         <div class="item"><span class="item-label">Objectif</span><span class="item-val">Collecter l'anamnèse avant la visite</span></div>
         <div class="item"><span class="item-label">Durée</span><span class="item-val">~10 minutes (20–25 questions)</span></div>
         <div class="item"><span class="item-label">Sections</span><span class="item-val">Identité animal · Alimentation · Comportement général · Problématique principale · Antécédents</span></div>
-        <div class="item"><span class="item-label">Résultat</span><span class="item-val">Pré-remplissage automatique de certains champs edc_fiche</span></div>
+        <div class="item"><span class="item-label">Résultat</span><span class="item-val">Pré-remplissage automatique de certains champs bc_fiche</span></div>
       </div>
       <div class="pill-row"><span class="pill pill-ok">Template système</span><span class="pill pill-blue">Auto J-2</span></div>
     </div>
@@ -368,14 +368,14 @@
 
 <!-- 04 MAQUETTE -->
 <div class="section" id="s4">
-  <div class="section-header"><span class="section-num">04</span><span class="section-title">Maquette — Questionnaire pré-EDC</span></div>
+  <div class="section-header"><span class="section-num">04</span><span class="section-title">Maquette — Questionnaire pré-BC</span></div>
   <div class="alert alert-info" style="margin-bottom:16px;">Rendu sur mobile — accessible via lien email sans connexion. Barre de progression en haut. Sections paginées (1 section = 1 écran).</div>
 
-  <div id="s4-preedc">
+  <div id="s4-prebc">
     <div class="q-preview">
       <div class="q-preview-header">
         <div class="q-preview-title">Questionnaire de pré-visite</div>
-        <div class="q-preview-meta">Cabinet Canin Harmonie · Titan (Berger Allemand) · EDC du 14/03/2026</div>
+        <div class="q-preview-meta">Cabinet Canin Harmonie · Titan (Berger Allemand) · BC du 14/03/2026</div>
         <div class="q-preview-progress"><div class="q-preview-progress-fill" style="width:40%;"></div></div>
         <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:6px;">Section 2/5 — Alimentation · 8 questions restantes</div>
       </div>
@@ -489,13 +489,13 @@
     <div class="schema-table">
       <div class="schema-table-header"><span class="tname">questionnaire_template</span><span class="tdesc">Modèles de questionnaires (système + personnalisés)</span></div>
       <div class="schema-field"><div class="sf-name sf-pk">QT_ID</div><div class="sf-type">INT AUTO_INCREMENT</div><div class="sf-desc">PK</div></div>
-      <div class="schema-field"><div class="sf-name">QT_CODE</div><div class="sf-type">VARCHAR(50)</div><div class="sf-desc">Code unique ex: PRE_EDC, SUIVI_INTERMEDIAIRE, SATISFACTION, CUSTOM_xxx</div></div>
+      <div class="schema-field"><div class="sf-name">QT_CODE</div><div class="sf-type">VARCHAR(50)</div><div class="sf-desc">Code unique ex: PRE_BC, SUIVI_INTERMEDIAIRE, SATISFACTION, CUSTOM_xxx</div></div>
       <div class="schema-field"><div class="sf-name">QT_TYPE</div><div class="sf-type">ENUM</div><div class="sf-desc">SYSTEME | CUSTOM — les templates SYSTEME ne sont pas modifiables</div></div>
       <div class="schema-field"><div class="sf-name">QT_TITRE</div><div class="sf-type">VARCHAR(200)</div><div class="sf-desc">Titre affiché au propriétaire</div></div>
       <div class="schema-field"><div class="sf-name">QT_DESCRIPTION</div><div class="sf-type">TEXT NULL</div><div class="sf-desc">Introduction / consignes affichées en début de questionnaire</div></div>
       <div class="schema-field"><div class="sf-name">QT_DECLENCHEUR</div><div class="sf-type">ENUM</div><div class="sf-desc">MANUEL | AUTO_PRE_SEANCE | AUTO_POST_SEANCE — pour les templates système</div></div>
       <div class="schema-field"><div class="sf-name">QT_DECLENCHEUR_DELAI_J</div><div class="sf-type">INT NULL</div><div class="sf-desc">Délai en jours (négatif = avant, positif = après) ex: -2 pour J-2</div></div>
-      <div class="schema-field"><div class="sf-name">QT_TYPE_SEANCE_CODE</div><div class="sf-type">VARCHAR(30) NULL</div><div class="sf-desc">Si rempli : déclenché uniquement pour ce type de séance (ex: EDC)</div></div>
+      <div class="schema-field"><div class="sf-name">QT_TYPE_SEANCE_CODE</div><div class="sf-type">VARCHAR(30) NULL</div><div class="sf-desc">Si rempli : déclenché uniquement pour ce type de séance (ex: BC)</div></div>
       <div class="schema-field"><div class="sf-name">QT_ACTIF</div><div class="sf-type">TINYINT(1)</div><div class="sf-desc">1 = actif</div></div>
       <div class="schema-field"><div class="sf-name sf-fk">USR_ID_CREATEUR</div><div class="sf-type">INT NULL</div><div class="sf-desc">FK utilisateur pour templates CUSTOM — NULL pour SYSTEME</div></div>
     </div>
@@ -511,7 +511,7 @@
       <div class="schema-field"><div class="sf-name">QQ_REQUIS</div><div class="sf-type">TINYINT(1)</div><div class="sf-desc">1 = obligatoire</div></div>
       <div class="schema-field"><div class="sf-name">QQ_OPTIONS_JSON</div><div class="sf-type">JSON NULL</div><div class="sf-desc">Options pour RADIO/CHECKBOX, paramètres SCALE (min,max,labels), etc.</div></div>
       <div class="schema-field"><div class="sf-name">QQ_CONDITION_JSON</div><div class="sf-type">JSON NULL</div><div class="sf-desc">Affichage conditionnel ex: {"si": "QQ_ID:12", "vaut": "Oui"}</div></div>
-      <div class="schema-field"><div class="sf-name">QQ_CHAMP_EDC_CIBLE</div><div class="sf-type">VARCHAR(80) NULL</div><div class="sf-desc">Si rempli : réponse copiée dans ce champ de edc_fiche automatiquement</div></div>
+      <div class="schema-field"><div class="sf-name">QQ_CHAMP_BC_CIBLE</div><div class="sf-type">VARCHAR(80) NULL</div><div class="sf-desc">Si rempli : réponse copiée dans ce champ de bc_fiche automatiquement</div></div>
     </div>
 
     <div class="schema-table">
@@ -543,32 +543,32 @@
   </div>
 
   <div class="subsection" id="s5-seed" style="margin-top:16px;">
-    <div class="subsection-title">Questions pré-EDC — liste complète (template système)</div>
+    <div class="subsection-title">Questions pré-BC — liste complète (template système)</div>
     <div class="tbl-wrap">
       <table class="tbl">
-        <thead><tr><th>#</th><th>Section</th><th>Question</th><th>Type</th><th>Req.</th><th>Champ EDC cible</th></tr></thead>
+        <thead><tr><th>#</th><th>Section</th><th>Question</th><th>Type</th><th>Req.</th><th>Champ BC cible</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td>Identité</td><td>Quel est le poids actuel de votre animal ?</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td>✓</td><td>EDC_POIDS</td></tr>
-          <tr><td>2</td><td>Identité</td><td>Y a-t-il d'autres animaux au domicile ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>EDC_COHABITATION</td></tr>
-          <tr><td>3</td><td>Identité</td><td>Si oui, lesquels ? (Chiens / Chats / NAC / Autre)</td><td><span class="qtype qt-multi" style="font-size:9px;padding:2px 6px;">CHECKBOX</span></td><td></td><td>EDC_COHABITATION_TYPE</td></tr>
-          <tr><td>4</td><td>Identité</td><td>Y a-t-il des enfants au domicile ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>EDC_ENFANTS</td></tr>
-          <tr><td>5</td><td>Alimentation</td><td>Type d'alimentation principale</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_ALIMENTATION</td></tr>
-          <tr><td>6</td><td>Alimentation</td><td>Combien de repas par jour ?</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_NB_REPAS</td></tr>
-          <tr><td>7</td><td>Alimentation</td><td>Comportement autour de la gamelle (garde ressource ?)</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-5</span></td><td></td><td>EDC_GARDE_RESSOURCE</td></tr>
-          <tr><td>8</td><td>Comportement</td><td>Décrivez le comportement qui vous préoccupe le plus</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td>✓</td><td>EDC_PROBLEME_PRINCIPAL</td></tr>
-          <tr><td>9</td><td>Comportement</td><td>Ce comportement se produit principalement</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_CONTEXTE_PROBLEME</td></tr>
-          <tr><td>10</td><td>Comportement</td><td>Intensité du comportement problématique (0–10)</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-10</span></td><td>✓</td><td>EDC_INTENSITE_PROBLEME</td></tr>
-          <tr><td>11</td><td>Comportement</td><td>Depuis combien de temps observez-vous ce comportement ?</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_DUREE_PROBLEME</td></tr>
-          <tr><td>12</td><td>Comportement</td><td>Votre chien a-t-il déjà mordu ou tenté de mordre ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>EDC_MORSURE</td></tr>
-          <tr><td>13</td><td>Comportement</td><td>Si oui, décrivez les circonstances (conditionnel Q12=Oui)</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td></td><td>EDC_MORSURE_DETAIL</td></tr>
-          <tr><td>14</td><td>Mode de vie</td><td>Temps seul par jour en moyenne</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_TEMPS_SEUL</td></tr>
-          <tr><td>15</td><td>Mode de vie</td><td>Durée quotidienne de promenades</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>EDC_ACTIVITE_PHYSIQUE</td></tr>
-          <tr><td>16</td><td>Mode de vie</td><td>Réactions en voiture</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-5</span></td><td></td><td>EDC_VOITURE</td></tr>
-          <tr><td>17</td><td>Antécédents</td><td>Votre animal a-t-il déjà suivi un programme de rééducation ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>EDC_ANTECEDENT_PROG</td></tr>
-          <tr><td>18</td><td>Antécédents</td><td>Traitements médicaux ou médicaments en cours ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>EDC_MEDOC</td></tr>
-          <tr><td>19</td><td>Antécédents</td><td>Si oui, lesquels ? (conditionnel Q18=Oui)</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td></td><td>EDC_MEDOC_DETAIL</td></tr>
-          <tr><td>20</td><td>Attentes</td><td>Qu'attendez-vous principalement de cette consultation ?</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td>✓</td><td>EDC_ATTENTES</td></tr>
-          <tr><td>21</td><td>Attentes</td><td>Êtes-vous disponible pour des exercices quotidiens ?</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-5</span></td><td>✓</td><td>EDC_MOTIVATION</td></tr>
+          <tr><td>1</td><td>Identité</td><td>Quel est le poids actuel de votre animal ?</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td>✓</td><td>BC_POIDS</td></tr>
+          <tr><td>2</td><td>Identité</td><td>Y a-t-il d'autres animaux au domicile ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>BC_COHABITATION</td></tr>
+          <tr><td>3</td><td>Identité</td><td>Si oui, lesquels ? (Chiens / Chats / NAC / Autre)</td><td><span class="qtype qt-multi" style="font-size:9px;padding:2px 6px;">CHECKBOX</span></td><td></td><td>BC_COHABITATION_TYPE</td></tr>
+          <tr><td>4</td><td>Identité</td><td>Y a-t-il des enfants au domicile ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>BC_ENFANTS</td></tr>
+          <tr><td>5</td><td>Alimentation</td><td>Type d'alimentation principale</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>BC_ALIMENTATION</td></tr>
+          <tr><td>6</td><td>Alimentation</td><td>Combien de repas par jour ?</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>BC_NB_REPAS</td></tr>
+          <tr><td>7</td><td>Alimentation</td><td>Comportement autour de la gamelle (garde ressource ?)</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-5</span></td><td></td><td>BC_GARDE_RESSOURCE</td></tr>
+          <tr><td>8</td><td>Comportement</td><td>Décrivez le comportement qui vous préoccupe le plus</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td>✓</td><td>BC_PROBLEME_PRINCIPAL</td></tr>
+          <tr><td>9</td><td>Comportement</td><td>Ce comportement se produit principalement</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>BC_CONTEXTE_PROBLEME</td></tr>
+          <tr><td>10</td><td>Comportement</td><td>Intensité du comportement problématique (0–10)</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-10</span></td><td>✓</td><td>BC_INTENSITE_PROBLEME</td></tr>
+          <tr><td>11</td><td>Comportement</td><td>Depuis combien de temps observez-vous ce comportement ?</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>BC_DUREE_PROBLEME</td></tr>
+          <tr><td>12</td><td>Comportement</td><td>Votre chien a-t-il déjà mordu ou tenté de mordre ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>BC_MORSURE</td></tr>
+          <tr><td>13</td><td>Comportement</td><td>Si oui, décrivez les circonstances (conditionnel Q12=Oui)</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td></td><td>BC_MORSURE_DETAIL</td></tr>
+          <tr><td>14</td><td>Mode de vie</td><td>Temps seul par jour en moyenne</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>BC_TEMPS_SEUL</td></tr>
+          <tr><td>15</td><td>Mode de vie</td><td>Durée quotidienne de promenades</td><td><span class="qtype qt-choix" style="font-size:9px;padding:2px 6px;">RADIO</span></td><td>✓</td><td>BC_ACTIVITE_PHYSIQUE</td></tr>
+          <tr><td>16</td><td>Mode de vie</td><td>Réactions en voiture</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-5</span></td><td></td><td>BC_VOITURE</td></tr>
+          <tr><td>17</td><td>Antécédents</td><td>Votre animal a-t-il déjà suivi un programme de rééducation ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>BC_ANTECEDENT_PROG</td></tr>
+          <tr><td>18</td><td>Antécédents</td><td>Traitements médicaux ou médicaments en cours ?</td><td><span class="qtype qt-oui-non" style="font-size:9px;padding:2px 6px;">OUI/NON</span></td><td>✓</td><td>BC_MEDOC</td></tr>
+          <tr><td>19</td><td>Antécédents</td><td>Si oui, lesquels ? (conditionnel Q18=Oui)</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td></td><td>BC_MEDOC_DETAIL</td></tr>
+          <tr><td>20</td><td>Attentes</td><td>Qu'attendez-vous principalement de cette consultation ?</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td>✓</td><td>BC_ATTENTES</td></tr>
+          <tr><td>21</td><td>Attentes</td><td>Êtes-vous disponible pour des exercices quotidiens ?</td><td><span class="qtype qt-echelle" style="font-size:9px;padding:2px 6px;">SCALE 0-5</span></td><td>✓</td><td>BC_MOTIVATION</td></tr>
           <tr><td>22</td><td>Attentes</td><td>Informations complémentaires (libre)</td><td><span class="qtype qt-text" style="font-size:9px;padding:2px 6px;">TEXT</span></td><td></td><td>—</td></tr>
         </tbody>
       </table>
@@ -581,10 +581,10 @@
   <div class="section-header"><span class="section-num">06</span><span class="section-title">Workflow envoi & réponse</span></div>
   <div class="grid2">
     <div class="card">
-      <div class="card-title"><div class="card-icon icon-blue">🔄</div>Envoi automatique (pré-EDC)</div>
+      <div class="card-title"><div class="card-icon icon-blue">🔄</div>Envoi automatique (pré-BC)</div>
       <div class="flow-step" style="padding-top:0;">
         <div class="flow-step-num">1</div>
-        <div class="flow-step-body"><div class="flow-step-title">Séance EDC créée</div><div class="flow-step-desc">Trigger BDD ou cron quotidien détecte séance EDC J+2.</div><span class="flow-tag ft-auto">Auto</span></div>
+        <div class="flow-step-body"><div class="flow-step-title">Séance BC créée</div><div class="flow-step-desc">Trigger BDD ou cron quotidien détecte séance BC J+2.</div><span class="flow-tag ft-auto">Auto</span></div>
       </div>
       <div class="flow-step">
         <div class="flow-step-num">2</div>
@@ -600,7 +600,7 @@
       </div>
       <div class="flow-step">
         <div class="flow-step-num">5</div>
-        <div class="flow-step-body"><div class="flow-step-title">Notification pro + pré-remplissage EDC</div><div class="flow-step-desc">Email : "Luc Rousseau a rempli le questionnaire de Titan." Champs edc_fiche pré-remplis depuis QQ_CHAMP_EDC_CIBLE.</div><span class="flow-tag ft-auto">Auto</span></div>
+        <div class="flow-step-body"><div class="flow-step-title">Notification pro + pré-remplissage BC</div><div class="flow-step-desc">Email : "Luc Rousseau a rempli le questionnaire de Titan." Champs bc_fiche pré-remplis depuis QQ_CHAMP_BC_CIBLE.</div><span class="flow-tag ft-auto">Auto</span></div>
       </div>
     </div>
 
@@ -645,7 +645,7 @@
         <div class="item-list">
           <div class="item"><span class="item-label">Fiche séance</span><span class="item-val">Section "Questionnaire" : statut + lien réponses + bouton renvoyer</span></div>
           <div class="item"><span class="item-label">Fiche animal</span><span class="item-val">Historique questionnaires + scores évolution</span></div>
-          <div class="item"><span class="item-label">Formulaire EDC</span><span class="item-val">Bouton "Importer depuis questionnaire" — pré-rempli</span></div>
+          <div class="item"><span class="item-label">Formulaire BC</span><span class="item-val">Bouton "Importer depuis questionnaire" — pré-rempli</span></div>
           <div class="item"><span class="item-label">Dashboard</span><span class="item-val">Widget "Questionnaires en attente de réponse"</span></div>
           <div class="item"><span class="item-label">Paramètres</span><span class="item-val">Activer/désactiver envois auto par type de séance</span></div>
         </div>
@@ -699,9 +699,9 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-title"><div class="card-icon icon-green">🔗</div>Pré-remplissage EDC</div>
+      <div class="card-title"><div class="card-icon icon-green">🔗</div>Pré-remplissage BC</div>
       <div class="item-list">
-        <div class="item"><span class="item-label">Automatique</span><span class="item-val">22 champs edc_fiche pré-remplis depuis les réponses</span></div>
+        <div class="item"><span class="item-label">Automatique</span><span class="item-val">22 champs bc_fiche pré-remplis depuis les réponses</span></div>
         <div class="item"><span class="item-label">Modifiable</span><span class="item-val">Pro peut toujours modifier les valeurs importées</span></div>
         <div class="item"><span class="item-label">Gain de temps</span><span class="item-val">~15 min d'anamnèse gagnées sur la séance</span></div>
       </div>
@@ -746,7 +746,7 @@
         <div class="item"><span class="item-label">questionnaire_envoi</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer table</span></div>
         <div class="item"><span class="item-label">questionnaire_reponse</span><span class="item-val"><span class="pill pill-todo">TODO</span> Créer table</span></div>
         <div class="item"><span class="item-label">Seeds templates système</span><span class="item-val"><span class="pill pill-todo">TODO</span> 3 templates + 22+12+8 questions</span></div>
-        <div class="item"><span class="item-label">Colonnes edc_fiche cibles</span><span class="item-val"><span class="pill pill-ok">OK S24</span> 60+ champs disponibles</span></div>
+        <div class="item"><span class="item-label">Colonnes bc_fiche cibles</span><span class="item-val"><span class="pill pill-ok">OK S24</span> 60+ champs disponibles</span></div>
       </div>
     </div>
     <div class="card">
@@ -758,7 +758,7 @@
         <div class="item"><span class="item-label">Email template questionnaire</span><span class="item-val"><span class="pill pill-todo">TODO</span> Template HTML SMTP</span></div>
         <div class="item"><span class="item-label">UI réponse mobile</span><span class="item-val"><span class="pill pill-todo">TODO</span> Page /q/:token PWA</span></div>
         <div class="item"><span class="item-label">UI pro — vue réponses</span><span class="item-val"><span class="pill pill-todo">TODO</span> /app/questionnaires/envois/:id</span></div>
-        <div class="item"><span class="item-label">Pré-remplissage edc_fiche</span><span class="item-val"><span class="pill pill-todo">TODO</span> Import depuis réponses questionnaire</span></div>
+        <div class="item"><span class="item-label">Pré-remplissage bc_fiche</span><span class="item-val"><span class="pill pill-todo">TODO</span> Import depuis réponses questionnaire</span></div>
         <div class="item"><span class="item-label">Plan requis</span><span class="item-val"><span class="pill pill-blue">Templates système : tous plans</span></span></div>
         <div class="item"><span class="item-label">Custom</span><span class="item-val"><span class="pill pill-blue">Cabinet+ uniquement</span></span></div>
       </div>
