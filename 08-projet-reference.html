@@ -330,7 +330,7 @@
         <div class="bdd-group"><div class="bdd-group-title">Référentiels</div><div class="bdd-tables">ville · condition_paiement · tva_taux · categorie · compte_compta<br>mode_paiement · role · seance_type (+STY_COULEUR) · seance_statut · race</div></div>
         <div class="bdd-group"><div class="bdd-group-title">Tiers & Contacts</div><div class="bdd-tables">tiers · contact</div></div>
         <div class="bdd-group"><div class="bdd-group-title">Animaux</div><div class="bdd-tables">animal (+ANI_SCORE_CAC · ANI_DERNIERE_SEA_ID · ANI_DERNIERE_SEA_DATE)</div></div>
-        <div class="bdd-group"><div class="bdd-group-title">Étude Comportementale (S24)</div><div class="bdd-tables">edc_fiche (60+ champs) · edc_probleme (grille multi-lignes)</div></div>
+        <div class="bdd-group"><div class="bdd-group-title">Bilan Comportemental (S24)</div><div class="bdd-tables">bc_fiche (60+ champs) · bc_probleme (grille multi-lignes)</div></div>
         <div class="bdd-group"><div class="bdd-group-title">Suivi CAC (S24)</div><div class="bdd-tables">seance_suivi_cac · param_libelles_ec (60 libellés dont 14 CAC)</div></div>
         <div class="bdd-group"><div class="bdd-group-title">Commercial ventes</div><div class="bdd-tables">article_prestation (+tarification, stock)<br>devis_contrat_entete/ligne · facture/ligne · reglement<br>facture_acompte · facture_remise · avoir/ligne · devis_facture_lien<br>commande_client/ligne</div></div>
         <div class="bdd-group"><div class="bdd-group-title">Achats fournisseurs</div><div class="bdd-tables">demande_prix/ligne · commande_fournisseur/ligne<br>bon_livraison_fourn/ligne · facture_fournisseur/ligne<br>bon_retour/ligne · demande_avoir_fourn<br>avoir_fournisseur/ligne · reglement_fournisseur</div></div>
@@ -351,7 +351,7 @@
   <div class="subsection" id="s7-ged">
     <div class="subsection-title">anim_gest_ged</div>
     <div class="card">
-      <div class="bdd-group" style="margin:0;"><div class="bdd-group-title">Tables GED</div><div class="bdd-tables">ged_objet_type (13 types : ANIMAL · FACTURE · SEANCE · TIERS · CONTACT · RACE · ARTICLE_PRESTATION · UTILISATEUR · DEVIS_CONTRAT · AVOIR · REGLEMENT · EDC_FICHE · SEANCE_SUIVI)<br>ged_document · ged_document_lien (polymorphe) · ged_tag · ged_document_tag · ged_document_version</div></div>
+      <div class="bdd-group" style="margin:0;"><div class="bdd-group-title">Tables GED</div><div class="bdd-tables">ged_objet_type (13 types : ANIMAL · FACTURE · SEANCE · TIERS · CONTACT · RACE · ARTICLE_PRESTATION · UTILISATEUR · DEVIS_CONTRAT · AVOIR · REGLEMENT · BC_FICHE · SEANCE_SUIVI)<br>ged_document · ged_document_lien (polymorphe) · ged_tag · ged_document_tag · ged_document_version</div></div>
     </div>
   </div>
 </div>
@@ -364,7 +364,7 @@
       <tbody>
         <tr><td>Tiers / Clients</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
         <tr><td>Animaux</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
-        <tr><td>Étude Comportementale</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-wip">S24</span></td><td><span class="pill pill-wip">EN COURS</span></td><td><span class="pill pill-wip">S24</span></td></tr>
+        <tr><td>Bilan Comportemental</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-wip">S24</span></td><td><span class="pill pill-wip">EN COURS</span></td><td><span class="pill pill-wip">S24</span></td></tr>
         <tr><td>Suivi CAC par séance</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-wip">S24</span></td><td><span class="pill pill-wip">EN COURS</span></td><td><span class="pill pill-wip">S24</span></td></tr>
         <tr><td>Séances / Agenda</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
         <tr><td>Devis / Contrats</td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">OK</span></td><td><span class="pill pill-ok">COMPLET</span></td></tr>
@@ -404,8 +404,8 @@
         <tr><td>S21</td><td>Stats CA HT, patch FAC_TOTAL_HT dans findAll</td></tr>
         <tr><td>S22</td><td>Couleurs agenda dynamiques STY_COULEUR, rebuild propre</td></tr>
         <tr><td>S23</td><td>Spec modules majeurs : stock, achats, tarif, bilan, Yousign, cycles docs, EC</td></tr>
-        <tr><td>S24</td><td>EC + CAC BDD (edc_fiche, seance_suivi_cac, param_libelles_ec), fix API PATCH_ROUTES_S56, libellés EC frontend</td></tr>
-              <tr><td>S25</td><td>Frontend EDC complet (7 sections, grille comportementale), frontend CAC (14 critères, évolution), patch API patch_edc_cac_s25.js, nettoyage docs</td></tr>
+        <tr><td>S24</td><td>EC + CAC BDD (bc_fiche, seance_suivi_cac, param_libelles_ec), fix API PATCH_ROUTES_S56, libellés EC frontend</td></tr>
+              <tr><td>S25</td><td>Frontend BC complet (7 sections, grille comportementale), frontend CAC (14 critères, évolution), patch API patch_bc_cac_s25.js, nettoyage docs</td></tr>
       </tbody>
     </table>
   </div>
