@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anim'Gest — Changelog S53</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0D2137; --navy-mid:#112845; --navy-light:#1a3558;
+    --gold:#D4A843; --gold-dim:rgba(212,168,67,0.15);
+    --text:#e8e4d8; --muted:#8a9ab5;
+    --surface:#0f2030; --card:#132a42; --card-hover:#1a3555;
+    --border:rgba(212,168,67,0.2);
+    --vert:#3fb87a; --orange:#e07c2e; --rouge:#e05252; --bleu:#4a9edd;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);font-size:14px;line-height:1.7;}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;}
+  .brand{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);}
+  .nav-back{color:var(--muted);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:6px;}
+  .nav-back:hover{color:var(--gold);}
+  main{max-width:960px;margin:0 auto;padding:40px;}
+  .sprint-hero{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:36px;}
+  .sprint-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--gold);font-weight:600;margin-bottom:16px;}
+  .sprint-title{font-family:'Playfair Display',serif;font-size:32px;color:var(--gold);margin-bottom:8px;}
+  .sprint-sub{color:var(--muted);font-size:14px;}
+  .kpi-row{display:flex;gap:24px;flex-wrap:wrap;margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+  .kpi{text-align:center;}
+  .kpi-v{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold);font-weight:700;}
+  .kpi-l{font-size:11px;color:var(--muted);margin-top:2px;}
+  h2{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);margin:32px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
+  .block-title{font-weight:600;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .block-title .icon{font-size:16px;}
+  ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+  li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);}
+  li::before{content:'▸';color:var(--gold);flex-shrink:0;margin-top:2px;}
+  li strong{color:var(--text);}
+  .tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;}
+  .tag-new{background:rgba(63,184,122,0.15);color:var(--vert);border:1px solid rgba(63,184,122,0.3);}
+  .tag-fix{background:rgba(74,158,221,0.15);color:var(--bleu);border:1px solid rgba(74,158,221,0.3);}
+  .tag-api{background:rgba(6,182,212,0.15);color:#06B6D4;border:1px solid rgba(6,182,212,0.3);}
+  .tag-bdd{background:rgba(212,168,67,0.12);color:var(--gold);border:1px solid rgba(212,168,67,0.25);}
+  .warn{background:rgba(224,124,46,0.1);border:1px solid rgba(224,124,46,0.3);border-radius:8px;padding:12px 16px;font-size:13px;color:#e89a60;display:flex;gap:8px;margin-top:12px;}
+  footer{text-align:center;padding:32px;border-top:1px solid var(--border);margin-top:60px;color:var(--muted);font-size:12px;}
+  footer a{color:var(--gold);text-decoration:none;}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Anim'Gest</div>
+  <a href="index.html" class="nav-back">← Retour à l'index</a>
+</header>
+
+<main>
+  <div class="sprint-hero">
+    <div class="sprint-badge">📋 Changelog</div>
+    <div class="sprint-title">Sprint S53</div>
+    <div class="sprint-sub">25–26 mars 2026 · Planning DnD · Forfaits &amp; Abonnements · Yousign routes · PATCH séances</div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-v">5</div><div class="kpi-l">Fonctionnalités</div></div>
+      <div class="kpi"><div class="kpi-v">7</div><div class="kpi-l">Routes API</div></div>
+      <div class="kpi"><div class="kpi-v">2</div><div class="kpi-l">Tables BDD</div></div>
+      <div class="kpi"><div class="kpi-v">3</div><div class="kpi-l">Pages TSX</div></div>
+    </div>
+  </div>
+
+  <h2>Frontend</h2>
+
+  <div class="block">
+    <div class="block-title"><span class="icon">📅</span> Planning — Drag &amp; Drop v2 <span class="tag tag-new">Nouveau</span></div>
+    <ul>
+      <li>Drag &amp; drop natif HTML5 (sans librairie externe)</li>
+      <li>Approche <strong>slot-drop</strong> — chaque créneau 30 min est une zone de dépôt indépendante</li>
+      <li>Ghost bleu pointillé pendant le drag + snap sur 30 min</li>
+      <li>Optimistic update + rollback automatique si PATCH échoue</li>
+      <li>Vue Jour + Vue Semaine toutes deux draggables</li>
+      <li><code>pointer-events-none</code> sur contenus internes pour éviter les interférences</li>
+      <li>Fichier déployé : <code>planning-seances-s53-dnd-v2.tsx</code></li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="block-title"><span class="icon">📦</span> Programmes — Tuiles modèles <span class="tag tag-new">Nouveau</span></div>
+    <ul>
+      <li>5 modèles Comportementaliste + 3 modèles Éducateur intégrés en dur</li>
+      <li>Tuiles riches : objectif, liste séances, badge niveau (Débutant / Intermédiaire / Avancé), barre progression</li>
+      <li>Modale duplication (remplace <code>prompt()</code> natif) avec titre + client optionnel</li>
+      <li>Charte alignée sur <code>--surface</code>, <code>--accent</code>, <code>--muted</code></li>
+      <li>Fichier déployé : <code>programmes-page-s53.tsx</code></li>
+    </ul>
+    <div class="warn">⚠️ Modèles restants à ajouter en S54 : Toiletteur, Pet-sitter, Éleveur, Vétérinaire, Équestre, Pension</div>
+  </div>
+
+  <div class="block">
+    <div class="block-title"><span class="icon">💳</span> Forfaits &amp; Abonnements <span class="tag tag-new">Nouveau</span></div>
+    <ul>
+      <li>Page <code>/app/forfaits/page.tsx</code> créée : catalogue par métier, onglet souscriptions</li>
+      <li>Modales création + souscription, prix TTC calculé en temps réel</li>
+      <li><strong>12 forfaits de démo</strong> : 4 Toiletteur + 4 Pension + 4 Équestre (packs + abonnements)</li>
+    </ul>
+  </div>
+
+  <h2>API — Nouvelles routes</h2>
+
+  <div class="block">
+    <div class="block-title"><span class="icon">📡</span> Routes Forfaits <span class="tag tag-api">API</span></div>
+    <ul>
+      <li><strong>GET / POST <code>/forfaits</code></strong> — liste et création</li>
+      <li><strong>GET / PATCH / DELETE <code>/forfaits/:id</code></strong> — détail, modification, suppression</li>
+      <li><strong>GET / POST <code>/forfaits/clients</code></strong> — souscriptions clients</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="block-title"><span class="icon">✍️</span> Routes Yousign <span class="tag tag-api">API</span></div>
+    <ul>
+      <li><strong>GET / PUT <code>/param-yousign</code></strong> — lecture/mise à jour config</li>
+      <li><strong>POST <code>/signatures</code></strong> — crée demande BDD + appel Yousign API v3</li>
+      <li><strong>POST <code>/signatures/:id/envoyer</code></strong> — active la demande + récupère lien signataire</li>
+      <li><strong>POST <code>/signatures/webhook</code></strong> — reçoit événements Yousign → met à jour statut</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="block-title"><span class="icon">🔄</span> Route PATCH /seances/:id <span class="tag tag-fix">Fix</span></div>
+    <ul>
+      <li>Route ajoutée dans <code>custom-routes.ts</code></li>
+      <li>Body parsing manuel (<code>req.body</code> undefined dans <code>app.use</code> custom)</li>
+      <li>Champs autorisés : <code>SEA_DATE_DEBUT</code>, <code>SEA_DATE_FIN</code>, <code>SEA_OBJET</code>, <code>SEA_MONTANT_TTC</code>, <code>SEA_LIEU</code>, <code>SST_ID</code></li>
+    </ul>
+    <div class="warn">⚠️ Rebuild API était en cours à l'arrêt de session S53 — vérifier en S54</div>
+  </div>
+
+  <h2>Base de données</h2>
+
+  <div class="block">
+    <div class="block-title"><span class="icon">🗄️</span> Nouvelles tables <span class="tag tag-bdd">BDD</span></div>
+    <ul>
+      <li><strong><code>forfait</code></strong> — catalogue des forfaits avec métier, type, prix, durée</li>
+      <li><strong><code>forfait_client</code></strong> — souscriptions clients avec statut et dates</li>
+      <li>Tables Yousign déjà présentes : <code>param_yousign</code>, <code>signature_demande</code>, <code>signature_demande_doc</code>, <code>signature_evenement</code></li>
+    </ul>
+  </div>
+
+  <h2>Routes actives vérifiées S53</h2>
+  <div class="block">
+    <ul>
+      <li><code>param-smtp</code>, <code>param-stripe</code>, <code>param-klarna</code>, <code>param-sms</code>, <code>param-urls</code></li>
+      <li><code>contacts</code>, <code>communaute</code>, <code>param-pdp</code>, <code>forfaits</code>, <code>forfaits/clients</code></li>
+      <li><code>param-yousign</code>, <code>signatures</code> — toutes HTTP 200</li>
+    </ul>
+  </div>
+
+</main>
+<footer>
+  <a href="index.html">← Index</a> &nbsp;·&nbsp; Anim'Gest — NoSage's Editor — S53 · 25/03/2026
+</footer>
+</body>
+</html>

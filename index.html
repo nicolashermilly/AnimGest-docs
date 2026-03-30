@@ -2,470 +2,778 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anim'Gest — Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0D2137;--navy-l:#112840;--navy-m:#1a3a5c;--gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);--text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;--bdr:rgba(255,255,255,.08);--ok:#4caf82;--r:10px;}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
-a{color:inherit;text-decoration:none}
+  :root {
+    --navy: #0D2137;
+    --navy-mid: #112845;
+    --navy-light: #1a3558;
+    --gold: #D4A843;
+    --gold-light: #e8c16a;
+    --gold-dim: rgba(212,168,67,0.15);
+    --text: #e8e4d8;
+    --muted: #8a9ab5;
+    --surface: #0f2030;
+    --card: #132a42;
+    --card-hover: #1a3555;
+    --border: rgba(212,168,67,0.2);
+    --accent-violet: #534ab7;
+    --accent-cyan: #06B6D4;
+    --rouge: #e05252;
+    --orange: #e07c2e;
+    --vert: #3fb87a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+  }
 
-nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
-.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold)}
-.nav-sprint{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:20px;padding:.2rem .85rem;font-size:.7rem;font-weight:600;color:var(--gold)}
-.nav-right{margin-left:auto;font-size:.7rem;color:var(--dim)}
+  /* ── HEADER ─────────────────────────────── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-brand { display: flex; align-items: center; gap: 16px; }
+  .header-logo {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--accent-violet), var(--accent-cyan));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+  }
+  .header-subtitle { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .header-meta {
+    display: flex; gap: 24px; align-items: center;
+  }
+  .header-badge {
+    background: var(--gold-dim);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .header-date { font-size: 12px; color: var(--muted); }
 
-.hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:3.5rem 2rem 3rem;border-bottom:1px solid var(--gold-b)}
-.hero-eye{font-size:.68rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3rem);margin-bottom:.6rem;line-height:1.1}
-.hero h1 em{color:var(--gold);font-style:normal}
-.hero p{font-size:.9rem;color:var(--muted);max-width:680px;margin-bottom:1.75rem}
+  /* ── KPI BAR ─────────────────────────────── */
+  .kpi-bar {
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .kpi-item { display: flex; align-items: baseline; gap: 8px; }
+  .kpi-v {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .kpi-lbl { font-size: 12px; color: var(--muted); }
+  .kpi-sep { width: 1px; background: var(--border); align-self: stretch; }
 
-.kpis{display:flex;gap:10px;flex-wrap:wrap}
-.kpi{background:rgba(255,255,255,.04);border:1px solid var(--gold-b);border-radius:var(--r);padding:.85rem 1.25rem;text-align:center;min-width:90px}
-.kpi-v{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--gold);line-height:1}
-.kpi-l{font-size:.65rem;color:var(--muted);margin-top:.3rem;text-transform:uppercase;letter-spacing:.05em}
+  /* ── MAIN ─────────────────────────────── */
+  main { max-width: 1400px; margin: 0 auto; padding: 40px; }
 
-.wrap{max-width:1140px;margin:0 auto;padding:2.5rem 2rem 5rem}
-.sec-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--gold-b)}
-.sav-section{margin-bottom:2.5rem}
+  /* ── SECTION HEADER ─────────────────────────────── */
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin: 40px 0 20px;
+  }
+  .section-header:first-child { margin-top: 0; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+  .section-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .section-count {
+    background: var(--gold-dim);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
 
-/* SAV TOOLS — 4 cartes */
-.sav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
-.sav-card{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:var(--r);padding:1.1rem 1.25rem;display:flex;align-items:flex-start;gap:12px;transition:all .2s}
-.sav-card:hover{background:rgba(212,168,67,.2);border-color:var(--gold)}
-.sav-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
-.sav-body{}
-.sav-title{font-weight:600;font-size:.88rem;color:var(--gold-l);margin-bottom:.25rem}
-.sav-desc{font-size:.73rem;color:var(--muted)}
+  /* ── GRID ─────────────────────────────── */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .grid-wide { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
 
-/* CATEGORY CARDS */
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;margin-bottom:2.5rem}
-.cat-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1.4rem 1.5rem;transition:all .2s;display:flex;flex-direction:column;gap:.75rem}
-.cat-card:hover{border-color:var(--gold-b);background:rgba(17,40,64,.9)}
-.cat-header{display:flex;align-items:center;gap:10px}
-.cat-icon{font-size:1.4rem;flex-shrink:0}
-.cat-name{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)}
-.cat-count{margin-left:auto;background:var(--gold-p);border:1px solid var(--gold-b);border-radius:12px;padding:.15rem .65rem;font-size:.68rem;font-weight:600;color:var(--gold)}
-.cat-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
-.cat-tags{display:flex;gap:5px;flex-wrap:wrap}
-.cat-tag{font-size:.65rem;padding:.15rem .55rem;border-radius:5px;background:rgba(255,255,255,.06);color:var(--muted)}
-.cat-btn{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:600;color:var(--gold);margin-top:.25rem}
+  /* ── CARDS ─────────────────────────────── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .card:hover {
+    background: var(--card-hover);
+    border-color: rgba(212,168,67,0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .card:hover::before { opacity: 1; }
 
-/* RECENT */
-.recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
-.doc-card{background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:8px;padding:.85rem 1rem;transition:all .2s}
-.doc-card:hover{border-color:var(--gold-b);background:rgba(212,168,67,.04)}
-.doc-card a{font-size:.83rem;font-weight:600;color:var(--text)}
-.doc-card a:hover{color:var(--gold)}
-.doc-card .desc{font-size:.72rem;color:var(--muted);margin-top:.25rem}
-.doc-card .tags{display:flex;gap:4px;margin-top:.4rem;flex-wrap:wrap}
-.tag{font-size:.62rem;padding:.15rem .5rem;border-radius:5px;background:rgba(255,255,255,.07);color:var(--muted)}
-.tag.new{background:var(--gold-p);color:var(--gold)}
-.tag.upd{background:rgba(76,175,130,.12);color:var(--ok)}
+  .card-icon { font-size: 22px; }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .card-num {
+    position: absolute;
+    top: 12px; right: 14px;
+    font-size: 10px;
+    color: rgba(212,168,67,0.4);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-family: monospace;
+  }
+  .card-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-top: 4px;
+    align-self: flex-start;
+  }
+  .tag-new { background: rgba(63,184,122,0.15); color: var(--vert); border: 1px solid rgba(63,184,122,0.3); }
+  .tag-sav { background: rgba(83,74,183,0.2); color: #a89cf7; border: 1px solid rgba(83,74,183,0.3); }
+  .tag-api { background: rgba(6,182,212,0.15); color: var(--accent-cyan); border: 1px solid rgba(6,182,212,0.3); }
+  .tag-bdd { background: rgba(212,168,67,0.12); color: var(--gold); border: 1px solid rgba(212,168,67,0.25); }
+  .tag-ia  { background: rgba(224,82,82,0.12); color: #f08080; border: 1px solid rgba(224,82,82,0.25); }
+  .tag-s62 { background: rgba(224,124,46,0.12); color: #e89a60; border: 1px solid rgba(224,124,46,0.25); }
 
-footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1.1rem 2rem;font-size:.72rem;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
-@media(max-width:640px){.wrap{padding:1.5rem 1rem 3rem}.hero{padding:2rem 1rem 1.75rem}.cat-grid{grid-template-columns:1fr}.kpis{gap:6px}}
+  /* ── CARD HERO (large) ─────────────────────────────── */
+  .card-hero {
+    grid-column: span 2;
+    background: linear-gradient(135deg, var(--navy-light), var(--card));
+    border-color: rgba(212,168,67,0.35);
+    padding: 28px;
+  }
+  .card-hero .card-title { font-size: 18px; }
+  .card-hero .card-desc { font-size: 13px; }
+  @media (max-width: 700px) { .card-hero { grid-column: span 1; } }
+
+  /* ── SPRINT BADGE ─────────────────────────────── */
+  .sprint-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-dim);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .sprint-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── SCORE GRID ─────────────────────────────── */
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0 0;
+  }
+  .score-item {
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+  .score-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .score-axe { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  @media (max-width: 600px) { .score-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ── FOOTER ─────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    margin-top: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 14px;
+  }
+  .footer-meta { font-size: 12px; color: var(--muted); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 12px; color: var(--muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--gold); }
 </style>
 </head>
 <body>
 
-<nav>
-  <span class="nav-logo">Anim'Gest</span>
-  <span class="nav-sprint">Sprint S61</span>
-  <span class="nav-right">NoSage's Editor &middot; 29 mars 2026 &middot; 105+ pages</span>
-</nav>
+<header>
+  <div class="header-brand">
+    <div class="header-logo">🐾</div>
+    <div>
+      <div class="header-title">Anim'Gest</div>
+      <div class="header-subtitle">NoSage's Editor — Documentation technique</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <span class="header-badge">Sprint S62</span>
+    <span class="header-date">30 mars 2026</span>
+  </div>
+</header>
 
-<div class="hero">
-  <div class="hero-eye">Documentation technique &amp; produit</div>
-  <h1>Anim'Gest — <em>Documentation</em></h1>
-  <p>Plateforme SaaS verticale pour les professionnels animaliers — 10 métiers, architecture Docker / Next.js / NestJS / MariaDB, ~90 routes API, 105 pages UI, 4 rôles, 56 permissions.</p>
-  <div class="kpis">
-    <div class="kpi"><div class="kpi-v">S61</div><div class="kpi-l">Sprint</div></div>
-    <div class="kpi"><div class="kpi-v">~90</div><div class="kpi-l">Routes API</div></div>
-    <div class="kpi"><div class="kpi-v">105</div><div class="kpi-l">Pages UI</div></div>
-    <div class="kpi"><div class="kpi-v">10</div><div class="kpi-l">Métiers</div></div>
-    <div class="kpi"><div class="kpi-v">82</div><div class="kpi-l">Score qualité</div></div>
-    <div class="kpi"><div class="kpi-v">156</div><div class="kpi-l">Clients BDD</div></div>
+<div class="kpi-bar">
+  <div class="kpi-item">
+    <span class="kpi-v">110</span>
+    <span class="kpi-lbl">Pages documentation</span>
+  </div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item">
+    <span class="kpi-v">105</span>
+    <span class="kpi-lbl">Pages UI</span>
+  </div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item">
+    <span class="kpi-v">90+</span>
+    <span class="kpi-lbl">Routes API</span>
+  </div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item">
+    <span class="kpi-v">241</span>
+    <span class="kpi-lbl">Colonnes BDD</span>
+  </div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item">
+    <span class="kpi-v">82/100</span>
+    <span class="kpi-lbl">Score global S61</span>
+  </div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item">
+    <span class="kpi-v">10</span>
+    <span class="kpi-lbl">Métiers couverts</span>
   </div>
 </div>
 
-  <!-- SECTION SAV - Outils de pilotage -->
-  <section class="sav-section" id="sav" style="padding:2.5rem 2rem 2rem;max-width:1200px;margin:0 auto">
-    <div style="display:flex;align-items:center;gap:.6rem;border-bottom:1px solid rgba(212,168,67,.2);padding-bottom:.6rem;margin-bottom:1.5rem">
-      <span style="font-size:1.2rem">🛠</span>
-      <span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#D4A843;font-weight:700">Outils de pilotage (SAV)</span>
-    </div>
+<main>
 
-    <!-- Ligne 1 : Pilotage + Launcher + Gen Maintenance + Analyseur Dette -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:.8rem">
-
-      <a href="SAV_Pilotage_Qualite.html" style="display:flex;flex-direction:column;gap:.4rem;background:#0D2137;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:1rem 1.1rem;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(212,168,67,.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,.07)'">
-        <span style="font-size:1.5rem">📐</span>
-        <span style="font-weight:700;color:#F8F8F5;font-size:.88rem">Pilotage Qualite</span>
-        <span style="color:#7a8fa6;font-size:.78rem;line-height:1.4">Process fin de sprint — outils, commandes, regles qualite et objectifs de score S61</span>
-      </a>
-
-      <a href="SAV_Launcher.html" style="display:flex;flex-direction:column;gap:.4rem;background:#122840;border:2px solid rgba(212,168,67,.35);border-radius:10px;padding:1rem 1.1rem;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(212,168,67,.7)'" onmouseout="this.style.borderColor='rgba(212,168,67,.35)'">
-        <span style="font-size:1.5rem">🚀</span>
-        <span style="font-weight:700;color:#D4A843;font-size:.88rem">Launcher — Fin de Sprint</span>
-        <span style="color:#7a8fa6;font-size:.78rem;line-height:1.4">Toutes les commandes Python + liens outils en une seule page</span>
-      </a>
-
-      <a href="SAV_Generator_Maintenance.html" style="display:flex;flex-direction:column;gap:.4rem;background:#0D2137;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:1rem 1.1rem;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(212,168,67,.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,.07)'">
-        <span style="font-size:1.5rem">🔧</span>
-        <span style="font-weight:700;color:#F8F8F5;font-size:.88rem">Generateur de Bilan Maintenance</span>
-        <span style="color:#7a8fa6;font-size:.78rem;line-height:1.4">Saisir scores, metriques, points d'action et envoyer vers le Dashboard Maintenance</span>
-      </a>
-
-      <a href="SAV_Analyseur_Dette_Technique.html" style="display:flex;flex-direction:column;gap:.4rem;background:#0D2137;border:1px solid rgba(96,165,250,.25);border-radius:10px;padding:1rem 1.1rem;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(96,165,250,.5)'" onmouseout="this.style.borderColor='rgba(96,165,250,.25)'">
-        <div style="display:flex;align-items:center;gap:.4rem">
-          <span style="font-size:1.5rem">⚙️</span>
-          <span style="font-size:.65rem;font-weight:700;background:#D4A843;color:#070F1A;padding:.1rem .4rem;border-radius:3px">NEW</span>
-        </div>
-        <span style="font-weight:700;color:#F8F8F5;font-size:.88rem">Analyseur Dette Technique</span>
-        <span style="color:#7a8fa6;font-size:.78rem;line-height:1.4">Catalogue · Refactorisation interactive · Detecteur patterns interdits</span>
-      </a>
-
-    </div>
-
-    <!-- Ligne 2 : Regles Metier + Gen Handover + Dashboard Revue de Code (large) -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 2fr;gap:.8rem;margin-bottom:.8rem">
-
-      <a href="SAV_Regles_Metier.html" style="display:flex;flex-direction:column;gap:.4rem;background:#0D2137;border:1px solid rgba(96,165,250,.25);border-radius:10px;padding:1rem 1.1rem;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(96,165,250,.5)'" onmouseout="this.style.borderColor='rgba(96,165,250,.25)'">
-        <div style="display:flex;align-items:center;gap:.4rem">
-          <span style="font-size:1.5rem">📜</span>
-          <span style="font-size:.65rem;font-weight:700;background:#D4A843;color:#070F1A;padding:.1rem .4rem;border-radius:3px">NEW</span>
-        </div>
-        <span style="font-weight:700;color:#F8F8F5;font-size:.88rem">Referentiel Regles Metier</span>
-        <span style="color:#7a8fa6;font-size:.78rem;line-height:1.4">15 regles actives · Exemples OK/NOK · Matrice couverture</span>
-      </a>
-
-      <a href="SAV_Generator_Handover.html" style="display:flex;flex-direction:column;gap:.4rem;background:#0D2137;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:1rem 1.1rem;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(212,168,67,.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,.07)'">
-        <span style="font-size:1.5rem">📋</span>
-        <span style="font-weight:700;color:#F8F8F5;font-size:.88rem">Generateur de Handover</span>
-        <span style="color:#7a8fa6;font-size:.78rem;line-height:1.4">Remplir et telecharger le fichier .md de fin de sprint en 5 min — pre-rempli S61</span>
-      </a>
-
-      <a href="SAV_Dashboard_Revue_Code.html" style="display:flex;flex-direction:column;gap:.4rem;background:linear-gradient(135deg,#0D2137 0%,#122840 100%);border:2px solid rgba(212,168,67,.35);border-radius:10px;padding:1rem 1.1rem;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(212,168,67,.7)'" onmouseout="this.style.borderColor='rgba(212,168,67,.35)'">
-        <div style="display:flex;align-items:center;gap:.5rem">
-          <span style="font-size:1.5rem">🔍</span>
-          <span style="font-size:.65rem;font-weight:700;background:#D4A843;color:#070F1A;padding:.1rem .4rem;border-radius:3px">FUSION S61</span>
-        </div>
-        <span style="font-weight:700;color:#D4A843;font-size:.88rem">Dashboard Revue de Code</span>
-        <span style="color:#7a8fa6;font-size:.78rem;line-height:1.4">Qualite · Maintenance · Dette · Regles — un onglet par sprint — evolution S54&rarr;S61</span>
-      </a>
-
-    </div>
-
-    <!-- Flux recommande -->
-    <div style="background:#0D2137;border:1px solid rgba(212,168,67,.2);border-radius:8px;padding:.7rem 1rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.78rem">
-      <span style="color:#7a8fa6;font-weight:600;margin-right:.3rem">Flux SAV :</span>
-      <span style="background:#122840;color:#F8F8F5;padding:.15rem .55rem;border-radius:4px">1. Analyseur Dette</span>
-      <span style="color:#7a8fa6">&rarr;</span>
-      <span style="background:#122840;color:#F8F8F5;padding:.15rem .55rem;border-radius:4px">2. Regles Metier</span>
-      <span style="color:#7a8fa6">&rarr;</span>
-      <span style="background:#122840;color:#F8F8F5;padding:.15rem .55rem;border-radius:4px">3. Gen. Maintenance</span>
-      <span style="color:#7a8fa6">&rarr;</span>
-      <span style="background:#122840;color:#F8F8F5;padding:.15rem .55rem;border-radius:4px">4. Gen. Handover</span>
-      <span style="color:#7a8fa6">&rarr;</span>
-      <span style="background:rgba(212,168,67,.1);color:#D4A843;padding:.15rem .55rem;border-radius:4px;border:1px solid rgba(212,168,67,.2)">5. Dashboard Revue de Code</span>
-      <span style="color:#7a8fa6">&rarr;</span>
-      <span style="background:rgba(212,168,67,.1);color:#D4A843;padding:.15rem .55rem;border-radius:4px;border:1px solid rgba(212,168,67,.2)">6. Pilotage Qualite</span>
-    </div>
-
-  </section>
-    </div>
-    <div class="doc-card">
-      <a href="07-audit-stack.html">07 — Audit Stack</a>
-      <div class="desc">2736 lignes, 87+ getDb(), ~90 routes API</div>
-      <div class="tags"><span class="tag upd">MàJ S61</span></div>
-    </div>
+  <!-- ══ SPRINT S62 — NOUVEAU ══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <span class="section-label">Sprint S62 — En cours</span>
+    <div class="section-line"></div>
   </div>
 
-</div>
+  <div class="grid grid-wide">
+    <a href="HANDOVER_S61_FIN_COMPLET_v2.html" class="card card-hero">
+      <div class="sprint-pill"><div class="sprint-dot"></div> S62 actif</div>
+      <div class="card-icon">🚀</div>
+      <div class="card-title">Handover S61 → S62 — Complet</div>
+      <div class="card-desc">Widget Eliot IA v2 · Portail Client BDD + spec · 43 corrections SQL · drag&amp;drop fluide · 20 avatars WebP · 4 commits dev + 8 commits docs</div>
+      <div class="score-grid">
+        <div class="score-item"><div class="score-val">82</div><div class="score-axe">Backend</div></div>
+        <div class="score-item"><div class="score-val">80</div><div class="score-axe">Frontend</div></div>
+        <div class="score-item"><div class="score-val">85</div><div class="score-axe">BDD</div></div>
+        <div class="score-item"><div class="score-val">82</div><div class="score-axe">Global</div></div>
+      </div>
+      <span class="card-tag tag-new">Nouveau S62</span>
+    </a>
+
+    <a href="portail-client-spec.html" class="card">
+      <div class="card-num">#NEW</div>
+      <div class="card-icon">🔑</div>
+      <div class="card-title">Portail Client — Spec &amp; Routes</div>
+      <div class="card-desc">16 routes API · 4 tables BDD · auth token UUID · séances / CAC / devis / factures / PDF · pages TSX prêtes à déployer</div>
+      <span class="card-tag tag-s62">S62 ROUGE</span>
+    </a>
+
+    <a href="widget-ia-eliot.html" class="card">
+      <div class="card-num">#NEW</div>
+      <div class="card-icon">🤖</div>
+      <div class="card-title">Widget Eliot IA — Documentation</div>
+      <div class="card-desc">Architecture proxy Anthropic · drag &amp; drop · avatars BIB_Widget · page paramètres · Web Speech API (POC) · règles sécurité clé</div>
+      <span class="card-tag tag-ia">Module IA</span>
+    </a>
+  </div>
+
+  <!-- ══ CHANGELOGS ══════════════════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <span class="section-label">Changelogs</span>
+    <span class="section-count">S32 → S61</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid">
+    <a href="58-changelog-S61.html" class="card">
+      <div class="card-num">#58</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S61</div>
+      <div class="card-desc">Widget Eliot IA · Portail Client BDD · 43 SQL fixes · 20 avatars WebP · Route /ia/chat</div>
+      <span class="card-tag tag-new">Nouveau</span>
+    </a>
+    <a href="57-changelog-S60.html" class="card">
+      <div class="card-num">#57</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S60</div>
+      <div class="card-desc">Fix RS colonnes · Devis transitions statut · Email · Créer facture depuis devis</div>
+    </a>
+    <a href="56-changelog-S59.html" class="card">
+      <div class="card-num">#56</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S59</div>
+      <div class="card-desc">Générateur Handover V1 · Formulaires lead · SAV Launcher première version</div>
+    </a>
+    <a href="55-changelog-S58.html" class="card">
+      <div class="card-num">#55</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S58</div>
+      <div class="card-desc">Page Paramètres Editions · Fix permissions rôles · Route GET /seances/:id · Script sauvegarde v7</div>
+    </a>
+    <a href="54-changelog-S57.html" class="card">
+      <div class="card-num">#54</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S57</div>
+      <div class="card-desc">Règle CAC : accès uniquement depuis fiche séance · Suppression lien Sidebar · Restauration src/</div>
+    </a>
+    <a href="53-changelog-S56.html" class="card">
+      <div class="card-num">#53</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S56</div>
+      <div class="card-desc">Revue de code · Analyse dette technique · Patterns d'architecture · SAV Qualité V1</div>
+    </a>
+    <a href="52-changelog-S55.html" class="card">
+      <div class="card-num">#52</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S55</div>
+      <div class="card-desc">Générateur Maintenance · Dashboard Qualité · SAV tooling · Pilotage sprint</div>
+    </a>
+    <a href="51-changelog-S54.html" class="card">
+      <div class="card-num">#51</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S54</div>
+      <div class="card-desc">Programmes métier · Vérification PATCH séances · Routes Yousign · Modèles forfaits</div>
+    </a>
+    <a href="50-changelog-S53.html" class="card">
+      <div class="card-num">#50</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S53</div>
+      <div class="card-desc">Planning DnD v2 · Forfaits &amp; Abonnements BDD/API · Yousign routes · PATCH /seances/:id</div>
+    </a>
+    <a href="49-changelog-S52.html" class="card">
+      <div class="card-num">#49</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S52</div>
+      <div class="card-desc">Stats KPIs · Carte clients v2 · Charte 79 fichiers · Routes avoirs/ged-edc</div>
+    </a>
+    <a href="48-changelog-S51.html" class="card">
+      <div class="card-num">#48</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S51</div>
+      <div class="card-desc">Carte clients Leaflet · GED CAC · Notice utilisateur v4 · Routes séances évolution</div>
+    </a>
+    <a href="47-changelog-S50.html" class="card">
+      <div class="card-num">#47</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S50</div>
+      <div class="card-desc">btn-danger · Doublon AideContextuelle · PDF routes corrigées · Sidebar règlements achats</div>
+    </a>
+    <a href="46-changelog-S48.html" class="card">
+      <div class="card-num">#46</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Changelog S48</div>
+      <div class="card-desc">EDC comportemental · Planning semaine · Seeds 200 animaux · Signatures Yousign</div>
+    </a>
+  </div>
+
+  <!-- ══ OUTILS SAV ══════════════════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <span class="section-label">Outils SAV</span>
+    <span class="section-count">10 outils</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid">
+    <a href="SAV_Launcher.html" class="card">
+      <div class="card-num">SAV</div>
+      <div class="card-icon">🚀</div>
+      <div class="card-title">SAV Launcher</div>
+      <div class="card-desc">Flux de démarrage 6 étapes · Accès rapide tous outils · Mis à jour S61</div>
+      <span class="card-tag tag-sav">SAV</span>
+    </a>
+    <a href="SAV_Pilotage_Qualite.html" class="card">
+      <div class="card-num">SAV</div>
+      <div class="card-icon">🎯</div>
+      <div class="card-title">Pilotage Qualité</div>
+      <div class="card-desc">8 tuiles · Checklist enrichie S61 · Scoring Backend / Frontend / BDD · Mis à jour S61</div>
+      <span class="card-tag tag-sav">SAV</span>
+    </a>
+    <a href="SAV_Dashboard_Revue_Code.html" class="card">
+      <div class="card-num">SAV</div>
+      <div class="card-icon">📊</div>
+      <div class="card-title">Dashboard Revue de Code</div>
+      <div class="card-desc">FUSION Qualité + Maintenance + Dette + Règles · S54 → S61 · localStorage</div>
+      <span class="card-tag tag-sav">SAV</span>
+    </a>
+    <a href="SAV_Analyseur_Dette_Technique.html" class="card">
+      <div class="card-num">SAV</div>
+      <div class="card-icon">🔍</div>
+      <div class="card-title">Analyseur Dette Technique</div>
+      <div class="card-desc">5 onglets : dashboard · catalogue · refactorisation · patterns · export — Nouveau S61</div>
+      <span class="card-tag tag-new">Nouveau S61</span>
+    </a>
+    <a href="SAV_Regles_Metier.html" class="card">
+      <div class="card-num">SAV</div>
+      <div class="card-icon">📐</div>
+      <div class="card-title">Règles Métier</div>
+      <div class="card-desc">15 règles · Exemples OK/NOK · Matrice couverture · Export — Nouveau S61</div>
+      <span class="card-tag tag-new">Nouveau S61</span>
+    </a>
+    <a href="SAV_Generateur_Handover_V2.html" class="card">
+      <div class="card-num">SAV</div>
+      <div class="card-icon">📝</div>
+      <div class="card-title">Générateur Handover V2</div>
+      <div class="card-desc">Génération handover structuré · Métriques S61 à alimenter manuellement</div>
+      <span class="card-tag tag-sav">SAV</span>
+    </a>
+    <a href="SAV_Generateur_Maintenance.html" class="card">
+      <div class="card-num">SAV</div>
+      <div class="card-icon">🔧</div>
+      <div class="card-title">Générateur Maintenance</div>
+      <div class="card-desc">Fiches maintenance · Suivi des corrections · Export rapport</div>
+      <span class="card-tag tag-sav">SAV</span>
+    </a>
+    <a href="SAV_Dashboard_Maintenance.html" class="card">
+      <div class="card-num">SAV</div>
+      <div class="card-icon">🛠️</div>
+      <div class="card-title">Dashboard Maintenance</div>
+      <div class="card-desc">Historique corrections · Bugs ouverts / fermés · Statistiques</div>
+      <span class="card-tag tag-sav">SAV</span>
+    </a>
+    <a href="SAV_Dashboard_Qualite.html" class="card">
+      <div class="card-num">SAV</div>
+      <div class="card-icon">✅</div>
+      <div class="card-title">Dashboard Qualité</div>
+      <div class="card-desc">Scores par sprint · Évolution axes Backend/Frontend/BDD · Tendances</div>
+      <span class="card-tag tag-sav">SAV</span>
+    </a>
+    <a href="SAV_suivi-revue-code.html" class="card">
+      <div class="card-num">SAV</div>
+      <div class="card-icon">🔎</div>
+      <div class="card-title">Suivi Revue de Code</div>
+      <div class="card-desc">Items à revoir · Priorités · Lien vers générateurs</div>
+      <span class="card-tag tag-sav">SAV</span>
+    </a>
+  </div>
+
+  <!-- ══ ARCHITECTURE & TECHNIQUE ═══════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <span class="section-label">Architecture &amp; Technique</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid">
+    <a href="07-audit-stack.html" class="card">
+      <div class="card-num">#07</div>
+      <div class="card-icon">🏗️</div>
+      <div class="card-title">Audit Stack</div>
+      <div class="card-desc">Next.js 15 · NestJS · MariaDB · Docker · nginx · Mis à jour S61</div>
+    </a>
+    <a href="17-api-reference.html" class="card">
+      <div class="card-num">#17</div>
+      <div class="card-icon">📡</div>
+      <div class="card-title">Référence API</div>
+      <div class="card-desc">90+ routes · custom-routes.ts 2800 lignes · Groupes : Portail · IA · Editions · Elevage · CRM</div>
+      <span class="card-tag tag-api">API</span>
+    </a>
+    <a href="20-pilotage-qualite.html" class="card">
+      <div class="card-num">#20</div>
+      <div class="card-icon">🎯</div>
+      <div class="card-title">Pilotage Qualité</div>
+      <div class="card-desc">Scores S54 → S61 · Métriques JSDoc, BDD, Routes · Mis à jour S61</div>
+    </a>
+    <a href="AUDIT_STACK.html" class="card">
+      <div class="card-num">#—</div>
+      <div class="card-icon">🔬</div>
+      <div class="card-title">Audit Stack détaillé</div>
+      <div class="card-desc">Analyse approfondie de la stack · Recommandations Optim'Web · Sentry / AG Grid / Stimulsoft</div>
+    </a>
+    <a href="01-synthese-projet.html" class="card">
+      <div class="card-num">#01</div>
+      <div class="card-icon">📌</div>
+      <div class="card-title">Synthèse projet</div>
+      <div class="card-desc">Vision produit · 10 métiers · 3 tiers (Essentiel / Pro / Expert) · Module Eliot IA</div>
+    </a>
+    <a href="ROADMAP.html" class="card">
+      <div class="card-num">#—</div>
+      <div class="card-icon">🗺️</div>
+      <div class="card-title">Roadmap</div>
+      <div class="card-desc">S62 : Portail Client · S63 : Notifs + Stripe · S70+ : IA licence · Carte Identité Animale</div>
+    </a>
+  </div>
+
+  <!-- ══ MODULES FONCTIONNELS ═══════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <span class="section-label">Modules fonctionnels</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid">
+    <a href="portail-client-spec.html" class="card">
+      <div class="card-num">#NEW</div>
+      <div class="card-icon">🔑</div>
+      <div class="card-title">Portail Client</div>
+      <div class="card-desc">Login token · Séances · CAC/BC · Devis · Factures · PDF · Confirmation/Annulation</div>
+      <span class="card-tag tag-s62">S62 ROUGE</span>
+    </a>
+    <a href="widget-ia-eliot.html" class="card">
+      <div class="card-num">#NEW</div>
+      <div class="card-icon">🤖</div>
+      <div class="card-title">Module IA — Eliot</div>
+      <div class="card-desc">Widget flottant · Proxy Anthropic · 20 avatars · Paramètres · Web Speech API POC</div>
+      <span class="card-tag tag-ia">Module IA</span>
+    </a>
+    <a href="ia-generative.html" class="card">
+      <div class="card-num">#—</div>
+      <div class="card-icon">✨</div>
+      <div class="card-title">IA Générative — Page commerciale</div>
+      <div class="card-desc">Présentation du module Eliot · Tarification · Fonctionnalités · POC validé S60</div>
+    </a>
+    <a href="03-notice-utilisateur.html" class="card">
+      <div class="card-num">#03</div>
+      <div class="card-icon">📖</div>
+      <div class="card-title">Notice utilisateur v4</div>
+      <div class="card-desc">Guide complet par module · Aide contextuelle par page · 15 sections</div>
+    </a>
+    <a href="02-guide-parametrage.html" class="card">
+      <div class="card-num">#02</div>
+      <div class="card-icon">⚙️</div>
+      <div class="card-title">Guide de paramétrage</div>
+      <div class="card-desc">Entreprise · Editions · SMTP · SMS · Stripe · Klarna · Yousign · Widget IA</div>
+    </a>
+    <a href="spec_etude_comportementale.html" class="card">
+      <div class="card-num">#—</div>
+      <div class="card-icon">🧠</div>
+      <div class="card-title">Spec Étude Comportementale</div>
+      <div class="card-desc">BC Bilan Comportemental (ex-EDC) · 14 CAC · Grille progression · Règle accès séance</div>
+    </a>
+    <a href="spec_chrono_tarif_cycles.html" class="card">
+      <div class="card-num">#—</div>
+      <div class="card-icon">💰</div>
+      <div class="card-title">Spec Chrono Tarif &amp; Cycles</div>
+      <div class="card-desc">3 méthodes tarification · Cycles comptables · Verrouillage devis facturé</div>
+    </a>
+    <a href="55-module-questionnaires.html" class="card">
+      <div class="card-num">#—</div>
+      <div class="card-icon">📋</div>
+      <div class="card-title">Module Questionnaires</div>
+      <div class="card-desc">25 modèles × 11 métiers · Types : admission / bilan / satisfaction</div>
+    </a>
+  </div>
+
+  <!-- ══ PAGES MÉTIER ═══════════════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <span class="section-label">Pages métier</span>
+    <span class="section-count">11 métiers</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid">
+    <a href="metier-comportementaliste.html" class="card">
+      <div class="card-icon">🐕</div>
+      <div class="card-title">Comportementaliste canin</div>
+      <div class="card-desc">EDC · Suivi CAC/BC · Programmes · ACACED · Dashboard CEO · Règle séance</div>
+    </a>
+    <a href="metier-toiletteur.html" class="card">
+      <div class="card-icon">✂️</div>
+      <div class="card-title">Toiletteur</div>
+      <div class="card-desc">Planning · Forfaits toilettage · Fiches races · Dashboard CEO</div>
+    </a>
+    <a href="metier-educateur.html" class="card">
+      <div class="card-icon">🎓</div>
+      <div class="card-title">Éducateur canin</div>
+      <div class="card-desc">Programmes d'éducation · Séances groupe · Niveaux · Dashboard CEO</div>
+    </a>
+    <a href="metier-petsitter.html" class="card">
+      <div class="card-icon">🏠</div>
+      <div class="card-title">Pet-sitter</div>
+      <div class="card-desc">Visites planning · Journal de visite · Géolocalisation · Dashboard CEO</div>
+    </a>
+    <a href="metier-pension.html" class="card">
+      <div class="card-icon">🏨</div>
+      <div class="card-title">Pension / Chenil</div>
+      <div class="card-desc">Réservations · Gestion places · Contrats pension · Dashboard CEO</div>
+    </a>
+    <a href="metier-eleveur.html" class="card">
+      <div class="card-icon">🐣</div>
+      <div class="card-title">Éleveur</div>
+      <div class="card-desc">Portées · Géniteurs · Généalogie · Réservations · Mortalité</div>
+    </a>
+    <a href="metier-equestre.html" class="card">
+      <div class="card-icon">🐎</div>
+      <div class="card-title">Centre équestre</div>
+      <div class="card-desc">Séances groupe · Planning chevaux · Dashboard CEO</div>
+    </a>
+    <a href="metier-veterinaire.html" class="card">
+      <div class="card-icon">🩺</div>
+      <div class="card-title">Vétérinaire</div>
+      <div class="card-desc">Consultations · Ordonnances · Suivi vaccins · Dashboard CEO</div>
+    </a>
+    <a href="metier-osteopathe.html" class="card">
+      <div class="card-icon">💆</div>
+      <div class="card-title">Ostéopathe animalier</div>
+      <div class="card-desc">Bilans · Séances · Suivi protocoles · Dashboard CEO</div>
+    </a>
+    <a href="metier-sport-canin.html" class="card">
+      <div class="card-icon">🏆</div>
+      <div class="card-title">Sport canin</div>
+      <div class="card-desc">Compétitions · Entraînements · Performances · Dashboard CEO</div>
+    </a>
+    <a href="metier-naturopathe.html" class="card">
+      <div class="card-icon">🌿</div>
+      <div class="card-title">Naturopathe / Bien-être</div>
+      <div class="card-desc">Protocoles · Séances bien-être · Compléments · Dashboard CEO</div>
+    </a>
+  </div>
+
+  <!-- ══ BASE DE DONNÉES ═══════════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <span class="section-label">Base de données</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid">
+    <a href="bdd-schema.html" class="card">
+      <div class="card-icon">🗄️</div>
+      <div class="card-title">Schéma BDD</div>
+      <div class="card-desc">~151 tables · 241 colonnes commentées · Conventions FK · Portail Client 4 tables</div>
+      <span class="card-tag tag-bdd">BDD</span>
+    </a>
+    <a href="bdd-portail-client.html" class="card">
+      <div class="card-icon">🔐</div>
+      <div class="card-title">BDD Portail Client</div>
+      <div class="card-desc">portail_client_acces · portail_client_session · portail_client_confirmation_seance · portail_client_notification (S63)</div>
+      <span class="card-tag tag-new">Nouveau S61</span>
+    </a>
+    <a href="bdd-migrations.html" class="card">
+      <div class="card-icon">📦</div>
+      <div class="card-title">Migrations BDD</div>
+      <div class="card-desc">Historique ALTER TABLE · Seeds · Conventions commentaires · Scripts HeidiSQL</div>
+      <span class="card-tag tag-bdd">BDD</span>
+    </a>
+  </div>
+
+  <!-- ══ COMMERCIAL & JURIDIQUE ════════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-line"></div>
+    <span class="section-label">Commercial &amp; Juridique</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="grid">
+    <a href="CGV_AnimGest.pdf" class="card">
+      <div class="card-icon">📄</div>
+      <div class="card-title">CGV Anim'Gest</div>
+      <div class="card-desc">Conditions Générales de Vente · 3 tiers (Essentiel / Professionnel / Expert) · Module Eliot</div>
+    </a>
+    <a href="SCENARIO_VIDEO_COMMERCIALE.html" class="card">
+      <div class="card-icon">🎬</div>
+      <div class="card-title">Scénario vidéo commerciale</div>
+      <div class="card-desc">Démo 7 min · Parcours utilisateur · Points clés par métier</div>
+    </a>
+    <a href="SCENARIO_USING.html" class="card">
+      <div class="card-icon">👤</div>
+      <div class="card-title">Scénarios d'usage</div>
+      <div class="card-desc">Cas d'usage par métier · Parcours complets · Fonctionnalités clés</div>
+    </a>
+  </div>
+
+</main>
 
 <footer>
-  <span>Anim'Gest — NoSage's Editor &copy; 2026</span>
-  <span>Sprint S61 &mdash; 29 mars 2026 &mdash; 105+ pages de documentation</span>
-</footer>
-
-  <!-- NOUVEAUTES -->
-  <div class="sec-title">🆕 Récents — S60</div>
-  <div class="recent-grid">
-    <div class="doc-card">
-      <a href="SAV_Generator_Maintenance.html">🛠️ Générateur Maintenance</a>
-      <div class="desc">Saisir le bilan maintenance et envoyer vers le dashboard</div>
-      <div class="tags"><span class="tag new">S60</span><span class="tag new">Nouveau</span></div>
-    </div>
-    <div class="doc-card">
-      <a href="SAV_Dashboard_Maintenance.html">🔧 Dashboard Maintenance</a>
-      <div class="desc">Santé infrastructure, API, dette technique, sécurité</div>
-      <div class="tags"><span class="tag new">S60</span><span class="tag new">Nouveau</span></div>
-    </div>
-    <div class="doc-card">
-      <a href="SAV_Pilotage_Qualite.html">📐 Pilotage Qualité</a>
-      <div class="desc">Process fin de sprint, 3 outils, localisations, règles, objectifs de score</div>
-      <div class="tags"><span class="tag new">S60</span><span class="tag new">Nouveau</span></div>
-    </div>
-    <div class="doc-card">
-      <a href="SAV_Generator_Handover.html">📋 Générateur Handover</a>
-      <div class="desc">Génération automatique du .md de fin de sprint</div>
-      <div class="tags"><span class="tag new">S60</span><span class="tag new">Nouveau</span></div>
-    </div>
-    <div class="doc-card">
-      <a href="SAV_Dashboard_Qualite.html">📊 Dashboard Qualité</a>
-      <div class="desc">Suivi des scores qualité code sprint par sprint</div>
-      <div class="tags"><span class="tag new">S60</span><span class="tag new">Nouveau</span></div>
-    </div>
-    <div class="doc-card">
-      <a href="72-droits-utilisateurs.html">72 — Droits utilisateurs</a>
-      <div class="desc">RBAC — 4 rôles, 56 permissions, 14 modules</div>
-      <div class="tags"><span class="tag new">S60</span><span class="tag upd">MàJ</span></div>
-    </div>
-    <div class="doc-card">
-      <a href="suivi-revue-code.html">🔍 Suivi Revue de Code</a>
-      <div class="desc">Qualité + maintenance S58/S59/S60/S61/S60 — scores, métriques, roadmap</div>
-      <div class="tags"><span class="tag new">S60</span><span class="tag upd">MàJ</span></div>
-    </div>
-    <div class="doc-card">
-      <a href="07-audit-stack.html">07 — Audit Stack</a>
-      <div class="desc">2736 lignes, 87+ getDb(), ~90 routes API</div>
-      <div class="tags"><span class="tag upd">MàJ S60</span></div>
-    </div>
+  <div class="footer-brand">Anim'Gest · NoSage's Editor</div>
+  <div class="footer-meta">Sprint S62 · 30 mars 2026 · 110 pages · v2.0</div>
+  <div class="footer-links">
+    <a href="https://github.com/nicolashermilly/petsuite-docs" target="_blank">GitHub</a>
+    <a href="07-audit-stack.html">Stack</a>
+    <a href="SAV_Launcher.html">SAV</a>
+    <a href="HANDOVER_S61_FIN_COMPLET_v2.html">Handover S61</a>
   </div>
-
-</div>
-
-
-  <!-- ======================================================== -->
-  <!-- SECTIONS DOCUMENTATION                                    -->
-  <!-- ======================================================== -->
-  <div id="doc-sections" style="max-width:1200px;margin:0 auto;padding:0 2rem 3rem">
-
-    <!-- STACK TECHNIQUE -->
-    <div style="margin-bottom:2.5rem">
-      <div style="display:flex;align-items:center;gap:.6rem;border-bottom:1px solid rgba(212,168,67,.2);padding-bottom:.6rem;margin-bottom:1.2rem">
-        <span style="font-size:1.1rem">&#9881;&#65039;</span>
-        <span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#D4A843;font-weight:700">Stack technique</span>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem">
-        <a href="07-audit-stack.html" class="doc-tile">
-          <div class="dt-num">07 &mdash; AUDIT</div>
-          <div class="dt-title">Audit Stack</div>
-          <div class="dt-desc">Regles absolues, custom-routes, patterns S61</div>
-          <span class="dt-badge gold">MaJ S61</span>
-        </a>
-        <a href="17-api-reference.html" class="doc-tile">
-          <div class="dt-num">17 &mdash; API</div>
-          <div class="dt-title">API Reference</div>
-          <div class="dt-desc">90+ routes, 13 groupes, Portail Client S61</div>
-          <span class="dt-badge gold">MaJ S61</span>
-        </a>
-        <a href="20-pilotage-projet.html" class="doc-tile">
-          <div class="dt-num">20 &mdash; PILOTAGE</div>
-          <div class="dt-title">Pilotage Projet</div>
-          <div class="dt-desc">Timeline S32-S61, roadmap S62-S65</div>
-          <span class="dt-badge gold">MaJ S61</span>
-        </a>
-        <a href="57-module-portail-client.html" class="doc-tile" style="border-color:rgba(212,168,67,.3)">
-          <div class="dt-num">57 &mdash; MODULE</div>
-          <div class="dt-title">Portail Client v2</div>
-          <div class="dt-desc">16 routes, 4 tables BDD, S61-S63</div>
-          <span class="dt-badge new">NEW S61</span>
-        </a>
-        <a href="01-synthese-projet.html" class="doc-tile">
-          <div class="dt-num">01 &mdash; ARCHI</div>
-          <div class="dt-title">Synthese projet</div>
-          <div class="dt-desc">Architecture, modules, BDD, stack technique</div>
-          <span class="dt-badge green">Document vivant</span>
-        </a>
-        <a href="12-infrastructure.html" class="doc-tile">
-          <div class="dt-num">12 &mdash; INFRA</div>
-          <div class="dt-title">Infrastructure</div>
-          <div class="dt-desc">Docker, nginx, MariaDB, deploy, backups</div>
-        </a>
-        <a href="05-architecture-roadmap.html" class="doc-tile">
-          <div class="dt-num">05 &mdash; TECH</div>
-          <div class="dt-title">Architecture &amp; Roadmap</div>
-          <div class="dt-desc">Next.js 15, NestJS, multi-tenant SaaS</div>
-        </a>
-        <a href="06-roadmap.html" class="doc-tile">
-          <div class="dt-num">06 &mdash; ROADMAP</div>
-          <div class="dt-title">Roadmap sprints</div>
-          <div class="dt-desc">S1-S61 complets, S62-S65 planifies</div>
-        </a>
-      </div>
-    </div>
-
-    <!-- METIERS -->
-    <div style="margin-bottom:2.5rem">
-      <div style="display:flex;align-items:center;gap:.6rem;border-bottom:1px solid rgba(212,168,67,.2);padding-bottom:.6rem;margin-bottom:1.2rem">
-        <span style="font-size:1.1rem">&#128062;</span>
-        <span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#D4A843;font-weight:700">Documentation par metier</span>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:.7rem">
-        <a href="36-metier-comportementaliste.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#128021;</div>
-          <div class="dtm-name">Comportementaliste</div>
-          <div class="dtm-pct green">95%</div>
-        </a>
-        <a href="37-metier-toiletteur.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#9986;&#65039;</div>
-          <div class="dtm-name">Toiletteur</div>
-          <div class="dtm-pct green">90%</div>
-        </a>
-        <a href="38-metier-petsitter.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#128062;</div>
-          <div class="dtm-name">Pet-Sitter</div>
-          <div class="dtm-pct green">88%</div>
-        </a>
-        <a href="39-metier-eleveur.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#128021;</div>
-          <div class="dtm-name">Eleveur</div>
-          <div class="dtm-pct gold">85%</div>
-        </a>
-        <a href="40-metier-educateur.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#127891;</div>
-          <div class="dtm-name">Educateur</div>
-          <div class="dtm-pct gold">85%</div>
-        </a>
-        <a href="47-module-equestre.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#128052;</div>
-          <div class="dtm-name">Equestre</div>
-          <div class="dtm-pct gold">80%</div>
-        </a>
-        <a href="48-module-pension-chenil.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#127968;</div>
-          <div class="dtm-name">Pension/Chenil</div>
-          <div class="dtm-pct gold">82%</div>
-        </a>
-        <a href="49-module-veterinaire.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#129690;</div>
-          <div class="dtm-name">Veterinaire</div>
-          <div class="dtm-pct gold">75%</div>
-        </a>
-        <a href="56-metier-osteopathe.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#128400;</div>
-          <div class="dtm-name">Osteopathe</div>
-          <div class="dtm-pct gold">80%</div>
-        </a>
-        <a href="57-metier-club-sport.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#127885;</div>
-          <div class="dtm-name">Sport Canin</div>
-          <div class="dtm-pct gold">78%</div>
-        </a>
-        <a href="69-metier-naturopathe.html" class="doc-tile-metier">
-          <div style="font-size:1.5rem;margin-bottom:.3rem">&#127807;</div>
-          <div class="dtm-name">Naturopathe</div>
-          <div class="dtm-pct orange">72%</div>
-        </a>
-      </div>
-    </div>
-
-    <!-- CHANGELOGS -->
-    <div style="margin-bottom:2.5rem">
-      <div style="display:flex;align-items:center;gap:.6rem;border-bottom:1px solid rgba(212,168,67,.2);padding-bottom:.6rem;margin-bottom:1.2rem">
-        <span style="font-size:1.1rem">&#128203;</span>
-        <span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#D4A843;font-weight:700">Changelogs</span>
-        <a href="docs-changelog.html" style="margin-left:auto;font-size:.78rem;color:#7a8fa6;border:1px solid rgba(255,255,255,.1);padding:.2rem .6rem;border-radius:4px;text-decoration:none">Voir tous &rarr;</a>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:.6rem">
-        <a href="56-changelog-S60.html" class="doc-tile-cl" style="border-color:rgba(212,168,67,.25)">
-          <div class="dtcl-num" style="color:#D4A843">S60</div>
-          <div class="dtcl-desc">Devis + RS + Editions</div>
-        </a>
-        <a href="55-changelog-S59.html" class="doc-tile-cl">
-          <div class="dtcl-num">S59</div><div class="dtcl-desc">Nettoyage + migration</div>
-        </a>
-        <a href="54-changelog-S58.html" class="doc-tile-cl">
-          <div class="dtcl-num">S58</div><div class="dtcl-desc">RBAC + Formules</div>
-        </a>
-        <a href="53-changelog-S57.html" class="doc-tile-cl">
-          <div class="dtcl-num">S57</div><div class="dtcl-desc">Fix routes + CAC</div>
-        </a>
-        <a href="52-changelog-S56.html" class="doc-tile-cl">
-          <div class="dtcl-num">S56</div><div class="dtcl-desc">100 pages + Formules</div>
-        </a>
-        <a href="docs-changelog.html" class="doc-tile-cl" style="display:flex;align-items:center;justify-content:center">
-          <span style="color:#7a8fa6;font-size:.8rem">Tous &rarr;</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- AUTRES DOCS -->
-    <div style="margin-bottom:2rem">
-      <div style="display:flex;align-items:center;gap:.6rem;border-bottom:1px solid rgba(212,168,67,.2);padding-bottom:.6rem;margin-bottom:1.2rem">
-        <span style="font-size:1.1rem">&#128196;</span>
-        <span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#D4A843;font-weight:700">Autres documents</span>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem">
-        <a href="03-notice-utilisateur.html" class="doc-tile">
-          <div class="dt-num">03 &mdash; GUIDE</div>
-          <div class="dt-title">Notice utilisateur v4</div>
-          <div class="dt-desc">Guide pratique complet — tous modules</div>
-        </a>
-        <a href="15-rgpd-conformite.html" class="doc-tile">
-          <div class="dt-num">15 &mdash; CONFORMITE</div>
-          <div class="dt-title">RGPD &amp; Conformite</div>
-          <div class="dt-desc">Registre traitements, droits, audit log</div>
-        </a>
-        <a href="23-Prise-en-compte-NF-525.html" class="doc-tile">
-          <div class="dt-num">23 &mdash; NF525</div>
-          <div class="dt-title">NF525 Logiciel caisse</div>
-          <div class="dt-desc">Certification, hash chaine, cloture Z</div>
-        </a>
-        <a href="10-modele-commercial.html" class="doc-tile">
-          <div class="dt-num">10 &mdash; COMMERCIAL</div>
-          <div class="dt-title">Licences &amp; SEPA</div>
-          <div class="dt-desc">Workflow souscription, pricing, CGV</div>
-        </a>
-      </div>
-    </div>
-
-  </div>
-
-  <style>
-    .doc-tile {
-      background: #0D2137; border: 1px solid rgba(255,255,255,.07);
-      border-radius: 8px; padding: .9rem 1rem; text-decoration: none;
-      display: block; transition: border-color .2s;
-    }
-    .doc-tile:hover { border-color: rgba(212,168,67,.4); }
-    .dt-num { font-size:.63rem; font-weight:700; color:#D4A843; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.3rem; }
-    .dt-title { font-weight:700; color:#F8F8F5; font-size:.88rem; margin-bottom:.2rem; }
-    .dt-desc { color:#7a8fa6; font-size:.75rem; margin-bottom:.4rem; }
-    .dt-badge { font-size:.65rem; font-weight:700; padding:.12rem .45rem; border-radius:3px; display:inline-block; }
-    .dt-badge.gold { background:rgba(212,168,67,.1); color:#D4A843; border:1px solid rgba(212,168,67,.25); }
-    .dt-badge.green { background:rgba(60,207,142,.1); color:#3ecf8e; border:1px solid rgba(60,207,142,.25); }
-    .dt-badge.new { background:#D4A843; color:#070F1A; }
-    .doc-tile-metier {
-      background: #0D2137; border: 1px solid rgba(255,255,255,.07);
-      border-radius: 8px; padding: .8rem; text-decoration: none;
-      text-align: center; transition: border-color .2s; display: block;
-    }
-    .doc-tile-metier:hover { border-color: rgba(212,168,67,.4); }
-    .dtm-name { font-weight:600; color:#F8F8F5; font-size:.8rem; }
-    .dtm-pct { font-size:.72rem; margin-top:.2rem; font-weight:700; }
-    .dtm-pct.green { color:#3ecf8e; }
-    .dtm-pct.gold { color:#D4A843; }
-    .dtm-pct.orange { color:#f59e0b; }
-    .doc-tile-cl {
-      background: #0D2137; border: 1px solid rgba(255,255,255,.07);
-      border-radius: 8px; padding: .7rem .9rem; text-decoration: none;
-      display: block; transition: border-color .2s;
-    }
-    .doc-tile-cl:hover { border-color: rgba(212,168,67,.3); }
-    .dtcl-num { font-weight:700; color:#F8F8F5; font-size:.85rem; }
-    .dtcl-desc { color:#7a8fa6; font-size:.72rem; }
-  </style>
-
-<footer>
-  <span>Anim'Gest — NoSage's Editor &copy; 2026</span>
-  <span>Sprint S61 &mdash; 29 mars 2026 &mdash; 105+ pages de documentation</span>
 </footer>
-
 
 </body>
 </html>
