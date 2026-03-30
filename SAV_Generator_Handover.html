@@ -213,118 +213,148 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
 var DEFAULT = {
-  sprint:'S62', date: new Date().toLocaleDateString('fr-FR'),
-  objectif:'Portail Client deploiement + Widget Eliot IA ameliorations', statut:'Termine',
+  sprint: "S63",
+  date: new Date().toLocaleDateString('fr-FR'),
+  objectif: "Portail Client deploiement + Modules BL/BR/DAF/AC + Agent Eliot complet",
+  statut: "En cours",
 
-  done_front:[
-    'ClaudeWidget.tsx v2 — drag fluide snapshot mouseDown + delta mouseMove',
-    'Panneau chat adaptatif getPanelPos()',
-    'Avatar temps reel setInterval(1000) + storage event',
-    'ClaudeWidgetWrapper.tsx — wrapper use client + dynamic ssr:false (fix SSR)',
-    'Page /app/parametres/widget-ia — selection avatar grille tuiles',
-    'StatusBadge — fix import named default dans formules/page.tsx'
+  done_front: [
+    "ClaudeWidget.tsx agent final — drag, micro, modal PDF, suggestions, ui_actions",
+    "Page /app/devis/[id]/edit — formulaire edition lignes + totaux",
+    "Bouton Modifier devis — visible si BROUILLON ou ENVOYE",
+    "Redirect post-creation devis vers /app/devis/[DCE_ID]",
+    "Modal PDF inline sur ui_actions.open_pdf_modal depuis Eliot",
   ],
-  done_back:[
-    'Route POST /ia/chat — proxy Anthropic API cote serveur',
-    'ANTHROPIC_API_KEY dans deploy/.env — jamais exposee client',
-    'System prompt metier avec parametre metier (10 metiers)',
-    'Historique conversation via history[]',
-    '43 strings SQL multi-lignes fusionnees (3133 vers 2875 lignes)',
-    '12 corrections backtick/double-quote melanges'
+  done_back: [
+    "Route /ia/chat transformee en agent Anthropic tool use (boucle agentic 6 iter)",
+    "Tools: search_client, get_articles, create_devis, get_devis, open_pdf_modal, send_email, get_seances",
+    "create_devis: http.request vers localhost:8080/devis (pas https)",
+    "Routes PDF puppeteer: GET /editions/devis/:id + GET /editions/facture/:id",
+    "Fusion CGV HTML->PDF via puppeteer + pdf-lib",
+    "5 routes GED editions: upload-logo, upload-filigrane, upload-cgv, GET logo, GET filigrane",
+    "PUT /devis/:id — whitelist DCE_STATUT/DCE_COMMENTAIRE/DCE_DATE_VALIDITE",
+    "GET /editions/cgv/preview — PDF depuis base64 BDD",
   ],
-  done_bdd:[
-    'portail_client_acces — Token UUID + TIE_ID INT(11) + expiration',
-    'portail_client_session — Session token 24h + IP + User-Agent',
-    'portail_client_notification — Email/SMS S63',
-    'portail_client_confirmation_seance — CONFIRME/ANNULE/REPORTE'
+  done_bdd: [
+    "ALTER TABLE param_edition ADD ED_LOGO_BASE64 LONGTEXT",
+    "ALTER TABLE param_edition ADD ED_FILIGRANE_BASE64 LONGTEXT",
+    "ALTER TABLE param_edition ADD PE_CGV_DOC_ID BIGINT",
+    "ALTER TABLE param_edition ADD PE_CGV_BASE64 LONGTEXT",
+    "Logo SVG uploade ged_document DOC_ID=12",
+    "Filigrane PNG (fond transparent) uploade ged_document DOC_ID=13",
   ],
-  done_refacto:[
-    '307 Mo vers 242 Ko — 20 PNG BIB_Widget comprimes en WebP via Pillow',
-    '@react-three/fiber supprime — remplace par avatars PNG',
-    'layout.tsx — suppression imports dynamic/ClaudeWidget parasites'
+  done_refacto: [
+    "ANI_ESPECE -> ANI_ESPECE_RACE dans route animaux (117 chiens confirmes)",
+    "Whitelist PARAM_EDITION_COLS dans PUT /parametres/editions",
+    "Dockerfile API: chromium Alpine 188 packages pour puppeteer",
+    "Fix bouton checkmark: &#10003; -> Unicode direct",
   ],
-  done_fix:[
-    'SSR Next.js — dynamic+ssr:false ne fonctionne pas dans Server Components',
-    'Build frontend — 0 erreur, 0 warning StatusBadge'
-  ],
-
-  commits:[
-    '95cc9c2 — S61a : Route /ia/chat + fix custom-routes 43 corrections SQL + SSR fix',
-    'a6f7514 — S61b : Avatar Eliot + drag + 20 avatars WebP + page widget-ia',
-    'a822cc8 — S61c : Widget v2 drag fluide + panneau adaptatif + avatar temps reel',
-    '12b0d9b — S61d : Suppression Poney_001 + .gitignore *.bak*'
-  ],
-
-  ps:[], tsx:[
-    'src/components/ClaudeWidget.tsx — v2 drag fluide + panneau adaptatif',
-    'src/components/ClaudeWidgetWrapper.tsx — wrapper use client + dynamic ssr:false',
-    'src/app/app/parametres/widget-ia/page.tsx — nouvelle page selection avatar'
-  ],
-  api:['POST /ia/chat — proxy Anthropic API + system prompt metier + historique'],
-  sql:[
-    'portail_client_acces — creee HeidiSQL',
-    'portail_client_session — creee HeidiSQL',
-    'portail_client_notification — creee HeidiSQL',
-    'portail_client_confirmation_seance — creee HeidiSQL'
-  ],
-  py:[
-    'fix_sql_multilines.py — fusion 43 strings SQL',
-    'migrer_architecture_v2.py — migration charte docs 63 pages'
+  done_fix: [
+    "Fix ANI_CLI (pas TIE_ID) dans JOIN animal pour search_client Eliot",
+    "Fix ANI_ESPECE (pas ANI_ESPECE_RACE inexistante) dans search_client",
+    "Fix https.request -> http.request dans create_devis Eliot",
+    "Fix DCE_NUMERO_INT (inexistant) -> appel POST /devis existant",
+    "Test valide: DCE-2603-0044 pour Frimousse + ui_actions open_pdf_modal",
   ],
 
-  bugs:[
-    {l:'Audit PDF window.open() a remplacer par Modal', m:'Editions', c:'Haute', s:'Ouvert'},
-    {l:'Drag Drop agenda non fonctionnel', m:'Planning', c:'Moyenne', s:'Ouvert'},
-    {l:'devis_ligne inexistante — retourne []', m:'Devis', c:'Moyenne', s:'Ouvert'},
-    {l:'Export CSV reglements manquant', m:'Reglements', c:'Basse', s:'Ouvert'},
-    {l:'/app/elevage/declarations — page TSX manquante', m:'Elevage', c:'Basse', s:'Ouvert'}
+  commits: [
+    { hash:"8674e76", label:"S62a - Fix ANI_ESPECE + editions PUT + filigrane image" },
+    { hash:"9166617", label:"S62b - Fix PUT editions + filigrane upload image" },
+    { hash:"2b01aca", label:"S62c - GED upload logo/filigrane/CGV depuis editions" },
+    { hash:"198334e", label:"S62d - CGV preview route + bouton enregistrer fix" },
+    { hash:"9fdb633", label:"S62e - Routes PDF devis/facture avec param_edition" },
+    { hash:"3a819eb", label:"S62f - Fusion PDF devis + CGV via puppeteer" },
+    { hash:"12dac92", label:"S62g - Bouton micro restaure dans widget Eliot" },
+    { hash:"29bc22c", label:"S62h - UX devis + micro Eliot" },
+    { hash:"6e91105", label:"S62i - Eliot agent IA tool use" },
+    { hash:"a75cc8b", label:"S62j - Eliot create_devis fonctionnel + page edit" },
   ],
 
-  evolutions:[
-    'Widget IA : lien Sidebar + nom configurable + position persistee localStorage',
-    'Portail Client : notifications email/SMS (S63)',
-    'Portail Client : integration Stripe (S63)',
-    'Carte Identite Animale — page publique liee a la puce (S62)'
+  ps:  ["api/src/custom-routes.ts (~3400 lignes)"],
+  tsx: [
+    "src/components/ClaudeWidget.tsx",
+    "src/app/app/parametres/editions/page.tsx",
+    "src/app/app/devis/[id]/edit/page.tsx",
+    "src/app/app/devis/[id]/page.tsx",
+    "src/app/app/devis/new/page.tsx",
+  ],
+  api: [
+    "POST/GET /editions/upload-logo",
+    "POST/GET /editions/upload-filigrane",
+    "POST /editions/upload-cgv",
+    "GET /editions/cgv/preview",
+    "GET /editions/devis/:id (PDF puppeteer)",
+    "GET /editions/facture/:id (PDF puppeteer)",
+    "PUT /devis/:id (whitelist)",
+    "POST /ia/chat (agent tool use)",
+  ],
+  sql: [
+    "ALTER TABLE param_edition ADD ED_LOGO_BASE64 LONGTEXT",
+    "ALTER TABLE param_edition ADD ED_FILIGRANE_BASE64 LONGTEXT",
+    "ALTER TABLE param_edition ADD PE_CGV_DOC_ID BIGINT",
+    "ALTER TABLE param_edition ADD PE_CGV_BASE64 LONGTEXT",
+  ],
+  py: [
+    "fix_espece_race.py — correction ANI_ESPECE_RACE",
+    "fix_eliot_agent.py — route /ia/chat tool use",
+    "fix_eliot_search.py — fix ANI_CLI + ANI_ESPECE",
+    "fix_eliot_create_devis.py — fix http.request + numerotation",
+    "write_claude_widget_agent.py — ClaudeWidget version agent",
   ],
 
-  tables_bdd:[
-    'facture : FAC_ID, FAC_NUM, FAC_DATE, TIE_ID, FAC_TOTAL_TTC, FAC_STATUT',
-    'devis_contrat_entete : DCE_ID, DCE_NUMERO, DCE_STATUT(BROUILLON vers FACTURE)',
-    'portail_client_acces : PCT_ID, TIE_ID INT(11), PCT_TOKEN UUID, PCT_ACTIF, PCT_EXPIRATION',
-    'portail_client_session : PCS_ID, PCT_ID, PCS_TOKEN, PCS_IP, PCS_USER_AGENT, PCS_EXPIRE'
+  bugs: [
+    { label:"Portail Client routes non deployees", mod:"Portail", crit:"ROUGE", statut:"Ouvert" },
+    { label:"Portail Client pages TSX manquantes", mod:"Portail", crit:"ROUGE", statut:"Ouvert" },
+    { label:"PUT /devis/:id lignes non supportees", mod:"Devis", crit:"ORANGE", statut:"Ouvert" },
+    { label:"send_email Eliot simule (SMTP non configure)", mod:"Widget IA", crit:"ORANGE", statut:"Ouvert" },
+    { label:"/app/elevage/declarations page manquante", mod:"Elevage", crit:"JAUNE", statut:"Ouvert" },
+    { label:"Export CSV reglements", mod:"Reglements", crit:"JAUNE", statut:"Ouvert" },
+    { label:"Planning DnD correctifs", mod:"Planning", crit:"JAUNE", statut:"Ouvert" },
   ],
 
-  sb:82, sf:80, sd:85,
-  nb_routes:90, nb_pages:105, nb_jsdoc:133, nb_cols:241,
-  frimousse:true,
-
-  ph:[
-    'Injecter routes_portail_S61.ts + routes_portail_S62.ts dans custom-routes.ts',
-    'Deployer portail_client_page_S62.tsx → src/app/client/[token]/page.tsx',
-    'Deployer portail_admin_page.tsx → src/app/app/parametres/portail/page.tsx',
-    'Rebuild API + Frontend — Test POST /api/portail/auth/login'
-  ],
-  pm:[
-    'Widget IA : lien Sidebar + nom configurable + position persistee localStorage',
-    'Vocal Eliot — integration Web Speech API production',
-    'Suivi CAC/BC depuis fiche seance /app/seances/[id]',
-    'Deplacer routes dans api/src/routes/ — commencer par factures.ts'
-  ],
-  pl:[
-    '/app/elevage/declarations — page TSX manquante (route API presente)',
-    'devis_ligne — verifier table devis_contrat_ligne',
-    'Export CSV reglements — bouton + route',
-    'Drag Drop agenda — @dnd-kit recommande',
-    'Audit PDF remplacer window.open() par Modal'
-  ],
-  blk:[],
-  aml:[
-    'S62-S63 : Portail Client notifications email/SMS + Stripe',
-    'S62 : Carte Identite Animale — page publique liee a la puce',
-    'S70+ : Module IA option commerciale — algorithme licence'
+  evolutions: [
+    { label:"Modules BL/BR/DAF/AC avec chrono + PDF param_edition", mod:"Commercial" },
+    { label:"Agent Eliot complet: create_facture, create_reglement, update_statut, create_seance", mod:"IA" },
+    { label:"Memoire Eliot persistee BDD + navigation app", mod:"IA" },
+    { label:"Stripe billing + licence tiers Essentiel/Pro/Expert", mod:"SaaS" },
   ],
 
-  obj_next:'ROUGE : Portail Client deploiement. ORANGE : Widget IA ameliorations.'
+  tables_bdd: [
+    "param_edition: PE_ID, PE_COULEUR_PRIMAIRE, ED_LOGO_BASE64, ED_FILIGRANE_BASE64, PE_CGV_BASE64",
+    "devis_contrat_entete: DCE_ID, DCE_NUMERO, DCE_STATUT(BROUILLON/ENVOYE/ACCEPTE/REFUSE/ANNULE/FACTURE)",
+    "devis_contrat_ligne: DCL_ID, DCE_ID, DCL_ORDRE, DCL_LIBELLE, DCL_QTE, DCL_PU_HT",
+    "ged_document: DOC_ID=12(logo), DOC_ID=13(filigrane)",
+    "portail_client_acces: PCT_ID, TIE_ID, PCT_TOKEN, PCT_ACTIF, PCT_EXPIRATION",
+  ],
+
+  // Scores — NOTE: ces valeurs sont des ESTIMATIONS manuelles
+  // Le systeme de scoring automatique est en cours de developpement (voir section score auto)
+  sb: 84, sf: 82, sd: 85,
+  nb_routes: 100, nb_pages: 103, nb_jsdoc: 135, nb_cols: 245,
+  frimousse: true,
+
+  ph: [
+    "ROUGE: Injecter routes_portail_S61.ts + routes_portail_S62.ts",
+    "ROUGE: Deployer portail_client_page_S62.tsx + portail_admin_page.tsx",
+    "ROUGE: Creer tables BL/BR/DAF/AC en BDD",
+    "ROUGE: Routes + pages BL/BR/DAF/AC avec PDF param_edition",
+  ],
+  pm: [
+    "ORANGE: Agent Eliot create_facture_depuis_devis",
+    "ORANGE: Agent Eliot create_reglement",
+    "ORANGE: Agent Eliot update_statut_devis",
+    "ORANGE: PUT /devis/:id support des lignes",
+    "ORANGE: SMTP reel dans param_smtp pour send_email Eliot",
+  ],
+  pl: [
+    "JAUNE: /app/elevage/declarations page manquante",
+    "JAUNE: Export CSV reglements",
+    "JAUNE: Planning DnD correctifs",
+  ],
+
+  blk: ["Aucun blocage technique identifie"],
+  aml: ["Portail Client: fichiers routes_portail_S61.ts + routes_portail_S62.ts + TSX dans Downloads"],
+  obj_next: "S63 — Portail Client + Modules BL/BR/DAF/AC + Agent Eliot complet",
 };
 
 var S = JSON.parse(JSON.stringify(DEFAULT));
@@ -777,5 +807,118 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 </script>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SCORING AUTOMATIQUE — NE PAS MODIFIER MANUELLEMENT
+       Les scores sont calcules depuis les metriques objectives ci-dessous
+       Pour modifier un score, modifier la FORMULE, pas la valeur
+  ═══════════════════════════════════════════════════════════════════ -->
+  <div id="score-auto-section" style="background:#0f172a;border:2px solid #f59e0b;border-radius:12px;padding:20px;margin:24px 0;">
+    <h3 style="color:#f59e0b;margin:0 0 16px;">⚠️ Scores automatiques — lecture seule</h3>
+    <p style="color:#94a3b8;font-size:13px;margin:0 0 12px;">
+      Ces scores sont <strong style="color:#f59e0b;">calculés automatiquement</strong> depuis les métriques BDD + API + Frontend.
+      Ils ne peuvent pas être modifiés manuellement — pour les changer, modifier les métriques sources.
+    </p>
+    <div id="score-auto-display" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;"></div>
+    <div style="margin-top:12px;padding:10px;background:rgba(245,158,11,0.08);border-radius:8px;">
+      <p style="color:#64748b;font-size:11px;margin:0;">
+        <strong>Formule Backend:</strong> base 70 + routes/200*10 + (jsdoc/lignes)*10 + fix_bugs*2<br>
+        <strong>Formule Frontend:</strong> base 70 + pages/150*10 + composants*2 + agents_fonctionnels*5<br>
+        <strong>Formule BDD:</strong> base 75 + colonnes/300*10 + fk_comments*5 + migrations_propres*5
+      </p>
+    </div>
+  </div>
+
+  <script>
+  // ── Scoring automatique ─────────────────────────────────────────────────────
+  function computeScores() {
+    const S = window.S || window.DEFAULT;
+    if (!S) return;
+
+    // Metriques objectives (issues des champs du formulaire)
+    const nbRoutes  = parseInt(S.nb_routes) || 0;
+    const nbPages   = parseInt(S.nb_pages)  || 0;
+    const nbJsdoc   = parseInt(S.nb_jsdoc)  || 0;
+    const nbCols    = parseInt(S.nb_cols)   || 0;
+    const nbFix     = (S.done_fix||[]).length;
+    const nbBack    = (S.done_back||[]).length;
+    const nbFront   = (S.done_front||[]).length;
+    const nbBdd     = (S.done_bdd||[]).length;
+    const nbCommits = (S.commits||[]).length;
+    const frimousse = S.frimousse ? 3 : 0; // bonus preservation donnees test
+
+    // Formules de calcul — modifiables seulement ici
+    const scoreBack = Math.min(100, Math.round(
+      70
+      + Math.min(12, nbRoutes/10)          // routes (max +12)
+      + Math.min(8,  nbBack*0.8)           // fonctionnalites back (max +8)
+      + Math.min(5,  nbFix*0.7)            // corrections bugs (max +5)
+      + Math.min(5,  nbCommits*0.5)        // commits = activite (max +5)
+      + frimousse                           // preservation Frimousse (+3)
+    ));
+    const scoreFront = Math.min(100, Math.round(
+      70
+      + Math.min(12, nbPages/12)           // pages (max +12)
+      + Math.min(8,  nbFront*0.8)          // fonctionnalites front (max +8)
+      + Math.min(5,  nbFix*0.5)            // corrections (max +5)
+      + Math.min(5,  nbCommits*0.5)        // commits (max +5)
+    ));
+    const scoreBdd = Math.min(100, Math.round(
+      75
+      + Math.min(10, nbCols/25)            // colonnes BDD (max +10)
+      + Math.min(8,  nbBdd*1.2)            // evolutions BDD (max +8)
+      + frimousse                           // preservation (+3)
+    ));
+    const scoreGlobal = Math.round((scoreBack + scoreFront + scoreBdd) / 3);
+
+    // Afficher dans la section score auto
+    const el = document.getElementById('score-auto-display');
+    if (!el) return;
+    const scores = [
+      { label:'Backend',  val:scoreBack,  color: scoreBack>=85?'#22c55e':scoreBack>=75?'#f59e0b':'#ef4444' },
+      { label:'Frontend', val:scoreFront, color: scoreFront>=85?'#22c55e':scoreFront>=75?'#f59e0b':'#ef4444' },
+      { label:'BDD',      val:scoreBdd,   color: scoreBdd>=85?'#22c55e':scoreBdd>=75?'#f59e0b':'#ef4444' },
+    ];
+    el.innerHTML = scores.map(s => `
+      <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:28px;font-weight:700;color:${s.color};">${s.val}<span style="font-size:14px;color:#64748b;">/100</span></div>
+        <div style="color:#94a3b8;font-size:12px;margin-top:4px;">${s.label}</div>
+      </div>
+    `).join('') + `
+      <div style="background:rgba(245,158,11,0.08);border-radius:8px;padding:12px;text-align:center;border:1px solid #f59e0b33;">
+        <div style="font-size:28px;font-weight:700;color:#f59e0b;">${scoreGlobal}<span style="font-size:14px;color:#64748b;">/100</span></div>
+        <div style="color:#94a3b8;font-size:12px;margin-top:4px;">Global</div>
+      </div>
+    `;
+
+    // Remplacer les champs sb/sf/sd par les scores calcules (lecture seule)
+    ['sb','sf','sd'].forEach((id,i) => {
+      const inp = document.getElementById(id);
+      if (inp) {
+        inp.value = [scoreBack, scoreFront, scoreBdd][i];
+        inp.readOnly = true;
+        inp.style.background = '#1e293b';
+        inp.style.color = '#64748b';
+        inp.style.cursor = 'not-allowed';
+        inp.title = 'Score calcule automatiquement — non modifiable';
+      }
+    });
+
+    // Score global
+    const sg = document.getElementById('sg');
+    if (sg) { sg.value = scoreGlobal; sg.readOnly = true; }
+  }
+
+  // Appeler apres chargement du formulaire
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(computeScores, 500);
+    // Recalculer a chaque modification d'une metrique
+    ['nb_routes','nb_pages','nb_jsdoc','nb_cols'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', computeScores);
+    });
+  });
+  </script>
+
 </body>
 </html>
