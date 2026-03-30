@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anim'Gest — Changelog S61</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0D2137; --navy-mid:#112845; --navy-light:#1a3558;
+    --gold:#D4A843; --gold-dim:rgba(212,168,67,0.15);
+    --text:#e8e4d8; --muted:#8a9ab5;
+    --surface:#0f2030; --card:#132a42; --card-hover:#1a3555;
+    --border:rgba(212,168,67,0.2);
+    --vert:#3fb87a; --orange:#e07c2e; --rouge:#e05252; --bleu:#4a9edd;
+    --violet:#a89cf7; --cyan:#06B6D4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);font-size:14px;line-height:1.7;}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;}
+  .brand{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);}
+  .nav-back{color:var(--muted);font-size:13px;text-decoration:none;}
+  .nav-back:hover{color:var(--gold);}
+  main{max-width:960px;margin:0 auto;padding:40px;}
+
+  .sprint-hero{background:linear-gradient(135deg,var(--navy-light),var(--card));border:1px solid rgba(212,168,67,0.35);border-radius:16px;padding:32px;margin-bottom:36px;}
+  .sprint-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--gold);font-weight:600;margin-bottom:16px;}
+  .sprint-dot{width:6px;height:6px;border-radius:50%;background:var(--vert);}
+  .sprint-title{font-family:'Playfair Display',serif;font-size:36px;color:var(--gold);margin-bottom:8px;}
+  .sprint-sub{color:var(--muted);font-size:14px;margin-bottom:20px;}
+  .kpi-row{display:flex;gap:24px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--border);}
+  .kpi{text-align:center;}
+  .kpi-v{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold);font-weight:700;}
+  .kpi-l{font-size:11px;color:var(--muted);margin-top:2px;}
+
+  .commit-row{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+  .commit{display:flex;align-items:flex-start;gap:12px;background:rgba(0,0,0,0.2);border-radius:8px;padding:10px 14px;}
+  .commit-hash{font-family:monospace;font-size:11px;color:var(--cyan);background:rgba(6,182,212,0.1);padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:2px;}
+  .commit-msg{font-size:13px;color:var(--muted);}
+  .commit-msg strong{color:var(--text);}
+
+  h2{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);margin:36px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  h3{font-size:14px;color:var(--text);font-weight:600;margin:20px 0 8px;}
+  .block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
+  .block-title{font-weight:600;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+  li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);}
+  li::before{content:'▸';color:var(--gold);flex-shrink:0;margin-top:2px;}
+  li strong{color:var(--text);}
+  code{background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:4px;font-family:monospace;font-size:12px;color:var(--cyan);}
+
+  .tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;}
+  .tag-new{background:rgba(63,184,122,0.15);color:var(--vert);border:1px solid rgba(63,184,122,0.3);}
+  .tag-fix{background:rgba(74,158,221,0.15);color:var(--bleu);border:1px solid rgba(74,158,221,0.3);}
+  .tag-api{background:rgba(6,182,212,0.15);color:var(--cyan);border:1px solid rgba(6,182,212,0.3);}
+  .tag-bdd{background:rgba(212,168,67,0.12);color:var(--gold);border:1px solid rgba(212,168,67,0.25);}
+  .tag-ia{background:rgba(224,82,82,0.12);color:#f08080;border:1px solid rgba(224,82,82,0.25);}
+  .tag-sav{background:rgba(83,74,183,0.2);color:var(--violet);border:1px solid rgba(83,74,183,0.3);}
+
+  .score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px;}
+  .score-item{background:rgba(0,0,0,0.2);border-radius:8px;padding:12px;text-align:center;}
+  .score-val{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);font-weight:700;}
+  .score-axe{font-size:10px;color:var(--muted);margin-top:2px;}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}
+  th{text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);color:var(--muted);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;}
+  td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted);}
+  td:first-child{color:var(--text);font-weight:500;}
+
+  .rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+  .rule-item{background:rgba(0,0,0,0.2);border-radius:6px;padding:8px 12px;font-size:12px;}
+  .rule-key{color:var(--gold);font-weight:600;margin-bottom:2px;}
+  .rule-val{color:var(--muted);}
+  @media(max-width:640px){.rules-grid{grid-template-columns:1fr;}.score-row{grid-template-columns:repeat(2,1fr);}}
+
+  footer{text-align:center;padding:32px;border-top:1px solid var(--border);margin-top:60px;color:var(--muted);font-size:12px;}
+  footer a{color:var(--gold);text-decoration:none;}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Anim'Gest</div>
+  <a href="index.html" class="nav-back">← Retour à l'index</a>
+</header>
+
+<main>
+  <div class="sprint-hero">
+    <div class="sprint-badge"><div class="sprint-dot"></div> Sprint terminé → S62</div>
+    <div class="sprint-title">Sprint S61</div>
+    <div class="sprint-sub">29 mars 2026 · Widget Eliot IA v2 · Portail Client BDD + Spec · 43 corrections SQL · 20 avatars WebP · Route /ia/chat · 4 commits dev + 8 commits docs</div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-v">105</div><div class="kpi-l">Pages UI</div></div>
+      <div class="kpi"><div class="kpi-v">90+</div><div class="kpi-l">Routes API</div></div>
+      <div class="kpi"><div class="kpi-v">2875</div><div class="kpi-l">Lignes custom-routes.ts</div></div>
+      <div class="kpi"><div class="kpi-v">241</div><div class="kpi-l">Colonnes BDD</div></div>
+      <div class="kpi"><div class="kpi-v">20</div><div class="kpi-l">Avatars WebP</div></div>
+    </div>
+  </div>
+
+  <!-- Commits -->
+  <h2>Commits Git — Code source</h2>
+  <div class="commit-row">
+    <div class="commit"><span class="commit-hash">95cc9c2</span><span class="commit-msg"><strong>S61a</strong> — Route /ia/chat + fix custom-routes 43 corrections SQL + SSR fix layout.tsx</span></div>
+    <div class="commit"><span class="commit-hash">a6f7514</span><span class="commit-msg"><strong>S61b</strong> — Avatar Eliot + drag &amp; drop + 20 avatars WebP + page widget-ia paramètres</span></div>
+    <div class="commit"><span class="commit-hash">a822cc8</span><span class="commit-msg"><strong>S61c</strong> — Widget v2 drag fluide + panneau adaptatif + avatar temps réel + fix StatusBadge</span></div>
+    <div class="commit"><span class="commit-hash">12b0d9b</span><span class="commit-msg"><strong>S61d</strong> — Suppression Poney_001 (hors format bulle) + .gitignore *.bak*</span></div>
+  </div>
+
+  <h2>Commits Git — Docs (petsuite-docs)</h2>
+  <div class="commit-row">
+    <div class="commit"><span class="commit-hash">6d3ba1c → 557a782</span><span class="commit-msg">Changelogs S52 → S60 + index.html 105 pages + .gitignore</span></div>
+    <div class="commit"><span class="commit-hash">c9acf70 → 0e8f6ee</span><span class="commit-msg">Portail Client spec v1 + MàJ S62 (16 routes, CAC, PDF)</span></div>
+    <div class="commit"><span class="commit-hash">ec36021</span><span class="commit-msg">07-audit-stack + 17-api-reference + 20-pilotage mis à jour S61</span></div>
+    <div class="commit"><span class="commit-hash">9957788</span><span class="commit-msg">Harmonisation charte 83 pages (navy/gold, Playfair + DM Sans, nav sticky)</span></div>
+    <div class="commit"><span class="commit-hash">2e33a2a</span><span class="commit-msg">Dashboard Revue de Code fusionné + Launcher + Pilotage Qualité</span></div>
+    <div class="commit"><span class="commit-hash">2ee2b66</span><span class="commit-msg">index.html — 3 nouvelles tuiles SAV</span></div>
+    <div class="commit"><span class="commit-hash">821efd8</span><span class="commit-msg">11 pages métier remodélées + BC 370 remplacements + SAV index refondu</span></div>
+    <div class="commit"><span class="commit-hash">80ea7a4</span><span class="commit-msg">SAV_Analyseur_Dette_Technique.html + SAV_Regles_Metier.html</span></div>
+  </div>
+
+  <!-- API -->
+  <h2>API — custom-routes.ts</h2>
+
+  <div class="block">
+    <div class="block-title"><span>🔧</span> 43 strings SQL multi-lignes fusionnées <span class="tag tag-fix">Fix critique</span></div>
+    <ul>
+      <li>3133 → <strong>2875 lignes</strong> — réduction de 258 lignes</li>
+      <li>Parser Python caractériel — détection et fusion automatique des continuations de ligne</li>
+      <li>12 corrections backtick/double-quote mélangés : L1073, 1480, 1482, 1733, 1790, 1794, 1810, 1829, 1833, 2583, 2780, 2835</li>
+      <li>Corrections TypeScript strict — tous les callbacks typés <code>any</code> résolus</li>
+      <li>Build API final : <strong>0 erreur</strong>, container <code>micro_api</code> recréé</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="block-title"><span>🤖</span> Route POST /ia/chat <span class="tag tag-new">Nouvelle route</span> <span class="tag tag-ia">Module IA</span></div>
+    <ul>
+      <li>Proxy Anthropic API côté serveur — clé <code>ANTHROPIC_API_KEY</code> jamais exposée au client</li>
+      <li>System prompt métier Anim'Gest avec paramètre <code>metier</code> (10 métiers supportés)</li>
+      <li>Historique de conversation supporté via <code>history[]</code></li>
+      <li>Modèle : <code>claude-sonnet-4-20250514</code></li>
+      <li>Test validé : <code>{ "response": "Bonjour ! Oui, c'est bien moi, Eliot...", "model": "claude-sonnet-4-20250514" }</code></li>
+    </ul>
+  </div>
+
+  <!-- Frontend Widget -->
+  <h2>Frontend — Widget Eliot IA v2</h2>
+
+  <div class="block">
+    <div class="block-title"><span>🎯</span> ClaudeWidget.tsx — Réécriture complète v2 <span class="tag tag-new">Nouveau</span></div>
+    <ul>
+      <li><strong>Drag fluide</strong> : snapshot position au <code>mouseDown</code> → delta calculé sur <code>mouseMove</code> — plus de lag</li>
+      <li><strong>Panneau chat intelligent</strong> : <code>getPanelPos()</code> → s'ouvre vers le coin libre de l'écran</li>
+      <li><strong>Avatar temps réel</strong> : <code>setInterval(1000)</code> + <code>storage event</code> → changement sans CTRL+SHIFT+R</li>
+      <li><strong>Position initiale</strong> : coin bas-droit calculée dynamiquement selon taille viewport</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="block-title"><span>🛠️</span> Fix SSR Next.js <span class="tag tag-fix">Fix</span></div>
+    <ul>
+      <li><code>layout.tsx</code> — suppression imports <code>dynamic</code> / <code>const ClaudeWidget</code> parasites</li>
+      <li><code>ClaudeWidgetWrapper.tsx</code> — wrapper <code>"use client"</code> + <code>dynamic + ssr:false</code></li>
+      <li><code>StatusBadge</code> — fix import named → default dans <code>formules/page.tsx</code></li>
+      <li>Build frontend final : <code>Compiled successfully</code>, 0 erreur, 0 warning</li>
+    </ul>
+  </div>
+
+  <!-- BIB_Widget -->
+  <h2>Frontend — BIB_Widget &amp; Paramètres</h2>
+
+  <div class="block">
+    <div class="block-title"><span>🖼️</span> 20 avatars WebP <span class="tag tag-new">Nouveau</span></div>
+    <ul>
+      <li><strong>307 Mo → 242 Ko</strong> — 20 PNG originaux compressés en WebP 200×200px via Pillow</li>
+      <li><code>public/bib_widget/</code> — 20 avatars WebP déployés</li>
+      <li>Poney_001 supprimé (hors format bulle — proportions incompatibles)</li>
+      <li><code>public/eliot-avatar.png</code> — avatar par défaut (Eliot avec lunettes + bucket hat)</li>
+      <li><code>BIB_Widget/</code> — dossier PNG originaux dans <code>.gitignore</code></li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="block-title"><span>⚙️</span> Page /app/parametres/widget-ia <span class="tag tag-new">Nouvelle page</span></div>
+    <ul>
+      <li>Sélection avatar en grille de tuiles avec coche ✓ sur la sélection active</li>
+      <li>Aperçu en temps réel de l'avatar sélectionné</li>
+      <li>Bouton Valider → sauvegarde dans <code>localStorage.widget_avatar</code></li>
+      <li>Tuile "🤖 Assistant IA" ajoutée dans la page <code>/app/parametres</code></li>
+    </ul>
+  </div>
+
+  <!-- BDD -->
+  <h2>Base de données — Portail Client</h2>
+
+  <div class="block">
+    <div class="block-title"><span>🗄️</span> 4 nouvelles tables créées en HeidiSQL <span class="tag tag-bdd">BDD</span></div>
+    <table>
+      <tr><th>Table</th><th>Rôle</th><th>Colonnes clés</th></tr>
+      <tr><td>portail_client_acces</td><td>Accès token par client</td><td>PCT_ID, TIE_ID INT(11), PCT_TOKEN UUID, PCT_ACTIF, PCT_EXPIRATION</td></tr>
+      <tr><td>portail_client_session</td><td>Session 24h</td><td>PCS_ID, PCT_ID, PCS_TOKEN, PCS_IP, PCS_USER_AGENT, PCS_EXPIRE</td></tr>
+      <tr><td>portail_client_notification</td><td>Email/SMS — S63</td><td>PCN_ID, PCT_ID, PCN_TYPE, PCN_STATUT</td></tr>
+      <tr><td>portail_client_confirmation_seance</td><td>CONFIRME / ANNULE / REPORTE</td><td>PCC_ID, PCT_ID, SEA_ID, PCC_STATUT</td></tr>
+    </table>
+  </div>
+
+  <!-- Variables d'env -->
+  <h2>Variables d'environnement</h2>
+  <div class="block">
+    <ul>
+      <li><code>ANTHROPIC_API_KEY=sk-ant-api03-...</code> — ajoutée dans <code>deploy/.env</code></li>
+      <li><code>NEXT_PUBLIC_WIDGET_IA_NOM=Eliot</code> — nom du widget configurable via .env</li>
+    </ul>
+  </div>
+
+  <!-- SAV -->
+  <h2>Outils SAV — Nouveautés S61</h2>
+
+  <div class="block">
+    <div class="block-title"><span>🛠️</span> Outils créés / mis à jour <span class="tag tag-sav">SAV</span></div>
+    <ul>
+      <li><strong>SAV_Analyseur_Dette_Technique.html</strong> — 5 onglets : dashboard · catalogue · refactorisation · patterns · export</li>
+      <li><strong>SAV_Regles_Metier.html</strong> — 15 règles · exemples OK/NOK · matrice couverture · export</li>
+      <li><strong>SAV_Dashboard_Revue_Code.html</strong> — FUSION Qualité + Maintenance + Dette + Règles S54 → S61</li>
+      <li><strong>SAV_Pilotage_Qualite.html</strong> — 8 tuiles, checklist enrichie S61</li>
+      <li><strong>SAV_Launcher.html</strong> — flux SAV 6 étapes mis à jour</li>
+    </ul>
+  </div>
+
+  <!-- Score -->
+  <h2>Score qualité S61</h2>
+  <div class="block">
+    <div class="score-row">
+      <div class="score-item"><div class="score-val">82</div><div class="score-axe">Backend</div></div>
+      <div class="score-item"><div class="score-val">80</div><div class="score-axe">Frontend</div></div>
+      <div class="score-item"><div class="score-val">85</div><div class="score-axe">BDD</div></div>
+      <div class="score-item"><div class="score-val">82</div><div class="score-axe">Global</div></div>
+    </div>
+  </div>
+
+  <!-- Bugs connus -->
+  <h2>Bugs connus → S62</h2>
+  <div class="block">
+    <table>
+      <tr><th>Bug</th><th>Module</th><th>Criticité</th></tr>
+      <tr><td>Audit PDF → window.open() à remplacer</td><td>Editions</td><td>🔴 Haute</td></tr>
+      <tr><td>Drag &amp; Drop agenda non fonctionnel</td><td>Planning</td><td>🟠 Moyenne</td></tr>
+      <tr><td>devis_ligne inexistante → retourne []</td><td>Devis</td><td>🟠 Moyenne</td></tr>
+      <tr><td>Export CSV règlements manquant</td><td>Règlements</td><td>🟡 Basse</td></tr>
+      <tr><td>/app/elevage/declarations — page TSX manquante</td><td>Elevage</td><td>🟡 Basse</td></tr>
+    </table>
+  </div>
+
+  <!-- Règles -->
+  <h2>Règles critiques S61</h2>
+  <div class="block">
+    <div class="rules-grid">
+      <div class="rule-item"><div class="rule-key">Portail</div><div class="rule-val">sessionStorage uniquement — jamais localStorage</div></div>
+      <div class="rule-item"><div class="rule-key">Clé Anthropic</div><div class="rule-val">deploy/.env uniquement — jamais côté client</div></div>
+      <div class="rule-item"><div class="rule-key">Three.js</div><div class="rule-val">@react-three/fiber supprimé S61 → avatars PNG BIB_Widget</div></div>
+      <div class="rule-item"><div class="rule-key">SSR Next.js</div><div class="rule-val">dynamic+ssr:false interdit Server Components → wrapper "use client"</div></div>
+      <div class="rule-item"><div class="rule-key">PDF/Editions</div><div class="rule-val">Modal uniquement — jamais window.open()</div></div>
+      <div class="rule-item"><div class="rule-key">Terminologie</div><div class="rule-val">BC Bilan Comportemental — plus jamais EDC</div></div>
+      <div class="rule-item"><div class="rule-key">Docker</div><div class="rule-val">build sans --no-cache si cache purgé (évite blocages)</div></div>
+      <div class="rule-item"><div class="rule-key">BDD FK</div><div class="rule-val">tiers.TIE_ID = INT(11), seance.SEA_ID = BIGINT(20)</div></div>
+    </div>
+  </div>
+
+</main>
+<footer>
+  <a href="index.html">← Index</a> &nbsp;·&nbsp; Anim'Gest — NoSage's Editor — S61 · 29/03/2026
+</footer>
+</body>
+</html>
