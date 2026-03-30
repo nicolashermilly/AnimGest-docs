@@ -5,357 +5,394 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anim'Gest — Changelogs &amp; Sprints</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --navy:#0D2137;--navy-l:#122840;--navy-ll:#1a3558;
-    --gold:#D4A843;--gold-l:#e8c068;--gold-p:rgba(212,168,67,.1);--gold-b:rgba(212,168,67,.2);
-    --dark:#070F1A;--white:#F8F8F5;--muted:#7a8fa6;
-    --green:#3ecf8e;--red:#ef4444;--orange:#f59e0b;--blue:#60a5fa;--purple:#a78bfa;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--white);font-size:14px;line-height:1.7;min-height:100vh}
-  a{color:var(--gold);text-decoration:none}
-  a:hover{color:var(--gold-l)}
-
-  /* NAV */
-  nav{background:var(--navy);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:100}
-  .brand{font-family:'Playfair Display',serif;color:var(--gold);font-weight:700;font-size:1.1rem}
-  .nav-links{display:flex;gap:.5rem;flex-wrap:wrap}
-  .nav-links a{color:var(--muted);font-size:.8rem;padding:.25rem .6rem;border-radius:4px;transition:.2s}
-  .nav-links a:hover{color:var(--white);background:rgba(255,255,255,.06)}
-  .nav-badge{margin-left:auto;background:var(--gold-p);border:1px solid var(--gold-b);color:var(--gold);font-size:.7rem;font-weight:600;padding:.2rem .75rem;border-radius:20px}
-
-  /* HERO */
-  .hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:3rem 2rem 2.5rem;border-bottom:2px solid var(--gold);text-align:center}
-  .hero-tag{display:inline-block;background:var(--gold);color:var(--dark);font-size:.72rem;font-weight:700;padding:.3rem .9rem;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
-  .hero h1{font-family:'Playfair Display',serif;font-size:2.4rem;margin-bottom:.5rem}
-  .hero h1 span{color:var(--gold)}
-  .hero .sub{color:var(--muted);font-size:.95rem}
-  .hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-top:1.5rem}
-  .hs{text-align:center}
-  .hs-v{font-size:1.5rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;display:block}
-  .hs-l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-
-  /* CONTAINER */
-  .container{max-width:1000px;margin:0 auto;padding:2.5rem 1.5rem}
-
-  /* CURRENT SPRINT BANNER */
-  .current-banner{background:linear-gradient(135deg,var(--navy-ll),var(--navy-l));border:1px solid rgba(212,168,67,.4);border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-  .cb-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);flex-shrink:0;animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-  .cb-label{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);font-weight:700}
-  .cb-desc{color:var(--muted);font-size:.85rem;flex:1}
-  .cb-link{background:var(--gold);color:var(--dark);padding:.35rem .9rem;border-radius:6px;font-size:.8rem;font-weight:700;white-space:nowrap}
-  .cb-link:hover{background:var(--gold-l);color:var(--dark)}
-
-  /* SECTION TITLE */
-  .sec-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);border-bottom:1px solid var(--gold-b);padding-bottom:.5rem;margin-bottom:1rem}
-
-  /* CHANGELOG GRID */
-  .cl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:2.5rem}
-  .cl-card{background:var(--navy);border:1px solid var(--gold-b);border-radius:8px;padding:1rem 1.2rem;display:flex;flex-direction:column;gap:.4rem;text-decoration:none;color:var(--white);transition:all .2s;position:relative;overflow:hidden}
-  .cl-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:.2s}
-  .cl-card:hover{border-color:rgba(212,168,67,.5);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
-  .cl-card:hover::before{opacity:1}
-  .cl-num{font-size:.68rem;color:rgba(212,168,67,.45);font-family:monospace;font-weight:600;letter-spacing:.05em}
-  .cl-sprint{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);font-weight:600}
-  .cl-date{font-size:.72rem;color:var(--muted)}
-  .cl-desc{font-size:.8rem;color:var(--muted);line-height:1.5}
-  .cl-badge{display:inline-block;padding:.15rem .5rem;border-radius:3px;font-size:.65rem;font-weight:600;align-self:flex-start;margin-top:.2rem}
-  .b-new{background:rgba(60,207,142,.12);color:var(--green);border:1px solid rgba(60,207,142,.3)}
-  .b-done{background:rgba(212,168,67,.1);color:var(--gold);border:1px solid rgba(212,168,67,.25)}
-  .b-current{background:var(--gold);color:var(--dark)}
-
-  footer{background:var(--navy);border-top:1px solid var(--gold-b);text-align:center;padding:2rem;color:var(--muted);font-size:.82rem;margin-top:3rem}
-  footer strong{color:var(--gold)}
+:root{--navy:#0D2137;--navy-l:#112840;--navy-m:#1a3a5c;--gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);--text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;--bdr:rgba(255,255,255,.08);--ok:#4caf82;--warn:#e8a84a;--err:#e05c5c;--info:#5b9bd5;--r:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+a{color:var(--gold);text-decoration:none}
+header{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.h-brand{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.15rem}
+.h-brand small{font-size:.72rem;color:var(--muted);margin-left:.75rem;font-weight:300}
+.h-right{display:flex;align-items:center;gap:.75rem}
+.h-nav{display:flex;gap:4px}
+.h-nav a{font-size:.75rem;color:var(--muted);padding:.3rem .7rem;border-radius:6px;border:1px solid transparent;transition:all .15s}
+.h-nav a:hover{border-color:var(--gold-b);color:var(--text)}
+.sprint-chip{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:20px;padding:.28rem 1rem;font-size:.72rem;font-weight:600;color:var(--gold)}
+.wrap{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem 3rem}
+.hero-bar{background:linear-gradient(135deg,var(--navy-l),var(--navy-m));border:1px solid var(--gold-b);border-radius:var(--r);padding:1.5rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.hero-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold)}
+.hero-sub{color:var(--muted);font-size:.85rem;margin-top:.2rem}
+.hero-kpis{display:flex;gap:1.5rem;margin-left:auto;flex-wrap:wrap}
+.hk{text-align:center}
+.hk-v{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);font-weight:700;display:block}
+.hk-l{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.sprint-nav{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr)}
+.sp-btn{padding:.35rem .9rem;border-radius:20px;border:1px solid var(--bdr);background:transparent;color:var(--muted);font-size:.75rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap}
+.sp-btn:hover{border-color:var(--gold-b);color:var(--text)}
+.sp-btn.on{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:700}
+.sp-btn.current-btn{border-color:var(--info);color:var(--info)}
+.sprint-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap}
+.sprint-badge-big{background:var(--gold);color:var(--navy);font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;padding:.4rem .9rem;border-radius:6px;flex-shrink:0}
+.sprint-badge-big.current{background:var(--info);color:#fff}
+.sprint-info{flex:1}
+.sprint-title-txt{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--text)}
+.sprint-date{color:var(--muted);font-size:.8rem;margin-top:.25rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.badge-current{display:inline-flex;align-items:center;gap:5px;background:rgba(91,155,213,.15);border:1px solid rgba(91,155,213,.3);color:var(--info);border-radius:20px;padding:.18rem .65rem;font-size:.68rem;font-weight:600}
+.badge-done{background:rgba(60,207,142,.12);border:1px solid rgba(60,207,142,.3);color:var(--ok);border-radius:20px;padding:.18rem .65rem;font-size:.68rem;font-weight:600}
+.dot-pulse{width:6px;height:6px;border-radius:50%;background:var(--info);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sprint-score-box{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:8px;padding:.5rem 1rem;text-align:center;min-width:80px;flex-shrink:0}
+.ssv{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
+.ssl{font-size:.65rem;color:var(--muted)}
+.score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1.2rem}
+.sc{background:var(--navy-l);border:1px solid var(--bdr);border-radius:8px;padding:.7rem;text-align:center}
+.sc-v{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700}
+.sc-l{font-size:.65rem;color:var(--muted);margin-top:.15rem}
+.sec{margin-bottom:1.4rem}
+.sec-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:.5rem}
+.sec-num{background:var(--gold);color:var(--navy);font-size:.62rem;font-weight:700;padding:.14rem .42rem;border-radius:3px;font-family:'DM Sans',sans-serif}
+.item-list{display:flex;flex-direction:column;gap:.45rem}
+.item{background:var(--navy-l);border:1px solid var(--bdr);border-radius:8px;padding:.7rem 1rem;display:flex;align-items:flex-start;gap:.7rem;transition:border-color .15s}
+.item:hover{border-color:var(--gold-b)}
+.itag{flex-shrink:0;font-size:.62rem;font-weight:700;padding:.14rem .48rem;border-radius:3px;margin-top:.2rem;letter-spacing:.03em}
+.t-api{background:rgba(91,155,213,.15);color:var(--info);border:1px solid rgba(91,155,213,.3)}
+.t-front{background:rgba(167,139,250,.15);color:#a78bfa;border:1px solid rgba(167,139,250,.3)}
+.t-bdd{background:rgba(212,168,67,.12);color:var(--gold);border:1px solid var(--gold-b)}
+.t-fix{background:rgba(60,207,142,.15);color:var(--ok);border:1px solid rgba(60,207,142,.3)}
+.t-sav{background:rgba(120,100,220,.15);color:#a89cf7;border:1px solid rgba(120,100,220,.3)}
+.ibody{flex:1}
+.ititle{font-weight:500;color:var(--text);font-size:.84rem;margin-bottom:.1rem}
+.idesc{color:var(--muted);font-size:.78rem;line-height:1.5}
+.commit-list{display:flex;flex-direction:column;gap:5px}
+.commit{display:flex;align-items:flex-start;gap:9px;background:rgba(0,0,0,.2);border-radius:6px;padding:7px 11px}
+.chash{font-family:'Courier New',monospace;font-size:.7rem;color:var(--info);background:rgba(91,155,213,.1);padding:1px 5px;border-radius:3px;flex-shrink:0;margin-top:2px}
+.cmsg{font-size:.79rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.25rem}
+th{text-align:left;padding:7px 10px;border-bottom:1px solid var(--gold-b);color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+td{padding:7px 10px;border-bottom:1px solid var(--bdr);vertical-align:top}
+td:first-child{color:var(--text)}
+.empty{color:var(--dim);font-size:.83rem;padding:.75rem;font-style:italic}
+.app-footer{background:var(--navy-l);border-top:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.af-left a{font-size:.78rem;font-weight:600;color:var(--gold)}
+.af-right{display:flex;gap:8px}
+.af-right a{font-size:.75rem;color:var(--muted);padding:.3rem .8rem;border:1px solid var(--bdr);border-radius:6px;transition:all .15s}
+.af-right a:hover{border-color:var(--gold-b);color:var(--text)}
+@media(max-width:600px){.score-row{grid-template-columns:1fr 1fr}.hero-kpis{margin-left:0}}
 </style>
 </head>
 <body>
 
-<nav>
-  <span class="brand">Anim'Gest Docs</span>
-  <div class="nav-links">
-    <a href="index.html">Accueil</a>
-    <a href="07-audit-stack.html">Audit Stack</a>
-    <a href="17-api-reference.html">API Reference</a>
-    <a href="20-pilotage-projet.html">Pilotage</a>
-  </div>
-  <span class="nav-badge">S62 — 30/03/2026</span>
-</nav>
-
-<div class="hero">
-  <div class="hero-tag">Release Notes</div>
-  <h1>Changelogs <span>&amp; Sprints</span></h1>
-  <p class="sub">Historique complet des livraisons Anim'Gest — S30 → S62 — NoSage's Editor</p>
-  <div class="hero-stats">
-    <div class="hs"><span class="hs-v">32</span><span class="hs-l">Sprints documentés</span></div>
-    <div class="hs"><span class="hs-v">105</span><span class="hs-l">Pages UI</span></div>
-    <div class="hs"><span class="hs-v">90+</span><span class="hs-l">Routes API</span></div>
-    <div class="hs"><span class="hs-v">82/100</span><span class="hs-l">Score qualité S61</span></div>
-  </div>
-</div>
-
-<div class="container">
-
-  <!-- SPRINT EN COURS -->
-  <div class="current-banner">
-    <div class="cb-dot"></div>
-    <div>
-      <div class="cb-label">Sprint S62 — En cours</div>
-      <div class="cb-desc">Portail Client déploiement · Widget Eliot IA améliorations · CAC/BC depuis fiche séance</div>
+<header>
+  <div class="h-brand">Anim'Gest <small>Changelogs &amp; Sprints</small></div>
+  <div class="h-right">
+    <div class="h-nav">
+      <a href="index.html">Accueil</a>
+      <a href="20-pilotage-projet.html">Pilotage</a>
+      <a href="07-audit-stack.html">Stack</a>
     </div>
-    <a href="20-pilotage-projet.html" class="cb-link">Voir le pilotage →</a>
+    <div class="sprint-chip">S62</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero-bar">
+    <div>
+      <div class="hero-title">Changelogs &amp; Sprints</div>
+      <div class="hero-sub">Historique complet des livraisons Anim'Gest — S30 &rarr; S62 — NoSage's Editor</div>
+    </div>
+    <div class="hero-kpis">
+      <div class="hk"><span class="hk-v">32</span><span class="hk-l">Sprints</span></div>
+      <div class="hk"><span class="hk-v">105</span><span class="hk-l">Pages UI</span></div>
+      <div class="hk"><span class="hk-v">90+</span><span class="hk-l">Routes API</span></div>
+      <div class="hk"><span class="hk-v">82</span><span class="hk-l">Score S61</span></div>
+    </div>
   </div>
 
-  <!-- S61–S58 -->
-  <div class="sec-title">Sprints récents</div>
-  <div class="cl-grid">
-
-    <a href="58-changelog-S61.html" class="cl-card">
-      <div class="cl-num">#58</div>
-      <div class="cl-sprint">Sprint S61</div>
-      <div class="cl-date">29/03/2026</div>
-      <div class="cl-desc">Widget Eliot IA v2 · Portail Client BDD · 43 SQL fixes · 20 avatars WebP · Route /ia/chat</div>
-      <span class="cl-badge b-new">Nouveau</span>
-    </a>
-
-    <a href="56-changelog-S60.html" class="cl-card">
-      <div class="cl-num">#56</div>
-      <div class="cl-sprint">Sprint S60</div>
-      <div class="cl-date">29/03/2026</div>
-      <div class="cl-desc">Fix RS colonnes + migration rs_post · Devis transitions statut · Email · Créer facture · GET /seances/:id</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="55-changelog-S59.html" class="cl-card">
-      <div class="cl-num">#55</div>
-      <div class="cl-sprint">Sprint S59</div>
-      <div class="cl-date">29/03/2026</div>
-      <div class="cl-desc">SAV Générateur Handover V1 · Fix dashboard · Migration repo docs · Nettoyage repo</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="55-changelog-S58.html" class="cl-card">
-      <div class="cl-num">#55</div>
-      <div class="cl-sprint">Sprint S58</div>
-      <div class="cl-date">28/03/2026</div>
-      <div class="cl-desc">Page Paramètres Éditions · Fix permissions rôles · Script sauvegarde v7 · Générateur Handover V1</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="54-changelog-S57.html" class="cl-card">
-      <div class="cl-num">#54</div>
-      <div class="cl-sprint">Sprint S57</div>
-      <div class="cl-date">28/03/2026</div>
-      <div class="cl-desc">Règle CAC formalisée · Suppression lien Sidebar · Fix permissions rôles BDD · Sauvegarde v7</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="53-changelog-S56.html" class="cl-card">
-      <div class="cl-num">#53</div>
-      <div class="cl-sprint">Sprint S56</div>
-      <div class="cl-date">27/03/2026</div>
-      <div class="cl-desc">Revue de code · Analyse dette technique · Patterns architecture · Restauration src/ · SAV V1</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="52-changelog-S55.html" class="cl-card">
-      <div class="cl-num">#52</div>
-      <div class="cl-sprint">Sprint S55</div>
-      <div class="cl-date">27/03/2026</div>
-      <div class="cl-desc">Générateur Maintenance · Dashboard Qualité · Carte clients v2 · 79 fichiers harmonisés</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="51-changelog-S54.html" class="cl-card">
-      <div class="cl-num">#51</div>
-      <div class="cl-sprint">Sprint S54</div>
-      <div class="cl-date">27/03/2026</div>
-      <div class="cl-desc">Validation DnD · Fix stats KPIs jointures SST · Modèles programmes métiers · SAV tooling V1</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="50-changelog-S53.html" class="cl-card">
-      <div class="cl-num">#50</div>
-      <div class="cl-sprint">Sprint S53</div>
-      <div class="cl-date">26/03/2026</div>
-      <div class="cl-desc">Planning DnD v2 · Forfaits &amp; Abonnements BDD+API · Yousign routes · PATCH /seances/:id</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-  </div>
-
-  <!-- S52–S46 -->
-  <div class="sec-title">Sprints S46–S52</div>
-  <div class="cl-grid">
-
-    <a href="48-changelog-S52.html" class="cl-card">
-      <div class="cl-num">#48</div>
-      <div class="cl-sprint">Sprint S52</div>
-      <div class="cl-date">25/03/2026</div>
-      <div class="cl-desc">Stats KPIs · Carte clients v2 Leaflet · Charte 79 fichiers · Routes avoirs/ged-edc</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="47-changelog-S51.html" class="cl-card">
-      <div class="cl-num">#47</div>
-      <div class="cl-sprint">Sprint S51</div>
-      <div class="cl-date">25/03/2026</div>
-      <div class="cl-desc">Carte clients Leaflet géocodage · GED CAC · Notice utilisateur v4 · Routes séances évolution</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="46-changelog-S50.html" class="cl-card">
-      <div class="cl-num">#46</div>
-      <div class="cl-sprint">Sprint S50</div>
-      <div class="cl-date">24/03/2026</div>
-      <div class="cl-desc">btn-danger · Doublon AideContextuelle supprimé · PDF routes corrigées · Sidebar règlements achats</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="46-changelog-S48.html" class="cl-card">
-      <div class="cl-num">#46</div>
-      <div class="cl-sprint">Sprint S48</div>
-      <div class="cl-date">23/03/2026</div>
-      <div class="cl-desc">EDC comportemental · Planning semaine · Seeds 200 animaux · Signatures Yousign</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="45-changelog-S47.html" class="cl-card">
-      <div class="cl-num">#45</div>
-      <div class="cl-sprint">Sprint S47</div>
-      <div class="cl-date">23/03/2026</div>
-      <div class="cl-desc">Dashboards CEO · Formulaires lead · Réseaux sociaux · Modules métier v2</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="44-changelog-S46.html" class="cl-card">
-      <div class="cl-num">#44</div>
-      <div class="cl-sprint">Sprint S46</div>
-      <div class="cl-date">22/03/2026</div>
-      <div class="cl-desc">Suivi CAC · Pages séances · Signatures Yousign v1 · Elevage complet</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-  </div>
-
-  <!-- S30–S44 -->
-  <div class="sec-title">Sprints S30–S44</div>
-  <div class="cl-grid">
-
-    <a href="73-changelog-s44.html" class="cl-card">
-      <div class="cl-num">#73</div>
-      <div class="cl-sprint">Sprint S44</div>
-      <div class="cl-date">22/03/2026</div>
-      <div class="cl-desc">Dashboards métiers · Webhooks Calendly · Seeds avancés · Templates devis 25 modèles</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="53-changelog-s43.html" class="cl-card">
-      <div class="cl-num">#53</div>
-      <div class="cl-sprint">Sprint S43</div>
-      <div class="cl-date">22/03/2026</div>
-      <div class="cl-desc">Planning 3 vues Jour/Semaine/Mois · Sidebar Éducateur · Seeds 200 animaux</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="44-changelog-s42.html" class="cl-card">
-      <div class="cl-num">#44</div>
-      <div class="cl-sprint">Sprint S42</div>
-      <div class="cl-date">22/03/2026</div>
-      <div class="cl-desc">Dashboards CEO × 7 métiers · Seeds 200 animaux + factures + commandes</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="43-changelog-S41.html" class="cl-card">
-      <div class="cl-num">#43</div>
-      <div class="cl-sprint">Sprint S41</div>
-      <div class="cl-date">21/03/2026</div>
-      <div class="cl-desc">Module CRM leads · Formulaire public · Agenda couleurs dynamiques</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="42-changelog-S38.html" class="cl-card">
-      <div class="cl-num">#42</div>
-      <div class="cl-sprint">Sprint S38</div>
-      <div class="cl-date">20/03/2026</div>
-      <div class="cl-desc">Module achats complet · Seeds démo · Infrastructure Docker stabilisée</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="31-changelog-S37.html" class="cl-card">
-      <div class="cl-num">#31</div>
-      <div class="cl-sprint">Sprint S37</div>
-      <div class="cl-date">20/03/2026</div>
-      <div class="cl-desc">CRM leads · Formulaire lead public · Routes paramètres</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="28-changelog-S36.html" class="cl-card">
-      <div class="cl-num">#28</div>
-      <div class="cl-sprint">Sprint S36</div>
-      <div class="cl-date">20/03/2026</div>
-      <div class="cl-desc">Module achats + inventaires · Factures PDF + Email · IA modération · Toiletteur + Pet-sitter</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="30-changelog-S35.html" class="cl-card">
-      <div class="cl-num">#30</div>
-      <div class="cl-sprint">Sprint S35</div>
-      <div class="cl-date">19/03/2026</div>
-      <div class="cl-desc">Module élevage · Portées · Géniteurs · Généalogie · Réservations</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="29-changelog-S34.html" class="cl-card">
-      <div class="cl-num">#29</div>
-      <div class="cl-sprint">Sprint S34</div>
-      <div class="cl-date">19/03/2026</div>
-      <div class="cl-desc">Signatures électroniques · Questionnaires multi-types · Planning v1</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="26-changelog-S33.html" class="cl-card">
-      <div class="cl-num">#26</div>
-      <div class="cl-sprint">Sprint S33</div>
-      <div class="cl-date">18/03/2026</div>
-      <div class="cl-desc">Fix compteur pages docs · Routes API paramètres · Seeds animaux races</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="25-changelog-sprint-S32.html" class="cl-card">
-      <div class="cl-num">#25</div>
-      <div class="cl-sprint">Sprint S32</div>
-      <div class="cl-date">17/03/2026</div>
-      <div class="cl-desc">PUT /animaux/:id · Photos animaux · Questionnaires multi-types · param_entreprise MàJ</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="24-changelog-sprint-S31.html" class="cl-card">
-      <div class="cl-num">#24</div>
-      <div class="cl-sprint">Sprint S31</div>
-      <div class="cl-date">16/03/2026</div>
-      <div class="cl-desc">Module CRM · Routes avancées · Dashboard stats · Contacts tuiles</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-    <a href="27-changelog-S30.html" class="cl-card">
-      <div class="cl-num">#27</div>
-      <div class="cl-sprint">Sprint S30</div>
-      <div class="cl-date">15/03/2026</div>
-      <div class="cl-desc">Infrastructure Docker · Première mise en production · Architecture NestJS + Next.js</div>
-      <span class="cl-badge b-done">Terminé</span>
-    </a>
-
-  </div>
-
+  <div id="sprint-nav-container"></div>
+  <div id="main-content"></div>
 </div>
 
-<footer>
-  <strong>Anim'Gest</strong> &mdash; NoSage's Editor &mdash; Changelogs &amp; Sprints<br>
-  <small>S30 &rarr; S62 &mdash; 32 sprints documentés &mdash; MàJ 30/03/2026</small>
-</footer>
+<div class="app-footer">
+  <div class="af-left"><a href="index.html">← Index documentation</a></div>
+  <div class="af-right">
+    <a href="20-pilotage-projet.html">📊 Pilotage</a>
+    <a href="SAV_Launcher.html">🚀 SAV</a>
+    <a href="07-audit-stack.html">🏗️ Stack</a>
+  </div>
+</div>
 
+<script>
+var SPRINTS = [
+  {id:'S62',statut:'current',date:'30/03/2026',titre:'Portail Client deploiement + Widget IA ameliorations',
+   scores:{backend:0,frontend:0,bdd:0,global:0},commits:[],
+   front:['Portail Client — injection routes_portail_S61.ts + routes_portail_S62.ts',
+          'Deploiement /client/[token] page TSX (4 onglets)',
+          'Widget IA — lien Sidebar + nom configurable + vocal'],
+   back:['routes_portail_S62.ts — 7 routes animaux/CAC/devis/factures/PDF'],
+   bdd:[],fix:[],
+   bugs:[{l:'Audit PDF window.open() a remplacer',m:'Editions',c:'Haute'},
+         {l:'Drag Drop agenda non fonctionnel',m:'Planning',c:'Moyenne'},
+         {l:'devis_ligne inexistante',m:'Devis',c:'Moyenne'}]},
+
+  {id:'S61',statut:'done',date:'29/03/2026',titre:'Widget Eliot IA v2 + Portail Client BDD + 43 SQL fixes',
+   scores:{backend:82,frontend:80,bdd:85,global:82},
+   commits:[{hash:'95cc9c2',msg:'S61a — Route /ia/chat + fix custom-routes 43 corrections SQL + SSR fix'},
+            {hash:'a6f7514',msg:'S61b — Avatar Eliot + drag + 20 avatars WebP + page widget-ia'},
+            {hash:'a822cc8',msg:'S61c — Widget v2 drag fluide + panneau adaptatif + avatar temps reel'},
+            {hash:'12b0d9b',msg:'S61d — Suppression Poney_001 + .gitignore *.bak*'}],
+   front:['ClaudeWidget.tsx v2 — drag fluide, panneau adaptatif, avatar temps reel',
+          'Page /app/parametres/widget-ia — selection avatar 20 WebP',
+          'ClaudeWidgetWrapper.tsx — dynamic+ssr:false (fix SSR)',
+          'StatusBadge — fix import named default formules/page.tsx'],
+   back:['POST /ia/chat — proxy Anthropic cote serveur, ANTHROPIC_API_KEY securisee',
+         '43 strings SQL multi-lignes fusionnees (3133 vers 2875 lignes)',
+         '12 corrections backtick/double-quote melanges'],
+   bdd:['portail_client_acces — Token UUID + TIE_ID INT(11)',
+        'portail_client_session — Session token 24h',
+        'portail_client_notification (S63)',
+        'portail_client_confirmation_seance'],
+   fix:['307 Mo vers 242 Ko — 20 PNG BIB_Widget comprimes WebP',
+        '@react-three/fiber supprime — remplace par avatars PNG'],
+   bugs:[{l:'Audit PDF window.open()',m:'Editions',c:'Haute'},
+         {l:'Drag Drop agenda',m:'Planning',c:'Moyenne'},
+         {l:'devis_ligne inexistante',m:'Devis',c:'Moyenne'},
+         {l:'Export CSV reglements',m:'Reglements',c:'Basse'},
+         {l:'/app/elevage/declarations manquante',m:'Elevage',c:'Basse'}]},
+
+  {id:'S60',statut:'done',date:'29/03/2026',titre:'Fix Reseaux Sociaux + Devis transitions statut',
+   scores:{backend:82,frontend:80,bdd:85,global:82},
+   commits:[{hash:'c6e046c',msg:'S60a — Fix PUT reseaux-sociaux + lien Nouveau devis sidebar'},
+            {hash:'6cc4050',msg:'S60b — Fix RS colonnes _URL + migration rs_publication vers rs_post'},
+            {hash:'7712b33',msg:'S60c — Fix API RS guillemets SQL ligne 2206'},
+            {hash:'389a1cf',msg:'S60d — Fix RS setData(d.raw) pour pre-remplir les champs'},
+            {hash:'c8c9d2d',msg:'S60e — Devis transitions statut + Email + Creer facture'}],
+   front:['RS — fix colonnes _URL, state setData(d.raw), route PUT corrigee',
+          'Sidebar — lien Nouveau devis 7 metiers',
+          'Devis/[id] — workflow BROUILLON vers ENVOYE vers ACCEPTE vers FACTURE + bouton Email'],
+   back:['PUT /devis/:id — mise a jour statut + commentaire',
+         'POST /devis/:id/facturer — creation facture depuis devis ACCEPTE',
+         'GET /seances/:id — route manquante ajoutee avec jointures'],
+   bdd:[],
+   fix:['Script sauvegarde v7 — FULL_KEEP=30'],
+   bugs:[]},
+
+  {id:'S59',statut:'done',date:'29/03/2026',titre:'SAV Generateur Handover V1 + migration repo docs',
+   scores:{backend:82,frontend:80,bdd:85,global:82},commits:[],
+   front:[],back:[],bdd:[],
+   fix:['SAV_Generator_Handover.html V1 — 7 onglets, export Markdown',
+        'Migration repo docs vers C:\\AnimGest_Repo_Git\\petsuite-docs',
+        'Nettoyage repo — suppression .bak et modeles .gltf'],
+   bugs:[]},
+
+  {id:'S58',statut:'done',date:'28/03/2026',titre:'Page Parametres Editions + Fix permissions + Sauvegarde v7',
+   scores:{backend:82,frontend:80,bdd:85,global:82},commits:[],
+   front:['/app/parametres/editions — Logo, Couleurs, Police, CGV, Filigrane',
+          'Sidebar comportementaliste — suppression lien Suivi CAC (regle S57)',
+          'KPIs dashboard — nb_seances_a_venir vers nb_seances (159 seances)'],
+   back:['GET /roles/:id/permissions — vrais noms colonnes BDD',
+         'GET /user-permissions — detection auto colonnes'],
+   bdd:[],fix:['Script sauvegarde v7 deploye'],bugs:[]},
+
+  {id:'S57',statut:'done',date:'28/03/2026',titre:'Regle CAC formalisee + Fix permissions roles',
+   scores:{backend:80,frontend:78,bdd:83,global:80},commits:[],
+   front:['Sidebar comportementaliste — lien Suivi CAC supprime (regle definitive)'],
+   back:['GET /roles/:id/permissions — parsing parts[2] corrige',
+         'GET /seances/:id — route manquante ajoutee'],
+   bdd:[],fix:['Restauration src/ depuis backup 20260326_2317_avant_revue_code'],bugs:[]},
+
+  {id:'S56',statut:'done',date:'27/03/2026',titre:'Revue de code + Analyse dette technique',
+   scores:{backend:78,frontend:76,bdd:82,global:79},commits:[],
+   front:[],back:[],bdd:[],
+   fix:['Audit custom-routes.ts — 43 strings SQL identifiees',
+        'Patterns architecture documentes : app.use(), getDb()',
+        'SAV Analyseur Dette Technique V1 — 3 onglets'],
+   bugs:[]},
+
+  {id:'S55',statut:'done',date:'27/03/2026',titre:'Generateur Maintenance + Dashboard Qualite',
+   scores:{backend:80,frontend:78,bdd:83,global:80},commits:[],
+   front:['Carte clients v2 Leaflet — geocodage batch, marqueurs colores'],
+   back:[],bdd:[],
+   fix:['SAV_Generator_Maintenance.html',
+        'SAV_Dashboard_Qualite.html',
+        '79 fichiers docs harmonises charte navy/gold'],
+   bugs:[]},
+
+  {id:'S54',statut:'done',date:'27/03/2026',titre:'Validation DnD + Fix stats KPIs',
+   scores:{backend:78,frontend:76,bdd:80,global:78},commits:[],
+   front:['Planning Jour + Semaine — drag&drop valide, PATCH retourne 200'],
+   back:['stats/kpis — jointure seance_statut via SST_ID corrigee'],
+   bdd:[],fix:['Mode clair CSS — h1 invisibles, textes tableaux pales'],bugs:[]},
+
+  {id:'S53',statut:'done',date:'26/03/2026',titre:'Planning DnD v2 + Forfaits BDD/API + Yousign',
+   scores:{backend:75,frontend:74,bdd:78,global:76},commits:[],
+   front:['Planning DnD v2 — slot-drop HTML5, ghost pointille, snap 30min',
+          '/app/forfaits — catalogue metier + souscriptions + modal prix TTC'],
+   back:['GET/POST /forfaits — 3 routes',
+         'POST /signatures + /signatures/:id/envoyer',
+         'PATCH /seances/:id — body parsing manuel'],
+   bdd:['forfait','forfait_client'],fix:[],bugs:[]},
+
+  {id:'S52',statut:'done',date:'25/03/2026',titre:'Stats KPIs + Carte clients v2 + Charte 79 fichiers',
+   scores:{backend:72,frontend:72,bdd:78,global:74},commits:[],
+   front:['Carte clients Leaflet — geocodage separe',
+          'Page statistiques — KPIs 48 014 EUR CA, graphique mensuel'],
+   back:['stats/kpis — correction jointures'],bdd:[],
+   fix:['79 fichiers HTML docs — charte CSS dark navy/gold'],bugs:[]},
+
+  {id:'S51',statut:'done',date:'25/03/2026',titre:'Carte clients Leaflet + GED CAC',
+   scores:{backend:70,frontend:70,bdd:75,global:72},commits:[],
+   front:['Carte clients Leaflet cdnjs — geocodage batch arriere-plan',
+          'Export CSV factures + seances — UTF-8 BOM separateur ;'],
+   back:['Routes GED CAC evolution + score'],bdd:[],
+   fix:['Notice utilisateur v4'],bugs:[]},
+
+  {id:'S50',statut:'done',date:'24/03/2026',titre:'btn-danger + Corrections charte graphique',
+   scores:{backend:68,frontend:68,bdd:72,global:69},commits:[],
+   front:['btn-danger ajoute globals.css',
+          'Doublon AideContextuelle supprime (5 fichiers)',
+          'PDF factures/devis — routes corrigees'],
+   back:[],bdd:[],fix:[],bugs:[]},
+
+  {id:'S48',statut:'done',date:'23/03/2026',titre:'EDC comportemental + Planning semaine + Seeds',
+   scores:{backend:65,frontend:65,bdd:70,global:67},commits:[],
+   front:['/app/seances/edc — fiche comportementale complete',
+          '/app/planning-seances v2 — vue calendrier semaine + liste'],
+   back:[],bdd:['edc_fiche','seance_suivi_cac'],
+   fix:['Seeds 200 animaux 6 especes + 50 visites pet-sitter'],bugs:[]},
+
+  {id:'S46',statut:'done',date:'22/03/2026',titre:'Suivi CAC + Signatures Yousign v1 + Elevage complet',
+   scores:{backend:62,frontend:62,bdd:68,global:64},commits:[],
+   front:['/app/seances/edc — v1','/app/elevage — geniteurs, genealogie, reservations, reglements'],
+   back:['POST /signatures — creation workflow Yousign'],bdd:[],fix:[],bugs:[]},
+
+  {id:'S44',statut:'done',date:'22/03/2026',titre:'Dashboards metiers + Webhooks Calendly + Templates devis',
+   scores:{backend:58,frontend:58,bdd:62,global:59},commits:[],
+   front:['Dashboards CEO x7 metiers','Templates devis 25 modeles x 5 metiers'],
+   back:['POST /calendly/webhook','Dashboards metiers routes'],bdd:[],fix:[],bugs:[]},
+
+  {id:'S42',statut:'done',date:'22/03/2026',titre:'Dashboards CEO x7 metiers + Seeds 200 animaux',
+   scores:{backend:55,frontend:55,bdd:60,global:57},commits:[],
+   front:['Dashboards CEO x7 metiers — CA, clients, seances, animaux'],
+   back:[],bdd:[],
+   fix:['Seeds 200 animaux + factures + commandes'],bugs:[]},
+
+  {id:'S38',statut:'done',date:'20/03/2026',titre:'Module Achats + IA moderation + Infrastructure Docker',
+   scores:{backend:48,frontend:48,bdd:55,global:50},commits:[],
+   front:['/app/achats/[id] — PDF, Email, Bon a payer, workflow statut',
+          '/app/toilettage — Planning salon journalier',
+          '/app/visites — Visites et Promenades double vue'],
+   back:['GET /achats/:id/lignes','POST /inventaires/:id statut',
+         'POST /communaute/moderer/:id — Claude API Sonnet'],
+   bdd:[],fix:['Docker Compose stabilise — volumes, nginx, hot reload'],bugs:[]},
+
+  {id:'S33',statut:'done',date:'18/03/2026',titre:'Documentation enrichie + NF525 + templates devis',
+   scores:{backend:40,frontend:40,bdd:45,global:42},commits:[],
+   front:['Templates devis 25 modeles x 5 metiers',
+          'Questionnaires multi-type ?type=equestre/pension/canin',
+          'Agenda vue semaine + mois'],
+   back:['PUT /animaux/:id + 14 champs + ANI_PHOTOS'],bdd:[],
+   fix:['param_entreprise — NoSages Editor SAS configureI',
+        "Centre d'aide 199 articles / 15 modules"],bugs:[]},
+
+  {id:'S30',statut:'done',date:'15/03/2026',titre:'Premiere mise en production — Infrastructure Docker',
+   scores:{backend:30,frontend:30,bdd:35,global:32},commits:[],
+   front:['Tableau de bord — QR Code, CA, clients, seances'],
+   back:['Routes core : /tiers, /animaux, /seances, /factures, /devis, /reglements'],
+   bdd:['151 tables creees — utf8mb4 InnoDB'],
+   fix:['Architecture Docker Compose + nginx reverse proxy'],bugs:[]}
+];
+
+var sel = 'S62';
+
+function selectSprint(id){ sel=id; render(); }
+
+function sc(v){ return v>=80?'var(--ok)':v>=60?'var(--warn)':'var(--err)'; }
+
+function itemsHtml(arr, type){
+  if(!arr||!arr.length) return '<div class="empty">Aucun element</div>';
+  return '<div class="item-list">'+arr.map(function(v){
+    var parts = v.split(' — ');
+    var title = parts[0], desc = parts.slice(1).join(' — ');
+    return '<div class="item">'
+      +'<span class="itag t-'+type+'">'+type.toUpperCase()+'</span>'
+      +'<div class="ibody"><div class="ititle">'+title+'</div>'
+      +(desc?'<div class="idesc">'+desc+'</div>':'')
+      +'</div></div>';
+  }).join('')+'</div>';
+}
+
+function render(){
+  var cur = SPRINTS.find(function(s){return s.id===sel;}) || SPRINTS[0];
+
+  // Nav
+  document.getElementById('sprint-nav-container').innerHTML =
+    '<div class="sprint-nav">'+SPRINTS.map(function(s){
+      var cls = 'sp-btn'+(s.id===sel?' on':'')+(s.statut==='current'&&s.id!==sel?' current-btn':'');
+      return '<button class="'+cls+'" onclick="selectSprint(\''+s.id+'\')">'+s.id+'</button>';
+    }).join('')+'</div>';
+
+  var s = cur;
+  var isCurrent = s.statut==='current';
+  var g = s.scores.global;
+  var h = '';
+
+  // Header
+  h += '<div class="sprint-header">';
+  h += '<div class="sprint-badge-big'+(isCurrent?' current':'')+'">'+s.id+'</div>';
+  h += '<div class="sprint-info">';
+  h += '<div class="sprint-title-txt">'+s.titre+'</div>';
+  h += '<div class="sprint-date">'+s.date;
+  if(isCurrent) h += '&nbsp;<span class="badge-current"><div class="dot-pulse"></div>En cours</span>';
+  else h += '&nbsp;<span class="badge-done">Termine</span>';
+  h += '</div></div>';
+  if(g>0) h += '<div class="sprint-score-box"><div class="ssv" style="color:'+sc(g)+'">'+g+'</div><div class="ssl">Global /100</div></div>';
+  h += '</div>';
+
+  // Scores
+  if(g>0){
+    h += '<div class="score-row">';
+    [['backend','Backend'],['frontend','Frontend'],['bdd','BDD'],['global','Global']].forEach(function(p){
+      var v=s.scores[p[0]]||0;
+      h+='<div class="sc"><div class="sc-v" style="color:'+sc(v)+'">'+v+'</div><div class="sc-l">'+p[1]+'</div></div>';
+    });
+    h += '</div>';
+  }
+
+  // Commits
+  if(s.commits&&s.commits.length){
+    h += '<div class="sec"><div class="sec-title"><span class="sec-num">GIT</span> Commits</div>';
+    h += '<div class="commit-list">'+s.commits.map(function(c){
+      return '<div class="commit"><span class="chash">'+c.hash+'</span><span class="cmsg">'+c.msg+'</span></div>';
+    }).join('')+'</div></div>';
+  }
+
+  // Realisations
+  var secs = [{k:'front',l:'Frontend',t:'front'},{k:'back',l:'API / Back-end',t:'api'},
+              {k:'bdd',l:'Base de donnees',t:'bdd'},{k:'fix',l:'Corrections & Outils',t:'fix'}];
+  var n = 1;
+  secs.forEach(function(sec){
+    if(s[sec.k]&&s[sec.k].length){
+      h += '<div class="sec"><div class="sec-title"><span class="sec-num">0'+n+'</span> '+sec.l+'</div>';
+      h += itemsHtml(s[sec.k],sec.t)+'</div>'; n++;
+    }
+  });
+
+  // Bugs
+  if(s.bugs&&s.bugs.length){
+    h += '<div class="sec"><div class="sec-title"><span class="sec-num">BUG</span> Bugs connus</div>';
+    h += '<table><thead><tr><th>Description</th><th>Module</th><th>Criticite</th></tr></thead><tbody>';
+    s.bugs.forEach(function(b){
+      var cc=b.c==='Haute'?'var(--err)':b.c==='Moyenne'?'var(--warn)':'var(--muted)';
+      h+='<tr><td>'+b.l+'</td><td style="color:var(--muted)">'+b.m+'</td><td style="color:'+cc+'">'+b.c+'</td></tr>';
+    });
+    h += '</tbody></table></div>';
+  }
+
+  document.getElementById('main-content').innerHTML = h;
+}
+
+window.addEventListener('DOMContentLoaded', function(){ render(); });
+</script>
 </body>
 </html>

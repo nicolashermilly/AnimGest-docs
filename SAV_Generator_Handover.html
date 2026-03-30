@@ -212,6 +212,121 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
 
+var DEFAULT = {
+  sprint:'S62', date: new Date().toLocaleDateString('fr-FR'),
+  objectif:'Portail Client deploiement + Widget Eliot IA ameliorations', statut:'Termine',
+
+  done_front:[
+    'ClaudeWidget.tsx v2 — drag fluide snapshot mouseDown + delta mouseMove',
+    'Panneau chat adaptatif getPanelPos()',
+    'Avatar temps reel setInterval(1000) + storage event',
+    'ClaudeWidgetWrapper.tsx — wrapper use client + dynamic ssr:false (fix SSR)',
+    'Page /app/parametres/widget-ia — selection avatar grille tuiles',
+    'StatusBadge — fix import named default dans formules/page.tsx'
+  ],
+  done_back:[
+    'Route POST /ia/chat — proxy Anthropic API cote serveur',
+    'ANTHROPIC_API_KEY dans deploy/.env — jamais exposee client',
+    'System prompt metier avec parametre metier (10 metiers)',
+    'Historique conversation via history[]',
+    '43 strings SQL multi-lignes fusionnees (3133 vers 2875 lignes)',
+    '12 corrections backtick/double-quote melanges'
+  ],
+  done_bdd:[
+    'portail_client_acces — Token UUID + TIE_ID INT(11) + expiration',
+    'portail_client_session — Session token 24h + IP + User-Agent',
+    'portail_client_notification — Email/SMS S63',
+    'portail_client_confirmation_seance — CONFIRME/ANNULE/REPORTE'
+  ],
+  done_refacto:[
+    '307 Mo vers 242 Ko — 20 PNG BIB_Widget comprimes en WebP via Pillow',
+    '@react-three/fiber supprime — remplace par avatars PNG',
+    'layout.tsx — suppression imports dynamic/ClaudeWidget parasites'
+  ],
+  done_fix:[
+    'SSR Next.js — dynamic+ssr:false ne fonctionne pas dans Server Components',
+    'Build frontend — 0 erreur, 0 warning StatusBadge'
+  ],
+
+  commits:[
+    '95cc9c2 — S61a : Route /ia/chat + fix custom-routes 43 corrections SQL + SSR fix',
+    'a6f7514 — S61b : Avatar Eliot + drag + 20 avatars WebP + page widget-ia',
+    'a822cc8 — S61c : Widget v2 drag fluide + panneau adaptatif + avatar temps reel',
+    '12b0d9b — S61d : Suppression Poney_001 + .gitignore *.bak*'
+  ],
+
+  ps:[], tsx:[
+    'src/components/ClaudeWidget.tsx — v2 drag fluide + panneau adaptatif',
+    'src/components/ClaudeWidgetWrapper.tsx — wrapper use client + dynamic ssr:false',
+    'src/app/app/parametres/widget-ia/page.tsx — nouvelle page selection avatar'
+  ],
+  api:['POST /ia/chat — proxy Anthropic API + system prompt metier + historique'],
+  sql:[
+    'portail_client_acces — creee HeidiSQL',
+    'portail_client_session — creee HeidiSQL',
+    'portail_client_notification — creee HeidiSQL',
+    'portail_client_confirmation_seance — creee HeidiSQL'
+  ],
+  py:[
+    'fix_sql_multilines.py — fusion 43 strings SQL',
+    'migrer_architecture_v2.py — migration charte docs 63 pages'
+  ],
+
+  bugs:[
+    {l:'Audit PDF window.open() a remplacer par Modal', m:'Editions', c:'Haute', s:'Ouvert'},
+    {l:'Drag Drop agenda non fonctionnel', m:'Planning', c:'Moyenne', s:'Ouvert'},
+    {l:'devis_ligne inexistante — retourne []', m:'Devis', c:'Moyenne', s:'Ouvert'},
+    {l:'Export CSV reglements manquant', m:'Reglements', c:'Basse', s:'Ouvert'},
+    {l:'/app/elevage/declarations — page TSX manquante', m:'Elevage', c:'Basse', s:'Ouvert'}
+  ],
+
+  evolutions:[
+    'Widget IA : lien Sidebar + nom configurable + position persistee localStorage',
+    'Portail Client : notifications email/SMS (S63)',
+    'Portail Client : integration Stripe (S63)',
+    'Carte Identite Animale — page publique liee a la puce (S62)'
+  ],
+
+  tables_bdd:[
+    'facture : FAC_ID, FAC_NUM, FAC_DATE, TIE_ID, FAC_TOTAL_TTC, FAC_STATUT',
+    'devis_contrat_entete : DCE_ID, DCE_NUMERO, DCE_STATUT(BROUILLON vers FACTURE)',
+    'portail_client_acces : PCT_ID, TIE_ID INT(11), PCT_TOKEN UUID, PCT_ACTIF, PCT_EXPIRATION',
+    'portail_client_session : PCS_ID, PCT_ID, PCS_TOKEN, PCS_IP, PCS_USER_AGENT, PCS_EXPIRE'
+  ],
+
+  sb:82, sf:80, sd:85,
+  nb_routes:90, nb_pages:105, nb_jsdoc:133, nb_cols:241,
+  frimousse:true,
+
+  ph:[
+    'Injecter routes_portail_S61.ts + routes_portail_S62.ts dans custom-routes.ts',
+    'Deployer portail_client_page_S62.tsx → src/app/client/[token]/page.tsx',
+    'Deployer portail_admin_page.tsx → src/app/app/parametres/portail/page.tsx',
+    'Rebuild API + Frontend — Test POST /api/portail/auth/login'
+  ],
+  pm:[
+    'Widget IA : lien Sidebar + nom configurable + position persistee localStorage',
+    'Vocal Eliot — integration Web Speech API production',
+    'Suivi CAC/BC depuis fiche seance /app/seances/[id]',
+    'Deplacer routes dans api/src/routes/ — commencer par factures.ts'
+  ],
+  pl:[
+    '/app/elevage/declarations — page TSX manquante (route API presente)',
+    'devis_ligne — verifier table devis_contrat_ligne',
+    'Export CSV reglements — bouton + route',
+    'Drag Drop agenda — @dnd-kit recommande',
+    'Audit PDF remplacer window.open() par Modal'
+  ],
+  blk:[],
+  aml:[
+    'S62-S63 : Portail Client notifications email/SMS + Stripe',
+    'S62 : Carte Identite Animale — page publique liee a la puce',
+    'S70+ : Module IA option commerciale — algorithme licence'
+  ],
+
+  obj_next:'ROUGE : Portail Client deploiement. ORANGE : Widget IA ameliorations.'
+};
+
 var S = JSON.parse(JSON.stringify(DEFAULT));
 
 var TABS = [
