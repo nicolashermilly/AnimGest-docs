@@ -2,735 +2,360 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Anim'Gest — Changelogs & Sprints</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anim'Gest — Changelogs &amp; Sprints</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0D2137;--navy2:#0a1a2e;--gold:#D4A843;--gold-p:rgba(212,168,67,.12);--gold-b:rgba(212,168,67,.25);--ink:#e8e6df;--ink2:#9aa3b2;--surface:#111c2b;--surface2:#162030;--border:rgba(255,255,255,.07);--ok:#4caf8e;--warn:#e6a817;--red:#e05555;--purple:#7c6ff7;--blue:#4a9eff}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--navy);color:var(--ink);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh}
-a{color:var(--gold);text-decoration:none}
-a:hover{text-decoration:underline}
+  :root{
+    --navy:#0D2137;--navy-l:#122840;--navy-ll:#1a3558;
+    --gold:#D4A843;--gold-l:#e8c068;--gold-p:rgba(212,168,67,.1);--gold-b:rgba(212,168,67,.2);
+    --dark:#070F1A;--white:#F8F8F5;--muted:#7a8fa6;
+    --green:#3ecf8e;--red:#ef4444;--orange:#f59e0b;--blue:#60a5fa;--purple:#a78bfa;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--white);font-size:14px;line-height:1.7;min-height:100vh}
+  a{color:var(--gold);text-decoration:none}
+  a:hover{color:var(--gold-l)}
 
-/* TOPBAR */
-.topbar{background:var(--navy2);border-bottom:1px solid var(--gold-b);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.topbar-logo{font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;color:var(--gold)}
-.topbar-nav{display:flex;gap:8px}
-.topbar-nav a{font-size:12px;color:var(--ink2);padding:4px 10px;border-radius:6px;transition:all .15s}
-.topbar-nav a:hover{background:var(--gold-p);color:var(--gold);text-decoration:none}
+  /* NAV */
+  nav{background:var(--navy);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+  .brand{font-family:'Playfair Display',serif;color:var(--gold);font-weight:700;font-size:1.1rem}
+  .nav-links{display:flex;gap:.5rem;flex-wrap:wrap}
+  .nav-links a{color:var(--muted);font-size:.8rem;padding:.25rem .6rem;border-radius:4px;transition:.2s}
+  .nav-links a:hover{color:var(--white);background:rgba(255,255,255,.06)}
+  .nav-badge{margin-left:auto;background:var(--gold-p);border:1px solid var(--gold-b);color:var(--gold);font-size:.7rem;font-weight:600;padding:.2rem .75rem;border-radius:20px}
 
-/* HEADER PAGE */
-.page-header{padding:24px 24px 0;border-bottom:1px solid var(--border)}
-.page-title{font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:var(--gold);margin-bottom:4px}
-.page-sub{font-size:12px;color:var(--ink2);margin-bottom:16px}
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:3rem 2rem 2.5rem;border-bottom:2px solid var(--gold);text-align:center}
+  .hero-tag{display:inline-block;background:var(--gold);color:var(--dark);font-size:.72rem;font-weight:700;padding:.3rem .9rem;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+  .hero h1{font-family:'Playfair Display',serif;font-size:2.4rem;margin-bottom:.5rem}
+  .hero h1 span{color:var(--gold)}
+  .hero .sub{color:var(--muted);font-size:.95rem}
+  .hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-top:1.5rem}
+  .hs{text-align:center}
+  .hs-v{font-size:1.5rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;display:block}
+  .hs-l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 
-/* ONGLETS */
-.tab-bar{display:flex;gap:0;overflow-x:auto;padding-bottom:0;scrollbar-width:none}
-.tab-bar::-webkit-scrollbar{display:none}
-.tab{font-size:12px;padding:8px 14px;color:var(--ink2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;border-radius:6px 6px 0 0;margin-right:2px;user-select:none}
-.tab:hover{color:var(--ink);background:var(--gold-p)}
-.tab.active{color:var(--gold);border-bottom-color:var(--gold);font-weight:500}
-.tab.missing{color:var(--red);opacity:.7}
-.tab.current{color:var(--gold);font-weight:600}
+  /* CONTAINER */
+  .container{max-width:1000px;margin:0 auto;padding:2.5rem 1.5rem}
 
-/* CONTENU */
-.pane{display:none;padding:20px 24px}
-.pane.active{display:block}
+  /* CURRENT SPRINT BANNER */
+  .current-banner{background:linear-gradient(135deg,var(--navy-ll),var(--navy-l));border:1px solid rgba(212,168,67,.4);border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+  .cb-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);flex-shrink:0;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .cb-label{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);font-weight:700}
+  .cb-desc{color:var(--muted);font-size:.85rem;flex:1}
+  .cb-link{background:var(--gold);color:var(--dark);padding:.35rem .9rem;border-radius:6px;font-size:.8rem;font-weight:700;white-space:nowrap}
+  .cb-link:hover{background:var(--gold-l);color:var(--dark)}
 
-/* VUE GLOBALE — grille sprints */
-.sprint-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;margin-bottom:20px}
-.sg-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 6px;text-align:center;cursor:pointer;transition:all .15s}
-.sg-card:hover{border-color:var(--gold-b);background:var(--surface2)}
-.sg-card.done{border-left:3px solid var(--ok)}
-.sg-card.missing{border-left:3px solid var(--red);opacity:.65}
-.sg-card.current{border-left:3px solid var(--gold);background:var(--gold-p)}
-.sg-num{font-size:13px;font-weight:600;color:var(--ink)}
-.sg-size{font-size:10px;color:var(--ink2);margin-top:2px}
-.legend{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
-.leg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink2)}
-.leg-dot{width:10px;height:10px;border-radius:2px}
+  /* SECTION TITLE */
+  .sec-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);border-bottom:1px solid var(--gold-b);padding-bottom:.5rem;margin-bottom:1rem}
 
-/* SPRINT DETAIL */
-.sprint-detail{max-width:720px}
-.sd-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
-.sd-title{font-family:'Poppins',sans-serif;font-size:17px;font-weight:700;color:var(--gold)}
-.sd-date{font-size:11px;color:var(--ink2);margin-top:3px}
-.sd-stats{display:flex;gap:8px;flex-wrap:wrap}
-.stat-pill{font-size:11px;padding:3px 10px;border-radius:12px;border:1px solid}
-.s-purple{background:rgba(124,111,247,.12);border-color:rgba(124,111,247,.3);color:#b3adf9}
-.s-teal{background:rgba(76,175,142,.1);border-color:rgba(76,175,142,.25);color:var(--ok)}
-.s-amber{background:rgba(212,168,67,.1);border-color:var(--gold-b);color:var(--gold)}
-.s-blue{background:rgba(74,158,255,.1);border-color:rgba(74,158,255,.25);color:var(--blue)}
-.s-red{background:rgba(224,85,85,.1);border-color:rgba(224,85,85,.3);color:var(--red)}
+  /* CHANGELOG GRID */
+  .cl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:2.5rem}
+  .cl-card{background:var(--navy);border:1px solid var(--gold-b);border-radius:8px;padding:1rem 1.2rem;display:flex;flex-direction:column;gap:.4rem;text-decoration:none;color:var(--white);transition:all .2s;position:relative;overflow:hidden}
+  .cl-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:.2s}
+  .cl-card:hover{border-color:rgba(212,168,67,.5);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+  .cl-card:hover::before{opacity:1}
+  .cl-num{font-size:.68rem;color:rgba(212,168,67,.45);font-family:monospace;font-weight:600;letter-spacing:.05em}
+  .cl-sprint{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);font-weight:600}
+  .cl-date{font-size:.72rem;color:var(--muted)}
+  .cl-desc{font-size:.8rem;color:var(--muted);line-height:1.5}
+  .cl-badge{display:inline-block;padding:.15rem .5rem;border-radius:3px;font-size:.65rem;font-weight:600;align-self:flex-start;margin-top:.2rem}
+  .b-new{background:rgba(60,207,142,.12);color:var(--green);border:1px solid rgba(60,207,142,.3)}
+  .b-done{background:rgba(212,168,67,.1);color:var(--gold);border:1px solid rgba(212,168,67,.25)}
+  .b-current{background:var(--gold);color:var(--dark)}
 
-.sd-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px}
-.sd-section{font-size:11px;font-weight:600;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-.sd-items{display:flex;flex-direction:column;gap:4px}
-.sd-item{font-size:13px;color:var(--ink);padding:3px 0;display:flex;gap:8px;align-items:flex-start}
-.sd-item::before{content:"→";color:var(--gold);flex-shrink:0;margin-top:1px;font-size:11px}
-.sd-missing{background:rgba(224,85,85,.07);border:1px solid rgba(224,85,85,.2);border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px;color:var(--red)}
-.sd-current-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--gold-p);color:var(--gold);border:1px solid var(--gold-b);margin-left:8px}
-
-.nav-sprint{display:flex;gap:8px;margin-top:16px}
-.nav-btn{font-size:11px;padding:5px 12px;border-radius:6px;background:var(--surface);border:1px solid var(--border);color:var(--ink2);cursor:pointer;transition:all .15s}
-.nav-btn:hover{border-color:var(--gold-b);color:var(--gold)}
+  footer{background:var(--navy);border-top:1px solid var(--gold-b);text-align:center;padding:2rem;color:var(--muted);font-size:.82rem;margin-top:3rem}
+  footer strong{color:var(--gold)}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="topbar-logo">Anim'Gest</div>
-  <div class="topbar-nav">
-    <a href="index.html">← Index</a>
+<nav>
+  <span class="brand">Anim'Gest Docs</span>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
     <a href="07-audit-stack.html">Audit Stack</a>
-    <a href="SAV_Launcher.html">Launcher</a>
+    <a href="17-api-reference.html">API Reference</a>
+    <a href="20-pilotage-projet.html">Pilotage</a>
+  </div>
+  <span class="nav-badge">S62 — 30/03/2026</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Release Notes</div>
+  <h1>Changelogs <span>&amp; Sprints</span></h1>
+  <p class="sub">Historique complet des livraisons Anim'Gest — S30 → S62 — NoSage's Editor</p>
+  <div class="hero-stats">
+    <div class="hs"><span class="hs-v">32</span><span class="hs-l">Sprints documentés</span></div>
+    <div class="hs"><span class="hs-v">105</span><span class="hs-l">Pages UI</span></div>
+    <div class="hs"><span class="hs-v">90+</span><span class="hs-l">Routes API</span></div>
+    <div class="hs"><span class="hs-v">82/100</span><span class="hs-l">Score qualité S61</span></div>
   </div>
 </div>
 
-<div class="page-header">
-  <div class="page-title">Changelogs & Sprints</div>
-  <div class="page-sub">Historique complet des releases — S30 à S60 · NoSage's Editor</div>
-  <div class="tab-bar" id="tab-bar">
-    <div class="tab active" data-id="overview" onclick="showTab('overview')">Vue globale</div>
-    <div class="tab" data-id="S30" onclick="showTab('S30')">S30</div>
-    <div class="tab" data-id="S31" onclick="showTab('S31')">S31</div>
-    <div class="tab" data-id="S32" onclick="showTab('S32')">S32</div>
-    <div class="tab" data-id="S33" onclick="showTab('S33')">S33</div>
-    <div class="tab" data-id="S34" onclick="showTab('S34')">S34</div>
-    <div class="tab" data-id="S35" onclick="showTab('S35')">S35</div>
-    <div class="tab" data-id="S36" onclick="showTab('S36')">S36</div>
-    <div class="tab" data-id="S37" onclick="showTab('S37')">S37</div>
-    <div class="tab" data-id="S38" onclick="showTab('S38')">S38</div>
-    <div class="tab" data-id="S41" onclick="showTab('S41')">S41</div>
-    <div class="tab" data-id="S42" onclick="showTab('S42')">S42</div>
-    <div class="tab" data-id="S43" onclick="showTab('S43')">S43</div>
-    <div class="tab" data-id="S44" onclick="showTab('S44')">S44</div>
-    <div class="tab" data-id="S46" onclick="showTab('S46')">S46</div>
-    <div class="tab" data-id="S47" onclick="showTab('S47')">S47</div>
-    <div class="tab" data-id="S48" onclick="showTab('S48')">S48</div>
-    <div class="tab" data-id="S50" onclick="showTab('S50')">S50</div>
-    <div class="tab" data-id="S51" onclick="showTab('S51')">S51</div>
-        <div class="doc-item"><a href="48-changelog-S52.html"><strong>Changelog S52</strong></a> &mdash; Audit 404, carte clients Leaflet, dashboards 9 metiers, 20 routes stats</div>
-        <div class="doc-item"><a href="49-changelog-S53.html"><strong>Changelog S53</strong></a> &mdash; Drag & Drop planning v2, forfaits/abonnements BDD, routes Yousign</div>
-        <div class="doc-item"><a href="50-changelog-S54.html"><strong>Changelog S54</strong></a> &mdash; Audit qualite 53/100, debut refactorisation architecture</div>
-        <div class="doc-item"><a href="51-changelog-S55.html"><strong>Changelog S55</strong></a> &mdash; Score qualite 80/100, getDb() centralise, 241/241 colonnes BDD</div>
-        <div class="doc-item"><a href="52-changelog-S56.html"><strong>Changelog S56</strong></a> &mdash; Formules/Abonnements complet, 100 pages UI, nettoyage code mort</div>
-        <div class="doc-item"><a href="53-changelog-S57.html"><strong>Changelog S57</strong></a> &mdash; Fix roles/permissions, GET seances/:id, regle CAC sidebar</div>
-        <div class="doc-item"><a href="54-changelog-S58.html"><strong>Changelog S58</strong></a> &mdash; Module Formules 10 routes, RBAC 56 permissions, badge role Topbar</div>
-        <div class="doc-item"><a href="55-changelog-S59.html"><strong>Changelog S59</strong></a> &mdash; Fix dashboard EDC, correction syntaxe devis, nettoyage repo Git</div>
-        <div class="doc-item"><a href="56-changelog-S60.html"><strong>Changelog S60</strong></a> &mdash; Reseaux sociaux, transitions devis, page editions, fix KPIs</div>
-    <div class="tab" data-id="S52" onclick="showTab('S52')">S52</div>
-    <div class="tab" data-id="S53" onclick="showTab('S53')">S53</div>
-    <div class="tab missing" data-id="S54" onclick="showTab('S54')">S54 ⚠</div>
-    <div class="tab missing" data-id="S55" onclick="showTab('S55')">S55 ⚠</div>
-    <div class="tab missing" data-id="S56" onclick="showTab('S56')">S56 ⚠</div>
-    <div class="tab missing" data-id="S57" onclick="showTab('S57')">S57 ⚠</div>
-    <div class="tab" data-id="S58" onclick="showTab('S58')">S58</div>
-    <div class="tab missing" data-id="S59" onclick="showTab('S59')">S59 ⚠</div>
-    <div class="tab current" data-id="S60" onclick="showTab('S60')">S60 ★</div>
-    
+<div class="container">
+
+  <!-- SPRINT EN COURS -->
+  <div class="current-banner">
+    <div class="cb-dot"></div>
+    <div>
+      <div class="cb-label">Sprint S62 — En cours</div>
+      <div class="cb-desc">Portail Client déploiement · Widget Eliot IA améliorations · CAC/BC depuis fiche séance</div>
+    </div>
+    <a href="20-pilotage-projet.html" class="cb-link">Voir le pilotage →</a>
   </div>
+
+  <!-- S61–S58 -->
+  <div class="sec-title">Sprints récents</div>
+  <div class="cl-grid">
+
+    <a href="58-changelog-S61.html" class="cl-card">
+      <div class="cl-num">#58</div>
+      <div class="cl-sprint">Sprint S61</div>
+      <div class="cl-date">29/03/2026</div>
+      <div class="cl-desc">Widget Eliot IA v2 · Portail Client BDD · 43 SQL fixes · 20 avatars WebP · Route /ia/chat</div>
+      <span class="cl-badge b-new">Nouveau</span>
+    </a>
+
+    <a href="56-changelog-S60.html" class="cl-card">
+      <div class="cl-num">#56</div>
+      <div class="cl-sprint">Sprint S60</div>
+      <div class="cl-date">29/03/2026</div>
+      <div class="cl-desc">Fix RS colonnes + migration rs_post · Devis transitions statut · Email · Créer facture · GET /seances/:id</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="55-changelog-S59.html" class="cl-card">
+      <div class="cl-num">#55</div>
+      <div class="cl-sprint">Sprint S59</div>
+      <div class="cl-date">29/03/2026</div>
+      <div class="cl-desc">SAV Générateur Handover V1 · Fix dashboard · Migration repo docs · Nettoyage repo</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="55-changelog-S58.html" class="cl-card">
+      <div class="cl-num">#55</div>
+      <div class="cl-sprint">Sprint S58</div>
+      <div class="cl-date">28/03/2026</div>
+      <div class="cl-desc">Page Paramètres Éditions · Fix permissions rôles · Script sauvegarde v7 · Générateur Handover V1</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="54-changelog-S57.html" class="cl-card">
+      <div class="cl-num">#54</div>
+      <div class="cl-sprint">Sprint S57</div>
+      <div class="cl-date">28/03/2026</div>
+      <div class="cl-desc">Règle CAC formalisée · Suppression lien Sidebar · Fix permissions rôles BDD · Sauvegarde v7</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="53-changelog-S56.html" class="cl-card">
+      <div class="cl-num">#53</div>
+      <div class="cl-sprint">Sprint S56</div>
+      <div class="cl-date">27/03/2026</div>
+      <div class="cl-desc">Revue de code · Analyse dette technique · Patterns architecture · Restauration src/ · SAV V1</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="52-changelog-S55.html" class="cl-card">
+      <div class="cl-num">#52</div>
+      <div class="cl-sprint">Sprint S55</div>
+      <div class="cl-date">27/03/2026</div>
+      <div class="cl-desc">Générateur Maintenance · Dashboard Qualité · Carte clients v2 · 79 fichiers harmonisés</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="51-changelog-S54.html" class="cl-card">
+      <div class="cl-num">#51</div>
+      <div class="cl-sprint">Sprint S54</div>
+      <div class="cl-date">27/03/2026</div>
+      <div class="cl-desc">Validation DnD · Fix stats KPIs jointures SST · Modèles programmes métiers · SAV tooling V1</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="50-changelog-S53.html" class="cl-card">
+      <div class="cl-num">#50</div>
+      <div class="cl-sprint">Sprint S53</div>
+      <div class="cl-date">26/03/2026</div>
+      <div class="cl-desc">Planning DnD v2 · Forfaits &amp; Abonnements BDD+API · Yousign routes · PATCH /seances/:id</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+  </div>
+
+  <!-- S52–S46 -->
+  <div class="sec-title">Sprints S46–S52</div>
+  <div class="cl-grid">
+
+    <a href="48-changelog-S52.html" class="cl-card">
+      <div class="cl-num">#48</div>
+      <div class="cl-sprint">Sprint S52</div>
+      <div class="cl-date">25/03/2026</div>
+      <div class="cl-desc">Stats KPIs · Carte clients v2 Leaflet · Charte 79 fichiers · Routes avoirs/ged-edc</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="47-changelog-S51.html" class="cl-card">
+      <div class="cl-num">#47</div>
+      <div class="cl-sprint">Sprint S51</div>
+      <div class="cl-date">25/03/2026</div>
+      <div class="cl-desc">Carte clients Leaflet géocodage · GED CAC · Notice utilisateur v4 · Routes séances évolution</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="46-changelog-S50.html" class="cl-card">
+      <div class="cl-num">#46</div>
+      <div class="cl-sprint">Sprint S50</div>
+      <div class="cl-date">24/03/2026</div>
+      <div class="cl-desc">btn-danger · Doublon AideContextuelle supprimé · PDF routes corrigées · Sidebar règlements achats</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="46-changelog-S48.html" class="cl-card">
+      <div class="cl-num">#46</div>
+      <div class="cl-sprint">Sprint S48</div>
+      <div class="cl-date">23/03/2026</div>
+      <div class="cl-desc">EDC comportemental · Planning semaine · Seeds 200 animaux · Signatures Yousign</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="45-changelog-S47.html" class="cl-card">
+      <div class="cl-num">#45</div>
+      <div class="cl-sprint">Sprint S47</div>
+      <div class="cl-date">23/03/2026</div>
+      <div class="cl-desc">Dashboards CEO · Formulaires lead · Réseaux sociaux · Modules métier v2</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="44-changelog-S46.html" class="cl-card">
+      <div class="cl-num">#44</div>
+      <div class="cl-sprint">Sprint S46</div>
+      <div class="cl-date">22/03/2026</div>
+      <div class="cl-desc">Suivi CAC · Pages séances · Signatures Yousign v1 · Elevage complet</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+  </div>
+
+  <!-- S30–S44 -->
+  <div class="sec-title">Sprints S30–S44</div>
+  <div class="cl-grid">
+
+    <a href="73-changelog-s44.html" class="cl-card">
+      <div class="cl-num">#73</div>
+      <div class="cl-sprint">Sprint S44</div>
+      <div class="cl-date">22/03/2026</div>
+      <div class="cl-desc">Dashboards métiers · Webhooks Calendly · Seeds avancés · Templates devis 25 modèles</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="53-changelog-s43.html" class="cl-card">
+      <div class="cl-num">#53</div>
+      <div class="cl-sprint">Sprint S43</div>
+      <div class="cl-date">22/03/2026</div>
+      <div class="cl-desc">Planning 3 vues Jour/Semaine/Mois · Sidebar Éducateur · Seeds 200 animaux</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="44-changelog-s42.html" class="cl-card">
+      <div class="cl-num">#44</div>
+      <div class="cl-sprint">Sprint S42</div>
+      <div class="cl-date">22/03/2026</div>
+      <div class="cl-desc">Dashboards CEO × 7 métiers · Seeds 200 animaux + factures + commandes</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="43-changelog-S41.html" class="cl-card">
+      <div class="cl-num">#43</div>
+      <div class="cl-sprint">Sprint S41</div>
+      <div class="cl-date">21/03/2026</div>
+      <div class="cl-desc">Module CRM leads · Formulaire public · Agenda couleurs dynamiques</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="42-changelog-S38.html" class="cl-card">
+      <div class="cl-num">#42</div>
+      <div class="cl-sprint">Sprint S38</div>
+      <div class="cl-date">20/03/2026</div>
+      <div class="cl-desc">Module achats complet · Seeds démo · Infrastructure Docker stabilisée</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="31-changelog-S37.html" class="cl-card">
+      <div class="cl-num">#31</div>
+      <div class="cl-sprint">Sprint S37</div>
+      <div class="cl-date">20/03/2026</div>
+      <div class="cl-desc">CRM leads · Formulaire lead public · Routes paramètres</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="28-changelog-S36.html" class="cl-card">
+      <div class="cl-num">#28</div>
+      <div class="cl-sprint">Sprint S36</div>
+      <div class="cl-date">20/03/2026</div>
+      <div class="cl-desc">Module achats + inventaires · Factures PDF + Email · IA modération · Toiletteur + Pet-sitter</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="30-changelog-S35.html" class="cl-card">
+      <div class="cl-num">#30</div>
+      <div class="cl-sprint">Sprint S35</div>
+      <div class="cl-date">19/03/2026</div>
+      <div class="cl-desc">Module élevage · Portées · Géniteurs · Généalogie · Réservations</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="29-changelog-S34.html" class="cl-card">
+      <div class="cl-num">#29</div>
+      <div class="cl-sprint">Sprint S34</div>
+      <div class="cl-date">19/03/2026</div>
+      <div class="cl-desc">Signatures électroniques · Questionnaires multi-types · Planning v1</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="26-changelog-S33.html" class="cl-card">
+      <div class="cl-num">#26</div>
+      <div class="cl-sprint">Sprint S33</div>
+      <div class="cl-date">18/03/2026</div>
+      <div class="cl-desc">Fix compteur pages docs · Routes API paramètres · Seeds animaux races</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="25-changelog-sprint-S32.html" class="cl-card">
+      <div class="cl-num">#25</div>
+      <div class="cl-sprint">Sprint S32</div>
+      <div class="cl-date">17/03/2026</div>
+      <div class="cl-desc">PUT /animaux/:id · Photos animaux · Questionnaires multi-types · param_entreprise MàJ</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="24-changelog-sprint-S31.html" class="cl-card">
+      <div class="cl-num">#24</div>
+      <div class="cl-sprint">Sprint S31</div>
+      <div class="cl-date">16/03/2026</div>
+      <div class="cl-desc">Module CRM · Routes avancées · Dashboard stats · Contacts tuiles</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+    <a href="27-changelog-S30.html" class="cl-card">
+      <div class="cl-num">#27</div>
+      <div class="cl-sprint">Sprint S30</div>
+      <div class="cl-date">15/03/2026</div>
+      <div class="cl-desc">Infrastructure Docker · Première mise en production · Architecture NestJS + Next.js</div>
+      <span class="cl-badge b-done">Terminé</span>
+    </a>
+
+  </div>
+
 </div>
 
-<div id="pane-overview" class="pane active">
-  <div class="legend">
-    <div class="leg"><div class="leg-dot" style="background:var(--ok)"></div>Changelog présent</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--red)"></div>Absent (contenu reconstitué)</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--gold)"></div>Sprint actuel</div>
-  </div>
-  <div class="sprint-grid">
-    <div class="sg-card done" onclick="showTab('S30')" title="Premiers modules core"><div class="sg-num">S30</div><div class="sg-size">6.7 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S31')" title="Infrastructure & BDD"><div class="sg-num">S31</div><div class="sg-size">23.9 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S32')" title="CRM & leads"><div class="sg-num">S32</div><div class="sg-size">17.4 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S33')" title="EDC & CAC"><div class="sg-num">S33</div><div class="sg-size">17.1 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S34')" title="GED documentaire"><div class="sg-num">S34</div><div class="sg-size">6.7 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S35')" title="Achats & stocks"><div class="sg-num">S35</div><div class="sg-size">6.7 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S36')" title="Réseaux sociaux & CRM"><div class="sg-num">S36</div><div class="sg-size">12.9 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S37')" title="Planning & agenda"><div class="sg-num">S37</div><div class="sg-size">8.2 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S38')" title="Élevage & génétique"><div class="sg-num">S38</div><div class="sg-size">8.3 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S41')" title="Signatures & paiements"><div class="sg-num">S41</div><div class="sg-size">17.6 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S42')" title="Dashboard & statistiques"><div class="sg-num">S42</div><div class="sg-size">16.6 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S43')" title="Composants génériques"><div class="sg-num">S43</div><div class="sg-size">9.5 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S44')" title="Aide intégrée"><div class="sg-num">S44</div><div class="sg-size">8.3 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S46')" title="Exports & CSV"><div class="sg-num">S46</div><div class="sg-size">13.3 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S47')" title="Carte clients Leaflet"><div class="sg-num">S47</div><div class="sg-size">10.9 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S48')" title="Routes GED CAC"><div class="sg-num">S48</div><div class="sg-size">8.6 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S50')" title="Corrections charte graphique"><div class="sg-num">S50</div><div class="sg-size">8.1 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S51')" title="Qualité & exports"><div class="sg-num">S51</div><div class="sg-size">14.5 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S52')" title="Dashboards métiers & planning"><div class="sg-num">S52</div><div class="sg-size">16.2 KB</div></div>
-    <div class="sg-card done" onclick="showTab('S53')" title="Corrections routes & UI"><div class="sg-num">S53</div><div class="sg-size">13.2 KB</div></div>
-    <div class="sg-card missing" onclick="showTab('S54')" title="Refactorisation qualité — audit initial"><div class="sg-num">S54</div><div class="sg-size">reconstitué</div></div>
-    <div class="sg-card missing" onclick="showTab('S55')" title="Refactorisation suite — composants génériques"><div class="sg-num">S55</div><div class="sg-size">reconstitué</div></div>
-    <div class="sg-card missing" onclick="showTab('S56')" title="Score 80/100 — nettoyage dette technique"><div class="sg-num">S56</div><div class="sg-size">reconstitué</div></div>
-    <div class="sg-card missing" onclick="showTab('S57')" title="RBAC & droits utilisateurs"><div class="sg-num">S57</div><div class="sg-size">reconstitué</div></div>
-    <div class="sg-card done" onclick="showTab('S58')" title="Formules & Abonnements"><div class="sg-num">S58</div><div class="sg-size">6.4 KB</div></div>
-    <div class="sg-card missing" onclick="showTab('S59')" title="Revue docs & SAV tools"><div class="sg-num">S59</div><div class="sg-size">reconstitué</div></div>
-    <div class="sg-card current" onclick="showTab('S60')" title="Fixes critiques & réseaux sociaux"><div class="sg-num">S60</div><div class="sg-size">reconstitué</div></div>
-    
-  </div>
-  <div style="font-size:11px;color:var(--ink2)">Cliquer un sprint pour voir son détail — URL directe : docs-changelog.html#S60</div>
-</div>
+<footer>
+  <strong>Anim'Gest</strong> &mdash; NoSage's Editor &mdash; Changelogs &amp; Sprints<br>
+  <small>S30 &rarr; S62 &mdash; 32 sprints documentés &mdash; MàJ 30/03/2026</small>
+</footer>
 
-
-<div id="pane-S30" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S30</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">12 pages UI</div><div class="stat-pill s-teal">8 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Facturation de base</div>
-<div class="sd-item">Gestion animaux</div>
-<div class="sd-item">Séances initiales</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S31')">S31 →</button></div>
-  </div>
-</div>
-<div id="pane-S31" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S31</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">20 pages UI</div><div class="stat-pill s-teal">15 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Tables métier complètes</div>
-<div class="sd-item">Triggers & vues</div>
-<div class="sd-item">Architecture Docker</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S30')">← S30</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S32')">S32 →</button></div>
-  </div>
-</div>
-<div id="pane-S32" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S32</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">25 pages UI</div><div class="stat-pill s-teal">18 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Formulaire public lead</div>
-<div class="sd-item">Pipeline CRM</div>
-<div class="sd-item">Conversion lead→client</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S31')">← S31</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S33')">S33 →</button></div>
-  </div>
-</div>
-<div id="pane-S33" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S33</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">30 pages UI</div><div class="stat-pill s-teal">22 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Étude Comportementale (7 sections)</div>
-<div class="sd-item">Suivi CAC 14 critères</div>
-<div class="sd-item">64 libellés paramétrables</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S32')">← S32</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S34')">S34 →</button></div>
-  </div>
-</div>
-<div id="pane-S34" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S34</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">32 pages UI</div><div class="stat-pill s-teal">24 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Archivage multi-objet</div>
-<div class="sd-item">Hash SHA-256</div>
-<div class="sd-item">13 types objets supportés</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S33')">← S33</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S35')">S35 →</button></div>
-  </div>
-</div>
-<div id="pane-S35" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S35</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">38 pages UI</div><div class="stat-pill s-teal">28 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Module achats fournisseurs</div>
-<div class="sd-item">Stock PMP/FIFO/LIFO</div>
-<div class="sd-item">Tarification 3 méthodes</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S34')">← S34</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S36')">S36 →</button></div>
-  </div>
-</div>
-<div id="pane-S36" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S36</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">42 pages UI</div><div class="stat-pill s-teal">31 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Comptes RS multi-réseaux</div>
-<div class="sd-item">Publications planifiées</div>
-<div class="sd-item">Stats CRM enrichies</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S35')">← S35</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S37')">S37 →</button></div>
-  </div>
-</div>
-<div id="pane-S37" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S37</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">45 pages UI</div><div class="stat-pill s-teal">33 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Vue semaine/mois</div>
-<div class="sd-item">Drag & drop initial</div>
-<div class="sd-item">Filtres par type séance</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S36')">← S36</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S38')">S38 →</button></div>
-  </div>
-</div>
-<div id="pane-S38" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S38</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">50 pages UI</div><div class="stat-pill s-teal">36 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Portées, saillies, gestations</div>
-<div class="sd-item">Réservations avec acomptes</div>
-<div class="sd-item">Généalogie visuelle</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S37')">← S37</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S41')">S41 →</button></div>
-  </div>
-</div>
-<div id="pane-S41" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S41</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">58 pages UI</div><div class="stat-pill s-teal">38 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Intégration Yousign (routes)</div>
-<div class="sd-item">Planning v2 vue calendrier</div>
-<div class="sd-item">Page paiements avec SK masqué</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S38')">← S38</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S42')">S42 →</button></div>
-  </div>
-</div>
-<div id="pane-S42" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S42</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">62 pages UI</div><div class="stat-pill s-teal">40 routes API</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">KPIs temps réel</div>
-<div class="sd-item">Graphique CA mensuel</div>
-<div class="sd-item">Stats par métier</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S41')">← S41</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S43')">S43 →</button></div>
-  </div>
-</div>
-<div id="pane-S43" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S43</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">65 pages UI</div><div class="stat-pill s-teal">41 routes API</div><div class="stat-pill s-amber">Score 53/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">DataTable réutilisable</div>
-<div class="sd-item">KpiCard centralisé</div>
-<div class="sd-item">StatusBadge unifié</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S42')">← S42</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S44')">S44 →</button></div>
-  </div>
-</div>
-<div id="pane-S44" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S44</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">68 pages UI</div><div class="stat-pill s-teal">41 routes API</div><div class="stat-pill s-amber">Score 58/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">58 articles d'aide</div>
-<div class="sd-item">HelpPanel contextuel par page</div>
-<div class="sd-item">Centre d'aide /app/aide</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S43')">← S43</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S46')">S46 →</button></div>
-  </div>
-</div>
-<div id="pane-S46" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S46</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">70 pages UI</div><div class="stat-pill s-teal">41 routes API</div><div class="stat-pill s-amber">Score 60/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Export CSV factures (UTF-8 BOM)</div>
-<div class="sd-item">Export CSV séances</div>
-<div class="sd-item">Boutons ⬇ sur listes</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S44')">← S44</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S47')">S47 →</button></div>
-  </div>
-</div>
-<div id="pane-S47" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S47</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">72 pages UI</div><div class="stat-pill s-teal">43 routes API</div><div class="stat-pill s-amber">Score 63/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Géocodage batch 140/156 clients</div>
-<div class="sd-item">Marqueurs colorés par statut</div>
-<div class="sd-item">Panneau gauche + distances</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S46')">← S46</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S48')">S48 →</button></div>
-  </div>
-</div>
-<div id="pane-S48" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S48</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">75 pages UI</div><div class="stat-pill s-teal">43 routes API</div><div class="stat-pill s-amber">Score 65/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">GET /ged-cac/animal/:id/evolution</div>
-<div class="sd-item">GET /ged-cac/animal/:id/score</div>
-<div class="sd-item">Vue v_animal_evolution_cac</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S47')">← S47</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S50')">S50 →</button></div>
-  </div>
-</div>
-<div id="pane-S50" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S50</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">78 pages UI</div><div class="stat-pill s-teal">43 routes API</div><div class="stat-pill s-amber">Score 68/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Suppression doublons AideContextuelle</div>
-<div class="sd-item">btn-danger ajouté</div>
-<div class="sd-item">PDF devis/factures → modal</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S48')">← S48</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S51')">S51 →</button></div>
-  </div>
-</div>
-<div id="pane-S51" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S51</div>
-        <div class="sd-date">25 mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">94 pages UI</div><div class="stat-pill s-teal">43 routes API</div><div class="stat-pill s-amber">Score 72/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Carte clients fix (3 bugs Leaflet)</div>
-<div class="sd-item">Export CSV factures + séances</div>
-<div class="sd-item">Routes GED CAC opérationnelles</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S50')">← S50</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S52')">S52 →</button></div>
-  </div>
-</div>
-<div id="pane-S52" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S52</div>
-        <div class="sd-date">25 mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">94 pages UI</div><div class="stat-pill s-teal">43 routes API</div><div class="stat-pill s-amber">Score 75/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Planning vue Jour + grille 7h-20h30</div>
-<div class="sd-item">9 dashboards métiers alimentés</div>
-<div class="sd-item">Questionnaires 3 boutons fonctionnels</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S51')">← S51</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S53')">S53 →</button></div>
-  </div>
-</div>
-<div id="pane-S53" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S53</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">94 pages UI</div><div class="stat-pill s-teal">45 routes API</div><div class="stat-pill s-amber">Score 76/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Fix stats/kpis jointure SST</div>
-<div class="sd-item">Fix ged-edc renommage</div>
-<div class="sd-item">Carte clients panneau conforme démo</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S52')">← S52</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S54')">S54 →</button></div>
-  </div>
-</div>
-<div id="pane-S54" class="pane">
-  <div class="sprint-detail">
-    <div class="sd-missing">⚠ Fichier changelog absent — contenu reconstitué depuis les handovers disponibles</div>
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S54</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">94 pages UI</div><div class="stat-pill s-teal">50 routes API</div><div class="stat-pill s-amber">Score 65/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Audit score 53/100 → 65/100</div>
-<div class="sd-item">Centralisation createConnection → getDb()</div>
-<div class="sd-item">JSDoc headers ajoutés</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S53')">← S53</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S55')">S55 →</button></div>
-  </div>
-</div>
-<div id="pane-S55" class="pane">
-  <div class="sprint-detail">
-    <div class="sd-missing">⚠ Fichier changelog absent — contenu reconstitué depuis les handovers disponibles</div>
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S55</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">95 pages UI</div><div class="stat-pill s-teal">55 routes API</div><div class="stat-pill s-amber">Score 72/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">DataTable, KpiCard, StatusBadge, PageHeader créés</div>
-<div class="sd-item">Helpers centralisés</div>
-<div class="sd-item">Score 65 → 72</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S54')">← S54</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S56')">S56 →</button></div>
-  </div>
-</div>
-<div id="pane-S56" class="pane">
-  <div class="sprint-detail">
-    <div class="sd-missing">⚠ Fichier changelog absent — contenu reconstitué depuis les handovers disponibles</div>
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S56</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">96 pages UI</div><div class="stat-pill s-teal">60 routes API</div><div class="stat-pill s-amber">Score 80/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">0 createConnection — migration getDb() complète</div>
-<div class="sd-item">window.open() → modals (PDF)</div>
-<div class="sd-item">Score 72 → 80</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S55')">← S55</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S57')">S57 →</button></div>
-  </div>
-</div>
-<div id="pane-S57" class="pane">
-  <div class="sprint-detail">
-    <div class="sd-missing">⚠ Fichier changelog absent — contenu reconstitué depuis les handovers disponibles</div>
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S57</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">98 pages UI</div><div class="stat-pill s-teal">65 routes API</div><div class="stat-pill s-amber">Score 80/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Tables role + role_permission (56 permissions)</div>
-<div class="sd-item">14 modules couverts</div>
-<div class="sd-item">Badge rôle coloré topbar</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S56')">← S56</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S58')">S58 →</button></div>
-  </div>
-</div>
-<div id="pane-S58" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S58</div>
-        <div class="sd-date">mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">100 pages UI</div><div class="stat-pill s-teal">85 routes API</div><div class="stat-pill s-amber">Score 80/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Tables formule_ligne + client_formule</div>
-<div class="sd-item">10 routes CRUD + souscriptions</div>
-<div class="sd-item">Consommation séances auto-statut EPUISEE</div>
-<div class="sd-item">Seed ART_ID=51 F5-EDUC</div>
-<div class="sd-item">Sidebar 5 métiers patchée</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S57')">← S57</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S59')">S59 →</button></div>
-  </div>
-</div>
-<div id="pane-S59" class="pane">
-  <div class="sprint-detail">
-    <div class="sd-missing">⚠ Fichier changelog absent — contenu reconstitué depuis les handovers disponibles</div>
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S59</div>
-        <div class="sd-date">29 mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">100 pages UI</div><div class="stat-pill s-teal">87 routes API</div><div class="stat-pill s-amber">Score 81/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">SAV_Launcher — Copier fallback execCommand + word-break</div>
-<div class="sd-item">SAV_Pilotage_Qualite — sprint dynamique</div>
-<div class="sd-item">Inventaire 98 fichiers GitHub Pages</div>
-<div class="sd-item">Suppression BRIEFINGs + fusion BP x3→1</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S58')">← S58</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button><button class="nav-btn" onclick="showTab('S60')">S60 →</button></div>
-  </div>
-</div>
-<div id="pane-S60" class="pane">
-  <div class="sprint-detail">
-    
-    <div class="sd-header">
-      <div>
-        <div class="sd-title">Sprint S60<span class="sd-current-badge">sprint actuel</span></div>
-        <div class="sd-date">29 mars 2026</div>
-      </div>
-      <div class="sd-stats"><div class="stat-pill s-purple">101 pages UI</div><div class="stat-pill s-teal">90 routes API</div><div class="stat-pill s-amber">Score 82/100</div></div>
-    </div>
-    <div class="sd-card">
-      <div class="sd-section">Réalisations</div>
-      <div class="sd-items"><div class="sd-item">Fix RS comptes/publications (5 bugs, 5 commits)</div>
-<div class="sd-item">Sidebar — lien Nouveau devis 7 métiers</div>
-<div class="sd-item">Devis/[id] — transitions statut + email + créer facture</div>
-<div class="sd-item">Routes PUT /devis/:id + POST /devis/:id/facturer</div>
-<div class="sd-item">Page /parametres/editions créée</div>
-<div class="sd-item">Fix KPI nb_seances (159 séances)</div>
-<div class="sd-item">Fix /roles/:id/permissions colonnes BDD</div>
-<div class="sd-item">Fix /user-permissions détection auto</div>
-<div class="sd-item">Fix /seances/:id route manquante</div>
-<div class="sd-item">Restauration src/ backup 20260326_2317</div></div>
-    </div>
-    <div class="nav-sprint"><button class="nav-btn" onclick="showTab('S59')">← S59</button><button class="nav-btn" onclick="showTab('overview')">↑ Vue globale</button></div>
-  </div>
-</div>
-
-<script>
-var TABS = ["overview", "S30", "S31", "S32", "S33", "S34", "S35", "S36", "S37", "S38", "S41", "S42", "S43", "S44", "S46", "S47", "S48", "S50", "S51", "S52", "S53", "S54", "S55", "S56", "S57", "S58", "S59", "S60"];
-var currentIdx = 0;
-
-function showTab(id){
-  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  var pane = document.getElementById('pane-'+id);
-  if(pane) pane.classList.add('active');
-  document.querySelectorAll('.tab').forEach(t=>{
-    if(t.getAttribute('data-id')===id || (id==='overview' && t.getAttribute('data-id')==='overview')) 
-      t.classList.add('active');
-  });
-  // Update hash
-  if(id !== 'overview') history.replaceState(null,'','#'+id);
-  else history.replaceState(null,'',location.pathname);
-  // Track current index
-  currentIdx = TABS.indexOf(id);
-}
-
-function navSprint(dir){
-  var next = currentIdx + dir;
-  if(next < 0) next = 0;
-  if(next >= TABS.length) next = TABS.length-1;
-  showTab(TABS[next]);
-  document.getElementById('pane-'+TABS[next])
-    .scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-// Hash routing
-window.addEventListener('DOMContentLoaded',function(){
-  var hash = location.hash.replace('#','');
-  if(hash) showTab(hash);
-});
-</script>
 </body>
 </html>
