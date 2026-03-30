@@ -236,7 +236,7 @@ var cur=0;
 
 /* ══ STATE ══ */
 var DEFAULT={
-  sprint:'S58', date:new Date().toLocaleDateString('fr-FR'),
+  sprint:'S62', date:new Date().toLocaleDateString('fr-FR'),
   s_infra:90, s_api:85, s_dette:60, s_secu:80,
   containers:3, routes_ok:'9/10', bak_files:45, api_reachable:true,
   actions:[
@@ -280,7 +280,7 @@ function updCmd(i,f,v){S.cmds[i][f]=v;saveState();}
 function goTo(i){cur=i;renderAll();}
 
 function glo(){return Math.round((S.s_infra+S.s_api+S.s_dette+S.s_secu)/4);}
-function nxt(){return 'S'+(parseInt((S.sprint||'S58').replace(/\D/g,''))||58+1);}
+function nxt(){return 'S'+(parseInt((S.sprint||'S62').replace(/\D/g,''))||62+1);}
 function sc(v){return v>=80?'var(--ok)':v>=60?'var(--warn)':'var(--err)';}
 function e(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
 

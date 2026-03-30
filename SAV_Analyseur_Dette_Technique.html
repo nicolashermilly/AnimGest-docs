@@ -509,7 +509,7 @@ function ajouterItem() {
     categorie: document.getElementById('new-cat').value,
     priorite: document.getElementById('new-prio').value,
     fichier: document.getElementById('new-fichier').value.trim(),
-    sprint: document.getElementById('new-sprint').value.trim() || 'S61',
+    sprint: document.getElementById('new-sprint').value.trim() || 'S62',
     effort: document.getElementById('new-effort').value,
     description: document.getElementById('new-desc').value.trim(),
     solution: document.getElementById('new-solution').value.trim(),
@@ -886,7 +886,7 @@ function genererExport() {
   const score = Math.max(0, Math.min(100, 100 - open.reduce((acc, d) => acc + (d.priorite==='haute'?15:d.priorite==='moyenne'?7:3), 0)));
 
   const payload = {
-    sprint: 'S61',
+    sprint: 'S62',
     date: new Date().toLocaleDateString('fr-FR'),
     score_dette: score,
     total_items: dette.length,
@@ -948,7 +948,7 @@ function copierMarkdown() {
 // INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Données initiales S61
+  // Données initiales S62
   if (dette.length === 0) {
     dette = [
       { id: 1, titre: 'Drag & Drop agenda non fonctionnel', categorie: 'Frontend', priorite: 'moyenne', fichier: 'src/app/app/planning-seances/page.tsx', sprint: 'S53', effort: 'L', description: 'Le DnD HTML5 ne persiste pas correctement après rebuild', solution: 'Vérifier PATCH /seances/:id body parsing et rebuid API', resolue: false, dateAjout: '29/03/2026' },

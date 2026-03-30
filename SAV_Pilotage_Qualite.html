@@ -119,9 +119,9 @@
   <!-- SPRINT -->
   <div class="sprint-bar">
     <span class="sprint-label">Sprint actuel :</span>
-    <input type="text" class="sprint-input" id="sprint-num" value="S61" oninput="majTout()">
+    <input type="text" class="sprint-input" id="sprint-num" value="S62" oninput="majTout()">
     <span class="sprint-label">Date :</span>
-    <input type="text" class="sprint-input" id="sprint-date" value="29/03/2026" style="width:100px">
+    <input type="text" class="sprint-input" id="sprint-date" value="30/03/2026" style="width:100px">
     <button class="btn btn-secondary" style="margin-left:auto" onclick="reinitChecklist()">🔄 Nouveau sprint</button>
     <button class="btn btn-primary" onclick="exporterBilan()">📤 Exporter bilan</button>
   </div>
@@ -164,7 +164,7 @@
     <div class="section-title"><span class="sec-icon">📊</span> Métriques techniques</div>
     <div class="metrics-row">
       <div class="metric"><div class="metric-lbl">Routes API</div><input class="metric-input" id="m-routes" value="90+" oninput="sauvegarder()"></div>
-      <div class="metric"><div class="metric-lbl">Lignes custom-routes</div><input class="metric-input" id="m-lignes" value="~2800" oninput="sauvegarder()"></div>
+      <div class="metric"><div class="metric-lbl">Lignes custom-routes</div><input class="metric-input" id="m-lignes" value="2875" oninput="sauvegarder()"></div>
       <div class="metric"><div class="metric-lbl">Pages UI</div><input class="metric-input" id="m-pages" value="105" oninput="sauvegarder()"></div>
       <div class="metric"><div class="metric-lbl">JSDoc couverture</div><input class="metric-input" id="m-jsdoc" value="133/137" oninput="sauvegarder()"></div>
     </div>
@@ -192,20 +192,22 @@
       </div>
       <div class="obj-card">
         <div class="obj-title">🟡 ORANGE — Priorité haute</div>
-        <div class="obj-text" id="obj-orange" contenteditable="true" style="outline:none;min-height:40px" oninput="sauvegarder()">Widget Claude IA "Eliot"
-Suivi CAC fiche séance
-Migration routes api/src/routes/</div>
+        <div class="obj-text" id="obj-orange" contenteditable="true" style="outline:none;min-height:40px" oninput="sauvegarder()">Portail Client déploiement routes + pages
+Widget IA lien Sidebar + nom configurable
+Suivi CAC depuis fiche séance</div>
       </div>
       <div class="obj-card">
         <div class="obj-title">🔵 JAUNE — Backlog</div>
-        <div class="obj-text" id="obj-jaune" contenteditable="true" style="outline:none;min-height:40px" oninput="sauvegarder()">Export CSV règlements
-/app/elevage/declarations
-devis_ligne inexistante</div>
+        <div class="obj-text" id="obj-jaune" contenteditable="true" style="outline:none;min-height:40px" oninput="sauvegarder()">Audit PDF window.open() → Modal
+Drag &amp; Drop agenda @dnd-kit
+Export CSV règlements
+/app/elevage/declarations</div>
       </div>
       <div class="obj-card">
         <div class="obj-title">🟢 VERT — Nouveaux modules</div>
-        <div class="obj-text" id="obj-vert" contenteditable="true" style="outline:none;min-height:40px" oninput="sauvegarder()">Portail Client S62 (animaux/CAC/docs)
-Carte Identité Animale S63</div>
+        <div class="obj-text" id="obj-vert" contenteditable="true" style="outline:none;min-height:40px" oninput="sauvegarder()">Portail Client S63 notifications + Stripe
+Carte Identité Animale S62
+Module IA licence S70+</div>
       </div>
     </div>
   </div>
@@ -257,7 +259,7 @@ Carte Identité Animale S63</div>
 var CHECKLIST = [
   // GIT
   { id:'git1', cat:'Git', titre:'git pull --rebase avant tout push petsuite-docs', detail:'Toujours depuis C:\\AnimGest_Repo_Git\\petsuite-docs', badge:'critique' },
-  { id:'git2', cat:'Git', titre:'Commit code source micro_logiciel pushé', detail:'Vérifier les commits S61a, S61b', badge:'critique' },
+  { id:'git2', cat:'Git', titre:'Commit code source micro_logiciel pushé', detail:'Vérifier les commits du sprint courant', badge:'critique' },
   { id:'git3', cat:'Git', titre:'Commit petsuite-docs pushé', detail:'Changelogs + pages mises à jour', badge:'critique' },
   // DOCKER
   { id:'dock1', cat:'Docker', titre:'docker ps — tous les containers UP', detail:'micro_api, micro_frontend, micro_nginx', badge:'critique' },
@@ -275,17 +277,17 @@ var CHECKLIST = [
   { id:'bdd1', cat:'BDD', titre:'Frimousse (ANI_ID=22) préservé', detail:'SELECT ANI_ID, ANI_NOM FROM animal WHERE ANI_ID=22', badge:'critique' },
   { id:'bdd2', cat:'BDD', titre:'Nouvelles colonnes commentées', detail:'Convention : "Relation NomTable - description"', badge:'attention' },
   // DOCS
-  { id:'doc1', cat:'Docs', titre:'Changelog sprint HTML généré et pushé', detail:'fichier XX-changelog-S61.html dans petsuite-docs', badge:'attention' },
+  { id:'doc1', cat:'Docs', titre:'Changelog sprint HTML généré et pushé', detail:'fichier XX-changelog-'+sprint+'.html dans petsuite-docs', badge:'attention' },
   { id:'doc2', cat:'Docs', titre:'index.html mis à jour (nb pages, sprint actuel)', detail:'kpi-v sprint badge + nombre total pages', badge:'attention' },
-  { id:'doc3', cat:'Docs', titre:'API Reference + Audit Stack + Pilotage à jour', detail:'07, 17, 20 — MàJ S61 confirmée', badge:'info' },
+  { id:'doc3', cat:'Docs', titre:'API Reference + Audit Stack + Pilotage à jour', detail:'07, 17, 20 — MàJ '+sprint+' confirmée', badge:'info' },
   // SAV
-  { id:'sav1', cat:'SAV', titre:'Dashboard Qualité alimenté (scores S61)', detail:'Via Générateur Maintenance', badge:'info' },
-  { id:'sav2', cat:'SAV', titre:'Handover S61 généré et téléchargé', detail:'Via Générateur Handover', badge:'attention' },
-  { id:'sav3', cat:'SAV', titre:'Suivi Revue de Code mis à jour', detail:'Entrée S61 ajoutée avec résultats', badge:'info' },
+  { id:'sav1', cat:'SAV', titre:'Dashboard Qualité alimenté (scores '+sprint+')', detail:'Via Générateur Maintenance', badge:'info' },
+  { id:'sav2', cat:'SAV', titre:'Handover généré et téléchargé', detail:'Via Générateur Handover — fichier HANDOVER_'+sprint+'_FIN.md', badge:'attention' },
+  { id:'sav3', cat:'SAV', titre:'Suivi Revue de Code mis à jour', detail:'Entrée '+sprint+' ajoutée avec résultats', badge:'info' },
 ];
 
-var checks = JSON.parse(localStorage.getItem('animgest_pq_checks_S61') || '{}');
-var sprint = 'S61';
+var checks = {};
+var sprint = 'S62';
 
 function sauvegarder() {
   localStorage.setItem('animgest_pq_checks_' + sprint, JSON.stringify(checks));
@@ -408,6 +410,8 @@ function exporterBilan() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  sprint = document.getElementById('sprint-num').value || 'S62';
+  checks = JSON.parse(localStorage.getItem('animgest_pq_checks_' + sprint) || '{}');
   var saved = JSON.parse(localStorage.getItem('animgest_pq_data') || 'null');
   if (saved) {
     if (saved.scores) {

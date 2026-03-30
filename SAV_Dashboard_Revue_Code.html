@@ -353,35 +353,31 @@ var SPRINTS_DEFAUT = [
     regles_violations: []
   },
   {
-    id: 'S61', num: 'S61', date: '29/03/2026', statut: 'en-cours',
+    id: 'S61', num: 'S61', date: '29/03/2026', statut: 'termine',
     scores: { backend: 82, frontend: 80, bdd: 85, global: 82 },
     metriques: { routes: '90+', pages: '105', jsdoc: '133/137', colonnes: '241/241' },
     realisations: [
-      'Git rattrapage S52-S60 : commit S61a (80 pages UI + API), S61b nettoyage .gltf + archives',
-      'Portail Client v2 : 4 tables BDD creees (FK corrigees INT/BIGINT signes)',
-      'Portail Client S61 : 9 routes API (auth + seances + admin)',
-      'Portail Client S62 : 7 routes API supplementaires (animaux/CAC + devis/factures + PDF modal)',
-      'Page /client/[token] v2 : 4 onglets, modal CAC graphique, modal PDF srcdoc',
-      'Page /app/parametres/portail : gestion acces praticien',
-      'Documentation : 9 changelogs S52→S60 generes + index 105 pages',
-      '83 pages petsuite-docs harmonisees — charte navy/gold + nav sticky',
-      '07-audit-stack + 17-api-reference + 20-pilotage-projet mis a jour S61',
-      'SAV : Analyseur Dette Technique cree (5 onglets + refactorisation interactive)',
-      'SAV : Referentiel Regles Metier cree (15 regles + matrice couverture)',
-      'SAV : Pilotage Qualite + Launcher + Revue de Code mis a jour'
+      'Route POST /ia/chat — proxy Anthropic API cote serveur, ANTHROPIC_API_KEY dans deploy/.env',
+      'ClaudeWidget.tsx v2 — drag fluide snapshot mouseDown, panneau adaptatif getPanelPos()',
+      'Avatar temps reel setInterval(1000) + storage event — ClaudeWidgetWrapper SSR fix',
+      '43 strings SQL multi-lignes fusionnees (3133→2875 lignes) — parser Python',
+      '12 corrections backtick/double-quote melanges dans custom-routes.ts',
+      '20 avatars WebP 200x200px (307 Mo → 242 Ko via Pillow)',
+      'Page /app/parametres/widget-ia — selection avatar grille tuiles',
+      'Portail Client : 4 tables BDD creees (portail_client_acces/session/notification/confirmation)',
+      'Docs : changelogs S53-S61 + index.html v2.1 + 07-audit-stack MaJ S62',
+      'SAV : Analyseur Dette Technique (5 onglets) + Referentiel Regles Metier (15 regles)',
+      'SAV : Dashboard Revue de Code FUSION Qualite + Maintenance + Dette + Regles'
     ],
     bugs: ['🔴 Audit PDF window.open() pages Editions', '🟡 Drag Drop agenda /app/planning-seances', '🟡 devis_ligne inexistante — GET /api/devis/:id/lignes retourne []', '🔵 Export CSV reglements manquant', '🔵 /app/elevage/declarations page manquante'],
     commits: [
-      'e660f5f — S61a : 80 pages UI + API + .gitignore mis a jour',
-      'c597f73 — S61b : Suppression 12 modeles .gltf',
-      '039b9ba — S61b : Suppression dossier _A_SUPPRIMER/',
-      '6d3ba1c — docs : 9 changelogs S52→S60 generes',
-      'fa0dc6b — docs : index.html 105 pages + docs-changelog',
-      '557a682 — docs : .gitignore petsuite-docs',
-      'c9acf70 — docs : Module A Portail Client v2 spec initiale',
-      'ec36021 — docs : audit-stack + api-reference + pilotage S61',
-      '9957788 — docs : harmonisation charte graphique 83 pages',
-      '0e8f6ee — docs : Portail Client v2 MaJ S62 (16 routes, CAC, PDF)'
+      '95cc9c2 — S61a : Route /ia/chat + fix custom-routes 43 corrections SQL + SSR fix',
+      'a6f7514 — S61b : Avatar Eliot + drag + 20 avatars WebP + page widget-ia',
+      'a822cc8 — S61c : Widget v2 drag fluide + panneau adaptatif + avatar temps reel + fix StatusBadge',
+      '12b0d9b — S61d : Suppression Poney_001 + .gitignore *.bak*',
+      'be1bb80 — docs : CGV + logos',
+      '28671f8 — docs : changelogs S53-S61 + index S62 + audit-stack S62',
+      'cb0c663 — docs : index.html v2.1 correction 32 liens 404'
     ],
     dette: [
       'window.open() encore present dans pages Editions [HAUTE]',
@@ -395,12 +391,31 @@ var SPRINTS_DEFAUT = [
     regles_ok: [
       'app.use() uniquement — 0 app.get/post/put',
       'getDb() centralise — 87+ appels, 0 createConnection()',
+      'ANTHROPIC_API_KEY uniquement dans deploy/.env — jamais cote client',
       'CAC uniquement depuis /app/seances/[id] — sidebar nettoyee',
-      'PDF portail en iframe srcdoc — window.open() absent portail',
       'sessionStorage uniquement portail — localStorage absent',
       'Scripts Python dans Downloads — 0 OneDrive',
-      'FK BDD types alignes — TIE_ID INT(11), SEA_ID BIGINT(20)'
+      'FK BDD types alignes — TIE_ID INT(11), SEA_ID BIGINT(20)',
+      'Three.js supprime — remplace par avatars PNG BIB_Widget'
     ]
+  },
+  {
+    id: 'S62', num: 'S62', date: '30/03/2026', statut: 'en-cours',
+    scores: { backend: 0, frontend: 0, bdd: 0, global: 0 },
+    metriques: { routes: '90+', pages: '105', jsdoc: '133/137', colonnes: '241/241' },
+    realisations: [],
+    bugs: ['🔴 Audit PDF window.open() pages Editions', '🟠 Portail Client routes non injectees', '🟡 Drag Drop agenda /app/planning-seances', '🟡 devis_ligne inexistante', '🔵 Export CSV reglements manquant', '🔵 /app/elevage/declarations page manquante'],
+    commits: [],
+    dette: [
+      'window.open() encore present dans pages Editions [HAUTE]',
+      'Portail Client routes a injecter dans custom-routes.ts [HAUTE]',
+      'Drag Drop agenda non fonctionnel [MOYENNE]',
+      'devis_ligne inexistante [MOYENNE]',
+      'Migration routes vers api/src/routes/ non faite [MOYENNE]',
+      'Export CSV reglements manquant [BASSE]'
+    ],
+    regles_violations: [],
+    regles_ok: []
   }
 ];
 

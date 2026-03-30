@@ -224,9 +224,9 @@ var DEFAULT = {
   ]
 };
 var D = JSON.parse(JSON.stringify(DEFAULT));
-var sel = 'S57';
+var sel = 'S61';
 
-function loadState(){ try{ var d=localStorage.getItem('ag_maint_data'); if(d) D=JSON.parse(d); sel=D.sprints.length?D.sprints[D.sprints.length-1].sprint:'S57'; }catch(e){} }
+function loadState(){ try{ var d=localStorage.getItem('ag_maint_data'); if(d) D=JSON.parse(d); sel=D.sprints.length?D.sprints[D.sprints.length-1].sprint:'S61'; }catch(e){} }
 function saveState(){ localStorage.setItem('ag_maint_data',JSON.stringify(D)); }
 
 function toggleForm(){
@@ -234,7 +234,7 @@ function toggleForm(){
   f.classList.toggle('open');
   if(f.classList.contains('open')){
     var last=D.sprints[D.sprints.length-1];
-    if(last){ var n=parseInt(last.sprint.replace(/\D/g,''))||57; document.getElementById('f-sprint').value='S'+(n+1); }
+    if(last){ var n=parseInt(last.sprint.replace(/\D/g,''))||61; document.getElementById('f-sprint').value='S'+(n+1); }
   }
 }
 
@@ -437,4 +437,12 @@ function render(){
 }
 </script>
 </body>
-</html>
+</html>,
+    {sprint:'S58',date:'28/03/2026',scores:{infrastructure:90,api:87,dette:55,securite:82},global:81,
+      bugs:[],corrections:[],notes:'Script sauvegarde v7 + RBAC + JSDoc 133/137 + 241 colonnes BDD'},
+    {sprint:'S59',date:'29/03/2026',scores:{infrastructure:90,api:88,dette:55,securite:82},global:81,
+      bugs:[],corrections:[],notes:'Fix dashboard ged-edc + nettoyage repo + migration docs local'},
+    {sprint:'S60',date:'29/03/2026',scores:{infrastructure:90,api:90,dette:50,securite:82},global:82,
+      bugs:[],corrections:[],notes:'Fix RS colonnes + Devis transitions statut + Route GET /seances/:id'},
+    {sprint:'S61',date:'29/03/2026',scores:{infrastructure:90,api:90,dette:45,securite:85},global:82,
+      bugs:[],corrections:[],notes:'Widget Eliot IA v2 + Portail Client BDD + 43 SQL fixes + 20 avatars WebP'}

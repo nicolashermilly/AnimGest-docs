@@ -167,7 +167,7 @@ textarea{resize:vertical;min-height:58px;line-height:1.5}
   <header>
     <div class="h-brand">Anim'Gest <small>Générateur de Handover</small></div>
     <div class="h-right">
-      <div class="sprint-chip" id="h-sprint">S58</div>
+      <div class="sprint-chip" id="h-sprint">S62</div>
       <button class="logout-btn" onclick="logout()">Déconnexion</button>
     </div>
   </header>
@@ -210,127 +210,7 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-/* ══ STATE PAR DEFAUT — S60 PRE-REMPLI ══ */
-var DEFAULT = {
-  sprint:'S61', date: new Date().toLocaleDateString('fr-FR'),
-  objectif:'Recette S59 — corrections bugs + routes API devis', statut:'Terminé',
 
-  done_front:[
-    'Fix RS comptes/publications : PUT /parametres/reseaux-sociaux route + colonnes _URL',
-    'Fix RS state React : setData(d.raw) pour pre-remplir au chargement',
-    'Sidebar — lien Nouveau devis ajouté dans 7 métiers (/app/devis/new)',
-    'Devis/[id] — transitions statut (BROUILLON/ENVOYE/ACCEPTE/REFUSE/ANNULE) + onClick',
-    'Devis/[id] — bouton Email (mailto: pre-rempli) + bouton Créer la facture',
-    'Fix formules/page.tsx — imports PageHeader + StatusBadge corrigés'
-  ],
-  done_back:[
-    'PUT /devis/:id — mise à jour DCE_STATUT, DCE_COMMENTAIRE, DCE_DATE_VALIDITE',
-    'POST /devis/:id/facturer — création facture depuis devis ACCEPTE (⚠ colonnes à corriger S61)',
-    'Fix RS migration rs_publication -> rs_post (SELECT + INSERT)',
-    'Fix SQL guillemets simples dans string TS ligne 2206'
-  ],
-  done_bdd:[],
-  done_refacto:[
-    'Dossiers réorganisés : C:\\AnimGest_Sav\\ C:\\AnimGest_Repo_Git\\ C:\\AnimGest_Start\\',
-    'C:\\PetSuite et C:\\petsuite-docs supprimés — tâche planifiée mise à jour',
-    'START_ANIM_GEST.bat créé dans C:\\AnimGest_Start\\'
-  ],
-  done_fix:[
-    'RS PUT : route /reseaux-sociaux/comptes utilisée (au lieu de /parametres/reseaux-sociaux)',
-    'RS colonnes : RS_FACEBOOK -> RS_FACEBOOK_URL (et tous les réseaux)',
-    'RS state : setData(d) -> setData(d.raw) — pré-remplissage champs',
-    'RS SQL : guillemets simples dans string TS corrigés (ligne 2206)'
-  ],
-
-  commits:[
-    'c6e046c — S60a : Fix PUT reseaux-sociaux + lien Nouveau devis dans sidebar',
-    '6cc4050 — S60b : Fix RS colonnes _URL + migration rs_publication -> rs_post',
-    '7712b33 — S60c : Fix API RS guillemets SQL ligne 2206',
-    '389a1cf — S60d : Fix RS setData(d.raw) pour pré-remplir les champs',
-    'c8c9d2d — S60e : Devis transitions statut + Email + Creer facture + routes PUT/POST'
-  ],
-
-  ps:[],
-  tsx:[
-    'src/app/app/parametres/reseaux-sociaux/page.tsx — fix PUT route + colonnes + state',
-    'src/components/Sidebar.tsx — lien Nouveau devis 7 métiers',
-    'src/app/app/devis/[id]/page.tsx — transitions statut + email + créer facture',
-    'src/app/app/formules/page.tsx — fix imports PageHeader + StatusBadge'
-  ],
-  api:[
-    'PUT /devis/:id — mise à jour statut + commentaire + date validité',
-    'POST /devis/:id/facturer — création facture (⚠ colonnes incorrectes, fix S61)',
-    'Fix RS migration rs_publication -> rs_post dans GET/POST reseaux-sociaux/publications'
-  ],
-  sql:[], py:[],
-
-  bugs:[
-    {l:'POST /devis/:id/facturer — colonnes INSERT incorrectes (FAC_NUMERO_INT inexistant)', m:'API', c:'Haute', s:'Ouvert'},
-    {l:'Factures/[id] — lignes non affichées, bouton Payer erreur', m:'Factures', c:'Haute', s:'Ouvert'},
-    {l:'RS Publications — GET ne retourne pas les posts créés', m:'Communauté', c:'Haute', s:'Ouvert'},
-    {l:'RS Comptes — (2) affiché, comptes sans URL visibles', m:'Communauté', c:'Moyenne', s:'Ouvert'},
-    {l:'Animaux — races mal catégorisées, ~0 chiens en BDD', m:'Animaux', c:'Moyenne', s:'Ouvert'},
-    {l:'Carte client — fond transparent dropdown CP + carte Leaflet vide', m:'Clients', c:'Moyenne', s:'Ouvert'},
-    {l:'Achat — Column ACH_DATE cannot be null', m:'Achats', c:'Moyenne', s:'Ouvert'},
-    {l:'Inventaire — valorisation 0.852.0.1415 + lignes disparaissent', m:'Inventaire', c:'Moyenne', s:'Ouvert'},
-    {l:'9 dashboards métiers vides — seeds multi-métiers manquants', m:'Dashboards', c:'Moyenne', s:'Ouvert'},
-    {l:'Drag & Drop agenda non fonctionnel', m:'Planning', c:'Basse', s:'Ouvert'},
-    {l:'/app/elevage/declarations — page manquante', m:'Elevage', c:'Basse', s:'Ouvert'}
-  ],
-
-  evolutions:[
-    'Nouveau client selon module Achat — sans Achat: client simple; avec Achat: client/fournisseur SIRET',
-    'Contacts multiples par tiers — sous-formulaire dans Coordonnées',
-    'Fiche animal — GED carnet santé (scan/import glisser-déposer)',
-    'Formules — refonte UI + flux devis/contrat à valider par souscription',
-    'Races indexées par catégorie/type animal — corriger seeds (~80 chiens / 48 chats)',
-    'Numérotation chrono devis/factures non conforme — numéros liens hypertextes',
-    'Commande provisoire PDF filigrane rouge PROVISOIRE + bouton Valider avec chrono'
-  ],
-
-  tables_bdd:[
-    'facture : FAC_ID, FAC_NUM, FAC_DATE, TIE_ID, FAC_TOTAL_TTC, FAC_STATUT — MANQUENT: FAC_TOTAL_HT, DCE_ID',
-    'devis_contrat_entete : DCE_ID, DCE_NUMERO, DCE_STATUT(BROUILLON/ENVOYE/ACCEPTE/REFUSE/ANNULE/FACTURE)',
-    'rs_compte : RSC_ID, RSC_RESEAU, RSC_NOM, RSC_HANDLE, RSC_ACTIF',
-    'rs_post : RSP_ID, RSC_ID, RSP_STATUT, RSP_DATE_PUBLICATION, RSP_TITRE, RSP_CONTENU',
-    'param_reseaux_sociaux : RS_FACEBOOK_URL, RS_INSTAGRAM_URL, RS_X_URL, RS_ACTIF'
-  ],
-
-  sb:82, sf:80, sd:85,
-  nb_routes:90, nb_pages:101, nb_jsdoc:133, nb_cols:241,
-  frimousse:true,
-
-  ph:[
-    'Corriger POST /devis/:id/facturer — adapter INSERT aux vraies colonnes table facture',
-    'Fix factures/[id] — lignes non affichées (GET /factures/:id/lignes)',
-    'Fix bouton Payer facture',
-    'Fix RS Publications — GET ne retourne pas les posts',
-    'Fix RS Comptes — affichage conditionnel URL renseignée seulement'
-  ],
-  pm:[
-    'Fix animaux — races/catégories + seeds 80 chiens / 48 chats',
-    'Fix carte client — fond dropdown CP + carte droite Leaflet',
-    'Seeds dashboards multi-métiers (9 métiers vides)',
-    'Fix chrono devis/factures + liens hypertextes',
-    'Fix ACH_DATE achat + règlement achats'
-  ],
-  pl:[
-    'Sidebar EDC comportementaliste (/seances/edc)',
-    'Drag & drop agenda REALISEE bloqué',
-    'Programmes de suivi — bouton Créer inactif',
-    'Fix inventaire lignes + valorisation',
-    '/app/elevage/declarations — page manquante'
-  ],
-  blk:[
-    'WireGuard VPN port 51820 — partiellement configuré, non opérationnel'
-  ],
-  aml:[
-    'S61-S63 : Portail Client — espace séances/CAC avec login client',
-    'S63-S65 : Carte Identité Animale — page publique liée à la puce'
-  ],
-
-  obj_next:'PRIORITÉ ABSOLUE : corriger POST /devis/:id/facturer colonnes table facture + fix factures/[id] lignes'
-};
 
 var S = JSON.parse(JSON.stringify(DEFAULT));
 
@@ -366,7 +246,7 @@ function loadState(){
 }
 
 function resetState(){
-  if(!confirm('Réinitialiser avec les données S57 par défaut ?')) return;
+  if(!confirm('Réinitialiser avec les données S61 par défaut ?')) return;
   S = JSON.parse(JSON.stringify(DEFAULT));
   S.date = new Date().toLocaleDateString('fr-FR');
   saveState(); renderAll();
@@ -443,18 +323,18 @@ function renderAll(){
         'CAC : pas de lien sidebar — fiche séance uniquement'
        ].map(function(r){ return '<span class="chip">'+r+'</span>'; }).join('')
       +'</div>'
-      +'<div class="sec-lbl">État custom-routes.ts au 28/03/2026</div>'
+      +'<div class="sec-lbl">État custom-routes.ts au 30/03/2026</div>'
       +'<div class="chips">'
-      +'<span class="chip">2736 lignes</span>'
+      +'<span class="chip">2875 lignes (43 SQL fixes S61)</span>'
       +'<span class="chip">87+ getDb() — 0 createConnection</span>'
-      +'<span class="chip">GET /seances/:id ajouté S57</span>'
-      +'<span class="chip">/roles perms : module_code, can_read, can_write, can_delete</span>'
+      +'<span class="chip">POST /ia/chat ajouté S61</span>'
+      +'<span class="chip">Portail Client 16 routes — S62</span>'
       +'</div>'
       +'</div>';
   }
 
   if(id === 'done'){
-    h = '<div class="card"><div class="card-hd">Ce qui a été accompli en S57</div>'
+    h = '<div class="card"><div class="card-hd">Ce qui a été accompli en '+esc(S.sprint)+'</div>'
       +'<div class="sec-lbl">Front-end (.tsx)</div>'+listEd('done_front','ex : /app/roles/page.tsx — liste + modale création')
       +'<div class="sec-lbl">Back-end / API</div>'+listEd('done_back','ex : GET /roles/:id/permissions — fix parsing parts[2]')
       +'<div class="sec-lbl">Base de données</div>'+listEd('done_bdd','ex : ALTER TABLE utilisateur ADD COLUMN USR_ROLE_ID')
