@@ -6,6 +6,145 @@
   <title>Référentiel Règles Métier — Anim'Gest SAV</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
+
+  /* ── Anim'Gest Design System ── */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ag-navy:   #0F172A;
+    --ag-navy2:  #1E293B;
+    --ag-navy3:  #334155;
+    --ag-gold:   #B8860B;
+    --ag-gold2:  #D4A017;
+    --ag-gold3:  #F5D76E;
+    --ag-white:  #F8FAFC;
+    --ag-muted:  #94A3B8;
+    --ag-accent: #4F46E5;
+    --ag-cyan:   #06B6D4;
+    --ag-green:  #10B981;
+    --ag-red:    #EF4444;
+    --ag-orange: #F59E0B;
+    --ag-radius: 10px;
+    --ag-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    --ag-font-heading: 'Playfair Display', Georgia, serif;
+    --ag-font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ag-navy);
+    color: var(--ag-white);
+    font-family: var(--ag-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--ag-font-heading);
+    color: var(--ag-white);
+    letter-spacing: -0.5px;
+  }
+
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--ag-gold2); }
+  h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+
+  a { color: var(--ag-gold2); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--ag-gold3); text-decoration: underline; }
+
+  .ag-header {
+    background: var(--ag-navy2);
+    border-bottom: 2px solid var(--ag-gold);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ag-header .ag-logo {
+    font-family: var(--ag-font-heading);
+    font-size: 1.6rem;
+    color: var(--ag-gold2);
+    letter-spacing: -1px;
+  }
+  .ag-header .ag-subtitle {
+    font-size: 0.85rem;
+    color: var(--ag-muted);
+  }
+  .ag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(184,134,11,0.15);
+    color: var(--ag-gold2);
+    border: 1px solid rgba(184,134,11,0.3);
+  }
+  .ag-card {
+    background: var(--ag-navy2);
+    border: 1px solid var(--ag-navy3);
+    border-radius: var(--ag-radius);
+    padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ag-card:hover { border-color: var(--ag-gold); box-shadow: var(--ag-shadow); }
+
+  .ag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: var(--ag-radius);
+    font-family: var(--ag-font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .ag-btn-primary {
+    background: linear-gradient(135deg, var(--ag-accent), var(--ag-cyan));
+    color: #fff;
+  }
+  .ag-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-gold {
+    background: linear-gradient(135deg, var(--ag-gold), var(--ag-gold2));
+    color: var(--ag-navy);
+  }
+  .ag-btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-ghost {
+    background: transparent;
+    border: 1px solid var(--ag-navy3);
+    color: var(--ag-muted);
+  }
+  .ag-btn-ghost:hover { border-color: var(--ag-gold); color: var(--ag-gold2); }
+
+  .ag-tag-rouge  { background: rgba(239,68,68,0.15);  color: #F87171; border: 1px solid rgba(239,68,68,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-orange { background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-vert   { background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-bleu   { background: rgba(79,70,229,0.15);  color: #818CF8; border: 1px solid rgba(79,70,229,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 0.6rem 0.8rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ag-muted); border-bottom: 1px solid var(--ag-navy3); }
+  td { padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(51,65,85,0.5); font-size: 0.875rem; }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+
+  code, pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); border-radius: 4px; }
+  code { padding: 0.1rem 0.4rem; color: var(--ag-gold3); }
+  pre { padding: 1rem 1.25rem; overflow-x: auto; border: 1px solid var(--ag-navy3); color: #E2E8F0; line-height: 1.7; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--ag-navy); }
+  ::-webkit-scrollbar-thumb { background: var(--ag-navy3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ag-gold); }
+  /* ── Fin charte Anim'Gest ── */
+
+</style>
+<style>
     :root {
       --bg:#070F1A; --surface:#0D2137; --surface2:#122840; --surface3:#1a3550;
       --gold:#D4A843; --gold-l:#e8c068; --gold-p:rgba(212,168,67,.1); --gold-b:rgba(212,168,67,.2);
