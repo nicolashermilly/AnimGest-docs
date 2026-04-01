@@ -1,445 +1,356 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>API Reference — Anim'Gest Documentation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-
-  /* ── Anim'Gest Design System ── */
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
-
-  :root {
-    --ag-navy:   #0F172A;
-    --ag-navy2:  #1E293B;
-    --ag-navy3:  #334155;
-    --ag-gold:   #B8860B;
-    --ag-gold2:  #D4A017;
-    --ag-gold3:  #F5D76E;
-    --ag-white:  #F8FAFC;
-    --ag-muted:  #94A3B8;
-    --ag-accent: #4F46E5;
-    --ag-cyan:   #06B6D4;
-    --ag-green:  #10B981;
-    --ag-red:    #EF4444;
-    --ag-orange: #F59E0B;
-    --ag-radius: 10px;
-    --ag-shadow: 0 4px 24px rgba(0,0,0,0.35);
-    --ag-font-heading: 'Playfair Display', Georgia, serif;
-    --ag-font-body:    'DM Sans', system-ui, sans-serif;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--ag-navy);
-    color: var(--ag-white);
-    font-family: var(--ag-font-body);
-    font-size: 15px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  h1, h2, h3, h4 {
-    font-family: var(--ag-font-heading);
-    color: var(--ag-white);
-    letter-spacing: -0.5px;
-  }
-
-  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-  h2 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--ag-gold2); }
-  h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
-
-  a { color: var(--ag-gold2); text-decoration: none; transition: color 0.2s; }
-  a:hover { color: var(--ag-gold3); text-decoration: underline; }
-
-  .ag-header {
-    background: var(--ag-navy2);
-    border-bottom: 2px solid var(--ag-gold);
-    padding: 1.5rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .ag-header .ag-logo {
-    font-family: var(--ag-font-heading);
-    font-size: 1.6rem;
-    color: var(--ag-gold2);
-    letter-spacing: -1px;
-  }
-  .ag-header .ag-subtitle {
-    font-size: 0.85rem;
-    color: var(--ag-muted);
-  }
-  .ag-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 999px;
-    background: rgba(184,134,11,0.15);
-    color: var(--ag-gold2);
-    border: 1px solid rgba(184,134,11,0.3);
-  }
-  .ag-card {
-    background: var(--ag-navy2);
-    border: 1px solid var(--ag-navy3);
-    border-radius: var(--ag-radius);
-    padding: 1.5rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .ag-card:hover { border-color: var(--ag-gold); box-shadow: var(--ag-shadow); }
-
-  .ag-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.55rem 1.25rem;
-    border-radius: var(--ag-radius);
-    font-family: var(--ag-font-body);
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: none;
-  }
-  .ag-btn-primary {
-    background: linear-gradient(135deg, var(--ag-accent), var(--ag-cyan));
-    color: #fff;
-  }
-  .ag-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-  .ag-btn-gold {
-    background: linear-gradient(135deg, var(--ag-gold), var(--ag-gold2));
-    color: var(--ag-navy);
-  }
-  .ag-btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
-  .ag-btn-ghost {
-    background: transparent;
-    border: 1px solid var(--ag-navy3);
-    color: var(--ag-muted);
-  }
-  .ag-btn-ghost:hover { border-color: var(--ag-gold); color: var(--ag-gold2); }
-
-  .ag-tag-rouge  { background: rgba(239,68,68,0.15);  color: #F87171; border: 1px solid rgba(239,68,68,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
-  .ag-tag-orange { background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
-  .ag-tag-vert   { background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
-  .ag-tag-bleu   { background: rgba(79,70,229,0.15);  color: #818CF8; border: 1px solid rgba(79,70,229,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
-
-  table { width: 100%; border-collapse: collapse; }
-  th { text-align: left; padding: 0.6rem 0.8rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ag-muted); border-bottom: 1px solid var(--ag-navy3); }
-  td { padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(51,65,85,0.5); font-size: 0.875rem; }
-  tr:hover td { background: rgba(255,255,255,0.03); }
-
-  code, pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); border-radius: 4px; }
-  code { padding: 0.1rem 0.4rem; color: var(--ag-gold3); }
-  pre { padding: 1rem 1.25rem; overflow-x: auto; border: 1px solid var(--ag-navy3); color: #E2E8F0; line-height: 1.7; }
-
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: var(--ag-navy); }
-  ::-webkit-scrollbar-thumb { background: var(--ag-navy3); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--ag-gold); }
-  /* ── Fin charte Anim'Gest ── */
-
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Reference — Anim'Gest Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-    :root{--navy:#0D2137;--navy-l:#122840;--gold:#D4A843;--gold-l:#e8c068;--gold-p:rgba(212,168,67,.1);--gold-b:rgba(212,168,67,.2);--dark:#070F1A;--white:#F8F8F5;--muted:#7a8fa6;--green:#3ecf8e;--red:#ef4444;--orange:#f59e0b;--blue:#60a5fa;--purple:#a78bfa}
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--white);line-height:1.7;font-size:14px}
-    a{color:var(--gold);text-decoration:none}
-    nav{background:var(--navy);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:100}
-    .brand{font-family:'Playfair Display',serif;color:var(--gold);font-weight:700;font-size:1.1rem}
-    .nav-links{display:flex;gap:.5rem;flex-wrap:wrap}
-    .nav-links a{color:var(--muted);font-size:.8rem;padding:.25rem .6rem;border-radius:4px;transition:.2s}
-    .nav-links a:hover{color:var(--white);background:rgba(255,255,255,.06)}
-    .nav-badge{margin-left:auto;background:var(--gold-p);border:1px solid var(--gold-b);color:var(--gold);font-size:.7rem;font-weight:600;padding:.2rem .75rem;border-radius:20px}
-    .hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:3rem 2rem 2.5rem;border-bottom:2px solid var(--gold);text-align:center}
-    .hero-tag{display:inline-block;background:var(--gold);color:var(--dark);font-size:.72rem;font-weight:700;padding:.3rem .9rem;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
-    .hero h1{font-family:'Playfair Display',serif;font-size:2.4rem;margin-bottom:.5rem}
-    .hero h1 span{color:var(--gold)}
-    .hero .sub{color:var(--muted);font-size:.95rem}
-    .hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-top:1.5rem}
-    .hs{text-align:center}
-    .hs-v{font-size:1.5rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;display:block}
-    .hs-l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-    .container{max-width:1000px;margin:0 auto;padding:2.5rem 1.5rem}
-    .section{margin-bottom:2.5rem}
-    .sec-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);border-bottom:1px solid var(--gold-b);padding-bottom:.5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
-    .sec-num{background:var(--gold);color:var(--dark);font-size:.7rem;font-weight:700;padding:.15rem .45rem;border-radius:3px}
-    table{width:100%;border-collapse:collapse;font-size:.83rem;margin-bottom:.5rem}
-    th{background:var(--navy);color:var(--gold);font-weight:600;padding:.6rem .9rem;text-align:left;border-bottom:1px solid var(--gold-b)}
-    td{padding:.55rem .9rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);vertical-align:top}
-    td:first-child{color:var(--white);font-family:'JetBrains Mono',monospace;font-size:.78rem;white-space:nowrap}
-    tr:hover td{background:rgba(255,255,255,.02)}
-    .m{display:inline-block;font-size:.68rem;font-weight:700;padding:.12rem .45rem;border-radius:3px;min-width:44px;text-align:center}
-    .get{background:rgba(60,207,142,.15);color:var(--green);border:1px solid rgba(60,207,142,.3)}
-    .post{background:rgba(96,165,250,.15);color:var(--blue);border:1px solid rgba(96,165,250,.3)}
-    .put{background:rgba(245,158,11,.15);color:var(--orange);border:1px solid rgba(245,158,11,.3)}
-    .patch{background:rgba(167,139,250,.15);color:var(--purple);border:1px solid rgba(167,139,250,.3)}
-    .del{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
-    .badge{display:inline-block;font-size:.68rem;font-weight:600;padding:.12rem .45rem;border-radius:3px}
-    .b-new{background:var(--gold);color:var(--dark)}
-    .b-s61{background:rgba(60,207,142,.15);color:var(--green);border:1px solid rgba(60,207,142,.3)}
-    footer{background:var(--navy);border-top:1px solid var(--gold-b);text-align:center;padding:2rem;color:var(--muted);font-size:.82rem;margin-top:3rem}
-    footer strong{color:var(--gold)}
-  </style>
+:root {
+  --navy: #0F172A; --navy-800: #1E293B;
+  --gold: #F59E0B; --cyan: #06B6D4; --violet: #4F46E5;
+  --green: #10B981; --red: #EF4444; --orange: #F97316;
+  --text: #E2E8F0; --text-muted: #94A3B8; --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px; display: flex; align-items: center; gap: 32px;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge { margin-left: auto; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); color: var(--gold); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 60px 32px 40px; text-align: center; position: relative;
+}
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.07) 0%, transparent 70%); pointer-events: none; }
+.hero-label { display: inline-block; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--gold); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 16px; }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #F8FAFC; margin-bottom: 12px; }
+.hero p { color: var(--text-muted); font-size: 0.9rem; }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(245,158,11,0.1); border-top: 1px solid rgba(245,158,11,0.1); }
+.kpi-card { background: var(--navy); padding: 20px; text-align: center; }
+.kpi-value { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 5px; }
+.kpi-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* LAYOUT */
+.layout { display: grid; grid-template-columns: 200px 1fr; gap: 0; min-height: calc(100vh - 200px); }
+.sidebar {
+  background: var(--navy-800);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  padding: 24px 0;
+  position: sticky; top: 57px; height: calc(100vh - 57px);
+  overflow-y: auto;
+}
+.sidebar a {
+  display: block; padding: 8px 20px;
+  font-size: 0.8rem; font-weight: 500;
+  color: var(--text-muted); text-decoration: none;
+  transition: all .15s;
+  border-left: 2px solid transparent;
+}
+.sidebar a:hover { color: var(--gold); background: rgba(245,158,11,0.04); border-left-color: rgba(245,158,11,0.3); }
+.sidebar a.new-s63 { color: var(--gold); }
+.sidebar-section { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); padding: 16px 20px 6px; opacity: 0.6; }
+
+.content { padding: 32px 40px; max-width: 860px; }
+
+/* API SECTIONS */
+.api-group { margin-bottom: 40px; }
+.group-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+}
+.group-num {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 700;
+  background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25);
+  color: var(--gold); width: 28px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.group-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; }
+.group-new { font-size: 0.67rem; font-weight: 700; background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.25); padding: 2px 8px; border-radius: 8px; text-transform: uppercase; }
+
+/* ROUTES */
+.route-row {
+  display: grid; grid-template-columns: 68px 1fr;
+  gap: 12px; align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.route-row:last-child { border-bottom: none; }
+.method { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 3px; text-align: center; }
+.m-get { background: rgba(16,185,129,0.12); color: #6EE7B7; }
+.m-post { background: rgba(245,158,11,0.12); color: #FCD34D; }
+.m-put { background: rgba(6,182,212,0.12); color: var(--cyan); }
+.m-patch { background: rgba(79,70,229,0.12); color: #818CF8; }
+.m-delete { background: rgba(239,68,68,0.1); color: #FCA5A5; }
+.route-info {}
+.route-path { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--text); display: block; margin-bottom: 2px; }
+.route-desc { font-size: 0.8rem; color: var(--text-muted); }
+.route-badge { display: inline-block; font-size: 0.62rem; font-weight: 700; padding: 1px 6px; border-radius: 6px; text-transform: uppercase; vertical-align: middle; margin-left: 6px; }
+.rb-s63 { background: rgba(245,158,11,0.12); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.rb-s62 { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.15); }
+
+footer { text-align: center; padding: 32px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.8rem; color: var(--text-muted); }
+footer a { color: var(--gold); text-decoration: none; }
+</style>
 </head>
 <body>
 
 <nav>
-  <span class="brand">Anim'Gest Docs</span>
-  <div class="nav-links">
-    <a href="index.html">Accueil</a>
-    <a href="07-audit-stack.html">Audit Stack</a>
-    <a href="20-pilotage-projet.html">Pilotage</a>
-    <a href="docs-changelog.html">Changelogs</a>
-  </div>
-  <span class="nav-badge">MàJ S61</span>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <a href="docs-changelog.html">Changelogs</a>
+  <span class="nav-badge">MàJ S63</span>
 </nav>
 
 <div class="hero">
-  <div class="hero-tag">Référence Technique</div>
-  <h1>API <span>Reference</span></h1>
-  <p class="sub">Toutes les routes de custom-routes.ts — NestJS backend — Anim'Gest S61</p>
-  <div class="hero-stats">
-    <div class="hs"><span class="hs-v">90+</span><span class="hs-l">Routes totales</span></div>
-    <div class="hs"><span class="hs-v">~2800</span><span class="hs-l">Lignes source</span></div>
-    <div class="hs"><span class="hs-v">87+</span><span class="hs-l">getDb() calls</span></div>
-    <div class="hs"><span class="hs-v">S61</span><span class="hs-l">Dernière MàJ</span></div>
+  <div class="hero-label">Référence Technique</div>
+  <h1>API Reference</h1>
+  <p>Toutes les routes de custom-routes.ts — NestJS backend — Anim'Gest S63</p>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-value">~115</div>
+    <div class="kpi-label">Routes totales</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">3846</div>
+    <div class="kpi-label">Lignes source</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">117</div>
+    <div class="kpi-label">getDb() calls</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">S63</div>
+    <div class="kpi-label">Dernière MàJ</div>
   </div>
 </div>
 
-<div class="container">
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-section">Core</div>
+    <a href="#core">01 Core</a>
+    <a href="#seances">02 Séances</a>
+    <a href="#commercial">03 Commercial</a>
+    <a href="#elevage">04 Élevage</a>
+    <a href="#ged-cac">05 GED & CAC</a>
+    <a href="#stats">06 Statistiques</a>
+    <a href="#crm">07 CRM & RS</a>
+    <a href="#forfaits">08 Forfaits S53-S56</a>
+    <a href="#rbac">09 Rôles RBAC S58</a>
+    <a href="#signatures">10 Signatures</a>
+    <a href="#parametres">11 Paramètres</a>
+    <a href="#programmes">12 Programmes</a>
+    <div class="sidebar-section">Nouveau</div>
+    <a href="#portail" class="new-s63">13 Portail Client ★</a>
+    <a href="#ia" class="new-s63">14 Eliot IA ★</a>
+    <a href="#editions" class="new-s63">15 Éditions ★</a>
+  </nav>
 
-  <!-- CORE -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">01</span> Core</div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/bilan</td><td>Healthcheck API + stats générales</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/tiers</td><td>Liste clients/fournisseurs (?type=CLIENT|FOURNISSEUR)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/tiers/:id</td><td>Détail tiers</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/animaux</td><td>Liste animaux (?tie_id=)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/animaux/races</td><td>Toutes les races (?type=&categorie=)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/animaux/races/types</td><td>Types d'animaux</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/animaux/races/categories</td><td>Catégories de races</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/animaux/:id</td><td>Fiche animal complète</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/contacts</td><td>Contacts pour autocomplétion</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/categories</td><td>Catégories articles</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/tva</td><td>Taux TVA</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/races</td><td>Alias /animaux/races</td></tr>
-    </table>
+  <div class="content">
+
+    <!-- 01 CORE -->
+    <div class="api-group" id="core">
+      <div class="group-header"><span class="group-num">01</span><span class="group-title">Core</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/bilan</span><span class="route-desc">Healthcheck API + stats générales</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/tiers</span><span class="route-desc">Liste clients/fournisseurs (?type=CLIENT|FOURNISSEUR)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/tiers/:id</span><span class="route-desc">Détail tiers</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/animaux</span><span class="route-desc">Liste animaux (?tie_id=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/animaux/races</span><span class="route-desc">Toutes les races (?type=&categorie=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/animaux/:id</span><span class="route-desc">Fiche animal complète</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/contacts</span><span class="route-desc">Contacts pour autocomplétion</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/categories</span><span class="route-desc">Catégories articles</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/tva</span><span class="route-desc">Taux TVA</span></div></div>
+    </div>
+
+    <!-- 02 SÉANCES -->
+    <div class="api-group" id="seances">
+      <div class="group-header"><span class="group-num">02</span><span class="group-title">Séances</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/seances</span><span class="route-desc">Liste séances (?tie_id= &ani_id= &statut=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/seances/:id</span><span class="route-desc">Détail séance avec jointures STY/SST/tiers/animal/contact</span></div></div>
+      <div class="route-row"><span class="method m-patch">PATCH</span><div class="route-info"><span class="route-path">/seances/:id</span><span class="route-desc">Modifier séance (drag & drop planning — SEA_DATE_DEBUT/FIN/OBJET/MONTANT)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/seances/bc</span><span class="route-desc">Séances avec Bilan Comportemental</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/agenda</span><span class="route-desc">Séances pour agenda (?debut= &fin=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/planning-seances</span><span class="route-desc">Planning séances (?semaine=)</span></div></div>
+    </div>
+
+    <!-- 03 COMMERCIAL -->
+    <div class="api-group" id="commercial">
+      <div class="group-header"><span class="group-num">03</span><span class="group-title">Commercial — Devis, Factures, Règlements</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/devis</span><span class="route-desc">Liste devis (?tie_id= &statut=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/devis/:id</span><span class="route-desc">Détail devis + lignes</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/devis/:id/statut</span><span class="route-desc">Changer statut (BROUILLON→ENVOYE→ACCEPTE→REFUSE→ANNULE)</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/devis/:id/facturer</span><span class="route-desc">Créer facture depuis devis accepté</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/devis/:id/email</span><span class="route-desc">Envoyer devis par email au client</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/factures</span><span class="route-desc">Liste factures avec statut paiement</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/factures/:id</span><span class="route-desc">Détail facture + lignes</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/reglements</span><span class="route-desc">Liste règlements</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoirs</span><span class="route-desc">Liste avoirs</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoirs/:id</span><span class="route-desc">Détail avoir</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/inventaires</span><span class="route-desc">Liste inventaires</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/achats</span><span class="route-desc">Liste achats fournisseurs</span></div></div>
+    </div>
+
+    <!-- 04 ÉLEVAGE -->
+    <div class="api-group" id="elevage">
+      <div class="group-header"><span class="group-num">04</span><span class="group-title">Élevage</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/geniteurs</span><span class="route-desc">Liste géniteurs</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/portees</span><span class="route-desc">Liste portées</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/saillies</span><span class="route-desc">Liste saillies</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/gestations</span><span class="route-desc">Gestations en cours</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/reservations</span><span class="route-desc">Réservations chiot</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/alertes</span><span class="route-desc">Alertes élevage (vaccins, déparasitages)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/genealogie</span><span class="route-desc">Arbre généalogique</span></div></div>
+    </div>
+
+    <!-- 05 GED & CAC -->
+    <div class="api-group" id="ged-cac">
+      <div class="group-header"><span class="group-num">05</span><span class="group-title">GED &amp; CAC</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ged-bc</span><span class="route-desc">Fiche BC par séance (?sea_id=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ged-cac/:id</span><span class="route-desc">Score CAC par séance</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ged-cac/animal/:id/evolution</span><span class="route-desc">Historique CAC animal (vue v_animal_evolution_cac)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ged-cac/animal/:id/score</span><span class="route-desc">Score CAC courant</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ged-factures-impayees</span><span class="route-desc">Factures impayées pour GED</span></div></div>
+    </div>
+
+    <!-- 06 STATS -->
+    <div class="api-group" id="stats">
+      <div class="group-header"><span class="group-num">06</span><span class="group-title">Statistiques</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/dashboard/stats</span><span class="route-desc">KPIs dashboard principal</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/kpis</span><span class="route-desc">KPIs étendus (CA, panier moyen)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/ca-par-mois</span><span class="route-desc">CA mensuel 12 mois glissants</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/especes</span><span class="route-desc">Répartition animaux par espèce</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/villes</span><span class="route-desc">Concentration clients par ville</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/top-clients</span><span class="route-desc">Top clients par CA</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/especes-ca</span><span class="route-desc">CA par espèce</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/seances-par-type</span><span class="route-desc">Répartition séances par type</span></div></div>
+    </div>
+
+    <!-- 07 CRM -->
+    <div class="api-group" id="crm">
+      <div class="group-header"><span class="group-num">07</span><span class="group-title">CRM &amp; Réseaux sociaux</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/crm/leads</span><span class="route-desc">Liste leads CRM avec filtres</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/crm/stats</span><span class="route-desc">Statistiques CRM</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/reseaux-sociaux/comptes</span><span class="route-desc">Comptes RS (rs_compte)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/reseaux-sociaux/publications</span><span class="route-desc">Publications RS (rs_post)</span></div></div>
+    </div>
+
+    <!-- 08 FORFAITS -->
+    <div class="api-group" id="forfaits">
+      <div class="group-header"><span class="group-num">08</span><span class="group-title">Forfaits &amp; Formules S53-S56</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/forfaits</span><span class="route-desc">Catalogue forfaits par métier</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/forfaits</span><span class="route-desc">Créer forfait</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/forfaits/clients</span><span class="route-desc">Souscriptions clients actives</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/forfaits/clients</span><span class="route-desc">Nouvelle souscription</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/formules</span><span class="route-desc">Catalogue formules/abonnements</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/formules/:id/souscrire</span><span class="route-desc">Souscription client</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/formules/:id/consommer</span><span class="route-desc">Consommer une séance (auto-statut EPUISEE)</span></div></div>
+    </div>
+
+    <!-- 09 RBAC -->
+    <div class="api-group" id="rbac">
+      <div class="group-header"><span class="group-num">09</span><span class="group-title">Rôles &amp; Permissions RBAC S58</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/roles</span><span class="route-desc">Liste rôles (ADMIN, GESTION, CONSULT, COMPTA)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/roles/:id/permissions</span><span class="route-desc">Permissions d'un rôle par module (can_read, can_write, can_delete)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/user-permissions</span><span class="route-desc">Permissions de l'utilisateur courant</span></div></div>
+    </div>
+
+    <!-- 10 SIGNATURES -->
+    <div class="api-group" id="signatures">
+      <div class="group-header"><span class="group-num">10</span><span class="group-title">Signatures Yousign</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/signatures</span><span class="route-desc">Liste signatures</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/signatures/:id</span><span class="route-desc">Détail signature + statut Yousign</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/signatures</span><span class="route-desc">Créer demande BDD + appel Yousign API v3</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/signatures/:id/envoyer</span><span class="route-desc">Activer demande + récupérer lien signataire</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/signatures/webhook</span><span class="route-desc">Callback Yousign → mise à jour statut</span></div></div>
+    </div>
+
+    <!-- 11 PARAMÈTRES -->
+    <div class="api-group" id="parametres">
+      <div class="group-header"><span class="group-num">11</span><span class="group-title">Paramètres</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/parametres/metier</span><span class="route-desc">Paramètre métier actif</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/parametres/metier</span><span class="route-desc">Mettre à jour métier</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/parametres/editions</span><span class="route-desc">Paramètres éditions (logo, couleurs, police)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/param-smtp</span><span class="route-desc">Config SMTP</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/param-smtp</span><span class="route-desc">Sauvegarder config SMTP depuis UI <span class="route-badge rb-s63">S63</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/param-stripe</span><span class="route-desc">Config Stripe</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/param-yousign</span><span class="route-desc">Config Yousign</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/param-yousign</span><span class="route-desc">Mettre à jour config Yousign</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/plan-comptable</span><span class="route-desc">Plan comptable PCG</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/aide/contexte</span><span class="route-desc">Aide contextuelle (7 contextes)</span></div></div>
+    </div>
+
+    <!-- 12 PROGRAMMES -->
+    <div class="api-group" id="programmes">
+      <div class="group-header"><span class="group-num">12</span><span class="group-title">Programmes &amp; Questionnaires</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/programmes</span><span class="route-desc">Programmes de suivi</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/programmes</span><span class="route-desc">Créer programme</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/questionnaires</span><span class="route-desc">Liste questionnaires</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/questionnaires</span><span class="route-desc">Créer questionnaire</span></div></div>
+    </div>
+
+    <!-- 13 PORTAIL CLIENT NEW S63 -->
+    <div class="api-group" id="portail">
+      <div class="group-header"><span class="group-num">13</span><span class="group-title">Portail Client</span><span class="group-new">S61-S63</span></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/auth/login</span><span class="route-desc">Connexion client (token accès → session_token) <span class="route-badge rb-s63">S61</span></span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/auth/logout</span><span class="route-desc">Déconnexion (invalide session) <span class="route-badge rb-s63">S61</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/admin/acces</span><span class="route-desc">Liste accès portail (praticien) <span class="route-badge rb-s63">S61</span></span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/admin/acces</span><span class="route-desc">Créer accès + générer token 64 chars hex <span class="route-badge rb-s63">S61</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/animaux</span><span class="route-desc">Animaux du client connecté (ANI_CLI) <span class="route-badge rb-s62">S62</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/devis</span><span class="route-desc">Devis ENVOYE/ACCEPTE/FACTURE <span class="route-badge rb-s62">S62</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/factures</span><span class="route-desc">Factures + solde restant <span class="route-badge rb-s62">S62</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/factures/:id/pdf</span><span class="route-desc">PDF facture pour modal iframe <span class="route-badge rb-s62">S62</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/seances</span><span class="route-desc">Séances du client (SEA_DATE_DEBUT) <span class="route-badge rb-s63">S63 ★</span></span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/seances/:id/confirmer</span><span class="route-desc">CONFIRME / ANNULE / REPORTE <span class="route-badge rb-s63">S63 ★</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/notifications</span><span class="route-desc">Notifications client (PCN_TYPE, PCN_CANAL, PCN_STATUT) <span class="route-badge rb-s63">S63 ★</span></span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/portail/admin/acces/:id/toggle</span><span class="route-desc">Activer / désactiver accès <span class="route-badge rb-s63">S63 ★</span></span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/admin/acces/:id/send-link</span><span class="route-desc">Envoyer lien portail par email (nodemailer) <span class="route-badge rb-s63">S63 ★</span></span></div></div>
+      <p style="margin-top:12px;font-size:0.78rem;color:var(--text-muted);">ℹ️ Toutes les routes portail utilisent <code style="font-family:'DM Mono',monospace">_readBody()</code> et sont dans <code style="font-family:'DM Mono',monospace">instance.use()</code> exclusivement.</p>
+    </div>
+
+    <!-- 14 ELIOT IA -->
+    <div class="api-group" id="ia">
+      <div class="group-header"><span class="group-num">14</span><span class="group-title">Eliot IA</span><span class="group-new">S61-S63</span></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/ia/chat</span><span class="route-desc">Proxy Anthropic API côté serveur — 10 tools déclarés (get_client, get_animal, create_devis, create_seance, get_planning, get_factures, send_email, update_statut_devis, create_facture_depuis_devis, create_reglement)</span></div></div>
+      <p style="margin-top:8px;font-size:0.78rem;color:var(--text-muted);">ℹ️ ANTHROPIC_API_KEY sécurisée côté serveur (jamais exposée frontend). Eliot est une option commerciale — toutes les fonctionnalités marchent sans lui.</p>
+    </div>
+
+    <!-- 15 ÉDITIONS -->
+    <div class="api-group" id="editions">
+      <div class="group-header"><span class="group-num">15</span><span class="group-title">Éditions &amp; PDF</span><span class="group-new">S62</span></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-logo</span><span class="route-desc">Upload logo en GED (ged_document)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/upload-logo</span><span class="route-desc">Lecture logo base64 depuis BDD</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-filigrane</span><span class="route-desc">Upload filigrane (fond transparent)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/upload-filigrane</span><span class="route-desc">Lecture filigrane base64</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-cgv</span><span class="route-desc">Upload CGV PDF</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/cgv/preview</span><span class="route-desc">Preview PDF CGV depuis base64 BDD</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/devis/:id</span><span class="route-desc">PDF devis puppeteer avec param_edition (couleur, logo, filigrane, police)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/facture/:id</span><span class="route-desc">PDF facture puppeteer avec param_edition + fusion CGV</span></div></div>
+    </div>
+
   </div>
-
-  <!-- SEANCES -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">02</span> Séances</div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/seances</td><td>Liste séances (?tie_id= &ani_id= &statut=)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/seances/:id</td><td>Détail séance avec jointures STY/SST/tiers/animal/contact</td></tr>
-      <tr><td><span class="m patch">PATCH</span></td><td>/seances/:id</td><td>Modifier séance (drag & drop planning — SEA_DATE_DEBUT/FIN/OBJET/MONTANT)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/seances/bc</td><td>Séances avec Bilan Comportemental</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/seances/types/:id</td><td>Type de séance par ID</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/agenda</td><td>Séances pour agenda (?debut= &fin=)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/planning-seances</td><td>Planning séances (?semaine=)</td></tr>
-    </table>
-  </div>
-
-  <!-- COMMERCIAL -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">03</span> Commercial — Devis, Factures, Règlements</div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/devis</td><td>Liste devis (?tie_id= &statut=)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/devis/:id</td><td>Détail devis + lignes</td></tr>
-      <tr><td><span class="m put">PUT</span></td><td>/devis/:id/statut</td><td>Changer statut (BROUILLON→ENVOYE→ACCEPTE→REFUSE→ANNULE)</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/devis/:id/facturer</td><td>Créer facture depuis devis accepté — statut → FACTURE</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/devis/:id/email</td><td>Envoyer devis par email au client</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/devis/:id/lignes</td><td>Lignes du devis (retourne [] si table absente)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/factures</td><td>Liste factures avec statut paiement</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/factures/:id</td><td>Détail facture + lignes</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/reglements</td><td>Liste règlements</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/avoirs</td><td>Liste avoirs</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/avoirs/:id</td><td>Détail avoir</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/condition-paiement</td><td>Conditions de paiement</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/inventaires</td><td>Liste inventaires</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/achats</td><td>Liste achats fournisseurs</td></tr>
-    </table>
-  </div>
-
-  <!-- ELEVAGE -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">04</span> Élevage</div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/geniteurs</td><td>Liste géniteurs</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/portees</td><td>Liste portées</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/saillies</td><td>Liste saillies</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/gestations</td><td>Gestations en cours</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/reservations</td><td>Réservations chiot</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/reglements</td><td>Règlements élevage</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/alertes</td><td>Alertes élevage (vaccins, déparasitages)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/genealogie</td><td>Arbre généalogique</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/stats-viabilite</td><td>Statistiques viabilité portées</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/mortalite</td><td>Mortalité chiots</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/elevage/declarations</td><td>Déclarations DDPP/SCC/LOOF/ICAD</td></tr>
-    </table>
-  </div>
-
-  <!-- GED CAC -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">05</span> GED & CAC</div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/ged-bc</td><td>Fiche BC par séance (?sea_id=)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/ged-cac/:id</td><td>Score CAC par séance</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/ged-cac/:id/initial</td><td>Valeurs CAC initiales de l'animal</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/ged-evolution-cac/:ani_id</td><td>Historique CAC animal (vue v_animal_evolution_cac)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/ged-cac/animal/:id/evolution</td><td>Alias évolution CAC animal</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/ged-cac/animal/:id/score</td><td>Score CAC courant</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/ged-factures-impayees</td><td>Factures impayées pour GED</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/ged-bc-sans-devis</td><td>BC sans devis associé</td></tr>
-    </table>
-  </div>
-
-  <!-- STATISTIQUES -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">06</span> Statistiques</div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/dashboard/stats</td><td>KPIs dashboard principal</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/stats/kpis</td><td>KPIs étendus (CA, panier moyen)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/stats/ca-par-mois</td><td>CA mensuel 12 mois glissants</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/stats/seances-par-type</td><td>Répartition séances par type</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/stats/especes</td><td>Répartition animaux par espèce</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/stats/especes-ca</td><td>CA par espèce</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/stats/villes</td><td>Concentration clients par ville</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/stats/top-clients</td><td>Top clients par CA</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/stats/promenade-visite</td><td>Ratio promenades/visites (pet-sitter)</td></tr>
-    </table>
-  </div>
-
-  <!-- CRM -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">07</span> CRM & Réseaux sociaux</div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/leads</td><td>Liste leads CRM</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/crm/leads</td><td>Alias leads CRM avec filtres</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/crm/stats</td><td>Statistiques CRM</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/reseaux-sociaux/comptes</td><td>Comptes RS (rs_compte)</td></tr>
-      <tr><td><span class="m put">PUT</span></td><td>/reseaux-sociaux/comptes</td><td>Mettre à jour comptes RS</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/reseaux-sociaux/publications</td><td>Publications RS (rs_post)</td></tr>
-    </table>
-  </div>
-
-  <!-- FORFAITS & FORMULES -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">08</span> Forfaits & Formules <span class="badge b-new" style="margin-left:.5rem">S53-S56</span></div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/forfaits</td><td>Catalogue forfaits par métier</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/forfaits</td><td>Créer forfait</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/forfaits/:id</td><td>Détail forfait</td></tr>
-      <tr><td><span class="m patch">PATCH</span></td><td>/forfaits/:id</td><td>Modifier forfait</td></tr>
-      <tr><td><span class="m del">DELETE</span></td><td>/forfaits/:id</td><td>Supprimer forfait</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/forfaits/clients</td><td>Souscriptions clients actives</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/forfaits/clients</td><td>Nouvelle souscription</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/formules</td><td>Catalogue formules/abonnements</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/formules</td><td>Créer formule</td></tr>
-      <tr><td><span class="m put">PUT</span></td><td>/formules/:id</td><td>Modifier formule</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/formules/:id/souscrire</td><td>Souscription client</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/formules/:id/consommer</td><td>Consommer une séance (auto-statut EPUISEE)</td></tr>
-    </table>
-  </div>
-
-  <!-- RBAC -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">09</span> Rôles & Permissions RBAC <span class="badge b-new" style="margin-left:.5rem">S58</span></div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/roles</td><td>Liste rôles (ADMIN, GESTION, CONSULT, COMPTA)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/roles/:id/permissions</td><td>Permissions d'un rôle par module (module_code, can_read, can_write, can_delete)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/user-permissions</td><td>Permissions de l'utilisateur courant</td></tr>
-    </table>
-  </div>
-
-  <!-- SIGNATURES -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">10</span> Signatures Yousign</div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/signatures</td><td>Liste signatures</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/signatures/:id</td><td>Détail signature + statut Yousign</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/signatures</td><td>Créer demande BDD + appel Yousign API v3</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/signatures/:id/envoyer</td><td>Activer demande + récupérer lien signataire</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/signatures/webhook</td><td>Callback Yousign → mise à jour statut</td></tr>
-    </table>
-  </div>
-
-  <!-- PARAMETRES -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">11</span> Paramètres</div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/parametres/metier</td><td>Paramètre métier actif</td></tr>
-      <tr><td><span class="m put">PUT</span></td><td>/parametres/metier</td><td>Mettre à jour métier</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/parametres/modules</td><td>Modules activés</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/parametres/editions</td><td>Paramètres éditions (logo, couleurs, police)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/param-smtp</td><td>Config SMTP</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/param-stripe</td><td>Config Stripe</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/param-klarna</td><td>Config Klarna</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/param-sms</td><td>Config SMS Twilio</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/param-pdp</td><td>Config plateforme dépôt (RFE)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/param-yousign</td><td>Config Yousign</td></tr>
-      <tr><td><span class="m put">PUT</span></td><td>/param-yousign</td><td>Mettre à jour config Yousign</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/param-urls</td><td>URLs configurées</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/plan-comptable</td><td>Plan comptable PCG</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/aide/contexte</td><td>Aide contextuelle (7 contextes)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/parametres/formulaire-lead</td><td>Config formulaire lead public</td></tr>
-    </table>
-  </div>
-
-  <!-- PROGRAMMES & QUESTIONNAIRES -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">12</span> Programmes & Questionnaires</div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m get">GET</span></td><td>/programmes</td><td>Programmes de suivi</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/programmes</td><td>Créer programme</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/programmes/modeles</td><td>5 modèles par métier</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/questionnaires</td><td>Liste questionnaires</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/questionnaires</td><td>Créer questionnaire</td></tr>
-      <tr><td><span class="m patch">PATCH</span></td><td>/questionnaires</td><td>Modifier questionnaire</td></tr>
-    </table>
-  </div>
-
-  <!-- PORTAIL CLIENT S61 -->
-  <div class="section">
-    <div class="sec-title"><span class="sec-num">13</span> Portail Client <span class="badge b-s61" style="margin-left:.5rem">NEW S61</span></div>
-    <table>
-      <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
-      <tr><td><span class="m post">POST</span></td><td>/portail/auth/login</td><td>Connexion client (token acces → session_token)</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/portail/auth/logout</td><td>Déconnexion (invalide session)</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/portail/auth/me</td><td>Infos client + animaux depuis session active</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/portail/seances</td><td>Séances du client connecté</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/portail/seances/:id</td><td>Détail séance + compte-rendu</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/portail/seances/:id/confirmer</td><td>CONFIRME / ANNULE / REPORTE</td></tr>
-      <tr><td><span class="m get">GET</span></td><td>/portail-admin/acces</td><td>Liste accès portail (praticien)</td></tr>
-      <tr><td><span class="m post">POST</span></td><td>/portail-admin/acces</td><td>Créer accès + générer token</td></tr>
-      <tr><td><span class="m del">DELETE</span></td><td>/portail-admin/acces/:id</td><td>Révoquer accès (+ invalider sessions)</td></tr>
-    </table>
-  </div>
-
 </div>
 
 <footer>
-  <strong>Anim'Gest</strong> &mdash; NoSage's Editor &mdash; API Reference<br>
-  <small>MàJ Sprint S61 &mdash; 29/03/2026 &mdash; 90+ routes &mdash; custom-routes.ts ~2800 lignes</small>
+  Anim'Gest — NoSage's Editor — API Reference MàJ Sprint S63 — 01/04/2026 — ~115 routes — custom-routes.ts 3846 lignes
+  <br><a href="index.html">← Retour à l'accueil</a>
+  &nbsp;·&nbsp;<a href="20-pilotage-projet.html">Pilotage</a>
+  &nbsp;·&nbsp;<a href="57-module-portail-client.html">Portail Client</a>
 </footer>
+
 </body>
 </html>

@@ -3,535 +3,684 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anim'Gest — Changelogs &amp; Sprints</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Changelogs & Sprints — Anim'Gest Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge { margin-left: auto; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); color: var(--gold); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
 
-  /* ── Anim'Gest Design System ── */
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 60px 32px 48px; text-align: center; position: relative; overflow: hidden;
+}
+.hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%); pointer-events: none; }
+.hero-label { display: inline-block; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--gold); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 16px; }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; color: #F8FAFC; margin-bottom: 12px; }
+.hero-sub { color: var(--text-muted); font-size: 0.9rem; max-width: 560px; margin: 0 auto; }
 
-  :root {
-    --ag-navy:   #0F172A;
-    --ag-navy2:  #1E293B;
-    --ag-navy3:  #334155;
-    --ag-gold:   #B8860B;
-    --ag-gold2:  #D4A017;
-    --ag-gold3:  #F5D76E;
-    --ag-white:  #F8FAFC;
-    --ag-muted:  #94A3B8;
-    --ag-accent: #4F46E5;
-    --ag-cyan:   #06B6D4;
-    --ag-green:  #10B981;
-    --ag-red:    #EF4444;
-    --ag-orange: #F59E0B;
-    --ag-radius: 10px;
-    --ag-shadow: 0 4px 24px rgba(0,0,0,0.35);
-    --ag-font-heading: 'Playfair Display', Georgia, serif;
-    --ag-font-body:    'DM Sans', system-ui, sans-serif;
-  }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(245,158,11,0.1); border-top: 1px solid rgba(245,158,11,0.1); }
+.kpi-card { background: var(--navy); padding: 24px 20px; text-align: center; }
+.kpi-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+.kpi-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.main { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
 
-  body {
-    background: var(--ag-navy);
-    color: var(--ag-white);
-    font-family: var(--ag-font-body);
-    font-size: 15px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+/* TABS */
+.tab-nav { display: flex; gap: 4px; margin-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0; }
+.tab-btn { padding: 10px 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: none; background: none; color: var(--text-muted); border-bottom: 2px solid transparent; transition: all .2s; margin-bottom: -1px; }
+.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+.tab-btn:hover { color: var(--text); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
-  h1, h2, h3, h4 {
-    font-family: var(--ag-font-heading);
-    color: var(--ag-white);
-    letter-spacing: -0.5px;
-  }
+/* SPRINT CARD */
+.sprint-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.sprint-card.current { border-color: rgba(245,158,11,0.35); }
+.sprint-head {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 24px;
+  background: linear-gradient(90deg, rgba(245,158,11,0.06) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.sprint-num-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 1rem; font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.25);
+  padding: 6px 14px; border-radius: 8px;
+  min-width: 52px; text-align: center;
+}
+.sprint-head-info { flex: 1; }
+.sprint-head-title { font-weight: 700; font-size: 1rem; margin-bottom: 2px; }
+.sprint-head-meta { font-size: 0.8rem; color: var(--text-muted); }
+.sprint-status-pill {
+  font-size: 0.7rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.pill-current { background: rgba(245,158,11,0.15); color: var(--gold); border: 1px solid rgba(245,158,11,0.3); }
+.pill-done { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.pill-progress { background: rgba(249,115,22,0.1); color: var(--orange); border: 1px solid rgba(249,115,22,0.2); }
 
-  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-  h2 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--ag-gold2); }
-  h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+.sprint-body { padding: 20px 24px; }
+.sprint-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.col-title {
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-muted); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.col-title::before { content: ''; display: block; width: 3px; height: 12px; border-radius: 2px; }
+.col-api::before { background: var(--cyan); }
+.col-front::before { background: #818CF8; }
+.col-fix::before { background: var(--red); }
+.col-ia::before { background: var(--green); }
+.col-bdd::before { background: var(--gold); }
+.change-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.change-list li { font-size: 0.83rem; color: var(--text-muted); padding-left: 14px; position: relative; }
+.change-list li::before { content: '▸'; position: absolute; left: 0; color: inherit; opacity: 0.7; font-size: 0.65rem; top: 2px; }
+.change-list li.api::before { color: var(--cyan); }
+.change-list li.front::before { color: #818CF8; }
+.change-list li.fix::before { color: var(--red); }
+.change-list li.ia::before { color: var(--green); }
+.change-list li.bdd::before { color: var(--gold); }
 
-  a { color: var(--ag-gold2); text-decoration: none; transition: color 0.2s; }
-  a:hover { color: var(--ag-gold3); text-decoration: underline; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
+.tag { font-size: 0.68rem; font-weight: 600; padding: 3px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.tag-fix { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
 
-  .ag-header {
-    background: var(--ag-navy2);
-    border-bottom: 2px solid var(--ag-gold);
-    padding: 1.5rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .ag-header .ag-logo {
-    font-family: var(--ag-font-heading);
-    font-size: 1.6rem;
-    color: var(--ag-gold2);
-    letter-spacing: -1px;
-  }
-  .ag-header .ag-subtitle {
-    font-size: 0.85rem;
-    color: var(--ag-muted);
-  }
-  .ag-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 999px;
-    background: rgba(184,134,11,0.15);
-    color: var(--ag-gold2);
-    border: 1px solid rgba(184,134,11,0.3);
-  }
-  .ag-card {
-    background: var(--ag-navy2);
-    border: 1px solid var(--ag-navy3);
-    border-radius: var(--ag-radius);
-    padding: 1.5rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .ag-card:hover { border-color: var(--ag-gold); box-shadow: var(--ag-shadow); }
+/* COMMIT BOX */
+.commit-box {
+  margin-top: 14px;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex; gap: 24px; flex-wrap: wrap;
+}
+.commit-box .commit-hash { color: var(--gold); }
 
-  .ag-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.55rem 1.25rem;
-    border-radius: var(--ag-radius);
-    font-family: var(--ag-font-body);
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: none;
-  }
-  .ag-btn-primary {
-    background: linear-gradient(135deg, var(--ag-accent), var(--ag-cyan));
-    color: #fff;
-  }
-  .ag-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-  .ag-btn-gold {
-    background: linear-gradient(135deg, var(--ag-gold), var(--ag-gold2));
-    color: var(--ag-navy);
-  }
-  .ag-btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
-  .ag-btn-ghost {
-    background: transparent;
-    border: 1px solid var(--ag-navy3);
-    color: var(--ag-muted);
-  }
-  .ag-btn-ghost:hover { border-color: var(--ag-gold); color: var(--ag-gold2); }
+/* BUGS TABLE */
+.bugs-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin-top: 16px; }
+.bugs-table th { text-align: left; padding: 10px 14px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.bugs-table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+.bugs-table tr:last-child td { border-bottom: none; }
+.bugs-table td:first-child { color: var(--text); font-weight: 500; }
+.crit-rouge { color: var(--red); font-weight: 700; font-size: 0.75rem; }
+.crit-orange { color: var(--orange); font-weight: 700; font-size: 0.75rem; }
+.crit-jaune { color: var(--gold); font-weight: 700; font-size: 0.75rem; }
 
-  .ag-tag-rouge  { background: rgba(239,68,68,0.15);  color: #F87171; border: 1px solid rgba(239,68,68,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
-  .ag-tag-orange { background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
-  .ag-tag-vert   { background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
-  .ag-tag-bleu   { background: rgba(79,70,229,0.15);  color: #818CF8; border: 1px solid rgba(79,70,229,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
-
-  table { width: 100%; border-collapse: collapse; }
-  th { text-align: left; padding: 0.6rem 0.8rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ag-muted); border-bottom: 1px solid var(--ag-navy3); }
-  td { padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(51,65,85,0.5); font-size: 0.875rem; }
-  tr:hover td { background: rgba(255,255,255,0.03); }
-
-  code, pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); border-radius: 4px; }
-  code { padding: 0.1rem 0.4rem; color: var(--ag-gold3); }
-  pre { padding: 1rem 1.25rem; overflow-x: auto; border: 1px solid var(--ag-navy3); color: #E2E8F0; line-height: 1.7; }
-
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: var(--ag-navy); }
-  ::-webkit-scrollbar-thumb { background: var(--ag-navy3); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--ag-gold); }
-  /* ── Fin charte Anim'Gest ── */
-
-</style>
-<style>
-:root{--navy:#0D2137;--navy-l:#112840;--navy-m:#1a3a5c;--gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);--text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;--bdr:rgba(255,255,255,.08);--ok:#4caf82;--warn:#e8a84a;--err:#e05c5c;--info:#5b9bd5;--r:10px}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
-a{color:var(--gold);text-decoration:none}
-header{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.h-brand{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.15rem}
-.h-brand small{font-size:.72rem;color:var(--muted);margin-left:.75rem;font-weight:300}
-.h-right{display:flex;align-items:center;gap:.75rem}
-.h-nav{display:flex;gap:4px}
-.h-nav a{font-size:.75rem;color:var(--muted);padding:.3rem .7rem;border-radius:6px;border:1px solid transparent;transition:all .15s}
-.h-nav a:hover{border-color:var(--gold-b);color:var(--text)}
-.sprint-chip{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:20px;padding:.28rem 1rem;font-size:.72rem;font-weight:600;color:var(--gold)}
-.wrap{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem 3rem}
-.hero-bar{background:linear-gradient(135deg,var(--navy-l),var(--navy-m));border:1px solid var(--gold-b);border-radius:var(--r);padding:1.5rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
-.hero-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold)}
-.hero-sub{color:var(--muted);font-size:.85rem;margin-top:.2rem}
-.hero-kpis{display:flex;gap:1.5rem;margin-left:auto;flex-wrap:wrap}
-.hk{text-align:center}
-.hk-v{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);font-weight:700;display:block}
-.hk-l{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.sprint-nav{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--bdr)}
-.sp-btn{padding:.35rem .9rem;border-radius:20px;border:1px solid var(--bdr);background:transparent;color:var(--muted);font-size:.75rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap}
-.sp-btn:hover{border-color:var(--gold-b);color:var(--text)}
-.sp-btn.on{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:700}
-.sp-btn.current-btn{border-color:var(--info);color:var(--info)}
-.sprint-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap}
-.sprint-badge-big{background:var(--gold);color:var(--navy);font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;padding:.4rem .9rem;border-radius:6px;flex-shrink:0}
-.sprint-badge-big.current{background:var(--info);color:#fff}
-.sprint-info{flex:1}
-.sprint-title-txt{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--text)}
-.sprint-date{color:var(--muted);font-size:.8rem;margin-top:.25rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-.badge-current{display:inline-flex;align-items:center;gap:5px;background:rgba(91,155,213,.15);border:1px solid rgba(91,155,213,.3);color:var(--info);border-radius:20px;padding:.18rem .65rem;font-size:.68rem;font-weight:600}
-.badge-done{background:rgba(60,207,142,.12);border:1px solid rgba(60,207,142,.3);color:var(--ok);border-radius:20px;padding:.18rem .65rem;font-size:.68rem;font-weight:600}
-.dot-pulse{width:6px;height:6px;border-radius:50%;background:var(--info);animation:pulse 2s infinite;flex-shrink:0}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.sprint-score-box{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:8px;padding:.5rem 1rem;text-align:center;min-width:80px;flex-shrink:0}
-.ssv{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
-.ssl{font-size:.65rem;color:var(--muted)}
-.score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1.2rem}
-.sc{background:var(--navy-l);border:1px solid var(--bdr);border-radius:8px;padding:.7rem;text-align:center}
-.sc-v{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700}
-.sc-l{font-size:.65rem;color:var(--muted);margin-top:.15rem}
-.sec{margin-bottom:1.4rem}
-.sec-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:.5rem}
-.sec-num{background:var(--gold);color:var(--navy);font-size:.62rem;font-weight:700;padding:.14rem .42rem;border-radius:3px;font-family:'DM Sans',sans-serif}
-.item-list{display:flex;flex-direction:column;gap:.45rem}
-.item{background:var(--navy-l);border:1px solid var(--bdr);border-radius:8px;padding:.7rem 1rem;display:flex;align-items:flex-start;gap:.7rem;transition:border-color .15s}
-.item:hover{border-color:var(--gold-b)}
-.itag{flex-shrink:0;font-size:.62rem;font-weight:700;padding:.14rem .48rem;border-radius:3px;margin-top:.2rem;letter-spacing:.03em}
-.t-api{background:rgba(91,155,213,.15);color:var(--info);border:1px solid rgba(91,155,213,.3)}
-.t-front{background:rgba(167,139,250,.15);color:#a78bfa;border:1px solid rgba(167,139,250,.3)}
-.t-bdd{background:rgba(212,168,67,.12);color:var(--gold);border:1px solid var(--gold-b)}
-.t-fix{background:rgba(60,207,142,.15);color:var(--ok);border:1px solid rgba(60,207,142,.3)}
-.t-sav{background:rgba(120,100,220,.15);color:#a89cf7;border:1px solid rgba(120,100,220,.3)}
-.ibody{flex:1}
-.ititle{font-weight:500;color:var(--text);font-size:.84rem;margin-bottom:.1rem}
-.idesc{color:var(--muted);font-size:.78rem;line-height:1.5}
-.commit-list{display:flex;flex-direction:column;gap:5px}
-.commit{display:flex;align-items:flex-start;gap:9px;background:rgba(0,0,0,.2);border-radius:6px;padding:7px 11px}
-.chash{font-family:'Courier New',monospace;font-size:.7rem;color:var(--info);background:rgba(91,155,213,.1);padding:1px 5px;border-radius:3px;flex-shrink:0;margin-top:2px}
-.cmsg{font-size:.79rem;color:var(--muted)}
-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.25rem}
-th{text-align:left;padding:7px 10px;border-bottom:1px solid var(--gold-b);color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
-td{padding:7px 10px;border-bottom:1px solid var(--bdr);vertical-align:top}
-td:first-child{color:var(--text)}
-.empty{color:var(--dim);font-size:.83rem;padding:.75rem;font-style:italic}
-.app-footer{background:var(--navy-l);border-top:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.af-left a{font-size:.78rem;font-weight:600;color:var(--gold)}
-.af-right{display:flex;gap:8px}
-.af-right a{font-size:.75rem;color:var(--muted);padding:.3rem .8rem;border:1px solid var(--bdr);border-radius:6px;transition:all .15s}
-.af-right a:hover{border-color:var(--gold-b);color:var(--text)}
-@media(max-width:600px){.score-row{grid-template-columns:1fr 1fr}.hero-kpis{margin-left:0}}
+footer { text-align: center; padding: 32px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.8rem; color: var(--text-muted); margin-top: 60px; }
+footer a { color: var(--gold); text-decoration: none; }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="h-brand">Anim'Gest <small>Changelogs &amp; Sprints</small></div>
-  <div class="h-right">
-    <div class="h-nav">
-      <a href="index.html">Accueil</a>
-      <a href="20-pilotage-projet.html">Pilotage</a>
-      <a href="07-audit-stack.html">Stack</a>
-    </div>
-    <div class="sprint-chip">S62</div>
-  </div>
-</header>
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <a href="07-audit-stack.html">Stack</a>
+  <a href="17-api-reference.html">API</a>
+  <span class="nav-badge">S63</span>
+</nav>
 
-<div class="wrap">
-  <div class="hero-bar">
-    <div>
-      <div class="hero-title">Changelogs &amp; Sprints</div>
-      <div class="hero-sub">Historique complet des livraisons Anim'Gest — S30 &rarr; S62 — NoSage's Editor</div>
-    </div>
-    <div class="hero-kpis">
-      <div class="hk"><span class="hk-v">32</span><span class="hk-l">Sprints</span></div>
-      <div class="hk"><span class="hk-v">105</span><span class="hk-l">Pages UI</span></div>
-      <div class="hk"><span class="hk-v">90+</span><span class="hk-l">Routes API</span></div>
-      <div class="hk"><span class="hk-v">82</span><span class="hk-l">Score S61</span></div>
-    </div>
-  </div>
-
-  <div id="sprint-nav-container"></div>
-  <div id="main-content"></div>
+<div class="hero">
+  <div class="hero-label">Changelogs &amp; Sprints</div>
+  <h1>Historique des livraisons</h1>
+  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S63 — NoSage's Editor</p>
 </div>
 
-<div class="app-footer">
-  <div class="af-left"><a href="index.html">← Index documentation</a></div>
-  <div class="af-right">
-    <a href="20-pilotage-projet.html">📊 Pilotage</a>
-    <a href="SAV_Launcher.html">🚀 SAV</a>
-    <a href="07-audit-stack.html">🏗️ Stack</a>
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-value">33</div>
+    <div class="kpi-label">Sprints</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">106</div>
+    <div class="kpi-label">Pages UI</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">~115</div>
+    <div class="kpi-label">Routes API</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">85/100</div>
+    <div class="kpi-label">Score S63</div>
   </div>
 </div>
+
+<div class="main">
+
+  <!-- TABS NAV -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('s63')">S63</button>
+    <button class="tab-btn" onclick="showTab('s62')">S62</button>
+    <button class="tab-btn" onclick="showTab('s61')">S61</button>
+    <button class="tab-btn" onclick="showTab('s60')">S60</button>
+    <button class="tab-btn" onclick="showTab('s59')">S59</button>
+    <button class="tab-btn" onclick="showTab('s58')">S58</button>
+    <button class="tab-btn" onclick="showTab('s57')">S57</button>
+    <button class="tab-btn" onclick="showTab('s56')">S56</button>
+    <button class="tab-btn" onclick="showTab('s55')">S55</button>
+    <button class="tab-btn" onclick="showTab('s54')">S54</button>
+    <button class="tab-btn" onclick="showTab('s53')">S53</button>
+    <button class="tab-btn" onclick="showTab('s52')">S52</button>
+    <button class="tab-btn" onclick="showTab('s51')">S51</button>
+    <button class="tab-btn" onclick="showTab('s50')">S50</button>
+    <button class="tab-btn" onclick="showTab('s30')">S30→S48</button>
+  </div>
+
+  <!-- S63 -->
+  <div id="tab-s63" class="tab-content active">
+    <div class="sprint-card current">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S63</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Portail Client déploiement complet + Eliot agent + Email nodemailer</div>
+          <div class="sprint-head-meta">01/04/2026 · commit b687f04</div>
+        </div>
+        <span class="sprint-status-pill pill-current">Terminé → S64</span>
+      </div>
+      <div class="sprint-body">
+        <div class="sprint-cols">
+          <div>
+            <div class="col-title col-api">API — 11 routes portail</div>
+            <ul class="change-list">
+              <li class="api">POST /portail/auth/login — connexion par token, création session</li>
+              <li class="api">POST /portail/auth/logout — invalidation session</li>
+              <li class="api">GET /portail/animaux — animaux du client connecté</li>
+              <li class="api">GET /portail/seances — séances (SEA_DATE_DEBUT)</li>
+              <li class="api">GET /portail/factures — factures du client</li>
+              <li class="api">GET /portail/notifications — notifications (colonnes PCN_*)</li>
+              <li class="api">GET /portail/admin/acces — liste accès praticien</li>
+              <li class="api">POST /portail/admin/acces — créer accès portail</li>
+              <li class="api">PUT /portail/admin/acces/:id/toggle — activer/désactiver</li>
+              <li class="api">POST /portail/admin/acces/:id/send-link — envoyer lien email</li>
+              <li class="api">POST /portail/seances/:id/confirmer — confirmation séance</li>
+              <li class="api">PUT /param-smtp — sauvegarde config SMTP</li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-title col-front">Frontend — 2 pages</div>
+            <ul class="change-list">
+              <li class="front">/client/[token] — espace client : login auto, 4 onglets (séances/factures/animaux/notifications)</li>
+              <li class="front">/app/parametres/portail — admin portail : select 500 tiers, email auto depuis TIE_EMAIL, copier/envoyer/toggle</li>
+              <li class="front">Sidebar : tuile 🔗 Portail Client sous groupe Communauté</li>
+              <li class="front">Liste clients : bouton 🔗 Portail par ligne</li>
+              <li class="front">Fiche client : bouton 🔗 Portail dans PageHeader</li>
+            </ul>
+            <div class="col-title col-ia" style="margin-top:16px">Eliot — 3 tools S63</div>
+            <ul class="change-list">
+              <li class="ia">update_statut_devis — BROUILLON→ENVOYE→ACCEPTE→REFUSE→ANNULE</li>
+              <li class="ia">create_facture_depuis_devis — convertit devis ACCEPTE en facture</li>
+              <li class="ia">create_reglement — INSERT sans REG_STATUT (corrigé)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-title col-fix" style="margin-top:20px">Corrections BDD & bugs</div>
+        <ul class="change-list" style="display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;">
+          <li class="fix">ANI_CLI (pas TIE_ID) dans table animal</li>
+          <li class="fix">SEA_DATE_DEBUT (pas SEA_DATE) dans table seance</li>
+          <li class="fix">TIE_RAISON_SOCIALE (pas TIE_NOM/PRENOM)</li>
+          <li class="fix">REG_STATUT inexistant → supprimé du INSERT</li>
+          <li class="fix">DCE_STATUT enum : FACTURE n'existe pas → retiré</li>
+          <li class="fix">FAC_NUM (pas FAC_NUMERO_INT) dans POST /devis/:id/facturer</li>
+          <li class="fix">Doublons execTool Eliot nettoyés (3 doublons)</li>
+          <li class="fix">send-link ID parsing → urlParts[urlParts.length - 2]</li>
+        </ul>
+        <div class="commit-box">
+          <span class="commit-hash">b687f04</span>
+          <span>S63 - Portail Client complet + Eliot tools S63 + Email nodemailer + Sidebar</span>
+        </div>
+        <div class="tags">
+          <span class="tag tag-api">11 routes portail</span>
+          <span class="tag tag-front">2 pages UI</span>
+          <span class="tag tag-ia">Eliot x3 tools</span>
+          <span class="tag tag-fix">nodemailer validé</span>
+          <span class="tag tag-bdd">colonnes BDD corrigées</span>
+          <span class="tag tag-fix">8 bugs corrigés</span>
+        </div>
+        <div style="margin-top:24px">
+          <div class="col-title col-fix">Bugs connus → S64</div>
+          <table class="bugs-table">
+            <thead><tr><th>Description</th><th>Module</th><th>Criticité</th></tr></thead>
+            <tbody>
+              <tr><td>PUT /devis/:id — lignes non supportées</td><td>Devis</td><td class="crit-rouge">ROUGE</td></tr>
+              <tr><td>POST /devis/:id/facturer — colonnes facture à vérifier</td><td>Factures</td><td class="crit-rouge">ROUGE</td></tr>
+              <tr><td>REG_STATUT encore présent dans un INSERT (L~56376)</td><td>Règlements</td><td class="crit-rouge">ROUGE</td></tr>
+              <tr><td>Tools Eliot doublons dans liste déclarée (3 tools x2)</td><td>Eliot</td><td class="crit-rouge">ROUGE</td></tr>
+              <tr><td>create_reglement — test end-to-end à faire</td><td>Eliot</td><td class="crit-orange">ORANGE</td></tr>
+              <tr><td>portailEmail initialisé avant chargement client</td><td>Portail admin</td><td class="crit-orange">ORANGE</td></tr>
+              <tr><td>/app/elevage/declarations — page TSX manquante</td><td>Elevage</td><td class="crit-jaune">JAUNE</td></tr>
+              <tr><td>Export CSV règlements</td><td>Règlements</td><td class="crit-jaune">JAUNE</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S62 -->
+  <div id="tab-s62" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S62</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Eliot agent IA + PDF param_edition + Paramètres Éditions GED</div>
+          <div class="sprint-head-meta">30/03/2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <div class="sprint-cols">
+          <div>
+            <div class="col-title col-api">API</div>
+            <ul class="change-list">
+              <li class="api">POST /editions/upload-logo — upload logo en GED</li>
+              <li class="api">GET /editions/upload-logo — lecture logo base64</li>
+              <li class="api">POST /editions/upload-filigrane — upload filigrane</li>
+              <li class="api">GET /editions/upload-filigrane — lecture filigrane base64</li>
+              <li class="api">POST /editions/upload-cgv — upload CGV PDF</li>
+              <li class="api">GET /editions/cgv/preview — preview PDF CGV</li>
+              <li class="api">GET /editions/devis/:id — PDF puppeteer avec param_edition</li>
+              <li class="api">GET /editions/facture/:id — PDF puppeteer avec param_edition</li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-title col-front">Frontend</div>
+            <ul class="change-list">
+              <li class="front">Paramètres Éditions — zone upload logo + filigrane + CGV</li>
+              <li class="front">Aperçu filigrane avec fond transparent</li>
+            </ul>
+            <div class="col-title col-ia" style="margin-top:16px">Eliot agent IA</div>
+            <ul class="change-list">
+              <li class="ia">Widget Eliot IA — 7 tools : get_client, get_animal, create_devis, create_seance, get_planning, get_factures, send_email</li>
+            </ul>
+            <div class="col-title col-bdd" style="margin-top:16px">BDD</div>
+            <ul class="change-list">
+              <li class="bdd">ED_LOGO_BASE64 LONGTEXT, ED_FILIGRANE_BASE64 LONGTEXT</li>
+              <li class="bdd">PE_CGV_DOC_ID BIGINT, PE_CGV_BASE64 LONGTEXT</li>
+            </ul>
+            <div class="col-title col-fix" style="margin-top:16px">Bugs corrigés</div>
+            <ul class="change-list">
+              <li class="fix">ANI_ESPECE → ANI_ESPECE_RACE (comptage espèces)</li>
+              <li class="fix">Whitelist PARAM_EDITION_COLS (SQL error save)</li>
+              <li class="fix">Filigrane texte → zone image upload</li>
+              <li class="fix">&#10003; entité HTML → Unicode ✓</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S61 -->
+  <div id="tab-s61" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S61</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Widget Eliot IA v2 + Portail Client BDD + planning journalier</div>
+          <div class="sprint-head-meta">29/03/2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <div class="sprint-cols">
+          <div>
+            <div class="col-title col-ia">Eliot IA v2</div>
+            <ul class="change-list">
+              <li class="ia">Drag fluide, panneau adaptatif, 20 avatars WebP compressés</li>
+              <li class="ia">Vocal (Web Speech API), nom configurable, position persistée</li>
+              <li class="ia">Route POST /ia/chat — proxy Anthropic API côté serveur</li>
+              <li class="ia">ANTHROPIC_API_KEY sécurisée (jamais exposée frontend)</li>
+            </ul>
+          </div>
+          <div>
+            <div class="col-title col-bdd">Portail Client BDD</div>
+            <ul class="change-list">
+              <li class="bdd">portail_client_acces (PCA_ID, PCA_TOKEN, PCA_ACTIF…)</li>
+              <li class="bdd">portail_client_session (PCS_SESSION_TOKEN…)</li>
+              <li class="bdd">portail_client_notification (PCN_TYPE, PCN_CANAL…)</li>
+              <li class="bdd">portail_client_action (log des actions client)</li>
+            </ul>
+            <div class="col-title col-front" style="margin-top:16px">Frontend</div>
+            <ul class="change-list">
+              <li class="front">Planning journalier — vue Jour grille 7h-20h30</li>
+              <li class="front">43 strings SQL multi-lignes fusionnées</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S60 -->
+  <div id="tab-s60" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S60</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Statistiques CA + dashboards 9 métiers + carte clients Leaflet v2</div>
+          <div class="sprint-head-meta">28/03/2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="api">20 nouvelles routes stats : kpis, ca-par-mois, especes, top-clients, villes, especes-ca, planning-seances…</li>
+          <li class="front">Dashboards 9 métiers alimentés en données réelles</li>
+          <li class="front">Carte clients Leaflet v2 — géocodage batch api-adresse.data.gouv.fr, 140/167 localisés</li>
+          <li class="front">Page statistiques : CA 48 014 €, panier moyen 231 €</li>
+          <li class="api">Export CSV factures et séances (UTF-8 BOM, séparateur ;)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S59 -->
+  <div id="tab-s59" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S59</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">RBAC complet — rôles, permissions, middleware</div>
+          <div class="sprint-head-meta">Mars 2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="api">GET /roles, GET /roles/:id/permissions, GET /user-permissions</li>
+          <li class="bdd">4 rôles : ADMIN, GESTION, CONSULT, COMPTA — middleware permissions par module</li>
+          <li class="front">UI gestion rôles + permissions par module (can_read, can_write, can_delete)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S58 -->
+  <div id="tab-s58" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S58</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Forfaits & Formules + Yousign signatures UI</div>
+          <div class="sprint-head-meta">Mars 2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="api">GET/POST /forfaits, GET/POST /formules, POST /formules/:id/souscrire, POST /formules/:id/consommer</li>
+          <li class="front">Catalogue forfaits par métier, souscriptions clients, consommation séances auto-statut EPUISEE</li>
+          <li class="front">Signatures Yousign — paramètres UI, demandes, webhook statut</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S57 -->
+  <div id="tab-s57" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S57</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">CRM complet — leads, opportunités, activités, campagnes</div>
+          <div class="sprint-head-meta">Mars 2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="api">GET /leads, /crm/leads, /crm/stats, /crm/opportunites, /crm/activites, /crm/campagnes, /crm/tags</li>
+          <li class="bdd">crm_lead, crm_opportunite, crm_activite, crm_note, crm_campagne, crm_tag, crm_tag_lien</li>
+          <li class="front">Pipeline CRM kanban, formulaire lead public, campagnes ciblées</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S56 -->
+  <div id="tab-s56" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S56</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Agenda planning séances + charte graphique</div>
+          <div class="sprint-head-meta">Mars 2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="front">Agenda planning séances — vue semaine + drag & drop</li>
+          <li class="front">Charte graphique globale navy/gold appliquée sur toutes les pages</li>
+          <li class="front">Boutons btn-danger, AideContextuelle uniformisée</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S55 -->
+  <div id="tab-s55" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S55</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Pages paiements + export FEC + comptabilité</div>
+          <div class="sprint-head-meta">Mars 2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="api">GET /comptabilite/fec-export, /bilan/*, plan-comptable</li>
+          <li class="front">Page règlements, export FEC conforme PCG 2025, bilan comptable</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S54 -->
+  <div id="tab-s54" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S54</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Stock PMP + inventaires + sorties stock</div>
+          <div class="sprint-head-meta">Mars 2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="bdd">param_stock, stock_lot, stock_mouvement, inventaire, inventaire_ligne, sortie_stock</li>
+          <li class="api">Routes /stock/* — mouvements, inventaires, correction PMP</li>
+          <li class="front">Pages stock liste, mouvements, inventaires, sorties, correction PMP</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S53 -->
+  <div id="tab-s53" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S53</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Achats fournisseurs complet + élevage</div>
+          <div class="sprint-head-meta">Mars 2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="bdd">demande_prix, commande_fournisseur, bon_livraison_fourn, facture_fournisseur, bon_retour, avoir_fournisseur, reglement_fournisseur</li>
+          <li class="bdd">elevage : portées, saillies, gestations, réservations chiots, généalogie</li>
+          <li class="api">Routes /achats/* complet + /elevage/*</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S52 -->
+  <div id="tab-s52" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S52</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">GED CAC évolution + carte Leaflet v1 + notice v4</div>
+          <div class="sprint-head-meta">25/03/2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="api">GET /ged-cac/animal/:id/evolution, /ged-cac/animal/:id/score</li>
+          <li class="front">Carte clients Leaflet v1 — géocodage batch via api-adresse.data.gouv.fr</li>
+          <li class="front">Notice utilisateur v4 — élevage, achats, inventaires, RS, topbar v2</li>
+          <li class="front">Uniformisation boutons ← Retour et + Nouveau</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S51 -->
+  <div id="tab-s51" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S51</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">GED avancée + réseaux sociaux + topbar v2</div>
+          <div class="sprint-head-meta">Mars 2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="api">GET /reseaux-sociaux/comptes, /reseaux-sociaux/publications</li>
+          <li class="front">GED polymorphe — documents par type (ANIMAL, FACTURE, TIERS, EDC_FICHE…)</li>
+          <li class="front">Topbar v2 — notifications, profil, accès rapide</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S50 -->
+  <div id="tab-s50" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S50</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Charte graphique globale navy/gold + BDD commentaires</div>
+          <div class="sprint-head-meta">Mars 2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminé</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li class="front">Charte navy/gold appliquée sur 96 pages UI</li>
+          <li class="front">PDF modal uniquement — jamais window.open()</li>
+          <li class="bdd">Commentaires BDD 241/241 colonnes documentées</li>
+          <li class="fix">Doublon AideContextuelle supprimé, btn-danger unifié</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- S30→S48 -->
+  <div id="tab-s30" class="tab-content">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S30→S48</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Fondations — Auth, CRUD, PDF, Agenda, CRM, Stats, PWA</div>
+          <div class="sprint-head-meta">Janvier → Mars 2026</div>
+        </div>
+        <span class="sprint-status-pill pill-done">Terminés</span>
+      </div>
+      <div class="sprint-body">
+        <ul class="change-list">
+          <li>S48 — Agenda planning séances, signatures Yousign UI, pages paiements</li>
+          <li>S47 — CRM complet (leads, opportunités, activités, campagnes, tags)</li>
+          <li>S46 — Seeds démo : Jean Dujardin, Frimousse (Malinois), devis/factures</li>
+          <li>S44-S45 — Dashboards métiers, devis/new v2, droits utilisateurs RBAC</li>
+          <li>S42-S43 — Statistiques avancées, questionnaires, export FEC</li>
+          <li>S38-S41 — Programmes suivi CAC, SMS Twilio, Stripe portail, PWA mobile</li>
+          <li>S35-S37 — GED complète, factures fournisseurs, avoirs</li>
+          <li>S32-S34 — Agenda visuel, templates devis, SMTP, PDF avancé</li>
+          <li>S30-S31 — Setup BDD, Auth JWT, CRUD tiers/animaux/séances</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor — Changelogs S30→S63 — MàJ 01/04/2026
+  <br><a href="index.html">← Index documentation</a>
+  &nbsp;·&nbsp;<a href="20-pilotage-projet.html">📊 Pilotage</a>
+  &nbsp;·&nbsp;<a href="SAV_Launcher.html">🚀 SAV</a>
+  &nbsp;·&nbsp;<a href="07-audit-stack.html">🏗️ Stack</a>
+</footer>
 
 <script>
-var SPRINTS = [
-  {id:'S62',statut:'current',date:'30/03/2026',titre:'Portail Client deploiement + Widget IA ameliorations',
-   scores:{backend:0,frontend:0,bdd:0,global:0},commits:[],
-   front:['Portail Client — injection routes_portail_S61.ts + routes_portail_S62.ts',
-          'Deploiement /client/[token] page TSX (4 onglets)',
-          'Widget IA — lien Sidebar + nom configurable + vocal'],
-   back:['routes_portail_S62.ts — 7 routes animaux/CAC/devis/factures/PDF'],
-   bdd:[],fix:[],
-   bugs:[{l:'Audit PDF window.open() a remplacer',m:'Editions',c:'Haute'},
-         {l:'Drag Drop agenda non fonctionnel',m:'Planning',c:'Moyenne'},
-         {l:'devis_ligne inexistante',m:'Devis',c:'Moyenne'}]},
-
-  {id:'S61',statut:'done',date:'29/03/2026',titre:'Widget Eliot IA v2 + Portail Client BDD + 43 SQL fixes',
-   scores:{backend:82,frontend:80,bdd:85,global:82},
-   commits:[{hash:'95cc9c2',msg:'S61a — Route /ia/chat + fix custom-routes 43 corrections SQL + SSR fix'},
-            {hash:'a6f7514',msg:'S61b — Avatar Eliot + drag + 20 avatars WebP + page widget-ia'},
-            {hash:'a822cc8',msg:'S61c — Widget v2 drag fluide + panneau adaptatif + avatar temps reel'},
-            {hash:'12b0d9b',msg:'S61d — Suppression Poney_001 + .gitignore *.bak*'}],
-   front:['ClaudeWidget.tsx v2 — drag fluide, panneau adaptatif, avatar temps reel',
-          'Page /app/parametres/widget-ia — selection avatar 20 WebP',
-          'ClaudeWidgetWrapper.tsx — dynamic+ssr:false (fix SSR)',
-          'StatusBadge — fix import named default formules/page.tsx'],
-   back:['POST /ia/chat — proxy Anthropic cote serveur, ANTHROPIC_API_KEY securisee',
-         '43 strings SQL multi-lignes fusionnees (3133 vers 2875 lignes)',
-         '12 corrections backtick/double-quote melanges'],
-   bdd:['portail_client_acces — Token UUID + TIE_ID INT(11)',
-        'portail_client_session — Session token 24h',
-        'portail_client_notification (S63)',
-        'portail_client_confirmation_seance'],
-   fix:['307 Mo vers 242 Ko — 20 PNG BIB_Widget comprimes WebP',
-        '@react-three/fiber supprime — remplace par avatars PNG'],
-   bugs:[{l:'Audit PDF window.open()',m:'Editions',c:'Haute'},
-         {l:'Drag Drop agenda',m:'Planning',c:'Moyenne'},
-         {l:'devis_ligne inexistante',m:'Devis',c:'Moyenne'},
-         {l:'Export CSV reglements',m:'Reglements',c:'Basse'},
-         {l:'/app/elevage/declarations manquante',m:'Elevage',c:'Basse'}]},
-
-  {id:'S60',statut:'done',date:'29/03/2026',titre:'Fix Reseaux Sociaux + Devis transitions statut',
-   scores:{backend:82,frontend:80,bdd:85,global:82},
-   commits:[{hash:'c6e046c',msg:'S60a — Fix PUT reseaux-sociaux + lien Nouveau devis sidebar'},
-            {hash:'6cc4050',msg:'S60b — Fix RS colonnes _URL + migration rs_publication vers rs_post'},
-            {hash:'7712b33',msg:'S60c — Fix API RS guillemets SQL ligne 2206'},
-            {hash:'389a1cf',msg:'S60d — Fix RS setData(d.raw) pour pre-remplir les champs'},
-            {hash:'c8c9d2d',msg:'S60e — Devis transitions statut + Email + Creer facture'}],
-   front:['RS — fix colonnes _URL, state setData(d.raw), route PUT corrigee',
-          'Sidebar — lien Nouveau devis 7 metiers',
-          'Devis/[id] — workflow BROUILLON vers ENVOYE vers ACCEPTE vers FACTURE + bouton Email'],
-   back:['PUT /devis/:id — mise a jour statut + commentaire',
-         'POST /devis/:id/facturer — creation facture depuis devis ACCEPTE',
-         'GET /seances/:id — route manquante ajoutee avec jointures'],
-   bdd:[],
-   fix:['Script sauvegarde v7 — FULL_KEEP=30'],
-   bugs:[]},
-
-  {id:'S59',statut:'done',date:'29/03/2026',titre:'SAV Generateur Handover V1 + migration repo docs',
-   scores:{backend:82,frontend:80,bdd:85,global:82},commits:[],
-   front:[],back:[],bdd:[],
-   fix:['SAV_Generator_Handover.html V1 — 7 onglets, export Markdown',
-        'Migration repo docs vers C:\\AnimGest_Repo_Git\\petsuite-docs',
-        'Nettoyage repo — suppression .bak et modeles .gltf'],
-   bugs:[]},
-
-  {id:'S58',statut:'done',date:'28/03/2026',titre:'Page Parametres Editions + Fix permissions + Sauvegarde v7',
-   scores:{backend:82,frontend:80,bdd:85,global:82},commits:[],
-   front:['/app/parametres/editions — Logo, Couleurs, Police, CGV, Filigrane',
-          'Sidebar comportementaliste — suppression lien Suivi CAC (regle S57)',
-          'KPIs dashboard — nb_seances_a_venir vers nb_seances (159 seances)'],
-   back:['GET /roles/:id/permissions — vrais noms colonnes BDD',
-         'GET /user-permissions — detection auto colonnes'],
-   bdd:[],fix:['Script sauvegarde v7 deploye'],bugs:[]},
-
-  {id:'S57',statut:'done',date:'28/03/2026',titre:'Regle CAC formalisee + Fix permissions roles',
-   scores:{backend:80,frontend:78,bdd:83,global:80},commits:[],
-   front:['Sidebar comportementaliste — lien Suivi CAC supprime (regle definitive)'],
-   back:['GET /roles/:id/permissions — parsing parts[2] corrige',
-         'GET /seances/:id — route manquante ajoutee'],
-   bdd:[],fix:['Restauration src/ depuis backup 20260326_2317_avant_revue_code'],bugs:[]},
-
-  {id:'S56',statut:'done',date:'27/03/2026',titre:'Revue de code + Analyse dette technique',
-   scores:{backend:78,frontend:76,bdd:82,global:79},commits:[],
-   front:[],back:[],bdd:[],
-   fix:['Audit custom-routes.ts — 43 strings SQL identifiees',
-        'Patterns architecture documentes : app.use(), getDb()',
-        'SAV Analyseur Dette Technique V1 — 3 onglets'],
-   bugs:[]},
-
-  {id:'S55',statut:'done',date:'27/03/2026',titre:'Generateur Maintenance + Dashboard Qualite',
-   scores:{backend:80,frontend:78,bdd:83,global:80},commits:[],
-   front:['Carte clients v2 Leaflet — geocodage batch, marqueurs colores'],
-   back:[],bdd:[],
-   fix:['SAV_Generator_Maintenance.html',
-        'SAV_Dashboard_Qualite.html',
-        '79 fichiers docs harmonises charte navy/gold'],
-   bugs:[]},
-
-  {id:'S54',statut:'done',date:'27/03/2026',titre:'Validation DnD + Fix stats KPIs',
-   scores:{backend:78,frontend:76,bdd:80,global:78},commits:[],
-   front:['Planning Jour + Semaine — drag&drop valide, PATCH retourne 200'],
-   back:['stats/kpis — jointure seance_statut via SST_ID corrigee'],
-   bdd:[],fix:['Mode clair CSS — h1 invisibles, textes tableaux pales'],bugs:[]},
-
-  {id:'S53',statut:'done',date:'26/03/2026',titre:'Planning DnD v2 + Forfaits BDD/API + Yousign',
-   scores:{backend:75,frontend:74,bdd:78,global:76},commits:[],
-   front:['Planning DnD v2 — slot-drop HTML5, ghost pointille, snap 30min',
-          '/app/forfaits — catalogue metier + souscriptions + modal prix TTC'],
-   back:['GET/POST /forfaits — 3 routes',
-         'POST /signatures + /signatures/:id/envoyer',
-         'PATCH /seances/:id — body parsing manuel'],
-   bdd:['forfait','forfait_client'],fix:[],bugs:[]},
-
-  {id:'S52',statut:'done',date:'25/03/2026',titre:'Stats KPIs + Carte clients v2 + Charte 79 fichiers',
-   scores:{backend:72,frontend:72,bdd:78,global:74},commits:[],
-   front:['Carte clients Leaflet — geocodage separe',
-          'Page statistiques — KPIs 48 014 EUR CA, graphique mensuel'],
-   back:['stats/kpis — correction jointures'],bdd:[],
-   fix:['79 fichiers HTML docs — charte CSS dark navy/gold'],bugs:[]},
-
-  {id:'S51',statut:'done',date:'25/03/2026',titre:'Carte clients Leaflet + GED CAC',
-   scores:{backend:70,frontend:70,bdd:75,global:72},commits:[],
-   front:['Carte clients Leaflet cdnjs — geocodage batch arriere-plan',
-          'Export CSV factures + seances — UTF-8 BOM separateur ;'],
-   back:['Routes GED CAC evolution + score'],bdd:[],
-   fix:['Notice utilisateur v4'],bugs:[]},
-
-  {id:'S50',statut:'done',date:'24/03/2026',titre:'btn-danger + Corrections charte graphique',
-   scores:{backend:68,frontend:68,bdd:72,global:69},commits:[],
-   front:['btn-danger ajoute globals.css',
-          'Doublon AideContextuelle supprime (5 fichiers)',
-          'PDF factures/devis — routes corrigees'],
-   back:[],bdd:[],fix:[],bugs:[]},
-
-  {id:'S48',statut:'done',date:'23/03/2026',titre:'EDC comportemental + Planning semaine + Seeds',
-   scores:{backend:65,frontend:65,bdd:70,global:67},commits:[],
-   front:['/app/seances/edc — fiche comportementale complete',
-          '/app/planning-seances v2 — vue calendrier semaine + liste'],
-   back:[],bdd:['edc_fiche','seance_suivi_cac'],
-   fix:['Seeds 200 animaux 6 especes + 50 visites pet-sitter'],bugs:[]},
-
-  {id:'S46',statut:'done',date:'22/03/2026',titre:'Suivi CAC + Signatures Yousign v1 + Elevage complet',
-   scores:{backend:62,frontend:62,bdd:68,global:64},commits:[],
-   front:['/app/seances/edc — v1','/app/elevage — geniteurs, genealogie, reservations, reglements'],
-   back:['POST /signatures — creation workflow Yousign'],bdd:[],fix:[],bugs:[]},
-
-  {id:'S44',statut:'done',date:'22/03/2026',titre:'Dashboards metiers + Webhooks Calendly + Templates devis',
-   scores:{backend:58,frontend:58,bdd:62,global:59},commits:[],
-   front:['Dashboards CEO x7 metiers','Templates devis 25 modeles x 5 metiers'],
-   back:['POST /calendly/webhook','Dashboards metiers routes'],bdd:[],fix:[],bugs:[]},
-
-  {id:'S42',statut:'done',date:'22/03/2026',titre:'Dashboards CEO x7 metiers + Seeds 200 animaux',
-   scores:{backend:55,frontend:55,bdd:60,global:57},commits:[],
-   front:['Dashboards CEO x7 metiers — CA, clients, seances, animaux'],
-   back:[],bdd:[],
-   fix:['Seeds 200 animaux + factures + commandes'],bugs:[]},
-
-  {id:'S38',statut:'done',date:'20/03/2026',titre:'Module Achats + IA moderation + Infrastructure Docker',
-   scores:{backend:48,frontend:48,bdd:55,global:50},commits:[],
-   front:['/app/achats/[id] — PDF, Email, Bon a payer, workflow statut',
-          '/app/toilettage — Planning salon journalier',
-          '/app/visites — Visites et Promenades double vue'],
-   back:['GET /achats/:id/lignes','POST /inventaires/:id statut',
-         'POST /communaute/moderer/:id — Claude API Sonnet'],
-   bdd:[],fix:['Docker Compose stabilise — volumes, nginx, hot reload'],bugs:[]},
-
-  {id:'S33',statut:'done',date:'18/03/2026',titre:'Documentation enrichie + NF525 + templates devis',
-   scores:{backend:40,frontend:40,bdd:45,global:42},commits:[],
-   front:['Templates devis 25 modeles x 5 metiers',
-          'Questionnaires multi-type ?type=equestre/pension/canin',
-          'Agenda vue semaine + mois'],
-   back:['PUT /animaux/:id + 14 champs + ANI_PHOTOS'],bdd:[],
-   fix:['param_entreprise — NoSages Editor SAS configureI',
-        "Centre d'aide 199 articles / 15 modules"],bugs:[]},
-
-  {id:'S30',statut:'done',date:'15/03/2026',titre:'Premiere mise en production — Infrastructure Docker',
-   scores:{backend:30,frontend:30,bdd:35,global:32},commits:[],
-   front:['Tableau de bord — QR Code, CA, clients, seances'],
-   back:['Routes core : /tiers, /animaux, /seances, /factures, /devis, /reglements'],
-   bdd:['151 tables creees — utf8mb4 InnoDB'],
-   fix:['Architecture Docker Compose + nginx reverse proxy'],bugs:[]}
-];
-
-var sel = 'S62';
-
-function selectSprint(id){ sel=id; render(); }
-
-function sc(v){ return v>=80?'var(--ok)':v>=60?'var(--warn)':'var(--err)'; }
-
-function itemsHtml(arr, type){
-  if(!arr||!arr.length) return '<div class="empty">Aucun element</div>';
-  return '<div class="item-list">'+arr.map(function(v){
-    var parts = v.split(' — ');
-    var title = parts[0], desc = parts.slice(1).join(' — ');
-    return '<div class="item">'
-      +'<span class="itag t-'+type+'">'+type.toUpperCase()+'</span>'
-      +'<div class="ibody"><div class="ititle">'+title+'</div>'
-      +(desc?'<div class="idesc">'+desc+'</div>':'')
-      +'</div></div>';
-  }).join('')+'</div>';
+function showTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
 }
-
-function render(){
-  var cur = SPRINTS.find(function(s){return s.id===sel;}) || SPRINTS[0];
-
-  // Nav
-  document.getElementById('sprint-nav-container').innerHTML =
-    '<div class="sprint-nav">'+SPRINTS.map(function(s){
-      var cls = 'sp-btn'+(s.id===sel?' on':'')+(s.statut==='current'&&s.id!==sel?' current-btn':'');
-      return '<button class="'+cls+'" onclick="selectSprint(\''+s.id+'\')">'+s.id+'</button>';
-    }).join('')+'</div>';
-
-  var s = cur;
-  var isCurrent = s.statut==='current';
-  var g = s.scores.global;
-  var h = '';
-
-  // Header
-  h += '<div class="sprint-header">';
-  h += '<div class="sprint-badge-big'+(isCurrent?' current':'')+'">'+s.id+'</div>';
-  h += '<div class="sprint-info">';
-  h += '<div class="sprint-title-txt">'+s.titre+'</div>';
-  h += '<div class="sprint-date">'+s.date;
-  if(isCurrent) h += '&nbsp;<span class="badge-current"><div class="dot-pulse"></div>En cours</span>';
-  else h += '&nbsp;<span class="badge-done">Termine</span>';
-  h += '</div></div>';
-  if(g>0) h += '<div class="sprint-score-box"><div class="ssv" style="color:'+sc(g)+'">'+g+'</div><div class="ssl">Global /100</div></div>';
-  h += '</div>';
-
-  // Scores
-  if(g>0){
-    h += '<div class="score-row">';
-    [['backend','Backend'],['frontend','Frontend'],['bdd','BDD'],['global','Global']].forEach(function(p){
-      var v=s.scores[p[0]]||0;
-      h+='<div class="sc"><div class="sc-v" style="color:'+sc(v)+'">'+v+'</div><div class="sc-l">'+p[1]+'</div></div>';
-    });
-    h += '</div>';
-  }
-
-  // Commits
-  if(s.commits&&s.commits.length){
-    h += '<div class="sec"><div class="sec-title"><span class="sec-num">GIT</span> Commits</div>';
-    h += '<div class="commit-list">'+s.commits.map(function(c){
-      return '<div class="commit"><span class="chash">'+c.hash+'</span><span class="cmsg">'+c.msg+'</span></div>';
-    }).join('')+'</div></div>';
-  }
-
-  // Realisations
-  var secs = [{k:'front',l:'Frontend',t:'front'},{k:'back',l:'API / Back-end',t:'api'},
-              {k:'bdd',l:'Base de donnees',t:'bdd'},{k:'fix',l:'Corrections & Outils',t:'fix'}];
-  var n = 1;
-  secs.forEach(function(sec){
-    if(s[sec.k]&&s[sec.k].length){
-      h += '<div class="sec"><div class="sec-title"><span class="sec-num">0'+n+'</span> '+sec.l+'</div>';
-      h += itemsHtml(s[sec.k],sec.t)+'</div>'; n++;
-    }
-  });
-
-  // Bugs
-  if(s.bugs&&s.bugs.length){
-    h += '<div class="sec"><div class="sec-title"><span class="sec-num">BUG</span> Bugs connus</div>';
-    h += '<table><thead><tr><th>Description</th><th>Module</th><th>Criticite</th></tr></thead><tbody>';
-    s.bugs.forEach(function(b){
-      var cc=b.c==='Haute'?'var(--err)':b.c==='Moyenne'?'var(--warn)':'var(--muted)';
-      h+='<tr><td>'+b.l+'</td><td style="color:var(--muted)">'+b.m+'</td><td style="color:'+cc+'">'+b.c+'</td></tr>';
-    });
-    h += '</tbody></table></div>';
-  }
-
-  document.getElementById('main-content').innerHTML = h;
-}
-
-window.addEventListener('DOMContentLoaded', function(){ render(); });
 </script>
 </body>
 </html>
