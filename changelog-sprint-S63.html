@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog Sprint S63 — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F172A;
+    --navy-light: #1E293B;
+    --navy-mid: #334155;
+    --gold: #F59E0B;
+    --gold-light: #FCD34D;
+    --gold-dark: #D97706;
+    --white: #F8FAFC;
+    --text: #E2E8F0;
+    --text-muted: #94A3B8;
+    --rouge: #EF4444;
+    --orange: #F97316;
+    --jaune: #EAB308;
+    --vert: #22C55E;
+    --cyan: #06B6D4;
+    --violet: #8B5CF6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  nav {
+    background: var(--navy-light);
+    border-bottom: 1px solid rgba(245,158,11,0.2);
+    padding: 0 2rem;
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 1.5rem; height: 56px;
+  }
+  nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  nav a:hover { color: var(--gold); }
+  nav .nav-brand { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; margin-right: auto; }
+  .header {
+    background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 3rem 2rem 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: 'S63';
+    position: absolute; right: 3rem; top: 50%; transform: translateY(-50%);
+    font-family: 'Playfair Display', serif; font-size: 8rem; font-weight: 700;
+    color: rgba(245,158,11,0.06); pointer-events: none; letter-spacing: -4px;
+  }
+  .header-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3);
+    color: var(--gold); padding: 0.3rem 0.9rem; border-radius: 20px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+  .header h1 span { color: var(--gold); }
+  .header .meta { color: var(--text-muted); font-size: 13px; display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 0.75rem; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 2.5rem 2rem; }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+  .summary-card { background: var(--navy-light); border: 1px solid rgba(245,158,11,0.15); border-radius: 10px; padding: 1.2rem 1.5rem; text-align: center; }
+  .summary-card .num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); display: block; }
+  .summary-card .label { font-size: 12px; color: var(--text-muted); margin-top: 0.2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; color: var(--white);
+    margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(245,158,11,0.2);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .feature-block {
+    background: var(--navy-light); border: 1px solid var(--navy-mid);
+    border-left: 3px solid var(--gold); border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 1rem;
+  }
+  .feature-block h3 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; }
+  .feature-block p { font-size: 13.5px; color: var(--text-muted); }
+  .feature-block ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+  .feature-block ul li { font-size: 13.5px; color: var(--text-muted); margin-bottom: 0.3rem; }
+  .feature-block ul li code, .feature-block p code {
+    background: rgba(245,158,11,0.1); color: var(--gold-light); padding: 0.1rem 0.4rem;
+    border-radius: 3px; font-size: 12px; font-family: 'Courier New', monospace;
+  }
+  .prio { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 0.5rem; vertical-align: middle; }
+  .prio-rouge { background: rgba(239,68,68,0.15); color: var(--rouge); border: 1px solid rgba(239,68,68,0.3); }
+  .prio-orange { background: rgba(249,115,22,0.15); color: var(--orange); border: 1px solid rgba(249,115,22,0.3); }
+  .commits-table { width: 100%; border-collapse: collapse; }
+  .commits-table th { text-align: left; padding: 0.6rem 1rem; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); background: var(--navy-light); border-bottom: 1px solid var(--navy-mid); }
+  .commits-table td { padding: 0.7rem 1rem; font-size: 13px; border-bottom: 1px solid rgba(51,65,85,0.5); vertical-align: top; }
+  .commits-table tr:last-child td { border-bottom: none; }
+  .commit-hash { font-family: 'Courier New', monospace; font-size: 12px; color: var(--gold); background: rgba(245,158,11,0.08); padding: 0.2rem 0.5rem; border-radius: 4px; white-space: nowrap; }
+  .scores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .score-card { background: var(--navy-light); border: 1px solid var(--navy-mid); border-radius: 10px; padding: 1.2rem; text-align: center; }
+  .score-card .axe { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .score-card .score-val { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); }
+  .score-card .score-prev { font-size: 11px; color: var(--text-muted); margin-top: 0.2rem; }
+  .score-card .delta { font-size: 11px; color: var(--vert); font-weight: 600; }
+  .routes-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
+  .route-tag { background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.2); color: var(--cyan); padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 12px; font-family: 'Courier New', monospace; }
+  .warning-block {
+    background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2); border-left: 3px solid var(--rouge);
+    border-radius: 8px; padding: 1rem 1.5rem; margin-bottom: 1rem;
+  }
+  .warning-block h3 { font-size: 13px; font-weight: 600; color: var(--rouge); margin-bottom: 0.4rem; }
+  .warning-block p { font-size: 13px; color: var(--text-muted); }
+  .warning-block code { background: rgba(239,68,68,0.1); color: #FCA5A5; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 12px; font-family: 'Courier New', monospace; }
+  footer { border-top: 1px solid rgba(245,158,11,0.15); padding: 1.5rem 2rem; text-align: center; color: var(--text-muted); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Anim'Gest</span>
+  <a href="index.html">← Accueil</a>
+  <a href="changelog-sprint-S62.html">← S62</a>
+  <a href="17-api-reference.html">API Référence</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+</nav>
+
+<div class="header">
+  <div class="header-badge">📋 Release Notes</div>
+  <h1>Sprint <span>S63</span></h1>
+  <p style="color:var(--text-muted);font-size:14px;margin-top:0.4rem;">Portail Client complet · Eliot tools étendus · Email nodemailer · Harmonisation charte docs</p>
+  <div class="meta">
+    <span>📅 1er avril 2026</span>
+    <span>🔀 3 commits (dont 94 fichiers docs)</span>
+    <span>📄 3 846 lignes custom-routes.ts</span>
+    <span>🖥️ 106 pages UI</span>
+    <span>🔌 ~115 routes API</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="summary-grid">
+    <div class="summary-card"><span class="num">11</span><div class="label">Routes Portail Client</div></div>
+    <div class="summary-card"><span class="num">3</span><div class="label">Nouveaux tools Eliot</div></div>
+    <div class="summary-card"><span class="num">2</span><div class="label">Pages TSX Portail</div></div>
+    <div class="summary-card"><span class="num">94</span><div class="label">Fichiers docs harmonisés</div></div>
+    <div class="summary-card"><span class="num">85</span><div class="label">Score global /100</div></div>
+  </div>
+
+  <!-- PORTAIL CLIENT ROUTES -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔗</span> Portail Client — Routes API <span class="prio prio-rouge">ROUGE</span></div>
+    <div class="feature-block">
+      <h3>11 routes déployées via <code>instance.use()</code></h3>
+      <div class="routes-list">
+        <span class="route-tag">POST /portail/auth/login</span>
+        <span class="route-tag">POST /portail/auth/logout</span>
+        <span class="route-tag">GET /portail/animaux</span>
+        <span class="route-tag">GET /portail/seances</span>
+        <span class="route-tag">GET /portail/factures</span>
+        <span class="route-tag">GET /portail/notifications</span>
+        <span class="route-tag">GET /portail/admin/acces</span>
+        <span class="route-tag">POST /portail/admin/acces</span>
+        <span class="route-tag">PUT /portail/admin/acces/:id/toggle</span>
+        <span class="route-tag">POST /portail/admin/acces/:id/send-link</span>
+        <span class="route-tag">POST /portail/seances/:id/confirmer</span>
+      </div>
+    </div>
+    <div class="feature-block">
+      <h3>Corrections colonnes BDD réelles appliquées</h3>
+      <ul>
+        <li><code>portail_client_acces</code> : <code>PCA_ID</code>, <code>PCA_TOKEN</code>, <code>PCA_ACTIF</code>, <code>PCA_DATE_EXPIRATION</code>, <code>PCA_EMAIL</code>, <code>TIE_ID</code></li>
+        <li><code>portail_client_session</code> : <code>PCS_SESSION_TOKEN</code>, <code>PCS_DATE_FIN</code>, <code>PCS_ACTIF</code>, <code>PCA_ID</code></li>
+        <li><code>animal</code> : <code>ANI_CLI</code> (pas <code>TIE_ID</code>), <code>ANI_PUC</code> (pas <code>ANI_PUCE</code>)</li>
+        <li><code>seance</code> : <code>SEA_DATE_DEBUT</code> (pas <code>SEA_DATE</code>)</li>
+        <li><code>tiers</code> : <code>TIE_RAISON_SOCIALE</code> (pas <code>TIE_NOM</code>/<code>TIE_PRENOM</code>)</li>
+        <li><code>reglement</code> : pas de <code>REG_STATUT</code> — colonnes réelles : <code>REG_ID</code>, <code>FAC_ID</code>, <code>REG_DATE</code>, <code>REG_MONTANT</code>, <code>REG_MODE</code>, <code>REG_REFERENCE</code></li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h3>Helper <code>_readBody()</code> obligatoire sur tous les POST</h3>
+      <p>NestJS ne parse pas le body avant <code>instance.use()</code>. Toutes les routes POST portail utilisent désormais le helper <code>_readBody()</code> pour parser le corps de la requête.</p>
+    </div>
+  </div>
+
+  <!-- PORTAIL CLIENT PAGES -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🖥️</span> Portail Client — Pages frontend <span class="prio prio-rouge">ROUGE</span></div>
+    <div class="feature-block">
+      <h3><code>/client/[token]</code> — Espace client public</h3>
+      <p>Login automatique via token URL, 3 onglets : Séances / Factures / Animaux. Confirmation de séance intégrée.</p>
+    </div>
+    <div class="feature-block">
+      <h3><code>/app/parametres/portail</code> — Page admin portail</h3>
+      <ul>
+        <li>Select client (500 tiers chargés, filtrage local)</li>
+        <li>Email pré-rempli depuis <code>TIE_EMAIL</code> avec badge "depuis la fiche client"</li>
+        <li>Actions : 📋 Copier le lien · ✉️ Envoyer par email · ✓/✗ Activer/Désactiver</li>
+        <li>Stats : accès créés / actifs / connexions totales</li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h3>4 points d'entrée vers le portail</h3>
+      <ul>
+        <li>URL directe : <code>http://[host]/client/[TOKEN_64_chars]</code></li>
+        <li>Sidebar : Communauté → 🔗 Portail Client</li>
+        <li>Liste clients : bouton "🔗 Portail" par ligne → mini-modal</li>
+        <li>Fiche client : bouton "🔗 Portail" dans le header</li>
+      </ul>
+    </div>
+    <div class="feature-block" style="border-left-color: var(--vert);">
+      <h3 style="color:var(--vert);">✅ Test portail validé S63</h3>
+      <p>TIE_ID=1 (Deneuve, Catherine) — Login OK, 5 animaux, 4 séances, 8 factures affichés correctement.</p>
+    </div>
+  </div>
+
+  <!-- EMAIL NODEMAILER -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📧</span> Email — Vrai envoi nodemailer <span class="prio prio-orange">ORANGE</span></div>
+    <div class="feature-block">
+      <h3>nodemailer ^6.9.14 intégré dans l'API</h3>
+      <ul>
+        <li>Tool Eliot <code>send_email</code> → vrai envoi nodemailer (lit <code>param_smtp</code>, génère PDF, envoie avec PJ)</li>
+        <li>Route <code>POST /portail/admin/acces/:id/send-link</code> → envoie lien portail par email</li>
+        <li>Route <code>PUT /param-smtp</code> → sauvegarde config SMTP depuis l'UI</li>
+      </ul>
+    </div>
+    <div class="feature-block" style="border-left-color: var(--vert);">
+      <h3 style="color:var(--vert);">✅ Test email validé</h3>
+      <p>SMTP : smtp.gmail.com:465, App Password configuré. Email reçu sur nicolashermilly@gmail.com.</p>
+    </div>
+  </div>
+
+  <!-- ELIOT TOOLS S63 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🤖</span> Eliot — Nouveaux tools S63 <span class="prio prio-orange">ORANGE</span></div>
+    <div class="feature-block">
+      <h3>3 nouveaux tools fonctionnels</h3>
+      <ul>
+        <li><code>update_statut_devis</code> — Transitions BROUILLON→ENVOYE→ACCEPTE→REFUSE→ANNULE ✅</li>
+        <li><code>create_facture_depuis_devis</code> — Convertit devis ACCEPTE en facture via <code>/devis/:id/facturer</code> ✅</li>
+        <li><code>create_reglement</code> — INSERT reglement sans <code>REG_STATUT</code> (colonnes réelles) ✅</li>
+      </ul>
+    </div>
+    <div class="warning-block">
+      <h3>⚠️ Dette à corriger en S64</h3>
+      <p>3 tools (<code>update_statut_devis</code>, <code>create_facture_depuis_devis</code>, <code>create_reglement</code>) apparaissent en doublon dans la liste déclarée (pas dans l'implémentation). À nettoyer.</p>
+    </div>
+  </div>
+
+  <!-- DOCS HARMONISATION -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📚</span> Documentation — Harmonisation charte</div>
+    <div class="feature-block">
+      <h3>94 fichiers harmonisés — <code>harmoniser_charte.py</code></h3>
+      <p>Script Python appliqué sur l'ensemble des fichiers HTML de <code>C:\AnimGest_Sav</code>. Design system Anim'Gest (navy/gold, Playfair Display + DM Sans, nav sticky) uniformisé sur toute la documentation.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Scripts d'inspection permanents</h3>
+      <ul>
+        <li><code>mon_script.py</code> — inspection complète de <code>custom-routes.ts</code> : routes, <code>app.use()</code> / <code>instance.use()</code>, <code>getDb()</code>, tools Eliot, colonnes problématiques</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DETTE TECHNIQUE -->
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span> Dette technique identifiée</div>
+    <div class="warning-block">
+      <h3>102 <code>app.use()</code> restants → migrer vers <code>instance.use()</code></h3>
+      <p>Migration progressive par module planifiée (formules, devis, factures…). 48 routes déjà migrées en S63.</p>
+    </div>
+    <div class="warning-block">
+      <h3>4 <code>createConnection</code> sur BDD GED (lignes 2286, 2317, 2355, 2393)</h3>
+      <p>À remplacer par un helper <code>getDbGed()</code> pour uniformiser la gestion des connexions.</p>
+    </div>
+    <div class="warning-block">
+      <h3><code>REG_STATUT</code> résiduel dans un INSERT reglement</h3>
+      <p>Colonne inexistante encore présente dans un INSERT (~L56376). À supprimer en S64.</p>
+    </div>
+  </div>
+
+  <!-- COMMITS -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔀</span> Commits S63</div>
+    <table class="commits-table">
+      <thead><tr><th>Hash</th><th>Description</th><th>Repo</th></tr></thead>
+      <tbody>
+        <tr><td><span class="commit-hash">b687f04</span></td><td>S63 - Portail Client complet + Eliot tools S63 + Email nodemailer + Sidebar</td><td>micro_logiciel</td></tr>
+        <tr><td><span class="commit-hash">4a7b95e</span></td><td>S63 - Handover final</td><td>petsuite-docs</td></tr>
+        <tr><td><span class="commit-hash">fbe0e7d</span></td><td>charte: harmonisation design system Anim'Gest — 94 fichiers</td><td>petsuite-docs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SCORES -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📊</span> Scores qualité S63</div>
+    <div class="scores-grid">
+      <div class="score-card">
+        <div class="axe">Backend</div>
+        <div class="score-val">85</div>
+        <div class="score-prev">S62 : 84 <span class="delta">▲ +1</span></div>
+      </div>
+      <div class="score-card">
+        <div class="axe">Frontend</div>
+        <div class="score-val">84</div>
+        <div class="score-prev">S62 : 82 <span class="delta">▲ +2</span></div>
+      </div>
+      <div class="score-card">
+        <div class="axe">BDD</div>
+        <div class="score-val">85</div>
+        <div class="score-prev">S62 : 85 <span style="color:var(--text-muted)">— stable</span></div>
+      </div>
+      <div class="score-card">
+        <div class="axe">Global</div>
+        <div class="score-val" style="color:var(--gold)">85</div>
+        <div class="score-prev">S62 : 83 <span class="delta">▲ +2</span></div>
+      </div>
+    </div>
+    <p style="color:var(--text-muted);font-size:12px;margin-top:1rem;">Routes API : ~115 · Pages UI : 106 · Eliot tools : 10 (déclarés : 13 avec doublons à corriger)</p>
+  </div>
+
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor · Sprint S63 · 1er avril 2026 · <a href="index.html" style="color:var(--gold);text-decoration:none;">Retour à l'index</a>
+</footer>
+
+</body>
+</html>

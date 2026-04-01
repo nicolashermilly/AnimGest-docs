@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog Sprint S62 — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F172A;
+    --navy-light: #1E293B;
+    --navy-mid: #334155;
+    --gold: #F59E0B;
+    --gold-light: #FCD34D;
+    --gold-dark: #D97706;
+    --white: #F8FAFC;
+    --text: #E2E8F0;
+    --text-muted: #94A3B8;
+    --rouge: #EF4444;
+    --orange: #F97316;
+    --jaune: #EAB308;
+    --vert: #22C55E;
+    --cyan: #06B6D4;
+    --violet: #8B5CF6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  /* NAV */
+  nav {
+    background: var(--navy-light);
+    border-bottom: 1px solid rgba(245,158,11,0.2);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 56px;
+  }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--gold); }
+  nav .nav-brand {
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: auto;
+  }
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: 'S62';
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    font-weight: 700;
+    color: rgba(245,158,11,0.06);
+    pointer-events: none;
+    letter-spacing: -4px;
+  }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.3);
+    color: var(--gold);
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .header h1 span { color: var(--gold); }
+  .header .meta {
+    color: var(--text-muted);
+    font-size: 13px;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+  }
+  .header .meta span { display: flex; align-items: center; gap: 0.4rem; }
+  /* MAIN */
+  .container { max-width: 1000px; margin: 0 auto; padding: 2.5rem 2rem; }
+  /* SUMMARY GRID */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .summary-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(245,158,11,0.15);
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+  }
+  .summary-card .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+  .summary-card .label { font-size: 12px; color: var(--text-muted); margin-top: 0.2rem; }
+  /* SECTIONS */
+  .section { margin-bottom: 2.5rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(245,158,11,0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .section-title .icon { font-size: 1rem; }
+  /* FEATURE BLOCKS */
+  .feature-block {
+    background: var(--navy-light);
+    border: 1px solid var(--navy-mid);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .feature-block h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .feature-block p { font-size: 13.5px; color: var(--text-muted); }
+  .feature-block ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+  .feature-block ul li { font-size: 13.5px; color: var(--text-muted); margin-bottom: 0.3rem; }
+  .feature-block ul li code {
+    background: rgba(245,158,11,0.1);
+    color: var(--gold-light);
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+  }
+  /* PRIORITY BADGE */
+  .prio { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 0.5rem; vertical-align: middle; }
+  .prio-rouge { background: rgba(239,68,68,0.15); color: var(--rouge); border: 1px solid rgba(239,68,68,0.3); }
+  .prio-orange { background: rgba(249,115,22,0.15); color: var(--orange); border: 1px solid rgba(249,115,22,0.3); }
+  .prio-vert { background: rgba(34,197,94,0.15); color: var(--vert); border: 1px solid rgba(34,197,94,0.3); }
+  /* COMMITS TABLE */
+  .commits-table { width: 100%; border-collapse: collapse; }
+  .commits-table th {
+    text-align: left;
+    padding: 0.6rem 1rem;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    background: var(--navy-light);
+    border-bottom: 1px solid var(--navy-mid);
+  }
+  .commits-table td {
+    padding: 0.7rem 1rem;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(51,65,85,0.5);
+    vertical-align: top;
+  }
+  .commits-table tr:last-child td { border-bottom: none; }
+  .commit-hash {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    background: rgba(245,158,11,0.08);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  /* SCORES */
+  .scores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .score-card {
+    background: var(--navy-light);
+    border: 1px solid var(--navy-mid);
+    border-radius: 10px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+  .score-card .axe { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .score-card .score-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .score-card .score-prev { font-size: 11px; color: var(--text-muted); margin-top: 0.2rem; }
+  .score-card .delta { font-size: 11px; color: var(--vert); font-weight: 600; }
+  /* ROUTES TABLE */
+  .routes-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .route-tag {
+    background: rgba(6,182,212,0.08);
+    border: 1px solid rgba(6,182,212,0.2);
+    color: var(--cyan);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+  }
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(245,158,11,0.15);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Anim'Gest</span>
+  <a href="index.html">← Accueil</a>
+  <a href="changelog-sprint-S61.html">S61</a>
+  <a href="changelog-sprint-S63.html">S63 →</a>
+  <a href="17-api-reference.html">API Référence</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+</nav>
+
+<div class="header">
+  <div class="header-badge">📋 Release Notes</div>
+  <h1>Sprint <span>S62</span></h1>
+  <p style="color:var(--text-muted);font-size:14px;margin-top:0.4rem;">Eliot agent IA · PDF param_edition · GED logos/CGV · Corrections recette</p>
+  <div class="meta">
+    <span>📅 30 mars 2026</span>
+    <span>🔀 10 commits</span>
+    <span>📄 ~3 400 lignes custom-routes.ts</span>
+    <span>🖥️ 103 pages UI</span>
+    <span>🔌 ~100 routes API</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SUMMARY -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <span class="num">10</span>
+      <div class="label">Commits dev</div>
+    </div>
+    <div class="summary-card">
+      <span class="num">6</span>
+      <div class="label">Nouvelles routes API</div>
+    </div>
+    <div class="summary-card">
+      <span class="num">4</span>
+      <div class="label">Colonnes BDD ajoutées</div>
+    </div>
+    <div class="summary-card">
+      <span class="num">7</span>
+      <div class="label">Tools Eliot actifs</div>
+    </div>
+    <div class="summary-card">
+      <span class="num">83</span>
+      <div class="label">Score global /100</div>
+    </div>
+  </div>
+
+  <!-- CORRECTIONS ROUGE -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔴</span> Corrections recette <span class="prio prio-rouge">ROUGE</span></div>
+    <div class="feature-block">
+      <h3>Compteur espèces animaux</h3>
+      <p>Remplacement de <code>ANI_ESPECE</code> par <code>ANI_ESPECE_RACE</code> dans la route animaux. Les compteurs "117 chiens / 62 chats" étaient erronés. <span style="color:var(--vert)">✅ Commit 8674e76</span></p>
+    </div>
+    <div class="feature-block">
+      <h3>Paramètres Éditions — erreur SQL au save</h3>
+      <p>Mise en place de la whitelist <code>PARAM_EDITION_COLS</code> dans <code>custom-routes.ts</code> pour protéger le UPDATE. Toutes les colonnes autorisées sont désormais explicitement listées.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Filigrane — zone d'upload remplaçant le champ texte</h3>
+      <p>L'ancien champ texte libre a été remplacé par une zone d'upload image complète avec prévisualisation, fond transparent géré côté serveur.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Entité HTML &#10003; → Unicode ✓</h3>
+      <p>Le bouton Enregistrer affichait <code>&amp;#10003;</code> brut dans certains contextes JSX. Corrigé par le caractère Unicode direct <code>✓</code>.</p>
+    </div>
+  </div>
+
+  <!-- GED PARAM EDITION -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🗄️</span> GED Paramètres Éditions — 6 routes + 4 colonnes BDD</div>
+    <div class="feature-block">
+      <h3>Nouvelles routes API GED</h3>
+      <div class="routes-list" style="margin-top:0.6rem;">
+        <span class="route-tag">POST /editions/upload-logo</span>
+        <span class="route-tag">GET /editions/upload-logo</span>
+        <span class="route-tag">POST /editions/upload-filigrane</span>
+        <span class="route-tag">GET /editions/upload-filigrane</span>
+        <span class="route-tag">POST /editions/upload-cgv</span>
+        <span class="route-tag">GET /editions/cgv/preview</span>
+      </div>
+    </div>
+    <div class="feature-block">
+      <h3>Colonnes BDD ajoutées — <code>param_edition</code></h3>
+      <ul>
+        <li><code>ED_LOGO_BASE64 LONGTEXT</code> — logo entreprise stocké en GED</li>
+        <li><code>ED_FILIGRANE_BASE64 LONGTEXT</code> — filigrane PDF (fond transparent)</li>
+        <li><code>PE_CGV_DOC_ID BIGINT</code> — référence document GED</li>
+        <li><code>PE_CGV_BASE64 LONGTEXT</code> — CGV PDF encodé</li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h3>Uploads en BDD GED (micro_logiciel_ged)</h3>
+      <ul>
+        <li>Logo SVG Anim'Gest → <code>ged_document</code> <strong>DOC_ID=12</strong></li>
+        <li>Filigrane PNG fond transparent → <code>ged_document</code> <strong>DOC_ID=13</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PDF PUPPETEER -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📄</span> PDF devis/facture avec param_edition</div>
+    <div class="feature-block">
+      <h3>Puppeteer + Chromium Alpine dans le container API</h3>
+      <p>188 packages Chromium installés, image API ~750MB. Génération PDF HTML→PDF via headless Chromium.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Paramètres appliqués aux PDF</h3>
+      <ul>
+        <li>Couleur primaire → <code>PE_COULEUR_PRIMAIRE</code></li>
+        <li>Logo → <code>ED_LOGO_BASE64</code></li>
+        <li>Filigrane → <code>ED_FILIGRANE_BASE64</code></li>
+        <li>Police → <code>PE_POLICE</code></li>
+        <li>Pied de page → <code>PE_PIED_PAGE</code></li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h3>Fusion CGV dans les PDF — pdf-lib</h3>
+      <p>Les CGV provenant de <code>ENT_CGV_TEXTE</code> (HTML) sont injectées via <code>pdf-lib</code> en dernière page des devis et factures.</p>
+      <div class="routes-list" style="margin-top:0.6rem;">
+        <span class="route-tag">GET /editions/devis/:id</span>
+        <span class="route-tag">GET /editions/facture/:id</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELIOT -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🤖</span> Eliot — Agent IA avec tool use <span class="prio prio-orange">ORANGE</span></div>
+    <div class="feature-block">
+      <h3>Architecture agent — boucle agentic max 6 itérations</h3>
+      <p>La route <code>/ia/chat</code> est transformée de proxy simple en agent Anthropic avec tool use. Les <code>ui_actions[]</code> sont retournées au frontend pour déclencher des actions UI.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Tools disponibles S62</h3>
+      <ul>
+        <li><code>search_client</code> — Recherche tiers + animal par nom ✅</li>
+        <li><code>get_articles</code> — Liste des prestations avec prix ✅</li>
+        <li><code>create_devis</code> — Crée devis + lignes via <code>POST /devis</code> ✅</li>
+        <li><code>get_devis</code> — Lecture devis + lignes par ID ✅</li>
+        <li><code>open_pdf_modal</code> — Signal UI → modal PDF dans le widget ✅</li>
+        <li><code>send_email</code> — Envoi email devis/facture (simulé S62) ✅</li>
+        <li><code>get_seances</code> — Séances d'un client ✅</li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h3>ClaudeWidget.tsx — version agent finale</h3>
+      <ul>
+        <li>Drag &amp; drop fluide (snapshot mouseDown + delta mouseMove)</li>
+        <li>Modal PDF inline sur <code>ui_actions.open_pdf_modal</code></li>
+        <li>Microphone 🎤 Web Speech API fr-FR restauré</li>
+        <li>Suggestions rapides dont "Créer un devis"</li>
+        <li>Avatar temps réel depuis localStorage</li>
+      </ul>
+    </div>
+    <div class="feature-block" style="border-left-color: var(--vert);">
+      <h3 style="color:var(--vert);">✅ Test validé S62j</h3>
+      <p>Devis <code>DCE-2603-0044</code> créé pour Frimousse, <code>ui_actions: open_pdf_modal</code> retournée, email envoyé à nicolashermilly@gmail.com.</p>
+    </div>
+  </div>
+
+  <!-- PAGES FRONTEND -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🖥️</span> Pages frontend — Devis</div>
+    <div class="feature-block">
+      <h3><code>/app/devis/[id]/edit</code> — nouvelle page (243 lignes)</h3>
+      <p>Formulaire d'édition des lignes de devis avec recalcul automatique des totaux. Bouton "Modifier" visible uniquement si statut <code>BROUILLON</code> ou <code>ENVOYE</code>.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Redirect post-création devis</h3>
+      <p>Après création d'un devis, redirection vers <code>/app/devis/[DCE_ID]</code> au lieu de la liste générale.</p>
+    </div>
+  </div>
+
+  <!-- COMMITS -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔀</span> Commits S62</div>
+    <table class="commits-table">
+      <thead>
+        <tr>
+          <th>Hash</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="commit-hash">8674e76</span></td><td>S62a — Fix ANI_ESPECE_RACE + Paramètres Éditions save</td></tr>
+        <tr><td><span class="commit-hash">S62b</span></td><td>GED logo/filigrane/CGV — 5 routes + 4 colonnes BDD</td></tr>
+        <tr><td><span class="commit-hash">S62c</span></td><td>Filigrane zone upload + CGV preview PDF</td></tr>
+        <tr><td><span class="commit-hash">S62d</span></td><td>Fix ✓ HTML entity + bouton Enregistre footer</td></tr>
+        <tr><td><span class="commit-hash">9fdb633</span></td><td>S62e — Routes PDF devis/facture + Chromium Alpine</td></tr>
+        <tr><td><span class="commit-hash">S62f</span></td><td>Fusion CGV dans PDF + pdf-lib</td></tr>
+        <tr><td><span class="commit-hash">S62g</span></td><td>Bouton micro Eliot restauré (SpeechRecognition fr-FR)</td></tr>
+        <tr><td><span class="commit-hash">S62h</span></td><td>Bouton Modifier devis + redirect post-création</td></tr>
+        <tr><td><span class="commit-hash">6e91105</span></td><td>S62i — Eliot agent tool use + ClaudeWidget modal PDF</td></tr>
+        <tr><td><span class="commit-hash">a75cc8b</span></td><td>S62j — Eliot create_devis fonctionnel (http, pas https) + page edit</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SCORES -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📊</span> Scores qualité S62</div>
+    <div class="scores-grid">
+      <div class="score-card">
+        <div class="axe">Backend</div>
+        <div class="score-val">84</div>
+        <div class="score-prev">S61 : 82 <span class="delta">▲ +2</span></div>
+      </div>
+      <div class="score-card">
+        <div class="axe">Frontend</div>
+        <div class="score-val">82</div>
+        <div class="score-prev">S61 : 80 <span class="delta">▲ +2</span></div>
+      </div>
+      <div class="score-card">
+        <div class="axe">BDD</div>
+        <div class="score-val">85</div>
+        <div class="score-prev">S61 : 85 <span style="color:var(--text-muted)">— stable</span></div>
+      </div>
+      <div class="score-card">
+        <div class="axe">Global</div>
+        <div class="score-val" style="color:var(--gold)">83</div>
+        <div class="score-prev">S61 : 82 <span class="delta">▲ +1</span></div>
+      </div>
+    </div>
+    <p style="color:var(--text-muted);font-size:12px;margin-top:1rem;">Routes API : ~100 · Pages UI : 103 · Eliot agent : fonctionnel</p>
+  </div>
+
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor · Sprint S62 · 30 mars 2026 · <a href="index.html" style="color:var(--gold);text-decoration:none;">Retour à l'index</a>
+</footer>
+
+</body>
+</html>
