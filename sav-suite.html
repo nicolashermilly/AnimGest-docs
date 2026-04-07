@@ -715,6 +715,19 @@ function switchTool(tool) {
   document.getElementById('sb-tool').textContent = 'OUTIL : ' + toolNames[tool];
 }
 
+function navTo(tool, tab) {
+  const nav = document.getElementById('nav-' + tool);
+  nav.querySelectorAll('.snav').forEach(s => {
+    const oc = s.getAttribute('onclick') || '';
+    s.classList.toggle('active', oc.includes("'" + tab + "'"));
+  });
+  document.querySelectorAll('.panel').forEach(p => {
+    if (p.id.startsWith('p-' + tool + '-')) p.classList.remove('active');
+  });
+  const p = document.getElementById('p-' + tool + '-' + tab);
+  if (p) p.classList.add('active');
+}
+
 function st(tool, tab) {
   const nav = document.getElementById('nav-' + tool);
   nav.querySelectorAll('.snav').forEach(s => s.classList.remove('active'));
@@ -788,9 +801,7 @@ function analyseHandover() {
   buildRegles();
 
   // Auto-navigate to rapport
-  st('analyse', 'rapport');
-  const snvs = document.querySelectorAll('#nav-analyse .snav');
-  snvs.forEach((s, i) => s.classList.toggle('active', i === 1));
+  navTo('analyse', 'rapport');
 }
 
 function scoreColor(v) {
@@ -933,7 +944,7 @@ function lancerScan() {
   scanData.done = false;
 
   // Switch to routes tab
-  st('maintenance', 'routes');
+  navTo('maintenance', 'routes');
   document.querySelectorAll('#nav-maintenance .snav').forEach((s, i) => s.classList.toggle('active', i === 1));
 
   renderRoutes();
@@ -1274,8 +1285,7 @@ ${reglesBlock}
     </div>
   `;
 
-  st('handover','preview');
-  document.querySelectorAll('#nav-handover .snav').forEach((s, i) => s.classList.toggle('active', i === 1));
+  navTo('handover', 'preview');
 }
 
 function copyHo() {
