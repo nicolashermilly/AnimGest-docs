@@ -344,7 +344,7 @@
     <a href="20-pilotage-projet.html">Pilotage</a>
     <a href="docs-changelog.html">Changelogs</a>
   </div>
-  <span class="nav-badge">S65</span>
+  <span class="nav-badge">S66</span>
 </nav>
 <div class="hero">
   <div class="hero-tag">Documentation</div>
@@ -1101,10 +1101,43 @@
       <div class="rule-ok">✅ 16 routes API — S64</div>
     </div>
   </div>
-  <!-- FIN RÈGLES S64-S65 -->
+
+  <!-- RÈGLES S66 -->
+  <div class="rule-section" id="regle-react-hooks">
+    <div class="rule-header">
+      <span class="rule-num">R-20</span>
+      <span class="rule-title">React — Ordre des hooks (Rules of Hooks)</span>
+      <span class="rule-badge badge-critique">Architecture Frontend</span>
+    </div>
+    <div class="rule-body">
+      <p>Tous les <code>useState</code>, <code>useEffect</code>, <code>useRef</code> et autres hooks React doivent être déclarés <strong>en haut du composant, avant tout <code>return</code> conditionnel</strong>. Placer un hook après un <code>return</code> conditionnel provoque React error #310 (Rendered more hooks than during the previous render), qui crashe la page entièrement.</p>
+      <div class="rule-ok">✅ Correct : tous les useState groupés lignes 200-210, avant les return if (loading) / if (error)</div>
+      <div class="rule-nok">❌ Incorrect : useState portailModal déclaré ligne 248, après return (loading) ligne 220 → React error #310</div>
+      <div class="rule-ok">✅ Fix S66 : patch_clients_id.py — remontée des 4 useState portail de la ligne 248 à la ligne 203</div>
+      <p style="margin-top:0.75rem;font-size:0.85rem;color:#94A3B8">Cas réel S66 : <code>clients/[id]/page.tsx</code> — 4 useState portail (portailModal, portailEmail, portailSaving, portailDone) déclarés après 2 return conditionnels → crash complet de la page. Validé sur <code>/app/clients/1</code> après fix.</p>
+    </div>
+  </div>
+
+  <div class="rule-section" id="regle-sql-table-names">
+    <div class="rule-header">
+      <span class="rule-num">R-21</span>
+      <span class="rule-title">SQL — Noms de tables exacts en BDD</span>
+      <span class="rule-badge badge-critique">Architecture Backend</span>
+    </div>
+    <div class="rule-body">
+      <p>Les noms de tables dans les requêtes SQL doivent correspondre exactement aux noms en BDD MariaDB. Deux erreurs fréquentes identifiées en S65-S66 :</p>
+      <div class="rule-nok">❌ <code>FROM animaux</code> → table inexistante. Correct : <code>FROM animal</code></div>
+      <div class="rule-nok">❌ <code>TIE_NOM</code> → colonne inexistante. Correct : <code>TIE_RAISON_SOCIALE</code></div>
+      <div class="rule-ok">✅ Vérifier avec HeidiSQL ou <code>SHOW TABLES</code> avant toute nouvelle sous-requête</div>
+      <div class="rule-ok">✅ Fix S67 : patch_routes_registre_carnivores.py — correction automatique des 2 occurrences</div>
+      <p style="margin-top:0.75rem;font-size:0.85rem;color:#94A3B8">Rappel : la table s'appelle <code>animal</code> (singulier), pas <code>animaux</code>. La colonne du nom du tiers est <code>TIE_RAISON_SOCIALE</code>, pas <code>TIE_NOM</code>. Ces erreurs font planter silencieusement les routes avec une erreur 500 "Table doesn't exist".</p>
+    </div>
+  </div>
+  <!-- FIN RÈGLES S66 -->
+
 <footer class="doc-footer">
   <strong>Anim'Gest</strong> &mdash; NoSage's Editor &mdash; Documentation technique<br>
-  <small>Plateforme SaaS ERP pour professionnels du soin animal &mdash; 10 metiers &mdash; Sprint S61</small>
+  <small>Plateforme SaaS ERP pour professionnels du soin animal &mdash; 10 metiers &mdash; Sprint S66</small>
 </footer>
 </body>
 </html>
