@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registre Sanitaire — Anim'Gest Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F172A;
+    --navy-mid: #1E293B;
+    --navy-light: #334155;
+    --gold: #F59E0B;
+    --gold-dark: #B45309;
+    --cyan: #06B6D4;
+    --violet: #4F46E5;
+    --green: #10B981;
+    --red: #EF4444;
+    --orange: #F97316;
+    --white: #F8FAFC;
+    --muted: #94A3B8;
+    --border: rgba(255,255,255,0.08);
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.07);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); font-weight: 700; letter-spacing: -0.5px; }
+  .nav-brand span { color: var(--cyan); }
+  .nav-links { display: flex; gap: 0.5rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; transition: all 0.2s; }
+  .nav-links a:hover { color: var(--white); background: var(--surface-hover); }
+  .badge { background: var(--violet); color: #fff; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 20px; font-weight: 600; margin-left: 0.4rem; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 1100px; margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
+    color: var(--green); font-size: 0.78rem; font-weight: 600;
+    padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 1.5rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 700;
+    line-height: 1.15; margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero-sub {
+    color: var(--muted); font-size: 1.05rem; max-width: 680px;
+    margin-bottom: 2rem; line-height: 1.8;
+  }
+  .hero-meta {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+  }
+  .meta-chip {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.85rem; color: var(--muted);
+  }
+  .meta-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-green { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .dot-gold { background: var(--gold); }
+  .dot-cyan { background: var(--cyan); }
+
+  /* ── LAYOUT ── */
+  .layout { display: grid; grid-template-columns: 260px 1fr; gap: 0; max-width: 1100px; margin: 0 auto; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--border);
+    position: sticky; top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 2px; }
+  .sidebar-title { font-size: 0.7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+  .sidebar-nav { list-style: none; }
+  .sidebar-nav li a {
+    display: block; padding: 0.45rem 0.75rem; border-radius: 6px;
+    color: var(--muted); text-decoration: none; font-size: 0.88rem;
+    transition: all 0.15s; border-left: 2px solid transparent;
+    margin-bottom: 0.1rem;
+  }
+  .sidebar-nav li a:hover { color: var(--white); background: var(--surface-hover); border-left-color: var(--gold); }
+  .sidebar-nav li a.active { color: var(--gold); background: rgba(245,158,11,0.08); border-left-color: var(--gold); }
+  .sidebar-section { margin-top: 1.5rem; }
+
+  /* ── CONTENT ── */
+  .content { padding: 2.5rem 3rem; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 3.5rem; }
+  .section-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .icon-green { background: rgba(16,185,129,0.15); }
+  .icon-gold { background: rgba(245,158,11,0.15); }
+  .icon-cyan { background: rgba(6,182,212,0.15); }
+  .icon-violet { background: rgba(79,70,229,0.15); }
+  .icon-red { background: rgba(239,68,68,0.15); }
+  .icon-orange { background: rgba(249,115,22,0.15); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; }
+
+  h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--white); }
+  p { color: #CBD5E1; margin-bottom: 1rem; }
+
+  /* ── ALERT BOX ── */
+  .alert {
+    padding: 1rem 1.25rem; border-radius: 10px;
+    margin-bottom: 1.5rem; font-size: 0.9rem;
+    display: flex; gap: 0.75rem;
+  }
+  .alert-law {
+    background: rgba(79,70,229,0.12); border: 1px solid rgba(79,70,229,0.35);
+    color: #C4B5FD;
+  }
+  .alert-warning {
+    background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+    color: #FCA5A5;
+  }
+  .alert-info {
+    background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.3);
+    color: #67E8F9;
+  }
+  .alert-success {
+    background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+    color: #6EE7B7;
+  }
+  .alert-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  thead th {
+    background: var(--navy-mid); padding: 0.8rem 1rem;
+    text-align: left; font-weight: 600; font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface-hover); }
+  tbody td { padding: 0.75rem 1rem; color: #CBD5E1; vertical-align: top; }
+  .td-key { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: var(--cyan); }
+  .td-type { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--gold); }
+  .td-req { color: var(--red); font-weight: 700; font-size: 0.75rem; }
+  .td-opt { color: var(--muted); font-size: 0.75rem; }
+
+  /* ── CODE ── */
+  .code-block {
+    background: #020617; border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem;
+  }
+  .code-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.6rem 1rem; background: var(--navy-mid);
+    border-bottom: 1px solid var(--border); font-size: 0.78rem; color: var(--muted);
+  }
+  .code-lang {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--cyan); font-size: 0.72rem; font-weight: 600;
+    background: rgba(6,182,212,0.12); padding: 0.15rem 0.5rem; border-radius: 4px;
+  }
+  pre { padding: 1.25rem; overflow-x: auto; font-size: 0.83rem; line-height: 1.7; }
+  code { font-family: 'JetBrains Mono', monospace; color: #E2E8F0; }
+  .kw { color: #7C3AED; }
+  .str { color: #10B981; }
+  .cm { color: #64748B; font-style: italic; }
+  .fn { color: #F59E0B; }
+  .ty { color: #06B6D4; }
+  .num { color: #F97316; }
+
+  /* ── GRID CARDS ── */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem;
+    transition: all 0.2s;
+  }
+  .card:hover { border-color: rgba(245,158,11,0.3); background: var(--surface-hover); }
+  .card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .card-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .card-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── MÉTIER BADGES ── */
+  .metier-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .metier-badge {
+    display: flex; align-items: center; gap: 0.4rem;
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.35rem 0.75rem; border-radius: 20px;
+    font-size: 0.83rem; color: #CBD5E1;
+    transition: all 0.15s;
+  }
+  .metier-badge.active { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.4); color: var(--green); }
+  .metier-badge.planned { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); color: var(--gold); }
+
+  /* ── STATUS FLOW ── */
+  .flow { display: flex; align-items: center; gap: 0; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .flow-step {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.6rem 1.1rem; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 500;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .flow-step.s-active { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4); color: var(--green); }
+  .flow-step.s-warn { background: rgba(249,115,22,0.12); border-color: rgba(249,115,22,0.35); color: var(--orange); }
+  .flow-step.s-close { background: rgba(100,116,139,0.15); border-color: rgba(100,116,139,0.3); color: var(--muted); }
+  .flow-arrow { padding: 0 0.5rem; color: var(--muted); font-size: 1rem; }
+
+  /* ── CHAMP OBLIGATOIRE LEGEND ── */
+  .field-legend { display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.82rem; }
+  .fl-item { display: flex; align-items: center; gap: 0.4rem; }
+
+  /* ── RULE BOX ── */
+  .rule-list { list-style: none; }
+  .rule-list li {
+    display: flex; gap: 0.75rem; padding: 0.75rem;
+    border-radius: 8px; margin-bottom: 0.5rem;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 0.88rem; color: #CBD5E1;
+    align-items: flex-start;
+  }
+  .rule-icon { flex-shrink: 0; margin-top: 1px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 4rem; padding: 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center; color: var(--muted); font-size: 0.82rem;
+  }
+  .footer strong { color: var(--gold); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Anim'Gest <span>Docs</span></div>
+  <div class="nav-links">
+    <a href="index.html">Index</a>
+    <a href="17-api-reference.html">API</a>
+    <a href="20-pilotage-projet.html">Pilotage</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="57-module-portail-client.html">Portail</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">⚖️ Réglementation • Arrêté 3 avril 2014</div>
+  <h1>Registre de suivi <em>sanitaire</em><br>et de santé des animaux</h1>
+  <p class="hero-sub">
+    Documentation complète du module Registre Sanitaire d'Anim'Gest — conforme à l'arrêté ministériel du 3 avril 2014 fixant les règles sanitaires et de protection animale auxquelles doivent satisfaire les activités liées aux animaux de compagnie d'espèces domestiques.
+  </p>
+  <div class="hero-meta">
+    <div class="meta-chip"><div class="dot dot-green"></div> Module actif — S65</div>
+    <div class="meta-chip"><div class="dot dot-gold"></div> 2 tables BDD</div>
+    <div class="meta-chip"><div class="dot dot-cyan"></div> 5 routes API</div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Sur cette page</div>
+    <ul class="sidebar-nav">
+      <li><a href="#cadre-legal" class="active">Cadre légal</a></li>
+      <li><a href="#metiers">Métiers concernés</a></li>
+      <li><a href="#obligations">Obligations réglementaires</a></li>
+      <li><a href="#donnees">Données enregistrées</a></li>
+      <li><a href="#bdd">Structure BDD</a></li>
+      <li><a href="#api">Routes API</a></li>
+      <li><a href="#statuts">Cycle de vie</a></li>
+      <li><a href="#frontend">Interface utilisateur</a></li>
+      <li><a href="#journal">Journal d'événements</a></li>
+      <li><a href="#regles">Règles métier</a></li>
+      <li><a href="#integration">Intégration Eliot</a></li>
+    </ul>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Documents liés</div>
+      <ul class="sidebar-nav">
+        <li><a href="17-api-reference.html">Référence API</a></li>
+        <li><a href="22-demarches-eleveur.html">Démarches éleveur</a></li>
+        <li><a href="57-module-portail-client.html">Portail client</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- CADRE LÉGAL -->
+    <section class="section" id="cadre-legal">
+      <div class="section-header">
+        <div class="section-icon icon-violet">⚖️</div>
+        <h2 class="section-title">Cadre légal</h2>
+      </div>
+
+      <div class="alert alert-law">
+        <div class="alert-icon">📜</div>
+        <div>
+          <strong>Arrêté du 3 avril 2014</strong> fixant les règles sanitaires et de protection animale auxquelles doivent satisfaire les activités liées aux animaux de compagnie d'espèces domestiques — JORF n°0086 du 12 avril 2014, texte n°16. Applicable aux établissements hébergeant des animaux de compagnie.
+        </div>
+      </div>
+
+      <p>L'arrêté du 3 avril 2014 impose à tout établissement accueillant des animaux de compagnie en pension (chenil, chatterie, garde temporaire, pet-sitting avec hébergement) la tenue d'un <strong>registre sanitaire</strong> traçant l'ensemble des informations relatives à la santé de chaque animal accueilli.</p>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <div class="card-title">Registre obligatoire</div>
+          <div class="card-text">Tenu à jour pour chaque séjour. Doit être présentable à tout contrôle de la DDPP (Direction Départementale de la Protection des Populations).</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📅</div>
+          <div class="card-title">Conservation 5 ans</div>
+          <div class="card-text">Les données doivent être conservées minimum 5 ans après la clôture du séjour. Anim'Gest ne procède à aucune suppression automatique.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <div class="card-title">Accès DDPP</div>
+          <div class="card-text">Le registre doit être communicable aux autorités sanitaires sur demande. Le module prévoit un export PDF officiel pour cette usage.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚠️</div>
+          <div class="card-title">Sanctions</div>
+          <div class="card-text">L'absence ou la tenue irrégulière du registre constitue une infraction passible de sanctions administratives pouvant conduire à la fermeture de l'établissement.</div>
+        </div>
+      </div>
+
+      <div class="alert alert-warning">
+        <div class="alert-icon">🚨</div>
+        <div>
+          <strong>Important :</strong> L'arrêté s'applique également aux structures proposant du pet-sitting avec hébergement même ponctuel. Une simple garde de quelques jours chez un particulier agrément ACACED est concernée dès lors qu'il y a hébergement de l'animal.
+        </div>
+      </div>
+    </section>
+
+    <!-- MÉTIERS CONCERNÉS -->
+    <section class="section" id="metiers">
+      <div class="section-header">
+        <div class="section-icon icon-green">🐾</div>
+        <h2 class="section-title">Métiers concernés</h2>
+      </div>
+
+      <p>Le module Registre Sanitaire est activé pour les métiers hébergeant des animaux. Il est désactivé pour les métiers sans hébergement (comportementaliste, éducateur canin, ostéopathe).</p>
+
+      <div class="metier-list">
+        <div class="metier-badge active">🏡 Pension / Chenil</div>
+        <div class="metier-badge active">🐱 Chatterie</div>
+        <div class="metier-badge active">🏠 Pet-Sitter (hébergement)</div>
+        <div class="metier-badge active">🐎 Centre Équestre (pension chevaux)</div>
+        <div class="metier-badge planned">🌿 Naturopathe (pension possible)</div>
+        <div class="metier-badge planned">🏋️ Sport Canin (camp d'entraînement)</div>
+        <div class="metier-badge" style="opacity:0.4">🐕 Éducateur canin — non hébergeur</div>
+        <div class="metier-badge" style="opacity:0.4">🦮 Comportementaliste — non hébergeur</div>
+        <div class="metier-badge" style="opacity:0.4">💆 Ostéopathe — non hébergeur</div>
+        <div class="metier-badge" style="opacity:0.4">✂️ Toiletteur — non hébergeur</div>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">ℹ️</div>
+        <div>Dans Anim'Gest, le paramètre métier <code>MODULE_REGISTRE_SANITAIRE = true</code> active l'accès au registre. Ce paramètre est configurable depuis <strong>Paramètres → Modules</strong>. Seuls les métiers avec hébergement doivent l'activer.</div>
+      </div>
+    </section>
+
+    <!-- OBLIGATIONS -->
+    <section class="section" id="obligations">
+      <div class="section-header">
+        <div class="section-icon icon-red">📌</div>
+        <h2 class="section-title">Obligations réglementaires</h2>
+      </div>
+
+      <p>L'arrêté du 3 avril 2014 définit précisément les informations devant figurer dans le registre pour chaque animal accueilli.</p>
+
+      <ul class="rule-list">
+        <li>
+          <span class="rule-icon">🔴</span>
+          <div><strong>Identification de l'animal</strong> — Numéro de tatouage ou de puce électronique (numéro I-CAD), espèce, race, nom, date de naissance estimée, sexe.</div>
+        </li>
+        <li>
+          <span class="rule-icon">🔴</span>
+          <div><strong>Identification du propriétaire</strong> — Nom, prénom, adresse complète, téléphone principal, téléphone d'urgence.</div>
+        </li>
+        <li>
+          <span class="rule-icon">🔴</span>
+          <div><strong>Dates d'entrée et de sortie</strong> — Avec heure précise. La sortie doit être enregistrée même en cas de décès ou de transfert vétérinaire.</div>
+        </li>
+        <li>
+          <span class="rule-icon">🔴</span>
+          <div><strong>État sanitaire à l'entrée</strong> — Observations physiques générales, comportement, toute anomalie constatée, traitement en cours.</div>
+        </li>
+        <li>
+          <span class="rule-icon">🔴</span>
+          <div><strong>Statut vaccinal</strong> — Vaccin contre la rage (obligatoire pour pension), DHPPi pour les chiens, typhus/coryza pour les chats. Date du dernier rappel et date d'échéance.</div>
+        </li>
+        <li>
+          <span class="rule-icon">🔴</span>
+          <div><strong>Médecin vétérinaire habituel</strong> — Nom du vétérinaire, nom de la clinique, téléphone. Utilisé en cas d'urgence médicale pendant le séjour.</div>
+        </li>
+        <li>
+          <span class="rule-icon">🟠</span>
+          <div><strong>Traitement en cours</strong> — Médicament, posologie, fréquence, durée, remarques particulières. Nécessite un journal de suivi.</div>
+        </li>
+        <li>
+          <span class="rule-icon">🟠</span>
+          <div><strong>Alimentation</strong> — Type d'alimentation (croquettes, pâtée, BARF), marque, quantité, fréquence. Allergies alimentaires connues.</div>
+        </li>
+        <li>
+          <span class="rule-icon">🟡</span>
+          <div><strong>Événements pendant le séjour</strong> — Journal chronologique des faits sanitaires : blessure, vomissement, diarrhée, refus d'alimentation, appel vétérinaire.</div>
+        </li>
+        <li>
+          <span class="rule-icon">🟡</span>
+          <div><strong>Contact d'urgence alternatif</strong> — Personne à contacter si le propriétaire est injoignable (autre téléphone, email).</div>
+        </li>
+      </ul>
+
+      <div class="alert alert-warning">
+        <div class="alert-icon">⚠️</div>
+        <div>
+          <strong>Vaccination antirabique :</strong> En pension/chenil, la vaccination contre la rage est obligatoire pour tout chien accueilli. Sans carnet de vaccination à jour présentant le vaccin antirabique valide, l'établissement peut légalement refuser l'accueil de l'animal.
+        </div>
+      </div>
+    </section>
+
+    <!-- DONNÉES ENREGISTRÉES -->
+    <section class="section" id="donnees">
+      <div class="section-header">
+        <div class="section-icon icon-gold">📊</div>
+        <h2 class="section-title">Données enregistrées</h2>
+      </div>
+
+      <h3>Informations du séjour — obligatoires</h3>
+      <div class="field-legend">
+        <div class="fl-item"><span class="td-req">●</span> Obligatoire</div>
+        <div class="fl-item"><span class="td-opt">●</span> Optionnel</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Champ</th><th>Type</th><th>Réq.</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">ANI_ID</td><td class="td-type">INT FK</td><td class="td-req">✦</td><td>Référence animal (table <code>animal</code>)</td></tr>
+            <tr><td class="td-key">TIE_ID</td><td class="td-type">INT FK</td><td class="td-req">✦</td><td>Référence propriétaire (table <code>tiers</code>)</td></tr>
+            <tr><td class="td-key">RSS_DATE_ENTREE</td><td class="td-type">DATETIME</td><td class="td-req">✦</td><td>Date et heure d'entrée dans l'établissement</td></tr>
+            <tr><td class="td-key">RSS_DATE_SORTIE</td><td class="td-type">DATETIME</td><td class="td-opt">○</td><td>Date et heure de sortie prévue (modifiable)</td></tr>
+            <tr><td class="td-key">RSS_DATE_SORTIE_REELLE</td><td class="td-type">DATETIME</td><td class="td-opt">○</td><td>Date et heure de sortie effective (à la clôture)</td></tr>
+            <tr><td class="td-key">RSS_STATUT</td><td class="td-type">ENUM</td><td class="td-req">✦</td><td>EN_COURS / CLOTURE / INCIDENT</td></tr>
+            <tr><td class="td-key">RSS_ETAT_ENTREE</td><td class="td-type">TEXT</td><td class="td-req">✦</td><td>Observation état physique et comportemental à l'entrée</td></tr>
+            <tr><td class="td-key">RSS_ETAT_SORTIE</td><td class="td-type">TEXT</td><td class="td-opt">○</td><td>Observation état à la sortie / clôture</td></tr>
+            <tr><td class="td-key">RSS_VACCIN_RAGE</td><td class="td-type">DATE</td><td class="td-opt">○</td><td>Date de validité du vaccin antirabique</td></tr>
+            <tr><td class="td-key">RSS_VACCIN_AUTRE</td><td class="td-type">VARCHAR</td><td class="td-opt">○</td><td>Autres vaccinations (DHPP, typhus, leucose…)</td></tr>
+            <tr><td class="td-key">RSS_TRAITEMENT</td><td class="td-type">TEXT</td><td class="td-opt">○</td><td>Traitement médical en cours : médicament + posologie</td></tr>
+            <tr><td class="td-key">RSS_ALIMENTATION</td><td class="td-type">TEXT</td><td class="td-opt">○</td><td>Type, marque, quantité, fréquence, allergies</td></tr>
+            <tr><td class="td-key">RSS_VETO_NOM</td><td class="td-type">VARCHAR</td><td class="td-req">✦</td><td>Nom du vétérinaire habituel</td></tr>
+            <tr><td class="td-key">RSS_VETO_TEL</td><td class="td-type">VARCHAR</td><td class="td-req">✦</td><td>Téléphone de la clinique vétérinaire</td></tr>
+            <tr><td class="td-key">RSS_URGENCE_NOM</td><td class="td-type">VARCHAR</td><td class="td-req">✦</td><td>Nom du contact d'urgence (si propriétaire absent)</td></tr>
+            <tr><td class="td-key">RSS_URGENCE_TEL</td><td class="td-type">VARCHAR</td><td class="td-req">✦</td><td>Téléphone du contact d'urgence</td></tr>
+            <tr><td class="td-key">RSS_AUTORISATION_SOINS</td><td class="td-type">BOOLEAN</td><td class="td-req">✦</td><td>Autorisation du propriétaire pour soins vétérinaires d'urgence</td></tr>
+            <tr><td class="td-key">RSS_METIER</td><td class="td-type">VARCHAR</td><td class="td-req">✦</td><td>Métier créateur : PENSION / PET_SITTER / EQUESTRE</td></tr>
+            <tr><td class="td-key">RSS_NOTES</td><td class="td-type">TEXT</td><td class="td-opt">○</td><td>Notes libres complémentaires</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Journal d'événements — table <code>registre_sanitaire_evenement</code></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Champ</th><th>Type</th><th>Réq.</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">RSE_ID</td><td class="td-type">INT PK</td><td class="td-req">✦</td><td>Identifiant unique</td></tr>
+            <tr><td class="td-key">RSS_ID</td><td class="td-type">INT FK</td><td class="td-req">✦</td><td>Référence séjour</td></tr>
+            <tr><td class="td-key">RSE_DATE</td><td class="td-type">DATETIME</td><td class="td-req">✦</td><td>Date et heure de l'événement</td></tr>
+            <tr><td class="td-key">RSE_TYPE</td><td class="td-type">ENUM</td><td class="td-req">✦</td><td>ALIMENTATION / SANTE / COMPORTEMENT / TRAITEMENT / VETERINAIRE / AUTRE</td></tr>
+            <tr><td class="td-key">RSE_DESCRIPTION</td><td class="td-type">TEXT</td><td class="td-req">✦</td><td>Description de l'événement</td></tr>
+            <tr><td class="td-key">RSE_GRAVITE</td><td class="td-type">ENUM</td><td class="td-opt">○</td><td>FAIBLE / MODEREE / ELEVEE / URGENCE</td></tr>
+            <tr><td class="td-key">RSE_AUTEUR</td><td class="td-type">VARCHAR</td><td class="td-opt">○</td><td>Nom de l'employé ayant enregistré l'événement</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- STRUCTURE BDD -->
+    <section class="section" id="bdd">
+      <div class="section-header">
+        <div class="section-icon icon-cyan">🗃️</div>
+        <h2 class="section-title">Structure BDD</h2>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>Migration SQL — S65</span>
+          <span class="code-lang">SQL</span>
+        </div>
+        <pre><code><span class="cm">-- Table principale du registre sanitaire</span>
+<span class="kw">CREATE TABLE</span> <span class="ty">registre_sanitaire_sejour</span> (
+  RSS_ID               <span class="ty">INT</span>(<span class="num">11</span>) <span class="kw">AUTO_INCREMENT PRIMARY KEY</span>,
+  ANI_ID               <span class="ty">INT</span>(<span class="num">11</span>) <span class="kw">NOT NULL</span>,
+  TIE_ID               <span class="ty">INT</span>(<span class="num">11</span>) <span class="kw">NOT NULL</span>,
+  RSS_DATE_ENTREE      <span class="ty">DATETIME</span> <span class="kw">NOT NULL</span>,
+  RSS_DATE_SORTIE      <span class="ty">DATETIME</span>,
+  RSS_DATE_SORTIE_REELLE <span class="ty">DATETIME</span>,
+  RSS_STATUT           <span class="ty">ENUM</span>(<span class="str">'EN_COURS'</span>,<span class="str">'CLOTURE'</span>,<span class="str">'INCIDENT'</span>) <span class="kw">DEFAULT</span> <span class="str">'EN_COURS'</span>,
+  RSS_ETAT_ENTREE      <span class="ty">TEXT</span> <span class="kw">NOT NULL</span>,
+  RSS_ETAT_SORTIE      <span class="ty">TEXT</span>,
+  RSS_VACCIN_RAGE      <span class="ty">DATE</span>,
+  RSS_VACCIN_AUTRE     <span class="ty">VARCHAR</span>(<span class="num">500</span>),
+  RSS_TRAITEMENT       <span class="ty">TEXT</span>,
+  RSS_ALIMENTATION     <span class="ty">TEXT</span>,
+  RSS_VETO_NOM         <span class="ty">VARCHAR</span>(<span class="num">150</span>) <span class="kw">NOT NULL</span>,
+  RSS_VETO_TEL         <span class="ty">VARCHAR</span>(<span class="num">20</span>) <span class="kw">NOT NULL</span>,
+  RSS_URGENCE_NOM      <span class="ty">VARCHAR</span>(<span class="num">150</span>) <span class="kw">NOT NULL</span>,
+  RSS_URGENCE_TEL      <span class="ty">VARCHAR</span>(<span class="num">20</span>) <span class="kw">NOT NULL</span>,
+  RSS_AUTORISATION_SOINS <span class="ty">TINYINT</span>(<span class="num">1</span>) <span class="kw">DEFAULT</span> <span class="num">0</span>,
+  RSS_METIER           <span class="ty">VARCHAR</span>(<span class="num">30</span>) <span class="kw">NOT NULL</span>,
+  RSS_NOTES            <span class="ty">TEXT</span>,
+  RSS_CREATED_AT       <span class="ty">DATETIME</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>,
+  RSS_UPDATED_AT       <span class="ty">DATETIME</span> <span class="kw">ON UPDATE CURRENT_TIMESTAMP</span>,
+  <span class="kw">FOREIGN KEY</span> (ANI_ID) <span class="kw">REFERENCES</span> <span class="ty">animal</span>(ANI_ID),
+  <span class="kw">FOREIGN KEY</span> (TIE_ID) <span class="kw">REFERENCES</span> <span class="ty">tiers</span>(TIE_ID),
+  <span class="kw">INDEX</span> idx_rss_animal (ANI_ID),
+  <span class="kw">INDEX</span> idx_rss_tiers (TIE_ID),
+  <span class="kw">INDEX</span> idx_rss_statut (RSS_STATUT)
+) <span class="ty">ENGINE</span>=InnoDB <span class="ty">DEFAULT CHARSET</span>=utf8mb4;
+
+<span class="cm">-- Journal chronologique des événements</span>
+<span class="kw">CREATE TABLE</span> <span class="ty">registre_sanitaire_evenement</span> (
+  RSE_ID               <span class="ty">INT</span>(<span class="num">11</span>) <span class="kw">AUTO_INCREMENT PRIMARY KEY</span>,
+  RSS_ID               <span class="ty">INT</span>(<span class="num">11</span>) <span class="kw">NOT NULL</span>,
+  RSE_DATE             <span class="ty">DATETIME</span> <span class="kw">NOT NULL DEFAULT CURRENT_TIMESTAMP</span>,
+  RSE_TYPE             <span class="ty">ENUM</span>(<span class="str">'ALIMENTATION'</span>,<span class="str">'SANTE'</span>,<span class="str">'COMPORTEMENT'</span>,
+                           <span class="str">'TRAITEMENT'</span>,<span class="str">'VETERINAIRE'</span>,<span class="str">'AUTRE'</span>) <span class="kw">NOT NULL</span>,
+  RSE_DESCRIPTION      <span class="ty">TEXT</span> <span class="kw">NOT NULL</span>,
+  RSE_GRAVITE          <span class="ty">ENUM</span>(<span class="str">'FAIBLE'</span>,<span class="str">'MODEREE'</span>,<span class="str">'ELEVEE'</span>,<span class="str">'URGENCE'</span>),
+  RSE_AUTEUR           <span class="ty">VARCHAR</span>(<span class="num">100</span>),
+  <span class="kw">FOREIGN KEY</span> (RSS_ID) <span class="kw">REFERENCES</span> <span class="ty">registre_sanitaire_sejour</span>(RSS_ID)
+    <span class="kw">ON DELETE CASCADE</span>,
+  <span class="kw">INDEX</span> idx_rse_sejour (RSS_ID)
+) <span class="ty">ENGINE</span>=InnoDB <span class="ty">DEFAULT CHARSET</span>=utf8mb4;
+</code></pre>
+      </div>
+    </section>
+
+    <!-- ROUTES API -->
+    <section class="section" id="api">
+      <div class="section-header">
+        <div class="section-icon icon-cyan">🔌</div>
+        <h2 class="section-title">Routes API</h2>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Méthode</th><th>Route</th><th>Description</th><th>Auth</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span style="color:var(--green);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:0.8rem">GET</span></td>
+              <td class="td-key">/api/registre-sanitaire</td>
+              <td>Liste paginée des séjours avec jointures animal + tiers + race</td>
+              <td><span style="color:var(--gold);font-size:0.78rem">Requis</span></td>
+            </tr>
+            <tr>
+              <td><span style="color:var(--green);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:0.8rem">GET</span></td>
+              <td class="td-key">/api/registre-sanitaire/:id</td>
+              <td>Détail complet d'un séjour + journal d'événements</td>
+              <td><span style="color:var(--gold);font-size:0.78rem">Requis</span></td>
+            </tr>
+            <tr>
+              <td><span style="color:var(--cyan);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:0.8rem">POST</span></td>
+              <td class="td-key">/api/registre-sanitaire</td>
+              <td>Créer un nouveau séjour (entrée animal)</td>
+              <td><span style="color:var(--gold);font-size:0.78rem">Requis</span></td>
+            </tr>
+            <tr>
+              <td><span style="color:var(--orange);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:0.8rem">PUT</span></td>
+              <td class="td-key">/api/registre-sanitaire/:id</td>
+              <td>Mettre à jour un séjour / clôturer (sortie animal)</td>
+              <td><span style="color:var(--gold);font-size:0.78rem">Requis</span></td>
+            </tr>
+            <tr>
+              <td><span style="color:var(--cyan);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:0.8rem">POST</span></td>
+              <td class="td-key">/api/registre-sanitaire/:id/evenement</td>
+              <td>Ajouter un événement au journal du séjour</td>
+              <td><span style="color:var(--gold);font-size:0.78rem">Requis</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Paramètres de filtrage — GET /registre-sanitaire</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Paramètre</th><th>Type</th><th>Valeurs</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">?statut=</td><td class="td-type">string</td><td>EN_COURS | CLOTURE | INCIDENT</td></tr>
+            <tr><td class="td-key">?metier=</td><td class="td-type">string</td><td>PENSION | PET_SITTER | EQUESTRE</td></tr>
+            <tr><td class="td-key">?ani_id=</td><td class="td-type">integer</td><td>Filtrer par animal</td></tr>
+            <tr><td class="td-key">?search=</td><td class="td-type">string</td><td>Recherche sur nom animal / propriétaire</td></tr>
+            <tr><td class="td-key">?date_from=</td><td class="td-type">date</td><td>Filtrer par date d'entrée ≥</td></tr>
+            <tr><td class="td-key">?date_to=</td><td class="td-type">date</td><td>Filtrer par date d'entrée ≤</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CYCLE DE VIE -->
+    <section class="section" id="statuts">
+      <div class="section-header">
+        <div class="section-icon icon-orange">🔄</div>
+        <h2 class="section-title">Cycle de vie d'un séjour</h2>
+      </div>
+
+      <div class="flow">
+        <div class="flow-step s-active">📥 Création <small style="font-weight:400;margin-left:4px;opacity:0.7">entrée animal</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step s-active">🟢 EN_COURS</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step s-warn">🟠 INCIDENT <small style="font-weight:400;margin-left:4px;opacity:0.7">(optionnel)</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step s-close">🔘 CLOTURE <small style="font-weight:400;margin-left:4px;opacity:0.7">sortie animal</small></div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🟢</div>
+          <div class="card-title">EN_COURS</div>
+          <div class="card-text">Séjour actif. L'animal est présent dans l'établissement. Le journal d'événements peut être alimenté à tout moment.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🟠</div>
+          <div class="card-title">INCIDENT</div>
+          <div class="card-text">Un événement de gravité ÉLEVÉE ou URGENCE a été enregistré. Le statut passe automatiquement à INCIDENT et déclenche une notification.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔘</div>
+          <div class="card-title">CLOTURE</div>
+          <div class="card-text">L'animal a quitté l'établissement. La date de sortie réelle est enregistrée. Le registre est archivé et en lecture seule. Conservation 5 ans garantie.</div>
+        </div>
+      </div>
+
+      <div class="alert alert-warning">
+        <div class="alert-icon">⚠️</div>
+        <div><strong>Séjour clôturé = lecture seule :</strong> Une fois l'état CLOTURE atteint, aucune modification des données du séjour n'est possible (sauf ajout d'événement post-clôture avec mention explicite). Cette règle garantit l'intégrité du registre réglementaire.</div>
+      </div>
+    </section>
+
+    <!-- FRONTEND -->
+    <section class="section" id="frontend">
+      <div class="section-header">
+        <div class="section-icon icon-violet">🖥️</div>
+        <h2 class="section-title">Interface utilisateur</h2>
+      </div>
+
+      <p>Le composant <code>RegistreSanitairePage.tsx</code> est partagé entre les deux métiers actifs. Il accepte un paramètre <code>metier</code> pour adapter le filtrage.</p>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🏡</div>
+          <div class="card-title"><code>/app/pension/registre</code></div>
+          <div class="card-text">Page registre pour le métier Pension / Chenil. Filtre automatique sur <code>RSS_METIER = 'PENSION'</code>.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏠</div>
+          <div class="card-title"><code>/app/pet-sitter/registre</code></div>
+          <div class="card-text">Page registre pour le métier Pet-Sitter. Filtre automatique sur <code>RSS_METIER = 'PET_SITTER'</code>.</div>
+        </div>
+      </div>
+
+      <h3>Fonctionnalités de l'interface</h3>
+      <ul class="rule-list">
+        <li><span class="rule-icon">📋</span><div><strong>Liste des séjours</strong> — tableau paginé avec filtre par statut, recherche full-text, tri par date d'entrée. Indicateur visuel rouge pour les séjours INCIDENT.</div></li>
+        <li><span class="rule-icon">📄</span><div><strong>Panneau latéral détail</strong> — ouverture au clic d'une ligne, affichage complet du séjour sans changement de page. Bouton de clôture et d'ajout d'événement.</div></li>
+        <li><span class="rule-icon">➕</span><div><strong>Formulaire de création</strong> — autocomplete sur les animaux existants, pré-remplissage du propriétaire depuis la fiche client, validation des champs obligatoires.</div></li>
+        <li><span class="rule-icon">📅</span><div><strong>Journal chronologique</strong> — fil d'actualité des événements avec code couleur par gravité. Filtrable par type d'événement.</div></li>
+        <li><span class="rule-icon">🖨️</span><div><strong>Export PDF officiel</strong> — génération Puppeteer d'un registre imprimable conforme DDPP, avec en-tête établissement et signature.</div></li>
+        <li><span class="rule-icon">🔔</span><div><strong>Alertes automatiques</strong> — notification interne si vaccin antirabique expiré à l'entrée ou si événement URGENCE enregistré.</div></li>
+      </ul>
+    </section>
+
+    <!-- JOURNAL -->
+    <section class="section" id="journal">
+      <div class="section-header">
+        <div class="section-icon icon-green">📓</div>
+        <h2 class="section-title">Journal d'événements</h2>
+      </div>
+
+      <p>Le journal est le cœur du suivi sanitaire quotidien. Chaque événement est horodaté, typé et peut recevoir un indice de gravité.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Type</th><th>Cas d'usage typiques</th><th>Gravité suggérée</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">ALIMENTATION</td><td>Refus de manger, quantité consommée, vomissement post-repas</td><td><span style="color:var(--gold)">FAIBLE → MODÉRÉE</span></td></tr>
+            <tr><td class="td-key">SANTE</td><td>Blessure, boiterie, écoulement oculaire, problème respiratoire</td><td><span style="color:var(--orange)">MODÉRÉE → URGENCE</span></td></tr>
+            <tr><td class="td-key">COMPORTEMENT</td><td>Agitation, agressivité, prostration, vocalises inhabituelles</td><td><span style="color:var(--gold)">FAIBLE → ÉLEVÉE</span></td></tr>
+            <tr><td class="td-key">TRAITEMENT</td><td>Administration d'un médicament prescrit, heure et dose</td><td><span style="color:var(--green)">FAIBLE</span></td></tr>
+            <tr><td class="td-key">VETERINAIRE</td><td>Appel au vétérinaire, transport en clinique, diagnostic reçu</td><td><span style="color:var(--red)">ÉLEVÉE → URGENCE</span></td></tr>
+            <tr><td class="td-key">AUTRE</td><td>Visite du propriétaire, sortie exceptionnelle, observation générale</td><td><span style="color:var(--muted)">FAIBLE</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div>En cas d'événement de gravité <strong>URGENCE</strong>, Anim'Gest génère automatiquement une notification interne et marque le séjour en statut INCIDENT. Le propriétaire et le contact d'urgence peuvent être alertés par email si la configuration SMTP est active.</div>
+      </div>
+    </section>
+
+    <!-- RÈGLES MÉTIER -->
+    <section class="section" id="regles">
+      <div class="section-header">
+        <div class="section-icon icon-red">⚡</div>
+        <h2 class="section-title">Règles métier</h2>
+      </div>
+
+      <ul class="rule-list">
+        <li><span class="rule-icon">🔒</span><div><strong>Immutabilité post-clôture :</strong> Un séjour clôturé ne peut plus être modifié. Le registre archivé est en lecture seule. Seul un événement post-clôture explicitement daté peut être ajouté.</div></li>
+        <li><span class="rule-icon">🐾</span><div><strong>Animal identifié obligatoire :</strong> Un séjour ne peut être créé que pour un animal référencé dans la base (table <code>animal</code> avec ANI_PUCE ou ANI_TATOUAGE renseigné de préférence).</div></li>
+        <li><span class="rule-icon">📅</span><div><strong>Conservation 5 ans :</strong> Aucune suppression de séjour cloturé avant l'expiration de 5 ans depuis la date de clôture. La suppression est désactivée en UI pour les séjours archivés.</div></li>
+        <li><span class="rule-icon">🐕</span><div><strong>Vaccination antirabique :</strong> Si <code>RSS_VACCIN_RAGE</code> est renseigné et antérieur à la date du jour, un avertissement s'affiche à l'enregistrement mais ne bloque pas la création (responsabilité professionnelle).</div></li>
+        <li><span class="rule-icon">✅</span><div><strong>Autorisation de soins :</strong> Le champ <code>RSS_AUTORISATION_SOINS</code> doit être explicitement coché par l'utilisateur. Il n'a pas de valeur par défaut à <code>true</code> pour éviter tout accord implicite.</div></li>
+        <li><span class="rule-icon">🔗</span><div><strong>Lien avec la fiche animal :</strong> La création d'un séjour pré-remplit automatiquement le vétérinaire habituel depuis la fiche animal si les champs <code>ANI_VETO_NOM</code> / <code>ANI_VETO_TEL</code> sont renseignés.</div></li>
+        <li><span class="rule-icon">📊</span><div><strong>Indépendance d'Eliot :</strong> Le registre sanitaire fonctionne intégralement sans Eliot. C'est une fonctionnalité réglementaire de base, non une option IA.</div></li>
+        <li><span class="rule-icon">🏷️</span><div><strong>Cloisonnement par métier :</strong> Chaque métier ne voit que ses propres séjours (<code>RSS_METIER</code> filter). Un établissement multi-activités (pension + pet-sitter) accède aux deux registres depuis leurs menus respectifs.</div></li>
+      </ul>
+    </section>
+
+    <!-- INTÉGRATION ELIOT -->
+    <section class="section" id="integration">
+      <div class="section-header">
+        <div class="section-icon icon-violet">🤖</div>
+        <h2 class="section-title">Intégration Eliot (futur)</h2>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">🔮</div>
+        <div>L'intégration Eliot pour le registre sanitaire est planifiée en S67+. Les outils ci-dessous sont spécifiés mais pas encore implémentés.</div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tool Eliot</th><th>Description</th><th>Statut</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">get_registre_sanitaire</td><td>Lire la liste des séjours en cours avec alertes sanitaires</td><td><span style="color:var(--gold)">Planifié S67</span></td></tr>
+            <tr><td class="td-key">create_evenement_sanitaire</td><td>Ajouter un événement au journal depuis Eliot en mode vocal</td><td><span style="color:var(--gold)">Planifié S67</span></td></tr>
+            <tr><td class="td-key">get_alertes_vaccins</td><td>Signaler les animaux avec vaccinations expirées ou à renouveler</td><td><span style="color:var(--gold)">Planifié S68</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert alert-success">
+        <div class="alert-icon">✅</div>
+        <div>Rappel : Eliot est une option commerciale. Toutes les fonctionnalités du registre sanitaire sont accessibles et pleinement opérationnelles sans Eliot. L'IA vient en complément, jamais en prérequis.</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Anim'Gest</strong> — NoSage's Editor &nbsp;·&nbsp;
+  Documentation technique &nbsp;·&nbsp;
+  Registre Sanitaire — Module S65 &nbsp;·&nbsp;
+  Arrêté 3 avril 2014 &nbsp;·&nbsp;
+  <span style="color:var(--muted)">Mise à jour 07/04/2026</span>
+</div>
+
+<script>
+  // Highlight active section on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav li a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.sidebar-nav li a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Générateur de Handover — Anim'Gest SAV</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0F1A;
+  --surface: #111827;
+  --surface2: #1C2534;
+  --surface3: #243040;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #D1D9E6;
+  --muted: #6B7A8D;
+  --accent: #3B7CF8;
+  --green: #22C55E;
+  --red: #F43F5E;
+  --orange: #FB923C;
+  --yellow: #FBBF24;
+  --violet: #A78BFA;
+  --cyan: #22D3EE;
+  --gold: #F59E0B;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── HEADER ── */
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border2);
+  padding: 1rem 2rem; display: flex; align-items: center; gap: 1.5rem;
+  position: sticky; top: 0; z-index: 50;
+}
+.header-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; font-weight: 600; color: var(--gold); }
+.header-title { font-size: 1rem; font-weight: 700; }
+.header-sub { font-size: 0.75rem; color: var(--muted); }
+.header-sprint {
+  margin-left: auto; font-family: 'IBM Plex Mono', monospace;
+  background: rgba(59,124,248,0.15); border: 1px solid rgba(59,124,248,0.3);
+  color: var(--accent); padding: 0.35rem 0.9rem; border-radius: 6px; font-size: 0.82rem; font-weight: 600;
+}
+.header-actions { display: flex; gap: 0.5rem; }
+
+/* ── LAYOUT ── */
+.app-layout { display: grid; grid-template-columns: 380px 1fr; min-height: calc(100vh - 64px); }
+
+/* ── FORM PANEL ── */
+.form-panel {
+  background: var(--surface); border-right: 1px solid var(--border);
+  overflow-y: auto; padding: 0;
+}
+.form-panel::-webkit-scrollbar { width: 4px; }
+.form-panel::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.section-block {
+  border-bottom: 1px solid var(--border); padding: 1.25rem 1.5rem;
+}
+.section-block:last-child { border-bottom: none; }
+.block-title {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.block-title.rouge { color: var(--red); }
+.block-title.orange { color: var(--orange); }
+.block-title.jaune { color: var(--yellow); }
+.block-title.neutral { color: var(--muted); }
+.block-title.green { color: var(--green); }
+.block-title.violet { color: var(--violet); }
+
+/* ── FORM ELEMENTS ── */
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem; }
+.f-group { margin-bottom: 0.6rem; }
+.f-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.3rem; display: block; font-weight: 500; }
+.f-label .req { color: var(--red); }
+.f-input, .f-select {
+  width: 100%; background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text); font-family: 'IBM Plex Sans', sans-serif; font-size: 0.82rem;
+  padding: 0.5rem 0.7rem; border-radius: 6px; transition: border-color 0.15s;
+}
+.f-input:focus, .f-select:focus { outline: none; border-color: var(--accent); }
+.f-input.valid { border-color: rgba(34,197,94,0.5); }
+.f-input.invalid { border-color: rgba(244,63,94,0.5); }
+.f-textarea {
+  width: 100%; background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+  padding: 0.6rem 0.75rem; border-radius: 6px; resize: vertical; min-height: 80px;
+  line-height: 1.6; transition: border-color 0.15s;
+}
+.f-textarea:focus { outline: none; border-color: var(--accent); }
+.f-textarea.valid { border-color: rgba(34,197,94,0.5); }
+
+/* Liste dynamique */
+.dynamic-list { }
+.dl-item {
+  display: flex; gap: 0.4rem; margin-bottom: 0.4rem; align-items: flex-start;
+}
+.dl-tag {
+  font-size: 0.68rem; font-weight: 700; padding: 0.25rem 0.4rem;
+  border-radius: 4px; flex-shrink: 0; margin-top: 8px; white-space: nowrap;
+}
+.dl-r { background: rgba(244,63,94,0.2); color: var(--red); }
+.dl-o { background: rgba(251,146,60,0.15); color: var(--orange); }
+.dl-y { background: rgba(251,191,36,0.12); color: var(--yellow); }
+.dl-input {
+  flex: 1; background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+  padding: 0.4rem 0.6rem; border-radius: 5px; width: 100%;
+}
+.dl-input:focus { outline: none; border-color: var(--accent); }
+.dl-add {
+  background: rgba(59,124,248,0.12); border: 1px solid rgba(59,124,248,0.25);
+  color: var(--accent); font-size: 0.72rem; font-family: 'IBM Plex Sans', sans-serif;
+  padding: 0.3rem 0.6rem; border-radius: 5px; cursor: pointer; margin-top: 0.3rem;
+  font-weight: 600;
+}
+.dl-add:hover { background: rgba(59,124,248,0.2); }
+.dl-rm {
+  background: transparent; border: none; color: var(--muted); font-size: 1rem;
+  cursor: pointer; margin-top: 6px; padding: 0 0.25rem; line-height: 1;
+}
+.dl-rm:hover { color: var(--red); }
+
+/* ── VALIDATION BAR ── */
+.validation-bar {
+  position: sticky; bottom: 0; background: var(--surface);
+  border-top: 1px solid var(--border2); padding: 1rem 1.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.val-score {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem;
+  color: var(--muted); flex: 1;
+}
+.val-score span { font-weight: 700; }
+
+/* ── BTN ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 1.1rem; border-radius: 7px; border: none;
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 0.82rem;
+  font-weight: 700; cursor: pointer; transition: all 0.15s;
+}
+.btn-gen { background: var(--accent); color: #fff; }
+.btn-gen:hover { background: #2563EB; }
+.btn-gen:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-copy { background: var(--surface2); color: var(--text); border: 1px solid var(--border2); font-size: 0.78rem; }
+.btn-copy:hover { border-color: var(--accent); }
+.btn-reset { background: transparent; color: var(--muted); border: 1px solid var(--border); font-size: 0.78rem; }
+.btn-reset:hover { color: var(--text); border-color: var(--border2); }
+
+/* ── PREVIEW PANEL ── */
+.preview-panel {
+  overflow-y: auto; background: var(--bg); padding: 2rem;
+}
+.preview-panel::-webkit-scrollbar { width: 5px; }
+.preview-panel::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.preview-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 100%; text-align: center; color: var(--muted); gap: 1rem;
+}
+.preview-empty-icon { font-size: 3rem; opacity: 0.3; }
+.preview-empty h3 { font-size: 1rem; font-weight: 600; }
+.preview-empty p { font-size: 0.83rem; max-width: 300px; line-height: 1.6; }
+
+.handover-output {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 12px; overflow: hidden;
+}
+.handover-header {
+  background: var(--surface2); border-bottom: 1px solid var(--border2);
+  padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;
+}
+.handover-title-row { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; color: var(--cyan); }
+.handover-actions { display: flex; gap: 0.5rem; }
+pre.handover-md {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+  line-height: 1.75; color: #C4D1E1; padding: 1.5rem;
+  white-space: pre-wrap; word-break: break-word;
+  max-height: calc(100vh - 200px); overflow-y: auto;
+}
+
+/* Highlight in preview */
+pre.handover-md .h1 { color: #F59E0B; font-weight: 700; }
+pre.handover-md .h2 { color: #93C5FD; font-weight: 600; }
+pre.handover-md .h3 { color: #A5B4FC; }
+pre.handover-md .rouge { color: var(--red); }
+pre.handover-md .orange { color: var(--orange); }
+pre.handover-md .jaune { color: var(--yellow); }
+pre.handover-md .code { color: var(--cyan); }
+pre.handover-md .ok { color: var(--green); }
+pre.handover-md .warn { color: var(--yellow); }
+pre.handover-md .separator { color: var(--muted); }
+
+/* ── PROGRESS INDICATOR ── */
+.progress-row {
+  display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem;
+}
+.prog-chip {
+  font-size: 0.65rem; font-weight: 600; padding: 0.2rem 0.6rem;
+  border-radius: 20px; cursor: default;
+}
+.prog-done { background: rgba(34,197,94,0.15); color: var(--green); }
+.prog-missing { background: rgba(244,63,94,0.12); color: var(--red); }
+.prog-optional { background: rgba(107,122,141,0.15); color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Anim'Gest SAV</div>
+  <div>
+    <div class="header-title">📄 Générateur de Handover</div>
+    <div class="header-sub">Saisissez le sprint · Obtenez un handover complet avec roadmap intégrée</div>
+  </div>
+  <div class="header-sprint" id="sprint_display">S66</div>
+  <div class="header-actions">
+    <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
+    <button class="btn btn-gen" id="btn_generate" onclick="genererHandover()">⚡ Générer Handover</button>
+  </div>
+</div>
+
+<div class="app-layout">
+
+  <!-- FORM PANEL -->
+  <div class="form-panel">
+
+    <!-- IDENTITÉ SPRINT -->
+    <div class="section-block">
+      <div class="block-title neutral">🎯 Identité du sprint</div>
+      <div class="f-row">
+        <div class="f-group">
+          <label class="f-label">Numéro sprint <span class="req">✦</span></label>
+          <input type="number" class="f-input" id="f_sprint" value="66" min="1" oninput="updateSprintBadge()">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Date <span class="req">✦</span></label>
+          <input type="date" class="f-input" id="f_date">
+        </div>
+      </div>
+      <div class="f-row">
+        <div class="f-group">
+          <label class="f-label">Commit de début</label>
+          <input type="text" class="f-input" id="f_commit_start" placeholder="ex: d4e9b23">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Commit de fin</label>
+          <input type="text" class="f-input" id="f_commit_end" placeholder="ex: a1b2c3d">
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTRIQUES -->
+    <div class="section-block">
+      <div class="block-title neutral">📊 Métriques finales</div>
+      <div class="f-row">
+        <div class="f-group">
+          <label class="f-label">Routes API <span class="req">✦</span></label>
+          <input type="number" class="f-input" id="f_routes" value="155">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Pages UI <span class="req">✦</span></label>
+          <input type="number" class="f-input" id="f_pages" value="112">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Eliot tools</label>
+          <input type="number" class="f-input" id="f_eliot" value="13">
+        </div>
+        <div class="f-group">
+          <label class="f-label">app.use() restants</label>
+          <input type="number" class="f-input" id="f_appuse" value="100">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Score Backend /100</label>
+          <input type="number" class="f-input" id="f_score_b" value="90" min="0" max="100">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Score Frontend /100</label>
+          <input type="number" class="f-input" id="f_score_f" value="89" min="0" max="100">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Score BDD /100</label>
+          <input type="number" class="f-input" id="f_score_d" value="90" min="0" max="100">
+        </div>
+        <div class="f-group">
+          <label class="f-label">JSDoc %</label>
+          <input type="number" class="f-input" id="f_jsdoc" value="97" min="0" max="100">
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCOMPLI -->
+    <div class="section-block">
+      <div class="block-title green">✅ Accompli ce sprint <span class="req" style="color:var(--red)">✦</span></div>
+      <div class="dynamic-list" id="list_done"></div>
+      <button class="dl-add" onclick="addItem('list_done', 'done')">+ Ajouter une livraison</button>
+    </div>
+
+    <!-- COMMITS -->
+    <div class="section-block">
+      <div class="block-title neutral">🔀 Commits <span class="req" style="color:var(--red)">✦</span></div>
+      <div class="dynamic-list" id="list_commits"></div>
+      <button class="dl-add" onclick="addItem('list_commits', 'commit')">+ Ajouter un commit</button>
+    </div>
+
+    <!-- BDD -->
+    <div class="section-block">
+      <div class="block-title neutral">🗃️ BDD — Nouvelles tables / colonnes</div>
+      <div class="dynamic-list" id="list_bdd"></div>
+      <button class="dl-add" onclick="addItem('list_bdd', 'bdd')">+ Ajouter table/colonne</button>
+    </div>
+
+    <!-- FICHIERS MODIFIÉS -->
+    <div class="section-block">
+      <div class="block-title neutral">📁 Fichiers modifiés</div>
+      <div class="dynamic-list" id="list_files"></div>
+      <button class="dl-add" onclick="addItem('list_files', 'file')">+ Ajouter un fichier</button>
+    </div>
+
+    <!-- DETTE ROUGE -->
+    <div class="section-block">
+      <div class="block-title rouge">🔴 Dette ROUGE — Bloquants <span style="color:var(--red)">✦</span></div>
+      <div class="dynamic-list" id="list_rouge"></div>
+      <button class="dl-add" onclick="addItem('list_rouge', 'rouge')">+ Ajouter item ROUGE</button>
+    </div>
+
+    <!-- DETTE ORANGE -->
+    <div class="section-block">
+      <div class="block-title orange">🟠 Dette ORANGE — Haute priorité <span style="color:var(--red)">✦</span></div>
+      <div class="dynamic-list" id="list_orange"></div>
+      <button class="dl-add" onclick="addItem('list_orange', 'orange')">+ Ajouter item ORANGE</button>
+    </div>
+
+    <!-- DETTE JAUNE -->
+    <div class="section-block">
+      <div class="block-title jaune">🟡 Dette JAUNE — Qualité</div>
+      <div class="dynamic-list" id="list_jaune"></div>
+      <button class="dl-add" onclick="addItem('list_jaune', 'jaune')">+ Ajouter item JAUNE</button>
+    </div>
+
+    <!-- PROCHAIN SPRINT -->
+    <div class="section-block">
+      <div class="block-title violet">🚀 Priorités sprint suivant <span style="color:var(--red)">✦</span></div>
+      <div class="f-group">
+        <label class="f-label">Priorité ROUGE #1 (la plus critique)</label>
+        <input type="text" class="f-input" id="f_next_rouge" placeholder="ex: Fix clients/[id] crash React">
+      </div>
+      <div class="f-group">
+        <label class="f-label">Priorités ORANGE</label>
+        <textarea class="f-textarea" id="f_next_orange" rows="3" placeholder="Une priorité par ligne&#10;ex: Déployer TSX BL/BR/DAF&#10;Exécuter migration_ged_complete.sql"></textarea>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Priorités JAUNE</label>
+        <textarea class="f-textarea" id="f_next_jaune" rows="2" placeholder="ex: Export CSV règlements, JSDoc restants"></textarea>
+      </div>
+    </div>
+
+    <!-- NOTES SPÉCIALES -->
+    <div class="section-block">
+      <div class="block-title neutral">📝 Notes & observations</div>
+      <div class="f-group">
+        <label class="f-label">Animal test protégé (ne jamais supprimer)</label>
+        <input type="text" class="f-input" id="f_animal" value="Frimousse (ANI_ID=22, Malinois, Jean Dujardin)">
+      </div>
+      <div class="f-group">
+        <label class="f-label">Notes libres</label>
+        <textarea class="f-textarea" id="f_notes" rows="3" placeholder="Observations particulières, points à surveiller..."></textarea>
+      </div>
+    </div>
+
+    <!-- VALIDATION BAR -->
+    <div class="validation-bar">
+      <div class="val-score" id="val_score">Complétion : <span>0%</span></div>
+      <button class="btn btn-gen" id="btn_gen_bottom" onclick="genererHandover()">⚡ Générer</button>
+    </div>
+
+  </div>
+
+  <!-- PREVIEW PANEL -->
+  <div class="preview-panel" id="preview_panel">
+    <div class="preview-empty" id="preview_empty">
+      <div class="preview-empty-icon">📄</div>
+      <h3>Handover non encore généré</h3>
+      <p>Remplissez les sections obligatoires (marquées ✦) puis cliquez sur <strong>Générer Handover</strong></p>
+      <div class="progress-row" id="progress_chips" style="margin-top:1rem;justify-content:center"></div>
+    </div>
+    <div id="handover_output" style="display:none">
+      <div class="handover-output">
+        <div class="handover-header">
+          <div class="handover-title-row" id="handover_label">HANDOVER_S66_FIN.md</div>
+          <div class="handover-actions">
+            <button class="btn btn-copy" onclick="copyHandover()">📋 Copier MD</button>
+            <button class="btn btn-copy" onclick="downloadHandover()">⬇️ Télécharger</button>
+          </div>
+        </div>
+        <pre class="handover-md" id="handover_content"></pre>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── DATA ──
+const ROADMAP_MODULES = [
+  { label: 'Fix clients/[id] crash React', cat: 'ORANGE', sprint: 'S66' },
+  { label: 'Exécuter migration_ged_complete.sql', cat: 'ROUGE', sprint: 'S66' },
+  { label: 'Déployer TSX BL/BR/DAF', cat: 'JAUNE', sprint: 'S66' },
+  { label: 'Exécuter SQL bl_achat + br_achat', cat: 'JAUNE', sprint: 'S66' },
+  { label: 'Export CSV règlements', cat: 'JAUNE', sprint: 'S66-S67' },
+  { label: 'Valider Drag & Drop agenda', cat: 'ORANGE', sprint: 'S66' },
+  { label: 'Supprimer micro_logiciel_ged', cat: 'ORANGE', sprint: 'S67' },
+  { label: 'JSDoc 4 fichiers restants', cat: 'JAUNE', sprint: 'S66' },
+  { label: 'Migration app.use() → instance.use() (10/sprint)', cat: 'ROUGE', sprint: 'S66-S70' },
+  { label: 'Eliot get_registre_sanitaire', cat: 'VERT', sprint: 'S67' },
+  { label: 'Eliot create_evenement_sanitaire', cat: 'VERT', sprint: 'S67' },
+  { label: 'Mémoire Eliot persistée BDD', cat: 'VERT', sprint: 'S68' },
+  { label: 'Stripe billing + licences Essentiel/Pro/Expert', cat: 'VERT', sprint: 'S70+' },
+  { label: 'Notifications portail email/SMS', cat: 'VERT', sprint: 'S68' },
+  { label: 'Sport canin parcours géolocalisé', cat: 'VERT', sprint: 'S69+' },
+  { label: 'Renommage BDD micro_logiciel → Anim_Gest', cat: 'VERT', sprint: 'S70+' },
+  { label: 'Carte Identité Animale publique (puce)', cat: 'VERT', sprint: 'S68+' },
+  { label: 'BL/BR/DAF/AC vente (numérotation + PDF)', cat: 'ORANGE', sprint: 'S67' },
+  { label: 'Signature Yousign intégration complète', cat: 'VERT', sprint: 'S68+' },
+];
+
+const REGLES_ARCH = [
+  'instance.use() uniquement — jamais app.use() dans registerCustomRoutes',
+  'getDb() par connexion avec db.end() en finally — jamais createConnection pour GED',
+  'nginx strips /api/ → routes définies SANS /api/ dans custom-routes.ts',
+  'PDF → Modal iframe uniquement — jamais window.open() ou navigation',
+  'sessionStorage uniquement pour Portail Client — jamais localStorage',
+  'DbService inaccessible après app.listen() → utiliser mysql2/promise direct',
+  '(db as any).execute() — jamais [rows] = await db.execute() (corrompt alias SQL)',
+  'POST/PUT via instance.use() → obligatoire _readBody() car req.body = undefined',
+  'Scripts Python dans $env:USERPROFILE\\Downloads\\ — jamais dans OneDrive (locks)',
+  'Eliot = option commerciale — tout doit fonctionner sans Eliot',
+  'BC = Bilan Comportemental — jamais EDC ou Etude de Comportement',
+  'Anim\'Gest — jamais PetSuite. NoSage\'s Editor — jamais Algorithmia',
+];
+
+const DEPLOY_SEQ = [
+  '1. COPIER_TOUTES_PAGES_v2.ps1 depuis frontend root (avant tout build frontend)',
+  '2. cd deploy',
+  '3. docker compose build [service] --no-cache',
+  '4. docker compose up -d [service]',
+  '5. docker compose restart nginx',
+  '⚠️ JAMAIS restart seul — toujours build + up -d',
+  '⚠️ TOUJOURS restart nginx après rebuild frontend (sinon 502)',
+];
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('f_date').value = new Date().toISOString().split('T')[0];
+  // Ajouter des items par défaut
+  addItemValue('list_done', 'done', 'Registre sanitaire — arrêté 3 avril 2014 (2 tables, 5 routes, 2 pages)');
+  addItemValue('list_done', 'done', 'Sidebar accordéon (7 groupes + dropdown métiers)');
+  addItemValue('list_done', 'done', 'Fix SQL v4→v9 (planning, avoirs, achats, factures, clients)');
+  addItemValue('list_done', 'done', 'Migration table race : RACE_GROUPE + numéros FCI');
+
+  addItemValue('list_commits', 'commit', 'a5ee60e — Fix /clients colonnes TIE_ADR1');
+  addItemValue('list_commits', 'commit', 'd4e9b23 — Sidebar accordéon + Registre sanitaire');
+
+  addItemValue('list_bdd', 'bdd', 'registre_sanitaire_sejour — séjours avec info vétérinaire + vaccins');
+  addItemValue('list_bdd', 'bdd', 'registre_sanitaire_evenement — journal chronologique événements');
+
+  addItemValue('list_files', 'file', 'api/src/custom-routes.ts — routes registre + fix SQL');
+  addItemValue('list_files', 'file', 'src/components/Sidebar.tsx — refonte complète accordéon');
+  addItemValue('list_files', 'file', 'src/components/RegistreSanitairePage.tsx — NOUVEAU');
+  addItemValue('list_files', 'file', 'src/app/app/pension/registre/page.tsx — NOUVEAU');
+  addItemValue('list_files', 'file', 'src/app/app/pet-sitter/registre/page.tsx — NOUVEAU');
+
+  addItemValue('list_rouge', 'rouge', '~100 app.use() restants → migration progressive par module (10/sprint)');
+  addItemValue('list_rouge', 'rouge', 'migration_ged_complete.sql — non exécuté dans HeidiSQL');
+
+  addItemValue('list_orange', 'orange', 'clients/[id] crash runtime — import @/lib/api manquant');
+  addItemValue('list_orange', 'orange', 'Drag & Drop agenda — instance.use() en place, tester');
+  addItemValue('list_orange', 'orange', 'Supprimer micro_logiciel_ged — après validation GED complète');
+
+  addItemValue('list_jaune', 'jaune', 'Pages BL/BR/DAF achat — TSX générés non déployés');
+  addItemValue('list_jaune', 'jaune', 'SQL tables bl_achat + br_achat — à exécuter HeidiSQL');
+  addItemValue('list_jaune', 'jaune', 'Export CSV règlements — bouton absent dans reglements/page.tsx');
+  addItemValue('list_jaune', 'jaune', 'JSDoc 4 fichiers restants (133/137 couverts)');
+  addItemValue('list_jaune', 'jaune', 'Docs GitHub Pages S65 — roadmap, API ref, changelog, registre sanitaire');
+
+  document.getElementById('f_next_rouge').value = 'Fix clients/[id] crash React (import @/lib/api)';
+  document.getElementById('f_next_orange').value = 'Exécuter migration_ged_complete.sql dans HeidiSQL\nDéployer TSX BL/BR/DAF (COPIER_TOUTES_PAGES_v2.ps1 + rebuild)\nValider Drag & Drop planning';
+  document.getElementById('f_next_jaune').value = 'Export CSV règlements, JSDoc 4 fichiers, MàJ docs S65';
+
+  updateValidation();
+  updateProgressChips();
+});
+
+// ── SPRINT BADGE ──
+function updateSprintBadge() {
+  const n = document.getElementById('f_sprint').value;
+  document.getElementById('sprint_display').textContent = 'S' + n;
+  document.getElementById('handover_label').textContent = `HANDOVER_S${n}_FIN.md`;
+}
+
+// ── DYNAMIC LISTS ──
+function addItem(listId, type) {
+  addItemValue(listId, type, '');
+}
+
+function addItemValue(listId, type, value) {
+  const list = document.getElementById(listId);
+  const div = document.createElement('div');
+  div.className = 'dl-item';
+  const tags = { rouge: ['🔴','dl-r'], orange: ['🟠','dl-o'], jaune: ['🟡','dl-y'] };
+  const tagHtml = tags[type] ? `<span class="dl-tag ${tags[type][1]}">${tags[type][0]}</span>` : '';
+  div.innerHTML = `${tagHtml}<input type="text" class="dl-input" value="${value}" oninput="updateValidation()"><button class="dl-rm" onclick="this.parentElement.remove();updateValidation()">×</button>`;
+  list.appendChild(div);
+  if (!value) div.querySelector('input').focus();
+  updateValidation();
+}
+
+function getListValues(listId) {
+  return Array.from(document.querySelectorAll(`#${listId} .dl-input`))
+    .map(i => i.value.trim()).filter(Boolean);
+}
+
+// ── VALIDATION ──
+const REQUIRED = ['f_sprint', 'f_date', 'f_routes', 'f_pages'];
+const REQUIRED_LISTS = ['list_done', 'list_commits', 'list_rouge', 'list_orange'];
+
+function updateValidation() {
+  let score = 0, total = REQUIRED.length + REQUIRED_LISTS.length + 2; // +next priorities
+
+  REQUIRED.forEach(id => { if (document.getElementById(id).value.trim()) score++; });
+  REQUIRED_LISTS.forEach(id => { if (getListValues(id).length > 0) score++; });
+  if (document.getElementById('f_next_rouge').value.trim()) score++;
+  if (document.getElementById('f_next_orange').value.trim()) score++;
+
+  const pct = Math.round((score / total) * 100);
+  const el = document.getElementById('val_score');
+  const color = pct >= 80 ? '#22C55E' : pct >= 50 ? '#FBBF24' : '#F43F5E';
+  el.innerHTML = `Complétion : <span style="color:${color}">${pct}%</span> (${score}/${total} sections)`;
+
+  updateProgressChips();
+}
+
+function updateProgressChips() {
+  const chips = document.getElementById('progress_chips');
+  if (!chips) return;
+  const checks = [
+    { label: 'Sprint + Date', ok: !!(document.getElementById('f_sprint').value && document.getElementById('f_date').value) },
+    { label: 'Métriques', ok: !!(document.getElementById('f_routes').value && document.getElementById('f_pages').value) },
+    { label: 'Accompli', ok: getListValues('list_done').length > 0 },
+    { label: 'Commits', ok: getListValues('list_commits').length > 0 },
+    { label: 'ROUGE', ok: getListValues('list_rouge').length > 0 },
+    { label: 'ORANGE', ok: getListValues('list_orange').length > 0 },
+    { label: 'Priorités S+1', ok: !!(document.getElementById('f_next_rouge').value.trim()) },
+  ];
+  chips.innerHTML = checks.map(c =>
+    `<span class="prog-chip ${c.ok ? 'prog-done' : 'prog-missing'}">${c.ok ? '✓' : '○'} ${c.label}</span>`
+  ).join('');
+}
+
+// ── GENERATE ──
+function genererHandover() {
+  const sprint = document.getElementById('f_sprint').value;
+  const date = document.getElementById('f_date').value ? new Date(document.getElementById('f_date').value).toLocaleDateString('fr-FR') : new Date().toLocaleDateString('fr-FR');
+  const commit_s = document.getElementById('f_commit_start').value || '—';
+  const commit_e = document.getElementById('f_commit_end').value || '—';
+  const routes = document.getElementById('f_routes').value;
+  const pages = document.getElementById('f_pages').value;
+  const eliot = document.getElementById('f_eliot').value;
+  const appuse = document.getElementById('f_appuse').value;
+  const sb = document.getElementById('f_score_b').value;
+  const sf = document.getElementById('f_score_f').value;
+  const sd = document.getElementById('f_score_d').value;
+  const sg = Math.round((parseInt(sb)+parseInt(sf)+parseInt(sd))/3);
+  const jsdoc = document.getElementById('f_jsdoc').value;
+  const animal = document.getElementById('f_animal').value;
+  const notes = document.getElementById('f_notes').value;
+  const next_sprint = parseInt(sprint) + 1;
+
+  const done = getListValues('list_done');
+  const commits = getListValues('list_commits');
+  const bdd = getListValues('list_bdd');
+  const files = getListValues('list_files');
+  const rouge = getListValues('list_rouge');
+  const orange = getListValues('list_orange');
+  const jaune = getListValues('list_jaune');
+  const next_rouge = document.getElementById('f_next_rouge').value.trim();
+  const next_orange = document.getElementById('f_next_orange').value.split('\n').filter(Boolean);
+  const next_jaune = document.getElementById('f_next_jaune').value.split('\n').filter(Boolean);
+
+  // Roadmap non terminée
+  const sprintNum = parseInt(sprint);
+  const roadmapFutur = ROADMAP_MODULES.filter(m => {
+    const s = m.sprint.replace('S','').split('-')[0];
+    return parseInt(s) > sprintNum;
+  });
+
+  const md = `# HANDOVER S${sprint} — FIN DE SESSION
+**Date :** ${date}
+**Sprint :** S${sprint}
+**Commits :** ${commit_s} → ${commit_e}
+
+---
+
+## 1. Accompli en S${sprint}
+
+${done.map((d, i) => `### 1${String.fromCharCode(97+i)}. ${d}`).join('\n\n')}
+
+---
+
+## 2. Commits S${sprint}
+
+| Commit | Description |
+|---|---|
+${commits.map(c => {
+  const [hash, ...desc] = c.split(' — ');
+  return `| \`${hash.trim()}\` | ${desc.join(' — ') || c} |`;
+}).join('\n')}
+
+---
+
+## 3. BDD — Nouvelles tables / colonnes S${sprint}
+
+${bdd.length > 0 ? `| Table / Colonne | Description |
+|---|---|
+${bdd.map(b => `| \`${b.split('—')[0].trim()}\` | ${b.split('—')[1]?.trim() || '—'} |`).join('\n')}` : '_Pas de modification BDD ce sprint_'}
+
+---
+
+## 4. Fichiers modifiés S${sprint}
+
+| Fichier | Modification |
+|---|---|
+${files.map(f => {
+  const [path, ...desc] = f.split(' — ');
+  return `| \`${path.trim()}\` | ${desc.join(' — ') || '—'} |`;
+}).join('\n')}
+
+---
+
+## 5. Dette technique restante — S${next_sprint}
+
+### 🔴 ROUGE — Bloquants
+
+${rouge.map(r => `| ${r} | Corriger en priorité absolue |`).length > 0 ? `| Item | Action |
+|---|---|
+${rouge.map(r => `| ${r} | Corriger en priorité absolue |`).join('\n')}` : '_Aucune dette rouge_'}
+
+### 🟠 ORANGE — Haute priorité
+
+${orange.map(o => `| ${o} | Corriger ce sprint |`).length > 0 ? `| Item | Action |
+|---|---|
+${orange.map(o => `| ${o} | Corriger ce sprint |`).join('\n')}` : '_Aucune dette orange_'}
+
+### 🟡 JAUNE — Qualité
+
+${jaune.map(j => `- ${j}`).join('\n') || '_Aucune dette jaune_'}
+
+---
+
+## 6. Roadmap S${next_sprint} — Priorités
+
+### 🔴 ROUGE — À traiter en premier
+
+- **${next_rouge || 'À définir'}**
+
+### 🟠 ORANGE — Haute priorité
+
+${next_orange.map(o => `- ${o}`).join('\n') || '- (non défini)'}
+
+### 🟡 JAUNE — Qualité & backlog
+
+${next_jaune.map(j => `- ${j}`).join('\n') || '- (non défini)'}
+
+---
+
+## 7. Roadmap globale — Modules restants
+
+${roadmapFutur.map(m => `| ${m.cat === 'ROUGE' ? '🔴' : m.cat === 'ORANGE' ? '🟠' : m.cat === 'JAUNE' ? '🟡' : '🟢'} ${m.label} | ${m.sprint} |`).join('\n').length > 0 ?
+`| Module | Sprint cible |
+|---|---|
+${roadmapFutur.map(m => `| ${m.cat === 'ROUGE' ? '🔴' : m.cat === 'ORANGE' ? '🟠' : m.cat === 'JAUNE' ? '🟡' : '🟢'} ${m.label} | ${m.sprint} |`).join('\n')}` : '_Roadmap à jour_'}
+
+---
+
+## 8. Score qualité S${sprint}
+
+| Axe | S${parseInt(sprint)-1} | S${sprint} |
+|---|---|---|
+| Backend | — | **${sb}/100** |
+| Frontend | — | **${sf}/100** |
+| BDD | — | **${sd}/100** |
+| Global | — | **${sg}/100** |
+
+> Routes API : ~${routes} | Pages UI : ${pages} | Eliot tools : ${eliot} | app.use() restants : ${appuse} | JSDoc : ${jsdoc}%
+
+---
+
+## 9. Infrastructure & accès
+
+### Chemins Windows
+\`\`\`
+Root frontend    : D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs\\
+Deploy           : ...\\micro_logiciel_frontend_nextjs\\deploy\\
+API source       : ...\\api\\src\\custom-routes.ts
+Docs Git         : C:\\AnimGest_Sav\\
+Downloads        : $env:USERPROFILE\\Downloads\\
+Python           : C:\\Python314\\python.exe
+GED              : C:\\AnimGest_GED\\SCT_001\\
+Backup propre    : C:\\Backup\\micro_logiciel\\20260326_2317_avant_revue_code
+\`\`\`
+
+### BDD MariaDB
+\`\`\`
+Host     : 192.168.1.62:3307
+User     : optimbtp
+Password : optimbtp
+Bases    : micro_logiciel | micro_logiciel_ged
+\`\`\`
+
+### Séquence déploiement
+\`\`\`powershell
+$root = "D:\\OneDrive_Perso\\OneDrive\\Documents\\Micro_Logiciel\\Documentation\\Frontend\\micro_logiciel_frontend_nextjs"
+
+# Rebuild Frontend
+cd $root; .\\COPIER_TOUTES_PAGES_v2.ps1
+cd deploy
+docker compose build frontend --no-cache
+docker compose up -d frontend
+docker compose restart nginx
+
+# Rebuild API
+Set-Location "$root\\deploy"
+docker compose build api --no-cache
+docker compose up -d api
+docker compose restart nginx
+\`\`\`
+
+---
+
+## 10. Règles techniques immuables
+
+${REGLES_ARCH.map((r, i) => `${i+1}. ${r}`).join('\n')}
+
+---
+
+## 11. Eliot agent — règles métier
+
+| Autorisation | Statut |
+|---|---|
+| Lecture (clients, animaux, devis, séances) | ✅ Autorisé |
+| Création (devis, séances, règlements, factures) | ✅ Autorisé |
+| Modification statut | ✅ Autorisé |
+| Suppression de données | ❌ JAMAIS |
+| Modification code source | ❌ JAMAIS |
+| Exécution SQL direct | ❌ JAMAIS |
+| Modification BDD schema | ❌ JAMAIS |
+
+Eliot model : \`claude-sonnet-4-20250514\` | Route : \`POST /ia/chat\` | Max 6 itérations agentic loop
+
+---
+
+## 12. Protection données de test
+
+> **${animal}** — NE JAMAIS SUPPRIMER
+
+---
+
+## 13. Prompt de démarrage S${next_sprint}
+
+\`\`\`
+Reprendre handover S${sprint} FIN.
+Lire section 5 (dette), section 6 (priorités S${next_sprint}), section 7 (roadmap globale).
+Vérifier cohérence architecture avant tout développement.
+Proposer plan d'action structuré ROUGE > ORANGE > JAUNE.
+Scripts Python dans $env:USERPROFILE\\Downloads\\ uniquement.
+Ne jamais patcher — intégrer proprement dans l'architecture.
+\`\`\`
+
+${notes ? `---\n\n## 14. Notes de session\n\n${notes}` : ''}
+
+---
+*Anim'Gest — NoSage's Editor — Handover S${sprint} FIN — ${date}*`;
+
+  document.getElementById('handover_content').textContent = md;
+  document.getElementById('handover_label').textContent = `HANDOVER_S${sprint}_FIN.md`;
+  document.getElementById('preview_empty').style.display = 'none';
+  document.getElementById('handover_output').style.display = 'block';
+
+  window._lastMD = md;
+  window._sprintNum = sprint;
+}
+
+function copyHandover() {
+  if (!window._lastMD) return;
+  navigator.clipboard.writeText(window._lastMD).then(() => alert('✅ Handover copié dans le presse-papier'));
+}
+
+function downloadHandover() {
+  if (!window._lastMD) return;
+  const blob = new Blob([window._lastMD], { type: 'text/markdown' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `HANDOVER_S${window._sprintNum}_FIN.md`;
+  a.click();
+}
+
+function resetAll() {
+  if (!confirm('Réinitialiser tous les champs ?')) return;
+  ['list_done','list_commits','list_bdd','list_files','list_rouge','list_orange','list_jaune']
+    .forEach(id => document.getElementById(id).innerHTML = '');
+  document.getElementById('f_sprint').value = '66';
+  document.getElementById('f_date').value = new Date().toISOString().split('T')[0];
+  updateSprintBadge();
+  document.getElementById('preview_empty').style.display = 'flex';
+  document.getElementById('handover_output').style.display = 'none';
+  updateValidation();
+}
+
+updateSprintBadge();
+</script>
+</body>
+</html>
