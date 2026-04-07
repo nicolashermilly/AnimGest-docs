@@ -143,6 +143,32 @@
   ::-webkit-scrollbar-thumb:hover { background: var(--ag-gold); }
   /* ── Fin charte Anim'Gest ── */
 
+
+  /* ── Barre retour index ── */
+  .nav-retour-bar {
+    position: sticky; top: 0; z-index: 9999;
+    background: rgba(15, 23, 42, 0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 0 1.5rem;
+    display: flex; align-items: center; height: 44px; gap: 1rem;
+  }
+  .nav-retour-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: #94A3B8; text-decoration: none;
+    font-size: 0.82rem; font-weight: 600;
+    font-family: 'DM Sans','Space Grotesk','Syne','IBM Plex Sans',sans-serif;
+    padding: 0.3rem 0.75rem; border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.15s;
+  }
+  .nav-retour-link:hover {
+    color: #F59E0B; border-color: rgba(245,158,11,0.35);
+    background: rgba(245,158,11,0.06);
+  }
+  .nav-retour-sep { color: rgba(255,255,255,0.18); margin: 0 0.25rem; }
+  .nav-retour-title { color: rgba(255,255,255,0.32); font-size: 0.76rem;
+    font-family: 'DM Sans','Space Grotesk','Syne','IBM Plex Sans',sans-serif; }
 </style>
 <style>
 :root{
@@ -288,6 +314,10 @@ textarea{resize:vertical;min-height:58px;line-height:1.5}
 </style>
 </head>
 <body>
+<div class="nav-retour-bar">
+  <a href="index.html" class="nav-retour-link">&#8592; Index</a><span class="nav-retour-sep">·</span><span class="nav-retour-title">Générateur Handover</span>
+</div>
+
 
 <div id="auth">
   <div class="auth-box">
