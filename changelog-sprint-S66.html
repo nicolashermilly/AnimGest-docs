@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog Sprint S66 — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #0F172A; --dark2: #1E293B; --dark3: #334155;
+    --gold: #F59E0B; --gold-p: rgba(245,158,11,0.15); --gold-b: rgba(245,158,11,0.3);
+    --cyan: #06B6D4; --vert: #10B981; --rouge: #EF4444; --orange: #F97316;
+    --violet: #4F46E5; --blue: #3B82F6;
+    --white: #F8FAFC; --text-muted: #94A3B8;
+    --border: rgba(255,255,255,0.07);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--dark); color:var(--white); font-size:14px; line-height:1.7; }
+
+  nav { background:rgba(15,23,42,0.96); border-bottom:1px solid var(--border); padding:0 2rem; height:52px; display:flex; align-items:center; gap:1rem; position:sticky; top:0; z-index:100; backdrop-filter:blur(10px); }
+  .nav-brand { font-family:'Playfair Display',serif; color:var(--gold); font-weight:700; font-size:1.05rem; margin-right:auto; }
+  nav a { color:var(--text-muted); text-decoration:none; font-size:0.82rem; padding:0.3rem 0.6rem; border-radius:5px; transition:color 0.15s; }
+  nav a:hover { color:var(--white); }
+  .nav-badge { margin-left:auto; background:var(--gold-p); border:1px solid var(--gold-b); color:var(--gold); padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:600; }
+
+  .header { padding:3rem 2rem 2rem; max-width:960px; margin:0 auto; border-bottom:1px solid var(--border); }
+  .header-badge { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); color:var(--vert); padding:0.25rem 0.75rem; border-radius:20px; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:1rem; }
+  .header h1 { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; letter-spacing:-1px; margin-bottom:0.5rem; }
+  .header h1 span { color:var(--gold); }
+  .header p { color:var(--text-muted); font-size:0.92rem; margin-bottom:1rem; }
+  .meta { display:flex; flex-wrap:wrap; gap:1.25rem; font-size:0.8rem; color:var(--text-muted); }
+  .meta span { display:flex; align-items:center; gap:0.35rem; }
+
+  .container { max-width:960px; margin:0 auto; padding:2rem; }
+
+  .summary-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:0.75rem; margin-bottom:2rem; }
+  .summary-card { background:var(--dark2); border:1px solid var(--border); border-radius:10px; padding:1rem; text-align:center; }
+  .summary-card .num { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--gold); display:block; line-height:1; margin-bottom:0.3rem; }
+  .summary-card .label { font-size:0.72rem; color:var(--text-muted); line-height:1.4; }
+
+  .section { background:var(--dark2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1.25rem; }
+  .section-title { display:flex; align-items:center; gap:0.75rem; font-weight:700; font-size:0.95rem; margin-bottom:1.25rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border); }
+  .icon { font-size:1.1rem; }
+  .prio { font-size:0.65rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:4px; text-transform:uppercase; letter-spacing:0.06em; }
+  .prio-rouge { background:rgba(239,68,68,0.15); color:var(--rouge); }
+  .prio-orange { background:rgba(249,115,22,0.12); color:var(--orange); }
+  .prio-jaune { background:rgba(245,158,11,0.1); color:var(--gold); }
+  .prio-vert { background:rgba(16,185,129,0.1); color:var(--vert); }
+
+  .feature-block { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:8px; padding:1rem 1.25rem; margin-bottom:0.75rem; }
+  .feature-block h3 { font-size:0.88rem; font-weight:600; margin-bottom:0.6rem; color:var(--white); }
+  .feature-block p, .feature-block li { font-size:0.83rem; color:var(--text-muted); line-height:1.7; }
+  .feature-block ul { padding-left:1.25rem; margin-top:0.4rem; }
+  .feature-block li { margin-bottom:0.25rem; }
+  .feature-block code { background:rgba(6,182,212,0.1); color:var(--cyan); padding:0.1rem 0.4rem; border-radius:3px; font-size:0.8rem; font-family:'Courier New',monospace; }
+
+  .routes-list { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.6rem; }
+  .route-tag { background:rgba(6,182,212,0.08); border:1px solid rgba(6,182,212,0.2); color:var(--cyan); padding:0.25rem 0.75rem; border-radius:4px; font-size:12px; font-family:'Courier New',monospace; }
+  .route-tag.post { background:rgba(16,185,129,0.08); border-color:rgba(16,185,129,0.2); color:var(--vert); }
+  .route-tag.put { background:rgba(245,158,11,0.08); border-color:rgba(245,158,11,0.2); color:var(--gold); }
+
+  .scores-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.75rem; }
+  .score-card { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:8px; padding:1rem; text-align:center; }
+  .score-card .score-val { font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:700; color:var(--gold); }
+  .score-card .score-lbl { font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-top:0.2rem; }
+  .score-card .score-prev { font-size:11px; color:var(--text-muted); margin-top:0.2rem; }
+  .score-card .delta { font-size:11px; color:var(--vert); font-weight:600; }
+
+  .fix-block { background:rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.2); border-left:3px solid var(--vert); border-radius:8px; padding:0.85rem 1.25rem; margin-bottom:0.75rem; }
+  .fix-block h3 { font-size:0.85rem; font-weight:600; color:var(--vert); margin-bottom:0.3rem; }
+  .fix-block p { font-size:0.82rem; color:var(--text-muted); }
+  .fix-block code { background:rgba(16,185,129,0.1); color:#6EE7B7; padding:0.1rem 0.35rem; border-radius:3px; font-size:0.78rem; font-family:'Courier New',monospace; }
+
+  .warning-block { background:rgba(249,115,22,0.05); border:1px solid rgba(249,115,22,0.2); border-left:3px solid var(--orange); border-radius:8px; padding:0.85rem 1.25rem; margin-bottom:0.75rem; }
+  .warning-block h3 { font-size:0.85rem; font-weight:600; color:var(--orange); margin-bottom:0.3rem; }
+  .warning-block p { font-size:0.82rem; color:var(--text-muted); }
+  .warning-block code { background:rgba(249,115,22,0.1); color:#FDBA74; padding:0.1rem 0.35rem; border-radius:3px; font-size:0.78rem; font-family:'Courier New',monospace; }
+
+  .commits-list { display:flex; flex-direction:column; gap:0.5rem; }
+  .commit { display:flex; align-items:flex-start; gap:0.75rem; padding:0.6rem 0.85rem; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:7px; }
+  .commit-hash { font-family:'Courier New',monospace; font-size:0.78rem; color:var(--cyan); flex-shrink:0; background:rgba(6,182,212,0.08); padding:0.15rem 0.5rem; border-radius:4px; }
+  .commit-msg { font-size:0.82rem; color:var(--text-muted); }
+
+  .tag-list { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.5rem; }
+  .tag { font-size:0.72rem; padding:0.2rem 0.55rem; border-radius:4px; font-weight:600; }
+  .tag-vert { background:rgba(16,185,129,0.12); color:var(--vert); }
+  .tag-orange { background:rgba(249,115,22,0.1); color:var(--orange); }
+  .tag-rouge { background:rgba(239,68,68,0.1); color:var(--rouge); }
+  .tag-jaune { background:rgba(245,158,11,0.1); color:var(--gold); }
+
+  .bdd-table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+  .bdd-table th { text-align:left; padding:0.5rem 0.75rem; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); border-bottom:1px solid var(--border); }
+  .bdd-table td { padding:0.55rem 0.75rem; border-bottom:1px solid rgba(255,255,255,0.04); color:var(--text-muted); }
+  .bdd-table td:first-child { font-family:'Courier New',monospace; color:var(--cyan); font-size:0.8rem; }
+  .bdd-table tr:last-child td { border-bottom:none; }
+
+  footer { border-top:1px solid var(--border); padding:1.5rem 2rem; text-align:center; color:var(--text-muted); font-size:12px; }
+  footer strong { color:var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Anim'Gest</span>
+  <a href="index.html">← Accueil</a>
+  <a href="changelog-sprint-S63.html">← S63</a>
+  <a href="17-api-reference.html">API Référence</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <span class="nav-badge">S66</span>
+</nav>
+
+<div class="header">
+  <div class="header-badge">📋 Release Notes</div>
+  <h1>Sprint <span>S66</span></h1>
+  <p>Registre Carnivores Domestiques · Fix crash clients · Migration GED · Validation 20/20 routes</p>
+  <div class="meta">
+    <span>📅 07 avril 2026</span>
+    <span>🔀 4 commits</span>
+    <span>📄 ~3 900 lignes custom-routes.ts</span>
+    <span>🖥️ 115 pages UI</span>
+    <span>🔌 ~159 routes API</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="summary-grid">
+    <div class="summary-card"><span class="num">4</span><div class="label">Routes Registre C.D.</div></div>
+    <div class="summary-card"><span class="num">3</span><div class="label">Pages métiers nouvelles</div></div>
+    <div class="summary-card"><span class="num">57</span><div class="label">Entrées GED migrées</div></div>
+    <div class="summary-card"><span class="num">20/20</span><div class="label">Routes validées</div></div>
+    <div class="summary-card"><span class="num">91</span><div class="label">Score global /100</div></div>
+  </div>
+
+  <!-- VALIDATION ROUTES -->
+  <div class="section">
+    <div class="section-title"><span class="icon">✅</span> Validation scan routes 20/20 <span class="prio prio-rouge">ROUGE</span></div>
+    <div class="fix-block">
+      <h3>20/20 routes opérationnelles confirmées</h3>
+      <p><code>/api/achats/bon-a-payer</code> → la vraie route est <code>/api/achats/:id/bon-a-payer</code> — comportement 404 sur ID absent attendu ✅<br>
+      <code>/api/portail/notifications</code> → 401 attendu (token requis) ✅</p>
+    </div>
+  </div>
+
+  <!-- MIGRATION GED -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📁</span> Migration GED Filesystem <span class="prio prio-orange">ORANGE</span></div>
+    <div class="fix-block">
+      <h3>57 entrées insérées dans <code>micro_logiciel.ged_fichier</code></h3>
+      <p>Fichier original comportait <code>SCT_ID</code> (colonne inexistante). Corrigé via <code>migration_ged_fixed.sql</code> sans <code>SCT_ID</code>, <code>ENT_ID</code> par défaut = 1.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Modules GED alimentés</h3>
+      <ul>
+        <li>Editions, Widgets, Animaux, Séances, Devis, Factures, Clients</li>
+        <li>Volume Docker monté : <code>C:\AnimGest_GED:/app/ged_new</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FIX CLIENTS/[ID] -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔧</span> Fix crash <code>clients/[id]</code> <span class="prio prio-rouge">ROUGE</span></div>
+    <div class="fix-block">
+      <h3>React error #310 (Rules of Hooks) — résolu</h3>
+      <p><strong>Cause :</strong> 4 <code>useState</code> portail (<code>portailModal</code>, <code>portailEmail</code>, <code>portailSaving</code>, <code>portailDone</code>) déclarés aux lignes 248-251, <strong>après</strong> 2 <code>return</code> conditionnels.<br>
+      <strong>Fix :</strong> remontés avec les autres <code>useState</code> en ligne 203 via <code>patch_clients_id.py</code>.<br>
+      <strong>Validé :</strong> <code>/app/clients/1</code> affiche "Deneuve, Catherine" sans erreur console ✅</p>
+    </div>
+  </div>
+
+  <!-- REGISTRE CARNIVORES DOMESTIQUES -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🐾</span> Registre Carnivores Domestiques <span class="prio prio-rouge">ROUGE</span></div>
+    <div class="feature-block">
+      <h3>Base réglementaire — Arrêté du 30 juin 1992 modifié</h3>
+      <p>Obligation de tenue d'un registre des entrées et sorties pour les établissements détenant des carnivores domestiques (chiens, chats, furets). Métiers concernés : Pet-Sitter, Pension/Chenil, Élevage.</p>
+    </div>
+
+    <div class="feature-block">
+      <h3>BDD — Table <code>registre_carnivores</code></h3>
+      <table class="bdd-table">
+        <thead><tr><th>Colonne</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>RC_ID</td><td>INT PK</td><td>Identifiant unique</td></tr>
+          <tr><td>ANI_ID</td><td>INT FK</td><td>Lien animal (table <code>animal</code>)</td></tr>
+          <tr><td>TIE_ID</td><td>INT FK</td><td>Lien propriétaire (table <code>tiers</code>)</td></tr>
+          <tr><td>RC_ESPECE</td><td>ENUM</td><td>CHIEN / CHAT / FURET</td></tr>
+          <tr><td>RC_NUM_IDENTIFICATION</td><td>VARCHAR</td><td>Numéro puce ou tatouage I-CAD</td></tr>
+          <tr><td>RC_DATE_ENTREE</td><td>DATETIME</td><td>Date entrée (obligatoire J0)</td></tr>
+          <tr><td>RC_DATE_SORTIE</td><td>DATETIME</td><td>Date sortie (72h max)</td></tr>
+          <tr><td>RC_STATUT</td><td>ENUM</td><td>PRESENT / SORTI / DECEDE</td></tr>
+          <tr><td>RC_METIER</td><td>VARCHAR</td><td>PET_SITTER / PENSION_CHENIL / ELEVEUR</td></tr>
+          <tr><td>RC_PROVENANCE</td><td>VARCHAR</td><td>Nom + adresse cédant</td></tr>
+          <tr><td>RC_DESTINATAIRE</td><td>VARCHAR</td><td>Nom + adresse destinataire</td></tr>
+          <tr><td>RC_MOTIF_SORTIE</td><td>ENUM</td><td>CESSION / RETOUR / DECES / AUTRE</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="feature-block">
+      <h3>4 routes API — <code>instance.use()</code></h3>
+      <div class="routes-list">
+        <span class="route-tag">GET /registre-carnivores</span>
+        <span class="route-tag">GET /registre-carnivores/:id</span>
+        <span class="route-tag post">POST /registre-carnivores</span>
+        <span class="route-tag put">PUT /registre-carnivores/:id</span>
+      </div>
+      <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--text-muted)">Filtres GET : <code>?metier=</code> <code>?statut=</code> <code>?espece=</code> <code>?search=</code> — PUT avec <code>date_sortie</code> → auto-SORTI</p>
+    </div>
+
+    <div class="feature-block">
+      <h3>Frontend — 3 pages + composant partagé <code>RegistreCarnivorePage.tsx</code></h3>
+      <div class="tag-list">
+        <span class="tag tag-vert">✅ /app/pet-sitter/registre-carnivores</span>
+        <span class="tag tag-vert">✅ /app/pension/registre-carnivores</span>
+        <span class="tag tag-vert">✅ /app/elevage/registre-carnivores</span>
+      </div>
+      <ul style="margin-top:0.75rem">
+        <li>Liste chronologique + filtres espèce/statut/recherche</li>
+        <li>KPIs : Présents / Sortis / Total</li>
+        <li>Panneau latéral détail + sortie rapide</li>
+        <li>Modal création complète (animal + santé + propriétaire + entrée)</li>
+        <li>Puce formatée XXX-XXX-XXX-XXX-XXX</li>
+      </ul>
+    </div>
+
+    <div class="warning-block">
+      <h3>⚠️ Bug résiduel corrigé en S67</h3>
+      <p>Sous-requête utilisait <code>FROM animaux</code> → table inexistante. Corrigée en <code>FROM animal</code> + fix <code>TIE_NOM → TIE_RAISON_SOCIALE</code> (2 occurrences). Sidebars Pet-Sitter / Pension / Élevage patchées avec lien "Registre C.D."</p>
+    </div>
+  </div>
+
+  <!-- SCORES -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📊</span> Scores qualité S66</div>
+    <div class="scores-grid">
+      <div class="score-card">
+        <div class="score-val">90</div>
+        <div class="score-lbl">Backend</div>
+        <div class="score-prev">S65 : 90/100</div>
+        <div class="delta">→ stable</div>
+      </div>
+      <div class="score-card">
+        <div class="score-val">91</div>
+        <div class="score-lbl">Frontend</div>
+        <div class="score-prev">S65 : 89/100</div>
+        <div class="delta">↑ +2</div>
+      </div>
+      <div class="score-card">
+        <div class="score-val">91</div>
+        <div class="score-lbl">BDD</div>
+        <div class="score-prev">S65 : 90/100</div>
+        <div class="delta">↑ +1</div>
+      </div>
+      <div class="score-card">
+        <div class="score-val">91</div>
+        <div class="score-lbl">Global</div>
+        <div class="score-prev">S65 : 90/100</div>
+        <div class="delta">↑ +1</div>
+      </div>
+    </div>
+    <div style="margin-top:1rem;font-size:0.78rem;color:var(--text-muted);text-align:center">
+      Routes API : ~159 · Pages UI : 115 · Eliot tools : 13 · Registre sanitaire : 2 métiers · Registre C.D. : 3 métiers
+    </div>
+  </div>
+
+  <!-- COMMITS -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔀</span> Commits S66</div>
+    <div class="commits-list">
+      <div class="commit"><span class="commit-hash">S66-a</span><span class="commit-msg">Validation scan 20/20 + migration GED 57 entrées</span></div>
+      <div class="commit"><span class="commit-hash">S66-b</span><span class="commit-msg">Fix crash clients/[id] — useState hooks hors ordre (patch_clients_id.py)</span></div>
+      <div class="commit"><span class="commit-hash">S66-c</span><span class="commit-msg">Registre Carnivores Domestiques — table BDD + 4 routes + 3 pages TSX</span></div>
+      <div class="commit"><span class="commit-hash">S66-d</span><span class="commit-msg">Fix FROM animaux→animal + TIE_NOM→TIE_RAISON_SOCIALE + sidebars Registre C.D.</span></div>
+    </div>
+  </div>
+
+  <!-- DETTE S67 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔧</span> Dette technique — S67</div>
+
+    <div class="feature-block">
+      <h3 style="color:var(--orange)">🟠 ORANGE</h3>
+      <ul>
+        <li>Valider ouverture modal portail depuis fiche client <code>/app/clients/[id]</code></li>
+        <li>Drag &amp; Drop agenda — <code>instance.use('/seances/:id')</code> en place — tester persistance</li>
+        <li>Supprimer <code>micro_logiciel_ged</code> — après validation GED complète</li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h3 style="color:var(--gold)">🟡 JAUNE</h3>
+      <ul>
+        <li>Pages BL/BR/DAF achat — TSX générés, non déployés (routes API OK)</li>
+        <li>SQL tables <code>bl_achat</code> + <code>br_achat</code> — à exécuter en HeidiSQL</li>
+        <li>Export CSV règlements — bouton absent dans <code>reglements/page.tsx</code></li>
+        <li>JSDoc 4 fichiers restants (133/137)</li>
+        <li>~100 <code>app.use()</code> restants — migration progressive</li>
+        <li>Docs GitHub Pages S66 — roadmap, API reference, changelog</li>
+        <li>Sidebar pet-sitter + pension Registre C.D. — vérifier ancres</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <strong>Anim'Gest</strong> — NoSage's Editor — Changelog Sprint S66 — 07/04/2026<br>
+  <small>Routes API : ~159 · Pages UI : 115 · Score global 91/100</small>
+</footer>
+
+</body>
+</html>
