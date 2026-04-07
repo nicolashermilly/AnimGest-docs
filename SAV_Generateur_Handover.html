@@ -263,7 +263,7 @@ pre.handover-md .separator { color: var(--muted); }
       <div class="f-row">
         <div class="f-group">
           <label class="f-label">Numéro sprint <span class="req">✦</span></label>
-          <input type="number" class="f-input" id="f_sprint" value="66" min="1" oninput="updateSprintBadge()">
+          <input type="number" class="f-input" id="f_sprint" value="67" min="1" oninput="updateSprintBadge()">
         </div>
         <div class="f-group">
           <label class="f-label">Date <span class="req">✦</span></label>
@@ -288,11 +288,11 @@ pre.handover-md .separator { color: var(--muted); }
       <div class="f-row">
         <div class="f-group">
           <label class="f-label">Routes API <span class="req">✦</span></label>
-          <input type="number" class="f-input" id="f_routes" value="155">
+          <input type="number" class="f-input" id="f_routes" value="159">
         </div>
         <div class="f-group">
           <label class="f-label">Pages UI <span class="req">✦</span></label>
-          <input type="number" class="f-input" id="f_pages" value="112">
+          <input type="number" class="f-input" id="f_pages" value="115">
         </div>
         <div class="f-group">
           <label class="f-label">Eliot tools</label>
@@ -308,11 +308,11 @@ pre.handover-md .separator { color: var(--muted); }
         </div>
         <div class="f-group">
           <label class="f-label">Score Frontend /100</label>
-          <input type="number" class="f-input" id="f_score_f" value="89" min="0" max="100">
+          <input type="number" class="f-input" id="f_score_f" value="91" min="0" max="100">
         </div>
         <div class="f-group">
           <label class="f-label">Score BDD /100</label>
-          <input type="number" class="f-input" id="f_score_d" value="90" min="0" max="100">
+          <input type="number" class="f-input" id="f_score_d" value="91" min="0" max="100">
         </div>
         <div class="f-group">
           <label class="f-label">JSDoc %</label>
@@ -435,25 +435,28 @@ pre.handover-md .separator { color: var(--muted); }
 <script>
 // ── DATA ──
 const ROADMAP_MODULES = [
-  { label: 'Fix clients/[id] crash React', cat: 'ORANGE', sprint: 'S66' },
-  { label: 'Exécuter migration_ged_complete.sql', cat: 'ROUGE', sprint: 'S66' },
-  { label: 'Déployer TSX BL/BR/DAF', cat: 'JAUNE', sprint: 'S66' },
-  { label: 'Exécuter SQL bl_achat + br_achat', cat: 'JAUNE', sprint: 'S66' },
-  { label: 'Export CSV règlements', cat: 'JAUNE', sprint: 'S66-S67' },
-  { label: 'Valider Drag & Drop agenda', cat: 'ORANGE', sprint: 'S66' },
-  { label: 'Supprimer micro_logiciel_ged', cat: 'ORANGE', sprint: 'S67' },
-  { label: 'JSDoc 4 fichiers restants', cat: 'JAUNE', sprint: 'S66' },
-  { label: 'Migration app.use() → instance.use() (10/sprint)', cat: 'ROUGE', sprint: 'S66-S70' },
-  { label: 'Eliot get_registre_sanitaire', cat: 'VERT', sprint: 'S67' },
-  { label: 'Eliot create_evenement_sanitaire', cat: 'VERT', sprint: 'S67' },
-  { label: 'Mémoire Eliot persistée BDD', cat: 'VERT', sprint: 'S68' },
-  { label: 'Stripe billing + licences Essentiel/Pro/Expert', cat: 'VERT', sprint: 'S70+' },
+  // S67 en cours
+  { label: 'Migration app.use() → instance.use() (~100 restants, 10/sprint)', cat: 'ROUGE', sprint: 'S67-S70' },
+  { label: 'SQL bl_achat + br_achat — exécuter HeidiSQL', cat: 'JAUNE', sprint: 'S67' },
+  { label: 'Déployer TSX BL/BR/DAF achat', cat: 'JAUNE', sprint: 'S67' },
+  { label: 'Export CSV règlements', cat: 'ORANGE', sprint: 'S67-S68' },
+  { label: 'Valider Drag & Drop agenda (PATCH /seances/:id)', cat: 'ORANGE', sprint: 'S67' },
+  { label: 'JSDoc 4 fichiers restants (133/137)', cat: 'JAUNE', sprint: 'S67' },
+  // S68
+  { label: 'Eliot get_registre_sanitaire', cat: 'VERT', sprint: 'S68' },
+  { label: 'Eliot create_evenement_sanitaire', cat: 'VERT', sprint: 'S68' },
   { label: 'Notifications portail email/SMS', cat: 'VERT', sprint: 'S68' },
-  { label: 'Sport canin parcours géolocalisé', cat: 'VERT', sprint: 'S69+' },
-  { label: 'Renommage BDD micro_logiciel → Anim_Gest', cat: 'VERT', sprint: 'S70+' },
+  { label: 'Mémoire Eliot persistée BDD', cat: 'VERT', sprint: 'S68' },
   { label: 'Carte Identité Animale publique (puce)', cat: 'VERT', sprint: 'S68+' },
-  { label: 'BL/BR/DAF/AC vente (numérotation + PDF)', cat: 'ORANGE', sprint: 'S67' },
+  { label: 'Supprimer micro_logiciel_ged', cat: 'ORANGE', sprint: 'S68' },
+  // S69+
   { label: 'Signature Yousign intégration complète', cat: 'VERT', sprint: 'S68+' },
+  { label: 'BL/BR/DAF/AC vente côté client (numérotation + PDF)', cat: 'ORANGE', sprint: 'S68' },
+  { label: 'Sport canin parcours géolocalisé', cat: 'VERT', sprint: 'S69+' },
+  { label: 'Transmission I-CAD registre E/S (obligation 2027)', cat: 'ORANGE', sprint: 'S70' },
+  { label: 'Stripe billing + licences Essentiel/Pro/Expert', cat: 'VERT', sprint: 'S70+' },
+  { label: 'Renommage BDD micro_logiciel → Anim_Gest', cat: 'VERT', sprint: 'S70+' },
+  { label: 'Dématérialisation registre C.D. (obligation 2029)', cat: 'VERT', sprint: 'S70+' },
 ];
 
 const REGLES_ARCH = [
@@ -485,39 +488,35 @@ const DEPLOY_SEQ = [
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('f_date').value = new Date().toISOString().split('T')[0];
   // Ajouter des items par défaut
-  addItemValue('list_done', 'done', 'Registre sanitaire — arrêté 3 avril 2014 (2 tables, 5 routes, 2 pages)');
-  addItemValue('list_done', 'done', 'Sidebar accordéon (7 groupes + dropdown métiers)');
-  addItemValue('list_done', 'done', 'Fix SQL v4→v9 (planning, avoirs, achats, factures, clients)');
-  addItemValue('list_done', 'done', 'Migration table race : RACE_GROUPE + numéros FCI');
+  addItemValue('list_done', 'done', 'Fix dette ROUGE Registre C.D. — FROM animaux→animal + TIE_RAISON_SOCIALE (S67)');
+  addItemValue('list_done', 'done', 'Sidebars Registre C.D. — ELEVEUR, PET_SITTER, PENSION_CHENIL (S67)');
+  addItemValue('list_done', 'done', 'Migration app.use() → instance.use() — module [À COMPLÉTER]');
+  addItemValue('list_done', 'done', 'Documentation GitHub Pages S66 — 72 pages, changelog S66, page #60 Registre C.D.');
 
-  addItemValue('list_commits', 'commit', 'a5ee60e — Fix /clients colonnes TIE_ADR1');
-  addItemValue('list_commits', 'commit', 'd4e9b23 — Sidebar accordéon + Registre sanitaire');
+  addItemValue('list_commits', 'commit', '[hash] — Fix FROM animaux→animal + sidebars Registre C.D.');
+  addItemValue('list_commits', 'commit', '[hash] — Migration app.use() module [NOM]');
+  addItemValue('list_commits', 'commit', '[hash] — Docs GitHub Pages S66');
 
-  addItemValue('list_bdd', 'bdd', 'registre_sanitaire_sejour — séjours avec info vétérinaire + vaccins');
-  addItemValue('list_bdd', 'bdd', 'registre_sanitaire_evenement — journal chronologique événements');
+  addItemValue('list_bdd', 'bdd', 'registre_carnivores — fix colonnes SQL (FROM animal, TIE_RAISON_SOCIALE)');
 
-  addItemValue('list_files', 'file', 'api/src/custom-routes.ts — routes registre + fix SQL');
-  addItemValue('list_files', 'file', 'src/components/Sidebar.tsx — refonte complète accordéon');
-  addItemValue('list_files', 'file', 'src/components/RegistreSanitairePage.tsx — NOUVEAU');
-  addItemValue('list_files', 'file', 'src/app/app/pension/registre/page.tsx — NOUVEAU');
-  addItemValue('list_files', 'file', 'src/app/app/pet-sitter/registre/page.tsx — NOUVEAU');
+  addItemValue('list_files', 'file', 'api/src/custom-routes.ts — fix registre-carnivores + migration app.use()');
+  addItemValue('list_files', 'file', 'src/components/Sidebar.tsx — +lien Registre C.D. 3 métiers');
 
-  addItemValue('list_rouge', 'rouge', '~100 app.use() restants → migration progressive par module (10/sprint)');
-  addItemValue('list_rouge', 'rouge', 'migration_ged_complete.sql — non exécuté dans HeidiSQL');
+  addItemValue('list_rouge', 'rouge', '~[NB] app.use() restants → continuer migration (10/sprint)');
 
-  addItemValue('list_orange', 'orange', 'clients/[id] crash runtime — import @/lib/api manquant');
-  addItemValue('list_orange', 'orange', 'Drag & Drop agenda — instance.use() en place, tester');
+  addItemValue('list_orange', 'orange', 'Valider modal portail depuis clients/[id]');
+  addItemValue('list_orange', 'orange', 'Drag & Drop agenda — tester persistance PATCH /seances/:id');
   addItemValue('list_orange', 'orange', 'Supprimer micro_logiciel_ged — après validation GED complète');
+  addItemValue('list_orange', 'orange', 'Export CSV règlements — bouton + route /api/reglements/export-csv');
 
-  addItemValue('list_jaune', 'jaune', 'Pages BL/BR/DAF achat — TSX générés non déployés');
-  addItemValue('list_jaune', 'jaune', 'SQL tables bl_achat + br_achat — à exécuter HeidiSQL');
-  addItemValue('list_jaune', 'jaune', 'Export CSV règlements — bouton absent dans reglements/page.tsx');
+  addItemValue('list_jaune', 'jaune', 'Pages BL/BR/DAF achat — TSX non déployés (routes API OK)');
+  addItemValue('list_jaune', 'jaune', 'SQL tables bl_achat + br_achat — à exécuter HeidiSQL [si non fait]');
   addItemValue('list_jaune', 'jaune', 'JSDoc 4 fichiers restants (133/137 couverts)');
-  addItemValue('list_jaune', 'jaune', 'Docs GitHub Pages S65 — roadmap, API ref, changelog, registre sanitaire');
+  addItemValue('list_jaune', 'jaune', 'Docs GitHub Pages S67 — roadmap, API ref, changelog');
 
-  document.getElementById('f_next_rouge').value = 'Fix clients/[id] crash React (import @/lib/api)';
-  document.getElementById('f_next_orange').value = 'Exécuter migration_ged_complete.sql dans HeidiSQL\nDéployer TSX BL/BR/DAF (COPIER_TOUTES_PAGES_v2.ps1 + rebuild)\nValider Drag & Drop planning';
-  document.getElementById('f_next_jaune').value = 'Export CSV règlements, JSDoc 4 fichiers, MàJ docs S65';
+  document.getElementById('f_next_rouge').value = 'Migration app.use() → instance.use() — continuer (10/sprint)';
+  document.getElementById('f_next_orange').value = 'Eliot get_registre_sanitaire + create_evenement_sanitaire\nNotifications portail email/SMS\nExport CSV règlements\nDrag & Drop agenda validation';
+  document.getElementById('f_next_jaune').value = 'Déployer TSX BL/BR/DAF, JSDoc 100%, Docs S67';
 
   updateValidation();
   updateProgressChips();
