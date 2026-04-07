@@ -344,7 +344,7 @@
     <a href="20-pilotage-projet.html">Pilotage</a>
     <a href="docs-changelog.html">Changelogs</a>
   </div>
-  <span class="nav-badge">S62</span>
+  <span class="nav-badge">S65</span>
 </nav>
 <div class="hero">
   <div class="hero-tag">Documentation</div>
@@ -602,7 +602,7 @@
           <span class="rule-id">DCE-03</span>
           <span class="rule-title">Procédure sp_dce_creer_depuis_seance — règles strictes</span>
         </div>
-        <div class="rule-body">La procédure <code>sp_dce_creer_depuis_seance(p_sea_id, p_forcer)</code> génère un devis depuis une séance avec 3 règles bloquantes :
+        <div class="rule-body">La procédure <code>sp_dce_creer_depuis_seance(p_sea_id, p_forcer)</code> génère un devis depuis une séance avec 7 règles bloquantes :
           <br>1. La séance doit exister
           <br>2. Si un devis est déjà lié et <code>p_forcer = 0</code> → erreur
           <br>3. Pour une BC, l'animal est obligatoire
@@ -1046,6 +1046,62 @@
   </div>
 </div>
 
+
+  <!-- RÈGLES S64-S65 — Ajoutées automatiquement -->
+  <div class="rule-section" id="regle-registres">
+    <div class="rule-header">
+      <span class="rule-num">R-16</span>
+      <span class="rule-title">Registre Sanitaire — Arrêté 3 avril 2014</span>
+      <span class="rule-badge badge-critique">Réglementaire</span>
+    </div>
+    <div class="rule-body">
+      <p>Tout établissement hébergeant des animaux (Pension, Pet-Sitter, Équestre) doit tenir un registre sanitaire. Chaque séjour est immutable après clôture. Conservation obligatoire 5 ans. Export PDF sur demande DDPP.</p>
+      <div class="rule-ok">✅ Tables : <code>registre_sanitaire_sejour</code> + <code>registre_sanitaire_evenement</code></div>
+      <div class="rule-ok">✅ Routes : <code>GET/POST/PUT /api/registre-sanitaire</code> + journal événements</div>
+      <div class="rule-nok">❌ Ne jamais supprimer un séjour cloturé avant 5 ans</div>
+    </div>
+  </div>
+
+  <div class="rule-section" id="regle-entrees-sorties">
+    <div class="rule-header">
+      <span class="rule-num">R-17</span>
+      <span class="rule-title">Registre Entrées/Sorties Carnivores — Arrêté 9 nov. 2023</span>
+      <span class="rule-badge badge-critique">Réglementaire</span>
+    </div>
+    <div class="rule-body">
+      <p>Tous les opérateurs manipulant des chiens, chats et furets (Éleveurs, Pension, Pet-Sitter) doivent enregistrer chaque mouvement. Entrée le jour même (J0). Sortie et décès dans les 72h. Conservation 3 ans. Transmission I-CAD obligatoire dès 2027.</p>
+      <div class="rule-ok">✅ Table : <code>registre_entrees_sorties</code> — S66 cible</div>
+      <div class="rule-ok">✅ Routes : <code>GET/POST /api/registre-mouvements</code> + alertes 72h</div>
+      <div class="rule-nok">❌ Ne jamais modifier une entrée après enregistrement de sortie</div>
+    </div>
+  </div>
+
+  <div class="rule-section" id="regle-tarification">
+    <div class="rule-header">
+      <span class="rule-num">R-18</span>
+      <span class="rule-title">Tarification — 3 méthodes obligatoires</span>
+      <span class="rule-badge badge-important">Architecture</span>
+    </div>
+    <div class="rule-body">
+      <p>Tous les métiers disposent de 3 méthodes de tarification configurables depuis <code>/app/parametres/tarification</code> : COEF_FG + MARGE (coût de revient), COEF_VTE (prix de vente), PRIX_DIRECT. Les colonnes BDD sont <code>DCE_METHODE_TARIF</code>, <code>DCE_COEF_FG</code>, <code>DCE_PCT_MARGE</code>, <code>DCE_COEF_VTE</code>, <code>DCE_VERROUILLE</code>.</p>
+      <div class="rule-ok">✅ Route : <code>GET/PUT /api/tarification</code> — S64</div>
+      <div class="rule-ok">✅ Route : <code>POST /api/devis/:id/appliquer-tarif</code></div>
+    </div>
+  </div>
+
+  <div class="rule-section" id="regle-bl-br">
+    <div class="rule-header">
+      <span class="rule-num">R-19</span>
+      <span class="rule-title">Cycles commerciaux achats — BL / BR / DAF</span>
+      <span class="rule-badge badge-important">Commerce</span>
+    </div>
+    <div class="rule-body">
+      <p>Le cycle d'achat complet est disponible pour tous les métiers : Commande → Bon de Livraison (BL) → Bon de Retour (BR) → Demande d'Avoir Fournisseur (DAF) → Avoir Client (AC). Numérotation chronologique automatique par préfixe.</p>
+      <div class="rule-ok">✅ Tables : <code>bon_livraison</code>, <code>bon_retour</code>, <code>avoir_client</code>, <code>demande_avoir_fourn</code></div>
+      <div class="rule-ok">✅ 16 routes API — S64</div>
+    </div>
+  </div>
+  <!-- FIN RÈGLES S64-S65 -->
 <footer class="doc-footer">
   <strong>Anim'Gest</strong> &mdash; NoSage's Editor &mdash; Documentation technique<br>
   <small>Plateforme SaaS ERP pour professionnels du soin animal &mdash; 10 metiers &mdash; Sprint S61</small>

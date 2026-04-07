@@ -144,7 +144,13 @@
   ::-webkit-scrollbar-thumb:hover { background: var(--ag-gold); }
   /* ── Fin charte Anim'Gest ── */
 
-</style>
+
+    .reg-card { flex-direction: column; align-items: flex-start; gap: .2rem; }
+    .reg-card small { color: var(--muted); font-size: .72rem; }
+    .badge.b-done { background: rgba(60,207,142,.12); color: var(--green); }
+    .badge.b-soon { background: rgba(245,158,11,.1); color: var(--gold); }
+
+  </style>
 <style>
     :root{--navy:#0D2137;--navy-l:#122840;--navy-ll:#1a3550;--gold:#D4A843;--gold-l:#e8c068;--gold-p:rgba(212,168,67,.1);--gold-b:rgba(212,168,67,.2);--dark:#070F1A;--white:#F8F8F5;--muted:#7a8fa6;--green:#3ecf8e;--red:#ef4444;--orange:#f59e0b;--blue:#60a5fa;--purple:#a78bfa}
     *{margin:0;padding:0;box-sizing:border-box}
@@ -252,7 +258,7 @@
     <a href="20-pilotage-projet.html">Pilotage</a>
     <a href="docs-changelog.html">Changelogs</a>
   </div>
-  <span class="nav-badge">S61</span>
+  <span class="nav-badge">S65</span>
 </nav>
 
 <div class="hero">
@@ -261,10 +267,10 @@
   <h1><span>Comportementaliste</span></h1>
   <p class="sub">ERP complet pour comportementalistes canins independants — EDC, CAC, programmes de suivi, devis automatiques</p>
   <div class="hero-stats">
-    <div class="hs"><span class="hs-v">8</span><span class="hs-l">Modules actifs</span></div>
-    <div class="hs"><span class="hs-v">95%</span><span class="hs-l">Avancement</span></div>
-    <div class="hs"><span class="hs-v">6</span><span class="hs-l">Routes API</span></div>
-    <div class="hs"><span class="hs-v">S61</span><span class="hs-l">MàJ sprint</span></div>
+    <div class="hs"><span class="hs-v">10</span><span class="hs-l">Modules actifs</span></div>
+    <div class="hs"><span class="hs-v">92%</span><span class="hs-l">Avancement</span></div>
+    <div class="hs"><span class="hs-v">12+</span><span class="hs-l">Routes API</span></div>
+    <div class="hs"><span class="hs-v">S65</span><span class="hs-l">MàJ sprint</span></div>
   </div>
 </div>
 
@@ -303,83 +309,97 @@
   <div class="section">
     <div class="sec-title">🔧 Modules &amp; Fonctionnalites</div>
     <div class="modules-grid">
-
       <div class="module-card done">
         <div class="module-header">
           <span>✅</span>
-          <span class="module-name">EDC — Etude de Comportement</span>
-          <span class="badge b-done">Actif</span>
+          <span class="module-name">BC — Bilan Comportemental</span>
+          <span class="badge b-done">Actif S65</span>
         </div>
-        <div class="module-desc">Seance initiale 90min, diagnostic complet, rapport EDC. Unique par animal. Genere un devis automatiquement a la validation.</div>
-        <div class="module-detail">Route : <code style="font-family:monospace;font-size:.77rem;background:rgba(255,255,255,.05);padding:.05rem .3rem;border-radius:3px">/app/seances/[id]/etude-comportementale</code></div>
+        <div class="module-desc">Fiche complète : identité, comportement, alimentation, contacts, territoire</div>
       </div>
-
       <div class="module-card done">
         <div class="module-header">
           <span>✅</span>
-          <span class="module-name">Suivi CAC</span>
-          <span class="badge b-done">Actif</span>
+          <span class="module-name">Suivi CAC (14 critères)</span>
+          <span class="badge b-done">Actif S65</span>
         </div>
-        <div class="module-desc">14 criteres d'adaptabilite comportementale par animal. Historique progression seance par seance. Graphique evolution visible par le client via le Portail.</div>
-        <div class="module-detail">Accessible uniquement depuis <code style="font-family:monospace;font-size:.77rem;background:rgba(255,255,255,.05);padding:.05rem .3rem;border-radius:3px">/app/seances/[id]</code></div>
+        <div class="module-desc">Grille CAC par séance + propagation fiche animal</div>
       </div>
-
       <div class="module-card done">
         <div class="module-header">
           <span>✅</span>
           <span class="module-name">Programmes de suivi</span>
-          <span class="badge b-done">Actif</span>
+          <span class="badge b-done">Actif S65</span>
         </div>
-        <div class="module-desc">Forfaits 5, 8 ou 10 seances. Suivi progression CAC 1-14. Dashboard avancement avec pourcentage completion et seances restantes.</div>
+        <div class="module-desc">Templates comportementaux par problématique</div>
       </div>
-
-      <div class="module-card done">
-        <div class="module-header">
-          <span>✅</span>
-          <span class="module-name">Dashboard CEO V2</span>
-          <span class="badge b-done">Actif</span>
-        </div>
-        <div class="module-desc">CA dynamique Mois / Trimestre / Annee. Programmes en cours. CA par prestation. KPIs temps reel. 159 seances en BDD demo.</div>
-      </div>
-
       <div class="module-card done">
         <div class="module-header">
           <span>✅</span>
           <span class="module-name">Questionnaires</span>
-          <span class="badge b-done">Actif</span>
+          <span class="badge b-done">Actif S65</span>
         </div>
-        <div class="module-desc">Bilan initial EDC (18 questions), Suivi hebdomadaire (8Q), Bilan fin de programme (12Q). Modeles personnalisables par praticien.</div>
+        <div class="module-desc">7 modèles par métier + éditeur questions</div>
       </div>
-
       <div class="module-card done">
         <div class="module-header">
           <span>✅</span>
-          <span class="module-name">Templates devis</span>
-          <span class="badge b-done">Actif</span>
+          <span class="module-name">Devis & Facturation</span>
+          <span class="badge b-done">Actif S65</span>
         </div>
-        <div class="module-desc">5 modeles : EDC, Forfait 5 seances, Forfait 8 seances, Forfait 10 seances, Bilan urgence. Selection dans l'etape 0 de creation devis.</div>
+        <div class="module-desc">Devis → Facture → Règlement. Tarification 3 méthodes (S64)</div>
       </div>
-
+      <div class="module-card done">
+        <div class="module-header">
+          <span>✅</span>
+          <span class="module-name">Achats & Fournisseurs</span>
+          <span class="badge b-done">Actif S65</span>
+        </div>
+        <div class="module-desc">Commandes, Factures fournisseur, Avoirs, Règlements achats</div>
+      </div>
+      <div class="module-card done">
+        <div class="module-header">
+          <span>✅</span>
+          <span class="module-name">BL / BR / DAF</span>
+          <span class="badge b-done">Actif S65</span>
+        </div>
+        <div class="module-desc">Bons de livraison, retour, demandes d'avoir fournisseur (S64)</div>
+      </div>
       <div class="module-card done">
         <div class="module-header">
           <span>✅</span>
           <span class="module-name">Planning multi-vues</span>
-          <span class="badge b-done">Actif</span>
+          <span class="badge b-done">Actif S65</span>
         </div>
-        <div class="module-desc">3 vues : Jour (grille horaire 7h-20h30), Semaine, Mois. Seances colorees par type. Drag &amp; Drop (en cours de stabilisation).</div>
+        <div class="module-desc">Calendrier semaine/mois/liste. Drag & Drop séances</div>
       </div>
-
       <div class="module-card done">
         <div class="module-header">
           <span>✅</span>
           <span class="module-name">Portail Client</span>
-          <span class="badge b-new">NEW S61</span>
+          <span class="badge b-done">Actif S65</span>
         </div>
-        <div class="module-desc">Espace securise pour le client — consultation seances, evolution CAC graphique, devis, factures avec PDF, confirmation RDV.</div>
-        <div class="module-detail">Route client : <code style="font-family:monospace;font-size:.77rem;background:rgba(255,255,255,.05);padding:.05rem .3rem;border-radius:3px">/client/[token]</code></div>
+        <div class="module-desc">Accès token sécurisé : séances, BC, devis, factures, PDF</div>
       </div>
-
+      <div class="module-card done">
+        <div class="module-header">
+          <span>✅</span>
+          <span class="module-name">Eliot IA</span>
+          <span class="badge b-done">Actif S65</span>
+        </div>
+        <div class="module-desc">Agent : créer devis/séances, consulter planning, envoyer lien portail</div>
+      </div>
+      <div class="module-card soon">
+        <div class="module-header">
+          <span>🔮</span>
+          <span class="module-name">Mémorisation Eliot BDD</span>
+          <span class="badge b-soon">Planifié</span>
+        </div>
+        <div class="module-desc">Contexte client persisté entre sessions — S68+</div>
+      </div>
     </div>
+    </div>
+  </div>
   </div>
 
   <!-- ROUTES API -->
