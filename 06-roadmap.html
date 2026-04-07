@@ -130,23 +130,32 @@ footer a { color: var(--gold); text-decoration: none; }
   <a href="17-api-reference.html">API</a>
   <a href="20-pilotage-projet.html">Pilotage</a>
   <a href="docs-changelog.html">Changelogs</a>
-  <span class="nav-badge">S64</span>
+  <span class="nav-badge">S66</span>
 </nav>
 
 <div class="hero">
   <div class="hero-label">DOCUMENTATION</div>
   <h1>Roadmap Anim'Gest</h1>
-  <p>Priorités sprint S64 · Visibilité S65-S70 · Objectifs produit 2026</p>
+  <p>Priorités sprint S66/S67 · Visibilité S68-S70 · Objectifs produit 2026-2029</p>
 </div>
 
 <div class="main">
 
-  <!-- S64 HEADER -->
+  <!-- S66/S67 HEADER -->
   <div class="sprint-header">
-    <div class="sprint-badge">S64</div>
+    <div class="sprint-badge">S67</div>
     <div class="sprint-info">
-      <h2>Sprint S64 — En cours</h2>
-      <p>Tarification 3 méthodes · Modules commerciaux · Eliot tools · Corrections dette technique</p>
+      <h2>Sprint S67 — En cours</h2>
+      <p>Réduction dette technique (app.use→instance.use) · SQL bl_achat/br_achat · Fix Registre C.D.</p>
+    </div>
+  </div>
+
+  <!-- LIVRÉS S65/S66 -->
+  <div class="sprint-header" style="opacity:0.7;margin-top:8px">
+    <div class="sprint-badge" style="background:rgba(16,185,129,0.2);color:#10B981;border-color:rgba(16,185,129,0.4)">S66 ✅</div>
+    <div class="sprint-info">
+      <h2 style="font-size:0.95rem">Sprint S66 — Livré</h2>
+      <p>Registre C.D. (arrêté 19 juin 2025) · Fix React hooks clients/[id] · Migration GED 57 entrées · Score 91/100</p>
     </div>
   </div>
 
@@ -154,55 +163,13 @@ footer a { color: var(--gold); text-decoration: none; }
   <div class="priority-section">
     <div class="priority-header ph-rouge">
       <span class="ph-dot dot-r"></span>
-      <span class="ph-title">ROUGE — Priorité maximale</span>
-      <span class="ph-subtitle">À traiter en premier</span>
+      <span class="ph-title">ROUGE — Priorité maximale S67</span>
+      <span class="ph-subtitle">Migration app.use() → instance.use() en cours</span>
     </div>
     <div class="tasks">
-      <div class="task">
-        <div class="task-icon">📊</div>
-        <div class="task-content">
-          <div class="task-title">Tarification 3 méthodes dans les devis</div>
-          <div class="task-desc">
-            Méthode 1 COEF_FG+MARGE : PRHT = PAUHT×(1+CoefFG) → PVHT = PRHT÷(1-PctMarge)<br>
-            Méthode 2 COEF_VTE : PVHT = PAUHT×(1+CoefVte)<br>
-            Méthode 3 PRIX_DIRECT : saisie libre<br>
-            Boutons sur devis BROUILLON uniquement (verrouillé si FAC liée)
-          </div>
-          <div class="task-tags">
-            <span class="ttag tt-bdd">param_tarification + tarif_historique_coef</span>
-            <span class="ttag tt-front">/app/parametres/tarification</span>
-            <span class="ttag tt-api">GET/PUT /tarification/*</span>
-          </div>
-        </div>
-      </div>
-      <div class="task">
-        <div class="task-icon">📦</div>
-        <div class="task-content">
-          <div class="task-title">Modules commerciaux BL / BR / DAF / AC</div>
-          <div class="task-desc">Bon de Livraison, Bon de Retour, Demande Avoir Fournisseur, Avoir Client — cycle complet avec PDF puppeteer param_edition</div>
-          <div class="task-tags">
-            <span class="ttag tt-bdd">bon_livraison, bon_retour, avoir_client, demande_avoir_fourn</span>
-            <span class="ttag tt-api">Routes CRUD + PDF</span>
-            <span class="ttag tt-front">Pages UI + liste + détail</span>
-          </div>
-        </div>
-      </div>
-      <div class="task">
-        <div class="task-icon">🔧</div>
-        <div class="task-content">
-          <div class="task-title">Fix dette technique prioritaire</div>
-          <div class="task-desc">
-            · Supprimer 3 doublons dans la déclaration Eliot tools (update_statut_devis / create_facture_depuis_devis / create_reglement)<br>
-            · Supprimer REG_STATUT résiduel dans INSERT reglement (~L56376)<br>
-            · Audit complet colonnes POST /devis/:id/facturer (table facture réelle)<br>
-            · Supporter DELETE/INSERT lignes dans PUT /devis/:id
-          </div>
-          <div class="task-tags">
-            <span class="ttag tt-fix">doublons Eliot</span>
-            <span class="ttag tt-fix">REG_STATUT résiduel</span>
-            <span class="ttag tt-fix">colonnes facture</span>
-          </div>
-        </div>
+      <div class="task-item task-rouge">
+        <div class="task-title">Migration app.use() → instance.use()</div>
+        <div class="task-desc">~100 occurrences restantes dans custom-routes.ts · 10 occurrences/sprint · S67→S70</div>
       </div>
     </div>
   </div>
@@ -211,36 +178,24 @@ footer a { color: var(--gold); text-decoration: none; }
   <div class="priority-section">
     <div class="priority-header ph-orange">
       <span class="ph-dot dot-o"></span>
-      <span class="ph-title">ORANGE — Priorité haute</span>
-      <span class="ph-subtitle">Eliot + Tests portail</span>
+      <span class="ph-title">ORANGE — Haute priorité S67-S68</span>
     </div>
     <div class="tasks">
-      <div class="task">
-        <div class="task-icon">🤖</div>
-        <div class="task-content">
-          <div class="task-title">Eliot — 3 tools supplémentaires</div>
-          <div class="task-desc">create_seance (planifier depuis Eliot) · get_planning (voir planning d'une période) · send_portail_link (envoyer lien portail depuis Eliot)</div>
-          <div class="task-tags">
-            <span class="ttag tt-ia">create_seance</span>
-            <span class="ttag tt-ia">get_planning</span>
-            <span class="ttag tt-ia">send_portail_link</span>
-          </div>
-        </div>
+      <div class="task-item task-orange">
+        <div class="task-title">Eliot tools registre sanitaire</div>
+        <div class="task-desc">get_registre_sanitaire · create_evenement_sanitaire — S68</div>
       </div>
-      <div class="task">
-        <div class="task-icon">🔗</div>
-        <div class="task-content">
-          <div class="task-title">Tests Portail Client end-to-end</div>
-          <div class="task-desc">
-            · Tester create_reglement via chat Eliot avec vraie facture<br>
-            · Tester envoi lien portail depuis page admin (créer accès Jean Dujardin + envoyer lien SMTP)<br>
-            · Fix portailEmail initialisé avant chargement client (initialiser dans useEffect sur client)
-          </div>
-          <div class="task-tags">
-            <span class="ttag tt-front">portailEmail fix</span>
-            <span class="ttag tt-fix">SMTP send-link test</span>
-          </div>
-        </div>
+      <div class="task-item task-orange">
+        <div class="task-title">Notifications portail email/SMS</div>
+        <div class="task-desc">PCN_TYPE: RAPPEL_SEANCE, DEVIS_DISPONIBLE — S68</div>
+      </div>
+      <div class="task-item task-orange">
+        <div class="task-title">Export CSV règlements</div>
+        <div class="task-desc">Bouton absent dans reglements/page.tsx — S67-S68</div>
+      </div>
+      <div class="task-item task-orange">
+        <div class="task-title">Drag & Drop agenda — validation</div>
+        <div class="task-desc">instance.use('/seances/:id') en place — tester persistance PATCH</div>
       </div>
     </div>
   </div>
@@ -249,31 +204,24 @@ footer a { color: var(--gold); text-decoration: none; }
   <div class="priority-section">
     <div class="priority-header ph-jaune">
       <span class="ph-dot dot-j"></span>
-      <span class="ph-title">JAUNE — Backlog persistant</span>
+      <span class="ph-title">JAUNE — Qualité & backlog</span>
     </div>
     <div class="tasks">
-      <div class="task">
-        <div class="task-icon">📋</div>
-        <div class="task-content">
-          <div class="task-title">Items backlog S64</div>
-          <div class="task-desc">
-            · /app/elevage/declarations — page TSX manquante<br>
-            · Export CSV règlements<br>
-            · Planning DnD correctifs (drag & drop)<br>
-            · Bouton ✓ Enregistre footer editions/page.tsx L336
-          </div>
-        </div>
+      <div class="task-item task-jaune">
+        <div class="task-title">Pages BL/BR/DAF achat</div>
+        <div class="task-desc">TSX générés non déployés — routes API OK — S67</div>
       </div>
-      <div class="task">
-        <div class="task-icon">🏗️</div>
-        <div class="task-content">
-          <div class="task-title">Migration dette technique app.use() → instance.use()</div>
-          <div class="task-desc">102 routes restantes en app.use() — migration progressive par module (formules, devis, factures, stats, CRM…). Créer getDbGed() pour les 4 createConnection GED restants.</div>
-          <div class="task-tags">
-            <span class="ttag tt-fix">102 app.use() restants</span>
-            <span class="ttag tt-fix">4 createConnection GED</span>
-          </div>
-        </div>
+      <div class="task-item task-jaune">
+        <div class="task-title">JSDoc 4 fichiers restants</div>
+        <div class="task-desc">133/137 couverts → cible 100% — S67</div>
+      </div>
+      <div class="task-item task-jaune">
+        <div class="task-title">Supprimer micro_logiciel_ged</div>
+        <div class="task-desc">Après validation GED filesystem complète — S68</div>
+      </div>
+      <div class="task-item task-jaune">
+        <div class="task-title">Transmission I-CAD registre E/S</div>
+        <div class="task-desc">Obligation légale 1er janvier 2027 — planifié S70</div>
       </div>
     </div>
   </div>
@@ -284,13 +232,13 @@ footer a { color: var(--gold); text-decoration: none; }
   <div>
     <div class="priority-header ph-vert" style="margin-bottom:20px">
       <span class="ph-dot dot-v"></span>
-      <span class="ph-title">VERT — Modules futurs S65+</span>
+      <span class="ph-title">VERT — Modules futurs S68+</span>
     </div>
     <div class="horizon-grid">
       <div class="horizon-card">
         <div class="horizon-title">🤖 IA & Agent Eliot</div>
         <ul class="horizon-items">
-          <li>Mémoire Eliot persistée en BDD (contexte utilisateur)</li>
+          <li>Mémoire Eliot persistée en BDD — S68</li>
           <li>Suggestions proactives basées sur l'activité</li>
           <li>Navigation dans l'app depuis Eliot (navigate_to)</li>
           <li>Eliot sur mobile (PWA notifications)</li>
@@ -308,7 +256,7 @@ footer a { color: var(--gold); text-decoration: none; }
       <div class="horizon-card">
         <div class="horizon-title">💳 SaaS & Billing</div>
         <ul class="horizon-items">
-          <li>Stripe billing + licence tiers (Essentiel/Professionnel/Expert)</li>
+          <li>Stripe billing + licences Essentiel/Professionnel/Expert — S70+</li>
           <li>Multi-tenant architecture (tenant_id strategy)</li>
           <li>Algorithme licence par plan</li>
           <li>Tableau de bord SaaS admin</li>
@@ -317,9 +265,9 @@ footer a { color: var(--gold); text-decoration: none; }
       <div class="horizon-card">
         <div class="horizon-title">🏗️ Architecture S70+</div>
         <ul class="horizon-items">
-          <li>Renommage BDD micro_logiciel → Anim_Gest / Anim_Gest_GED</li>
+          <li>Renommage BDD micro_logiciel → Anim_Gest — S70+</li>
           <li>Migration routes NestJS sources (ne plus dépendre de custom-routes.ts)</li>
-          <li>Sport canin parcours géolocalisé</li>
+          <li>Sport canin parcours géolocalisé — S69+</li>
           <li>HTTPS production + monitoring Sentry</li>
         </ul>
       </div>
@@ -329,7 +277,7 @@ footer a { color: var(--gold); text-decoration: none; }
 </div>
 
 <footer>
-  Anim'Gest — NoSage's Editor — Roadmap S64+ — MàJ 01/04/2026
+  Anim'Gest — NoSage's Editor — Roadmap S66+ — MàJ 07/04/2026
   <br><a href="index.html">← Retour à l'accueil</a>
   &nbsp;·&nbsp;<a href="20-pilotage-projet.html">Pilotage</a>
   &nbsp;·&nbsp;<a href="docs-changelog.html">Changelogs</a>
