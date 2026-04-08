@@ -438,6 +438,40 @@ footer a { color: var(--gold); text-decoration: none; }
       <p>Retourne les séjours avec vaccins manquants ou à vérifier (RAGE, CHC, LEUCOSE).</p>
     </div>
   </div>
+
+  <!-- GROUPE 22 — S71 : POST /portail/envoyer + Pages BL/BR/DAF détail -->
+  <div class="api-group" id="groupe-22">
+    <div class="group-header">
+      <span class="group-num">22</span>
+      <h2>Portail Client — Envoi notifications + Pages détail achats</h2>
+      <span class="badge-cyan">PORTAIL</span>
+    </div>
+    <div class="route-block">
+      <span class="method-tag post">POST</span>
+      <code>/portail/envoyer</code>
+      <p>Envoie une notification portail à un client. Body : <code>{ tie_id, type }</code> (types : DEVIS_DISPONIBLE · RAPPEL_SEANCE · FACTURE_DISPONIBLE). Délègue à <code>envoyerNotification()</code>. Retourne <code>{ sent: true }</code>.</p>
+    </div>
+    <div class="route-block">
+      <span class="method-tag get">PAGE</span>
+      <code>/app/bon-livraison/[id]</code>
+      <p>Fiche détail bon de livraison — infos BL + lignes (<code>bon_livraison_ligne</code>) + actions statut BROUILLON → ENVOYE → LIVRE.</p>
+    </div>
+    <div class="route-block">
+      <span class="method-tag get">PAGE</span>
+      <code>/app/bon-retour/[id]</code>
+      <p>Fiche détail bon de retour — infos BR + motif + actions statut → TRAITE / REFUSE. (Table <code>bon_retour_ligne</code> inexistante — pas de section lignes.)</p>
+    </div>
+    <div class="route-block">
+      <span class="method-tag get">PAGE</span>
+      <code>/app/demande-avoir-fourn/[id]</code>
+      <p>Fiche détail demande d'avoir fournisseur — infos DAF + motif + actions statut → ACCEPTE → REMBOURSE / REFUSE. (Table <code>demande_avoir_fourn_ligne</code> inexistante — pas de section lignes.)</p>
+    </div>
+    <div class="route-block">
+      <span class="method-tag get">PAGE</span>
+      <code>/app/elevage/declarations</code>
+      <p>Page déclarations élevage — créée S72. Lien sidebar groupe Élevage ajouté.</p>
+    </div>
+  </div>
 </body>
 </html>
 
