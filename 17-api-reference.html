@@ -120,7 +120,7 @@ footer a { color: var(--gold); text-decoration: none; }
   <a href="07-audit-stack.html">Audit Stack</a>
   <a href="20-pilotage-projet.html">Pilotage</a>
   <a href="docs-changelog.html">Changelogs</a>
-  <span class="nav-badge">MàJ S66</span>
+  <span class="nav-badge">MàJ S68</span>
 </nav>
 
 <div class="hero">
@@ -210,6 +210,7 @@ footer a { color: var(--gold); text-decoration: none; }
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/factures</span><span class="route-desc">Liste factures avec statut paiement</span></div></div>
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/factures/:id</span><span class="route-desc">Détail facture + lignes</span></div></div>
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/reglements</span><span class="route-desc">Liste règlements</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/reglements/export-csv</span><span class="route-desc">Export CSV règlements — colonnes : ID · Date · Montant · Mode · FAC_NUM · Client — BOM UTF-8 — S68</span></div></div>
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoirs</span><span class="route-desc">Liste avoirs</span></div></div>
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoirs/:id</span><span class="route-desc">Détail avoir</span></div></div>
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/inventaires</span><span class="route-desc">Liste inventaires</span></div></div>
@@ -335,8 +336,11 @@ footer a { color: var(--gold); text-decoration: none; }
 
     <!-- 14 ELIOT IA -->
     <div class="api-group" id="ia">
-      <div class="group-header"><span class="group-num">14</span><span class="group-title">Eliot IA</span><span class="group-new">S61-S63</span></div>
+      <div class="group-header"><span class="group-num">14</span><span class="group-title">Eliot IA</span><span class="group-new">S61-S68 · 16 tools</span></div>
       <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/ia/chat</span><span class="route-desc">Proxy Anthropic API côté serveur — 10 tools déclarés (get_client, get_animal, create_devis, create_seance, get_planning, get_factures, send_email, update_statut_devis, create_facture_depuis_devis, create_reglement)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">tool: get_registre_carnivores</span><span class="route-desc">Eliot — Liste mouvements registre carnivores avec filtres statut/espece/search — S68</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">tool: create_registre_carnivore</span><span class="route-desc">Eliot — Créer une entrée registre carnivores (animal + métier + date) — S68</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">tool: update_sortie_registre_carnivore</span><span class="route-desc">Eliot — Enregistrer sortie d'un carnivore (date + observations) — S68</span></div></div>
       <p style="margin-top:8px;font-size:0.78rem;color:var(--text-muted);">ℹ️ ANTHROPIC_API_KEY sécurisée côté serveur (jamais exposée frontend). Eliot est une option commerciale — toutes les fonctionnalités marchent sans lui.</p>
     </div>
 
@@ -383,13 +387,16 @@ footer a { color: var(--gold); text-decoration: none; }
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/tarification/historique</span><span class="route-desc">Historique des changements de tarification avec dates d'application</span></div></div>
       <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/devis/:id/appliquer-tarif</span><span class="route-desc">Appliquer la tarification courante à un devis existant</span></div></div>
     </div>
-
-
+    <!-- 19 ANIMAL SEARCH S68 -->
+    <div class="api-group" id="animal-search">
+      <div class="group-header"><span class="group-num">19</span><span class="group-title">Recherche Animal Unifiée</span><span class="group-new">S68</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/animal/search-complet</span><span class="route-desc">Recherche simultanée ANI_NOM + TIE_RAISON_SOCIALE — jointure animal + tiers + race — LIMIT 10 — utilisé par AnimalSearchComboBox</span></div></div>
+    </div>
   </div>
 </div>
 
 <footer>
-  Anim'Gest — NoSage's Editor — API Reference MàJ Sprint S66 — 07/04/2026 — ~159 routes — 3 registres réglementaires
+  Anim'Gest — NoSage's Editor — API Reference MàJ Sprint S68 — 07/04/2026 — ~165 routes — 3 registres réglementaires
   <br><a href="index.html">← Retour à l'accueil</a>
   &nbsp;·&nbsp;<a href="20-pilotage-projet.html">Pilotage</a>
   &nbsp;·&nbsp;<a href="57-module-portail-client.html">Portail Client</a>
@@ -397,3 +404,4 @@ footer a { color: var(--gold); text-decoration: none; }
 
 </body>
 </html>
+
