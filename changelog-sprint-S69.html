@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog Sprint S69 — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F172A; --navy-light: #1E293B; --navy-mid: #334155;
+    --gold: #F59E0B; --gold-light: #FCD34D; --gold-dark: #D97706;
+    --white: #F8FAFC; --text: #E2E8F0; --text-muted: #94A3B8;
+    --rouge: #EF4444; --orange: #F97316; --jaune: #EAB308;
+    --vert: #22C55E; --cyan: #06B6D4; --violet: #8B5CF6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.7; }
+  nav { background: var(--navy-light); border-bottom: 1px solid rgba(245,158,11,0.2); padding: 0 2rem; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 1.5rem; height: 56px; }
+  nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  nav a:hover { color: var(--gold); }
+  nav .nav-brand { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; margin-right: auto; }
+  .header { background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%); border-bottom: 2px solid var(--gold); padding: 3rem 2rem 2.5rem; position: relative; overflow: hidden; }
+  .header-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--gold); padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem; }
+  .header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+  .header h1 span { color: var(--gold); }
+  .header .meta { color: var(--text-muted); font-size: 13px; display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 0.75rem; }
+  .header .sprint-bg { position: absolute; right: 3rem; top: 50%; transform: translateY(-50%); font-family: 'Playfair Display', serif; font-size: 8rem; font-weight: 700; color: rgba(245,158,11,0.06); pointer-events: none; letter-spacing: -4px; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 2.5rem 2rem; }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+  .summary-card { background: var(--navy-light); border: 1px solid rgba(245,158,11,0.15); border-radius: 10px; padding: 1.2rem 1.5rem; text-align: center; }
+  .summary-card .num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); display: block; }
+  .summary-card .label { font-size: 12px; color: var(--text-muted); margin-top: 0.2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; color: var(--white); margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(245,158,11,0.2); display: flex; align-items: center; gap: 0.6rem; }
+  .feature-block { background: var(--navy-light); border: 1px solid var(--navy-mid); border-left: 3px solid var(--gold); border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 1rem; }
+  .feature-block h3 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; }
+  .feature-block ul { padding-left: 1.2rem; }
+  .feature-block li { color: var(--text-muted); font-size: 13px; margin-bottom: 0.3rem; }
+  .feature-block li strong { color: var(--text); }
+  .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+  .badge-rouge { background: rgba(239,68,68,0.15); color: var(--rouge); }
+  .badge-orange { background: rgba(249,115,22,0.15); color: var(--orange); }
+  .badge-vert { background: rgba(34,197,94,0.15); color: var(--vert); }
+  .badge-cyan { background: rgba(6,182,212,0.15); color: var(--cyan); }
+  .badge-violet { background: rgba(139,92,246,0.15); color: var(--violet); }
+  .commits-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .commits-table th { background: var(--navy-mid); color: var(--text-muted); font-weight: 600; padding: 0.6rem 1rem; text-align: left; }
+  .commits-table td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); }
+  .commits-table td:first-child { font-family: monospace; color: var(--gold); font-size: 12px; }
+  .score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .score-card { background: var(--navy-light); border: 1px solid rgba(245,158,11,0.15); border-radius: 10px; padding: 1.2rem; text-align: center; }
+  .score-card .axe { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem; }
+  .score-card .score { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--gold); }
+  .score-card .delta { font-size: 11px; color: var(--vert); margin-top: 0.2rem; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-muted); text-decoration: none; font-size: 13px; margin-bottom: 2rem; transition: color 0.2s; }
+  .back-link:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+<nav>
+  <span class="nav-brand">Anim'Gest — NoSage's Editor</span>
+  <a href="index.html">Accueil</a>
+  <a href="06-roadmap.html">Roadmap</a>
+  <a href="17-api-reference.html">API</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <a href="docs-changelog.html">Changelogs</a>
+</nav>
+<div class="header">
+  <div class="sprint-bg">S69</div>
+  <div class="container">
+    <div class="header-badge">📋 Changelog</div>
+    <h1>Sprint <span>S69</span> — Mémoire Eliot, Notifications Portail &amp; Fix Clients</h1>
+    <div class="meta">
+      <span>📅 07/04/2026</span>
+      <span>🏷️ Anim'Gest</span>
+      <span>🏢 NoSage's Editor</span>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <a href="docs-changelog.html" class="back-link">← Tous les changelogs</a>
+
+  <div class="summary-grid">
+    <div class="summary-card"><span class="num">~172</span><span class="label">Routes API</span></div>
+    <div class="summary-card"><span class="num">116</span><span class="label">Pages UI</span></div>
+    <div class="summary-card"><span class="num">17</span><span class="label">Eliot tools</span></div>
+    <div class="summary-card"><span class="num">3</span><span class="label">Tables BDD nouvelles</span></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🧠 Mémoire Eliot persistée</div>
+    <div class="feature-block"><ul>
+      <li><strong>2 tables BDD</strong> : eliot_memoire + eliot_contexte_session</li>
+      <li>Tool <strong>memoriser</strong> (17e tool Eliot) — Eliot peut stocker des faits persistants</li>
+      <li>systemPromptFinal = systemPrompt + memoireContext injecté à chaque chat</li>
+      <li>Résumé fire-and-forget → eliot_contexte_session après chaque conversation</li>
+      <li>Routes : GET/POST /ia/memoire · DELETE /ia/memoire/:id · GET /ia/sessions</li>
+      <li>Seeds : langue_reponse=français · metier_principal=Comportementaliste canin</li>
+    </ul></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🔔 Notifications Portail Client</div>
+    <div class="feature-block"><ul>
+      <li><strong>Table portail_client_notification_config</strong> + 5 seeds (DEVIS_DISPONIBLE, FACTURE_DISPONIBLE…)</li>
+      <li>Fonction envoyerNotification() — nodemailer + historique BDD</li>
+      <li>Routes : GET/PUT /portail/admin/notifications/config · POST /envoyer · GET /historique</li>
+      <li>Hooks fire-and-forget : devis ENVOYE → DEVIS_DISPONIBLE · facture EMISE → FACTURE_DISPONIBLE</li>
+    </ul></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📊 Export CSV Factures</div>
+    <div class="feature-block"><ul>
+      <li>Route GET /api/factures/export-csv — 143 factures · BOM UTF-8</li>
+      <li>Colonnes : FAC_NUM · Date · Client · HT · TVA · TTC · Statut</li>
+      <li>Règle R-26 appliquée : route /export-csv placée AVANT /factures/:ref</li>
+    </ul></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🎨 Charte &amp; CSS — Conv1</div>
+    <div class="feature-block"><ul>
+      <li><strong>Refonte modal registre sanitaire</strong> — calquée sur registre C.D. (overlay bg-black/60 + card, sections titrées)</li>
+      <li>Fix globals.css — sélecteurs html.light corrigés (étaient [data-theme="light"]) → règle R-25</li>
+      <li>Fix React.useState → useState dans RegistreCarnivorePage.tsx (règle R-28)</li>
+      <li>BDD : UPDATE animal SET ANI_ESPECE='CHIEN' WHERE ANI_ID=22 (Frimousse)</li>
+    </ul></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🐛 Fixes Clients &amp; Portail</div>
+    <div class="feature-block"><ul>
+      <li><strong>Fix crash /app/clients</strong> — race condition Leaflet : state mapReady + setMapReady(true) dans script.onload → règle R-29</li>
+      <li>Fix portailDone undefined — 5 états + createPortailAcces injectés dans VueListe</li>
+      <li>Modal portail clients/[id] validée — email pré-rempli</li>
+      <li>Drag &amp; Drop agenda validé — PATCH /api/seances/:id → 200</li>
+    </ul></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📄 Page Admin Mémoire Eliot</div>
+    <div class="feature-block"><ul>
+      <li>Nouvelle page /app/parametres/eliot-memoire — 287 lignes TSX</li>
+      <li>Tableau filtrable des faits mémorisés + suppression individuelle</li>
+      <li>Section Historique des sessions Eliot</li>
+      <li>Lien 🧠 Mémoire Eliot ajouté dans sidebar Administration</li>
+    </ul></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📦 Commits</div>
+    <div class="feature-block">
+      <table class="commits-table">
+        <thead><tr><th>SHA</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>a78b00c</td><td>feat(S69): refonte modal registre sanitaire + fix html.light modal-panel</td></tr>
+          <tr><td>bfd176c</td><td>feat(S69): route GET /factures/export-csv</td></tr>
+          <tr><td>c83365e</td><td>fix(S69): factures/export-csv déplacée avant /:ref + suppression FAC_TOTAL_HT</td></tr>
+          <tr><td>54fcecc</td><td>feat(S69): memoire Eliot persistee + notifications portail + fix clients crash Leaflet + portailDone VueListe</td></tr>
+          <tr><td>2c3e19c</td><td>docs(S68): changelogs S64/S65/S67/S68 + pilotage + roadmap S69</td></tr>
+          <tr><td>da511c3</td><td>docs(S68): API reference +groupe 19 + export-csv + Eliot 16 tools</td></tr>
+          <tr><td>2a1416c</td><td>docs(S69): suppression doublon page 65 tarification</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📊 Score qualité</div>
+    <div class="score-grid">
+      <div class="score-card"><div class="axe">Backend</div><div class="score">97</div><div class="delta">+1 vs S68</div></div>
+      <div class="score-card"><div class="axe">Frontend</div><div class="score">97</div><div class="delta">+2 vs S68</div></div>
+      <div class="score-card"><div class="axe">BDD</div><div class="score">92</div><div class="delta">+1 vs S68</div></div>
+      <div class="score-card"><div class="axe">Global</div><div class="score">96</div><div class="delta">+2 vs S68</div></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

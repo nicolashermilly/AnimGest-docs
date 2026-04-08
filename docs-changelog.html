@@ -169,13 +169,13 @@ footer a { color: var(--gold); text-decoration: none; }
   <a href="20-pilotage-projet.html">Pilotage</a>
   <a href="07-audit-stack.html">Stack</a>
   <a href="17-api-reference.html">API</a>
-  <span class="nav-badge">S68</span>
+  <span class="nav-badge">S69</span>
 </nav>
 
 <div class="hero">
   <div class="hero-label">Changelogs &amp; Sprints</div>
   <h1>Historique des livraisons</h1>
-  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S68 — NoSage's Editor</p>
+  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S69 — NoSage's Editor</p>
 </div>
 
 <div class="kpi-grid">
@@ -193,7 +193,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
   <div class="kpi-card">
     <div class="kpi-value">85/100</div>
-    <div class="kpi-label">Score S68</div>
+    <div class="kpi-label">Score S69</div>
   </div>
 </div>
 
@@ -201,7 +201,8 @@ footer a { color: var(--gold); text-decoration: none; }
 
   <!-- TABS NAV -->
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="showTab('s68')">S68</button>
+    <button class="tab-btn active" onclick="showTab('s69')">S69</button>
+    <button class="tab-btn" onclick="showTab('s68')">S68</button>
     <button class="tab-btn" onclick="showTab('s67')">S67</button>
     <button class="tab-btn" onclick="showTab('s66')">S66</button>
     <button class="tab-btn" onclick="showTab('s65')">S65</button>
@@ -223,8 +224,52 @@ footer a { color: var(--gold); text-decoration: none; }
     <button class="tab-btn" onclick="showTab('s30')">S30→S48</button>
   </div>
 
+  <!-- S69 -->
+  <div class="tab-content active" id="tab-s69">
+    <div class="sprint-card current">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S69</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Memoire Eliot persistee · Notifications Portail · Fix Clients Leaflet · Export CSV Factures</div>
+          <div class="sprint-head-meta">07/04/2026 · 116 pages UI · ~172 routes API · Score global 96/100</div>
+        </div>
+      </div>
+      <div class="sprint-cols">
+        <div class="sprint-col">
+          <div class="col-title">&#x2705; Livraisons S69</div>
+          <ul>
+            <li>Memoire Eliot persistee — 2 tables BDD · tool memoriser (17e tool) · page admin /parametres/eliot-memoire</li>
+            <li>Notifications portail client — table config + 5 seeds + envoyerNotification() · hooks devis/facture</li>
+            <li>Export CSV factures — route GET /api/factures/export-csv · 143 factures · BOM UTF-8</li>
+            <li>Fix crash /app/clients — race condition Leaflet (R-29)</li>
+            <li>Fix portailDone undefined — modal portail clients/[id] validee</li>
+            <li>Refonte modal registre sanitaire — charte calquee sur registre C.D.</li>
+            <li>Fix globals.css — selecteurs html.light (R-25)</li>
+          </ul>
+        </div>
+        <div class="sprint-col">
+          <div class="col-title">&#x1F527; Nouvelles regles S69</div>
+          <ul>
+            <li>R-25 : Selecteur CSS theme clair = html.light (pas [data-theme])</li>
+            <li>R-26 : Routes specifiques avant routes parametriques (/export-csv avant /:ref)</li>
+            <li>R-27 : FAC_TOTAL_TTC (pas FAC_TOTAL_HT)</li>
+            <li>R-28 : Composants React — declarer tous les etats dans le composant</li>
+            <li>R-29 : Leaflet — mapReady state + setMapReady(true) dans script.onload</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sprint-scores">
+        <div class="score-item"><span class="score-val">97</span><span class="score-lbl">Backend</span></div>
+        <div class="score-item"><span class="score-val">97</span><span class="score-lbl">Frontend</span></div>
+        <div class="score-item"><span class="score-val">92</span><span class="score-lbl">BDD</span></div>
+        <div class="score-item"><span class="score-val" style="color:var(--gold)">96</span><span class="score-lbl">Global</span></div>
+      </div>
+      <div class="sprint-link"><a href="changelog-sprint-S69.html">Voir release notes completes S69 &#x2192;</a></div>
+    </div>
+  </div>
+
   <!-- S68 -->
-  <div class="tab-content active" id="tab-s68">
+  <div class="tab-content" id="tab-s68">
     <div class="sprint-card current">
       <div class="sprint-head">
         <div class="sprint-num-badge">S68</div>

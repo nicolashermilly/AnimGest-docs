@@ -392,11 +392,23 @@ footer a { color: var(--gold); text-decoration: none; }
       <div class="group-header"><span class="group-num">19</span><span class="group-title">Recherche Animal Unifiée</span><span class="group-new">S68</span></div>
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/animal/search-complet</span><span class="route-desc">Recherche simultanée ANI_NOM + TIE_RAISON_SOCIALE — jointure animal + tiers + race — LIMIT 10 — utilisé par AnimalSearchComboBox</span></div></div>
     </div>
+    <div class="api-group" id="s69-nouvelles-routes">
+      <div class="group-header"><span class="group-num">20</span><span class="group-title">Mémoire Eliot &amp; Notifications Portail</span><span class="group-new">S69</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ia/memoire</span><span class="route-desc">Liste des faits mémorisés par Eliot — seeds langue + métier</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/ia/memoire</span><span class="route-desc">Ajouter un fait à la mémoire Eliot (tool memoriser)</span></div></div>
+      <div class="route-row"><span class="method m-delete">DELETE</span><div class="route-info"><span class="route-path">/ia/memoire/:id</span><span class="route-desc">Supprimer un fait de la mémoire Eliot</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ia/sessions</span><span class="route-desc">Historique des sessions Eliot (résumés fire-and-forget)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/admin/notifications/config</span><span class="route-desc">Configuration notifications portail — 5 types (DEVIS_DISPONIBLE, FACTURE_DISPONIBLE…)</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/portail/admin/notifications/config</span><span class="route-desc">Mettre à jour la configuration des notifications portail</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/admin/notifications/envoyer</span><span class="route-desc">Envoyer manuellement une notification portail</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/admin/notifications/historique</span><span class="route-desc">Historique des notifications envoyées</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/factures/export-csv</span><span class="route-desc">Export CSV factures — BOM UTF-8 — 143 factures — FAC_NUM · Date · Client · TTC · Statut</span></div></div>
+    </div>
   </div>
 </div>
 
 <footer>
-  Anim'Gest — NoSage's Editor — API Reference MàJ Sprint S68 — 07/04/2026 — ~165 routes — 3 registres réglementaires
+  Anim'Gest — NoSage's Editor — API Reference MàJ Sprint S69 — 08/04/2026 — ~172 routes — 3 registres réglementaires
   <br><a href="index.html">← Retour à l'accueil</a>
   &nbsp;·&nbsp;<a href="20-pilotage-projet.html">Pilotage</a>
   &nbsp;·&nbsp;<a href="57-module-portail-client.html">Portail Client</a>
