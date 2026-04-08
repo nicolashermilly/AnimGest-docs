@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog Sprint S72 — Anim'Gest</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: #0F172A; color: #E2E8F0; line-height: 1.6; padding: 2rem 1rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 2px solid #1E293B; }
+    .header .sprint-badge { display: inline-block; background: linear-gradient(135deg, #4F46E5, #06B6D4); color: white; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; padding: 0.3rem 1rem; border-radius: 99px; margin-bottom: 1rem; text-transform: uppercase; }
+    .header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 2.2rem; color: #F8FAFC; margin-bottom: 0.5rem; }
+    .header .meta { color: #64748B; font-size: 0.9rem; }
+    .header .meta span { color: #F59E0B; font-weight: 600; }
+    .scores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+    .score-card { background: #1E293B; border: 1px solid #334155; border-radius: 12px; padding: 1.2rem; text-align: center; }
+    .score-card .label { font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .score-card .value { font-size: 2rem; font-weight: 800; color: #F8FAFC; }
+    .score-card .delta { font-size: 0.8rem; color: #64748B; margin-top: 0.2rem; }
+    .score-card.global { border-color: #4F46E5; }
+    .score-card.global .value { color: #818CF8; }
+    .stats-bar { background: #1E293B; border: 1px solid #334155; border-radius: 12px; padding: 1rem 1.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem; font-size: 0.85rem; }
+    .stats-bar .stat { display: flex; align-items: center; gap: 0.5rem; }
+    .stats-bar .stat .num { font-weight: 700; color: #F59E0B; }
+    .stats-bar .stat .lbl { color: #94A3B8; }
+    section { margin-bottom: 2.5rem; }
+    section h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.25rem; color: #F8FAFC; margin-bottom: 1.2rem; padding-bottom: 0.5rem; border-bottom: 1px solid #1E293B; }
+    .card { background: #1E293B; border: 1px solid #334155; border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1rem; }
+    .card h3 { font-size: 0.95rem; font-weight: 700; color: #E2E8F0; margin-bottom: 0.6rem; }
+    .card ul { list-style: none; padding: 0; }
+    .card ul li { font-size: 0.88rem; color: #94A3B8; padding: 0.2rem 0; padding-left: 1.4rem; position: relative; }
+    .card ul li::before { content: '→'; position: absolute; left: 0; color: #4F46E5; }
+    .card ul li.new::before { color: #10B981; content: '✨'; font-size: 0.75rem; }
+    .card ul li.valid::before { color: #10B981; content: '✅'; font-size: 0.75rem; }
+    .bdd-box { background: #1E293B; border: 1px solid #334155; border-radius: 10px; padding: 1rem 1.4rem; font-family: monospace; font-size: 0.82rem; color: #94A3B8; white-space: pre-wrap; }
+    .bdd-box .col { color: #93C5FD; }
+    .bdd-box .val { color: #86EFAC; }
+    .commits-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .commits-table th { text-align: left; color: #64748B; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.5rem 0.8rem; border-bottom: 1px solid #334155; }
+    .commits-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #1E293B; color: #CBD5E1; }
+    .commits-table .hash { font-family: monospace; color: #818CF8; }
+    .commits-table .conv { font-size: 0.75rem; background: #0F172A; color: #64748B; padding: 0.15rem 0.5rem; border-radius: 4px; }
+    footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #1E293B; text-align: center; font-size: 0.8rem; color: #475569; }
+    footer a { color: #4F46E5; text-decoration: none; }
+    @media (max-width: 640px) { .scores-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="sprint-badge">Sprint S72</div>
+    <h1>Changelog — Sprint S72</h1>
+    <p class="meta"><span>08 avril 2026</span> &nbsp;·&nbsp; Anim'Gest — NoSage's Editor</p>
+  </div>
+
+  <div class="scores-grid">
+    <div class="score-card"><div class="label">Backend</div><div class="value">98</div><div class="delta">stable vs S71</div></div>
+    <div class="score-card"><div class="label">Frontend</div><div class="value">99</div><div class="delta">stable (+1 page)</div></div>
+    <div class="score-card"><div class="label">BDD</div><div class="value">92</div><div class="delta">stable</div></div>
+    <div class="score-card global"><div class="label">Global</div><div class="value">98</div><div class="delta">stable vs S71</div></div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><span class="num">~173</span><span class="lbl">Routes API</span></div>
+    <div class="stat"><span class="num">120</span><span class="lbl">Pages UI (+1)</span></div>
+    <div class="stat"><span class="num">20</span><span class="lbl">Eliot tools</span></div>
+    <div class="stat"><span class="num">240/240</span><span class="lbl">JSDoc ✅</span></div>
+    <div class="stat"><span class="num">0</span><span class="lbl">app.use()</span></div>
+  </div>
+
+  <section>
+    <h2>✅ Soldé en entrée — Commit pages BL/BR/DAF</h2>
+    <div class="card">
+      <ul>
+        <li class="valid">Commit <code>feat(S71)</code> pages BL/BR/DAF déjà pushé — working tree clean à l'arrivée en S72</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>🟡 JAUNE soldé — Page <code>/app/elevage/declarations</code></h2>
+
+    <div class="card">
+      <h3>📋 Page TSX créée — commit <code>b55c1b5</code></h3>
+      <ul>
+        <li class="new">3 compteurs : À faire / En retard / Envoyées</li>
+        <li class="new">Filtre par statut : <code>A_FAIRE</code> / <code>EN_COURS</code> / <code>ENVOYE</code> / <code>ARCHIVE</code></li>
+        <li class="new">Filtre par type : <code>SAILLIE_SCC</code> / <code>SAILLIE_LOOF</code> / <code>NAISSANCE_SCC</code> / <code>PORTEE_SCC</code></li>
+        <li class="new">Tableau trié par échéance croissante</li>
+        <li class="new">Détection retard : échéance dépassée + statut ≠ ENVOYE/ARCHIVE → fond rouge + badge ⚠</li>
+        <li class="new">Badges colorés par type et statut · commentaire tronqué à 60 chars (title complet au survol)</li>
+        <li class="valid">Route <code>GET /api/elevage/declarations</code> existante — 16 déclarations en BDD de test</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🔗 Lien sidebar ELEVEUR ajouté</h3>
+      <ul>
+        <li class="new"><code>Sidebar.tsx</code> ligne 143 : <code>{ label: "Déclarations", href: "/app/elevage/declarations", icon: "📋" }</code></li>
+        <li>Inséré entre "Réservations" et "Questionnaires" dans le groupe ELEVEUR</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🐳 Build frontend validé</h3>
+      <ul>
+        <li class="valid">120 pages compilées — <code>✓ Compiled successfully</code> — 0 erreur TypeScript</li>
+        <li class="valid"><code>/app/elevage/declarations</code> présente dans le manifest Next.js</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>🗄️ Données de test — Déclarations élevage</h2>
+    <div class="bdd-box"><span class="val">16 déclarations</span> en BDD — toutes DEC_STATUT = A_FAIRE
+Types : <span class="col">SAILLIE_SCC · SAILLIE_LOOF · NAISSANCE_SCC · PORTEE_SCC</span>
+Colonnes : <span class="col">DEC_ID · DEC_TYPE · DEC_DATE_EVENEMENT · DEC_ECHEANCE · DEC_DATE_ENVOI</span>
+           <span class="col">DEC_STATUT · DEC_MONTANT · DEC_NUM_DOSSIER · DEC_COMMENTAIRE</span>
+           <span class="col">DEC_CREE_LE · SAI_ID · POR_ID · NAI_ID</span>
+Toutes échéances dépassées → toutes affichées en <span class="val">retard</span> (fond rouge + badge ⚠)</div>
+  </section>
+
+  <section>
+    <h2>📝 Commits S72</h2>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <table class="commits-table">
+        <thead><tr><th>Conv</th><th>Hash</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="conv">Conv1</span></td>
+            <td class="hash">b55c1b5</td>
+            <td>feat(S72): page déclarations élevage + lien sidebar ELEVEUR</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>⏭️ Dette technique → S73</h2>
+    <div class="card">
+      <h3>🟠 ORANGE</h3>
+      <ul><li>Docs GitHub Pages S72 — changelog + roadmap + pilotage + API ref</li></ul>
+    </div>
+    <div class="card">
+      <h3>🟡 JAUNE</h3>
+      <ul>
+        <li>Tables <code>bon_retour_ligne</code> + <code>demande_avoir_fourn_ligne</code> — créer si besoin fonctionnel</li>
+        <li>Supprimer <code>micro_logiciel_ged</code> après validation GED complète</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p><a href="docs-changelog.html">← Tous les changelogs</a> &nbsp;·&nbsp; <a href="06-roadmap.html">Roadmap</a> &nbsp;·&nbsp; <a href="17-api-reference.html">API Reference</a></p>
+    <p style="margin-top:0.8rem;">Anim'Gest — NoSage's Editor — Sprint S72 — 08/04/2026</p>
+  </footer>
+
+</div>
+</body>
+</html>
