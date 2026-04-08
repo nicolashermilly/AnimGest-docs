@@ -169,13 +169,13 @@ footer a { color: var(--gold); text-decoration: none; }
   <a href="20-pilotage-projet.html">Pilotage</a>
   <a href="07-audit-stack.html">Stack</a>
   <a href="17-api-reference.html">API</a>
-  <span class="nav-badge">S66</span>
+  <span class="nav-badge">S68</span>
 </nav>
 
 <div class="hero">
   <div class="hero-label">Changelogs &amp; Sprints</div>
   <h1>Historique des livraisons</h1>
-  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S66 — NoSage's Editor</p>
+  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S68 — NoSage's Editor</p>
 </div>
 
 <div class="kpi-grid">
@@ -193,7 +193,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
   <div class="kpi-card">
     <div class="kpi-value">85/100</div>
-    <div class="kpi-label">Score S66</div>
+    <div class="kpi-label">Score S68</div>
   </div>
 </div>
 
@@ -201,8 +201,12 @@ footer a { color: var(--gold); text-decoration: none; }
 
   <!-- TABS NAV -->
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="showTab('s66')">S66</button>
-    <button class="tab-btn" onclick="showTab('s66')">S63</button>
+    <button class="tab-btn active" onclick="showTab('s68')">S68</button>
+    <button class="tab-btn" onclick="showTab('s67')">S67</button>
+    <button class="tab-btn" onclick="showTab('s66')">S66</button>
+    <button class="tab-btn" onclick="showTab('s65')">S65</button>
+    <button class="tab-btn" onclick="showTab('s64')">S64</button>
+    <button class="tab-btn" onclick="showTab('s63')">S63</button>
     <button class="tab-btn" onclick="showTab('s62')">S62</button>
     <button class="tab-btn" onclick="showTab('s61')">S61</button>
     <button class="tab-btn" onclick="showTab('s60')">S60</button>
@@ -219,8 +223,176 @@ footer a { color: var(--gold); text-decoration: none; }
     <button class="tab-btn" onclick="showTab('s30')">S30→S48</button>
   </div>
 
+  <!-- S68 -->
+  <div class="tab-content active" id="tab-s68">
+    <div class="sprint-card current">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S68</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Charte Registres · AnimalSearchComboBox · Eliot 16 tools · SAV Suite v3.0</div>
+          <div class="sprint-head-meta">07/04/2026 · 115 pages UI · ~165 routes API · Score global 94/100</div>
+        </div>
+      </div>
+      <div class="sprint-cols">
+        <div class="sprint-col">
+          <div class="col-title">✅ Livraisons S68</div>
+          <ul>
+            <li>Charte graphique registres — 120+ classes Tailwind → variables CSS</li>
+            <li>Composant partagé <code>AnimalSearchComboBox.tsx</code> — recherche ANI_NOM + TIE_RAISON_SOCIALE</li>
+            <li>Route <code>GET /api/animal/search-complet</code> — jointure animal + tiers + race</li>
+            <li>Pré-remplissage formulaires BDD — 4 champs registre sanitaire · 10 champs registre C.D.</li>
+            <li>3 tools Eliot registre carnivores (get · create · update_sortie) — 16 tools total</li>
+            <li>Export CSV règlements — route + bouton TSX</li>
+            <li>SAV Suite v3.0 publiée — 3 outils fusionnés</li>
+          </ul>
+        </div>
+        <div class="sprint-col">
+          <div class="col-title">🔧 Fixes S68</div>
+          <ul>
+            <li>Fix <code>React.useState → useState</code> named import dans registres</li>
+            <li>Fix <code>setSelectedAni</code> dans onSelect (bouton disabled)</li>
+            <li>Fix <code>FAC_NUMERO → FAC_NUM</code> dans export CSV</li>
+            <li>BDD : <code>ANI_ESPECE = 'CHIEN'</code> sur Frimousse (ANI_ID=22)</li>
+            <li>Fix backticks échappés dans hooks injectés</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sprint-scores">
+        <div class="score-item"><span class="score-val">96</span><span class="score-lbl">Backend</span></div>
+        <div class="score-item"><span class="score-val">95</span><span class="score-lbl">Frontend</span></div>
+        <div class="score-item"><span class="score-val">91</span><span class="score-lbl">BDD</span></div>
+        <div class="score-item"><span class="score-val" style="color:var(--gold)">94</span><span class="score-lbl">Global</span></div>
+      </div>
+      <div class="sprint-link"><a href="changelog-sprint-S68.html">Voir release notes complètes S68 →</a></div>
+    </div>
+  </div>
+
+  <!-- S67 -->
+  <div class="tab-content" id="tab-s67">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S67</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Migration instance.use() 100% · Docs 77 pages · Fix Registre C.D.</div>
+          <div class="sprint-head-meta">07/04/2026 · 115 pages UI · ~163 routes API · Score global 93/100</div>
+        </div>
+      </div>
+      <div class="sprint-cols">
+        <div class="sprint-col">
+          <div class="col-title">✅ Livraisons S67</div>
+          <ul>
+            <li>Migration <code>app.use() → instance.use()</code> — 94 routes · 0 restant</li>
+            <li>Fix registre C.D. : <code>FROM animaux → FROM animal</code> · <code>TIE_NOM → TIE_RAISON_SOCIALE</code></li>
+            <li>Sidebar ELEVEUR, PET_SITTER, PENSION_CHENIL — item Registre C.D. ajouté</li>
+            <li>Pages docs 58→62 : registres réglementaires + GED + tarification</li>
+            <li>3 outils SAV refondus (Analyseur · Maintenance · Handover)</li>
+            <li>4 specs S68 produites</li>
+          </ul>
+        </div>
+        <div class="sprint-col">
+          <div class="col-title">📋 Règles établies S67</div>
+          <ul>
+            <li>R-19 : instance.use() — jamais app.use()</li>
+            <li>R-20 : useState AVANT tout return conditionnel</li>
+            <li>R-21 : sous-requêtes registre C.D. (ambiguïté MariaDB)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sprint-scores">
+        <div class="score-item"><span class="score-val">95</span><span class="score-lbl">Backend</span></div>
+        <div class="score-item"><span class="score-val">93</span><span class="score-lbl">Frontend</span></div>
+        <div class="score-item"><span class="score-val">91</span><span class="score-lbl">BDD</span></div>
+        <div class="score-item"><span class="score-val" style="color:var(--gold)">93</span><span class="score-lbl">Global</span></div>
+      </div>
+      <div class="sprint-link"><a href="changelog-sprint-S67.html">Voir release notes complètes S67 →</a></div>
+    </div>
+  </div>
+
+  <!-- S65 -->
+  <div class="tab-content" id="tab-s65">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S65</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Sidebar Accordéon · Registre Sanitaire · Corrections SQL v4→v9</div>
+          <div class="sprint-head-meta">07/04/2026 · 112 pages UI · ~155 routes API · Score global 90/100</div>
+        </div>
+      </div>
+      <div class="sprint-cols">
+        <div class="sprint-col">
+          <div class="col-title">✅ Livraisons S65</div>
+          <ul>
+            <li>Sidebar accordéon — 7 groupes repliables + sessionStorage + METIER_MENUS 10 métiers</li>
+            <li>Registre sanitaire — tables BDD + 5 routes + 2 pages (Pension / Pet-Sitter)</li>
+            <li>Corrections SQL v4→v9 : /planning · /avoirs · /achats · /factures/avoir · /clients</li>
+            <li>Migration table <code>race</code> — RACE_GROUPE + RACE_NUMERO_STANDARD FCI</li>
+            <li>Sidebar Achats : BL / BR / DAF / Règlements / Inventaires</li>
+          </ul>
+        </div>
+        <div class="sprint-col">
+          <div class="col-title">🔧 Fixes S65</div>
+          <ul>
+            <li>sst.SST_NOM → sst.STY_LIBELLE dans planning</li>
+            <li>FAC_ID_ORIGINE → FAC_ID dans avoirs</li>
+            <li>CMF_ID → ACH_ID dans bon-a-payer</li>
+            <li>Route /api/clients créée (manquait)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sprint-scores">
+        <div class="score-item"><span class="score-val">90</span><span class="score-lbl">Backend</span></div>
+        <div class="score-item"><span class="score-val">89</span><span class="score-lbl">Frontend</span></div>
+        <div class="score-item"><span class="score-val">90</span><span class="score-lbl">BDD</span></div>
+        <div class="score-item"><span class="score-val" style="color:var(--gold)">90</span><span class="score-lbl">Global</span></div>
+      </div>
+      <div class="sprint-link"><a href="changelog-sprint-S65.html">Voir release notes complètes S65 →</a></div>
+    </div>
+  </div>
+
+  <!-- S64 -->
+  <div class="tab-content" id="tab-s64">
+    <div class="sprint-card">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S64</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Architecture GED · Modules BL/BR/DAF/AC · Tarification · Eliot 3 tools</div>
+          <div class="sprint-head-meta">06/04/2026 · 110 pages UI · ~140 routes API · Score global 87/100</div>
+        </div>
+      </div>
+      <div class="sprint-cols">
+        <div class="sprint-col">
+          <div class="col-title">✅ Livraisons S64</div>
+          <ul>
+            <li>GED Filesystem — volume Docker + table <code>ged_fichier</code> + 57 fichiers migrés</li>
+            <li>Tarification 3 méthodes — COEF_FG+MARGE · COEF_VTE · PRIX_DIRECT</li>
+            <li>Modules BL / BR / DAF / AC — 16 routes + 4 tables + 4 pages TSX</li>
+            <li>Eliot tools : create_seance · get_planning · send_portail_link</li>
+            <li>14 routes manquantes ajoutées · Page elevage/declarations créée</li>
+            <li>Dette technique S63 soldée (5 routes 404, doublons Eliot, getDbGed)</li>
+          </ul>
+        </div>
+        <div class="sprint-col">
+          <div class="col-title">🔧 Fixes SQL S64</div>
+          <ul>
+            <li>devis_contrat_ligne (était devis_ligne)</li>
+            <li>achat_entete (était commande_fournisseur)</li>
+            <li>avoir_client (était avoir)</li>
+            <li>Alias sst dans planning corrigé</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sprint-scores">
+        <div class="score-item"><span class="score-val">88</span><span class="score-lbl">Backend</span></div>
+        <div class="score-item"><span class="score-val">86</span><span class="score-lbl">Frontend</span></div>
+        <div class="score-item"><span class="score-val">88</span><span class="score-lbl">BDD</span></div>
+        <div class="score-item"><span class="score-val" style="color:var(--gold)">87</span><span class="score-lbl">Global</span></div>
+      </div>
+      <div class="sprint-link"><a href="changelog-sprint-S64.html">Voir release notes complètes S64 →</a></div>
+    </div>
+  </div>
+
   <!-- S66 -->
-  <div class="tab-content active" id="tab-s66">
+  <div class="tab-content" id="tab-s66">
     <div class="sprint-card current">
       <div class="sprint-head">
         <div class="sprint-num-badge">S66</div>
