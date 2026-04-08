@@ -6,321 +6,75 @@
 <title>Changelog Sprint S70 — Anim'Gest</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0F172A;
-    --navy-light: #1E293B;
-    --navy-card: #1a2744;
-    --gold: #F59E0B;
-    --gold-light: #FCD34D;
-    --violet: #4F46E5;
-    --cyan: #06B6D4;
-    --green: #10B981;
-    --red: #EF4444;
-    --orange: #F97316;
-    --yellow: #EAB308;
-    --text: #E2E8F0;
-    --text-muted: #94A3B8;
-    --border: rgba(245,158,11,0.2);
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--navy);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    line-height: 1.7;
-    min-height: 100vh;
-  }
-
-  /* Header */
-  .header {
-    background: linear-gradient(135deg, #0a0f1e 0%, var(--navy) 50%, #0d1b35 100%);
-    border-bottom: 2px solid var(--border);
-    padding: 40px 48px 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-  .breadcrumb {
-    font-size: 13px;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-  }
-  .breadcrumb a { color: var(--gold); text-decoration: none; }
-  .breadcrumb a:hover { text-decoration: underline; }
-  .sprint-badge {
-    background: var(--gold);
-    color: var(--navy);
-    font-weight: 700;
-    font-size: 12px;
-    padding: 4px 14px;
-    border-radius: 20px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 38px;
-    font-weight: 900;
-    color: #fff;
-    line-height: 1.2;
-    margin-bottom: 8px;
-  }
-  h1 span { color: var(--gold); }
-  .header-meta {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 12px;
-  }
-  .header-meta span { display: flex; align-items: center; gap: 6px; }
-
-  /* Scores */
-  .scores-bar {
-    background: var(--navy-light);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 48px;
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .score-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-  .score-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-  .score-value { font-size: 22px; font-weight: 700; color: var(--gold); font-family: 'JetBrains Mono', monospace; }
-  .score-delta { font-size: 11px; color: var(--green); }
-  .scores-divider { width: 1px; height: 40px; background: var(--border); }
-
-  /* Main layout */
-  .container { max-width: 1100px; margin: 0 auto; padding: 48px 48px; }
-
-  /* Section */
-  .section { margin-bottom: 56px; }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--gold);
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* Cards grid */
-  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-  .card {
-    background: var(--navy-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    position: relative;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .card:hover { border-color: rgba(245,158,11,0.5); transform: translateY(-2px); }
-  .card-icon { font-size: 28px; margin-bottom: 12px; }
-  .card-title { font-weight: 600; font-size: 15px; color: #fff; margin-bottom: 8px; }
-  .card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
-  .card-tag {
-    position: absolute;
-    top: 16px; right: 16px;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .tag-rouge { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
-  .tag-orange { background: rgba(249,115,22,0.15); color: var(--orange); border: 1px solid rgba(249,115,22,0.3); }
-  .tag-green { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
-  .tag-violet { background: rgba(79,70,229,0.15); color: #818CF8; border: 1px solid rgba(79,70,229,0.3); }
-
-  /* Feature list */
-  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .feature-item {
-    background: var(--navy-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 20px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-  }
-  .feature-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
-  .feature-content { flex: 1; }
-  .feature-title { font-weight: 600; font-size: 14px; color: #fff; margin-bottom: 4px; }
-  .feature-desc { font-size: 13px; color: var(--text-muted); }
-
-  /* Commits table */
-  .commits-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .commits-table th {
-    text-align: left;
-    padding: 10px 16px;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
-    font-weight: 600;
-  }
-  .commits-table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid rgba(245,158,11,0.08);
-    vertical-align: top;
-  }
-  .commits-table tr:hover td { background: rgba(245,158,11,0.04); }
-  .commit-hash {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--cyan);
-    font-size: 12px;
-    background: rgba(6,182,212,0.08);
-    padding: 2px 8px;
-    border-radius: 5px;
-    white-space: nowrap;
-  }
-  .commit-desc { color: var(--text); }
-  .commit-conv {
-    font-size: 11px;
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-
-  /* Stats strip */
-  .stats-strip {
-    background: var(--navy-light);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px 32px;
-    display: flex;
-    gap: 0;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-  }
-  .stat-block {
-    flex: 1;
-    min-width: 130px;
-    text-align: center;
-    padding: 0 16px;
-    border-right: 1px solid var(--border);
-  }
-  .stat-block:last-child { border-right: none; }
-  .stat-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--gold);
-    display: block;
-  }
-  .stat-lbl { font-size: 12px; color: var(--text-muted); }
-
-  /* Règle box */
-  .rule-box {
-    background: rgba(79,70,229,0.08);
-    border: 1px solid rgba(79,70,229,0.3);
-    border-left: 4px solid var(--violet);
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin-bottom: 20px;
-  }
-  .rule-title { font-weight: 700; font-size: 14px; color: #818CF8; margin-bottom: 8px; }
-  .rule-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
-  .rule-desc code {
-    background: rgba(255,255,255,0.08);
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--gold-light);
-  }
-  .rule-desc ul { padding-left: 20px; margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
-
-  /* Dette technique */
-  .dette-list { display: flex; flex-direction: column; gap: 12px; }
-  .dette-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: var(--navy-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 18px;
-  }
-  .dette-prio {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 10px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    flex-shrink: 0;
-  }
-  .prio-orange { background: rgba(249,115,22,0.15); color: var(--orange); border: 1px solid rgba(249,115,22,0.3); }
-  .prio-yellow { background: rgba(234,179,8,0.15); color: var(--yellow); border: 1px solid rgba(234,179,8,0.3); }
-  .dette-text { font-size: 13px; color: var(--text); }
-  .dette-action { font-size: 12px; color: var(--text-muted); margin-left: auto; font-family: 'JetBrains Mono', monospace; }
-
-  /* Footer */
-  .footer {
-    background: var(--navy-light);
-    border-top: 1px solid var(--border);
-    padding: 24px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: gap;
-    gap: 16px;
-  }
-  .footer-brand { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--gold); }
-  .footer-meta { font-size: 12px; color: var(--text-muted); }
-  .nav-links { display: flex; gap: 20px; }
-  .nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--gold); }
-
-  @media (max-width: 768px) {
-    .header, .scores-bar, .container, .footer { padding-left: 24px; padding-right: 24px; }
-    h1 { font-size: 28px; }
-    .cards-grid { grid-template-columns: 1fr; }
-    .scores-bar { gap: 20px; }
-    .stat-block { border-right: none; border-bottom: 1px solid var(--border); padding: 12px 0; }
-    .stat-block:last-child { border-bottom: none; }
-  }
+:root{--navy:#0F172A;--navy-light:#1E293B;--navy-card:#1a2744;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--green:#10B981;--red:#EF4444;--orange:#F97316;--yellow:#EAB308;--text:#E2E8F0;--text-muted:#94A3B8;--border:rgba(245,158,11,0.2)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.7}
+.header{background:linear-gradient(135deg,#0a0f1e 0%,var(--navy) 50%,#0d1b35 100%);border-bottom:2px solid var(--border);padding:40px 48px 32px;position:relative}
+.header::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(245,158,11,0.08) 0%,transparent 70%);border-radius:50%}
+.header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+.breadcrumb{font-size:13px;color:var(--text-muted);letter-spacing:.05em}
+.breadcrumb a{color:var(--gold);text-decoration:none}
+.sprint-badge{background:var(--gold);color:var(--navy);font-weight:700;font-size:12px;padding:4px 14px;border-radius:20px;letter-spacing:.08em;text-transform:uppercase}
+h1{font-family:'Playfair Display',serif;font-size:38px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px}
+h1 span{color:var(--gold)}
+.header-meta{display:flex;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--text-muted);margin-top:12px}
+.scores-bar{background:var(--navy-light);border-bottom:1px solid var(--border);padding:20px 48px;display:flex;gap:40px;flex-wrap:wrap;align-items:center}
+.score-item{display:flex;flex-direction:column;align-items:center;gap:4px}
+.score-label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em}
+.score-value{font-size:22px;font-weight:700;color:var(--gold);font-family:'JetBrains Mono',monospace}
+.score-delta{font-size:11px;color:var(--green)}
+.scores-divider{width:1px;height:40px;background:var(--border)}
+.container{max-width:1100px;margin:0 auto;padding:48px}
+.section{margin-bottom:56px}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.card{background:var(--navy-card);border:1px solid var(--border);border-radius:12px;padding:24px;position:relative;transition:border-color .2s,transform .2s}
+.card:hover{border-color:rgba(245,158,11,.5);transform:translateY(-2px)}
+.card-icon{font-size:28px;margin-bottom:12px}
+.card-title{font-weight:600;font-size:15px;color:#fff;margin-bottom:8px}
+.card-desc{font-size:13px;color:var(--text-muted);line-height:1.6}
+.card-tag{position:absolute;top:16px;right:16px;font-size:10px;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:.06em;text-transform:uppercase}
+.tag-green{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)}
+.tag-violet{background:rgba(79,70,229,.15);color:#818CF8;border:1px solid rgba(79,70,229,.3)}
+code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold-light);background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px}
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.feature-item{background:var(--navy-card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;gap:14px;align-items:flex-start}
+.feature-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.feature-content{flex:1}
+.feature-title{font-weight:600;font-size:14px;color:#fff;margin-bottom:4px}
+.feature-desc{font-size:13px;color:var(--text-muted)}
+.commits-table{width:100%;border-collapse:collapse;font-size:13px}
+.commits-table th{text-align:left;padding:10px 16px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);border-bottom:1px solid var(--border);font-weight:600}
+.commits-table td{padding:12px 16px;border-bottom:1px solid rgba(245,158,11,.08);vertical-align:top}
+.commit-hash{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:12px;background:rgba(6,182,212,.08);padding:2px 8px;border-radius:5px;white-space:nowrap}
+.stats-strip{background:var(--navy-light);border:1px solid var(--border);border-radius:12px;padding:24px 32px;display:flex;gap:0;flex-wrap:wrap;margin-bottom:40px}
+.stat-block{flex:1;min-width:130px;text-align:center;padding:0 16px;border-right:1px solid var(--border)}
+.stat-block:last-child{border-right:none}
+.stat-num{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--gold);display:block}
+.stat-lbl{font-size:12px;color:var(--text-muted)}
+.rule-box{background:rgba(79,70,229,.08);border:1px solid rgba(79,70,229,.3);border-left:4px solid var(--violet);border-radius:10px;padding:20px 24px;margin-bottom:20px}
+.rule-title{font-weight:700;font-size:14px;color:#818CF8;margin-bottom:8px}
+.rule-desc{font-size:13px;color:var(--text-muted);line-height:1.7}
+.rule-desc ul{padding-left:20px;margin-top:8px;display:flex;flex-direction:column;gap:4px}
+.dette-list{display:flex;flex-direction:column;gap:12px}
+.dette-item{display:flex;align-items:center;gap:14px;background:var(--navy-card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+.dette-prio{font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:.06em;text-transform:uppercase;flex-shrink:0}
+.prio-orange{background:rgba(249,115,22,.15);color:var(--orange);border:1px solid rgba(249,115,22,.3)}
+.prio-yellow{background:rgba(234,179,8,.15);color:var(--yellow);border:1px solid rgba(234,179,8,.3)}
+.dette-text{font-size:13px;color:var(--text)}
+.footer{background:var(--navy-light);border-top:1px solid var(--border);padding:24px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-brand{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold)}
+.footer-meta{font-size:12px;color:var(--text-muted)}
+.nav-links{display:flex;gap:20px}
+.nav-links a{font-size:13px;color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-top">
-    <div class="breadcrumb">
-      <a href="docs-changelog.html">← Changelog</a> / Sprint S70
-    </div>
+    <div class="breadcrumb"><a href="docs-changelog.html">← Changelog</a> / Sprint S70</div>
     <span class="sprint-badge">Sprint S70</span>
   </div>
   <h1>Changelog <span>Sprint S70</span></h1>
@@ -333,271 +87,84 @@
     <span>📝 240/240 JSDoc</span>
   </div>
 </div>
-
-<!-- Scores -->
 <div class="scores-bar">
-  <div class="score-item">
-    <span class="score-label">Backend</span>
-    <span class="score-value">98</span>
-    <span class="score-delta">▲ +1 vs S69</span>
-  </div>
+  <div class="score-item"><span class="score-label">Backend</span><span class="score-value">98</span><span class="score-delta">▲ +1 vs S69</span></div>
   <div class="scores-divider"></div>
-  <div class="score-item">
-    <span class="score-label">Frontend</span>
-    <span class="score-value">98</span>
-    <span class="score-delta">▲ +1 vs S69</span>
-  </div>
+  <div class="score-item"><span class="score-label">Frontend</span><span class="score-value">98</span><span class="score-delta">▲ +1 vs S69</span></div>
   <div class="scores-divider"></div>
-  <div class="score-item">
-    <span class="score-label">BDD</span>
-    <span class="score-value">92</span>
-    <span class="score-delta">— stable</span>
-  </div>
+  <div class="score-item"><span class="score-label">BDD</span><span class="score-value">92</span><span class="score-delta">— stable</span></div>
   <div class="scores-divider"></div>
-  <div class="score-item">
-    <span class="score-label">Global</span>
-    <span class="score-value">97</span>
-    <span class="score-delta">▲ +1 vs S69</span>
-  </div>
+  <div class="score-item"><span class="score-label">Global</span><span class="score-value">97</span><span class="score-delta">▲ +1 vs S69</span></div>
   <div class="scores-divider"></div>
-  <div class="score-item">
-    <span class="score-label">Routes API</span>
-    <span class="score-value">~172</span>
-    <span class="score-delta">JSDoc 240/240 ✅</span>
-  </div>
+  <div class="score-item"><span class="score-label">Routes API</span><span class="score-value">~173</span><span class="score-delta">JSDoc 240/240 ✅</span></div>
   <div class="scores-divider"></div>
-  <div class="score-item">
-    <span class="score-label">Pages UI</span>
-    <span class="score-value">116</span>
-    <span class="score-delta">stable</span>
-  </div>
-  <div class="scores-divider"></div>
-  <div class="score-item">
-    <span class="score-label">Eliot tools</span>
-    <span class="score-value">20</span>
-    <span class="score-delta">▲ +3 vs S69</span>
-  </div>
+  <div class="score-item"><span class="score-label">Eliot tools</span><span class="score-value">20</span><span class="score-delta">▲ +3 vs S69</span></div>
 </div>
-
 <div class="container">
-
-  <!-- Stats strip -->
   <div class="stats-strip">
-    <div class="stat-block">
-      <span class="stat-num">3</span>
-      <span class="stat-lbl">Commits code</span>
-    </div>
-    <div class="stat-block">
-      <span class="stat-num">1</span>
-      <span class="stat-lbl">Commit docs</span>
-    </div>
-    <div class="stat-block">
-      <span class="stat-num">115</span>
-      <span class="stat-lbl">JSDoc insérés</span>
-    </div>
-    <div class="stat-block">
-      <span class="stat-num">+3</span>
-      <span class="stat-lbl">Eliot tools</span>
-    </div>
-    <div class="stat-block">
-      <span class="stat-num">+115</span>
-      <span class="stat-lbl">Lignes API</span>
-    </div>
-    <div class="stat-block">
-      <span class="stat-num">5</span>
-      <span class="stat-lbl">Fichiers modifiés</span>
-    </div>
+    <div class="stat-block"><span class="stat-num">3</span><span class="stat-lbl">Commits code</span></div>
+    <div class="stat-block"><span class="stat-num">1</span><span class="stat-lbl">Commit docs</span></div>
+    <div class="stat-block"><span class="stat-num">115</span><span class="stat-lbl">JSDoc insérés</span></div>
+    <div class="stat-block"><span class="stat-num">+3</span><span class="stat-lbl">Eliot tools</span></div>
+    <div class="stat-block"><span class="stat-num">+115</span><span class="stat-lbl">Lignes API</span></div>
+    <div class="stat-block"><span class="stat-num">5</span><span class="stat-lbl">Fichiers modifiés</span></div>
   </div>
-
-  <!-- Conv1 -->
   <div class="section">
     <div class="section-title">⚙️ Conv1 — Dette technique JAUNE + Docs S69</div>
     <div class="cards-grid">
-
-      <div class="card">
-        <span class="card-tag tag-green">Sidebar</span>
-        <div class="card-icon">💹</div>
-        <div class="card-title">Lien Tarification ajouté</div>
-        <div class="card-desc">Groupe Administration enrichi d'un lien direct vers <code style="font-family:monospace;font-size:12px;color:#FCD34D">/app/parametres/tarification</code>. Module COEF_FG/MARGE/VTE accessible depuis la navigation principale.</div>
-      </div>
-
-      <div class="card">
-        <span class="card-tag tag-green">Sidebar</span>
-        <div class="card-icon">📦</div>
-        <div class="card-title">Hrefs BL/BR/DAF corrigés</div>
-        <div class="card-desc">3 liens du groupe Achats &amp; Stock pointaient vers des routes inexistantes. Corrigés vers <code style="font-family:monospace;font-size:12px;color:#FCD34D">/app/bon-livraison</code>, <code style="font-family:monospace;font-size:12px;color:#FCD34D">/app/bon-retour</code>, <code style="font-family:monospace;font-size:12px;color:#FCD34D">/app/demande-avoir-fourn</code>.</div>
-      </div>
-
-      <div class="card">
-        <span class="card-tag tag-green">Qualité</span>
-        <div class="card-icon">📝</div>
-        <div class="card-title">JSDoc 240/240 — couverture totale</div>
-        <div class="card-desc">115 commentaires <code style="font-family:monospace;font-size:12px;color:#FCD34D">// METHOD /route - Description</code> insérés dans <code style="font-family:monospace;font-size:12px;color:#FCD34D">custom-routes.ts</code>. Zéro description générique. Règle R-30 instaurée.</div>
-      </div>
-
-      <div class="card">
-        <span class="card-tag tag-violet">Docs</span>
-        <div class="card-icon">📚</div>
-        <div class="card-title">Docs GitHub Pages S69</div>
-        <div class="card-desc">Nouveau <code style="font-family:monospace;font-size:12px;color:#FCD34D">changelog-sprint-S69.html</code> (7 sections). Mise à jour onglet S69, roadmap S70 en cours, scores 97/97/92/96, groupe API 20 (9 routes S69).</div>
-      </div>
-
+      <div class="card"><span class="card-tag tag-green">Sidebar</span><div class="card-icon">💹</div><div class="card-title">Lien Tarification ajouté</div><div class="card-desc">Groupe Administration enrichi d'un lien direct vers <code>/app/parametres/tarification</code>. Module COEF_FG/MARGE/VTE accessible depuis la navigation principale.</div></div>
+      <div class="card"><span class="card-tag tag-green">Sidebar</span><div class="card-icon">📦</div><div class="card-title">Hrefs BL/BR/DAF corrigés</div><div class="card-desc">3 liens du groupe Achats pointaient vers des routes inexistantes. Corrigés vers <code>/app/bon-livraison</code>, <code>/app/bon-retour</code>, <code>/app/demande-avoir-fourn</code>.</div></div>
+      <div class="card"><span class="card-tag tag-green">Qualité</span><div class="card-icon">📝</div><div class="card-title">JSDoc 240/240 — couverture totale</div><div class="card-desc">115 commentaires <code>// METHOD /route - Description</code> insérés dans <code>custom-routes.ts</code>. Zéro description générique. Règle R-30 instaurée.</div></div>
+      <div class="card"><span class="card-tag tag-violet">Docs</span><div class="card-icon">📚</div><div class="card-title">Docs GitHub Pages S69</div><div class="card-desc">Nouveau <code>changelog-sprint-S69.html</code> (7 sections). Onglet S69 actif, roadmap S70, scores 97/97/92/96, groupe API 20 (9 routes S69).</div></div>
     </div>
   </div>
-
-  <!-- Conv2 -->
   <div class="section">
     <div class="section-title">🔴 Conv2 — ROUGE S69 soldé + Notifications Portail + Eliot tools</div>
-
     <ul class="feature-list">
-
-      <li class="feature-item">
-        <span class="feature-icon">🧠</span>
-        <div class="feature-content">
-          <div class="feature-title">Page eliot-memoire commité (ROUGE S69 soldé)</div>
-          <div class="feature-desc">Commit <code style="font-family:monospace;font-size:12px;color:#FCD34D">c173c90</code> — Page <code style="font-family:monospace;font-size:12px;color:#FCD34D">/app/parametres/eliot-memoire</code> + lien sidebar 🧠 Mémoire Eliot + <code style="font-family:monospace;font-size:12px;color:#FCD34D">*.bak*</code> dans <code style="font-family:monospace;font-size:12px;color:#FCD34D">.gitignore</code>. Dette ROUGE S69 entièrement soldée.</div>
-        </div>
-      </li>
-
-      <li class="feature-item">
-        <span class="feature-icon">🔔</span>
-        <div class="feature-content">
-          <div class="feature-title">Onglet Notifications Portail — validé ✅</div>
-          <div class="feature-desc"><code style="font-family:monospace;font-size:12px;color:#FCD34D">portail/page.tsx</code> : 292 → 587 lignes. Tab switcher "Accès clients | Notifications". 5 configs <code style="font-family:monospace;font-size:12px;color:#FCD34D">PNC_*</code> avec toggle actif/email + modal édition template HTML. Historique des envois. Fix timing onClick → loadNotifConfigs() + loadHistorique() explicites. Validation live : 5 cards, 10 checkboxes, 5 boutons "Modifier template", modal ✅</div>
-        </div>
-      </li>
-
-      <li class="feature-item">
-        <span class="feature-icon">🐾</span>
-        <div class="feature-content">
-          <div class="feature-title">Eliot tool 18 — get_registre_sanitaire</div>
-          <div class="feature-desc">Liste et détail des séjours du registre sanitaire avec filtres <code style="font-family:monospace;font-size:12px;color:#FCD34D">ani_id</code> / <code style="font-family:monospace;font-size:12px;color:#FCD34D">statut</code> / <code style="font-family:monospace;font-size:12px;color:#FCD34D">metier</code> / <code style="font-family:monospace;font-size:12px;color:#FCD34D">rss_id</code>.</div>
-        </div>
-      </li>
-
-      <li class="feature-item">
-        <span class="feature-icon">💉</span>
-        <div class="feature-content">
-          <div class="feature-title">Eliot tool 19 — create_evenement_sanitaire</div>
-          <div class="feature-desc">Ajout d'un événement au journal sanitaire d'un séjour : types SOIN / OBSERVATION / TRAITEMENT / VACCINATION / INCIDENT.</div>
-        </div>
-      </li>
-
-      <li class="feature-item">
-        <span class="feature-icon">⚠️</span>
-        <div class="feature-content">
-          <div class="feature-title">Eliot tool 20 — get_alertes_vaccins</div>
-          <div class="feature-desc">Détecte les séjours avec vaccins manquants ou expirés parmi RAGE / CHC / LEUCOSE. Retourne liste priorisée pour alerte immédiate.</div>
-        </div>
-      </li>
-
+      <li class="feature-item"><span class="feature-icon">🧠</span><div class="feature-content"><div class="feature-title">Page eliot-memoire commité (ROUGE S69 soldé)</div><div class="feature-desc">Commit <code>c173c90</code> — Page <code>/app/parametres/eliot-memoire</code> + lien sidebar 🧠 Mémoire Eliot + <code>*.bak*</code> dans <code>.gitignore</code>.</div></div></li>
+      <li class="feature-item"><span class="feature-icon">🔔</span><div class="feature-content"><div class="feature-title">Onglet Notifications Portail — validé ✅</div><div class="feature-desc"><code>portail/page.tsx</code> : 292 → 587 lignes. Tab switcher "Accès clients | Notifications". 5 configs <code>PNC_*</code> avec toggle actif/email + modal édition template HTML. Historique des envois. Validation live : 5 cards, 10 checkboxes, modal ✅</div></div></li>
+      <li class="feature-item"><span class="feature-icon">🐾</span><div class="feature-content"><div class="feature-title">Eliot tool 18 — get_registre_sanitaire</div><div class="feature-desc">Liste et détail des séjours du registre sanitaire avec filtres <code>ani_id</code> / <code>statut</code> / <code>metier</code> / <code>rss_id</code>.</div></div></li>
+      <li class="feature-item"><span class="feature-icon">💉</span><div class="feature-content"><div class="feature-title">Eliot tool 19 — create_evenement_sanitaire</div><div class="feature-desc">Ajout d'un événement au journal sanitaire : SOIN / OBSERVATION / TRAITEMENT / VACCINATION / INCIDENT.</div></div></li>
+      <li class="feature-item"><span class="feature-icon">⚠️</span><div class="feature-content"><div class="feature-title">Eliot tool 20 — get_alertes_vaccins</div><div class="feature-desc">Détecte les séjours avec vaccins manquants ou expirés parmi RAGE / CHC / LEUCOSE.</div></div></li>
     </ul>
   </div>
-
-  <!-- Commits -->
   <div class="section">
     <div class="section-title">📦 Commits S70</div>
     <table class="commits-table">
-      <thead>
-        <tr>
-          <th>Conv</th>
-          <th>Hash</th>
-          <th>Description</th>
-          <th>Repo</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Conv</th><th>Hash</th><th>Description</th><th>Repo</th></tr></thead>
       <tbody>
-        <tr>
-          <td class="commit-conv">Conv1</td>
-          <td><span class="commit-hash">c576ddd</span></td>
-          <td class="commit-desc">feat(S70): sidebar tarification + BL/BR/DAF hrefs + JSDoc 240 routes + R-30</td>
-          <td><span style="color:var(--text-muted);font-size:12px;">micro_logiciel</span></td>
-        </tr>
-        <tr>
-          <td class="commit-conv">Conv2</td>
-          <td><span class="commit-hash">c173c90</span></td>
-          <td class="commit-desc">feat(S70): onglet Notifications portail + page eliot-memoire + lien sidebar</td>
-          <td><span style="color:var(--text-muted);font-size:12px;">micro_logiciel</span></td>
-        </tr>
-        <tr>
-          <td class="commit-conv">Conv2</td>
-          <td><span class="commit-hash">de54403</span></td>
-          <td class="commit-desc">feat(S70): Eliot tools 18-20 registre sanitaire</td>
-          <td><span style="color:var(--text-muted);font-size:12px;">micro_logiciel</span></td>
-        </tr>
-        <tr>
-          <td class="commit-conv">Conv1</td>
-          <td><span class="commit-hash">b527321</span></td>
-          <td class="commit-desc">docs(S69): changelog S69 + roadmap S70 + pilotage + API ref groupe 20</td>
-          <td><span style="color:var(--text-muted);font-size:12px;">petsuite-docs</span></td>
-        </tr>
+        <tr><td>Conv1</td><td><span class="commit-hash">c576ddd</span></td><td>feat(S70): sidebar tarification + BL/BR/DAF hrefs + JSDoc 240 routes + R-30</td><td><span style="color:var(--text-muted);font-size:12px">micro_logiciel</span></td></tr>
+        <tr><td>Conv2</td><td><span class="commit-hash">c173c90</span></td><td>feat(S70): onglet Notifications portail + page eliot-memoire + lien sidebar</td><td><span style="color:var(--text-muted);font-size:12px">micro_logiciel</span></td></tr>
+        <tr><td>Conv2</td><td><span class="commit-hash">de54403</span></td><td>feat(S70): Eliot tools 18-20 registre sanitaire</td><td><span style="color:var(--text-muted);font-size:12px">micro_logiciel</span></td></tr>
+        <tr><td>Conv1</td><td><span class="commit-hash">b527321</span></td><td>docs(S69): changelog S69 + roadmap S70 + pilotage + API ref groupe 20</td><td><span style="color:var(--text-muted);font-size:12px">petsuite-docs</span></td></tr>
       </tbody>
     </table>
   </div>
-
-  <!-- Règle R-30 -->
   <div class="section">
     <div class="section-title">📏 Nouvelle règle — R-30</div>
     <div class="rule-box">
       <div class="rule-title">R-30 : Qualité code — tolérance zéro dette technique</div>
-      <div class="rule-desc">
-        <ul>
-          <li>Toute nouvelle route DOIT avoir son commentaire <code>// METHOD /route - Description</code></li>
-          <li>Tout nouveau lien sidebar DOIT pointer vers le chemin réel (vérifier avant commit)</li>
-          <li>Toute nouvelle page TSX DOIT être accessible depuis la sidebar ou un lien parent</li>
-          <li>Aucun <code>TODO</code>, <code>FIXME</code>, <code>console.error</code> non géré, commentaire générique "Route /xxx"</li>
-          <li>Avant chaque commit : 0 régression, 0 commentaire générique</li>
-        </ul>
-      </div>
+      <div class="rule-desc"><ul>
+        <li>Toute nouvelle route DOIT avoir son commentaire <code>// METHOD /route - Description</code></li>
+        <li>Tout nouveau lien sidebar DOIT pointer vers le chemin réel (vérifier avant commit)</li>
+        <li>Toute nouvelle page TSX DOIT être accessible depuis la sidebar ou un lien parent</li>
+        <li>Aucun <code>TODO</code>, <code>FIXME</code>, commentaire générique "Route /xxx"</li>
+      </ul></div>
     </div>
   </div>
-
-  <!-- Dette technique S71 -->
   <div class="section">
     <div class="section-title">🔧 Dette technique → S71</div>
     <div class="dette-list">
-
-      <div class="dette-item">
-        <span class="dette-prio prio-orange">ORANGE</span>
-        <span class="dette-text">Route <code style="font-family:monospace;font-size:12px;color:#FCD34D">POST /portail/envoyer</code> — 404 détecté en S70, handler à monter dans custom-routes.ts</span>
-      </div>
-
-      <div class="dette-item">
-        <span class="dette-prio prio-orange">ORANGE</span>
-        <span class="dette-text">Docs GitHub Pages S70 — changelog S70 + roadmap S71 + API ref tools 18-20</span>
-        <span class="dette-action">→ S71 en cours</span>
-      </div>
-
-      <div class="dette-item">
-        <span class="dette-prio prio-orange">ORANGE</span>
-        <span class="dette-text">Supprimer <code style="font-family:monospace;font-size:12px;color:#FCD34D">micro_logiciel_ged</code> — après validation GED complète</span>
-      </div>
-
-      <div class="dette-item">
-        <span class="dette-prio prio-yellow">JAUNE</span>
-        <span class="dette-text">Bouton "Appliquer tarif" sur devis — page paramètres OK, intégration devis en attente</span>
-      </div>
-
-      <div class="dette-item">
-        <span class="dette-prio prio-yellow">JAUNE</span>
-        <span class="dette-text">Pages BL/BR/DAF détail — <code style="font-family:monospace;font-size:12px;color:#FCD34D">/app/bon-livraison/[id]</code> etc. manquants</span>
-      </div>
-
-      <div class="dette-item">
-        <span class="dette-prio prio-yellow">JAUNE</span>
-        <span class="dette-text">Historique notifications portail — à peupler via test réel (SMTP configuré)</span>
-      </div>
-
+      <div class="dette-item"><span class="dette-prio prio-orange">ORANGE</span><span class="dette-text">Route <code>POST /portail/envoyer</code> — 404 (soldé en S71 ✅)</span></div>
+      <div class="dette-item"><span class="dette-prio prio-orange">ORANGE</span><span class="dette-text">Docs GitHub Pages S70 — changelog + roadmap + API ref tools 18-20</span></div>
+      <div class="dette-item"><span class="dette-prio prio-orange">ORANGE</span><span class="dette-text">Supprimer <code>micro_logiciel_ged</code> — après validation GED complète</span></div>
+      <div class="dette-item"><span class="dette-prio prio-yellow">JAUNE</span><span class="dette-text">Bouton "Appliquer tarif" sur devis</span></div>
+      <div class="dette-item"><span class="dette-prio prio-yellow">JAUNE</span><span class="dette-text">Pages BL/BR/DAF détail — <code>/app/bon-livraison/[id]</code> etc.</span></div>
     </div>
   </div>
-
-</div><!-- /container -->
-
+</div>
 <div class="footer">
-  <div>
-    <div class="footer-brand">Anim'Gest</div>
-    <div class="footer-meta">NoSage's Editor — Sprint S70 — 08/04/2026</div>
-  </div>
+  <div><div class="footer-brand">Anim'Gest</div><div class="footer-meta">NoSage's Editor — Sprint S70 — 08/04/2026</div></div>
   <nav class="nav-links">
     <a href="docs-changelog.html">← Changelog</a>
     <a href="06-roadmap.html">Roadmap</a>
@@ -606,6 +173,5 @@
     <a href="changelog-sprint-S69.html">Sprint S69</a>
   </nav>
 </div>
-
 </body>
 </html>
