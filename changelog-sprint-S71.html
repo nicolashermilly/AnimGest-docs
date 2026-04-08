@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog Sprint S71 — Anim'Gest</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: #0F172A;
+      color: #E2E8F0;
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid #1E293B;
+    }
+    .header .sprint-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #4F46E5, #06B6D4);
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 1rem;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+    .header h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.2rem;
+      color: #F8FAFC;
+      margin-bottom: 0.5rem;
+    }
+    .header .meta { color: #64748B; font-size: 0.9rem; }
+    .header .meta span { color: #F59E0B; font-weight: 600; }
+
+    /* Score cards */
+    .scores-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .score-card {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .score-card .label { font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .score-card .value { font-size: 2rem; font-weight: 800; color: #F8FAFC; }
+    .score-card .delta { font-size: 0.8rem; color: #10B981; margin-top: 0.2rem; }
+    .score-card .delta.stable { color: #64748B; }
+    .score-card.global { border-color: #4F46E5; }
+    .score-card.global .value { color: #818CF8; }
+
+    /* Stats bar */
+    .stats-bar {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      font-size: 0.85rem;
+    }
+    .stats-bar .stat { display: flex; align-items: center; gap: 0.5rem; }
+    .stats-bar .stat .num { font-weight: 700; color: #F59E0B; }
+    .stats-bar .stat .lbl { color: #94A3B8; }
+
+    /* Sections */
+    section { margin-bottom: 2.5rem; }
+    section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      color: #F8FAFC;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #1E293B;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    section h2 .tag {
+      font-size: 0.7rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .tag-rouge { background: #7F1D1D; color: #FCA5A5; }
+    .tag-orange { background: #7C2D12; color: #FCA5A5; }
+    .tag-vert { background: #14532D; color: #86EFAC; }
+
+    /* Cards */
+    .card {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 { font-size: 0.95rem; font-weight: 700; color: #E2E8F0; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem; }
+    .card p { font-size: 0.88rem; color: #94A3B8; margin-bottom: 0.4rem; }
+    .card ul { list-style: none; padding: 0; }
+    .card ul li { font-size: 0.88rem; color: #94A3B8; padding: 0.2rem 0; padding-left: 1.2rem; position: relative; }
+    .card ul li::before { content: '→'; position: absolute; left: 0; color: #4F46E5; }
+    .card ul li.fix::before { color: #F59E0B; content: '🔧'; font-size: 0.75rem; }
+    .card ul li.new::before { color: #10B981; content: '✨'; font-size: 0.75rem; }
+    .card ul li.valid::before { color: #10B981; content: '✅'; font-size: 0.75rem; }
+
+    /* Commits */
+    .commits-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .commits-table th { text-align: left; color: #64748B; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.5rem 0.8rem; border-bottom: 1px solid #334155; }
+    .commits-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #1E293B; color: #CBD5E1; }
+    .commits-table .hash { font-family: monospace; color: #818CF8; }
+    .commits-table .conv { font-size: 0.75rem; background: #1E293B; color: #64748B; padding: 0.15rem 0.5rem; border-radius: 4px; }
+
+    /* Rule */
+    .rule-box {
+      background: #1E293B;
+      border-left: 3px solid #F59E0B;
+      border-radius: 0 10px 10px 0;
+      padding: 1rem 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .rule-box .rule-id { font-size: 0.75rem; color: #F59E0B; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+    .rule-box p { font-size: 0.88rem; color: #CBD5E1; }
+
+    /* BDD discoveries */
+    .bdd-box {
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 1rem 1.4rem;
+      font-family: monospace;
+      font-size: 0.82rem;
+      color: #94A3B8;
+      white-space: pre-wrap;
+    }
+    .bdd-box .exists { color: #86EFAC; }
+    .bdd-box .missing { color: #FCA5A5; }
+    .bdd-box .col { color: #93C5FD; }
+
+    /* Footer */
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #1E293B;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #475569;
+    }
+    footer a { color: #4F46E5; text-decoration: none; }
+    footer a:hover { color: #818CF8; }
+
+    @media (max-width: 640px) {
+      .scores-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-bar { gap: 1rem; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="sprint-badge">Sprint S71</div>
+    <h1>Changelog — Sprint S71</h1>
+    <p class="meta">
+      <span>08 avril 2026</span> &nbsp;·&nbsp; Conv1 + Conv2 &nbsp;·&nbsp;
+      Anim'Gest — NoSage's Editor
+    </p>
+  </div>
+
+  <!-- Scores -->
+  <div class="scores-grid">
+    <div class="score-card">
+      <div class="label">Backend</div>
+      <div class="value">98</div>
+      <div class="delta stable">stable (fix bugs latents)</div>
+    </div>
+    <div class="score-card">
+      <div class="label">Frontend</div>
+      <div class="value">99</div>
+      <div class="delta">+1 (+3 pages BL/BR/DAF)</div>
+    </div>
+    <div class="score-card">
+      <div class="label">BDD</div>
+      <div class="value">92</div>
+      <div class="delta stable">stable</div>
+    </div>
+    <div class="score-card global">
+      <div class="label">Global</div>
+      <div class="value">98</div>
+      <div class="delta">+1 vs S70</div>
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stat"><span class="num">~173</span><span class="lbl">Routes API</span></div>
+    <div class="stat"><span class="num">119</span><span class="lbl">Pages UI (+3)</span></div>
+    <div class="stat"><span class="num">20</span><span class="lbl">Eliot tools</span></div>
+    <div class="stat"><span class="num">240/240</span><span class="lbl">JSDoc ✅</span></div>
+    <div class="stat"><span class="num">0</span><span class="lbl">app.use()</span></div>
+    <div class="stat"><span class="num">3</span><span class="lbl">Notifs portail envoyées</span></div>
+    <div class="stat"><span class="num">113</span><span class="lbl">Pages docs · 21 groupes API</span></div>
+  </div>
+
+  <!-- Conv1 -->
+  <section>
+    <h2>🔴 <span>Conv1</span> — Route /portail/envoyer + Fix envoyerNotification() + Docs S70</h2>
+
+    <div class="card">
+      <h3>✅ ROUGE soldé — Commit Eliot tools 18-20</h3>
+      <ul>
+        <li class="valid">Commit <code>de54403</code> déjà pushé depuis S70 — rien à faire</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📬 Route POST /portail/envoyer</h3>
+      <ul>
+        <li class="new">Route injectée dans <code>custom-routes.ts</code> après le bloc <code>/portail/admin/notifications/historique</code></li>
+        <li>Délègue à <code>envoyerNotification()</code> existante</li>
+        <li class="valid">Validation live : <code>sent: True</code> pour DEVIS_DISPONIBLE, RAPPEL_SEANCE, FACTURE_DISPONIBLE</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🔧 Fix envoyerNotification() — 4 bugs corrigés</h3>
+      <ul>
+        <li class="fix"><code>pca.PCT_ID</code> → <code>pca.PCA_ID</code> dans le SELECT</li>
+        <li class="fix"><code>pca.PCT_ACTIF</code> → <code>pca.PCA_ACTIF</code></li>
+        <li class="fix"><code>client.PCT_TOKEN</code> → <code>client.PCA_TOKEN</code></li>
+        <li class="fix"><code>PCT_ID</code> + <code>PCN_CORPS</code> supprimés du INSERT (colonnes inexistantes en BDD)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📋 Historique notifications portail — validé ✅ (JAUNE soldé)</h3>
+      <ul>
+        <li class="valid">3 entrées BDD : DEVIS_DISPONIBLE, RAPPEL_SEANCE, FACTURE_DISPONIBLE</li>
+        <li class="valid"><code>PCN_STATUT = 'ENVOYE'</code> + <code>PCN_DATE_ENVOI</code> renseignée</li>
+        <li class="valid">SMTP Gmail actif — envois réels déclenchés</li>
+        <li><code>GET /portail/admin/notifications/historique</code> retourne <code>TIE_RAISON_SOCIALE</code> jointé</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📚 Docs GitHub Pages S70 — pushées</h3>
+      <ul>
+        <li class="new"><code>changelog-sprint-S70.html</code> — créé (scores, commits, R-30, Eliot tools 18-20)</li>
+        <li><code>docs-changelog.html</code> — onglet S70 actif</li>
+        <li><code>06-roadmap.html</code> — S70 livré, S71 en cours</li>
+        <li><code>20-pilotage-projet.html</code> — scores 98/98/92/97</li>
+        <li><code>17-api-reference.html</code> — groupe 21 (Eliot tools 18-20 + POST /portail/envoyer)</li>
+        <li>Commits : <code>04f15d0</code> (docs) + <code>54d378a</code> (changelog S70)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Conv2 -->
+  <section>
+    <h2>🟠 <span>Conv2</span> — Bouton tarif devis + Pages BL/BR/DAF détail</h2>
+
+    <div class="card">
+      <h3>💹 Bouton "Appliquer tarif" sur fiche devis — commit <code>7f7a4c7</code></h3>
+      <ul>
+        <li class="new">États <code>applyingTarif</code> + <code>tarifMsg</code></li>
+        <li class="new">Fonction <code>appliquerTarif()</code> → <code>POST /api/devis/:id/appliquer-tarif</code></li>
+        <li class="new">Bouton 💹 dans PageHeader (désactivé si statut FACTURE)</li>
+        <li class="new">Bandeau feedback vert/rouge + bouton ✕</li>
+        <li>Route <code>POST /devis/:id/appliquer-tarif</code> existait depuis S64 — aucun backend nécessaire</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📦 Pages détail BL/BR/DAF — 3 nouvelles pages</h3>
+      <ul>
+        <li class="new"><code>/app/bon-livraison/[id]</code> — infos BL + lignes (<code>bon_livraison_ligne</code>) + actions BROUILLON→ENVOYE→LIVRE</li>
+        <li class="new"><code>/app/bon-retour/[id]</code> — infos BR + motif + actions →TRAITE/REFUSE</li>
+        <li class="new"><code>/app/demande-avoir-fourn/[id]</code> — infos DAF + motif + actions →ACCEPTE→REMBOURSE/REFUSE</li>
+        <li>Numéros cliquables ajoutés dans les 3 pages liste</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Commits -->
+  <section>
+    <h2>📝 Commits S71</h2>
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <table class="commits-table">
+        <thead>
+          <tr>
+            <th>Conv</th>
+            <th>Hash</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="conv">Conv1</span></td>
+            <td class="hash">f70fdbb</td>
+            <td>feat(S71): route POST /portail/envoyer via envoyerNotification()</td>
+          </tr>
+          <tr>
+            <td><span class="conv">Conv1</span></td>
+            <td class="hash">e3ba6ab</td>
+            <td>fix(S71): envoyerNotification() colonnes PCA_ID/PCA_TOKEN/PCA_ACTIF</td>
+          </tr>
+          <tr>
+            <td><span class="conv">Conv1</span></td>
+            <td class="hash">9e4a669</td>
+            <td>fix(S71): envoyerNotification() INSERT colonnes réelles BDD (retire PCT_ID et PCN_CORPS)</td>
+          </tr>
+          <tr>
+            <td><span class="conv">Conv2</span></td>
+            <td class="hash">7f7a4c7</td>
+            <td>feat(S71): bouton appliquer-tarif sur fiche devis [id]</td>
+          </tr>
+          <tr>
+            <td><span class="conv">Conv2</span></td>
+            <td class="hash">(BL/BR/DAF)</td>
+            <td>feat(S71): pages détail BL/BR/DAF [id] + liens liste</td>
+          </tr>
+          <tr>
+            <td><span class="conv">Docs</span></td>
+            <td class="hash">04f15d0</td>
+            <td>docs(S70): changelog S70 + tabs + pilotage + API ref groupe 21</td>
+          </tr>
+          <tr>
+            <td><span class="conv">Docs</span></td>
+            <td class="hash">54d378a</td>
+            <td>docs(S70): changelog S70 + roadmap S71 + pilotage + API ref groupe 21</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- BDD -->
+  <section>
+    <h2>🗄️ Découvertes BDD S71</h2>
+    <div class="bdd-box"><span class="exists">bon_livraison_ligne</span>       → EXISTS  (lignes affichées sur /bon-livraison/[id])
+<span class="missing">bon_retour_ligne</span>          → N'EXISTE PAS (pas de section lignes sur BR)
+<span class="missing">demande_avoir_fourn_ligne</span> → N'EXISTE PAS (pas de section lignes sur DAF)
+
+portail_client_notification → Colonnes réelles :
+  <span class="col">PCN_ID · TIE_ID · PCN_TYPE · PCN_CANAL · PCN_STATUT · PCN_DATE_ENVOI</span>
+  <span class="col">PCN_OBJET · PCN_ERREUR · SEA_ID · DCE_ID · FAC_ID · PCN_DATE_CREATION</span>
+  (PAS de PCT_ID, PAS de PCN_CORPS)
+
+portail_client_acces → Colonnes préfixe PCA_ (pas PCT_) :
+  <span class="col">PCA_ID · PCA_TOKEN · PCA_ACTIF · PCA_EMAIL · PCA_DATE_EXPIRATION</span>
+  <span class="col">PCA_DATE_CREATION · PCA_DERNIERE_CONNEXION · PCA_NB_CONNEXIONS</span></div>
+  </section>
+
+  <!-- Dette S72 -->
+  <section>
+    <h2>⏭️ Dette technique → S72</h2>
+
+    <div class="card">
+      <h3><span class="tag tag-orange">ORANGE</span> À traiter en priorité</h3>
+      <ul>
+        <li>Docs GitHub Pages S71 — changelog + roadmap + pilotage + API ref</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🟡 JAUNE — Backlog</h3>
+      <ul>
+        <li>Tables <code>bon_retour_ligne</code> + <code>demande_avoir_fourn_ligne</code> — créer si besoin fonctionnel</li>
+        <li><code>/app/elevage/declarations</code> — page TSX manquante (route API présente)</li>
+        <li>Supprimer <code>micro_logiciel_ged</code> après validation GED complète</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <a href="docs-changelog.html">← Tous les changelogs</a> &nbsp;·&nbsp;
+      <a href="06-roadmap.html">Roadmap</a> &nbsp;·&nbsp;
+      <a href="17-api-reference.html">API Reference</a>
+    </p>
+    <p style="margin-top: 0.8rem;">Anim'Gest — NoSage's Editor — Sprint S71 — 08/04/2026</p>
+  </footer>
+
+</div>
+</body>
+</html>

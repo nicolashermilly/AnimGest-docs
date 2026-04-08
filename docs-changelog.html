@@ -169,31 +169,31 @@ footer a { color: var(--gold); text-decoration: none; }
   <a href="20-pilotage-projet.html">Pilotage</a>
   <a href="07-audit-stack.html">Stack</a>
   <a href="17-api-reference.html">API</a>
-  <span class="nav-badge">S70</span>
+  <span class="nav-badge">S71</span>
 </nav>
 
 <div class="hero">
   <div class="hero-label">Changelogs &amp; Sprints</div>
   <h1>Historique des livraisons</h1>
-  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S70 — NoSage's Editor</p>
+  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S71 — NoSage's Editor</p>
 </div>
 
 <div class="kpi-grid">
   <div class="kpi-card">
-    <div class="kpi-value">33</div>
+    <div class="kpi-value">34</div>
     <div class="kpi-label">Sprints</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-value">106</div>
+    <div class="kpi-value">119</div>
     <div class="kpi-label">Pages UI</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-value">~115</div>
+    <div class="kpi-value">~173</div>
     <div class="kpi-label">Routes API</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-value">97/100</div>
-    <div class="kpi-label">Score S70</div>
+    <div class="kpi-value">98/100</div>
+    <div class="kpi-label">Score S71</div>
   </div>
 </div>
 
@@ -201,7 +201,8 @@ footer a { color: var(--gold); text-decoration: none; }
 
   <!-- TABS NAV -->
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="showTab('s70')">S70</button>
+    <button class="tab-btn active" onclick="showTab('s71')">S71</button>
+    <button class="tab-btn" onclick="showTab('s70')">S70</button>
     <button class="tab-btn" onclick="showTab('s69')">S69</button>
     <button class="tab-btn" onclick="showTab('s68')">S68</button>
     <button class="tab-btn" onclick="showTab('s67')">S67</button>
@@ -225,8 +226,49 @@ footer a { color: var(--gold); text-decoration: none; }
     <button class="tab-btn" onclick="showTab('s30')">S30→S48</button>
   </div>
 
+  <!-- S71 -->
+  <div class="tab-content active" id="tab-s71">
+    <div class="sprint-card current">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S71</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">POST /portail/envoyer · Fix envoyerNotification() · Bouton tarif devis · Pages BL/BR/DAF détail</div>
+          <div class="sprint-head-meta">08/04/2026 · 119 pages UI (+3) · ~173 routes API · 20 Eliot tools · Score global 98/100</div>
+        </div>
+      </div>
+      <div class="sprint-cols">
+        <div class="sprint-col">
+          <div class="col-title">✅ Livraisons S71 — Conv1</div>
+          <ul>
+            <li>Route POST /portail/envoyer — délègue à envoyerNotification()</li>
+            <li>4 bugs corrigés dans envoyerNotification() : PCA_ID, PCA_ACTIF, PCA_TOKEN, suppression PCT_ID/PCN_CORPS</li>
+            <li>Historique notifications validé : 3 entrées ENVOYE en BDD · SMTP Gmail actif</li>
+            <li>Docs GitHub Pages S70 pushées — changelog + roadmap + pilotage + API ref groupe 21</li>
+          </ul>
+        </div>
+        <div class="sprint-col">
+          <div class="col-title">✅ Livraisons S71 — Conv2</div>
+          <ul>
+            <li>Bouton 💹 Appliquer tarif sur fiche devis [id] — désactivé si FACTURE · bandeau vert/rouge</li>
+            <li>Page /app/bon-livraison/[id] — infos BL + lignes + actions BROUILLON→ENVOYE→LIVRE</li>
+            <li>Page /app/bon-retour/[id] — infos BR + motif + actions →TRAITE/REFUSE</li>
+            <li>Page /app/demande-avoir-fourn/[id] — infos DAF + motif + actions →ACCEPTE→REMBOURSE/REFUSE</li>
+            <li>Numéros cliquables dans les 3 pages liste</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sprint-scores">
+        <div class="score-item"><span class="score-val">98</span><span class="score-lbl">Backend</span></div>
+        <div class="score-item"><span class="score-val">99</span><span class="score-lbl">Frontend</span></div>
+        <div class="score-item"><span class="score-val">92</span><span class="score-lbl">BDD</span></div>
+        <div class="score-item"><span class="score-val" style="color:var(--gold)">98</span><span class="score-lbl">Global</span></div>
+      </div>
+      <div class="sprint-link"><a href="changelog-sprint-S71.html">Voir release notes complètes S71 →</a></div>
+    </div>
+  </div>
+
   <!-- S70 -->
-  <div class="tab-content active" id="tab-s70">
+  <div class="tab-content" id="tab-s70">
     <div class="sprint-card current">
       <div class="sprint-head">
         <div class="sprint-num-badge">S70</div>
@@ -951,7 +993,7 @@ footer a { color: var(--gold); text-decoration: none; }
 </div>
 
 <footer>
-  Anim'Gest — NoSage's Editor — Changelogs S30→S63 — MàJ 01/04/2026
+  Anim'Gest — NoSage's Editor — Changelogs S30→S71 — MàJ 08/04/2026
   <br><a href="index.html">← Index documentation</a>
   &nbsp;·&nbsp;<a href="20-pilotage-projet.html">📊 Pilotage</a>
   &nbsp;·&nbsp;<a href="SAV_Launcher.html">🚀 SAV</a>
