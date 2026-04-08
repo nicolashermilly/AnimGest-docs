@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog Sprint S73 - Anim'Gest</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="docs-changelog.html" class="nav-back">← Changelogs</a>
+</nav>
+<div class="page-content">
+  <div class="page-header">
+    <div class="sprint-badge">S73</div>
+    <h1>Sprint S73 — 08/04/2026</h1>
+    <p class="subtitle">Formulaire declarations elevage · Validation notifications portail</p>
+  </div>
+
+  <div class="scores-row">
+    <div class="score-card"><div class="score-val">98</div><div class="score-lbl">Backend</div></div>
+    <div class="score-card"><div class="score-val">99</div><div class="score-lbl">Frontend</div></div>
+    <div class="score-card"><div class="score-val">92</div><div class="score-lbl">BDD</div></div>
+    <div class="score-card score-global"><div class="score-val">98</div><div class="score-lbl">Global</div></div>
+  </div>
+
+  <section class="changelog-section">
+    <h2>Commits S73</h2>
+    <table class="data-table">
+      <thead><tr><th>Hash</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>59ddef8</code></td><td>feat(S73): formulaire creation/edition declarations elevage + routes POST/PUT</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="changelog-section">
+    <h2>1. Formulaire declarations elevage</h2>
+    <ul>
+      <li>Page <code>/app/elevage/declarations</code> refactorisee — modal creation + modal edition</li>
+      <li>Bouton <strong>+ Nouvelle declaration</strong> en haut de page</li>
+      <li>Formulaire : type, dates, statut, montant, n° dossier, commentaire, liaisons SAI/POR/NAI</li>
+      <li>Bouton <strong>Modifier</strong> sur chaque ligne — modal pre-remplie</li>
+      <li>Route <code>POST /elevage/declarations</code> — creation avec INSERT + retour enregistrement</li>
+      <li>Route <code>PUT /elevage/declarations/:id</code> — modification whitelist 11 champs</li>
+      <li>Fix route GET — ajout filtre methode + <code>next()</code> pour laisser passer POST/PUT</li>
+    </ul>
+  </section>
+
+  <section class="changelog-section">
+    <h2>2. Validation notifications portail</h2>
+    <ul>
+      <li>Test end-to-end confirme : envoi email reel a <code>nicolashermilly@gmail.com</code></li>
+      <li>Substitution variables operationnelle : <code>{{DEVIS_NUM}}</code>, <code>{{MONTANT}}</code>, <code>{{PORTAIL_URL}}</code></li>
+      <li>5 configs actives en BDD : RAPPEL_SEANCE, DEVIS_DISPONIBLE, FACTURE_DISPONIBLE, SEANCE_CONFIRMEE, DOCUMENT_PARTAGE</li>
+      <li>Hooks fire-and-forget fonctionnels : devis ENVOYE et facture EMISE declenchent notification automatique</li>
+      <li>Route <code>POST /portail/admin/notifications/envoyer</code> validee</li>
+    </ul>
+  </section>
+
+  <section class="changelog-section">
+    <h2>3. KPIs S73</h2>
+    <table class="data-table">
+      <thead><tr><th>Metrique</th><th>Valeur</th></tr></thead>
+      <tbody>
+        <tr><td>Pages UI</td><td>120</td></tr>
+        <tr><td>Routes API</td><td>~175 (+2 POST/PUT declarations)</td></tr>
+        <tr><td>Eliot tools</td><td>20</td></tr>
+        <tr><td>JSDoc</td><td>242/242</td></tr>
+        <tr><td>app.use()</td><td>0</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="changelog-section">
+    <h2>4. Dette technique S74</h2>
+    <p>Aucun ROUGE ni ORANGE. Items JAUNE stables :</p>
+    <ul>
+      <li>Tables <code>bon_retour_ligne</code> + <code>demande_avoir_fourn_ligne</code> — creer si besoin fonctionnel</li>
+      <li>Suppression <code>micro_logiciel_ged</code> — apres validation GED complete</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
