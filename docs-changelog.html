@@ -169,13 +169,13 @@ footer a { color: var(--gold); text-decoration: none; }
   <a href="20-pilotage-projet.html">Pilotage</a>
   <a href="07-audit-stack.html">Stack</a>
   <a href="17-api-reference.html">API</a>
-  <span class="nav-badge">S72</span>
+  <span class="nav-badge">S73</span>
 </nav>
 
 <div class="hero">
   <div class="hero-label">Changelogs &amp; Sprints</div>
   <h1>Historique des livraisons</h1>
-  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S72 — NoSage's Editor</p>
+  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S73 — NoSage's Editor</p>
 </div>
 
 <div class="kpi-grid">
@@ -193,7 +193,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
   <div class="kpi-card">
     <div class="kpi-value">98/100</div>
-    <div class="kpi-label">Score S72</div>
+    <div class="kpi-label">Score S73</div>
   </div>
 </div>
 
@@ -201,7 +201,8 @@ footer a { color: var(--gold); text-decoration: none; }
 
   <!-- TABS NAV -->
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="showTab('s72')">S72</button>
+    <button class="tab-btn active" onclick="showTab('s73')">S73</button>
+    <button class="tab-btn" onclick="showTab('s72')">S72</button>
     <button class="tab-btn" onclick="showTab('s71')">S71</button>
     <button class="tab-btn" onclick="showTab('s70')">S70</button>
     <button class="tab-btn" onclick="showTab('s69')">S69</button>
@@ -227,8 +228,48 @@ footer a { color: var(--gold); text-decoration: none; }
     <button class="tab-btn" onclick="showTab('s30')">S30→S48</button>
   </div>
 
+  <!-- S73 -->
+  <div class="tab-content active" id="tab-s73">
+    <div class="sprint-card current">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S73</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Fix clients Leaflet · Guard R-26 BL/BR/DAF · Lignes BR+DAF · Liaisons BR→DAF · Fix Eliot R-33 · Formulaire declarations</div>
+          <div class="sprint-head-meta">09/04/2026 · 120 pages UI · ~181 routes API (+6) · 21 Eliot tools · Score global 98/100</div>
+        </div>
+      </div>
+      <div class="sprint-cols">
+        <div class="sprint-col">
+          <div class="col-title">✅ Livraisons S73 — Conv1</div>
+          <ul>
+            <li>Fix /app/clients — suppression geocoding externe (api-adresse.data.gouv.fr) · vue carte remplacée par placeholder · liste 167 clients stable</li>
+            <li>Guard R-26 injecté sur routes GET /bon-livraison, /bon-retour, /demande-avoir-fourn — empêche interception des routes /:id</li>
+            <li>Fix Eliot R-33 — format tableau tools corrigé (virgules ,{ en début de ligne → undefined) · tool get_declarations_elevage ajouté (21 tools)</li>
+            <li>Pages bon-retour/[id] et demande-avoir-fourn/[id] améliorées (contenu stash Conv2)</li>
+          </ul>
+        </div>
+        <div class="sprint-col">
+          <div class="col-title">✅ Livraisons S73 — Conv2</div>
+          <ul>
+            <li>Formulaire declarations elevage — modal creation + modal edition + routes POST/PUT /elevage/declarations</li>
+            <li>Tables bon_retour_ligne + demande_avoir_fourn_ligne — routes GET+POST lignes BR/DAF</li>
+            <li>6 triggers MariaDB recalcul totaux HT/TTC (AFTER INSERT/UPDATE/DELETE sur lignes BR et DAF)</li>
+            <li>Colonne BR_ID ajoutee dans demande_avoir_fourn · jointures DAF/BR · navigation bidirectionnelle BR↔DAF</li>
+            <li>Notifications portail — test end-to-end confirme · email reel envoye · substitution variables operationnelle</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sprint-scores">
+        <div class="score-item"><span class="score-val">98</span><span class="score-lbl">Backend</span></div>
+        <div class="score-item"><span class="score-val">99</span><span class="score-lbl">Frontend</span></div>
+        <div class="score-item"><span class="score-val">93</span><span class="score-lbl">BDD</span></div>
+        <div class="score-item"><span class="score-val" style="color:var(--gold)">98</span><span class="score-lbl">Global</span></div>
+      </div>
+      <div class="sprint-link"><a href="changelog-sprint-S73.html">Voir release notes complètes S73 →</a></div>
+    </div>
+  </div>
   <!-- S72 -->
-  <div class="tab-content active" id="tab-s72">
+  <div class="tab-content" id="tab-s72">
     <div class="sprint-card current">
       <div class="sprint-head">
         <div class="sprint-num-badge">S72</div>
