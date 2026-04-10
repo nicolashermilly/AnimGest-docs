@@ -169,31 +169,31 @@ footer a { color: var(--gold); text-decoration: none; }
   <a href="20-pilotage-projet.html">Pilotage</a>
   <a href="07-audit-stack.html">Stack</a>
   <a href="17-api-reference.html">API</a>
-  <span class="nav-badge">S73</span>
+  <span class="nav-badge">S74</span>
 </nav>
 
 <div class="hero">
   <div class="hero-label">Changelogs &amp; Sprints</div>
   <h1>Historique des livraisons</h1>
-  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S73 — NoSage's Editor</p>
+  <p class="hero-sub">Historique complet des livraisons Anim'Gest — S30 → S74 — NoSage's Editor</p>
 </div>
 
 <div class="kpi-grid">
   <div class="kpi-card">
-    <div class="kpi-value">35</div>
+    <div class="kpi-value">36</div>
     <div class="kpi-label">Sprints</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-value">120</div>
+    <div class="kpi-value">121</div>
     <div class="kpi-label">Pages UI</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-value">~173</div>
+    <div class="kpi-value">~189</div>
     <div class="kpi-label">Routes API</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-value">98/100</div>
-    <div class="kpi-label">Score S73</div>
+    <div class="kpi-value">99/100</div>
+    <div class="kpi-label">Score S74</div>
   </div>
 </div>
 
@@ -201,7 +201,8 @@ footer a { color: var(--gold); text-decoration: none; }
 
   <!-- TABS NAV -->
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="showTab('s73')">S73</button>
+    <button class="tab-btn active" onclick="showTab('s74')">S74</button>
+    <button class="tab-btn" onclick="showTab('s73')">S73</button>
     <button class="tab-btn" onclick="showTab('s72')">S72</button>
     <button class="tab-btn" onclick="showTab('s71')">S71</button>
     <button class="tab-btn" onclick="showTab('s70')">S70</button>
@@ -228,8 +229,50 @@ footer a { color: var(--gold); text-decoration: none; }
     <button class="tab-btn" onclick="showTab('s30')">S30→S48</button>
   </div>
 
+  <!-- S74 -->
+  <div class="tab-content active" id="tab-s74">
+    <div class="sprint-card current">
+      <div class="sprint-head">
+        <div class="sprint-num-badge">S74</div>
+        <div class="sprint-head-info">
+          <div class="sprint-head-title">Module AC Avoir Client · PDF BL/BR/DAF/AC · Eliot tool 22 · 1791 colonnes BDD commentées</div>
+          <div class="sprint-head-meta">09/04/2026 · 121 pages UI (+1) · ~189 routes API (+8) · 22 Eliot tools (+1) · Score global 99/100</div>
+        </div>
+      </div>
+      <div class="sprint-cols">
+        <div class="sprint-col">
+          <div class="col-title">✅ Livraisons S74 — Conv1</div>
+          <ul>
+            <li>Fix docs GitHub Pages S73 — onglet S73 actif, roadmap S74 en cours, pilotage historique</li>
+            <li>Module AC complet — Guards R-26/R-32 · PUT whitelist · GET+POST lignes · page /avoir-client/[id] · liste cliquable</li>
+            <li>BDD — table <code>avoir_client_ligne</code> + 3 triggers AFTER INSERT/UPDATE/DELETE recalcul totaux HT/TTC</li>
+            <li>Route PDF AC enrichie — section lignes <code>avoir_client_ligne</code> + tableau totaux</li>
+            <li>Eliot tool 22 <code>get_avoirs_client</code> — filtres statut+tie_id · format R-33 ✅</li>
+          </ul>
+        </div>
+        <div class="sprint-col">
+          <div class="col-title">✅ Livraisons S74 — Conv2</div>
+          <ul>
+            <li>4 routes PDF éditions : <code>GET /editions/bon-livraison/:id</code> · <code>/bon-retour/:id</code> · <code>/demande-avoir-fourn/:id</code> · <code>/avoir-client/:id</code></li>
+            <li>Boutons PDF + modals <code>&lt;iframe src&gt;</code> sur pages BL/BR/DAF/[id]</li>
+            <li>Fix SQL <code>f.FAC_NUM</code> (pas <code>f.FAC_NUMERO</code>)</li>
+            <li><strong>1791 colonnes commentées</strong> sur 171 tables <code>micro_logiciel</code> — conventions R-34 FK/PK</li>
+            <li>Fix <code>DEFAULT NULL</code> vs <code>DEFAULT 'NULL'</code> sur nullable datetime/varchar</li>
+            <li>Score BDD 93 → <strong>98/100</strong> — dette technique soldée ✅</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sprint-scores">
+        <div class="score-item"><span class="score-val">99</span><span class="score-lbl">Backend</span></div>
+        <div class="score-item"><span class="score-val">99</span><span class="score-lbl">Frontend</span></div>
+        <div class="score-item"><span class="score-val">98</span><span class="score-lbl">BDD</span></div>
+        <div class="score-item"><span class="score-val" style="color:var(--gold)">99</span><span class="score-lbl">Global</span></div>
+      </div>
+      <div class="sprint-link"><a href="changelog-sprint-S74.html">Voir release notes complètes S74 →</a></div>
+    </div>
+  </div>
   <!-- S73 -->
-  <div class="tab-content active" id="tab-s73">
+  <div class="tab-content" id="tab-s73">
     <div class="sprint-card current">
       <div class="sprint-head">
         <div class="sprint-num-badge">S73</div>
@@ -1074,7 +1117,7 @@ footer a { color: var(--gold); text-decoration: none; }
 </div>
 
 <footer>
-  Anim'Gest — NoSage's Editor — Changelogs S30→S72 — MàJ 08/04/2026
+  Anim'Gest — NoSage's Editor — Changelogs S30→S74 — MàJ 10/04/2026
   <br><a href="index.html">← Index documentation</a>
   &nbsp;·&nbsp;<a href="20-pilotage-projet.html">📊 Pilotage</a>
   &nbsp;·&nbsp;<a href="SAV_Launcher.html">🚀 SAV</a>
