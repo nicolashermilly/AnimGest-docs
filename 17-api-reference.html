@@ -347,14 +347,18 @@ footer a { color: var(--gold); text-decoration: none; }
     <!-- 15 ÉDITIONS -->
     <div class="api-group" id="editions">
       <div class="group-header"><span class="group-num">15</span><span class="group-title">Éditions &amp; PDF</span><span class="group-new">S62</span></div>
-      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-logo</span><span class="route-desc">Upload logo en GED (ged_document)</span></div></div>
-      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/upload-logo</span><span class="route-desc">Lecture logo base64 depuis BDD</span></div></div>
-      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-filigrane</span><span class="route-desc">Upload filigrane (fond transparent)</span></div></div>
-      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/upload-filigrane</span><span class="route-desc">Lecture filigrane base64</span></div></div>
-      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-cgv</span><span class="route-desc">Upload CGV PDF</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-logo</span><span class="route-desc">Upload logo - base64 direct dans param_edition ED_LOGO_BASE64 (S75)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/upload-logo</span><span class="route-desc">Lecture logo base64 depuis param_edition ED_LOGO_BASE64</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-filigrane</span><span class="route-desc">Upload filigrane - base64 direct dans param_edition ED_FILIGRANE_BASE64 (S75)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/upload-filigrane</span><span class="route-desc">Lecture filigrane base64 depuis param_edition ED_FILIGRANE_BASE64</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-cgv</span><span class="route-desc">Upload CGV PDF - base64 direct dans param_edition PE_CGV_BASE64 (S75)</span></div></div>
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/cgv/preview</span><span class="route-desc">Preview PDF CGV depuis base64 BDD</span></div></div>
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/devis/:id</span><span class="route-desc">PDF devis puppeteer avec param_edition (couleur, logo, filigrane, police)</span></div></div>
       <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/facture/:id</span><span class="route-desc">PDF facture puppeteer avec param_edition + fusion CGV</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/avoir-client/:id</span><span class="route-desc">PDF avoir client puppeteer (S74)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/bon-livraison/:id</span><span class="route-desc">PDF bon de livraison (S71)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/bon-retour/:id</span><span class="route-desc">PDF bon de retour fournisseur (S71)</span></div></div>
+      <div class="route-row" style="background:rgba(124,58,237,0.08)"><span class="method m-note" style="background:#7c3aed;color:#fff;font-size:10px;padding:2px 6px">S75</span><div class="route-info"><span class="route-path" style="color:#a78bfa">Migration GED supprimee</span><span class="route-desc">upload-logo/filigrane/cgv stockent desormais en base64 dans param_edition - micro_logiciel_ged supprimee (0 tables, aucune donnee perdue)</span></div></div>
     </div>
     <!-- 16 REGISTRE SANITAIRE S65 -->
     <div class="api-group" id="registre-sanitaire">
