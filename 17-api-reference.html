@@ -408,7 +408,7 @@ footer a { color: var(--gold); text-decoration: none; }
 </div>
 
 <footer>
-  Anim'Gest — NoSage's Editor — API Reference MàJ Sprint S69 — 08/04/2026 — ~172 routes — 3 registres réglementaires
+  Anim'Gest — NoSage's Editor — API Reference MàJ Sprint S74 — 10/04/2026 — ~189 routes — 3 registres réglementaires
   <br><a href="index.html">← Retour à l'accueil</a>
   &nbsp;·&nbsp;<a href="20-pilotage-projet.html">Pilotage</a>
   &nbsp;·&nbsp;<a href="57-module-portail-client.html">Portail Client</a>
@@ -471,6 +471,24 @@ footer a { color: var(--gold); text-decoration: none; }
       <code>/app/elevage/declarations</code>
       <p>Page déclarations élevage — créée S72. Lien sidebar groupe Élevage ajouté.</p>
     </div>
+  </div>
+  <!-- GROUPE 23 — S74 : Module AC + PDF BL/BR/DAF/AC + Eliot tool 22 -->
+  <div class="api-group" id="groupe-23">
+    <div class="group-header">
+      <span class="group-num">23</span>
+      <h2>Avoir Client · PDF Éditions · Eliot tool 22</h2>
+      <span class="group-new">S74</span>
+    </div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoir-client</span><span class="route-desc">Liste des avoirs client — Guard R-26 (rejette sous-chemins)</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoir-client/:id</span><span class="route-desc">Détail avoir client — Guard R-32 (urlParts.length === 2)</span></div></div>
+    <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/avoir-client/:id</span><span class="route-desc">Mise à jour avoir client — whitelist 6 champs (AVC_STATUT, AVC_MOTIF, AVC_TOTAL_HT, AVC_TOTAL_TTC, AVC_DATE_EMISSION, AVC_COMMENTAIRE)</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoir-client/:id/lignes</span><span class="route-desc">Liste des lignes d'un avoir client (table avoir_client_ligne)</span></div></div>
+    <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/avoir-client/:id/lignes</span><span class="route-desc">Ajouter une ligne à un avoir client — triggers recalculent AVC_TOTAL_HT/TTC</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/bon-livraison/:id</span><span class="route-desc">HTML PDF bon de livraison — lignes sans prix (document transport) · violet #4F46E5</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/bon-retour/:id</span><span class="route-desc">HTML PDF bon de retour — lignes + totaux HT/TVA/TTC · amber #F59E0B</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/demande-avoir-fourn/:id</span><span class="route-desc">HTML PDF demande d'avoir fournisseur — lignes + BR lié · violet #8B5CF6</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/avoir-client/:id</span><span class="route-desc">HTML PDF avoir client — lignes avoir_client_ligne + totaux · vert #10B981</span></div></div>
+    <div class="route-row"><span class="method m-get">TOOL</span><div class="route-info"><span class="route-path">get_avoirs_client</span><span class="route-desc">Eliot tool 22 — liste avoirs client avec filtres statut + tie_id. Retourne total, total_ttc, avoirs[] (numéro, client, montant, statut, motif, facture origine).</span></div></div>
   </div>
 </body>
 </html>

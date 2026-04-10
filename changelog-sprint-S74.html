@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog Sprint S74 — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F172A;
+    --navy-light: #1E293B;
+    --navy-mid: #334155;
+    --gold: #F59E0B;
+    --gold-light: #FCD34D;
+    --gold-dark: #D97706;
+    --white: #F8FAFC;
+    --text: #E2E8F0;
+    --text-muted: #94A3B8;
+    --rouge: #EF4444;
+    --orange: #F97316;
+    --jaune: #EAB308;
+    --vert: #22C55E;
+    --cyan: #06B6D4;
+    --violet: #8B5CF6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  nav {
+    background: var(--navy-light);
+    border-bottom: 1px solid rgba(245,158,11,0.2);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 56px;
+  }
+  nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  nav a:hover { color: var(--gold); }
+  nav .nav-brand { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; margin-right: auto; }
+  .header {
+    background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: 'S74';
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    font-weight: 700;
+    color: rgba(245,158,11,0.06);
+    pointer-events: none;
+    letter-spacing: -4px;
+  }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.3);
+    color: var(--gold);
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+  .header h1 span { color: var(--gold); }
+  .header .meta { color: var(--text-muted); font-size: 13px; display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 0.75rem; }
+  .header .meta span { display: flex; align-items: center; gap: 0.4rem; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 2.5rem 2rem; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .summary-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(245,158,11,0.15);
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+  }
+  .summary-card .num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); display: block; }
+  .summary-card .label { font-size: 12px; color: var(--text-muted); margin-top: 0.2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(245,158,11,0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .section-title .icon { font-size: 1rem; }
+  .feature-block {
+    background: var(--navy-light);
+    border: 1px solid var(--navy-mid);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .feature-block h3 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem; }
+  .feature-block p { font-size: 13.5px; color: var(--text-muted); }
+  .feature-block ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+  .feature-block ul li { font-size: 13.5px; color: var(--text-muted); margin-bottom: 0.3rem; }
+  .feature-block ul li code, .feature-block p code, .feature-block h3 code {
+    background: rgba(245,158,11,0.1);
+    color: var(--gold-light);
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+  }
+  .prio { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 0.5rem; vertical-align: middle; }
+  .prio-orange { background: rgba(249,115,22,0.15); color: var(--orange); border: 1px solid rgba(249,115,22,0.3); }
+  .prio-vert { background: rgba(34,197,94,0.15); color: var(--vert); border: 1px solid rgba(34,197,94,0.3); }
+  .commits-table { width: 100%; border-collapse: collapse; }
+  .commits-table th { text-align: left; padding: 0.6rem 1rem; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); background: var(--navy-light); border-bottom: 1px solid var(--navy-mid); }
+  .commits-table td { padding: 0.7rem 1rem; font-size: 13px; border-bottom: 1px solid rgba(51,65,85,0.5); vertical-align: top; color: var(--text-muted); }
+  .commits-table tr:last-child td { border-bottom: none; }
+  .commit-hash { font-family: 'Courier New', monospace; font-size: 12px; color: var(--gold); background: rgba(245,158,11,0.08); padding: 0.2rem 0.5rem; border-radius: 4px; white-space: nowrap; }
+  .scores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .score-card { background: var(--navy-light); border: 1px solid var(--navy-mid); border-radius: 10px; padding: 1.2rem; text-align: center; }
+  .score-card .axe { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .score-card .score-val { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); }
+  .score-card .score-prev { font-size: 11px; color: var(--text-muted); margin-top: 0.2rem; }
+  .score-card .delta { font-size: 11px; color: var(--vert); font-weight: 600; }
+  .routes-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
+  .route-tag { background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.2); color: var(--cyan); padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 12px; font-family: 'Courier New', monospace; }
+  .dette-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .dette-table th { text-align: left; padding: 0.6rem 1rem; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); background: var(--navy-light); border-bottom: 1px solid var(--navy-mid); }
+  .dette-table td { padding: 0.7rem 1rem; border-bottom: 1px solid rgba(51,65,85,0.5); color: var(--text-muted); }
+  .dette-table tr:last-child td { border-bottom: none; }
+  .dette-table td:first-child { color: var(--text); font-weight: 500; }
+  .badge-jaune { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 4px; font-size: 11px; font-weight: 700; background: rgba(234,179,8,0.15); color: var(--jaune); border: 1px solid rgba(234,179,8,0.3); }
+  footer { border-top: 1px solid rgba(245,158,11,0.15); padding: 1.5rem 2rem; text-align: center; color: var(--text-muted); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Anim'Gest</span>
+  <a href="index.html">← Accueil</a>
+  <a href="changelog-sprint-S73.html">S73</a>
+  <a href="17-api-reference.html">API Référence</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+</nav>
+
+<div class="header">
+  <div class="header-badge">📋 Release Notes</div>
+  <h1>Sprint <span>S74</span></h1>
+  <p style="color:var(--text-muted);font-size:14px;margin-top:0.4rem;">Module AC Avoir Client complet · PDF BL/BR/DAF/AC · Eliot tool 22 · 1791 colonnes BDD commentées</p>
+  <div class="meta">
+    <span>📅 09 avril 2026</span>
+    <span>🔀 4 commits</span>
+    <span>🖥️ 121 pages UI</span>
+    <span>🔌 ~189 routes API</span>
+    <span>🤖 22 Eliot tools</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SUMMARY -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <span class="num">4</span>
+      <div class="label">Commits dev</div>
+    </div>
+    <div class="summary-card">
+      <span class="num">8</span>
+      <div class="label">Nouvelles routes API</div>
+    </div>
+    <div class="summary-card">
+      <span class="num">1791</span>
+      <div class="label">Colonnes BDD commentées</div>
+    </div>
+    <div class="summary-card">
+      <span class="num">22</span>
+      <div class="label">Eliot tools actifs</div>
+    </div>
+    <div class="summary-card">
+      <span class="num">99</span>
+      <div class="label">Score global /100</div>
+    </div>
+  </div>
+
+  <!-- DOCS FIX S73 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📝</span> Fix docs GitHub Pages S73 <span class="prio prio-orange">ORANGE</span></div>
+    <div class="feature-block">
+      <h3>Patches S73 non pris en fin de sprint précédent</h3>
+      <ul>
+        <li><code>docs-changelog.html</code> — onglet S73 ajouté actif, nav-badge S73</li>
+        <li><code>06-roadmap.html</code> — S74 en cours, S73 livré, tâches ORANGE S74 à jour</li>
+        <li><code>20-pilotage-projet.html</code> — bloc S73 injecté dans historique, scores BDD 93/100</li>
+      </ul>
+      <p style="margin-top:0.5rem;color:var(--vert)">✅ Commit <code>a0cb396</code></p>
+    </div>
+  </div>
+
+  <!-- MODULE AC -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span> Module AC — Avoir Client complet <span class="prio prio-orange">ORANGE</span></div>
+    <div class="feature-block">
+      <h3>Guards R-26 / R-32 — protection routes</h3>
+      <p>Guard R-26 sur <code>GET /avoir-client</code> liste pour rejeter les sous-chemins. Guard R-32 sur <code>GET /avoir-client/:id</code> avec filtre <code>urlParts.length === 2</code> — empêche l'interception de <code>/:id/lignes</code>.</p>
+    </div>
+    <div class="feature-block">
+      <h3><code>PUT /avoir-client/:id</code> — mise à jour</h3>
+      <p>Whitelist 6 champs : <code>AVC_STATUT</code>, <code>AVC_MOTIF</code>, <code>AVC_TOTAL_HT</code>, <code>AVC_TOTAL_TTC</code>, <code>AVC_DATE_EMISSION</code>, <code>AVC_COMMENTAIRE</code>. Pattern <code>_readBody()</code> obligatoire.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Routes lignes — placées AVANT <code>/:id</code> (R-26)</h3>
+      <div class="routes-list">
+        <span class="route-tag">GET /avoir-client/:id/lignes</span>
+        <span class="route-tag">POST /avoir-client/:id/lignes</span>
+      </div>
+      <p style="margin-top:0.6rem;">Insertion d'une ligne déclenche les triggers MariaDB qui recalculent <code>AVC_TOTAL_HT</code> et <code>AVC_TOTAL_TTC</code> automatiquement.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Page <code>/app/avoir-client/[id]/page.tsx</code> — NOUVEAU</h3>
+      <ul>
+        <li>Section lignes avec tableau <code>avoir_client_ligne</code></li>
+        <li>Formulaire ajout ligne (désignation, quantité, PU HT, TVA)</li>
+        <li>Totaux HT / TVA / TTC recalculés par trigger</li>
+        <li>Lien vers la facture origine (<code>FAC_NUM</code>)</li>
+        <li>Bouton PDF avec modal <code>srcDoc</code> (à aligner S75)</li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h3>Liste <code>/app/avoir-client</code> — <code>AVC_NUMERO</code> cliquable</h3>
+      <p>Chaque numéro AC-AAAA-XXXX est maintenant un lien vers <code>/app/avoir-client/[id]</code>. Suite BL → BR → DAF → <strong>AC complète ✅</strong></p>
+    </div>
+    <p style="color:var(--vert);font-size:13px;margin-top:0.5rem;">✅ Commit <code>5e56674</code></p>
+  </div>
+
+  <!-- BDD ACL + TRIGGERS -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🗄️</span> BDD — Table avoir_client_ligne + 3 triggers</div>
+    <div class="feature-block">
+      <h3>Table <code>avoir_client_ligne</code> créée via HeidiSQL</h3>
+      <ul>
+        <li><code>ACL_ID INT AUTO_INCREMENT PRIMARY KEY</code></li>
+        <li><code>AVC_ID INT NOT NULL</code> — Relation avoir_client</li>
+        <li><code>ACL_DESIGNATION VARCHAR(255) NOT NULL</code></li>
+        <li><code>ACL_QTE DECIMAL(10,2) DEFAULT 1.00</code></li>
+        <li><code>ACL_PU_HT DECIMAL(10,2) DEFAULT 0.00</code></li>
+        <li><code>ACL_TVA_TAUX DECIMAL(5,2) DEFAULT 20.00</code></li>
+        <li><code>ACL_TOTAL_HT</code> · <code>ACL_TOTAL_TTC</code> · <code>ACL_CREE_LE DATETIME</code></li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h3>3 triggers AFTER INSERT / UPDATE / DELETE</h3>
+      <ul>
+        <li><code>trg_acl_after_insert</code> — recalcul à l'ajout d'une ligne</li>
+        <li><code>trg_acl_after_update</code> — recalcul à la modification</li>
+        <li><code>trg_acl_after_delete</code> — recalcul à la suppression</li>
+      </ul>
+      <p style="margin-top:0.5rem;">Chaque trigger met à jour <code>AVC_TOTAL_HT</code> et <code>AVC_TOTAL_TTC</code> dans <code>avoir_client</code> par somme des lignes.</p>
+    </div>
+    <div class="feature-block" style="border-left-color: var(--vert);">
+      <h3 style="color:var(--vert);">✅ Donnée de test</h3>
+      <p><code>ACL_ID=1</code>, <code>AVC_ID=1</code> — Remboursement consultation comportementale — 85€ HT / 102€ TTC</p>
+    </div>
+  </div>
+
+  <!-- PDF EDITIONS -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📄</span> PDF Éditions — BL / BR / DAF / AC</div>
+    <div class="feature-block">
+      <h3>4 nouvelles routes éditions HTML</h3>
+      <div class="routes-list">
+        <span class="route-tag">GET /editions/bon-livraison/:id</span>
+        <span class="route-tag">GET /editions/bon-retour/:id</span>
+        <span class="route-tag">GET /editions/demande-avoir-fourn/:id</span>
+        <span class="route-tag">GET /editions/avoir-client/:id</span>
+      </div>
+    </div>
+    <div class="feature-block">
+      <h3>Détail des éditions par document</h3>
+      <ul>
+        <li><strong>BL</strong> — lignes sans prix (document transport) · accent violet <code>#4F46E5</code></li>
+        <li><strong>BR</strong> — lignes + totaux HT/TVA/TTC · accent amber <code>#F59E0B</code></li>
+        <li><strong>DAF</strong> — lignes + BR lié + motif · accent violet <code>#8B5CF6</code></li>
+        <li><strong>AC</strong> — lignes <code>avoir_client_ligne</code> + totaux · accent vert <code>#10B981</code></li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h3>Boutons PDF + modals sur pages [id]</h3>
+      <p>Pages BL/BR/DAF/[id] : bouton 🖨️ PDF → modal <code>&lt;iframe src="/api/editions/..."&gt;</code> (pattern standard R-23).</p>
+      <p style="margin-top:0.4rem;">Page AC/[id] : modal <code>srcDoc</code> (fetch HTML inline) — à aligner sur <code>src</code> URL en S75.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Fix SQL — <code>f.FAC_NUM</code></h3>
+      <p>Correction <code>f.FAC_NUMERO</code> → <code>f.FAC_NUM</code> dans les jointures facture des routes PDF (règle R-27).</p>
+    </div>
+    <p style="color:var(--vert);font-size:13px;margin-top:0.5rem;">✅ Commits <code>62fc49f</code> + <code>16fbcfd</code></p>
+  </div>
+
+  <!-- ELIOT TOOL 22 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🤖</span> Eliot — Tool 22 : get_avoirs_client</div>
+    <div class="feature-block">
+      <h3><code>get_avoirs_client</code> — 22e tool de la boucle agentique</h3>
+      <ul>
+        <li>Filtres : <code>statut</code> (BROUILLON · EMIS · REMBOURSE · ANNULE) + <code>tie_id</code></li>
+        <li>Retourne : <code>total</code>, <code>total_ttc</code>, <code>avoirs[]</code></li>
+        <li>Chaque avoir : numéro, client, montant HT/TTC, statut, motif, facture origine</li>
+        <li>Format one-liner respectant la règle <strong>R-33</strong> ✅ (pas de <code>,{</code> en début de ligne)</li>
+      </ul>
+    </div>
+    <div class="feature-block" style="border-left-color: var(--vert);">
+      <h3 style="color:var(--vert);">✅ Test validé</h3>
+      <p>"liste moi les avoirs client" + métier COMPORTEMENTALISTE → retourne <code>AC-2604-0001</code>, Catherine Deneuve, 85€ HT, statut EMIS.</p>
+    </div>
+    <p style="color:var(--vert);font-size:13px;margin-top:0.5rem;">✅ Commit <code>16fbcfd</code></p>
+  </div>
+
+  <!-- BDD COMMENTAIRES -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🗄️</span> BDD — 1791 colonnes commentées (Conv2)</div>
+    <div class="feature-block">
+      <h3>Couverture totale — 171 tables micro_logiciel</h3>
+      <p><strong>1791 colonnes commentées</strong> via <code>ALTER TABLE MODIFY COLUMN ... COMMENT '...'</code>. Dette technique BDD soldée — score passe de 93 → <strong>98/100</strong>.</p>
+    </div>
+    <div class="feature-block">
+      <h3>Conventions établies — Règle R-34</h3>
+      <ul>
+        <li><strong>FK</strong> : <code>Relation table_liee - description attendue</code></li>
+        <li><strong>PK</strong> : <code>Identifiant unique de l enregistrement [table]</code></li>
+        <li><strong>Fix</strong> : <code>DEFAULT NULL</code> (keyword SQL) — jamais <code>DEFAULT 'NULL'</code> (string littérale) sur nullable</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- COMMITS -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔀</span> Commits S74</div>
+    <table class="commits-table">
+      <thead>
+        <tr><th>Hash</th><th>Conv</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="commit-hash">a0cb396</span></td><td style="color:var(--text-muted)">Conv1</td><td>docs(S74): fix docs-changelog + roadmap + pilotage — patches S73 non pris</td></tr>
+        <tr><td><span class="commit-hash">5e56674</span></td><td style="color:var(--text-muted)">Conv1</td><td>feat(S74): module AC avoir_client — guards + PUT + routes lignes + page [id] + lien liste</td></tr>
+        <tr><td><span class="commit-hash">62fc49f</span></td><td style="color:var(--text-muted)">Conv2</td><td>feat(S74): routes PDF editions BL/BR/DAF/AC + boutons modal srcdoc</td></tr>
+        <tr><td><span class="commit-hash">16fbcfd</span></td><td style="color:var(--text-muted)">Conv1</td><td>feat(S74): Eliot tool get_avoirs_client (tool 22) + route PDF AC avec lignes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SCORES -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📊</span> Scores qualité S74</div>
+    <div class="scores-grid">
+      <div class="score-card">
+        <div class="axe">Backend</div>
+        <div class="score-val">99</div>
+        <div class="score-prev">S73 : 98 <span class="delta">▲ +1</span></div>
+      </div>
+      <div class="score-card">
+        <div class="axe">Frontend</div>
+        <div class="score-val">99</div>
+        <div class="score-prev">S73 : 99 <span style="color:var(--text-muted)">— stable</span></div>
+      </div>
+      <div class="score-card">
+        <div class="axe">BDD</div>
+        <div class="score-val">98</div>
+        <div class="score-prev">S73 : 93 <span class="delta">▲ +5</span></div>
+      </div>
+      <div class="score-card">
+        <div class="axe">Global</div>
+        <div class="score-val" style="color:var(--gold)">99</div>
+        <div class="score-prev">S73 : 98 <span class="delta">▲ +1</span></div>
+      </div>
+    </div>
+    <p style="color:var(--text-muted);font-size:12px;margin-top:1rem;">Routes API : ~189 (+8) · Pages UI : 121 (+1) · Eliot tools : 22 (+1) · JSDoc : 240/240 ✅ · app.use() : 0 · Colonnes BDD : 1791/1791 ✅</p>
+  </div>
+
+  <!-- DETTE S75 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span> Dette technique → S75</div>
+    <p style="color:var(--vert);font-size:13px;margin-bottom:1rem;">Aucun ROUGE ni ORANGE — uniquement des items JAUNE.</p>
+    <table class="dette-table">
+      <thead>
+        <tr><th>Item</th><th>Priorité</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Modal PDF AC — aligner sur pattern <code>src</code> URL</td>
+          <td><span class="badge-jaune">JAUNE</span></td>
+          <td>Remplacer <code>srcDoc</code> par <code>&lt;iframe src="/api/editions/avoir-client/:id"&gt;</code></td>
+        </tr>
+        <tr>
+          <td>Tarification UI — 3 méthodes sur le devis</td>
+          <td><span class="badge-jaune">JAUNE</span></td>
+          <td>COEF_FG+MARGE · COEF_VTE · PRIX_DIRECT — colonnes BDD et routes présentes depuis S64</td>
+        </tr>
+        <tr>
+          <td>Vue Carte <code>/app/clients</code></td>
+          <td><span class="badge-jaune">JAUNE</span></td>
+          <td>Réactiver géocodage + Leaflet — conditionnel accès réseau externe (WireGuard VPN ?)</td>
+        </tr>
+        <tr>
+          <td>Supprimer <code>micro_logiciel_ged</code></td>
+          <td><span class="badge-jaune">JAUNE</span></td>
+          <td>Après validation GED complète</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor · Sprint S74 · 09 avril 2026 · <a href="docs-changelog.html" style="color:var(--gold);text-decoration:none;">← Tous les changelogs</a>
+</footer>
+
+</body>
+</html>
