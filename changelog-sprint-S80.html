@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Changelog Sprint S78 — Anim'Gest</title>
+<title>Changelog Sprint S80 — Anim'Gest</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root { --navy:#0F172A; --navy-800:#1E293B; --gold:#F59E0B; --green:#10B981; --cyan:#06B6D4; --text:#E2E8F0; --text-muted:#94A3B8; --card:#1E293B; }
@@ -29,7 +29,7 @@ nav a:hover { color:var(--gold); }
 .section-body { padding:20px 24px; }
 .section-body ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
 .section-body li { padding-left:20px; position:relative; font-size:0.88rem; color:var(--text-muted); }
-.section-body li::before { content:'✅'; position:absolute; left:0; }
+.section-body li::before { content:'&#x2705;'; position:absolute; left:0; }
 .scores { display:flex; gap:16px; padding:16px 24px; border-top:1px solid rgba(255,255,255,0.06); }
 .score-item { text-align:center; }
 .score-val { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--green); display:block; }
@@ -44,32 +44,49 @@ footer a { color:var(--gold); text-decoration:none; }
   <a href="docs-changelog.html">&#8592; Changelogs</a>
   <a href="06-roadmap.html">Roadmap</a>
   <a href="20-pilotage-projet.html">Pilotage</a>
-  <span class="nav-badge">S78</span>
+  <span class="nav-badge">S80</span>
 </nav>
 <div class="hero">
   <div class="hero-label">Release Notes</div>
-  <h1>Sprint S78 — Documentation &amp; Aide</h1>
-  <p>11/04/2026 &mdash; Centre d'aide 244 Q/R &middot; 22 sc&eacute;narios m&eacute;tier HTML &middot; Guide param&eacute;trage &middot; Notice utilisation &middot; Agenda DnD</p>
+  <h1>Sprint S80 — Wrappers &middot; Charte &middot; Nettoyage</h1>
+  <p>11/04/2026 &mdash; Fix GED &middot; Archivage dist/BIB_Widget 893 Mo &middot; Corrections wrappers isolants &middot; Charte 8 pages &middot; JSDoc custom-routes &middot; Sidebar S80</p>
 </div>
 <div class="kpi-grid">
   <div class="kpi-card"><div class="kpi-value">117</div><div class="kpi-label">Pages UI</div></div>
-  <div class="kpi-card"><div class="kpi-value">~195</div><div class="kpi-label">Routes API</div></div>
+  <div class="kpi-card"><div class="kpi-value">~198</div><div class="kpi-label">Routes API</div></div>
   <div class="kpi-card"><div class="kpi-value">22</div><div class="kpi-label">Eliot tools</div></div>
   <div class="kpi-card"><div class="kpi-value">99</div><div class="kpi-label">Score global</div></div>
 </div>
 <div class="main">
 
   <div class="section">
-    <div class="section-head"><div class="section-title">&#x2705; Conv1 — Documentation compl&egrave;te</div></div>
+    <div class="section-head"><div class="section-title">&#x2705; Conv1 — Docs + Nettoyage</div></div>
     <div class="section-body"><ul>
-      <li>Centre d'aide /app/aide — 244 Q/R, 20 modules, help-content.ts r&eacute;&eacute;crit</li>
-      <li>HelpPanel contextuel corrig&eacute; — getArticlesForPage, mapping 35 routes &rarr; modules</li>
-      <li>22 sc&eacute;narios m&eacute;tier HTML : 10 m&eacute;tiers + 11 transverses + index</li>
-      <li>Guide de param&eacute;trage — 7 phases, checklist 16 items</li>
-      <li>Notice compl&egrave;te d'utilisation — 20 sections, sidebar navigation</li>
-      <li>Documentation embarqu&eacute;e public/docs/ — 20 pages r&eacute;f&eacute;rence + 22 sc&eacute;narios</li>
-      <li>Acc&egrave;s depuis la Sidebar — boutons Documentation + Sc&eacute;narios</li>
-      <li>Hub documentation /app/aide — 12 raccourcis directs</li>
+      <li>Stack v&eacute;rifi&eacute;e — PDF devis OK, GED valide</li>
+      <li>index-complet.html mis &agrave; jour S80 — 198 routes</li>
+      <li>J1 double point _saveGedPdf — inexistant, corrig&eacute; S79</li>
+      <li>J2 invoice.pdf r&eacute;siduel supprim&eacute; de Semaine_2026_15</li>
+      <li>J3 dist/ (596 Mo) + BIB_Widget/ (297 Mo) supprim&eacute;s — 893 Mo lib&eacute;r&eacute;s</li>
+      <li>GitHub Pages S79 push&eacute; — commit 0927966</li>
+      <li>changelog-sprint-S79.html cr&eacute;&eacute;</li>
+      <li>Sidebar v2 &middot; S80 — Sidebar.tsx patch&eacute; + JSDoc @sprint S80</li>
+      <li>J6 JSDoc custom-routes — 1 faux positif, dette z&eacute;ro</li>
+      <li>Build frontend 117/117 — 0 erreur</li>
+    </ul></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-title">&#x2705; Conv2 — Corrections wrappers isolants + charte</div></div>
+    <div class="section-body"><ul>
+      <li>demande-avoir-fourn/[id] — reconstruit complet (16 783 car.)</li>
+      <li>avoir-client/[id] — wrapper + loading state corrig&eacute;s</li>
+      <li>bon-livraison/[id] — wrapper supprim&eacute; + div orphelin retir&eacute;</li>
+      <li>bon-retour/[id] — wrapper supprim&eacute;</li>
+      <li>bon-livraison/page.tsx — charte + wrapper</li>
+      <li>avoir-client/page.tsx — charte + wrapper</li>
+      <li>bon-retour/page.tsx — charte + wrapper</li>
+      <li>demande-avoir-fourn/page.tsx — charte + wrapper</li>
+      <li>Build frontend 117/117 — 0 erreur</li>
     </ul></div>
     <div class="scores">
       <div class="score-item"><span class="score-val">99</span><span class="score-lbl">Backend</span></div>
@@ -79,22 +96,9 @@ footer a { color:var(--gold); text-decoration:none; }
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-head"><div class="section-title">&#x2705; Conv2 — Audit cl&ocirc;ture + dette technique</div></div>
-    <div class="section-body"><ul>
-      <li>Sidebar version v2 &middot; S77 &rarr; v2 &middot; S78</li>
-      <li>window.location.href &rarr; router.push() dans clients + factures/avoir</li>
-      <li>Couleurs r&eacute;siduelles corrig&eacute;es — bon-livraison, agenda, carte, clients dropdowns</li>
-      <li>JSDoc manquant — Sidebar, EmailModal, 6 pages prioritaires</li>
-      <li>Hex hardcod&eacute;s corrig&eacute;s — comportementaliste + EmailModal + dropdowns</li>
-      <li>Agenda DnD — force-dynamic + useRouter + zones de drop op&eacute;rationnelles</li>
-      <li>Audit global dette : 0 point r&eacute;siduel sur p&eacute;rim&egrave;tre S78</li>
-    </ul></div>
-  </div>
-
 </div>
 <footer>
-  Anim'Gest &mdash; NoSage's Editor &mdash; Changelog Sprint S78 &mdash; 11/04/2026<br>
+  Anim'Gest &mdash; NoSage's Editor &mdash; Changelog Sprint S80 &mdash; 11/04/2026<br>
   <a href="docs-changelog.html">&#8592; Tous les changelogs</a>
 </footer>
 </body>
