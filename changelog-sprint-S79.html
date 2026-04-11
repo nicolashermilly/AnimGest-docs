@@ -3,76 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Changelog Sprint S79 - Anim'Gest</title>
+<title>Changelog Sprint S79 — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --navy: #0F172A; --gold: #F59E0B; --text: #E2E8F0; --muted: #94A3B8; --card: #1E293B; --border: #334155; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; padding: 2rem; }
-  h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2rem; margin-bottom: 0.5rem; }
-  .meta { color: var(--muted); font-size: 0.875rem; margin-bottom: 2rem; }
-  .section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
-  .section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-  .rouge { color: #F87171; } .orange { color: #FB923C; } .jaune { color: #FDE047; } .vert { color: #4ADE80; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-  th { text-align: left; padding: 0.5rem 0.75rem; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
-  td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
-  .badge { display: inline-block; padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
-  .badge-ok { background: #14532d; color: #4ADE80; }
-  .badge-info { background: #1e3a5f; color: #60A5FA; }
-  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
-  .metric { background: #0F172A; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
-  .metric-val { font-size: 1.75rem; font-weight: 700; color: var(--gold); }
-  .metric-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+:root { --navy:#0F172A; --navy-800:#1E293B; --gold:#F59E0B; --green:#10B981; --cyan:#06B6D4; --text:#E2E8F0; --text-muted:#94A3B8; --card:#1E293B; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'DM Sans',sans-serif; background:var(--navy); color:var(--text); min-height:100vh; line-height:1.6; }
+nav { position:sticky; top:0; z-index:100; background:rgba(15,23,42,0.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(245,158,11,0.2); padding:14px 32px; display:flex; align-items:center; gap:32px; }
+.nav-logo { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--gold); font-weight:700; text-decoration:none; }
+nav a { color:var(--text-muted); text-decoration:none; font-size:0.85rem; font-weight:500; }
+nav a:hover { color:var(--gold); }
+.nav-badge { margin-left:auto; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); color:var(--gold); padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:600; }
+.hero { background:linear-gradient(135deg,#0F172A 0%,#1E293B 50%,#0F172A 100%); border-bottom:1px solid rgba(245,158,11,0.15); padding:60px 32px 48px; text-align:center; }
+.hero-label { display:inline-block; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); color:var(--gold); font-size:0.7rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:16px; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:#F8FAFC; margin-bottom:8px; }
+.hero p { color:var(--text-muted); font-size:0.9rem; }
+.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(245,158,11,0.1); border-top:1px solid rgba(245,158,11,0.1); }
+.kpi-card { background:var(--navy); padding:24px 20px; text-align:center; }
+.kpi-value { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--gold); line-height:1; margin-bottom:6px; }
+.kpi-label { font-size:0.75rem; color:var(--text-muted); font-weight:500; text-transform:uppercase; letter-spacing:0.08em; }
+.main { max-width:900px; margin:0 auto; padding:48px 24px; }
+.section { background:var(--card); border:1px solid rgba(255,255,255,0.06); border-radius:12px; margin-bottom:24px; overflow:hidden; }
+.section-head { padding:18px 24px; background:linear-gradient(90deg,rgba(245,158,11,0.06) 0%,transparent 100%); border-bottom:1px solid rgba(255,255,255,0.06); }
+.section-title { font-family:'Playfair Display',serif; font-size:1rem; color:var(--gold); font-weight:700; }
+.section-body { padding:20px 24px; }
+.section-body ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.section-body li { padding-left:20px; position:relative; font-size:0.88rem; color:var(--text-muted); }
+.section-body li::before { content:'&#x2705;'; position:absolute; left:0; }
+.scores { display:flex; gap:16px; padding:16px 24px; border-top:1px solid rgba(255,255,255,0.06); }
+.score-item { text-align:center; }
+.score-val { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--green); display:block; }
+.score-lbl { font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; }
+footer { text-align:center; padding:32px; color:var(--text-muted); font-size:0.8rem; border-top:1px solid rgba(255,255,255,0.06); margin-top:48px; }
+footer a { color:var(--gold); text-decoration:none; }
 </style>
 </head>
 <body>
-<h1>Changelog Sprint S79</h1>
-<p class="meta">Date : 11/04/2026 &mdash; Anim'Gest &middot; NoSage's Editor &mdash; Score qualit&eacute; : 99/100</p>
-
-<div class="section">
-  <h2><span class="jaune">&#9679;</span> JAUNE sold&eacute;s (Conv1 &mdash; Dette technique)</h2>
-  <table>
-    <tr><th>Item</th><th>Description</th><th>Fichier(s)</th><th>Statut</th></tr>
-    <tr><td>J3</td><td>JSDoc global : 71 fichiers patch&eacute;s (38 pages + 20 composants + 1 hook + 5 lib + 7 autres)</td><td>71 fichiers</td><td><span class="badge badge-ok">OK</span></td></tr>
-    <tr><td>J4</td><td>Archivage : 15 &eacute;l&eacute;ments &rarr; Archives/S79_archivage_20260411_1520/</td><td>Archives/</td><td><span class="badge badge-ok">OK</span></td></tr>
-    <tr><td>&mdash;</td><td>BACKLOG_PRODUIT.md cr&eacute;&eacute; &mdash; fonctionnalit&eacute;s long terme document&eacute;es</td><td>BACKLOG_PRODUIT.md</td><td><span class="badge badge-ok">OK</span></td></tr>
-  </table>
+<nav>
+  <a class="nav-logo" href="index.html">Anim'Gest</a>
+  <a href="docs-changelog.html">&#8592; Changelogs</a>
+  <a href="06-roadmap.html">Roadmap</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <span class="nav-badge">S79</span>
+</nav>
+<div class="hero">
+  <div class="hero-label">Release Notes</div>
+  <h1>Sprint S79 — JSDoc &middot; GED &middot; Charte &middot; Archivage</h1>
+  <p>11/04/2026 &mdash; JSDoc 71 fichiers &middot; GED valid&eacute; &middot; Charte BR/DAF/achats &middot; Routes PDF BR+DAF &middot; Archivage dist/BIB_Widget</p>
 </div>
-
-<div class="section">
-  <h2><span class="jaune">&#9679;</span> JAUNE sold&eacute;s (Conv2 &mdash; Corrections techniques + charte)</h2>
-  <table>
-    <tr><th>Item</th><th>Description</th><th>Fichier(s)</th><th>Statut</th></tr>
-    <tr><td>J1</td><td>Test GED r&eacute;el : PDF devis valid&eacute;, GED_ID=59 ins&eacute;r&eacute;</td><td>custom-routes.ts</td><td><span class="badge badge-ok">OK</span></td></tr>
-    <tr><td>J2</td><td>Charte graphique : bon-retour, demande-avoir-fourn, achats/[id], parametres/editions</td><td>4 fichiers TSX</td><td><span class="badge badge-ok">OK</span></td></tr>
-    <tr><td>&mdash;</td><td>Routes PDF BR + DAF : Puppeteer complet, helper _loadEditionParams</td><td>custom-routes.ts</td><td><span class="badge badge-ok">OK</span></td></tr>
-    <tr><td>&mdash;</td><td>Fix routes upload editions : /pdf/upload-* &rarr; /editions/upload-*</td><td>custom-routes.ts</td><td><span class="badge badge-ok">OK</span></td></tr>
-    <tr><td>&mdash;</td><td>Fix chemins GED container : C:\AnimGest_GED &rarr; /app/ged_new partout</td><td>custom-routes.ts</td><td><span class="badge badge-ok">OK</span></td></tr>
-  </table>
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-value">117</div><div class="kpi-label">Pages UI</div></div>
+  <div class="kpi-card"><div class="kpi-value">~198</div><div class="kpi-label">Routes API</div></div>
+  <div class="kpi-card"><div class="kpi-value">22</div><div class="kpi-label">Eliot tools</div></div>
+  <div class="kpi-card"><div class="kpi-value">99</div><div class="kpi-label">Score global</div></div>
 </div>
+<div class="main">
 
-<div class="section">
-  <h2><span class="vert">&#9679;</span> Audit cl&ocirc;ture S79</h2>
-  <table>
-    <tr><th>Point</th><th>Action</th><th>Statut</th></tr>
-    <tr><td>JSDoc 240+ fichiers</td><td>71 fichiers patch&eacute;s en S79</td><td><span class="badge badge-ok">OK</span></td></tr>
-    <tr><td>Charte graphique</td><td>CSS vars appliqu&eacute;es sur 4 pages r&eacute;siduelles</td><td><span class="badge badge-ok">OK</span></td></tr>
-    <tr><td>GED chemins container</td><td>/app/ged_new unifi&eacute; partout</td><td><span class="badge badge-ok">OK</span></td></tr>
-    <tr><td>Dette technique</td><td>0 point r&eacute;siduel</td><td><span class="badge badge-ok">OK</span></td></tr>
-    <tr><td>Build frontend</td><td>117/117 pages &mdash; 0 erreur</td><td><span class="badge badge-ok">OK</span></td></tr>
-  </table>
-</div>
-
-<div class="section">
-  <h2>M&eacute;triques S79</h2>
-  <div class="metrics">
-    <div class="metric"><div class="metric-val">117</div><div class="metric-lbl">Pages UI</div></div>
-    <div class="metric"><div class="metric-val">~198</div><div class="metric-lbl">Routes API</div></div>
-    <div class="metric"><div class="metric-val">22</div><div class="metric-lbl">Eliot tools</div></div>
-    <div class="metric"><div class="metric-val">99/100</div><div class="metric-lbl">Score qualit&eacute;</div></div>
-    <div class="metric"><div class="metric-val">0</div><div class="metric-lbl">Erreurs build</div></div>
+  <div class="section">
+    <div class="section-head"><div class="section-title">&#x2705; Conv1 — JSDoc + GED + Charte</div></div>
+    <div class="section-body"><ul>
+      <li>JSDoc complet sur 71 fichiers — @module/@description/@author/@sprint sur toutes les pages TSX</li>
+      <li>GED valid&eacute; — _saveGedPdf op&eacute;rationnel, fichiers horodat&eacute;s dans C:\AnimGest_GED\SCT_001\</li>
+      <li>Charte graphique bon-retour/[id], demande-avoir-fourn/[id], achats/[id] — var(--color-*) partout</li>
+      <li>Routes PDF BR+DAF — GET /editions/bon-retour/:id et /editions/demande-avoir-fourn/:id</li>
+      <li>Boutons PDF + modals iframe src sur pages BR/DAF</li>
+    </ul></div>
   </div>
-</div>
 
+  <div class="section">
+    <div class="section-head"><div class="section-title">&#x2705; Conv2 — Archivage + Audit</div></div>
+    <div class="section-body"><ul>
+      <li>Archivage dist/ (596 Mo) + BIB_Widget/ (297 Mo) &rarr; 893 Mo lib&eacute;r&eacute;s</li>
+      <li>Audit dette technique global — 0 point r&eacute;siduel</li>
+      <li>index-complet.html mis &agrave; jour S79</li>
+      <li>GitHub Pages S78 push&eacute; — commit 044c624</li>
+    </ul></div>
+    <div class="scores">
+      <div class="score-item"><span class="score-val">99</span><span class="score-lbl">Backend</span></div>
+      <div class="score-item"><span class="score-val">99</span><span class="score-lbl">Frontend</span></div>
+      <div class="score-item"><span class="score-val">98</span><span class="score-lbl">BDD</span></div>
+      <div class="score-item"><span class="score-val" style="color:var(--gold)">99</span><span class="score-lbl">Global</span></div>
+    </div>
+  </div>
+
+</div>
+<footer>
+  Anim'Gest &mdash; NoSage's Editor &mdash; Changelog Sprint S79 &mdash; 11/04/2026<br>
+  <a href="docs-changelog.html">&#8592; Tous les changelogs</a>
+</footer>
 </body>
 </html>
