@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog Sprint S79 - Anim'Gest</title>
+<style>
+  :root { --navy: #0F172A; --gold: #F59E0B; --text: #E2E8F0; --muted: #94A3B8; --card: #1E293B; --border: #334155; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; padding: 2rem; }
+  h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2rem; margin-bottom: 0.5rem; }
+  .meta { color: var(--muted); font-size: 0.875rem; margin-bottom: 2rem; }
+  .section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .rouge { color: #F87171; } .orange { color: #FB923C; } .jaune { color: #FDE047; } .vert { color: #4ADE80; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  th { text-align: left; padding: 0.5rem 0.75rem; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+  td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .badge { display: inline-block; padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+  .badge-ok { background: #14532d; color: #4ADE80; }
+  .badge-info { background: #1e3a5f; color: #60A5FA; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+  .metric { background: #0F172A; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+  .metric-val { font-size: 1.75rem; font-weight: 700; color: var(--gold); }
+  .metric-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+</style>
+</head>
+<body>
+<h1>Changelog Sprint S79</h1>
+<p class="meta">Date : 11/04/2026 &mdash; Anim'Gest &middot; NoSage's Editor &mdash; Score qualit&eacute; : 99/100</p>
+
+<div class="section">
+  <h2><span class="jaune">&#9679;</span> JAUNE sold&eacute;s (Conv1 &mdash; Dette technique)</h2>
+  <table>
+    <tr><th>Item</th><th>Description</th><th>Fichier(s)</th><th>Statut</th></tr>
+    <tr><td>J3</td><td>JSDoc global : 71 fichiers patch&eacute;s (38 pages + 20 composants + 1 hook + 5 lib + 7 autres)</td><td>71 fichiers</td><td><span class="badge badge-ok">OK</span></td></tr>
+    <tr><td>J4</td><td>Archivage : 15 &eacute;l&eacute;ments &rarr; Archives/S79_archivage_20260411_1520/</td><td>Archives/</td><td><span class="badge badge-ok">OK</span></td></tr>
+    <tr><td>&mdash;</td><td>BACKLOG_PRODUIT.md cr&eacute;&eacute; &mdash; fonctionnalit&eacute;s long terme document&eacute;es</td><td>BACKLOG_PRODUIT.md</td><td><span class="badge badge-ok">OK</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="jaune">&#9679;</span> JAUNE sold&eacute;s (Conv2 &mdash; Corrections techniques + charte)</h2>
+  <table>
+    <tr><th>Item</th><th>Description</th><th>Fichier(s)</th><th>Statut</th></tr>
+    <tr><td>J1</td><td>Test GED r&eacute;el : PDF devis valid&eacute;, GED_ID=59 ins&eacute;r&eacute;</td><td>custom-routes.ts</td><td><span class="badge badge-ok">OK</span></td></tr>
+    <tr><td>J2</td><td>Charte graphique : bon-retour, demande-avoir-fourn, achats/[id], parametres/editions</td><td>4 fichiers TSX</td><td><span class="badge badge-ok">OK</span></td></tr>
+    <tr><td>&mdash;</td><td>Routes PDF BR + DAF : Puppeteer complet, helper _loadEditionParams</td><td>custom-routes.ts</td><td><span class="badge badge-ok">OK</span></td></tr>
+    <tr><td>&mdash;</td><td>Fix routes upload editions : /pdf/upload-* &rarr; /editions/upload-*</td><td>custom-routes.ts</td><td><span class="badge badge-ok">OK</span></td></tr>
+    <tr><td>&mdash;</td><td>Fix chemins GED container : C:\AnimGest_GED &rarr; /app/ged_new partout</td><td>custom-routes.ts</td><td><span class="badge badge-ok">OK</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2><span class="vert">&#9679;</span> Audit cl&ocirc;ture S79</h2>
+  <table>
+    <tr><th>Point</th><th>Action</th><th>Statut</th></tr>
+    <tr><td>JSDoc 240+ fichiers</td><td>71 fichiers patch&eacute;s en S79</td><td><span class="badge badge-ok">OK</span></td></tr>
+    <tr><td>Charte graphique</td><td>CSS vars appliqu&eacute;es sur 4 pages r&eacute;siduelles</td><td><span class="badge badge-ok">OK</span></td></tr>
+    <tr><td>GED chemins container</td><td>/app/ged_new unifi&eacute; partout</td><td><span class="badge badge-ok">OK</span></td></tr>
+    <tr><td>Dette technique</td><td>0 point r&eacute;siduel</td><td><span class="badge badge-ok">OK</span></td></tr>
+    <tr><td>Build frontend</td><td>117/117 pages &mdash; 0 erreur</td><td><span class="badge badge-ok">OK</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>M&eacute;triques S79</h2>
+  <div class="metrics">
+    <div class="metric"><div class="metric-val">117</div><div class="metric-lbl">Pages UI</div></div>
+    <div class="metric"><div class="metric-val">~198</div><div class="metric-lbl">Routes API</div></div>
+    <div class="metric"><div class="metric-val">22</div><div class="metric-lbl">Eliot tools</div></div>
+    <div class="metric"><div class="metric-val">99/100</div><div class="metric-lbl">Score qualit&eacute;</div></div>
+    <div class="metric"><div class="metric-val">0</div><div class="metric-lbl">Erreurs build</div></div>
+  </div>
+</div>
+
+</body>
+</html>
