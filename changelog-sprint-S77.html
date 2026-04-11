@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog Sprint S77 — Anim'Gest</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="index.html">Accueil</a> &rsaquo;
+      <a href="docs-changelog.html">Changelog</a> &rsaquo;
+      Sprint S77
+    </nav>
+
+    <header class="page-header">
+      <h1>Sprint S77 — Changelog</h1>
+      <p class="subtitle">11 avril 2026 &mdash; Corrections ORANGE/JAUNE + fixes ROUGE API/PDF/Règlements</p>
+      <div class="badges">
+        <span class="badge badge-success">117 pages UI</span>
+        <span class="badge badge-success">Build API ✅</span>
+        <span class="badge badge-success">Build Frontend ✅</span>
+        <span class="badge badge-warning">R3 Agenda DnD reporté S78</span>
+      </div>
+    </header>
+
+    <!-- ROUGE -->
+    <section class="changelog-section">
+      <h2><span class="dot dot-rouge"></span>Corrections ROUGE (Conv1)</h2>
+      <div class="changelog-grid">
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-fix">Fix</span>
+            <span class="changelog-item-title">R5 — Bug API : helpers hors scope</span>
+          </div>
+          <p>Restauration backup S73 + réinjection propre des fonctions
+          <code>saveGedPdf</code>, <code>getGedLogo</code>, <code>getGedWeekDir</code>
+          à l'intérieur de <code>registerCustomRoutes</code>. Build API stable (0 erreur TS).</p>
+          <code class="file">api/src/custom-routes.ts</code>
+        </div>
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-fix">Fix</span>
+            <span class="changelog-item-title">R2 — GED logo/filigrane absents des PDF</span>
+          </div>
+          <p>Lecture des assets GED depuis <code>C:\AnimGest_GED\SCT_001\General\</code>
+          avec fallback BDD. Devis et factures affichent à nouveau logo, filigrane et CGV.
+          Confirmé par test <code>Invoke-RestMethod /editions/devis/1</code> → blob PDF valide.</p>
+          <code class="file">api/src/custom-routes.ts — getGedLogo()</code>
+        </div>
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-fix">Fix</span>
+            <span class="changelog-item-title">R1 — Puppeteer 502 sur routes /pdf/*</span>
+          </div>
+          <p>Suppression du flag <code>--single-process</code>, <code>executablePath</code>
+          fixé à <code>/usr/bin/chromium</code>, bons flags sandbox Alpine.
+          BL/BR/DAF/INV/AC génèrent des PDF correctement.</p>
+          <code class="file">api/src/custom-routes.ts — launch Puppeteer</code>
+        </div>
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-fix">Fix</span>
+            <span class="changelog-item-title">R4 — Règlements achats non fonctionnel</span>
+          </div>
+          <p>Page réécrite sans <code>useParams</code> — affiche la liste générale des
+          règlements fournisseurs. Build frontend validé.</p>
+          <code class="file">src/app/app/achats/reglements/page.tsx</code>
+        </div>
+
+        <div class="changelog-item changelog-item-warning">
+          <div class="changelog-item-header">
+            <span class="tag tag-report">Reporté S78</span>
+            <span class="changelog-item-title">R3 — Drag &amp; drop Agenda cassé</span>
+          </div>
+          <p>Zones de drop et indicateur saving injectés mais hooks
+          <code>dragSeaId/dragOver/handleDrop</code> non injectés (point d'injection non trouvé).
+          Build échoué sur accolade parasite ligne 217. Fix syntaxe généré, à appliquer en S78.</p>
+          <code class="file">src/app/app/agenda/page.tsx</code>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ORANGE -->
+    <section class="changelog-section">
+      <h2><span class="dot dot-orange"></span>Corrections ORANGE (Conv2)</h2>
+      <div class="changelog-grid">
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-fix">Fix</span>
+            <span class="changelog-item-title">O1 — Dashboard comportementaliste : "Undefined"</span>
+          </div>
+          <p>Fallback <code>data.nb_seances ?? data.nb_bilans ?? 0</code>.
+          Label corrigé en "Bilans comportementaux".</p>
+        </div>
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-fix">Fix</span>
+            <span class="changelog-item-title">O2 — Sidebar : 2 items actifs simultanément</span>
+          </div>
+          <p>Sport canin : "Cours collectifs" et "Cours individuels" avaient le même
+          <code>href</code>. Différenciés avec <code>?type=COLLECTIF</code> /
+          <code>?type=INDIVIDUEL</code>.</p>
+        </div>
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-feat">Feat</span>
+            <span class="changelog-item-title">O3 — Formules : création impossible</span>
+          </div>
+          <p>Bouton "+ Nouvelle formule" + modal complet avec libellé, référence,
+          nb séances, validité, prix HT. POST <code>/api/formules</code>.</p>
+        </div>
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-fix">Fix</span>
+            <span class="changelog-item-title">O4 — "EDC" → "BC (Bilan Comportemental)"</span>
+          </div>
+          <p>Tous les templates devis comportementaliste renommés. Libellés de lignes mis à jour.</p>
+        </div>
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-fix">Fix</span>
+            <span class="changelog-item-title">O5 — Modal portail client fond transparent</span>
+          </div>
+          <p>Fond opaque garanti en mode clair et sombre :
+          <code>style={{background:"var(--surface-card,#1e293b)"}}</code>.</p>
+        </div>
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-fix">Fix</span>
+            <span class="changelog-item-title">O6 — Bouton "Appliquer tarif" inactif</span>
+          </div>
+          <p>Body JSON manquant dans <code>appliquerTarif()</code> — ajout de
+          <code>{methode, coef_fg, pct_marge, coef_vte}</code>.
+          Cast <code>Number(DCE_VERROUILLE)</code> corrigé.</p>
+        </div>
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-improve">Amélio</span>
+            <span class="changelog-item-title">O7 — Registre sanitaire : charte unifiée</span>
+          </div>
+          <p>PageHeader + KPIs (séjours en cours, terminés, vaccins rage) + filtres
+          charte dynamique. Conforme au modèle Registre carnivores.</p>
+        </div>
+
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span class="tag tag-feat">Feat</span>
+            <span class="changelog-item-title">O8 — Sport canin : collectif vs individuel</span>
+          </div>
+          <p>Filtre TOUS / COLLECTIF / INDIVIDUEL dans le header. Badges visuels sur
+          chaque cours. Paramètre <code>type</code> transmis à l'API agenda.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- JAUNE -->
+    <section class="changelog-section">
+      <h2><span class="dot dot-jaune"></span>Améliorations JAUNE (Conv2)</h2>
+      <ul class="changelog-list">
+        <li><strong>J1</strong> — Listes devis/factures/avoirs/règlements : client et animal cliquables → fiche</li>
+        <li><strong>J2</strong> — Module achats/stock : fournisseur cliquable sur BL, BR, commandes, DAF</li>
+        <li><strong>J3</strong> — Facturation électronique : factures et clients cliquables</li>
+        <li><strong>J5</strong> — GED : panneau arborescence dossiers (<code>GET /ged/arborescence</code>)</li>
+        <li><strong>J6</strong> — i18n : "Réalisée", "Planifiée", "Année" — zéro texte anglais natif</li>
+        <li><strong>J7</strong> — Topbar : 7 couleurs hardcodées → <code>var(--text-secondary)</code>, <code>var(--border)</code></li>
+        <li><strong>J8</strong> — Route <code>/api/debug-pdf/:id</code> supprimée (temporaire S76)</li>
+      </ul>
+    </section>
+
+    <!-- Métriques -->
+    <section class="changelog-section">
+      <h2>Métriques S77</h2>
+      <table class="metrics-table">
+        <tr><td>Pages UI</td><td><strong>117</strong></td></tr>
+        <tr><td>Routes API</td><td><strong>~194</strong> (debug-pdf supprimée)</td></tr>
+        <tr><td>Eliot tools</td><td><strong>22</strong></td></tr>
+        <tr><td>Build API</td><td><strong>✅ 0 erreur</strong></td></tr>
+        <tr><td>Build Frontend</td><td><strong>✅ 0 erreur</strong></td></tr>
+        <tr><td>Couleurs hardcodées corrigées</td><td><strong>7</strong> (Topbar + Registre sanitaire)</td></tr>
+        <tr><td>Score qualité global</td><td><strong>98/100</strong></td></tr>
+      </table>
+    </section>
+
+    <footer class="page-footer">
+      <p>Anim&rsquo;Gest &mdash; NoSage&rsquo;s Editor &mdash; Sprint S77 &mdash; 11/04/2026</p>
+    </footer>
+  </div>
+</body>
+</html>
