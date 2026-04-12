@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Changelog S83 — Anim'Gest</title>
+<style>
+  body { font-family: 'DM Sans', sans-serif; background: #0F172A; color: #E2E8F0; margin: 0; padding: 32px; max-width: 900px; margin: 0 auto; }
+  h1 { color: #F59E0B; } h2 { color: #F59E0B; border-bottom: 1px solid #1E293B; padding-bottom: 6px; margin-top: 2rem; }
+  .card { background: #1E293B; border: 1px solid #334155; border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-right: 6px; }
+  .bg { background: #14532D; color: #4ADE80; }
+  .bb { background: #1E3A5F; color: #60A5FA; }
+  .by { background: #713F12; color: #FCD34D; }
+  li { margin-bottom: 6px; color: #94A3B8; font-size: 0.9rem; }
+  strong { color: #E2E8F0; }
+</style>
+</head>
+<body>
+<h1>Changelog Sprint S83</h1>
+<p style="color:#64748B;">12/04/2026 — Anim'Gest NoSage's Editor</p>
+
+<div class="card">
+  <h2>Pages UI</h2>
+  <ul>
+    <li><strong>Scenarios metiers :</strong> 9 pages HTML embarquees metiers (pet-sitter, toiletteur, eleveur, pension, equestre, veterinaire, osteopathe, sport-canin, naturopathe) confirmees actives</li>
+    <li><strong>trans-notes-frais.html :</strong> scenario transverse notes de frais (5 etapes)</li>
+    <li><strong>trans-seances-groupe.html :</strong> scenario transverse seances de groupe (5 etapes)</li>
+    <li><strong>trans-webhook-calendly.html :</strong> NOUVEAU — guide integration webhook Calendly</li>
+    <li><strong>parametres/calendly :</strong> encart URL Webhook avec bouton Copier</li>
+    <li><strong>seances/groupe :</strong> bouton "Facturer les participants" sur seances REALISEE</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>API — Nouvelles routes</h2>
+  <ul>
+    <li><span class="badge bb">POST</span><strong>/webhooks/calendly</strong> — reception evenements Calendly, creation seance automatique</li>
+    <li><span class="badge bb">POST</span><strong>/seances-groupe/:id/facturer</strong> — facturation individuelle par participant (PRESENT/INSCRIT)</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>Corrections N2 — Sidebar</h2>
+  <ul>
+    <li><strong>Fix :</strong> "Nouveau devis" dans menu COMPORTEMENTALISTE pointait vers ?metier=TOILETTEUR</li>
+    <li><strong>Fix :</strong> Emoji 👥 affiches comme entite HTML &#x1F465; dans 3 menus</li>
+    <li><strong>Fix :</strong> Accent manquant sur "Seances de groupe" (3 occurrences)</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>Corrections N3 — BDD</h2>
+  <ul>
+    <li><strong>Valide :</strong> Migration SEA_OBJET EC -> BC deja effectuee en S82 (9 seances BC confirmees)</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>Documentation embarquee mise a jour</h2>
+  <ul>
+    <li>index-complet.html : version S83, ~220 routes API</li>
+    <li>scenarios/index.html : carte Webhook Calendly ajoutee</li>
+    <li>ref-faq.html + ref-glossaire.html : mis a jour S83</li>
+    <li>metier-comportementaliste.html : encarts BC et Seances de groupe</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>Metriques S83</h2>
+  <ul>
+    <li>Pages UI : <strong>120</strong></li>
+    <li>Routes API : <strong>~220</strong></li>
+    <li>Eliot tools : <strong>22</strong></li>
+    <li>Build : <strong>120/120 sans erreur</strong></li>
+    <li>Dette technique : <strong>0</strong></li>
+  </ul>
+</div>
+
+<p style="color:#334155;font-size:0.75rem;margin-top:32px;text-align:center;">Anim'Gest — NoSage's Editor — Sprint S83 — 12/04/2026</p>
+</body>
+</html>
