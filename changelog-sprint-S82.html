@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog Sprint S82 - Anim'Gest</title>
+<style>
+  :root{--navy:#0F172A;--gold:#F59E0B;--dark:#020817;--white:#F8FAFC;--surface:#1E293B;--border:#334155;--text-muted:#94A3B8;--green:#22C55E;--blue:#3B82F6;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--dark);color:var(--white);font-family:'DM Sans',system-ui,sans-serif;line-height:1.6;}
+  .header{background:linear-gradient(135deg,var(--navy) 0%,#1E1B4B 100%);padding:3rem 2rem;text-align:center;border-bottom:2px solid var(--gold);}
+  .header h1{font-family:'Playfair Display',Georgia,serif;font-size:2.5rem;color:var(--gold);margin-bottom:0.5rem;}
+  .header p{color:var(--text-muted);font-size:1rem;}
+  .badge{display:inline-block;background:var(--gold);color:var(--dark);padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.75rem;font-weight:700;margin-left:0.5rem;}
+  .container{max-width:900px;margin:0 auto;padding:2rem;}
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}
+  .section h2{font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:1rem;}
+  .item{display:flex;align-items:flex-start;gap:0.75rem;padding:0.6rem 0;border-bottom:1px solid var(--border);}
+  .item:last-child{border-bottom:none;}
+  .check{color:var(--green);flex-shrink:0;}
+  .item-text{font-size:0.9rem;color:var(--white);}
+  .item-sub{font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1rem;}
+  .metric{background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;}
+  .metric-val{font-size:1.8rem;font-weight:800;color:var(--gold);}
+  .metric-label{font-size:0.75rem;color:var(--text-muted);margin-top:0.25rem;}
+  .nav{text-align:center;padding:2rem;}
+  .nav a{color:var(--gold);text-decoration:none;margin:0 1rem;font-size:0.9rem;}
+  footer{text-align:center;padding:2rem;color:var(--text-muted);font-size:0.8rem;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Sprint S82 <span class="badge">TERMINE</span></h1>
+  <p>Anim&apos;Gest &mdash; NoSage&apos;s Editor &mdash; 12 avril 2026</p>
+</div>
+<div class="container">
+
+  <div class="section">
+    <h2>Metriques S82</h2>
+    <div class="metrics">
+      <div class="metric"><div class="metric-val">119</div><div class="metric-label">Pages UI</div></div>
+      <div class="metric"><div class="metric-val">~215</div><div class="metric-label">Routes API</div></div>
+      <div class="metric"><div class="metric-val">22</div><div class="metric-label">Outils Eliot</div></div>
+      <div class="metric"><div class="metric-val">99<small>/100</small></div><div class="metric-label">Score qualite</div></div>
+      <div class="metric"><div class="metric-val">0</div><div class="metric-label">Dette</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Fonctionnalites livrees</h2>
+    <div class="item"><span class="check">&#x2714;</span><div><div class="item-text">Renommage complet EDC &#x2192; BC (Bilan Comportemental)</div><div class="item-sub">BDD : bc_fiche (BCF_*), bc_probleme (BCP_*), STY_CODE=BC, v_bc_sans_devis. API : /ged-bc, /seances/bc. Frontend : 29 fichiers, 200+ remplacements. Dossier seances/bc/.</div></div></div>
+    <div class="item"><span class="check">&#x2714;</span><div><div class="item-text">devis/new : pre-selection metier actif via ?metier=CODE</div><div class="item-sub">Sidebar : tous les liens Nouveau devis transmettent le metier actif.</div></div></div>
+    <div class="item"><span class="check">&#x2714;</span><div><div class="item-text">PDF devis : ANI_NOM dans les lignes</div><div class="item-sub">Requete SQL + lignes.map enrichis avec ANI_NOM.</div></div></div>
+    <div class="item"><span class="check">&#x2714;</span><div><div class="item-text">Liens hypertexte entites cliquables</div><div class="item-sub">seances : client cliquable. avoir-client : lien client avec TIE_ID.</div></div></div>
+    <div class="item"><span class="check">&#x2714;</span><div><div class="item-text">Page Visites : refonte en tableau</div><div class="item-sub">Format tableau avec liens client + animal. Filtres conserves.</div></div></div>
+    <div class="item"><span class="check">&#x2714;</span><div><div class="item-text">Export TVA + Notes de frais (Conv1)</div><div class="item-sub">Route /tva/export + page factures/tva. Module notes-frais skeleton.</div></div></div>
+    <div class="item"><span class="check">&#x2714;</span><div><div class="item-text">Renommage repo petsuite-docs &#x2192; AnimGest-docs</div><div class="item-sub">GitHub + remote local mis a jour. C:\AnimGest-docs actif.</div></div></div>
+  </div>
+
+  <div class="section">
+    <h2>Backlog S83</h2>
+    <div class="item"><span style="color:#F59E0B">&#x25CF;</span><div class="item-text">GitHub Pages S82 (ce changelog)</div></div>
+    <div class="item"><span style="color:#F59E0B">&#x25CF;</span><div class="item-text">Notes de frais module complet (OCR + comptabilite)</div></div>
+    <div class="item"><span style="color:#F59E0B">&#x25CF;</span><div class="item-text">Formules & Abonnements : tuiles par metier</div></div>
+    <div class="item"><span style="color:#F59E0B">&#x25CF;</span><div class="item-text">Questionnaires BC + envoi multi-canal</div></div>
+    <div class="item"><span style="color:#F59E0B">&#x25CF;</span><div class="item-text">PDF devis : afficher ANI_NOM dans template HTML</div></div>
+  </div>
+
+  <div class="nav">
+    <a href="docs-changelog.html">&#x2190; Tous les changelogs</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="index.html">Accueil</a>
+  </div>
+</div>
+<footer>Anim&apos;Gest &mdash; NoSage&apos;s Editor &mdash; Sprint S82 &mdash; 12/04/2026</footer>
+</body>
+</html>
