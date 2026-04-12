@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog Sprint S81 - Anim'Gest</title>
+<style>
+  :root {
+    --navy: #0F172A; --gold: #F59E0B; --dark: #020817;
+    --white: #F8FAFC; --surface: #1E293B; --border: #334155;
+    --text-muted: #94A3B8; --green: #22C55E; --blue: #3B82F6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--dark); color: var(--white); font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.6; }
+  .header { background: linear-gradient(135deg, var(--navy) 0%, #1E1B4B 100%); padding: 3rem 2rem; text-align: center; border-bottom: 2px solid var(--gold); }
+  .header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .header p { color: var(--text-muted); font-size: 1rem; }
+  .badge { display: inline-block; background: var(--gold); color: var(--dark); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; margin-left: 0.5rem; }
+  .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+  .section { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .section h2 { font-size: 1.1rem; font-weight: 700; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+  .item:last-child { border-bottom: none; }
+  .check { color: var(--green); font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .item-text { font-size: 0.9rem; color: var(--white); }
+  .item-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+  .metric { background: var(--navy); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+  .metric-val { font-size: 1.8rem; font-weight: 800; color: var(--gold); }
+  .metric-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+  .commit { font-family: monospace; font-size: 0.8rem; background: var(--navy); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--blue); }
+  .nav { text-align: center; padding: 2rem; }
+  .nav a { color: var(--gold); text-decoration: none; margin: 0 1rem; font-size: 0.9rem; }
+  .nav a:hover { text-decoration: underline; }
+  footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Sprint S81 <span class="badge">TERMINE</span></h1>
+  <p>Anim&apos;Gest &mdash; NoSage&apos;s Editor &mdash; 12 avril 2026</p>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <h2>&#x1F4CA; Metriques S81</h2>
+    <div class="metrics">
+      <div class="metric"><div class="metric-val">117</div><div class="metric-label">Pages UI</div></div>
+      <div class="metric"><div class="metric-val">~202</div><div class="metric-label">Routes API</div></div>
+      <div class="metric"><div class="metric-val">22</div><div class="metric-label">Outils Eliot</div></div>
+      <div class="metric"><div class="metric-val">240+</div><div class="metric-label">Fichiers JSDoc</div></div>
+      <div class="metric"><div class="metric-val">99<small>/100</small></div><div class="metric-label">Score qualite</div></div>
+      <div class="metric"><div class="metric-val">0</div><div class="metric-label">Dette technique</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>&#x2705; Fonctionnalites livrees &mdash; Conv1</h2>
+
+    <div class="item">
+      <span class="check">&#x2714;</span>
+      <div>
+        <div class="item-text">Devis multi-animaux &mdash; colonne ANI_ID sur devis_contrat_ligne</div>
+        <div class="item-sub">ALTER TABLE + FK + commentaire SQL. Premiere implementation devis par animal.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <span class="check">&#x2714;</span>
+      <div>
+        <div class="item-text">API GET /devis/:id/lignes enrichie &mdash; ANI_ID + ANI_NOM retournes</div>
+        <div class="item-sub">JOIN animal dans la requete. Compatible multi-animaux d'un meme client.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <span class="check">&#x2714;</span>
+      <div>
+        <div class="item-text">Frontend devis/[id]/edit &mdash; select animal par ligne + autofill article</div>
+        <div class="item-sub">Chargement animaux du client. PU HT + TVA autofill depuis catalogue article.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <span class="check">&#x2714;</span>
+      <div>
+        <div class="item-text">Frontend devis/[id] &mdash; colonne Animal affichee dans le tableau</div>
+        <div class="item-sub">ANI_NOM visible sur chaque ligne de devis.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <span class="check">&#x2714;</span>
+      <div>
+        <div class="item-text">Email avec PDF en piece jointe &mdash; tous types de documents</div>
+        <div class="item-sub">Route POST /editions/:type/:id/email. Types : devis, facture, avoir-client, BL, BR, DAF. Nom PDF = numero document.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <span class="check">&#x2714;</span>
+      <div>
+        <div class="item-text">EmailModal refactor &mdash; endpoint corrige, supporte tous les types</div>
+        <div class="item-sub">Plus de mailto: dans devis/[id] et factures/[id]. Import ReferenceError corrige.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <span class="check">&#x2714;</span>
+      <div>
+        <div class="item-text">Fix bug date validite ISO &mdash; DCE_DATE_VALIDITE format YYYY-MM-DD</div>
+        <div class="item-sub">Audit dates systemique : zero autre bug detecte sur les autres modules.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <span class="check">&#x2714;</span>
+      <div>
+        <div class="item-text">JSDoc planning-seances corrige &mdash; @sprint S81 sans point-virgule parasite</div>
+        <div class="item-sub">240+ fichiers JSDoc couverts. Dette technique S81 : 0 point residuel.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section">
+    <h2>&#x1F4DA; Commits S81</h2>
+    <div class="item">
+      <span class="check">&#x1F4BB;</span>
+      <div>
+        <div class="item-text">Conv1 &mdash; Code applicatif</div>
+        <div class="item-sub">Build API 0 erreur &middot; Build Frontend 117/117 pages</div>
+      </div>
+    </div>
+    <div class="item">
+      <span class="check">&#x1F4C4;</span>
+      <div>
+        <div class="item-text">Conv2 &mdash; GitHub Pages</div>
+        <div class="item-sub"><span class="commit">2641d9b</span> &mdash; changelog S78/S79/S80, roadmap S81, pilotage</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>&#x1F7E1; Backlog S82</h2>
+
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J1 &mdash; @sprint obsoletes (~50 fichiers a bumper S82)</div>
+      </div>
+    </div>
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J2 &mdash; Export TVA (volet comptable)</div>
+      </div>
+    </div>
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J5 &mdash; PDF devis : afficher ANI_NOM sur les lignes</div>
+      </div>
+    </div>
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J8 &mdash; GitHub Pages : changelog S81 + roadmap + pilotage</div>
+      </div>
+    </div>
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J9 &mdash; Liens hypertexte entites cliquables dans toutes les listes</div>
+      </div>
+    </div>
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J10/J11 &mdash; EDC remplace par BC (Bilan Comportemental) + sidebar</div>
+      </div>
+    </div>
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J12 &mdash; Formules &amp; Abonnements : refonte tuiles par metier</div>
+      </div>
+    </div>
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J13/J14 &mdash; Questionnaires BC + envoi multi-canal</div>
+      </div>
+    </div>
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J15 &mdash; Page visites : refonte tableau format seances</div>
+      </div>
+    </div>
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J16/J17 &mdash; devis/new : pre-selection metier + modeles par metier</div>
+      </div>
+    </div>
+    <div class="item">
+      <span style="color:#F59E0B">&#x25CF;</span>
+      <div>
+        <div class="item-text">J3 &mdash; Notes de frais module complet (tickets + OCR + comptabilite)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="docs-changelog.html">&#x2190; Tous les changelogs</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="20-pilotage-projet.html">Pilotage</a>
+    <a href="index.html">Accueil</a>
+  </div>
+
+</div>
+<footer>Anim&apos;Gest &mdash; NoSage&apos;s Editor &mdash; Sprint S81 &mdash; 12/04/2026</footer>
+</body>
+</html>
