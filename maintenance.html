@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anim'Gest — Procédure de maintenance du site</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --border: #334155;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #6366f1;
+    --accent-2: #06b6d4;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --code-bg: #0b1120;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .hero {
+    background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+    padding: 3rem 2rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-inner { max-width: 960px; margin: 0 auto; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--accent);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    margin: 0 0 0.5rem;
+    font-size: 2.25rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p { margin: 0; color: var(--muted); font-size: 1rem; }
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem; }
+  .toc {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .toc h2 { margin: 0 0 0.75rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  .toc ol { margin: 0; padding-left: 1.25rem; }
+  .toc li { margin: 0.25rem 0; }
+  .toc a { color: var(--accent-2); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  h2.section {
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+    font-size: 1.5rem;
+    color: var(--text);
+  }
+  h3 {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 1.1rem;
+    color: var(--accent-2);
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0;
+  }
+  .card.success { border-left: 4px solid var(--success); }
+  .card.warning { border-left: 4px solid var(--warning); }
+  .card.danger  { border-left: 4px solid var(--danger); }
+  .card.info    { border-left: 4px solid var(--accent-2); }
+  .card-title {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  code {
+    background: var(--code-bg);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #fbbf24;
+    font-family: 'Fira Code', 'Consolas', monospace;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  pre code { background: transparent; padding: 0; color: #e2e8f0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background: var(--panel);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    padding: 0.6rem 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  th { background: rgba(99, 102, 241, 0.08); color: var(--accent); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+  tr:last-child td { border-bottom: none; }
+  .footer {
+    margin-top: 3rem;
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(6, 182, 212, 0.15);
+    color: var(--accent-2);
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 0.25rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Maintenance · Public</div>
+    <h1>Site Anim'Gest — Procédure de maintenance</h1>
+    <p>Documentation publique : infrastructure, mise à jour et dépannage du site <code>no-sages-editor.com</code>.</p>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="toc">
+  <h2>Sommaire</h2>
+  <ol>
+    <li><a href="#archi">Architecture actuelle</a></li>
+    <li><a href="#update">Mettre à jour le site</a></li>
+    <li><a href="#verify">Vérifier le bon fonctionnement</a></li>
+    <li><a href="#issues">Incidents fréquents</a></li>
+    <li><a href="#do-not">Ce qu'il ne faut jamais faire</a></li>
+  </ol>
+</div>
+
+<h2 class="section" id="archi">1. Architecture actuelle</h2>
+
+<p>Le site <code>no-sages-editor.com</code> est un site <strong>100 % statique</strong> hébergé par GitHub Pages, avec le domaine géré chez Ionos.</p>
+
+<div class="card info">
+  <span class="card-title">Chaîne complète</span>
+  <ol>
+    <li><strong>Ionos (domaine + DNS + emails)</strong> — résolution du nom de domaine et gestion des enregistrements mail.</li>
+    <li><strong>DNS</strong> — 4 enregistrements <code>A</code> vers les IP GitHub Pages + 1 <code>CNAME www</code> vers <code>nicolashermilly.github.io</code>.</li>
+    <li><strong>GitHub Pages</strong> — sert automatiquement le contenu de la branche <code>main</code> du repo <code>nicolashermilly/AnimGest-docs</code>.</li>
+    <li><strong>Let's Encrypt</strong> — certificat HTTPS géré automatiquement par GitHub Pages, renouvellement transparent.</li>
+  </ol>
+</div>
+
+<h3>Enregistrements DNS de référence chez Ionos</h3>
+<table>
+  <thead>
+    <tr><th>Type</th><th>Nom</th><th>Valeur</th><th>Rôle</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>A</td><td>@</td><td>185.199.108.153</td><td>GitHub Pages</td></tr>
+    <tr><td>A</td><td>@</td><td>185.199.109.153</td><td>GitHub Pages</td></tr>
+    <tr><td>A</td><td>@</td><td>185.199.110.153</td><td>GitHub Pages</td></tr>
+    <tr><td>A</td><td>@</td><td>185.199.111.153</td><td>GitHub Pages</td></tr>
+    <tr><td>CNAME</td><td>www</td><td>nicolashermilly.github.io</td><td>GitHub Pages (www)</td></tr>
+    <tr><td>MX / TXT / CNAME</td><td>divers</td><td>Ionos Mail</td><td>Emails (à préserver)</td></tr>
+  </tbody>
+</table>
+
+<h2 class="section" id="update">2. Mettre à jour le site</h2>
+
+<p>Le workflow est le même que pour n'importe quelle page du repo.</p>
+
+<div class="card success">
+  <span class="card-title">Procédure standard</span>
+  <pre><code>cd C:\AnimGest-docs
+git pull --rebase
+# ... modifier les fichiers ...
+git add .
+git commit -m "Description de la modification"
+git push</code></pre>
+  <p style="margin:0.5rem 0 0; color:var(--muted); font-size:0.85rem;">
+    Le site est mis à jour automatiquement sur <code>https://no-sages-editor.com</code> en moins d'une minute.
+  </p>
+</div>
+
+<h3>Fichier <code>CNAME</code> à la racine</h3>
+<p>Le fichier <code>CNAME</code> (sans extension) à la racine du repo doit contenir exactement <code>no-sages-editor.com</code>, sans <code>https://</code> et sans retour à la ligne. <strong>Ne jamais le supprimer</strong> : GitHub Pages en a besoin pour servir le domaine personnalisé.</p>
+
+<h2 class="section" id="verify">3. Vérifier le bon fonctionnement</h2>
+
+<h3>Test manuel rapide</h3>
+<p>Ouvrir dans un navigateur : <code>https://no-sages-editor.com</code>. Vérifier :</p>
+<ul>
+  <li>La page s'affiche avec le design Anim'Gest (pas une page d'erreur GitHub ni le 404 par défaut).</li>
+  <li>Le cadenas <strong>🔒 HTTPS</strong> est présent dans la barre d'adresse.</li>
+  <li>Le certificat est valide (cliquer sur le cadenas → voir <em>Émis par Let's Encrypt</em>).</li>
+</ul>
+
+<h3>Vérification DNS en ligne de commande</h3>
+<pre><code>Resolve-DnsName no-sages-editor.com -Type A
+Resolve-DnsName www.no-sages-editor.com -Type CNAME</code></pre>
+<p>Résultats attendus : les 4 IP <code>185.199.108-111.153</code> pour l'apex, et <code>nicolashermilly.github.io</code> pour <code>www</code>.</p>
+
+<h3>Vérification côté GitHub Pages</h3>
+<p>Aller sur <code>github.com/nicolashermilly/AnimGest-docs/settings/pages</code>. Vérifier :</p>
+<ul>
+  <li><strong>Vérification DNS réussie</strong> (message vert sous le champ Custom domain).</li>
+  <li><strong>Imposer le protocole HTTPS</strong> : case cochée.</li>
+  <li>Dernier déploiement récent (le commit en cours).</li>
+</ul>
+
+<h2 class="section" id="issues">4. Incidents fréquents</h2>
+
+<div class="card warning">
+  <span class="card-title">Le site affiche un 404 GitHub alors qu'il marchait avant</span>
+  <p>Le fichier <code>CNAME</code> à la racine du repo a probablement été supprimé accidentellement. Le recréer avec comme contenu <code>no-sages-editor.com</code> (sans BOM, sans retour à la ligne), committer et pusher.</p>
+</div>
+
+<div class="card warning">
+  <span class="card-title">Le cadenas HTTPS n'est plus valide</span>
+  <p>Cela peut arriver après une modification DNS. Aller dans Settings → Pages du repo, décocher puis recocher <em>Imposer HTTPS</em>. Si le certificat ne se régénère pas, retirer et remettre le Custom domain.</p>
+</div>
+
+<div class="card warning">
+  <span class="card-title">Une page modifiée n'apparaît pas en ligne</span>
+  <p>Vérifier que le commit a bien été pushé (<code>git log origin/main --oneline -5</code>). GitHub Pages met environ 1 minute à déployer. Vider le cache du navigateur (<code>Ctrl+Shift+R</code>) si le contenu ancien reste affiché.</p>
+</div>
+
+<div class="card danger">
+  <span class="card-title">Les emails <code>@no-sages-editor.com</code> ne fonctionnent plus</span>
+  <p>Vérifier dans la zone DNS Ionos que les enregistrements <strong>MX</strong>, <strong>TXT</strong> (SPF, DMARC) et <strong>CNAME</strong> (DKIM, autodiscover) <em>service Mail</em> sont toujours présents. Ils ne doivent jamais être supprimés.</p>
+</div>
+
+<h2 class="section" id="do-not">5. Ce qu'il ne faut jamais faire</h2>
+
+<div class="card danger">
+  <span class="card-title">Ne jamais toucher aux enregistrements Mail côté Ionos</span>
+  <p>Les enregistrements <strong>MX</strong>, <strong>SPF</strong>, <strong>DMARC</strong>, <strong>DKIM</strong> et <strong>autodiscover</strong> doivent rester intacts, même si aucune adresse email n'est actuellement créée. Les supprimer empêche la création future d'adresses pro.</p>
+</div>
+
+<div class="card danger">
+  <span class="card-title">Ne jamais supprimer le fichier <code>CNAME</code></span>
+  <p>Sans ce fichier à la racine du repo, GitHub Pages bascule sur le domaine par défaut <code>nicolashermilly.github.io</code> et le site <code>no-sages-editor.com</code> renvoie une erreur.</p>
+</div>
+
+<div class="card danger">
+  <span class="card-title">Ne jamais pusher d'informations sensibles dans ce repo public</span>
+  <p>Les credentials, clés API, secrets SMTP et documents confidentiels doivent rester dans le repo privé <code>AnimGest-docs-private</code>. Une fausse protection JS côté client n'a aucune valeur de sécurité.</p>
+</div>
+
+<div class="card danger">
+  <span class="card-title">Ne jamais force-push sur <code>main</code> sans backup préalable</span>
+  <p>Toute opération destructive (<code>git filter-repo</code>, <code>git reset --hard</code>, <code>git push --force</code>) doit être précédée d'un backup complet du repo <em>.git</em> inclus, dans <code>C:\Backup\</code>.</p>
+</div>
+
+<div class="card warning">
+  <span class="card-title">Ne pas modifier la branche source de GitHub Pages</span>
+  <p>La branche servie par GitHub Pages est <code>main</code> à la racine. Ne pas la changer sauf raison explicite : cela casse immédiatement le site.</p>
+</div>
+
+</div>
+
+<div class="footer">
+  Documentation publique — <code>no-sages-editor.com</code> · NoSage's Editor · Dernière révision : 13 avril 2026
+</div>
+
+</body>
+</html>
