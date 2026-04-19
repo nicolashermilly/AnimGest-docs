@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Reference — Anim'Gest Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F172A; --navy-800: #1E293B;
+  --gold: #F59E0B; --cyan: #06B6D4; --violet: #4F46E5;
+  --green: #10B981; --red: #EF4444; --orange: #F97316;
+  --text: #E2E8F0; --text-muted: #94A3B8; --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px; display: flex; align-items: center; gap: 32px;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge { margin-left: auto; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); color: var(--gold); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 60px 32px 40px; text-align: center; position: relative;
+}
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.07) 0%, transparent 70%); pointer-events: none; }
+.hero-label { display: inline-block; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--gold); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 16px; }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #F8FAFC; margin-bottom: 12px; }
+.hero p { color: var(--text-muted); font-size: 0.9rem; }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(245,158,11,0.1); border-top: 1px solid rgba(245,158,11,0.1); }
+.kpi-card { background: var(--navy); padding: 20px; text-align: center; }
+.kpi-value { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 5px; }
+.kpi-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* LAYOUT */
+.layout { display: grid; grid-template-columns: 200px 1fr; gap: 0; min-height: calc(100vh - 200px); }
+.sidebar {
+  background: var(--navy-800);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  padding: 24px 0;
+  position: sticky; top: 57px; height: calc(100vh - 57px);
+  overflow-y: auto;
+}
+.sidebar a {
+  display: block; padding: 8px 20px;
+  font-size: 0.8rem; font-weight: 500;
+  color: var(--text-muted); text-decoration: none;
+  transition: all .15s;
+  border-left: 2px solid transparent;
+}
+.sidebar a:hover { color: var(--gold); background: rgba(245,158,11,0.04); border-left-color: rgba(245,158,11,0.3); }
+.sidebar a.new-s63 { color: var(--gold); }
+.sidebar-section { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); padding: 16px 20px 6px; opacity: 0.6; }
+
+.content { padding: 32px 40px; max-width: 860px; }
+
+/* API SECTIONS */
+.api-group { margin-bottom: 40px; }
+.group-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+}
+.group-num {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 700;
+  background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25);
+  color: var(--gold); width: 28px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.group-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; }
+.group-new { font-size: 0.67rem; font-weight: 700; background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.25); padding: 2px 8px; border-radius: 8px; text-transform: uppercase; }
+
+/* ROUTES */
+.route-row {
+  display: grid; grid-template-columns: 68px 1fr;
+  gap: 12px; align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.route-row:last-child { border-bottom: none; }
+.method { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 3px; text-align: center; }
+.m-get { background: rgba(16,185,129,0.12); color: #6EE7B7; }
+.m-post { background: rgba(245,158,11,0.12); color: #FCD34D; }
+.m-put { background: rgba(6,182,212,0.12); color: var(--cyan); }
+.m-patch { background: rgba(79,70,229,0.12); color: #818CF8; }
+.m-delete { background: rgba(239,68,68,0.1); color: #FCA5A5; }
+.route-info {}
+.route-path { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--text); display: block; margin-bottom: 2px; }
+.route-desc { font-size: 0.8rem; color: var(--text-muted); }
+.route-badge { display: inline-block; font-size: 0.62rem; font-weight: 700; padding: 1px 6px; border-radius: 6px; text-transform: uppercase; vertical-align: middle; margin-left: 6px; }
+.rb-s63 { background: rgba(245,158,11,0.12); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.rb-s62 { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.15); }
+
+footer { text-align: center; padding: 32px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.8rem; color: var(--text-muted); }
+footer a { color: var(--gold); text-decoration: none; }
+
+  .new-s64 { color: var(--gold); font-size: 11px; }
+  .new-s65 { color: #10B981; font-size: 11px; }
+  .new-s66 { color: #F97316; font-size: 11px; }
+  .group-new-s65 { font-size: 0.65rem; font-weight: 700; background: rgba(16,185,129,0.15); color: #10B981; padding: 0.15rem 0.5rem; border-radius: 4px; margin-left: 0.5rem; }
+  .group-new-s66 { font-size: 0.65rem; font-weight: 700; background: rgba(249,115,22,0.15); color: #F97316; padding: 0.15rem 0.5rem; border-radius: 4px; margin-left: 0.5rem; }
+  .group-new-s64 { font-size: 0.65rem; font-weight: 700; background: rgba(245,158,11,0.12); color: var(--gold); padding: 0.15rem 0.5rem; border-radius: 4px; margin-left: 0.5rem; }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <a href="docs-changelog.html">Changelogs</a>
+  <span class="nav-badge">MàJ S68</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">Référence Technique</div>
+  <h1>API Reference</h1>
+  <p>Toutes les routes de custom-routes.ts — NestJS backend — Anim'Gest S63</p>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-value">~115</div>
+    <div class="kpi-label">Routes totales</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">3846</div>
+    <div class="kpi-label">Lignes source</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">117</div>
+    <div class="kpi-label">getDb() calls</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">S63</div>
+    <div class="kpi-label">Dernière MàJ</div>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-section">Core</div>
+    <a href="#core">01 Core</a>
+    <a href="#seances">02 Séances</a>
+    <a href="#commercial">03 Commercial</a>
+    <a href="#elevage">04 Élevage</a>
+    <a href="#ged-cac">05 GED & CAC</a>
+    <a href="#stats">06 Statistiques</a>
+    <a href="#crm">07 CRM & RS</a>
+    <a href="#forfaits">08 Forfaits S53-S56</a>
+    <a href="#rbac">09 Rôles RBAC S58</a>
+    <a href="#signatures">10 Signatures</a>
+    <a href="#parametres">11 Paramètres</a>
+    <a href="#programmes">12 Programmes</a>
+    <div class="sidebar-section">Nouveau</div>
+    <a href="#portail" class="new-s63">13 Portail Client ★</a>
+    <a href="#ia" class="new-s63">14 Eliot IA ★</a>
+    <a href="#editions" class="new-s63">15 Éditions ★</a>
+    <a href="#registre-sanitaire" class="new-s65">16 Registre Sanitaire ★</a>
+    <a href="#registre-carnivores" class="new-s66">17 Registre C.D. ★</a>
+    <a href="#tarification" class="new-s64">18 Tarification ★</a>
+  </nav>
+
+  <div class="content">
+
+    <!-- 01 CORE -->
+    <div class="api-group" id="core">
+      <div class="group-header"><span class="group-num">01</span><span class="group-title">Core</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/bilan</span><span class="route-desc">Healthcheck API + stats générales</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/tiers</span><span class="route-desc">Liste clients/fournisseurs (?type=CLIENT|FOURNISSEUR)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/tiers/:id</span><span class="route-desc">Détail tiers</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/animaux</span><span class="route-desc">Liste animaux (?tie_id=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/animaux/races</span><span class="route-desc">Toutes les races (?type=&categorie=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/animaux/:id</span><span class="route-desc">Fiche animal complète</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/contacts</span><span class="route-desc">Contacts pour autocomplétion</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/categories</span><span class="route-desc">Catégories articles</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/tva</span><span class="route-desc">Taux TVA</span></div></div>
+    </div>
+
+    <!-- 02 SÉANCES -->
+    <div class="api-group" id="seances">
+      <div class="group-header"><span class="group-num">02</span><span class="group-title">Séances</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/seances</span><span class="route-desc">Liste séances (?tie_id= &ani_id= &statut=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/seances/:id</span><span class="route-desc">Détail séance avec jointures STY/SST/tiers/animal/contact</span></div></div>
+      <div class="route-row"><span class="method m-patch">PATCH</span><div class="route-info"><span class="route-path">/seances/:id</span><span class="route-desc">Modifier séance (drag & drop planning — SEA_DATE_DEBUT/FIN/OBJET/MONTANT)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/seances/bc</span><span class="route-desc">Séances avec Bilan Comportemental</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/agenda</span><span class="route-desc">Séances pour agenda (?debut= &fin=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/planning-seances</span><span class="route-desc">Planning séances (?semaine=)</span></div></div>
+    </div>
+
+    <!-- 03 COMMERCIAL -->
+    <div class="api-group" id="commercial">
+      <div class="group-header"><span class="group-num">03</span><span class="group-title">Commercial — Devis, Factures, Règlements</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/devis</span><span class="route-desc">Liste devis (?tie_id= &statut=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/devis/:id</span><span class="route-desc">Détail devis + lignes</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/devis/:id/statut</span><span class="route-desc">Changer statut (BROUILLON→ENVOYE→ACCEPTE→REFUSE→ANNULE)</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/devis/:id/facturer</span><span class="route-desc">Créer facture depuis devis accepté</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/devis/:id/email</span><span class="route-desc">Envoyer devis par email au client</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/factures</span><span class="route-desc">Liste factures avec statut paiement</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/factures/:id</span><span class="route-desc">Détail facture + lignes</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/reglements</span><span class="route-desc">Liste règlements</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/reglements/export-csv</span><span class="route-desc">Export CSV règlements — colonnes : ID · Date · Montant · Mode · FAC_NUM · Client — BOM UTF-8 — S68</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoirs</span><span class="route-desc">Liste avoirs</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoirs/:id</span><span class="route-desc">Détail avoir</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/inventaires</span><span class="route-desc">Liste inventaires</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/achats</span><span class="route-desc">Liste achats fournisseurs</span></div></div>
+    </div>
+
+    <!-- 04 ÉLEVAGE -->
+    <div class="api-group" id="elevage">
+      <div class="group-header"><span class="group-num">04</span><span class="group-title">Élevage</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/geniteurs</span><span class="route-desc">Liste géniteurs</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/portees</span><span class="route-desc">Liste portées</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/saillies</span><span class="route-desc">Liste saillies</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/gestations</span><span class="route-desc">Gestations en cours</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/reservations</span><span class="route-desc">Réservations chiot</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/alertes</span><span class="route-desc">Alertes élevage (vaccins, déparasitages)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/elevage/genealogie</span><span class="route-desc">Arbre généalogique</span></div></div>
+    </div>
+
+    <!-- 05 GED & CAC -->
+    <div class="api-group" id="ged-cac">
+      <div class="group-header"><span class="group-num">05</span><span class="group-title">GED &amp; CAC</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ged-bc</span><span class="route-desc">Fiche BC par séance (?sea_id=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ged-cac/:id</span><span class="route-desc">Score CAC par séance</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ged-cac/animal/:id/evolution</span><span class="route-desc">Historique CAC animal (vue v_animal_evolution_cac)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ged-cac/animal/:id/score</span><span class="route-desc">Score CAC courant</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ged-factures-impayees</span><span class="route-desc">Factures impayées pour GED</span></div></div>
+    </div>
+
+    <!-- 06 STATS -->
+    <div class="api-group" id="stats">
+      <div class="group-header"><span class="group-num">06</span><span class="group-title">Statistiques</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/dashboard/stats</span><span class="route-desc">KPIs dashboard principal</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/kpis</span><span class="route-desc">KPIs étendus (CA, panier moyen)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/ca-par-mois</span><span class="route-desc">CA mensuel 12 mois glissants</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/especes</span><span class="route-desc">Répartition animaux par espèce</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/villes</span><span class="route-desc">Concentration clients par ville</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/top-clients</span><span class="route-desc">Top clients par CA</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/especes-ca</span><span class="route-desc">CA par espèce</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/stats/seances-par-type</span><span class="route-desc">Répartition séances par type</span></div></div>
+    </div>
+
+    <!-- 07 CRM -->
+    <div class="api-group" id="crm">
+      <div class="group-header"><span class="group-num">07</span><span class="group-title">CRM &amp; Réseaux sociaux</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/crm/leads</span><span class="route-desc">Liste leads CRM avec filtres</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/crm/stats</span><span class="route-desc">Statistiques CRM</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/reseaux-sociaux/comptes</span><span class="route-desc">Comptes RS (rs_compte)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/reseaux-sociaux/publications</span><span class="route-desc">Publications RS (rs_post)</span></div></div>
+    </div>
+
+    <!-- 08 FORFAITS -->
+    <div class="api-group" id="forfaits">
+      <div class="group-header"><span class="group-num">08</span><span class="group-title">Forfaits &amp; Formules S53-S56</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/forfaits</span><span class="route-desc">Catalogue forfaits par métier</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/forfaits</span><span class="route-desc">Créer forfait</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/forfaits/clients</span><span class="route-desc">Souscriptions clients actives</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/forfaits/clients</span><span class="route-desc">Nouvelle souscription</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/formules</span><span class="route-desc">Catalogue formules/abonnements</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/formules/:id/souscrire</span><span class="route-desc">Souscription client</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/formules/:id/consommer</span><span class="route-desc">Consommer une séance (auto-statut EPUISEE)</span></div></div>
+    </div>
+
+    <!-- 09 RBAC -->
+    <div class="api-group" id="rbac">
+      <div class="group-header"><span class="group-num">09</span><span class="group-title">Rôles &amp; Permissions RBAC S58</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/roles</span><span class="route-desc">Liste rôles (ADMIN, GESTION, CONSULT, COMPTA)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/roles/:id/permissions</span><span class="route-desc">Permissions d'un rôle par module (can_read, can_write, can_delete)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/user-permissions</span><span class="route-desc">Permissions de l'utilisateur courant</span></div></div>
+    </div>
+
+    <!-- 10 SIGNATURES -->
+    <div class="api-group" id="signatures">
+      <div class="group-header"><span class="group-num">10</span><span class="group-title">Signatures Yousign</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/signatures</span><span class="route-desc">Liste signatures</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/signatures/:id</span><span class="route-desc">Détail signature + statut Yousign</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/signatures</span><span class="route-desc">Créer demande BDD + appel Yousign API v3</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/signatures/:id/envoyer</span><span class="route-desc">Activer demande + récupérer lien signataire</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/signatures/webhook</span><span class="route-desc">Callback Yousign → mise à jour statut</span></div></div>
+    </div>
+
+    <!-- 11 PARAMÈTRES -->
+    <div class="api-group" id="parametres">
+      <div class="group-header"><span class="group-num">11</span><span class="group-title">Paramètres</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/parametres/metier</span><span class="route-desc">Paramètre métier actif</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/parametres/metier</span><span class="route-desc">Mettre à jour métier</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/parametres/editions</span><span class="route-desc">Paramètres éditions (logo, couleurs, police)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/param-smtp</span><span class="route-desc">Config SMTP</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/param-smtp</span><span class="route-desc">Sauvegarder config SMTP depuis UI <span class="route-badge rb-s63">S63</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/param-stripe</span><span class="route-desc">Config Stripe</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/param-yousign</span><span class="route-desc">Config Yousign</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/param-yousign</span><span class="route-desc">Mettre à jour config Yousign</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/plan-comptable</span><span class="route-desc">Plan comptable PCG</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/aide/contexte</span><span class="route-desc">Aide contextuelle (7 contextes)</span></div></div>
+    </div>
+
+    <!-- 12 PROGRAMMES -->
+    <div class="api-group" id="programmes">
+      <div class="group-header"><span class="group-num">12</span><span class="group-title">Programmes &amp; Questionnaires</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/programmes</span><span class="route-desc">Programmes de suivi</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/programmes</span><span class="route-desc">Créer programme</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/questionnaires</span><span class="route-desc">Liste questionnaires</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/questionnaires</span><span class="route-desc">Créer questionnaire</span></div></div>
+    </div>
+
+    <!-- 13 PORTAIL CLIENT NEW S63 -->
+    <div class="api-group" id="portail">
+      <div class="group-header"><span class="group-num">13</span><span class="group-title">Portail Client</span><span class="group-new">S61-S63</span></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/auth/login</span><span class="route-desc">Connexion client (token accès → session_token) <span class="route-badge rb-s63">S61</span></span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/auth/logout</span><span class="route-desc">Déconnexion (invalide session) <span class="route-badge rb-s63">S61</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/admin/acces</span><span class="route-desc">Liste accès portail (praticien) <span class="route-badge rb-s63">S61</span></span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/admin/acces</span><span class="route-desc">Créer accès + générer token 64 chars hex <span class="route-badge rb-s63">S61</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/animaux</span><span class="route-desc">Animaux du client connecté (ANI_CLI) <span class="route-badge rb-s62">S62</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/devis</span><span class="route-desc">Devis ENVOYE/ACCEPTE/FACTURE <span class="route-badge rb-s62">S62</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/factures</span><span class="route-desc">Factures + solde restant <span class="route-badge rb-s62">S62</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/factures/:id/pdf</span><span class="route-desc">PDF facture pour modal iframe <span class="route-badge rb-s62">S62</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/seances</span><span class="route-desc">Séances du client (SEA_DATE_DEBUT) <span class="route-badge rb-s63">S63 ★</span></span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/seances/:id/confirmer</span><span class="route-desc">CONFIRME / ANNULE / REPORTE <span class="route-badge rb-s63">S63 ★</span></span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/notifications</span><span class="route-desc">Notifications client (PCN_TYPE, PCN_CANAL, PCN_STATUT) <span class="route-badge rb-s63">S63 ★</span></span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/portail/admin/acces/:id/toggle</span><span class="route-desc">Activer / désactiver accès <span class="route-badge rb-s63">S63 ★</span></span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/admin/acces/:id/send-link</span><span class="route-desc">Envoyer lien portail par email (nodemailer) <span class="route-badge rb-s63">S63 ★</span></span></div></div>
+      <p style="margin-top:12px;font-size:0.78rem;color:var(--text-muted);">ℹ️ Toutes les routes portail utilisent <code style="font-family:'DM Mono',monospace">_readBody()</code> et sont dans <code style="font-family:'DM Mono',monospace">instance.use()</code> exclusivement.</p>
+    </div>
+
+    <!-- 14 ELIOT IA -->
+    <div class="api-group" id="ia">
+      <div class="group-header"><span class="group-num">14</span><span class="group-title">Eliot IA</span><span class="group-new">S61-S68 · 22 tools</span></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/ia/chat</span><span class="route-desc">Proxy Anthropic API côté serveur — 22 tools déclarés (get_client, get_animal, create_devis, create_seance, get_planning, get_factures, send_email, update_statut_devis, create_facture_depuis_devis, create_reglement)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">tool: get_registre_carnivores</span><span class="route-desc">Eliot — Liste mouvements registre carnivores avec filtres statut/espece/search — S68</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">tool: create_registre_carnivore</span><span class="route-desc">Eliot — Créer une entrée registre carnivores (animal + métier + date) — S68</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">tool: update_sortie_registre_carnivore</span><span class="route-desc">Eliot — Enregistrer sortie d'un carnivore (date + observations) — S68</span></div></div>
+      <p style="margin-top:8px;font-size:0.78rem;color:var(--text-muted);">ℹ️ ANTHROPIC_API_KEY sécurisée côté serveur (jamais exposée frontend). Eliot est une option commerciale — toutes les fonctionnalités marchent sans lui.</p>
+    </div>
+
+    <!-- 15 ÉDITIONS -->
+    <div class="api-group" id="editions">
+      <div class="group-header"><span class="group-num">15</span><span class="group-title">Éditions &amp; PDF</span><span class="group-new">S62</span></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-logo</span><span class="route-desc">Upload logo - base64 direct dans param_edition ED_LOGO_BASE64 (S75)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/upload-logo</span><span class="route-desc">Lecture logo base64 depuis param_edition ED_LOGO_BASE64</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-filigrane</span><span class="route-desc">Upload filigrane - base64 direct dans param_edition ED_FILIGRANE_BASE64 (S75)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/upload-filigrane</span><span class="route-desc">Lecture filigrane base64 depuis param_edition ED_FILIGRANE_BASE64</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/editions/upload-cgv</span><span class="route-desc">Upload CGV PDF - base64 direct dans param_edition PE_CGV_BASE64 (S75)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/cgv/preview</span><span class="route-desc">Preview PDF CGV depuis base64 BDD</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/devis/:id</span><span class="route-desc">PDF devis puppeteer avec param_edition (couleur, logo, filigrane, police)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/facture/:id</span><span class="route-desc">PDF facture puppeteer avec param_edition + fusion CGV</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/avoir-client/:id</span><span class="route-desc">PDF avoir client puppeteer (S74)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/bon-livraison/:id</span><span class="route-desc">PDF bon de livraison (S71)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/bon-retour/:id</span><span class="route-desc">PDF bon de retour fournisseur (S71)</span></div></div>
+      <div class="route-row" style="background:rgba(124,58,237,0.08)"><span class="method m-note" style="background:#7c3aed;color:#fff;font-size:10px;padding:2px 6px">S75</span><div class="route-info"><span class="route-path" style="color:#a78bfa">Migration GED supprimee</span><span class="route-desc">upload-logo/filigrane/cgv stockent desormais en base64 dans param_edition - micro_logiciel_ged supprimee (0 tables, aucune donnee perdue)</span></div></div>
+    </div>
+    <!-- 16 REGISTRE SANITAIRE S65 -->
+    <div class="api-group" id="registre-sanitaire">
+      <div class="group-header"><span class="group-num">16</span><span class="group-title">Registre Sanitaire</span><span class="group-new-s65">S65</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/registre-sanitaire</span><span class="route-desc">Liste séjours avec jointures animal+tiers (?metier=PENSION|PET_SITTER|EQUESTRE &statut= &search=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/registre-sanitaire/:id</span><span class="route-desc">Détail complet séjour + journal événements</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/registre-sanitaire</span><span class="route-desc">Créer séjour (entrée animal) — champs requis : ANI_ID, TIE_ID, RSS_DATE_ENTREE, RSS_ETAT_ENTREE, RSS_VETO_NOM, RSS_VETO_TEL, RSS_URGENCE_NOM, RSS_URGENCE_TEL</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/registre-sanitaire/:id</span><span class="route-desc">Mettre à jour / clôturer séjour (sortie animal) — auto-CLOTURE si RSS_DATE_SORTIE_REELLE fournie</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/registre-sanitaire/:id/evenement</span><span class="route-desc">Ajouter événement au journal — RSE_TYPE : ALIMENTATION|SANTE|COMPORTEMENT|TRAITEMENT|VETERINAIRE|AUTRE · RSE_GRAVITE : FAIBLE|MODEREE|ELEVEE|URGENCE</span></div></div>
+    </div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/registre-carnivores</span><span class="route-desc">Liste registre carnivores domestiques — filtres metier/statut/espece/search</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/registre-carnivores/:id</span><span class="route-desc">Detail entree registre carnivores</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/registre-carnivores</span><span class="route-desc">Creer entree registre carnivores domestiques</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/registre-carnivores/:id</span><span class="route-desc">Mettre a jour / sortie rapide registre carnivores</span></div></div>
+
+    <!-- 17 REGISTRE CARNIVORES DOMESTIQUES S66 -->
+    <div class="api-group" id="registre-carnivores">
+      <div class="group-header"><span class="group-num">17</span><span class="group-title">Registre Carnivores Domestiques</span><span class="group-new-s66">S66</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/registre-carnivores</span><span class="route-desc">Liste mouvements carnivores (?metier=PET_SITTER|PENSION|ELEVEUR &statut=PRESENT|SORTI|DECEDE &espece=CHIEN|CHAT|FURET &search=)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/registre-carnivores/:id</span><span class="route-desc">Détail complet d'un mouvement avec jointures animal (FROM animal) + tiers (TIE_RAISON_SOCIALE)</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/registre-carnivores</span><span class="route-desc">Enregistrer entrée immédiate — RC_DATE_ENTREE = NOW() · RC_PROVENANCE_TYPE : ELEVEUR|PARTICULIER|NAISSANCE|REFUGE|IMPORTATION</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/registre-carnivores/:id</span><span class="route-desc">Modifier / enregistrer sortie — auto-SORTI si RC_DATE_SORTIE fournie · RC_MOTIF_SORTIE : CESSION_VENTE|CESSION_DON|RETOUR_PROPRIO|DECES|TRANSFERT</span></div></div>
+    </div>
+
+    <!-- 18 TARIFICATION S64 -->
+    <div class="api-group" id="tarification">
+      <div class="group-header"><span class="group-num">18</span><span class="group-title">Tarification</span><span class="group-new-s64">S64</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/tarification</span><span class="route-desc">Lire la configuration de tarification (COEF_FG+MARGE, COEF_VTE, PRIX_DIRECT)</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/tarification</span><span class="route-desc">Mettre à jour la méthode et les coefficients — colonnes : DCE_METHODE_TARIF, DCE_COEF_FG, DCE_PCT_MARGE, DCE_COEF_VTE</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/tarification/historique</span><span class="route-desc">Historique des changements de tarification avec dates d'application</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/devis/:id/appliquer-tarif</span><span class="route-desc">Appliquer la tarification courante à un devis existant</span></div></div>
+    </div>
+    <!-- 19 ANIMAL SEARCH S68 -->
+    <div class="api-group" id="animal-search">
+      <div class="group-header"><span class="group-num">19</span><span class="group-title">Recherche Animal Unifiée</span><span class="group-new">S68</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/animal/search-complet</span><span class="route-desc">Recherche simultanée ANI_NOM + TIE_RAISON_SOCIALE — jointure animal + tiers + race — LIMIT 10 — utilisé par AnimalSearchComboBox</span></div></div>
+    </div>
+    <div class="api-group" id="s69-nouvelles-routes">
+      <div class="group-header"><span class="group-num">20</span><span class="group-title">Mémoire Eliot &amp; Notifications Portail</span><span class="group-new">S69</span></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ia/memoire</span><span class="route-desc">Liste des faits mémorisés par Eliot — seeds langue + métier</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/ia/memoire</span><span class="route-desc">Ajouter un fait à la mémoire Eliot (tool memoriser)</span></div></div>
+      <div class="route-row"><span class="method m-delete">DELETE</span><div class="route-info"><span class="route-path">/ia/memoire/:id</span><span class="route-desc">Supprimer un fait de la mémoire Eliot</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/ia/sessions</span><span class="route-desc">Historique des sessions Eliot (résumés fire-and-forget)</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/admin/notifications/config</span><span class="route-desc">Configuration notifications portail — 5 types (DEVIS_DISPONIBLE, FACTURE_DISPONIBLE…)</span></div></div>
+      <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/portail/admin/notifications/config</span><span class="route-desc">Mettre à jour la configuration des notifications portail</span></div></div>
+      <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/portail/admin/notifications/envoyer</span><span class="route-desc">Envoyer manuellement une notification portail</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/portail/admin/notifications/historique</span><span class="route-desc">Historique des notifications envoyées</span></div></div>
+      <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/factures/export-csv</span><span class="route-desc">Export CSV factures — BOM UTF-8 — 143 factures — FAC_NUM · Date · Client · TTC · Statut</span></div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor — API Reference MàJ Sprint S74 — 10/04/2026 — ~189 routes — 3 registres réglementaires
+  <br><a href="index.html">← Retour à l'accueil</a>
+  &nbsp;·&nbsp;<a href="20-pilotage-projet.html">Pilotage</a>
+  &nbsp;·&nbsp;<a href="57-module-portail-client.html">Portail Client</a>
+</footer>
+
+
+  <!-- GROUPE 21 — Eliot tools 18-20 registre sanitaire -->
+  <div class="api-group" id="groupe-21">
+    <div class="group-header">
+      <span class="group-num">21</span>
+      <h2>Eliot — Registre Sanitaire (tools 18-20)</h2>
+      <span class="badge-cyan">IA</span>
+    </div>
+    <div class="route-block">
+      <span class="method-tag get">TOOL</span>
+      <code>get_registre_sanitaire</code>
+      <p>Liste ou détail des séjours au registre sanitaire. Filtres : ani_id, statut, metier, rss_id.</p>
+    </div>
+    <div class="route-block">
+      <span class="method-tag post">TOOL</span>
+      <code>create_evenement_sanitaire</code>
+      <p>Crée un événement dans le journal sanitaire d'un séjour (SOIN / OBSERVATION / TRAITEMENT / VACCINATION / INCIDENT).</p>
+    </div>
+    <div class="route-block">
+      <span class="method-tag get">TOOL</span>
+      <code>get_alertes_vaccins</code>
+      <p>Retourne les séjours avec vaccins manquants ou à vérifier (RAGE, CHC, LEUCOSE).</p>
+    </div>
+  </div>
+
+  <!-- GROUPE 22 — S71 : POST /portail/envoyer + Pages BL/BR/DAF détail -->
+  <div class="api-group" id="groupe-22">
+    <div class="group-header">
+      <span class="group-num">22</span>
+      <h2>Portail Client — Envoi notifications + Pages détail achats</h2>
+      <span class="badge-cyan">PORTAIL</span>
+    </div>
+    <div class="route-block">
+      <span class="method-tag post">POST</span>
+      <code>/portail/envoyer</code>
+      <p>Envoie une notification portail à un client. Body : <code>{ tie_id, type }</code> (types : DEVIS_DISPONIBLE · RAPPEL_SEANCE · FACTURE_DISPONIBLE). Délègue à <code>envoyerNotification()</code>. Retourne <code>{ sent: true }</code>.</p>
+    </div>
+    <div class="route-block">
+      <span class="method-tag get">PAGE</span>
+      <code>/app/bon-livraison/[id]</code>
+      <p>Fiche détail bon de livraison — infos BL + lignes (<code>bon_livraison_ligne</code>) + actions statut BROUILLON → ENVOYE → LIVRE.</p>
+    </div>
+    <div class="route-block">
+      <span class="method-tag get">PAGE</span>
+      <code>/app/bon-retour/[id]</code>
+      <p>Fiche détail bon de retour — infos BR + motif + actions statut → TRAITE / REFUSE. (Table <code>bon_retour_ligne</code> inexistante — pas de section lignes.)</p>
+    </div>
+    <div class="route-block">
+      <span class="method-tag get">PAGE</span>
+      <code>/app/demande-avoir-fourn/[id]</code>
+      <p>Fiche détail demande d'avoir fournisseur — infos DAF + motif + actions statut → ACCEPTE → REMBOURSE / REFUSE. (Table <code>demande_avoir_fourn_ligne</code> inexistante — pas de section lignes.)</p>
+    </div>
+    <div class="route-block">
+      <span class="method-tag get">PAGE</span>
+      <code>/app/elevage/declarations</code>
+      <p>Page déclarations élevage — créée S72. Lien sidebar groupe Élevage ajouté.</p>
+    </div>
+  </div>
+  <!-- GROUPE 23 — S74 : Module AC + PDF BL/BR/DAF/AC + Eliot tool 22 -->
+  <div class="api-group" id="groupe-23">
+    <div class="group-header">
+      <span class="group-num">23</span>
+      <h2>Avoir Client · PDF Éditions · Eliot tool 22</h2>
+      <span class="group-new">S74</span>
+    </div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoir-client</span><span class="route-desc">Liste des avoirs client — Guard R-26 (rejette sous-chemins)</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoir-client/:id</span><span class="route-desc">Détail avoir client — Guard R-32 (urlParts.length === 2)</span></div></div>
+    <div class="route-row"><span class="method m-put">PUT</span><div class="route-info"><span class="route-path">/avoir-client/:id</span><span class="route-desc">Mise à jour avoir client — whitelist 6 champs (AVC_STATUT, AVC_MOTIF, AVC_TOTAL_HT, AVC_TOTAL_TTC, AVC_DATE_EMISSION, AVC_COMMENTAIRE)</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/avoir-client/:id/lignes</span><span class="route-desc">Liste des lignes d'un avoir client (table avoir_client_ligne)</span></div></div>
+    <div class="route-row"><span class="method m-post">POST</span><div class="route-info"><span class="route-path">/avoir-client/:id/lignes</span><span class="route-desc">Ajouter une ligne à un avoir client — triggers recalculent AVC_TOTAL_HT/TTC</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/bon-livraison/:id</span><span class="route-desc">HTML PDF bon de livraison — lignes sans prix (document transport) · violet #4F46E5</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/bon-retour/:id</span><span class="route-desc">HTML PDF bon de retour — lignes + totaux HT/TVA/TTC · amber #F59E0B</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/demande-avoir-fourn/:id</span><span class="route-desc">HTML PDF demande d'avoir fournisseur — lignes + BR lié · violet #8B5CF6</span></div></div>
+    <div class="route-row"><span class="method m-get">GET</span><div class="route-info"><span class="route-path">/editions/avoir-client/:id</span><span class="route-desc">HTML PDF avoir client — lignes avoir_client_ligne + totaux · vert #10B981</span></div></div>
+    <div class="route-row"><span class="method m-get">TOOL</span><div class="route-info"><span class="route-path">get_avoirs_client</span><span class="route-desc">Eliot tool 22 — liste avoirs client avec filtres statut + tie_id. Retourne total, total_ttc, avoirs[] (numéro, client, montant, statut, motif, facture origine).</span></div></div>
+  </div>
+</body>
+</html>
+

@@ -373,7 +373,7 @@
 
       <div class="metier-list">
         <div class="metier-badge active">🌿 Éleveur (chiens/chats/furets)</div>
-        <div class="metier-badge active">🏡 Pension / Chenil</div>
+        <div class="metier-badge active">🏡 Pension</div>
         <div class="metier-badge active">🏠 Pet-Sitter (hébergement)</div>
         <div class="metier-badge" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.3);color:var(--gold)">🏥 Fourrière / Refuge</div>
         <div class="metier-badge" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.3);color:var(--gold)">🛍️ Animalerie</div>
@@ -528,7 +528,7 @@
 
   <span class="cm">-- Statut et métier</span>
   RC_STATUT              <span class="ty">ENUM</span>(<span class="str">'PRESENT'</span>,<span class="str">'SORTI'</span>,<span class="str">'DECEDE'</span>) <span class="kw">DEFAULT</span> <span class="str">'PRESENT'</span>,
-  RC_METIER              <span class="ty">VARCHAR</span>(<span class="num">30</span>) <span class="kw">NOT NULL</span>,  <span class="cm">-- PET_SITTER/PENSION_CHENIL/ELEVEUR</span>
+  RC_METIER              <span class="ty">VARCHAR</span>(<span class="num">30</span>) <span class="kw">NOT NULL</span>,  <span class="cm">-- PET_SITTER/PENSION/ELEVEUR</span>
   RC_NOTES               <span class="ty">TEXT</span>,
   RC_CREATED_AT          <span class="ty">DATETIME</span> <span class="kw">DEFAULT CURRENT_TIMESTAMP</span>,
   RC_UPDATED_AT          <span class="ty">DATETIME</span> <span class="kw">ON UPDATE CURRENT_TIMESTAMP</span>,
@@ -585,7 +585,7 @@
         <table>
           <thead><tr><th>Paramètre</th><th>Valeurs</th><th>Usage</th></tr></thead>
           <tbody>
-            <tr><td class="td-key">?metier=PENSION_CHENIL</td><td>PET_SITTER · PENSION_CHENIL · ELEVEUR</td><td>Filtrer par métier (cloisonnement)</td></tr>
+            <tr><td class="td-key">?metier=PENSION</td><td>PET_SITTER · PENSION · ELEVEUR</td><td>Filtrer par métier (cloisonnement)</td></tr>
             <tr><td class="td-key">?statut=PRESENT</td><td>PRESENT · SORTI · DECEDE</td><td>Animaux actuellement présents</td></tr>
             <tr><td class="td-key">?espece=CHIEN</td><td>CHIEN · CHAT · FURET</td><td>Filtrer par espèce</td></tr>
             <tr><td class="td-key">?search=Frimousse</td><td>texte libre</td><td>Nom animal, numéro puce, nom propriétaire</td></tr>

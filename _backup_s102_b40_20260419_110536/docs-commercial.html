@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Commercial & Produit — Anim'Gest</title>
+<style>
+
+  /* ── Anim'Gest Design System ── */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ag-navy:   #0F172A;
+    --ag-navy2:  #1E293B;
+    --ag-navy3:  #334155;
+    --ag-gold:   #B8860B;
+    --ag-gold2:  #D4A017;
+    --ag-gold3:  #F5D76E;
+    --ag-white:  #F8FAFC;
+    --ag-muted:  #94A3B8;
+    --ag-accent: #4F46E5;
+    --ag-cyan:   #06B6D4;
+    --ag-green:  #10B981;
+    --ag-red:    #EF4444;
+    --ag-orange: #F59E0B;
+    --ag-radius: 10px;
+    --ag-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    --ag-font-heading: 'Playfair Display', Georgia, serif;
+    --ag-font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ag-navy);
+    color: var(--ag-white);
+    font-family: var(--ag-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--ag-font-heading);
+    color: var(--ag-white);
+    letter-spacing: -0.5px;
+  }
+
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--ag-gold2); }
+  h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+
+  a { color: var(--ag-gold2); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--ag-gold3); text-decoration: underline; }
+
+  .ag-header {
+    background: var(--ag-navy2);
+    border-bottom: 2px solid var(--ag-gold);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ag-header .ag-logo {
+    font-family: var(--ag-font-heading);
+    font-size: 1.6rem;
+    color: var(--ag-gold2);
+    letter-spacing: -1px;
+  }
+  .ag-header .ag-subtitle {
+    font-size: 0.85rem;
+    color: var(--ag-muted);
+  }
+  .ag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(184,134,11,0.15);
+    color: var(--ag-gold2);
+    border: 1px solid rgba(184,134,11,0.3);
+  }
+  .ag-card {
+    background: var(--ag-navy2);
+    border: 1px solid var(--ag-navy3);
+    border-radius: var(--ag-radius);
+    padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ag-card:hover { border-color: var(--ag-gold); box-shadow: var(--ag-shadow); }
+
+  .ag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: var(--ag-radius);
+    font-family: var(--ag-font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .ag-btn-primary {
+    background: linear-gradient(135deg, var(--ag-accent), var(--ag-cyan));
+    color: #fff;
+  }
+  .ag-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-gold {
+    background: linear-gradient(135deg, var(--ag-gold), var(--ag-gold2));
+    color: var(--ag-navy);
+  }
+  .ag-btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-ghost {
+    background: transparent;
+    border: 1px solid var(--ag-navy3);
+    color: var(--ag-muted);
+  }
+  .ag-btn-ghost:hover { border-color: var(--ag-gold); color: var(--ag-gold2); }
+
+  .ag-tag-rouge  { background: rgba(239,68,68,0.15);  color: #F87171; border: 1px solid rgba(239,68,68,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-orange { background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-vert   { background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-bleu   { background: rgba(79,70,229,0.15);  color: #818CF8; border: 1px solid rgba(79,70,229,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 0.6rem 0.8rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ag-muted); border-bottom: 1px solid var(--ag-navy3); }
+  td { padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(51,65,85,0.5); font-size: 0.875rem; }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+
+  code, pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); border-radius: 4px; }
+  code { padding: 0.1rem 0.4rem; color: var(--ag-gold3); }
+  pre { padding: 1rem 1.25rem; overflow-x: auto; border: 1px solid var(--ag-navy3); color: #E2E8F0; line-height: 1.7; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--ag-navy); }
+  ::-webkit-scrollbar-thumb { background: var(--ag-navy3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ag-gold); }
+  /* ── Fin charte Anim'Gest ── */
+
+</style>
+<style>
+:root{--navy:#0D2137;--navy-l:#112840;--gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);--text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;--bdr:rgba(255,255,255,.08);--ok:#4caf82;--r:10px;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold)}
+.nav-back{font-size:.75rem;color:var(--muted);margin-left:.5rem}.nav-back:hover{color:var(--gold)}
+.nav-right{margin-left:auto;font-size:.7rem;color:var(--dim)}
+.hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:2.5rem 2rem;border-bottom:1px solid var(--gold-b)}
+.hero-eye{font-size:.68rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2.2rem);margin-bottom:.5rem}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{font-size:.85rem;color:var(--muted);max-width:600px}
+.wrap{max-width:1100px;margin:0 auto;padding:2rem 2rem 5rem}
+.sec-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);margin:2rem 0 1rem;padding-bottom:.6rem;border-bottom:1px solid var(--gold-b)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.doc-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1rem 1.15rem;transition:all .2s;display:flex;flex-direction:column;gap:.4rem}
+.doc-card:hover{border-color:var(--gold-b);background:rgba(212,168,67,.04)}
+.doc-card a{font-size:.85rem;font-weight:600;color:var(--text)}
+.doc-card a:hover{color:var(--gold)}
+.doc-card .desc{font-size:.73rem;color:var(--muted)}
+.doc-card .tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:.2rem}
+.tag{font-size:.62rem;padding:.15rem .5rem;border-radius:5px;background:rgba(255,255,255,.07);color:var(--muted)}
+.tag.new{background:var(--gold-p);color:var(--gold)}
+.formules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.formule-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1.2rem;text-align:center}
+.formule-card.pro{border-color:var(--gold-b)}
+.f-name{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);margin-bottom:.4rem}
+.f-desc{font-size:.72rem;color:var(--muted);line-height:1.5}
+footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2rem;font-size:.72rem;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+@media(max-width:640px){.formules{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <span class="nav-logo">Anim'Gest</span>
+  <a href="index.html" class="nav-back">← Retour à l'index</a>
+  <span class="nav-right">Commercial &amp; Produit</span>
+</nav>
+<div class="hero">
+  <div class="hero-eye">Documentation commerciale</div>
+  <h1>💼 Commercial &amp; <em>Produit</em></h1>
+  <p>Business plan, formules tarifaires, landing page, investisseurs, onboarding, scénarios vidéo.</p>
+</div>
+<div class="wrap">
+
+  <div class="sec-title">Formules commerciales</div>
+  <div class="formules">
+    <div class="formule-card">
+      <div class="f-name">Essentiel</div>
+      <div class="f-desc">Le professionnel solo qui débute ou gère seul son activité. Agenda, clients, animaux, devis, facturation, 1 métier.</div>
+    </div>
+    <div class="formule-card pro">
+      <div class="f-name">Professionnel</div>
+      <div class="f-desc">Le praticien confirmé. EDC, CAC, élevage, questionnaires, GED, dashboard BI, multi-métiers.</div>
+    </div>
+    <div class="formule-card">
+      <div class="f-name">Expert</div>
+      <div class="f-desc">La structure multi-praticiens. Multi-utilisateurs, inventaires, achats, toutes familles de métiers.</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Documents commerciaux</div>
+  <div class="grid">
+    <div class="doc-card confidentiel" style="border:1px solid #6366f1;background:rgba(99,102,241,0.08);padding:1.25rem;grid-column:1/-1">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem">
+        <span style="font-size:1.5rem">🔒</span>
+        <strong style="font-size:1.05rem">Documentation commerciale confidentielle</strong>
+      </div>
+      <div class="desc" style="margin-bottom:.75rem">
+        Business plans, modèle commercial détaillé et dossier investisseurs sont réservés aux contacts autorisés.
+      </div>
+      <div style="font-size:.9rem">
+        Pour toute demande d'accès : <a href="mailto:contact@no-sages-editor.com" style="color:#06b6d4;font-weight:600">contact@no-sages-editor.com</a>
+      </div>
+    </div>
+    <div class="doc-card"><a href="16-landing-page.html">16 — Landing page</a><div class="desc">Contenu et structure de la landing page commerciale</div></div>
+    <div class="doc-card"><a href="45-dashboards-ceo-bi.html">45 — Dashboards CEO &amp; BI</a><div class="desc">Tableaux de bord dirigeant, KPIs business, analyses</div></div>
+    <div class="doc-card"><a href="58-plateformes-agreees.html">58 — Plateformes agréées</a><div class="desc">Liste des plateformes agréées RFE — Pennylane et autres PA</div></div>
+  </div>
+
+  <div class="sec-title">Onboarding &amp; Utilisateur</div>
+  <div class="grid">
+    <div class="doc-card"><a href="03-notice-utilisateur.html">03 — Notice utilisateur</a><div class="desc">Guide complet utilisateur — toutes les fonctionnalités</div></div>
+    <div class="doc-card"><a href="19-onboarding.html">19 — Onboarding</a><div class="desc">Parcours d'intégration nouveau client, paramétrage initial</div></div>
+    <div class="doc-card"><a href="09-scenario-video.html">09 — Scénario vidéo</a><div class="desc">Scénario vidéo commerciale produit</div></div>
+    <div class="doc-card"><a href="Anim'Gest_Demo by NoSage's Editor.html">Démo interactive</a><div class="desc">Présentation produit interactive — 10 écrans animés</div></div>
+    <div class="doc-card"><a href="AnimGest Storytelling by NoSage's Editor.html">Storytelling immersif</a><div class="desc">Présentation HTML5 avec animations et storytelling produit</div></div>
+  </div>
+
+</div>
+<footer>
+  <span>Anim'Gest — NoSage's Editor &copy; 2026</span>
+  <span><a href="index.html" style="color:var(--gold)">← Retour à l'index</a></span>
+</footer>
+</body>
+</html>

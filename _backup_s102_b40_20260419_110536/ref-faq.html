@@ -1,0 +1,342 @@
+
+<!-- Polices, variables CSS, composants communs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+
+<style>
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:20px}
+.gterm{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px 20px}
+.gterm-word{font-weight:700;font-size:14px;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.gterm-tag{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600;text-transform:uppercase}
+.gterm-def{font-size:13px;color:#94A3B8;line-height:1.6}
+.faq-item{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.faq-q{padding:16px 20px;font-weight:600;font-size:14px;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q:hover{background:rgba(255,255,255,.03)}
+.faq-a{padding:0 20px 16px;font-size:13px;color:#94A3B8;line-height:1.7;display:none}
+.faq-a.open{display:block}
+.checklist-section{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;margin-bottom:20px}
+.checklist-title{font-weight:700;font-size:15px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;color:#94A3B8}
+.check-item:last-child{border-bottom:none}
+.check-box{width:20px;height:20px;border-radius:5px;border:2px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all .2s;margin-top:1px}
+.check-box.done{background:#10B981;border-color:#10B981;color:#fff}
+.check-label{flex:1}
+.check-label strong{color:#fff;display:block;margin-bottom:3px}
+.time-badge{font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(245,158,11,.15);color:#fcd34d;font-weight:600;white-space:nowrap;flex-shrink:0}
+.module-card{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;transition:all .2s}
+.module-card:hover{border-color:rgba(255,255,255,.2)}
+.module-name{font-weight:700;font-size:14px;color:#fff;margin-bottom:8px}
+.module-desc{font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:10px}
+.module-deps{font-size:11px;color:#64748B}
+.dep-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;background:rgba(79,70,229,.15);color:#a5b4fc;margin:2px}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+.formula-card{border-radius:16px;padding:28px;border:2px solid transparent;transition:all .2s}
+.formula-card:hover{transform:translateY(-4px)}
+.formula-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:6px}
+.formula-price{font-size:28px;font-weight:700;margin:12px 0}
+.formula-price span{font-size:14px;font-weight:400;color:#94A3B8}
+.formula-features{list-style:none;margin-top:16px}
+.formula-features li{padding:6px 0;font-size:13px;color:#94A3B8;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px}
+.formula-features li:last-child{border-bottom:none}
+.feature-yes{color:#10B981}
+.feature-no{color:#64748B}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);color:#94A3B8;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.08)}
+.data-table td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);color:#94A3B8;vertical-align:top}
+.data-table td:first-child{color:#F1F5F9;font-weight:500}
+.table-wrap{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;margin:20px 0}
+.alert-box{border-radius:12px;padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start;font-size:13px}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#fcd34d}
+.alert-ok{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:#6ee7b7}
+.alert-danger{background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);color:#fda4af}
+.alert-info{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);color:#67e8f9}
+.roi-calc{background:#1E293B;border:1px solid rgba(79,70,229,.3);border-radius:16px;padding:28px}
+.roi-input{margin-bottom:16px}
+.roi-label{font-size:13px;color:#94A3B8;margin-bottom:8px;display:block}
+.roi-slider{width:100%;accent-color:#4F46E5}
+.roi-value{font-size:20px;font-weight:700;color:#fff;text-align:center;padding:12px;background:rgba(79,70,229,.15);border-radius:10px;margin-top:8px}
+</style><title>FAQ — Questions fréquentes — Anim'Gest</title></head>
+<body>
+<nav class="nav-bar">
+  <a class="nav-link home" href="index-complet.html">🏠 Index</a>
+  <a class="nav-link" href="ref-glossaire.html">📖 Glossaire</a>
+  <a class="nav-link" href="ref-raccourcis.html">⌨️ Raccourcis</a>
+  <a class="nav-link" href="ref-faq.html">❓ FAQ</a>
+  <a class="nav-link" href="ops-cloture-mensuelle.html">📅 Clôture mensuelle</a>
+  <a class="nav-link" href="ops-cloture-annuelle.html">📆 Clôture annuelle</a>
+  <a class="nav-link" href="ops-migration.html">🚀 Migration</a>
+  <a class="nav-link" href="ops-reprise-incident.html">🚨 Incident</a>
+  <a class="nav-link" href="tech-schema-donnees.html">🗄️ Schéma données</a>
+  <a class="nav-link" href="tech-carte-modules.html">🗺️ Modules</a>
+  <a class="nav-link" href="tech-rgpd.html">🔒 RGPD</a>
+  <a class="nav-link" href="com-formules.html">💎 Formules</a>
+  <a class="nav-link" href="com-roi.html">📊 ROI</a>
+  <a class="nav-link" href="com-onboarding.html">🎯 Onboarding</a>
+  <a class="nav-link" href="adv-multi-utilisateurs.html">👥 Multi-users</a>
+  <a class="nav-link" href="adv-multi-sites.html">🏢 Multi-sites</a>
+  <a class="nav-link" href="adv-compta-avancee.html">📊 Compta avancée</a>
+  <a class="nav-link" href="adv-impayes.html">⚠️ Impayés</a>
+  <a class="nav-link" href="adv-tarification-avancee.html">💰 Tarification</a>
+  <a class="nav-link" href="adv-eliot-avance.html">🤖 Eliot avancé</a>
+</nav>
+<div class="hero" style="padding:48px">
+  <div class="hero-badge" style="background:linear-gradient(135deg,var(--emerald),var(--emerald)aa)">Support</div>
+  <h1>❓ FAQ — Questions fréquentes</h1>
+  <p class="hero-sub">Les questions les plus posées au support — réponses claires et directes</p>
+</div>
+<div class="container">
+<div class="section-title">Installation & Accès</div><div class="faq-item">
+<div class="faq-q">Comment accéder à Anim'Gest si mon serveur est éteint ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Vérifiez que Docker Desktop est démarré sur votre PC serveur. Une tâche planifiée (PetSuite_AutoStart) démarre normalement les containers au démarrage de Windows. Si ce n'est pas le cas, ouvrez PowerShell et lancez : Set-Location 'chemin_vers_deploy' puis docker compose up -d.</div>
+</div><div class="faq-item">
+<div class="faq-q">Puis-je accéder à Anim'Gest depuis l'extérieur de mon réseau ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Par défaut, Anim'Gest est accessible uniquement sur votre réseau local. Pour un accès externe, configurez un VPN ou un reverse proxy nginx avec certificat SSL. Contactez le support pour un accompagnement.</div>
+</div><div class="faq-item">
+<div class="faq-q">Comment créer un accès pour mon assistante ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Paramètres → Utilisateurs → + Nouvel utilisateur. Saisissez son email, son rôle (Admin, Praticien, Secrétaire, Lecture seule) et les modules accessibles. Elle reçoit un email d'invitation.</div>
+</div><div class="faq-item">
+<div class="faq-q">Le logiciel fonctionne-t-il sur iPad ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Oui. Anim'Gest est responsive et fonctionne parfaitement sur iPad via Safari ou Chrome. Pour une meilleure expérience, ajoutez le site à votre écran d'accueil.</div>
+</div><div class="section-title">Facturation</div><div class="faq-item">
+<div class="faq-q">J'ai fait une erreur sur une facture validée, que faire ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Une facture validée ne peut pas être modifiée (NF525). Créez un avoir total depuis la fiche facture pour l'annuler, puis créez une nouvelle facture correcte.</div>
+</div><div class="faq-item">
+<div class="faq-q">Puis-je supprimer un devis ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Oui, un devis en statut Brouillon peut être supprimé. Un devis Envoyé ou Accepté ne peut être qu'annulé (statut Annulé). Un devis transformé en facture ne peut plus être modifié.</div>
+</div><div class="faq-item">
+<div class="faq-q">Comment faire une facture à 0€ (offerte) ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Créez une facture normale et mettez les lignes à 0€ ou appliquez une remise de 100%. La facture est numérotée NF525 mais n'appelle aucun règlement.</div>
+</div><div class="faq-item">
+<div class="faq-q">Mon client veut payer en plusieurs fois, comment gérer ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Enregistrez plusieurs règlements partiels sur la même facture. Chaque règlement peut être d'un mode de paiement différent. La facture reste En attente jusqu'à ce que le total soit atteint.</div>
+</div><div class="faq-item">
+<div class="faq-q">Comment récupérer la TVA sur mes achats ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Les factures fournisseurs enregistrées dans Anim'Gest génèrent automatiquement les écritures TVA déductible (compte 445). Ces montants alimentent votre déclaration TVA périodique.</div>
+</div><div class="section-title">Stock & Achats</div><div class="faq-item">
+<div class="faq-q">Mon stock est négatif, comment corriger ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Stock → Articles → [article concerné] → Mouvements → + Entrée manuelle. Saisissez la quantité manquante avec le motif Régularisation. Puis faites un inventaire pour vérifier.</div>
+</div><div class="faq-item">
+<div class="faq-q">Comment gérer un article que je n'achète plus ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Dans la fiche article, changez le statut en Inactif. L'article n'apparaît plus dans les nouvelles commandes mais son historique est conservé.</div>
+</div><div class="faq-item">
+<div class="faq-q">Un fournisseur m'a livré moins que commandé, que faire ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Lors de la réception, saisissez uniquement les quantités réellement reçues. Le bon de commande reste ouvert avec le reliquat. Relancez le fournisseur ou annulez le reliquat si non livrable.</div>
+</div><div class="section-title">Agenda & Séances</div><div class="faq-item">
+<div class="faq-q">Comment gérer une annulation de dernière minute ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Ouvrez la séance → Annuler → saisissez le motif. Si vous avez une politique d'annulation tardive, cochez Facturer l'annulation. Une ligne de facturation est ajoutée automatiquement.</div>
+</div><div class="faq-item">
+<div class="faq-q">Puis-je gérer plusieurs intervenants dans le même agenda ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Oui. Paramètres → Utilisateurs → chaque utilisateur peut avoir son agenda. En vue Semaine, activez l'option multi-colonnes pour voir tous les agendas côte à côte.</div>
+</div><div class="faq-item">
+<div class="faq-q">Les clients peuvent-ils réserver en ligne ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Si le module Calendly est activé, les clients peuvent réserver depuis un lien public. Les réservations apparaissent automatiquement dans votre agenda.</div>
+</div><div class="section-title">Comptabilité & FEC</div><div class="faq-item">
+<div class="faq-q">Mon FEC n'est pas équilibré (Débit ≠ Crédit), que faire ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Allez dans Comptabilité → Contrôles. Identifiez les écritures orphelines ou mal équilibrées. En général, c'est une écriture manuelle incorrecte. Contactez le support si vous ne trouvez pas.</div>
+</div><div class="faq-item">
+<div class="faq-q">Mon expert-comptable veut des numéros de comptes différents, comment modifier ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Paramètres → Plan comptable → modifiez les numéros de compte selon les instructions de votre comptable. Attention : ne modifiez pas en cours d'exercice si des écritures existent déjà.</div>
+</div><div class="faq-item">
+<div class="faq-q">Comment transmettre mon FEC à mon expert-comptable ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Comptabilité → Export FEC → téléchargez le fichier .txt. Envoyez-le par email sécurisé ou déposez-le sur la plateforme partagée de votre cabinet comptable.</div>
+</div><div class="section-title">GED & Documents</div><div class="faq-item">
+<div class="faq-q">Où se trouvent mes documents sur le disque ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">C:\AnimGest_GED\SCT_001\ — chaque module a son sous-dossier (Module_Factures, Module_Devis, etc.) organisé par semaine.</div>
+</div><div class="faq-item">
+<div class="faq-q">Un PDF n'a pas été archivé en GED, comment l'ajouter manuellement ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Dans la fiche concernée (facture, séance, animal), onglet Documents → + Ajouter. Sélectionnez le fichier PDF depuis votre ordinateur. Il sera archivé et tagué automatiquement.</div>
+</div><div class="faq-item">
+<div class="faq-q">Comment sauvegarder ma GED ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Copiez le dossier C:\AnimGest_GED\ sur un disque externe ou un NAS. Utilisez robocopy pour une copie incrémentale. Une sauvegarde nightly automatique est normalement configurée.</div>
+</div><div class="section-title">Eliot IA</div><div class="faq-item">
+<div class="faq-q">Eliot a fait une erreur, comment annuler ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Eliot ne supprime jamais de données. Si une séance ou un devis a été créé par erreur, supprimez-le manuellement depuis l'interface. Toute action Eliot passe par les mêmes API que l'interface normale.</div>
+</div><div class="faq-item">
+<div class="faq-q">Eliot ne comprend pas ma demande, que faire ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Reformulez en étant plus précis. Exemple au lieu de 'fais un devis' → 'crée un devis pour Marie Dupont pour son chien Rex, 5 séances de suivi à 70€ chacune'. Plus c'est précis, mieux c'est.</div>
+</div><div class="faq-item">
+<div class="faq-q">Puis-je désactiver Eliot ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Oui. Paramètres → Modules → Eliot IA → Désactiver. Le bouton disparaît de l'interface. Le logiciel fonctionne parfaitement sans Eliot.</div>
+</div>
+</div>
+
+<div class="section-title">Notes de frais</div><div class="faq-item">
+<div class="faq-q">Comment créer une note de frais ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Comptabilité → Notes de frais → + Nouvelle note. Saisissez le titre, la date et cliquez Créer. La note s’ouvre en statut Brouillon. Ajoutez ensuite les lignes de dépense une par une avec la catégorie, le montant TTC et le taux de TVA. Les montants HT et TVA sont calculés automatiquement.</div>
+<div class="faq-q">Comment ajouter une dépense à une note de frais ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Ouvrez la note (clic sur la ligne dans la liste) → bouton + Ajouter une dépense. Renseignez la date, le libellé, la catégorie (qui pré-remplit le compte PCG), le taux TVA et le montant TTC. Cliquez Ajouter. Les totaux sont recalculés immédiatement.</div>
+<div class="faq-q">Quelles sont les catégories de dépenses disponibles ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Six catégories pré-paramétrées avec leur compte PCG : Repas / Restauration (6257), Transport / Déplacement (6251), Hébergement (6257), Fournitures / Matériel (6064), Frais postaux (6260), Frais divers (6288). Le compte PCG est modifiable manuellement si besoin.</div>
+<div class="faq-q">Comment soumettre une note de frais pour validation ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">La note doit être en statut Brouillon et contenir au moins une ligne. Cliquez Soumettre en haut à droite. Le statut passe à SOUMISE. Un administrateur peut alors la Valider ou la Rejeter depuis la même page.</div>
+<div class="faq-q">Quel est le workflow des statuts d’une note de frais ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">BROUILLON → SOUMISE → VALIDEE → REMBOURSEE. Un rejet repasse la note en REJETEE. Seules les notes en statut BROUILLON peuvent être modifiées (ajout de lignes). La numérotation suit le format NDF-AAAAMM-XXXX.</div>
+<div class="faq-q">Comment exporter les notes de frais en CSV ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Comptabilité → Notes de frais → bouton Export CSV. Le fichier téléchargé contient toutes les notes avec leurs lignes : numéro, date, titre, statut, catégorie, compte PCG, montants HT/TVA/TTC. Ouvrez-le dans Excel pour votre comptable.</div>
+<div class="faq-q">Puis-je scanner un justificatif avec l’IA ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Oui si l’option Eliot est activée. Dans le formulaire de création, cliquez Scan ticket. Prenez une photo du reçu ou importez une image. L’IA (Anthropic) extrait automatiquement le montant, la date et la catégorie. Vérifiez les valeurs avant de valider.</div>
+<div class="faq-q">Le numéro NDF est incorrect, que faire ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Le numéro NDF-AAAAMM-XXXX est généré automatiquement à la création depuis le compteur mensuel. Il ne peut pas être modifié manuellement. Si une note porte un numéro incorrect (migration), contactez le support pour une correction en base.</div>
+</div>
+
+<div class="section-title">GED — Gestion électronique des documents</div><div class="faq-item">
+<div class="faq-q">Où sont stockés les documents dans Anim’Gest ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Tous les documents sont stockés sur le disque local du serveur dans C:\AnimGest_GED\SCT_001\. Jamais en base de données ni sur un service cloud. Cette approche garantit confidentialité et performance, et permet une sauvegarde simple par robocopy.</div>
+<div class="faq-q">Comment accéder à la GED ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Cliquez GED dans le menu latéral. Vous voyez l’arborescence des dossiers à gauche et la liste des documents à droite. Cliquez sur un document pour le télécharger. Les documents sont classés par semaine (Semaine_YYYY_NN) et par module.</div>
+<div class="faq-q">Les PDF de factures sont-ils automatiquement archivés ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Oui. Chaque génération de PDF (facture, devis, avoir, bon de livraison) est automatiquement enregistrée dans la GED avec horodatage. Le fichier est nommé PIECE_horodatage.pdf et apparaît dans le dossier de la semaine courante.</div>
+<div class="faq-q">Comment déposer mes CGV pour qu’elles apparaissent sur les factures ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Paramètres → GED → Déposer CGV. Importez votre fichier CGV.pdf. Il sera stocké dans SCT_001/General/CGV.pdf et fusionné automatiquement à chaque génération de PDF de facture et devis. La fusion utilise pdf-lib et n’altère pas le fichier original.</div>
+<div class="faq-q">Combien de documents peut contenir la GED ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">La GED n’a pas de limite théorique. La limite pratique est l’espace disque du serveur. Avec 116 documents actifs pour une année, comptez environ 500 Mo/an pour un usage intensif. La page GED affiche le nombre de documents et permet de naviguer par dossier.</div>
+</div>
+
+<div class="section-title">Réseaux sociaux</div><div class="faq-item">
+<div class="faq-q">Comment planifier une publication sur les réseaux sociaux ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Réseaux sociaux → onglet + Nouveau post. Sélectionnez le réseau (Facebook, Instagram, Twitter/X, LinkedIn), rédigez votre contenu, et saisissez une date de publication optionnelle. Cliquez Enregistrer. La publication apparaît en statut BROUILLON dans la liste.</div>
+<div class="faq-q">Comment connecter mes comptes réseaux sociaux ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Paramètres → Réseaux sociaux (ou lien Paramètres en haut de la page). Renseignez l’URL de votre page et le token API pour chaque réseau. Une coche verte indique qu’un compte est configuré. Les tokens ne sont jamais affichés en clair après enregistrement.</div>
+<div class="faq-q">Je ne vois aucune publication dans la liste, pourquoi ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Vérifiez que vous êtes bien dans l’onglet Publications (premier onglet). Si la liste est vide malgré des publications créées, actualisez la page. Si le problème persiste, vérifiez que la table rs_post existe en base (Paramètres → Diagnostic téchnique).</div>
+<div class="faq-q">Quels réseaux sont supportés ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Facebook, Instagram, Twitter/X et LinkedIn sont disponibles. La publication automatique nécessite la configuration d’un token API valide pour chaque réseau. Sans token, les publications restent en brouillon dans Anim’Gest et doivent être publiées manuellement.</div>
+</div>
+
+<div class="section-title">Séances de groupe</div><div class="faq-item">
+<div class="faq-q">Comment créer une séance de groupe ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Agenda → Séances de groupe → + Nouvelle séance de groupe. Définissez le type de séance, la capacité maximale, la date et l’horaire. Une jauge de remplissage (vert/orange/rouge) indique le taux d’occupation en temps réel.</div>
+<div class="faq-q">Comment inscrire un client à une séance de groupe ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Ouvrez la séance de groupe → + Ajouter participant. Sélectionnez le client et l’animal. Si la capacité maximale est atteinte, l’ajout est bloqué. La facturation individuelle est disponible depuis chaque fiche participant.</div>
+<div class="faq-q">Puis-je facturer individuellement dans une séance de groupe ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Oui. Chaque participant peut être facturé individuellement avec son propre tarif. Depuis la fiche séance de groupe, cliquez Facturer sur la ligne du participant. Un devis ou une facture est généré(e) pour ce client uniquement.</div>
+</div>
+
+<div class="section-title">Webhooks &amp; Intégrations</div><div class="faq-item">
+<div class="faq-q">Comment connecter Calendly pour créer des séances automatiquement ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Dans Calendly, configurez un webhook vers votre URL Anim’Gest : http://[votre-ip]/api/webhooks/calendly. À chaque nouvelle réservation Calendly, une séance est automatiquement créée dans Anim’Gest avec les informations du client. Nécessite un accès réseau public (ngrok pour les tests).</div>
+<div class="faq-q">Le webhook Calendly ne reçoit aucun événement, que vérifier ?<span class="faq-arrow">+</span></div>
+<div class="faq-a">Vérifiez que l’URL webhook est accessible depuis l’extérieur (utilisez ngrok pour les tests locaux). Contrôlez les logs Docker (docker logs micro_api) pour voir les requêtes entrantes. Assurez-vous que le port 80 est ouvert et que nginx transmet les requêtes /api/webhooks/.</div>
+</div>
+
+<footer>Anim'Gest · NoSage's Editor — FAQ — Questions fréquentes — Sprint S93 · 2026</footer>
+<script>
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
+  q.nextElementSibling.classList.toggle('open');
+  q.querySelector('.faq-arrow').textContent=q.nextElementSibling.classList.contains('open')?'−':'+';
+}));
+document.querySelectorAll('.check-box').forEach(b=>b.addEventListener('click',()=>{
+  b.classList.toggle('done');
+  b.textContent=b.classList.contains('done')?'✓':'';
+}));
+</script>
+
+    <!-- S83-FAQ -->
+    <div style="margin-top:2rem">
+      <h3 style="color:#F59E0B">Comptabilit&eacute; &mdash; Nouveaut&eacute;s S82</h3>
+
+      <details style="margin-bottom:1rem">
+        <summary style="cursor:pointer;padding:.5rem;background:#1E293B;border-radius:.25rem">
+          Comment acc&eacute;der &agrave; l'export TVA&nbsp;?
+        </summary>
+        <p style="padding:.75rem;color:#94A3B8">
+          Allez dans <strong>Facturation &rarr; Export TVA</strong>. S&eacute;lectionnez la p&eacute;riode (ou utilisez les raccourcis mois/trimestre/ann&eacute;e)
+          puis cliquez sur <em>Exporter CSV</em>. Le fichier est au format UTF-8 BOM avec s&eacute;parateur&nbsp;; pour une compatibilit&eacute; Excel imm&eacute;diate.
+        </p>
+      </details>
+
+      <details style="margin-bottom:1rem">
+        <summary style="cursor:pointer;padding:.5rem;background:#1E293B;border-radius:.25rem">
+          Comment cr&eacute;er une note de frais&nbsp;?
+        </summary>
+        <p style="padding:.75rem;color:#94A3B8">
+          Allez dans <strong>Comptabilit&eacute; &rarr; Notes de frais &rarr; Nouvelle note</strong>.
+          Saisissez les lignes de d&eacute;penses (cat&eacute;gorie PCG, montant TTC, taux TVA).
+          Soumettez puis faites valider. L'export CSV est disponible depuis la liste des notes.
+        </p>
+      </details>
+
+      <details style="margin-bottom:1rem">
+        <summary style="cursor:pointer;padding:.5rem;background:#1E293B;border-radius:.25rem">
+          Pourquoi voit-on BC au lieu d'EDC dans les bilans comportementaux&nbsp;?
+        </summary>
+        <p style="padding:.75rem;color:#94A3B8">
+          La terminologie a &eacute;t&eacute; mise &agrave; jour en S82. EDC (Etude De Comportement) devient
+          <strong>BC (Bilan Comportemental)</strong>, conform&eacute;ment &agrave; la terminologie officielle du m&eacute;tier.
+          La route est d&eacute;sormais <code>/seances/bc</code> et les tables BDD <code>bc_fiche</code> / <code>bc_probleme</code>.
+        </p>
+      </details>
+
+      <details style="margin-bottom:1rem">
+        <summary style="cursor:pointer;padding:.5rem;background:#1E293B;border-radius:.25rem">
+          Comment organiser une s&eacute;ance de groupe avec des tarifs diff&eacute;rents&nbsp;?
+        </summary>
+        <p style="padding:.75rem;color:#94A3B8">
+          Allez dans <strong>S&eacute;ances &rarr; S&eacute;ances de groupe &rarr; Nouvelle s&eacute;ance</strong>.
+          D&eacute;finissez la capacit&eacute; max, le tarif pour 1 animal et le tarif pour 2+ animaux.
+          Ajoutez les participants&nbsp;: le tarif est calcul&eacute; automatiquement. La jauge de remplissage est visible en temps r&eacute;el.
+        </p>
+      </details>
+
+      <details style="margin-bottom:1rem">
+        <summary style="cursor:pointer;padding:.5rem;background:#1E293B;border-radius:.25rem">
+          Comment cr&eacute;er un devis pr&eacute;-rempli pour mon m&eacute;tier&nbsp;?
+        </summary>
+        <p style="padding:.75rem;color:#94A3B8">
+          Depuis la sidebar, cliquez sur <em>Nouveau devis</em> sous votre m&eacute;tier&nbsp;: le formulaire s'ouvre
+          pr&eacute;-s&eacute;lectionn&eacute; avec votre m&eacute;tier. Vous pouvez aussi choisir parmi les <strong>21 mod&egrave;les pr&eacute;d&eacute;finis</strong>
+          (3 par m&eacute;tier, 7 m&eacute;tiers couverts) dans l'onglet Mod&egrave;les du formulaire de cr&eacute;ation de devis.
+        </p>
+      </details>
+
+    </div>
+
+  </body></html>

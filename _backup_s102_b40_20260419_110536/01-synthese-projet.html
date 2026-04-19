@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anim'Gest — Synthèse projet S95</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F172A; --navy-800: #1E293B; --navy-700: #334155; --navy-600: #475569;
+  --gold: #F59E0B; --gold-light: #FCD34D; --gold-pale: #FEF3C7;
+  --cyan: #06B6D4; --violet: #4F46E5; --green: #10B981; --red: #EF4444; --orange: #F97316;
+  --text: #E2E8F0; --text-muted: #94A3B8; --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px; display: flex; align-items: center; gap: 32px;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge { margin-left: auto; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); color: var(--gold); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+
+/* HERO */
+.hero {
+  min-height: 420px;
+  background: linear-gradient(160deg, #0F172A 0%, #1E293B 40%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 80px 32px 60px; text-align: center; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(79,70,229,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 30%, rgba(6,182,212,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25);
+  color: var(--gold); font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 5px 16px; border-radius: 20px; margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem; font-weight: 800;
+  color: #F8FAFC; line-height: 1.1;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #F8FAFC 0%, #CBD5E1 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: var(--gold);
+  letter-spacing: 0.08em; margin-bottom: 20px;
+}
+.hero-tagline {
+  font-size: 1.05rem; color: var(--text-muted);
+  max-width: 640px; margin: 0 auto 32px;
+}
+.hero-meta { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; justify-content: center; }
+.hero-meta-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.82rem; color: var(--text-muted);
+}
+.hero-meta-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+/* STATS GRID */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 1px; background: rgba(245,158,11,0.08);
+  border-top: 1px solid rgba(245,158,11,0.1);
+  border-bottom: 1px solid rgba(245,158,11,0.1);
+}
+.stat-card { background: var(--navy); padding: 28px 16px; text-align: center; transition: background .2s; }
+.stat-card:hover { background: var(--navy-800); }
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 700; color: var(--gold);
+  line-height: 1; margin-bottom: 8px;
+}
+.stat-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
+.stat-delta { font-size: 0.7rem; color: var(--green); margin-top: 4px; }
+
+/* MAIN */
+.main { max-width: 1000px; margin: 0 auto; padding: 56px 24px; }
+.section { margin-bottom: 56px; }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 700;
+  color: #F8FAFC; margin-bottom: 28px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex; align-items: center; gap: 14px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold); font-size: 0.75rem; font-weight: 700;
+  width: 30px; height: 30px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; flex-shrink: 0;
+}
+
+/* VISION CARD */
+.vision-card {
+  background: linear-gradient(135deg, rgba(245,158,11,0.06) 0%, rgba(79,70,229,0.06) 100%);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 14px; padding: 32px;
+}
+.vision-card p { font-size: 1rem; line-height: 1.8; color: var(--text-muted); }
+.vision-card strong { color: var(--text); }
+
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pricing-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px; padding: 28px;
+  position: relative; overflow: hidden;
+  transition: border-color .2s;
+}
+.pricing-card:hover { border-color: rgba(245,158,11,0.25); }
+.pricing-card.featured {
+  border-color: rgba(245,158,11,0.35);
+  background: linear-gradient(160deg, rgba(245,158,11,0.06) 0%, var(--card) 60%);
+}
+.pricing-plan { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 10px; }
+.pricing-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem; font-weight: 700; color: var(--gold);
+  line-height: 1; margin-bottom: 4px;
+}
+.pricing-price span { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
+.pricing-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.pricing-features { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.pricing-features li { font-size: 0.82rem; color: var(--text-muted); padding-left: 18px; position: relative; }
+.pricing-features li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; font-size: 0.8rem; }
+.ia-option {
+  margin-top: 16px; padding: 10px 14px;
+  background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.15);
+  border-radius: 8px; font-size: 0.8rem; color: #6EE7B7;
+  text-align: center;
+}
+
+/* MÉTIERS GRID */
+.metiers-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.metier-card {
+  background: var(--card); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px; padding: 16px 12px; text-align: center;
+  transition: border-color .2s, transform .2s;
+  cursor: default;
+}
+.metier-card:hover { border-color: rgba(245,158,11,0.25); transform: translateY(-2px); }
+.metier-icon { font-size: 1.6rem; margin-bottom: 8px; }
+.metier-name { font-size: 0.78rem; font-weight: 600; color: var(--text); }
+.metier-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+
+/* OBJECTIFS */
+.objectifs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.obj-card {
+  background: var(--card); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px; padding: 24px;
+}
+.obj-year { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--gold); font-weight: 700; margin-bottom: 8px; }
+.obj-metric { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.obj-desc { font-size: 0.82rem; color: var(--text-muted); }
+
+/* STACK */
+.stack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.stack-item {
+  background: var(--card); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; padding: 14px 16px;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.stack-layer { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 4px; }
+.stack-tech { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+.stack-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+/* MODULES */
+.modules-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.module-row {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 8px; padding: 12px 16px;
+}
+.module-status {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.ms-ok { background: var(--green); box-shadow: 0 0 6px rgba(16,185,129,0.4); }
+.ms-spec { background: var(--orange); box-shadow: 0 0 6px rgba(249,115,22,0.4); }
+.ms-wip { background: var(--cyan); box-shadow: 0 0 6px rgba(6,182,212,0.4); }
+.module-name { font-size: 0.85rem; font-weight: 600; flex: 1; }
+.module-route { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); }
+
+footer {
+  text-align: center; padding: 40px 32px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.8rem; color: var(--text-muted); margin-top: 60px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+footer .footer-brand { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold); margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+  <a href="17-api-reference.html">API</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <a href="docs-changelog.html">Changelogs</a>
+  <span class="nav-badge">S95</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">
+    <span>📅</span> 01/04/2026
+    &nbsp;·&nbsp;
+    <span>🔀</span> Sprint S63
+    &nbsp;·&nbsp;
+    <span>🎯</span> 10 métiers
+  </div>
+  <h1>Anim'Gest</h1>
+  <div class="hero-brand">by NoSage's Editor</div>
+  <p class="hero-tagline">
+    La première plateforme ERP verticale dédiée à la filière animale de compagnie française.
+    Agenda · CRM · Facturation FEC · GED · Portail Client · Agent IA Eliot.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><span class="dot"></span>SaaS B2B multi-métiers</div>
+    <div class="hero-meta-item"><span class="dot"></span>10 métiers couverts</div>
+    <div class="hero-meta-item"><span class="dot"></span>Objectif : 2 000 abonnés an 5</div>
+    <div class="hero-meta-item"><span class="dot"></span>Score qualité 85/100</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value">S63</div>
+    <div class="stat-label">Sprint actuel</div>
+    <div class="stat-delta">→ S64</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">~115</div>
+    <div class="stat-label">Routes API</div>
+    <div class="stat-delta">+11 S63</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">106</div>
+    <div class="stat-label">Pages UI</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">85/100</div>
+    <div class="stat-label">Score qualité</div>
+    <div class="stat-delta">+2 vs S62</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">10</div>
+    <div class="stat-label">Métiers</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">167</div>
+    <div class="stat-label">Clients BDD</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- VISION -->
+  <div class="section">
+    <div class="section-title"><span class="num">🎯</span> Vision produit</div>
+    <div class="vision-card">
+      <p>
+        <strong>Anim'Gest</strong> est la première plateforme ERP verticale dédiée à la <strong>filière animale de compagnie française</strong>.
+        Elle centralise <strong>agenda, CRM, facturation FEC-conforme, élevage, GED, réseaux sociaux et portail client</strong>
+        dans un seul outil SaaS multi-métiers, conçu pour 10 professions du soin animal.
+        <br><br>
+        L'agent IA <strong>Eliot</strong> (basé sur l'API Anthropic) permet de créer devis, séances, factures et règlements
+        en langage naturel, directement depuis l'interface. Le <strong>Portail Client</strong> offre aux propriétaires d'animaux
+        un espace sécurisé pour consulter leurs séances, factures et animaux — sans compte Anim'Gest.
+      </p>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="section">
+    <div class="section-title"><span class="num">💶</span> Pricing</div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-plan">Essentiel</div>
+        <div class="pricing-price">39 <span>€/mois</span></div>
+        <div class="pricing-desc">Solo, 1 métier — idéal pour démarrer</div>
+        <ul class="pricing-features">
+          <li>Agenda + séances</li>
+          <li>Clients + animaux</li>
+          <li>Devis + factures</li>
+          <li>1 utilisateur</li>
+          <li>Export FEC</li>
+        </ul>
+        <div class="ia-option">+ Option Eliot IA disponible</div>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-plan">Professionnel</div>
+        <div class="pricing-price">69 <span>€/mois</span></div>
+        <div class="pricing-desc">Multi-métiers, BC, élevage, GED, Portail Client</div>
+        <ul class="pricing-features">
+          <li>Tout Essentiel</li>
+          <li>Bilan Comportemental</li>
+          <li>Module élevage</li>
+          <li>GED complète</li>
+          <li>Portail Client</li>
+          <li>CRM + programmes suivi</li>
+          <li>3 utilisateurs</li>
+        </ul>
+        <div class="ia-option">+ Option Eliot IA disponible</div>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-plan">Expert</div>
+        <div class="pricing-price">119 <span>€/mois</span></div>
+        <div class="pricing-desc">Multi-utilisateurs, inventaires, signature, RPE</div>
+        <ul class="pricing-features">
+          <li>Tout Professionnel</li>
+          <li>Stock + inventaires</li>
+          <li>Achats fournisseurs</li>
+          <li>Signature Yousign</li>
+          <li>Utilisateurs illimités</li>
+          <li>Bilan PCG 2025</li>
+          <li>Forfaits & Formules</li>
+          <li>RFE Pennylane</li>
+        </ul>
+        <div class="ia-option">+ Option Eliot IA disponible</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÉTIERS -->
+  <div class="section">
+    <div class="section-title"><span class="num">🐾</span> 10 métiers couverts</div>
+    <div class="metiers-grid">
+      <div class="metier-card">
+        <div class="metier-icon">🧠</div>
+        <div class="metier-name">Comportementaliste</div>
+        <div class="metier-sub">BC + CAC + Éthogramme</div>
+      </div>
+      <div class="metier-card">
+        <div class="metier-icon">✂️</div>
+        <div class="metier-name">Toiletteur</div>
+        <div class="metier-sub">Séances + fiches race</div>
+      </div>
+      <div class="metier-card">
+        <div class="metier-icon">🎓</div>
+        <div class="metier-name">Éducateur canin</div>
+        <div class="metier-sub">Programmes suivi</div>
+      </div>
+      <div class="metier-card">
+        <div class="metier-icon">🏠</div>
+        <div class="metier-name">Pet-sitter</div>
+        <div class="metier-sub">Visites + promenades</div>
+      </div>
+      <div class="metier-card">
+        <div class="metier-icon">🏨</div>
+        <div class="metier-name">Pension / Chenil</div>
+        <div class="metier-sub">Hébergements + stock</div>
+      </div>
+      <div class="metier-card">
+        <div class="metier-icon">🐕</div>
+        <div class="metier-name">Éleveur</div>
+        <div class="metier-sub">Portées + généalogie</div>
+      </div>
+      <div class="metier-card">
+        <div class="metier-icon">🐴</div>
+        <div class="metier-name">Équestre</div>
+        <div class="metier-sub">Chevaux + parcours</div>
+      </div>
+      <div class="metier-card">
+        <div class="metier-icon">🩺</div>
+        <div class="metier-name">Vétérinaire</div>
+        <div class="metier-sub">Soins + ordonnances</div>
+      </div>
+      <div class="metier-card">
+        <div class="metier-icon">💆</div>
+        <div class="metier-name">Ostéopathe</div>
+        <div class="metier-sub">Bilans + suivi</div>
+      </div>
+      <div class="metier-card">
+        <div class="metier-icon">🏅</div>
+        <div class="metier-name">Sport canin</div>
+        <div class="metier-sub">Parcours géolocalisé</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJECTIFS 5 ANS -->
+  <div class="section">
+    <div class="section-title"><span class="num">📈</span> Objectifs 5 ans</div>
+    <div class="objectifs-grid">
+      <div class="obj-card">
+        <div class="obj-year">An 3</div>
+        <div class="obj-metric">500 abonnés</div>
+        <div class="obj-desc">Breakeven mois 28-30 · BPI + love money → Business Angels</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-year">An 5</div>
+        <div class="obj-metric">2 000+ abonnés</div>
+        <div class="obj-desc">~1,8 M€ ARR · 360 000 animaux suivis · Série A / banque</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STACK TECHNIQUE -->
+  <div class="section">
+    <div class="section-title"><span class="num">🏗️</span> Stack technique</div>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <div class="stack-icon">⚡</div>
+        <div>
+          <div class="stack-layer">Frontend</div>
+          <div class="stack-tech">Next.js 15 App Router · TypeScript · Tailwind CSS</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🔧</div>
+        <div>
+          <div class="stack-layer">Backend</div>
+          <div class="stack-tech">NestJS · custom-routes.ts · 3846 lignes</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🗄️</div>
+        <div>
+          <div class="stack-layer">Base de données</div>
+          <div class="stack-tech">MariaDB · micro_logiciel + micro_logiciel_ged</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🌐</div>
+        <div>
+          <div class="stack-layer">Infrastructure</div>
+          <div class="stack-tech">Docker Compose · Nginx 1.27-alpine</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">📄</div>
+        <div>
+          <div class="stack-layer">PDF</div>
+          <div class="stack-tech">Puppeteer + Chromium Alpine · pdf-lib (CGV)</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">📧</div>
+        <div>
+          <div class="stack-layer">Email</div>
+          <div class="stack-tech">Nodemailer ^6.9.14 · SMTP Gmail App Password</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🤖</div>
+        <div>
+          <div class="stack-layer">IA</div>
+          <div class="stack-tech">Anthropic API · Eliot agent · 10 tools S63</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">✍️</div>
+        <div>
+          <div class="stack-layer">Signature</div>
+          <div class="stack-tech">Yousign API v3 · webhook statut</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">💳</div>
+        <div>
+          <div class="stack-layer">Paiement</div>
+          <div class="stack-tech">Stripe (portail client — à venir)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULES FONCTIONNELS -->
+  <div class="section">
+    <div class="section-title"><span class="num">📦</span> Modules fonctionnels</div>
+    <div class="modules-grid">
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Tiers / Clients</span><span class="module-route">/tiers</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Animaux + races</span><span class="module-route">/animaux</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Séances + Agenda</span><span class="module-route">/seances · /agenda</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Bilan Comportemental (BC)</span><span class="module-route">/ged-bc · /ged-cac</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Devis + Factures + Règlements</span><span class="module-route">/devis · /factures</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Avoirs + Conditions paiement</span><span class="module-route">/avoirs</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">GED complète (polymorphe)</span><span class="module-route">/ged/*</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">CRM (leads, opps, campagnes)</span><span class="module-route">/crm/*</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Élevage complet</span><span class="module-route">/elevage/*</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Achats fournisseurs</span><span class="module-route">/achats/*</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Stock PMP + inventaires</span><span class="module-route">/stock/*</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Statistiques + Dashboards</span><span class="module-route">/stats/*</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Export FEC comptabilité</span><span class="module-route">/comptabilite/*</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Signature Yousign</span><span class="module-route">/signatures/*</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">RBAC rôles + permissions</span><span class="module-route">/roles · /user-permissions</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Forfaits & Formules</span><span class="module-route">/forfaits · /formules</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Portail Client</span><span class="module-route">/portail/* — S63 ✓</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Agent IA Eliot</span><span class="module-route">/ia/chat — 10 tools</span></div>
+      <div class="module-row"><span class="module-status ms-ok"></span><span class="module-name">Paramètres Éditions + PDF</span><span class="module-route">/editions/*</span></div>
+      <div class="module-row"><span class="module-status ms-spec"></span><span class="module-name">Tarification 3 méthodes</span><span class="module-route">→ S64</span></div>
+      <div class="module-row"><span class="module-status ms-spec"></span><span class="module-name">Modules BL/BR/DAF/AC</span><span class="module-route">→ S64</span></div>
+      <div class="module-row"><span class="module-status ms-spec"></span><span class="module-name">Stripe billing + licences</span><span class="module-route">→ S65+</span></div>
+      <div class="module-row"><span class="module-status ms-spec"></span><span class="module-name">Multi-tenant SaaS</span><span class="module-route">→ S70+</span></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:20px;font-size:0.78rem;color:var(--text-muted);">
+      <span style="display:flex;align-items:center;gap:6px;"><span class="module-status ms-ok" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);"></span>Déployé</span>
+      <span style="display:flex;align-items:center;gap:6px;"><span class="module-status ms-spec" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--orange);"></span>Planifié</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-brand">Anim'Gest</div>
+  NoSage's Editor — Synthèse projet — MàJ Sprint S63 — 01/04/2026
+  <br>~115 routes API · 106 pages UI · Score qualité 85/100 · 10 métiers
+  <br><br>
+  <a href="index.html">← Retour à l'accueil</a>
+  &nbsp;·&nbsp;<a href="20-pilotage-projet.html">Pilotage</a>
+  &nbsp;·&nbsp;<a href="06-roadmap.html">Roadmap S64</a>
+  &nbsp;·&nbsp;<a href="17-api-reference.html">API Reference</a>
+</footer>
+
+</body>
+</html>

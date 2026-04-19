@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Générateur Maintenance — Anim'Gest</title>
+<style>
+
+  /* ── Anim'Gest Design System ── */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ag-navy:   #0F172A;
+    --ag-navy2:  #1E293B;
+    --ag-navy3:  #334155;
+    --ag-gold:   #B8860B;
+    --ag-gold2:  #D4A017;
+    --ag-gold3:  #F5D76E;
+    --ag-white:  #F8FAFC;
+    --ag-muted:  #94A3B8;
+    --ag-accent: #4F46E5;
+    --ag-cyan:   #06B6D4;
+    --ag-green:  #10B981;
+    --ag-red:    #EF4444;
+    --ag-orange: #F59E0B;
+    --ag-radius: 10px;
+    --ag-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    --ag-font-heading: 'Playfair Display', Georgia, serif;
+    --ag-font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ag-navy);
+    color: var(--ag-white);
+    font-family: var(--ag-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--ag-font-heading);
+    color: var(--ag-white);
+    letter-spacing: -0.5px;
+  }
+
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--ag-gold2); }
+  h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+
+  a { color: var(--ag-gold2); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--ag-gold3); text-decoration: underline; }
+
+  .ag-header {
+    background: var(--ag-navy2);
+    border-bottom: 2px solid var(--ag-gold);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ag-header .ag-logo {
+    font-family: var(--ag-font-heading);
+    font-size: 1.6rem;
+    color: var(--ag-gold2);
+    letter-spacing: -1px;
+  }
+  .ag-header .ag-subtitle {
+    font-size: 0.85rem;
+    color: var(--ag-muted);
+  }
+  .ag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(184,134,11,0.15);
+    color: var(--ag-gold2);
+    border: 1px solid rgba(184,134,11,0.3);
+  }
+  .ag-card {
+    background: var(--ag-navy2);
+    border: 1px solid var(--ag-navy3);
+    border-radius: var(--ag-radius);
+    padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ag-card:hover { border-color: var(--ag-gold); box-shadow: var(--ag-shadow); }
+
+  .ag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: var(--ag-radius);
+    font-family: var(--ag-font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .ag-btn-primary {
+    background: linear-gradient(135deg, var(--ag-accent), var(--ag-cyan));
+    color: #fff;
+  }
+  .ag-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-gold {
+    background: linear-gradient(135deg, var(--ag-gold), var(--ag-gold2));
+    color: var(--ag-navy);
+  }
+  .ag-btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-ghost {
+    background: transparent;
+    border: 1px solid var(--ag-navy3);
+    color: var(--ag-muted);
+  }
+  .ag-btn-ghost:hover { border-color: var(--ag-gold); color: var(--ag-gold2); }
+
+  .ag-tag-rouge  { background: rgba(239,68,68,0.15);  color: #F87171; border: 1px solid rgba(239,68,68,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-orange { background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-vert   { background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-bleu   { background: rgba(79,70,229,0.15);  color: #818CF8; border: 1px solid rgba(79,70,229,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 0.6rem 0.8rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ag-muted); border-bottom: 1px solid var(--ag-navy3); }
+  td { padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(51,65,85,0.5); font-size: 0.875rem; }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+
+  code, pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); border-radius: 4px; }
+  code { padding: 0.1rem 0.4rem; color: var(--ag-gold3); }
+  pre { padding: 1rem 1.25rem; overflow-x: auto; border: 1px solid var(--ag-navy3); color: #E2E8F0; line-height: 1.7; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--ag-navy); }
+  ::-webkit-scrollbar-thumb { background: var(--ag-navy3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ag-gold); }
+  /* ── Fin charte Anim'Gest ── */
+
+  /* ── Barre retour index ── */
+  .nav-retour-bar {
+    position: sticky; top: 0; z-index: 9999;
+    background: rgba(15, 23, 42, 0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 0 1.5rem;
+    display: flex; align-items: center; height: 44px; gap: 1rem;
+  }
+  .nav-retour-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: #94A3B8; text-decoration: none;
+    font-size: 0.82rem; font-weight: 600;
+    font-family: 'DM Sans','Space Grotesk','Syne','IBM Plex Sans',sans-serif;
+    padding: 0.3rem 0.75rem; border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.15s;
+  }
+  .nav-retour-link:hover {
+    color: #F59E0B; border-color: rgba(245,158,11,0.35);
+    background: rgba(245,158,11,0.06);
+  }
+  .nav-retour-sep { color: rgba(255,255,255,0.18); margin: 0 0.25rem; }
+  .nav-retour-title { color: rgba(255,255,255,0.32); font-size: 0.76rem;
+    font-family: 'DM Sans','Space Grotesk','Syne','IBM Plex Sans',sans-serif; }
+</style>
+<style>
+:root{
+  --navy:#0D2137;--navy-l:#112840;--navy-m:#1a3a5c;
+  --gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);
+  --text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;
+  --bdr:rgba(255,255,255,.08);
+  --ok:#4caf82;--warn:#e8a84a;--err:#e05c5c;--info:#5b9bd5;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+
+/* AUTH */
+#auth{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;
+  background:radial-gradient(ellipse at 30% 40%,rgba(212,168,67,.07) 0%,transparent 60%),var(--navy)}
+.auth-box{background:var(--navy-l);border:1px solid var(--gold-b);border-radius:18px;
+  padding:3rem 2.5rem;max-width:400px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.auth-logo{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);margin-bottom:.2rem}
+.auth-tag{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2.5rem}
+.auth-input{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--gold-b);border-radius:9px;
+  padding:.8rem 1rem;color:var(--text);font-size:1.1rem;font-family:inherit;
+  text-align:center;letter-spacing:.3em;outline:none;margin-bottom:1rem;transition:border-color .2s}
+.auth-input:focus{border-color:var(--gold)}
+.auth-btn{width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:9px;
+  padding:.8rem;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:opacity .2s}
+.auth-btn:hover{opacity:.85}
+.auth-err{color:var(--err);font-size:.78rem;margin-top:.8rem;min-height:1.2rem}
+.auth-hint{font-size:.68rem;color:var(--dim);margin-top:1.5rem}
+
+/* LAYOUT */
+#app{display:none;min-height:100vh}
+header{background:var(--navy-l);border-bottom:1px solid var(--gold-b);
+  padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100}
+.h-brand{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.15rem}
+.h-brand small{font-family:'DM Sans',sans-serif;font-size:.72rem;color:var(--muted);margin-left:.75rem;font-weight:300}
+.h-right{display:flex;align-items:center;gap:.75rem}
+.sprint-chip{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:20px;
+  padding:.28rem 1rem;font-size:.72rem;font-weight:600;color:var(--gold);letter-spacing:.05em}
+.logout-btn{background:none;border:none;color:var(--dim);font-size:.72rem;cursor:pointer;font-family:inherit}
+.logout-btn:hover{color:var(--muted)}
+
+.wrap{max-width:980px;margin:0 auto;padding:1.75rem 1.5rem 3rem}
+
+/* TABS */
+.tabs{display:flex;gap:5px;margin-bottom:1.25rem;flex-wrap:wrap}
+.t-btn{padding:.4rem 1rem;border-radius:20px;border:1px solid var(--bdr);
+  background:transparent;color:var(--muted);font-size:.75rem;font-weight:500;
+  cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap}
+.t-btn:hover{border-color:var(--gold-b);color:var(--text)}
+.t-btn.on{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:700}
+
+/* PROGRESS */
+.prog{display:flex;gap:4px;margin-bottom:1.5rem}
+.ps{flex:1;height:3px;border-radius:2px;background:var(--bdr);transition:background .3s}
+.ps.on{background:var(--gold)}
+
+/* CARD */
+.card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1.4rem 1.5rem;margin-bottom:1rem}
+.card-hd{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);
+  margin-bottom:1.1rem;padding-bottom:.75rem;border-bottom:1px solid var(--gold-b)}
+.sec-lbl{font-size:.67rem;font-weight:600;color:var(--dim);text-transform:uppercase;
+  letter-spacing:.1em;margin:1.1rem 0 .55rem}
+
+/* FORM */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px}
+.f{margin-bottom:.8rem}
+.lbl{display:block;font-size:.72rem;color:var(--muted);margin-bottom:.3rem}
+input[type=text],input[type=number],input[type=password],select{
+  width:100%;background:rgba(0,0,0,.25);border:1px solid var(--bdr);
+  border-radius:8px;padding:.52rem .85rem;color:var(--text);font-size:.83rem;
+  font-family:inherit;outline:none;transition:border-color .2s}
+input:focus,select:focus{border-color:var(--gold-b)}
+select option{background:#0D2137}
+
+/* SCORE SLIDERS */
+.sc-row{display:flex;align-items:center;gap:12px;margin-bottom:1rem}
+.sc-icon{font-size:1.1rem;flex-shrink:0;width:24px;text-align:center}
+.sc-lbl{width:120px;font-size:.8rem;color:var(--muted);flex-shrink:0}
+.sc-row input[type=range]{flex:1;accent-color:var(--gold)}
+.sc-val{width:52px;text-align:right;font-weight:700;font-size:.95rem;flex-shrink:0}
+.global-box{background:var(--gold-p);border:1px solid var(--gold-b);border-radius:8px;
+  padding:.85rem 1.1rem;display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
+.global-lbl{font-size:.8rem;color:var(--muted)}
+.global-val{font-size:1.5rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--gold)}
+
+/* LIST EDITOR */
+.ri{display:flex;gap:6px;align-items:center;margin-bottom:5px}
+.ri input,.ri select{flex:1;min-width:0}
+.del{flex-shrink:0;background:none;border:none;color:var(--err);cursor:pointer;
+  font-size:1.25rem;padding:1px 5px;opacity:.6;transition:opacity .2s;line-height:1}
+.del:hover{opacity:1}
+.add{display:inline-flex;align-items:center;gap:5px;font-size:.75rem;color:var(--gold);
+  background:none;border:none;cursor:pointer;padding:.28rem 0;font-family:inherit;opacity:.8}
+.add:hover{opacity:1}
+
+/* SEVERITY BADGES */
+.sev-select{width:110px;flex-shrink:0}
+
+/* OUTPUT */
+.score-summary{background:rgba(212,168,67,.08);border:1px solid var(--gold-b);border-radius:var(--r);
+  padding:1.1rem 1.25rem;margin-top:1rem}
+.score-mini-grid{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1rem}
+.score-mini{flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center}
+.score-mini-val{font-size:1.4rem;font-weight:700;font-family:'Playfair Display',serif;line-height:1}
+.score-mini-lbl{font-size:.65rem;color:var(--muted);margin-top:.25rem}
+.btn-dash{display:block;width:100%;padding:.8rem;background:var(--gold);color:var(--navy);
+  border:none;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;
+  font-family:inherit;text-decoration:none;text-align:center;margin-top:.75rem;transition:opacity .2s}
+.btn-dash:hover{opacity:.85}
+.btn-copy{display:block;width:100%;padding:.68rem;background:rgba(76,175,130,.13);
+  color:var(--ok);border:1px solid rgba(76,175,130,.3);border-radius:8px;
+  font-size:.83rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:.6rem;transition:all .2s}
+.btn-copy:hover{background:rgba(76,175,130,.22)}
+.btn-reset{display:block;width:100%;padding:.6rem;background:transparent;color:var(--err);
+  border:1px solid rgba(224,92,92,.25);border-radius:8px;font-size:.78rem;cursor:pointer;
+  font-family:inherit;margin-top:.5rem;opacity:.7}
+.btn-reset:hover{opacity:1}
+
+/* NAV */
+.navb{display:flex;gap:10px;margin-top:1.5rem}
+.nb{flex:1;padding:.65rem;border-radius:8px;font-size:.83rem;cursor:pointer;
+  font-family:inherit;font-weight:500;transition:all .2s;border:none}
+.nb.prev{background:transparent;border:1px solid var(--bdr);color:var(--muted)}
+.nb.prev:hover{border-color:var(--gold-b);color:var(--text)}
+.nb.next{background:var(--gold);color:var(--navy);font-weight:700}
+.nb.next:hover{opacity:.85}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--navy-l);
+  border:1px solid var(--gold-b);border-radius:8px;padding:.5rem 1.1rem;
+  font-size:.75rem;color:var(--gold);opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+/* FOOTER NAV */
+#app-footer{display:none;background:#112840;border-top:1px solid rgba(212,168,67,.28);
+  padding:.85rem 2rem;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;position:sticky;bottom:0;z-index:100}
+.f-link{font-size:.75rem;color:var(--muted);text-decoration:none;padding:.35rem .85rem;
+  border:1px solid rgba(255,255,255,.08);border-radius:6px;transition:all .2s}
+.f-link:hover{border-color:rgba(212,168,67,.28);color:var(--text)}
+</style>
+</head>
+<body>
+<div class="nav-retour-bar">
+  <a href="index.html" class="nav-retour-link">&#8592; Index</a><span class="nav-retour-sep">·</span><span class="nav-retour-title">Générateur Maintenance</span>
+</div>
+
+<!-- AUTH -->
+<div id="auth">
+  <div class="auth-box">
+    <div class="auth-logo">Anim'Gest</div>
+    <div class="auth-tag">NoSage's Editor &middot; Générateur de Bilan Maintenance</div>
+    
+    <button class="auth-btn" onclick="login()">Accéder &rarr;</button>
+    <div class="auth-err" id="auth-err"></div>
+    <div class="auth-hint">Accès réservé &mdash; NoSage's Editor</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="h-brand">Anim'Gest <small>Générateur de Bilan Maintenance</small></div>
+    <div class="h-right">
+      <div class="sprint-chip" id="h-sprint">S58</div>
+      <button class="logout-btn" onclick="logout()">Déconnexion</button>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="tabs" id="tabs"></div>
+    <div class="prog" id="prog"></div>
+    <div id="content"></div>
+  </div>
+</div>
+
+<div id="app-footer">
+  <a href="index.html" style="font-size:.78rem;font-weight:600;color:var(--gold)">← Index documentation</a>
+  <div style="display:flex;gap:10px">
+    <a href="SAV_Pilotage_Qualite.html" class="f-link">📐 Pilotage</a>
+    <a href="SAV_Generator_Handover.html" class="f-link">📋 Handover</a>
+    <a href="SAV_Dashboard_Qualite.html" class="f-link">📊 Qualité</a>
+    <a href="SAV_Dashboard_Maintenance.html" class="f-link">🔧 Dashboard Maintenance</a>
+  </div>
+</div>
+
+<div class="toast" id="toast">Sauvegardé ✓</div>
+
+<script>
+var SECRET = '@lgoritHme+977_73300';
+
+function login(){
+  var v = document.getElementById('pwd').value;
+  if(v === SECRET){
+    sessionStorage.setItem('ag_maint_gen','1');
+    document.getElementById('auth').style.display='none';
+    document.getElementById('app').style.display='block';
+    document.getElementById('app-footer').style.display='flex';
+    loadState(); renderAll();
+  } else {
+    var el=document.getElementById('auth-err');
+    el.textContent='Mot de passe incorrect';
+    document.getElementById('pwd').value='';
+    setTimeout(function(){el.textContent='';},3000);
+  }
+}
+function logout(){ sessionStorage.removeItem('ag_maint_gen'); location.reload(); }
+window.addEventListener('DOMContentLoaded',function(){
+  if(sessionStorage.getItem('ag_maint_gen')==='1'){
+    document.getElementById('auth').style.display='none';
+    document.getElementById('app').style.display='block';
+    document.getElementById('app-footer').style.display='flex';
+    loadState(); renderAll();
+  }
+});
+
+/* ══ TABS ══ */
+var TABS=[
+  {id:'meta',     lbl:'📅 En-tête'},
+  {id:'scores',   lbl:'📊 Scores'},
+  {id:'metriques',lbl:'🔢 Métriques'},
+  {id:'actions',  lbl:'⚠️ Points d\'action'},
+  {id:'cmds',     lbl:'💻 Commandes'},
+  {id:'out',      lbl:'📤 Envoyer'}
+];
+
+var cur=0;
+
+/* ══ STATE ══ */
+var DEFAULT={
+  sprint:'S62', date:new Date().toLocaleDateString('fr-FR'),
+  s_infra:90, s_api:85, s_dette:60, s_secu:80,
+  containers:3, routes_ok:'9/10', bak_files:45, api_reachable:true,
+  actions:[
+    {label:'45 fichiers .bak — session nettoyage nécessaire', sev:'warn'},
+    {label:'Route /formules non testée', sev:'info'}
+  ],
+  cmds:[
+    {label:'Rebuild API', cmd:'cd "D:\\...\\deploy" && docker compose build api --no-cache && docker compose up -d api && docker compose restart nginx'},
+    {label:'Sauvegarde manuelle', cmd:'PowerShell -ExecutionPolicy Bypass -File "G:\\Sauvegarde_micro_logiciel\\Sauvegarde_micro_logiciel.ps1"'},
+    {label:'Nettoyage cache Docker', cmd:'docker builder prune --force'}
+  ]
+};
+
+var S = JSON.parse(JSON.stringify(DEFAULT));
+var saveTimer=null;
+
+function saveState(){
+  localStorage.setItem('ag_maint_gen_data',JSON.stringify(S));
+  clearTimeout(saveTimer);
+  var t=document.getElementById('toast');
+  t.classList.add('show');
+  saveTimer=setTimeout(function(){t.classList.remove('show');},1800);
+}
+function loadState(){
+  try{var d=localStorage.getItem('ag_maint_gen_data');if(d)Object.assign(S,JSON.parse(d));}catch(e){}
+}
+function resetState(){
+  if(!confirm('Réinitialiser avec les données par défaut ?')) return;
+  S=JSON.parse(JSON.stringify(DEFAULT));
+  S.date=new Date().toLocaleDateString('fr-FR');
+  saveState(); renderAll();
+}
+
+function upd(k,v){S[k]=v;saveState();}
+function addAction(){S.actions.push({label:'',sev:'warn'});saveState();renderAll();}
+function delAction(i){S.actions.splice(i,1);saveState();renderAll();}
+function updAction(i,f,v){S.actions[i][f]=v;saveState();}
+function addCmd(){S.cmds.push({label:'',cmd:''});saveState();renderAll();}
+function delCmd(i){S.cmds.splice(i,1);saveState();renderAll();}
+function updCmd(i,f,v){S.cmds[i][f]=v;saveState();}
+function goTo(i){cur=i;renderAll();}
+
+function glo(){return Math.round((S.s_infra+S.s_api+S.s_dette+S.s_secu)/4);}
+function nxt(){return 'S'+(parseInt((S.sprint||'S62').replace(/\D/g,''))||62+1);}
+function sc(v){return v>=80?'var(--ok)':v>=60?'var(--warn)':'var(--err)';}
+function e(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+
+/* ══ RENDER ══ */
+function renderAll(){
+  document.getElementById('h-sprint').textContent=S.sprint||'SXX';
+  document.getElementById('tabs').innerHTML=TABS.map(function(t,i){
+    return '<button class="t-btn'+(i===cur?' on':'')+'" onclick="goTo('+i+')">'+t.lbl+'</button>';
+  }).join('');
+  document.getElementById('prog').innerHTML=TABS.map(function(_,i){
+    return '<div class="ps'+(i<=cur?' on':'')+'"></div>';
+  }).join('');
+
+  var id=TABS[cur].id;
+  var h='';
+
+  if(id==='meta'){
+    h='<div class="card"><div class="card-hd">En-tête du bilan</div>'
+      +'<div class="g2">'
+      +'<div class="f"><label class="lbl">Sprint</label><input type="text" value="'+e(S.sprint)+'" placeholder="S58" oninput="upd(\'sprint\',this.value)" /></div>'
+      +'<div class="f"><label class="lbl">Date</label><input type="text" value="'+e(S.date)+'" oninput="upd(\'date\',this.value)" /></div>'
+      +'</div>'
+      +'<div class="sec-lbl">Rappel — ce que vérifie animgest_maintenance.py</div>'
+      +'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:.25rem">'
+      +['🐳 Conteneurs Docker up/down','🔌 10 routes API critiques (HTTP 200/404/500)','🗂️ Fichiers .bak, inject_*.js, patch_*.py','🔒 Passwords hardcodés, tokens, clés Stripe','📦 inject_v4_final.js (pénalité spéciale)']
+        .map(function(r){return '<span style="background:var(--gold-p);border:1px solid var(--gold-b);border-radius:5px;padding:.22rem .65rem;font-size:.68rem;color:var(--gold-l);font-family:Courier New,monospace">'+r+'</span>';}).join('')
+      +'</div>'
+      +'</div>';
+  }
+
+  if(id==='scores'){
+    var g=glo();
+    h='<div class="card"><div class="card-hd">Scores de maintenance</div>'
+      +[['s_infra','🐳','Infrastructure','Docker, nginx, BDD, sauvegardes'],
+        ['s_api',  '🔌','Routes API',    '10 routes critiques testées'],
+        ['s_dette','🗂️','Dette technique','.bak, inject_, scripts obsolètes'],
+        ['s_secu', '🔒','Sécurité',      'Credentials, tokens, .env exposés']
+       ].map(function(row){
+         var k=row[0],ic=row[1],lbl=row[2],hint=row[3];
+         var v=S[k];
+         return '<div class="sc-row">'
+           +'<span class="sc-icon">'+ic+'</span>'
+           +'<span class="sc-lbl" title="'+hint+'">'+lbl+'</span>'
+           +'<input type="range" min="0" max="100" value="'+v+'" oninput="upd(\''+k+'\',+this.value);renderAll()" />'
+           +'<span class="sc-val" style="color:'+sc(v)+'">'+v+'</span>'
+           +'</div>';
+       }).join('')
+      +'<div class="global-box"><span class="global-lbl">Score global maintenance</span>'
+      +'<span class="global-val" style="color:'+sc(g)+'">'+g+'/100</span></div>'
+      +'</div>';
+  }
+
+  if(id==='metriques'){
+    h='<div class="card"><div class="card-hd">Métriques infrastructure</div>'
+      +'<div class="g3">'
+      +'<div class="f"><label class="lbl">Containers actifs (/ 3)</label>'
+      +'<input type="number" min="0" max="3" value="'+S.containers+'" oninput="upd(\'containers\',+this.value)" /></div>'
+      +'<div class="f"><label class="lbl">Routes OK / total</label>'
+      +'<input type="text" value="'+e(S.routes_ok)+'" placeholder="9/10" oninput="upd(\'routes_ok\',this.value)" /></div>'
+      +'<div class="f"><label class="lbl">Fichiers .bak détectés</label>'
+      +'<input type="number" min="0" value="'+S.bak_files+'" oninput="upd(\'bak_files\',+this.value)" /></div>'
+      +'</div>'
+      +'<div class="f" style="margin-top:.5rem"><label class="lbl">API accessible ?</label>'
+      +'<select onchange="upd(\'api_reachable\',this.value===\'true\')">'
+      +'<option value="true"'+(S.api_reachable?' selected':'')+'>✅ Oui — GET /api/bilan → 200</option>'
+      +'<option value="false"'+(!S.api_reachable?' selected':'')+'>❌ Non — inaccessible</option>'
+      +'</select></div>'
+      +'</div>';
+  }
+
+  if(id==='actions'){
+    h='<div class="card"><div class="card-hd">Points d\'action identifiés</div>'
+      +'<div class="sec-lbl">Issus du rapport animgest_maintenance.py</div>'
+      +S.actions.map(function(a,i){
+        return '<div class="ri">'
+          +'<select class="sev-select" onchange="updAction('+i+',\'sev\',this.value)">'
+          +'<option value="err"'+(a.sev==='err'?' selected':'')+'>🔴 Critique</option>'
+          +'<option value="warn"'+(a.sev==='warn'?' selected':'')+'>🟠 Attention</option>'
+          +'<option value="info"'+(a.sev==='info'?' selected':'')+'>🔵 Info</option>'
+          +'</select>'
+          +'<input type="text" value="'+e(a.label)+'" placeholder="ex : Route /formules retourne 404"'
+          +' oninput="updAction('+i+',\'label\',this.value)" />'
+          +'<button class="del" onclick="delAction('+i+')">×</button>'
+          +'</div>';
+      }).join('')
+      +'<button class="add" onclick="addAction()">＋ Ajouter un point d\'action</button>'
+      +'</div>';
+  }
+
+  if(id==='cmds'){
+    h='<div class="card"><div class="card-hd">Commandes de correction</div>'
+      +'<div class="sec-lbl">Commandes à copier depuis le Dashboard Maintenance</div>'
+      +S.cmds.map(function(c,i){
+        return '<div style="margin-bottom:.85rem">'
+          +'<div class="f"><label class="lbl">Label</label>'
+          +'<input type="text" value="'+e(c.label)+'" placeholder="ex : Rebuild API"'
+          +' oninput="updCmd('+i+',\'label\',this.value)" /></div>'
+          +'<div class="ri">'
+          +'<input type="text" value="'+e(c.cmd)+'" placeholder="commande PowerShell"'
+          +' oninput="updCmd('+i+',\'cmd\',this.value)" />'
+          +'<button class="del" onclick="delCmd('+i+')">×</button>'
+          +'</div>'
+          +'</div>';
+      }).join('')
+      +'<button class="add" onclick="addCmd()">＋ Ajouter une commande</button>'
+      +'</div>';
+  }
+
+  if(id==='out'){
+    var g=glo();
+    var sp=S.sprint||'SXX';
+
+    // Construire l'URL dashboard avec params
+    var dashUrl='SAV_Dashboard_Maintenance.html'
+      +'?sprint='+encodeURIComponent(sp)
+      +'&infra='+S.s_infra
+      +'&api='+S.s_api
+      +'&dette='+S.s_dette
+      +'&secu='+S.s_secu
+      +'&containers='+S.containers
+      +'&routes_ok='+encodeURIComponent(S.routes_ok)
+      +'&bak='+S.bak_files
+      +'&issues='+encodeURIComponent(S.actions.filter(function(a){return a.label.trim();}).map(function(a){return a.label;}).join('|'));
+
+    h='<div class="card"><div class="card-hd">Envoyer vers le Dashboard Maintenance</div>'
+      // Résumé scores
+      +'<div class="score-summary">'
+      +'<div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:.75rem">Bilan '+sp+' — récapitulatif</div>'
+      +'<div class="score-mini-grid">'
+      +'<div class="score-mini"><div class="score-mini-val" style="color:'+sc(S.s_infra)+'">'+S.s_infra+'</div><div class="score-mini-lbl">Infrastructure</div></div>'
+      +'<div class="score-mini"><div class="score-mini-val" style="color:'+sc(S.s_api)+'">'+S.s_api+'</div><div class="score-mini-lbl">Routes API</div></div>'
+      +'<div class="score-mini"><div class="score-mini-val" style="color:'+sc(S.s_dette)+'">'+S.s_dette+'</div><div class="score-mini-lbl">Dette</div></div>'
+      +'<div class="score-mini"><div class="score-mini-val" style="color:'+sc(S.s_secu)+'">'+S.s_secu+'</div><div class="score-mini-lbl">Sécurité</div></div>'
+      +'<div class="score-mini"><div class="score-mini-val" style="color:'+sc(g)+'">'+g+'</div><div class="score-mini-lbl">Global</div></div>'
+      +'</div>'
+      // Métriques résumé
+      +'<div style="font-size:.75rem;color:var(--muted);margin-bottom:.85rem">'
+      +'Containers : <strong style="color:var(--text)">'+S.containers+'/3</strong> &nbsp;|&nbsp; '
+      +'Routes OK : <strong style="color:var(--text)">'+S.routes_ok+'</strong> &nbsp;|&nbsp; '
+      +'Fichiers .bak : <strong style="color:'+(S.bak_files>30?'var(--warn)':'var(--text)')+'">'+S.bak_files+'</strong> &nbsp;|&nbsp; '
+      +'API : <strong style="color:'+(S.api_reachable?'var(--ok)':'var(--err)')+'">'+( S.api_reachable?'✅ OK':'❌ KO')+'</strong>'
+      +'</div>'
+      // Points d'action résumé
+      +(S.actions.filter(function(a){return a.label.trim();}).length
+        ? '<div style="font-size:.72rem;color:var(--muted);margin-bottom:.85rem"><strong style="color:var(--gold-l)">Points d\'action :</strong> '
+          +S.actions.filter(function(a){return a.label.trim();}).map(function(a){
+            var icon=a.sev==='err'?'🔴':a.sev==='warn'?'🟠':'🔵';
+            return icon+' '+a.label;
+          }).join(' &nbsp;·&nbsp; ')+'</div>'
+        : '')
+      // Bouton dashboard
+      +'<a href="'+dashUrl+'" class="btn-dash">🔧 Ouvrir le Dashboard Maintenance avec ce bilan →</a>'
+      +'</div>'
+      // Bouton copie URL
+      +'<button class="btn-copy" onclick="copyUrl(\''+dashUrl.replace(/'/g,"\\'")+'\')" style="margin-top:.75rem">📋 Copier le lien pré-rempli</button>'
+      +'<button class="btn-reset" onclick="resetState()">Réinitialiser avec les données par défaut</button>'
+      +'</div>';
+  }
+
+  var nav='<div class="navb">';
+  if(cur>0) nav+='<button class="nb prev" onclick="goTo('+(cur-1)+')">Précédent</button>';
+  if(cur<TABS.length-1) nav+='<button class="nb next" onclick="goTo('+(cur+1)+')">Suivant</button>';
+  nav+='</div>';
+  document.getElementById('content').innerHTML=h+nav;
+}
+
+function copyUrl(url){
+  var full=window.location.href.replace(/[^/]*$/,'')+url;
+  navigator.clipboard.writeText(full).then(function(){
+    var b=document.querySelector('.btn-copy');
+    if(b){b.textContent='✅ Lien copié !';setTimeout(function(){b.textContent='📋 Copier le lien pré-rempli';},2000);}
+  });
+}
+</script>
+</body>
+</html>

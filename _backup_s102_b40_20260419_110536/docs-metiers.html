@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Métiers — Anim'Gest</title>
+<style>
+
+  /* ── Anim'Gest Design System ── */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ag-navy:   #0F172A;
+    --ag-navy2:  #1E293B;
+    --ag-navy3:  #334155;
+    --ag-gold:   #B8860B;
+    --ag-gold2:  #D4A017;
+    --ag-gold3:  #F5D76E;
+    --ag-white:  #F8FAFC;
+    --ag-muted:  #94A3B8;
+    --ag-accent: #4F46E5;
+    --ag-cyan:   #06B6D4;
+    --ag-green:  #10B981;
+    --ag-red:    #EF4444;
+    --ag-orange: #F59E0B;
+    --ag-radius: 10px;
+    --ag-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    --ag-font-heading: 'Playfair Display', Georgia, serif;
+    --ag-font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ag-navy);
+    color: var(--ag-white);
+    font-family: var(--ag-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--ag-font-heading);
+    color: var(--ag-white);
+    letter-spacing: -0.5px;
+  }
+
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--ag-gold2); }
+  h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+
+  a { color: var(--ag-gold2); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--ag-gold3); text-decoration: underline; }
+
+  .ag-header {
+    background: var(--ag-navy2);
+    border-bottom: 2px solid var(--ag-gold);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ag-header .ag-logo {
+    font-family: var(--ag-font-heading);
+    font-size: 1.6rem;
+    color: var(--ag-gold2);
+    letter-spacing: -1px;
+  }
+  .ag-header .ag-subtitle {
+    font-size: 0.85rem;
+    color: var(--ag-muted);
+  }
+  .ag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(184,134,11,0.15);
+    color: var(--ag-gold2);
+    border: 1px solid rgba(184,134,11,0.3);
+  }
+  .ag-card {
+    background: var(--ag-navy2);
+    border: 1px solid var(--ag-navy3);
+    border-radius: var(--ag-radius);
+    padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ag-card:hover { border-color: var(--ag-gold); box-shadow: var(--ag-shadow); }
+
+  .ag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: var(--ag-radius);
+    font-family: var(--ag-font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .ag-btn-primary {
+    background: linear-gradient(135deg, var(--ag-accent), var(--ag-cyan));
+    color: #fff;
+  }
+  .ag-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-gold {
+    background: linear-gradient(135deg, var(--ag-gold), var(--ag-gold2));
+    color: var(--ag-navy);
+  }
+  .ag-btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-ghost {
+    background: transparent;
+    border: 1px solid var(--ag-navy3);
+    color: var(--ag-muted);
+  }
+  .ag-btn-ghost:hover { border-color: var(--ag-gold); color: var(--ag-gold2); }
+
+  .ag-tag-rouge  { background: rgba(239,68,68,0.15);  color: #F87171; border: 1px solid rgba(239,68,68,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-orange { background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-vert   { background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-bleu   { background: rgba(79,70,229,0.15);  color: #818CF8; border: 1px solid rgba(79,70,229,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 0.6rem 0.8rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ag-muted); border-bottom: 1px solid var(--ag-navy3); }
+  td { padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(51,65,85,0.5); font-size: 0.875rem; }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+
+  code, pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); border-radius: 4px; }
+  code { padding: 0.1rem 0.4rem; color: var(--ag-gold3); }
+  pre { padding: 1rem 1.25rem; overflow-x: auto; border: 1px solid var(--ag-navy3); color: #E2E8F0; line-height: 1.7; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--ag-navy); }
+  ::-webkit-scrollbar-thumb { background: var(--ag-navy3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ag-gold); }
+  /* ── Fin charte Anim'Gest ── */
+
+</style>
+<style>
+:root{--navy:#0D2137;--navy-l:#112840;--gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);--text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;--bdr:rgba(255,255,255,.08);--ok:#4caf82;--r:10px;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+nav{background:var(--navy-l);border-bottom:1px solid var(--gold-b);padding:.85rem 2rem;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold)}
+.nav-back{font-size:.75rem;color:var(--muted);margin-left:.5rem}
+.nav-back:hover{color:var(--gold)}
+.nav-right{margin-left:auto;font-size:.7rem;color:var(--dim)}
+.hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:2.5rem 2rem;border-bottom:1px solid var(--gold-b)}
+.hero-eye{font-size:.68rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2.2rem);margin-bottom:.5rem}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{font-size:.85rem;color:var(--muted);max-width:600px}
+.wrap{max-width:1100px;margin:0 auto;padding:2rem 2rem 5rem}
+.sec-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);margin:2rem 0 1rem;padding-bottom:.6rem;border-bottom:1px solid var(--gold-b)}
+.metier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.metier-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1.2rem 1.35rem;transition:all .2s;display:flex;gap:12px}
+.metier-card:hover{border-color:var(--gold-b);background:rgba(212,168,67,.04)}
+.metier-icon{font-size:1.6rem;flex-shrink:0;margin-top:2px}
+.metier-body{}
+.metier-name{font-weight:600;font-size:.9rem;color:var(--gold-l);margin-bottom:.25rem}
+.metier-desc{font-size:.75rem;color:var(--muted);line-height:1.5;margin-bottom:.4rem}
+.metier-link{font-size:.73rem;color:var(--gold);opacity:.8}
+.metier-link:hover{opacity:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.doc-card{background:var(--navy-l);border:1px solid var(--bdr);border-radius:var(--r);padding:1rem 1.15rem;transition:all .2s;display:flex;flex-direction:column;gap:.4rem}
+.doc-card:hover{border-color:var(--gold-b);background:rgba(212,168,67,.04)}
+.doc-card a{font-size:.85rem;font-weight:600;color:var(--text)}
+.doc-card a:hover{color:var(--gold)}
+.doc-card .desc{font-size:.73rem;color:var(--muted)}
+footer{background:var(--navy-l);border-top:1px solid var(--bdr);padding:1rem 2rem;font-size:.72rem;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+</style>
+</head>
+<body>
+<nav>
+  <span class="nav-logo">Anim'Gest</span>
+  <a href="index.html" class="nav-back">← Retour à l'index</a>
+  <span class="nav-right">Métiers — 10 professionnels couverts</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-eye">Documentation métiers</div>
+  <h1>🐾 Les <em>10 Métiers</em></h1>
+  <p>Chaque métier dispose de son propre module, dashboard, sidebar contextuelle et programmes de suivi adaptés.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-title">Les 10 métiers couverts</div>
+  <div class="metier-grid">
+
+    <a href="36-metier-comportementaliste.html" class="metier-card">
+      <span class="metier-icon">🧠</span>
+      <div class="metier-body">
+        <div class="metier-name">Comportementaliste</div>
+        <div class="metier-desc">EDC (Étude Comportementale), CAC, programmes comportementaux, suivi séances. Accessible depuis fiche séance uniquement.</div>
+        <div class="metier-link">Voir la documentation →</div>
+      </div>
+    </a>
+
+    <a href="37-metier-toiletteur.html" class="metier-card">
+      <span class="metier-icon">✂️</span>
+      <div class="metier-body">
+        <div class="metier-name">Toiletteur</div>
+        <div class="metier-desc">Module toilettage complet, types de prestations, suivi par race, historique par animal.</div>
+        <div class="metier-link">Voir la documentation →</div>
+      </div>
+    </a>
+
+    <a href="38-metier-petsitter.html" class="metier-card">
+      <span class="metier-icon">🏠</span>
+      <div class="metier-body">
+        <div class="metier-name">Pet-sitter</div>
+        <div class="metier-desc">Gardes à domicile, planning des visites, notes de garde, facturation à la prestation.</div>
+        <div class="metier-link">Voir la documentation →</div>
+      </div>
+    </a>
+
+    <a href="39-metier-eleveur.html" class="metier-card">
+      <span class="metier-icon">🐕</span>
+      <div class="metier-body">
+        <div class="metier-name">Éleveur</div>
+        <div class="metier-desc">Portées, saillies, réservations, généalogie, déclarations DDPP/LOF, géniteurs.</div>
+        <div class="metier-link">Voir la documentation →</div>
+      </div>
+    </a>
+
+    <a href="40-metier-educateur.html" class="metier-card">
+      <span class="metier-icon">🎓</span>
+      <div class="metier-body">
+        <div class="metier-name">Éducateur canin</div>
+        <div class="metier-desc">Séances individuelles et collectives, programmes multi-séances, forfaits cours.</div>
+        <div class="metier-link">Voir la documentation →</div>
+      </div>
+    </a>
+
+    <a href="47-module-equestre.html" class="metier-card">
+      <span class="metier-icon">🐴</span>
+      <div class="metier-body">
+        <div class="metier-name">Centre équestre</div>
+        <div class="metier-desc">Chevaux, cours d'équitation, compétitions, planning cavaliers, suivi médical.</div>
+        <div class="metier-link">Voir la documentation →</div>
+      </div>
+    </a>
+
+    <a href="48-module-pension-chenil.html" class="metier-card">
+      <span class="metier-icon">🏨</span>
+      <div class="metier-body">
+        <div class="metier-name">Pension / Chenil</div>
+        <div class="metier-desc">Réservations, planning des boxes, fiche entrée/sortie, facturation au séjour.</div>
+        <div class="metier-link">Voir la documentation →</div>
+      </div>
+    </a>
+
+    <a href="49-module-veterinaire.html" class="metier-card">
+      <span class="metier-icon">💉</span>
+      <div class="metier-body">
+        <div class="metier-name">Vétérinaire</div>
+        <div class="metier-desc">Consultations, vaccinations, ordonnances, antécédents médicaux, suivi traitement.</div>
+        <div class="metier-link">Voir la documentation →</div>
+      </div>
+    </a>
+
+    <a href="56-metier-osteopathe.html" class="metier-card">
+      <span class="metier-icon">🖐️</span>
+      <div class="metier-body">
+        <div class="metier-name">Ostéopathe animalier</div>
+        <div class="metier-desc">Séances ostéopathie, bilan corporel, suivi traitement, compte-rendus.</div>
+        <div class="metier-link">Voir la documentation →</div>
+      </div>
+    </a>
+
+    <a href="57-metier-club-sport.html" class="metier-card">
+      <span class="metier-icon">🏅</span>
+      <div class="metier-body">
+        <div class="metier-name">Sport canin</div>
+        <div class="metier-desc">Entraînements, compétitions, suivi performances, adhésions club.</div>
+        <div class="metier-link">Voir la documentation →</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="sec-title">Modules transversaux &amp; ressources métiers</div>
+  <div class="grid">
+    <div class="doc-card"><a href="28-rapport-regles-metier.html">28 — Règles métier</a><div class="desc">Rapport complet des règles métier et contraintes réglementaires</div></div>
+    <div class="doc-card"><a href="28-scenarios-video-metiers.html">28 — Scénarios vidéo</a><div class="desc">Scénarios de démonstration par métier</div></div>
+    <div class="doc-card"><a href="51-sidebar-metiers.html">51 — Sidebar métiers</a><div class="desc">Sidebar contextuelle adaptée par métier actif</div></div>
+    <div class="doc-card"><a href="59-roadmap-metiers.html">59 — Roadmap métiers</a><div class="desc">Priorisation des modules par métier — S58+</div></div>
+    <div class="doc-card"><a href="60-demarches-eleveur.html">60 — Démarches éleveur</a><div class="desc">Guide complet des démarches administratives pour les éleveurs</div></div>
+    <div class="doc-card"><a href="69-metier-naturopathe.html">69 — Naturopathe</a><div class="desc">Module naturopathie animale — compléments, bilans, conseils</div></div>
+    <div class="doc-card"><a href="71-charte-graphique.html">71 — Charte graphique</a><div class="desc">Charte visuelle Anim'Gest — couleurs, typographies, composants</div></div>
+    <div class="doc-card"><a href="09-scenario-video.html">09 — Scénario vidéo</a><div class="desc">Scénario vidéo commerciale produit</div></div>
+  </div>
+
+</div>
+<footer>
+  <span>Anim'Gest — NoSage's Editor &copy; 2026</span>
+  <span><a href="index.html" style="color:var(--gold)">← Retour à l'index</a></span>
+</footer>
+</body>
+</html>

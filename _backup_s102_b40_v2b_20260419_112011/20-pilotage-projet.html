@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilotage Projet — Anim'Gest Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --gold-pale: #FEF3C7;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 60px 32px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 12px;
+}
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: rgba(245,158,11,0.1);
+  border-top: 1px solid rgba(245,158,11,0.1);
+}
+.kpi-card {
+  background: var(--navy);
+  padding: 28px 20px;
+  text-align: center;
+  transition: background .2s;
+}
+.kpi-card:hover { background: var(--navy-800); }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.kpi-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.kpi-badge {
+  display: inline-block;
+  background: rgba(16,185,129,0.1);
+  color: var(--green);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
+
+/* SECTION HEADERS */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+
+/* SPRINT TIMELINE */
+.sprint-list { display: flex; flex-direction: column; gap: 16px; }
+.sprint-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.sprint-item:hover { border-color: rgba(245,158,11,0.25); }
+.sprint-item.current { border-color: rgba(245,158,11,0.4); }
+.sprint-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+}
+.sprint-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 4px 10px;
+  border-radius: 6px;
+  min-width: 44px;
+  text-align: center;
+}
+.sprint-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.sprint-date { font-size: 0.8rem; color: var(--text-muted); }
+.sprint-status {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.status-current { background: rgba(245,158,11,0.15); color: var(--gold); border: 1px solid rgba(245,158,11,0.3); }
+.status-done { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.sprint-body {
+  padding: 0 20px 16px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.sprint-items { list-style: none; margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.sprint-items li {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding-left: 16px;
+  position: relative;
+}
+.sprint-items li::before {
+  content: '▸';
+  position: absolute; left: 0;
+  color: var(--gold);
+  font-size: 0.7rem;
+}
+.sprint-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.tag-fix { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+
+/* SCORE SECTION */
+.scores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+.score-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+.score-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.score-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+.score-delta { font-size: 0.75rem; color: var(--green); margin-top: 4px; }
+.score-backend { color: var(--cyan); }
+.score-front { color: #818CF8; }
+.score-bdd { color: var(--gold); }
+.score-global { color: var(--green); }
+
+/* ROADMAP S64 */
+.roadmap-section { margin-top: 40px; }
+.priority-block { margin-bottom: 24px; }
+.priority-title {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 0.9rem;
+  margin-bottom: 12px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.dot-rouge { width: 10px; height: 10px; background: var(--red); border-radius: 50%; flex-shrink: 0; }
+.dot-orange { width: 10px; height: 10px; background: var(--orange); border-radius: 50%; flex-shrink: 0; }
+.dot-vert { width: 10px; height: 10px; background: var(--green); border-radius: 50%; flex-shrink: 0; }
+.roadmap-items { display: flex; flex-direction: column; gap: 8px; }
+.roadmap-item {
+  background: var(--navy-800);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.roadmap-item .ri-title { font-weight: 600; margin-bottom: 2px; }
+.roadmap-item .ri-desc { font-size: 0.8rem; color: var(--text-muted); }
+
+/* DETTE SECTION */
+.dette-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.dette-table th {
+  text-align: left; padding: 10px 14px;
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.dette-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-muted);
+}
+.dette-table tr:last-child td { border-bottom: none; }
+.dette-table td:first-child { color: var(--text); font-weight: 500; }
+.mono { font-family: 'DM Mono', monospace; font-size: 0.78rem; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 32px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 60px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+
+/* SECTION GAP */
+.section { margin-bottom: 48px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+  <a href="17-api-reference.html">API Reference</a>
+  <a href="docs-changelog.html">Changelogs</a>
+  <span class="nav-badge">S87</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">SUIVI DE PROJET</div>
+  <h1>Pilotage Projet</h1>
+  <p>Historique des sprints, avancement fonctionnel et roadmap — Anim'Gest by NoSage's Editor</p>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-value">S74</div>
+    <div class="kpi-value">S87</div>
+<div class="kpi-label">Sprint actuel</div>
+    <div class="kpi-badge">→ S75</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">121</div>
+    <div class="kpi-label">Pages UI</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">~189</div>
+    <div class="kpi-label">Routes API</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">99/100</div>
+    <div class="kpi-label">Score qualité</div>
+    <div class="kpi-badge">↑ S74</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">10</div>
+    <div class="kpi-label">Métiers couverts</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- SCORES -->
+  <div class="section">
+    <div class="section-title"><span class="num">01</span> Scores qualité S74</div>
+    <div class="scores-grid">
+      <div class="score-card">
+        <div class="score-value score-backend">99/100</div>
+        <div class="score-label">Backend</div>
+        <div class="score-delta">+1 vs S73 (+8 routes PDF+AC+lignes+tool)</div>
+      </div>
+      <div class="score-card">
+        <div class="score-value score-front">99/100</div>
+        <div class="score-label">Frontend</div>
+        <div class="score-delta">= stable vs S73 (+page AC[id] + 4 boutons PDF)</div>
+      </div>
+      <div class="score-card">
+        <div class="score-value score-bdd">98/100</div>
+        <div class="score-label">BDD</div>
+        <div class="score-delta">+5 vs S73 (1791 colonnes commentées)</div>
+      </div>
+      <div class="score-card">
+        <div class="score-value score-global">99/100</div>
+        <div class="score-label">Global</div>
+        <div class="score-delta">+1 vs S73</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPRINT HISTORY -->
+  <div class="section">
+    <div class="section-title"><span class="num">02</span> Historique des sprints</div>
+    <div class="sprint-list">
+
+      <!-- S74 CURRENT -->
+      <div class="sprint-item current">
+        <div class="sprint-header">
+          <span class="sprint-num">74</span>
+          <span class="sprint-title">Module AC Avoir Client · PDF BL/BR/DAF/AC · Eliot tool 22 · 1791 colonnes BDD commentées</span>
+          <span class="sprint-date">09/04/2026</span>
+          <span class="sprint-status status-current">Livré → S75</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>Module AC complet — Guards R-26/R-32 · PUT whitelist · GET+POST lignes · page /avoir-client/[id] · liste cliquable · suite BL→BR→DAF→AC ✅</li>
+            <li>Table <code>avoir_client_ligne</code> + 3 triggers AFTER INSERT/UPDATE/DELETE recalcul totaux HT/TTC</li>
+            <li>4 routes PDF éditions : GET /editions/bon-livraison/:id · /bon-retour/:id · /demande-avoir-fourn/:id · /avoir-client/:id</li>
+            <li>Boutons PDF + modals &lt;iframe src&gt; sur pages BL/BR/DAF/[id]</li>
+            <li>Eliot tool 22 <code>get_avoirs_client</code> — filtres statut+tie_id · format R-33 ✅ · 22 tools total</li>
+            <li><strong>1791 colonnes commentées</strong> sur 171 tables — conventions R-34 FK/PK · score BDD 93→98/100</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-api">+8 routes</span>
+            <span class="tag tag-front">+1 page AC[id]</span>
+            <span class="tag tag-bdd">1791 colonnes</span>
+            <span class="tag tag-ia">Eliot tool 22</span>
+            <span class="tag">Score 99/100</span>
+          </div>
+        </div>
+      </div>
+      <!-- S73 -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">73</span>
+          <span class="sprint-title">Fix clients Leaflet · Guard R-26 BL/BR/DAF · Lignes BR+DAF · Liaisons BR→DAF · Fix Eliot R-33 · Formulaire declarations</span>
+          <span class="sprint-date">09/04/2026</span>
+          <span class="sprint-status status-done">Livré → S74</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>Fix /app/clients — suppression geocoding externe · vue carte remplacée par placeholder · liste 167 clients stable</li>
+            <li>Guard R-26 injecté sur routes listes BL/BR/DAF — empêche interception routes /:id</li>
+            <li>Formulaire declarations elevage — modal creation + modal edition + routes POST/PUT /elevage/declarations</li>
+            <li>Tables bon_retour_ligne + demande_avoir_fourn_ligne — routes GET+POST lignes BR/DAF</li>
+            <li>6 triggers MariaDB recalcul totaux HT/TTC sur lignes BR et DAF</li>
+            <li>Colonne BR_ID dans demande_avoir_fourn · navigation bidirectionnelle BR↔DAF</li>
+            <li>Fix Eliot R-33 — format tableau tools (virgules isolees) · tool get_declarations_elevage · 21 tools total</li>
+            <li>Notifications portail — test end-to-end confirme · email reel envoye</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-api">+6 routes lignes BR/DAF</span>
+            <span class="tag tag-api">POST/PUT declarations</span>
+            <span class="tag tag-front">Fix clients</span>
+            <span class="tag tag-front">Pages BR/DAF améliorées</span>
+            <span class="tag">21 Eliot tools</span>
+            <span class="tag">Score 98/100</span>
+          </div>
+        </div>
+      </div>
+      <!-- S72 -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">72</span>
+          <span class="sprint-title">Page déclarations élevage · Sidebar ELEVEUR · Build 120 pages validé</span>
+          <span class="sprint-date">08/04/2026</span>
+          <span class="sprint-status">Livré → S73</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>Page /app/elevage/declarations — JAUNE soldé — 3 compteurs · filtres · détection retard (fond rouge)</li>
+            <li>Lien sidebar ELEVEUR "Déclarations" — entre Réservations et Questionnaires</li>
+            <li>Build frontend : 120 pages compilées · ✓ Compiled successfully · 0 erreur TS</li>
+            <li>16 déclarations BDD test (SAILLIE_SCC · SAILLIE_LOOF · NAISSANCE_SCC · PORTEE_SCC)</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-front">+1 page déclarations</span>
+            <span class="tag tag-front">Sidebar ELEVEUR</span>
+            <span class="tag">Score 98/100</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- S71 -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">71</span>
+          <span class="sprint-title">POST /portail/envoyer · Fix envoyerNotification() · Bouton tarif devis · Pages BL/BR/DAF détail</span>
+          <span class="sprint-date">08/04/2026</span>
+          <span class="sprint-status status-current">Livré → S72</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>Route POST /portail/envoyer déployée — délègue à envoyerNotification()</li>
+            <li>4 bugs corrigés dans envoyerNotification() (PCA_ID, PCA_ACTIF, PCA_TOKEN, INSERT colonnes)</li>
+            <li>Historique notifications validé : 3 entrées PCN_STATUT=ENVOYE · SMTP Gmail actif</li>
+            <li>Bouton 💹 Appliquer tarif sur fiche devis — désactivé si FACTURE · bandeau feedback</li>
+            <li>3 nouvelles pages détail : /bon-livraison/[id] · /bon-retour/[id] · /demande-avoir-fourn/[id]</li>
+            <li>Numéros cliquables ajoutés dans les 3 pages liste correspondantes</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-api">POST /portail/envoyer</span>
+            <span class="tag tag-fix">4 bugs envoyerNotification</span>
+            <span class="tag tag-front">3 pages BL/BR/DAF</span>
+            <span class="tag">Score 98/100</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- S69 -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">66</span>
+          <span class="sprint-title">Mémoire Eliot persistée · Notifications Portail · Fix Clients Leaflet · Export CSV Factures</span>
+          <span class="sprint-date">07/04/2026</span>
+          <span class="sprint-status status-current">Livré → S70</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>Mémoire Eliot persistée — 2 tables BDD + tool memoriser (17e tool)</li>
+            <li>Notifications portail client — table config + 5 seeds + envoyerNotification()</li>
+            <li>Export CSV factures — route GET /api/factures/export-csv · 143 factures</li>
+            <li>Fix crash /app/clients — race condition Leaflet (R-29)</li>
+            <li>Page admin /parametres/eliot-memoire — 287 lignes TSX</li>
+            <li>Fix globals.css — sélecteurs html.light (R-25)</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-vert">Mémoire Eliot</span>
+            <span class="tag tag-vert">Notifications portail</span>
+            <span class="tag tag-rouge">Fix Leaflet R-29</span>
+            <span class="tag">Score 96/100</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- S65 -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">65</span>
+          <span class="sprint-title">Registre Sanitaire · Sidebar accordéon · 9 fix SQL · Races FCI</span>
+          <span class="sprint-date">07/04/2026</span>
+          <span class="sprint-status status-done">Livré</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>Registre sanitaire arrêté 3 avril 2014 — 2 tables BDD + 5 routes + journal événements</li>
+            <li>Sidebar accordéon 7 groupes repliables + groupe métiers en tête</li>
+            <li>9 corrections SQL (planning, avoirs, achats, factures, clients)</li>
+            <li>Migration table race : RACE_GROUPE + numéros FCI (~400 races)</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-vert">Registre Sanitaire</span>
+            <span class="tag tag-vert">Sidebar accordéon</span>
+            <span class="tag">Score 90/100</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- S63 CURRENT -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">63</span>
+          <span class="sprint-title">Portail Client déploiement complet + Eliot agent + Email nodemailer</span>
+          <span class="sprint-date">01/04/2026</span>
+          <span class="sprint-status status-current">Terminé → S64</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>11 routes Portail Client déployées dans instance.use() (auth, animaux, séances, factures, notifications, admin accès, toggle, send-link, confirmer)</li>
+            <li>Page /client/[token] — espace client 4 onglets (séances, factures, animaux, notifications)</li>
+            <li>Page /app/parametres/portail — admin portail avec select 500 tiers, copier lien, envoyer email</li>
+            <li>Eliot tools S63 : update_statut_devis, create_facture_depuis_devis, create_reglement (corrigé sans REG_STATUT)</li>
+            <li>Nodemailer ^6.9.14 — vrai envoi email SMTP validé (test reçu gmail)</li>
+            <li>PUT /param-smtp — sauvegarde config SMTP depuis UI</li>
+            <li>Corrections colonnes BDD portail : ANI_CLI, SEA_DATE_DEBUT, TIE_RAISON_SOCIALE, PCN_*</li>
+            <li>Sidebar : tuile 🔗 Portail Client sous groupe Communauté</li>
+            <li>Harmonisation charte design Anim'Gest sur 94 fichiers HTML docs (commit fbe0e7d)</li>
+            <li>Commit dev : b687f04 — custom-routes.ts 3846 lignes / 220 760 octets</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-api">11 routes portail</span>
+            <span class="tag tag-front">2 pages UI</span>
+            <span class="tag tag-ia">Eliot tools x3</span>
+            <span class="tag tag-fix">nodemailer</span>
+            <span class="tag tag-bdd">colonnes corrigées</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- S62 -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">62</span>
+          <span class="sprint-title">Eliot agent IA + PDF param_edition + Paramètres Éditions GED</span>
+          <span class="sprint-date">30/03/2026</span>
+          <span class="sprint-status status-done">Terminé</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>Widget Eliot IA — agent Anthropic API avec 7 tools (get_client, get_animal, create_devis, create_seance, get_planning, get_factures, send_email)</li>
+            <li>5 routes GED éditions : upload-logo, upload-filigrane, upload-cgv, lecture base64, preview PDF CGV</li>
+            <li>PDF puppeteer avec param_edition : couleur primaire, logo, filigrane, police, pied de page</li>
+            <li>Colonnes BDD : ED_LOGO_BASE64, ED_FILIGRANE_BASE64, PE_CGV_DOC_ID, PE_CGV_BASE64</li>
+            <li>Corrections : ANI_ESPECE→ANI_ESPECE_RACE, whitelist PARAM_EDITION_COLS, &#10003;→✓</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-api">5 routes GED</span>
+            <span class="tag tag-front">Paramètres Éditions</span>
+            <span class="tag tag-ia">Eliot 7 tools</span>
+            <span class="tag tag-fix">4 bugs critiques</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- S61 -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">61</span>
+          <span class="sprint-title">Widget Eliot IA v2 + Portail Client BDD + planning journalier</span>
+          <span class="sprint-date">29/03/2026</span>
+          <span class="sprint-status status-done">Terminé</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>Widget Eliot IA v2 — drag fluide, panneau adaptatif, 20 avatars WebP, vocal, nom configurable</li>
+            <li>Route POST /ia/chat — proxy Anthropic API côté serveur, ANTHROPIC_API_KEY sécurisée</li>
+            <li>Portail Client BDD — 4 tables (portail_client_acces, portail_client_session, portail_client_notification, portail_client_action)</li>
+            <li>43 strings SQL multi-lignes fusionnées, 12 fixes délimiteurs</li>
+            <li>Planning journalier — vue Jour avec grille 7h-20h30</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-ia">Eliot IA v2</span>
+            <span class="tag tag-bdd">4 tables portail</span>
+            <span class="tag tag-front">Planning jour</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- S60 -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">60</span>
+          <span class="sprint-title">Stats CA + dashboards métiers + Leaflet carte v2</span>
+          <span class="sprint-date">28/03/2026</span>
+          <span class="sprint-status status-done">Terminé</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>Carte clients Leaflet v2 — géocodage batch, 140/167 clients localisés</li>
+            <li>Dashboards 9 métiers alimentés en données réelles</li>
+            <li>20 nouvelles routes stats (kpis, ca-par-mois, especes, top-clients, villes…)</li>
+            <li>Page statistiques opérationnelle — CA 48 014 €, panier moyen 231 €</li>
+            <li>Export CSV factures et séances (UTF-8 BOM, séparateur ;)</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-api">20 routes stats</span>
+            <span class="tag tag-front">Dashboards + Carte</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- S51→S59 groupé -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">51→59</span>
+          <span class="sprint-title">Sprints S51 → S59</span>
+          <span class="sprint-date">Mars 2026</span>
+          <span class="sprint-status status-done">Terminés</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>S59 — RBAC complet (rôles ADMIN/GESTION/CONSULT/COMPTA), middleware permissions</li>
+            <li>S58 — Forfaits & Formules (souscriptions, consommation séances), Yousign signatures UI</li>
+            <li>S57 — CRM complet (leads, opportunités, activités, campagnes, tags)</li>
+            <li>S55-S56 — Agenda planning séances, pages paiements, charte graphique globale</li>
+            <li>S53-S54 — Élevage complet, achats fournisseurs, stock PMP, inventaires</li>
+            <li>S51-S52 — GED CAC évolution, carte clients Leaflet v1, notice utilisateur v4</li>
+          </ul>
+          <div class="sprint-tags">
+            <span class="tag tag-api">90+ routes</span>
+            <span class="tag tag-front">96+ pages UI</span>
+            <span class="tag tag-bdd">30+ tables</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- S32→S50 groupé -->
+      <div class="sprint-item">
+        <div class="sprint-header">
+          <span class="sprint-num">32→50</span>
+          <span class="sprint-title">Sprints S32 → S50</span>
+          <span class="sprint-date">Mars 2026</span>
+          <span class="sprint-status status-done">Terminés</span>
+        </div>
+        <div class="sprint-body">
+          <ul class="sprint-items">
+            <li>S50 — Charte graphique globale, doublon AideContextuelle, btn-danger, PDF modal</li>
+            <li>S49 — Commentaires BDD 241/241 colonnes, pages S46-S48</li>
+            <li>S48 — Agenda planning séances, signatures Yousign UI, pages paiements</li>
+            <li>S47 — CRM complet (leads, opportunités, activités, campagnes, tags)</li>
+            <li>S44-S46 — Dashboards métiers, devis/new v2, droits utilisateurs, seeds démo</li>
+            <li>S32-S43 — Fondations : Auth, CRUD, PDF, SMTP, agenda, programmes, questionnaires, FEC, stats, PWA</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ROADMAP S64 -->
+  <div class="section roadmap-section">
+    <div class="section-title"><span class="num">03</span> Roadmap S64</div>
+
+    <div class="priority-block">
+      <div class="priority-title"><span class="dot-rouge"></span> ROUGE — Priorité maximale</div>
+      <div class="roadmap-items">
+        <div class="roadmap-item">
+          <div>
+            <div class="ri-title">Tarification 3 méthodes dans les devis</div>
+            <div class="ri-desc">COEF_FG+MARGE · COEF_VTE · PRIX_DIRECT — Tables param_tarification + tarif_historique_coef — Page /app/parametres/tarification</div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div>
+            <div class="ri-title">Modules commerciaux BL/BR/DAF/AC</div>
+            <div class="ri-desc">Tables bon_livraison, bon_retour, avoir_client, demande_avoir_fourn — Routes API + pages UI + PDF puppeteer param_edition</div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div>
+            <div class="ri-title">Fix dette technique Eliot + règlements</div>
+            <div class="ri-desc">Supprimer 3 doublons déclaration tools · REG_STATUT résiduel L~56376 · Audit colonnes POST /devis/:id/facturer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="priority-block">
+      <div class="priority-title"><span class="dot-orange"></span> ORANGE — Priorité haute</div>
+      <div class="roadmap-items">
+        <div class="roadmap-item">
+          <div>
+            <div class="ri-title">Eliot tools supplémentaires</div>
+            <div class="ri-desc">create_seance · get_planning · send_portail_link</div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div>
+            <div class="ri-title">Tests Portail Client end-to-end</div>
+            <div class="ri-desc">create_reglement via chat Eliot · Envoi lien portail depuis page admin (Jean Dujardin)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="priority-block">
+      <div class="priority-title"><span class="dot-vert"></span> VERT — Backlog S65+</div>
+      <div class="roadmap-items">
+        <div class="roadmap-item">
+          <div>
+            <div class="ri-title">Mémoire Eliot persistée en BDD · Notifications portail email/SMS · Stripe billing + licence tiers</div>
+            <div class="ri-desc">Essentiel / Professionnel / Expert · Sport canin parcours géolocalisé · Renommage BDD micro_logiciel → Anim_Gest (S70+)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETTE TECHNIQUE -->
+  <div class="section">
+    <div class="section-title"><span class="num">04</span> Dette technique identifiée</div>
+    <table class="dette-table">
+      <thead>
+        <tr>
+          <th>Dette</th>
+          <th>Localisation</th>
+          <th>Plan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>102 <span class="mono">app.use()</span> restants → migrer vers <span class="mono">instance.use()</span></td>
+          <td class="mono">custom-routes.ts</td>
+          <td>Migration progressive par module</td>
+        </tr>
+        <tr>
+          <td>4 <span class="mono">createConnection</span> sur BDD GED</td>
+          <td class="mono">L2286, L2317, L2355, L2393</td>
+          <td>Créer <span class="mono">getDbGed()</span> helper</td>
+        </tr>
+        <tr>
+          <td>3 doublons dans la déclaration Eliot tools</td>
+          <td class="mono">bloc tools déclarés</td>
+          <td>Supprimer update_statut_devis / create_facture_depuis_devis / create_reglement en double</td>
+        </tr>
+        <tr>
+          <td><span class="mono">REG_STATUT</span> résiduel dans INSERT reglement</td>
+          <td class="mono">L~56376</td>
+          <td>Supprimer la colonne inexistante</td>
+        </tr>
+                <tr>
+            <td><strong>S77</strong></td>
+            <td>11/04/2026</td>
+            <td>Corrections ROUGE (API/PDF/Règlements) + 8 ORANGE + 7 JAUNE</td>
+            <td><span class="badge badge-success">Terminé</span></td>
+            <td>98 / 99 / 92 / 98</td>
+          </tr>
+<tr><td><strong>S78</strong></td><td>11/04/2026</td><td>Documentation &amp; Aide (244 Q/R, sc&eacute;narios, guide, notice)</td><td>117</td><td>~195</td><td>22</td><td><span class="badge badge-success">Termin&eacute;</span></td></tr>
+<tr><td><strong>S79</strong></td><td>11/04/2026</td><td>JSDoc 71 fichiers &middot; GED valid&eacute; &middot; Charte BR/DAF/achats &middot; Routes PDF BR+DAF &middot; Archivage</td><td>117</td><td>~198</td><td>22</td><td><span class="badge badge-success">Termin&eacute;</span></td></tr>
+<tr><td><strong>S80</strong></td><td>11/04/2026</td><td>Fix GED &middot; Archivage dist/BIB_Widget 893 Mo &middot; Wrappers isolants 8 pages &middot; JSDoc custom-routes</td><td>117</td><td>~198</td><td>22</td><td><span class="badge badge-success">Termin&eacute;</span></td></tr>
+      <tr>
+        <td><strong>S81</strong></td>
+        <td>12/04/2026</td>
+        <td>Devis multi-animaux (ANI_ID), Email PDF PJ (EmailModal), Fix dates ISO</td>
+        <td>117 pages UI, ~~212 routes, 22 Eliot, JSDoc 240+</td>
+        <td><span class="badge-green">TERMINE</span></td>
+      </tr>
+      <tr>
+        <td><strong>S82</strong></td>
+        <td>12/04/2026</td>
+        <td>EDC&#x2192;BC, visites tableau, liens hypertexte, devis metier</td>
+        <td>119 pages, ~215 routes</td>
+        <td><span class="badge-green">TERMINE</span></td>
+      </tr>
+
+<tr><td><strong>S81</strong></td><td>11/04/2026</td><td>Devis multi-animaux (ANI_ID lignes) &middot; Tables bon_retour_ligne/demande_avoir_fourn_ligne &middot; Docs GitHub Pages S80</td><td>117</td><td>~198</td><td>22</td><td><span class="badge badge-success">Termin&eacute;</span></td></tr>
+
+        <tr>
+  <td>S83</td><td>12/04/2026</td><td>120</td><td>~220</td><td>22</td>
+  <td>Webhook Calendly, Facturation groupe, Fixes sidebar</td>
+  <td>99/100</td><td>0</td>
+</tr>
+      <tr><td>S84</td><td>12/04/2026</td><td>Fix devis, OCR NF, seances groupe, charte couleurs</td><td>99/100</td></tr>
+      <tr><td><strong>S85</strong></td><td>13/04/2026</td><td>Notes de frais complètes (NDF_*) · OCR justificatifs GED · Factures CGV GED · Note de frais module</td><td>120 pages</td><td>~237 routes</td><td>22</td><td><span class="badge badge-success">Termin&eacute;</span></td></tr>
+      <tr><td><strong>S86</strong></td><td>13/04/2026</td><td>Migration no-sages-editor.com · Repo privé 14 fichiers · 4 emails pro · NDF détail page · Fix réseaux sociaux</td><td>121 pages</td><td>~242 routes</td><td>22</td><td><span class="badge badge-success">Termin&eacute;</span></td></tr>
+      <tr><td><strong>S87</strong></td><td>13/04/2026</td><td>TVA NDF déductible · FEC journal AC · Page TVA 3 KPIs · JSDoc 89 fichiers · Liens hypertexte listes</td><td>121 pages</td><td>~242 routes</td><td>22</td><td><span class="badge badge-success">Terminé</span></td></tr>
+      <tr><td><strong>S88</strong></td><td>13/04/2026</td><td>FEC complet · Export FEC corrig&#233; collation · Notes frais comptable</td><td>121 pages</td><td>~242 routes</td><td>22</td><td><span class="badge badge-success">Termin&#233;</span></td></tr>
+      <tr><td><strong>S89</strong></td><td>13/04/2026</td><td>Bilan comptable · 55 mod&#232;les devis · Tables ASSOCIATIONS · R&#233;cu fiscal PDF Cerfa</td><td>121 pages</td><td>~242 routes</td><td>22</td><td><span class="badge badge-success">Termin&#233;</span></td></tr>
+      <tr><td><strong>S90</strong></td><td>14/04/2026</td><td>Membres + adh&#233;sions + questionnaires multi-canal + CAC groupe + Calendly</td><td>132 pages</td><td>~263 routes</td><td>22</td><td><span class="badge badge-success">Termin&#233;</span></td></tr>
+      <tr><td><strong>S91</strong></td><td>14/04/2026</td><td>ASSOCIATIONS &#8212; bill&#233;terie &#233;v&#233;nements + check-in participants</td><td>134 pages</td><td>~271 routes</td><td>22</td><td><span class="badge badge-success">Termin&#233;</span></td></tr>
+      <tr><td><strong>S92</strong></td><td>15/04/2026</td><td>Audit charte 145 pages · useCharte 145/145 · badges rgba · @sprint S92 · petsuite&#x2192;animgest · sidebar 12 m&#233;tiers</td><td>134 pages</td><td>~271 routes</td><td>22</td><td><span class="badge badge-success">Termin&#233;</span></td></tr>
+      <tr><td><strong>S93</strong></td><td>15/04/2026</td><td>Kanban b&#233;n&#233;voles + Formulaire adh&#233;sion public + GitHub Pages bump</td><td>136 pages</td><td>~282 routes</td><td>22</td><td><span style="color:#F59E0B">En cours</span></td></tr>
+</tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor — Pilotage Projet — MaJ Sprint S101 &mdash; 13/04/2026 &mdash; ~242 routes &mdash; 121 pages UI &mdash; Score 97/100
+  <br><a href="index.html">← Retour à l'accueil</a>
+</footer>
+
+</body>
+</html>
+

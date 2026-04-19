@@ -1,0 +1,774 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anim'Gest — Système d'aide intégré</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+
+  /* ── Anim'Gest Design System ── */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ag-navy:   #0F172A;
+    --ag-navy2:  #1E293B;
+    --ag-navy3:  #334155;
+    --ag-gold:   #B8860B;
+    --ag-gold2:  #D4A017;
+    --ag-gold3:  #F5D76E;
+    --ag-white:  #F8FAFC;
+    --ag-muted:  #94A3B8;
+    --ag-accent: #4F46E5;
+    --ag-cyan:   #06B6D4;
+    --ag-green:  #10B981;
+    --ag-red:    #EF4444;
+    --ag-orange: #F59E0B;
+    --ag-radius: 10px;
+    --ag-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    --ag-font-heading: 'Playfair Display', Georgia, serif;
+    --ag-font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ag-navy);
+    color: var(--ag-white);
+    font-family: var(--ag-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--ag-font-heading);
+    color: var(--ag-white);
+    letter-spacing: -0.5px;
+  }
+
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--ag-gold2); }
+  h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+
+  a { color: var(--ag-gold2); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--ag-gold3); text-decoration: underline; }
+
+  .ag-header {
+    background: var(--ag-navy2);
+    border-bottom: 2px solid var(--ag-gold);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ag-header .ag-logo {
+    font-family: var(--ag-font-heading);
+    font-size: 1.6rem;
+    color: var(--ag-gold2);
+    letter-spacing: -1px;
+  }
+  .ag-header .ag-subtitle {
+    font-size: 0.85rem;
+    color: var(--ag-muted);
+  }
+  .ag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(184,134,11,0.15);
+    color: var(--ag-gold2);
+    border: 1px solid rgba(184,134,11,0.3);
+  }
+  .ag-card {
+    background: var(--ag-navy2);
+    border: 1px solid var(--ag-navy3);
+    border-radius: var(--ag-radius);
+    padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ag-card:hover { border-color: var(--ag-gold); box-shadow: var(--ag-shadow); }
+
+  .ag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: var(--ag-radius);
+    font-family: var(--ag-font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .ag-btn-primary {
+    background: linear-gradient(135deg, var(--ag-accent), var(--ag-cyan));
+    color: #fff;
+  }
+  .ag-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-gold {
+    background: linear-gradient(135deg, var(--ag-gold), var(--ag-gold2));
+    color: var(--ag-navy);
+  }
+  .ag-btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-ghost {
+    background: transparent;
+    border: 1px solid var(--ag-navy3);
+    color: var(--ag-muted);
+  }
+  .ag-btn-ghost:hover { border-color: var(--ag-gold); color: var(--ag-gold2); }
+
+  .ag-tag-rouge  { background: rgba(239,68,68,0.15);  color: #F87171; border: 1px solid rgba(239,68,68,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-orange { background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-vert   { background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-bleu   { background: rgba(79,70,229,0.15);  color: #818CF8; border: 1px solid rgba(79,70,229,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 0.6rem 0.8rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ag-muted); border-bottom: 1px solid var(--ag-navy3); }
+  td { padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(51,65,85,0.5); font-size: 0.875rem; }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+
+  code, pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); border-radius: 4px; }
+  code { padding: 0.1rem 0.4rem; color: var(--ag-gold3); }
+  pre { padding: 1rem 1.25rem; overflow-x: auto; border: 1px solid var(--ag-navy3); color: #E2E8F0; line-height: 1.7; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--ag-navy); }
+  ::-webkit-scrollbar-thumb { background: var(--ag-navy3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ag-gold); }
+  /* ── Fin charte Anim'Gest ── */
+
+</style>
+<style>
+    /* === CHARTE ANIM'GEST - NoSage's Editor === */
+    :root {
+      --navy: #0D2137;
+      --navy-l: #122840;
+      --navy-ll: #1a3550;
+      --gold: #D4A843;
+      --gold-l: #e8c068;
+      --gold-p: rgba(212,168,67,0.1);
+      --gold-b: rgba(212,168,67,0.2);
+      --dark: #070F1A;
+      --white: #F8F8F5;
+      --muted: #7a8fa6;
+      --green: #3ecf8e;
+      --red: #ef4444;
+      --orange: #f59e0b;
+      --blue: #60a5fa;
+      --purple: #a78bfa;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { color: var(--gold-l); }
+    /* Nav */
+    nav.doc-nav {
+      background: var(--navy);
+      border-bottom: 1px solid var(--gold-b);
+      padding: .85rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav.doc-nav .brand {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    nav.doc-nav .nav-links { display: flex; gap: .5rem; flex-wrap: wrap; }
+    nav.doc-nav .nav-links a {
+      color: var(--muted);
+      font-size: .8rem;
+      padding: .25rem .6rem;
+      border-radius: 4px;
+      transition: .2s;
+    }
+    nav.doc-nav .nav-links a:hover { color: var(--white); background: rgba(255,255,255,.06); }
+    nav.doc-nav .nav-badge {
+      margin-left: auto;
+      background: var(--gold-p);
+      border: 1px solid var(--gold-b);
+      color: var(--gold);
+      font-size: .7rem;
+      font-weight: 600;
+      padding: .2rem .75rem;
+      border-radius: 20px;
+    }
+    /* Hero */
+    .doc-hero {
+      background: linear-gradient(135deg, #070F1A 0%, #0D2137 100%);
+      padding: 3rem 2rem 2.5rem;
+      border-bottom: 2px solid var(--gold);
+      text-align: center;
+    }
+    .doc-hero-tag {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .3rem .9rem;
+      border-radius: 20px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .doc-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: .5rem;
+    }
+    .doc-hero h1 span { color: var(--gold); }
+    .doc-hero .doc-sub { color: var(--muted); font-size: .95rem; max-width: 600px; margin: 0 auto; }
+    /* Container */
+    .doc-container { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    /* Section */
+    .doc-section { margin-bottom: 2.5rem; }
+    .doc-section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      border-bottom: 1px solid var(--gold-b);
+      padding-bottom: .5rem;
+      margin-bottom: 1rem;
+    }
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; margin-bottom: 1rem; }
+    th {
+      background: var(--navy);
+      color: var(--gold);
+      font-weight: 600;
+      padding: .65rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gold-b);
+    }
+    td {
+      padding: .6rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      color: var(--muted);
+      vertical-align: top;
+    }
+    tr:hover td { background: rgba(255,255,255,.02); }
+    /* Code */
+    pre, code {
+      font-family: 'Courier New', monospace;
+      font-size: .83rem;
+    }
+    pre {
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+    /* Cards */
+    .doc-card {
+      background: var(--navy);
+      border: 1px solid var(--gold-b);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin-bottom: .7rem;
+    }
+    /* Footer */
+    footer.doc-footer {
+      background: var(--navy);
+      border-top: 1px solid var(--gold-b);
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: .82rem;
+      margin-top: 3rem;
+    }
+    footer.doc-footer strong { color: var(--gold); }
+  
+    /* === MIGRATION CHARTE V2 === */
+    .container{max-width:1000px;margin:0 auto;padding:2.5rem 1.5rem}
+    .section{margin-bottom:2.5rem}
+    h2,.section h2{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);border-bottom:1px solid var(--gold-b);padding-bottom:.5rem;margin-bottom:1rem;font-weight:600}
+    h1{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:.5rem}
+    .subtitle,.sub{color:var(--muted);font-size:.95rem;margin-bottom:1rem}
+    .card{background:var(--navy-l,#122840);border:1px solid var(--gold-b);border-radius:8px;padding:1rem 1.2rem;margin-bottom:.7rem}
+    .card-title{font-weight:600;color:var(--white);font-size:.88rem;margin-bottom:.3rem}
+    .card-desc{color:var(--muted);font-size:.82rem;line-height:1.5}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:1.5rem}
+    .tag{display:inline-block;font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:3px;margin-right:.4rem}
+    .tred,.tag.tred{background:rgba(239,68,68,.15);color:var(--red,#ef4444);border:1px solid rgba(239,68,68,.3)}
+    .tamber,.tag.tamber{background:rgba(245,158,11,.15);color:var(--orange,#f59e0b);border:1px solid rgba(245,158,11,.3)}
+    .tgreen{background:rgba(60,207,142,.15);color:var(--green,#3ecf8e);border:1px solid rgba(60,207,142,.3)}
+    .hero{background:linear-gradient(135deg,#070F1A 0%,#0D2137 100%);padding:3rem 2rem 2.5rem;border-bottom:2px solid var(--gold);text-align:center}
+    .hero-tag{display:inline-block;background:var(--gold);color:var(--dark,#070F1A);font-size:.72rem;font-weight:700;padding:.3rem .9rem;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+    .hero h1{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:.5rem}
+    .hero h1 span,.hero h1>span{color:var(--gold)}
+    .hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-top:1.5rem}
+    .hs{text-align:center}
+    .hs-v{font-size:1.5rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;display:block}
+    .hs-l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    table{width:100%;border-collapse:collapse;font-size:.85rem;margin-bottom:1rem}
+    th{background:var(--navy);color:var(--gold);font-weight:600;padding:.65rem 1rem;text-align:left;border-bottom:1px solid var(--gold-b)}
+    td{padding:.6rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);vertical-align:top}
+    tr:hover td{background:rgba(255,255,255,.02)}
+    pre,code{font-family:'Courier New',monospace;font-size:.83rem}
+    pre{background:var(--navy);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:1rem 1.2rem;overflow-x:auto;margin-bottom:1rem}
+    ul,ol{margin-left:1.2rem;color:var(--muted);font-size:.88rem;margin-bottom:.8rem}
+    li{margin-bottom:.3rem;line-height:1.6}
+    p{color:var(--muted);font-size:.88rem;margin-bottom:.8rem;line-height:1.6}
+    /* === FIN MIGRATION === */
+  </style>
+</head>
+<body>
+<nav class="doc-nav">
+  <span class="brand">Anim'Gest Docs</span>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="07-audit-stack.html">Audit Stack</a>
+    <a href="17-api-reference.html">API</a>
+    <a href="20-pilotage-projet.html">Pilotage</a>
+    <a href="docs-changelog.html">Changelogs</a>
+  </div>
+  <span class="nav-badge">S62</span>
+</nav>
+<div class="hero">
+  <div class="hero-tag">Documentation</div>
+  
+</div>
+
+<div class="container">
+
+<main>
+    
+<div style="position:fixed;top:12px;left:12px;z-index:1000;"><a href="index.html" style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.5);text-decoration:none;padding:4px 12px;border:1px solid rgba(255,255,255,.15);border-radius:20px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.5)'">← Index</a></div>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <h1>Système d'aide intégré</h1>
+    <p>v1.0 &nbsp;·&nbsp; Session S25/S26 &nbsp;·&nbsp; 3 composants &nbsp;·&nbsp; 58 articles &nbsp;·&nbsp; 6 modules</p>
+    <div class="badges">
+      <span class="badge b-green">help-content.ts</span>
+      <span class="badge b-blue">HelpPanel.tsx</span>
+      <span class="badge b-amber">aide/page.tsx</span>
+      <span class="badge b-gray">layout.tsx</span>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('overview',this)">Vue d'ensemble</button>
+    <button class="tab-btn" onclick="showTab('panel',this)">Panneau flottant</button>
+    <button class="tab-btn" onclick="showTab('center',this)">Centre d'aide</button>
+    <button class="tab-btn" onclick="showTab('content',this)">Contenu</button>
+    <button class="tab-btn" onclick="showTab('tech',this)">Spec technique</button>
+  </div>
+
+  <!-- ═══ VUE D'ENSEMBLE ═══ -->
+  <div id="tab-overview" class="tab-pane active">
+
+    <div class="section">
+      <h2>Architecture des composants</h2>
+      <div class="card-row">
+        <div class="card green">
+          <div class="card-title">help-content.ts</div>
+          <div class="card-desc">Bibliotheque de donnees pure TypeScript. 58 articles, 6 modules, 3 fonctions utilitaires. Aucune dependance externe. Source unique de verite.</div>
+        </div>
+        <div class="card blue">
+          <div class="card-title">HelpPanel.tsx</div>
+          <div class="card-desc">Composant client React. Bouton FAB fixe bas-droit + panneau lateral contextuel. Monte dans layout.tsx, actif sur toutes les pages /app/*.</div>
+        </div>
+        <div class="card amber">
+          <div class="card-title">aide/page.tsx</div>
+          <div class="card-desc">Page centre d'aide complet. Sidebar 6 modules, recherche plein texte, accordeons ancables, raccourci Ctrl+K, surlignage des resultats.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Flux utilisateur</h2>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-num">1</div><div class="flow-text">L'utilisateur navigue sur n'importe quelle page <code>/app/*</code> de Anim'Gest</div></div>
+        <div class="flow-step"><div class="flow-num">2</div><div class="flow-text">Le bouton <strong>?</strong> fixe bas-droit est toujours visible — clic pour ouvrir le panneau</div></div>
+        <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">Le panneau detecte la page via <code>usePathname()</code> et affiche 4-5 questions contextuelles</div></div>
+        <div class="flow-step"><div class="flow-num">4a</div><div class="flow-text">L'utilisateur clique sur une question → accordeon s'ouvre → reponse inline</div></div>
+        <div class="flow-step"><div class="flow-num">4b</div><div class="flow-text">L'utilisateur tape dans la barre de recherche → resultats filtres en temps reel (2+ caracteres)</div></div>
+        <div class="flow-step"><div class="flow-num">5</div><div class="flow-text">Clic sur "Toute l'aide" → ferme le panneau → navigue vers <code>/app/aide</code></div></div>
+        <div class="flow-step"><div class="flow-num">6</div><div class="flow-text">Centre d'aide : navigation par module, recherche globale, lien direct par ancre URL</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Deploiement</h2>
+      <div class="warn-box">Attention : le fichier <code>layout.tsx</code> fourni est un template minimal. Ne pas ecraser un layout existant avec du code (sidebar, topbar, providers). Utiliser <code>git restore</code> + patch des 2 lignes si necessaire.</div>
+      <table>
+        <thead><tr><th>Fichier</th><th>Destination</th><th>Commande de copie</th></tr></thead>
+        <tbody>
+          <tr><td><code>help-content.ts</code></td><td><code>src/lib/</code></td><td>Copy-Item automatique via deploy-aide.ps1</td></tr>
+          <tr><td><code>HelpPanel.tsx</code></td><td><code>src/components/</code></td><td>Copy-Item automatique via deploy-aide.ps1</td></tr>
+          <tr><td><code>aide-page.tsx</code></td><td><code>src/app/app/aide/page.tsx</code></td><td>Copy-Item automatique via deploy-aide.ps1</td></tr>
+          <tr><td><code>layout.tsx</code></td><td><code>src/app/app/layout.tsx</code></td><td>Patch manuel ou git restore + 2 lignes</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px">Apres deploiement : <code>docker compose build frontend &amp;&amp; docker compose up -d frontend &amp;&amp; docker compose restart nginx</code></p>
+    </div>
+  </div>
+
+  <!-- ═══ PANNEAU FLOTTANT ═══ -->
+  <div id="tab-panel" class="tab-pane">
+
+    <div class="section">
+      <h2>Etat ferme — bouton FAB uniquement</h2>
+      <p>Le bouton <strong>?</strong> est rendu via <code>position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 40</code>. Il disparait automatiquement si le pathname ne commence pas par <code>/app</code>.</p>
+      <div class="mockup-wrap" style="height:100px">
+        <div class="mockup-label">Bouton etat ferme — bas droit</div>
+        <div style="position:relative;height:72px;background:var(--bg3)">
+          <div style="position:absolute;bottom:12px;right:14px;width:34px;height:34px;border-radius:50%;background:var(--bg2);border:0.5px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:16px;font-weight:700">?</div>
+          <div style="position:absolute;bottom:24px;right:56px;font-size:9px;color:var(--amber)">← fixed bottom-6 right-6 / z-40</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Etat ouvert — panneau contextuel</h2>
+      <p>Largeur 360px, hauteur max <code>calc(100vh - 8rem)</code>, scrollable. Le premier article est ouvert par defaut. Fermeture : clic exterieur ou touche Echap.</p>
+      <div class="mockup-wrap">
+        <div class="mockup-label">Page /app/animaux — panneau aide ouvert</div>
+        <div class="ps-shell" style="position:relative">
+          <div class="ps-sidebar">
+            <div class="ps-logo">Anim'Gest</div>
+            <div class="ps-nav-item active"><div class="ps-nav-dot active"></div>Animaux</div>
+            <div class="ps-nav-item"><div class="ps-nav-dot"></div>Seances</div>
+            <div class="ps-nav-item"><div class="ps-nav-dot"></div>Factures</div>
+            <div class="ps-nav-item"><div class="ps-nav-dot"></div>Clients</div>
+            <div class="ps-nav-item"><div class="ps-nav-dot"></div>CRM</div>
+          </div>
+          <div class="ps-body">
+            <div class="ps-topbar">
+              <span class="ps-topbar-title">Animaux</span>
+              <div class="ps-avatar">A</div>
+            </div>
+            <div class="ps-main">
+              <div class="ps-page-title">Liste des animaux</div>
+              <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:6px;padding:10px;font-size:11px;color:var(--text3)">3 animaux enregistres</div>
+            </div>
+          </div>
+          <!-- Panneau aide -->
+          <div class="ps-help-panel">
+            <div class="ps-help-header">
+              <div class="ps-help-icon">?</div>
+              <div>
+                <div class="ps-help-title">Aide Anim'Gest</div>
+                <div class="ps-help-sub">Questions frequentes sur cette page</div>
+              </div>
+            </div>
+            <div class="ps-search-wrap">
+              <div class="ps-search-box">Rechercher dans l'aide...</div>
+            </div>
+            <div class="ps-articles">
+              <div class="ps-article">
+                <div class="ps-article-q"><span class="ps-chevron">v</span>Comment creer un nouvel animal ?</div>
+                <div class="ps-article-a">Rendez-vous dans <em>Animaux &rsaquo; Nouvel animal</em>. Renseignez le numero de puce (15 chiffres obligatoires), le nom et le proprietaire. Cliquez sur <em>Creer</em> pour valider.</div>
+              </div>
+              <div class="ps-article">
+                <div class="ps-article-q"><span class="ps-chevron">&rsaquo;</span>Le numero de puce est rejete, pourquoi ?</div>
+              </div>
+              <div class="ps-article">
+                <div class="ps-article-q"><span class="ps-chevron">&rsaquo;</span>Comment associer deux races a un animal ?</div>
+              </div>
+              <div class="ps-article">
+                <div class="ps-article-q"><span class="ps-chevron">&rsaquo;</span>Comment ajouter une photo ou un document ?</div>
+              </div>
+            </div>
+            <div class="ps-help-footer">
+              <div class="ps-help-link"><span>Toute l'aide</span><span>&rarr;</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- FAB -->
+        <div style="position:absolute;bottom:12px;right:12px;width:34px;height:34px;border-radius:50%;background:#059669;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;cursor:pointer">&#x2715;</div>
+      </div>
+
+      <div class="ann-row"><div class="ann-dot"></div>Header : icone + titre + sous-titre contextuel</div>
+      <div class="ann-row"><div class="ann-dot"></div>Recherche locale : active des 2 caracteres, remplace les articles contextuels</div>
+      <div class="ann-row"><div class="ann-dot"></div>1er accordeon ouvert par defaut. Les suivants fermes.</div>
+      <div class="ann-row"><div class="ann-dot"></div>Footer : lien "Toute l'aide" vers /app/aide, ferme le panneau</div>
+    </div>
+
+    <div class="section">
+      <h2>Comportements detailles</h2>
+      <table>
+        <thead><tr><th>Declencheur</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Clic bouton ?</td><td>Ouvre le panneau. Focus automatique sur le champ recherche (delai 50ms)</td></tr>
+          <tr><td>Clic exterieur</td><td>Ferme le panneau via listener <code>mousedown</code> sur <code>document</code></td></tr>
+          <tr><td>Touche Echap</td><td>Ferme le panneau via listener <code>keydown</code> sur <code>document</code></td></tr>
+          <tr><td>Saisie 2+ caracteres</td><td>Bascule sur les resultats de <code>searchArticles()</code>, remplace les articles contextuels</td></tr>
+          <tr><td>Clic bouton effacer</td><td>Vide la recherche, revient aux articles contextuels</td></tr>
+          <tr><td>Fermeture du panneau</td><td>Vide la recherche via le <code>useEffect([isOpen])</code></td></tr>
+          <tr><td>Changement de page</td><td><code>usePathname()</code> recalcule les articles contextuels automatiquement</td></tr>
+          <tr><td>Clic "Toute l'aide"</td><td>Appelle <code>setIsOpen(false)</code> puis navigue vers <code>/app/aide</code></td></tr>
+          <tr><td>Pathname hors /app</td><td>Composant retourne <code>null</code>, rien n'est rendu</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ CENTRE D'AIDE ═══ -->
+  <div id="tab-center" class="tab-pane">
+
+    <div class="section">
+      <h2>Maquette — page /app/aide</h2>
+      <div class="mockup-wrap">
+        <div class="mockup-label">Page complete /app/aide — module Animaux actif</div>
+        <div class="ps-aide-shell">
+          <!-- Sidebar nav gauche reduite -->
+          <div style="width:40px;background:#080F1A;border-right:0.5px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:8px">
+            <div style="width:26px;height:26px;border-radius:6px;background:var(--green-bg);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--green)">P</div>
+            <div class="ps-nav-dot" style="margin-top:8px"></div>
+            <div class="ps-nav-dot"></div>
+            <div class="ps-nav-dot active"></div>
+          </div>
+          <!-- Sidebar modules -->
+          <div class="ps-aide-modules">
+            <div class="ps-module-label">Modules</div>
+            <button class="ps-module-btn active">🐾 <span style="flex:1">Animaux</span><span class="ps-module-count active">10</span></button>
+            <button class="ps-module-btn">📅 <span style="flex:1">Seances</span><span class="ps-module-count">10</span></button>
+            <button class="ps-module-btn">📄 <span style="flex:1">Devis</span><span class="ps-module-count">10</span></button>
+            <button class="ps-module-btn">👥 <span style="flex:1">Clients</span><span class="ps-module-count">10</span></button>
+            <button class="ps-module-btn">📊 <span style="flex:1">Compta</span><span class="ps-module-count">10</span></button>
+            <button class="ps-module-btn">💼 <span style="flex:1">CRM</span><span class="ps-module-count">10</span></button>
+            <div style="margin-top:10px;padding:8px 8px 4px;border-top:0.5px solid var(--border)">
+              <div style="font-size:9px;color:var(--text3)">58 articles total</div>
+            </div>
+          </div>
+          <!-- Zone contenu -->
+          <div class="ps-aide-content">
+            <div style="position:relative">
+              <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text3)">&#x2315;</span>
+              <div class="ps-aide-search">Rechercher dans toute l'aide... (Ctrl+K)</div>
+            </div>
+            <div class="ps-module-header">
+              <div class="ps-module-emoji">🐾</div>
+              <div>
+                <div class="ps-module-name">Animaux</div>
+                <div class="ps-module-desc">Gestion des fiches animaux, puces, races et proprietaires</div>
+              </div>
+            </div>
+            <div class="ps-acc open">
+              <div class="ps-acc-q"><span style="color:var(--green);font-size:9px">v</span>Comment creer un nouvel animal ?</div>
+              <div class="ps-acc-a">Rendez-vous dans <em>Animaux &rsaquo; Nouvel animal</em>. Renseignez le numero de puce (15 chiffres obligatoires), le nom et le proprietaire.</div>
+            </div>
+            <div class="ps-acc">
+              <div class="ps-acc-q"><span style="color:var(--text3);font-size:9px">&rsaquo;</span>Le numero de puce est rejete, pourquoi ?</div>
+            </div>
+            <div class="ps-acc">
+              <div class="ps-acc-q"><span style="color:var(--text3);font-size:9px">&rsaquo;</span>Comment associer deux races a un animal ?</div>
+            </div>
+            <div class="ps-acc">
+              <div class="ps-acc-q"><span style="color:var(--text3);font-size:9px">&rsaquo;</span>Que sont les cases CAC 1 a 14 ?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ann-row"><div class="ann-dot"></div>Sidebar sticky avec compteur d'articles par module</div>
+      <div class="ann-row"><div class="ann-dot"></div>Barre de recherche : Ctrl+K pour focus, resultats groupes par module avec surlignage</div>
+      <div class="ann-row"><div class="ann-dot"></div>Accordeons : URL ancrable via #id, bouton copie lien direct au hover</div>
+    </div>
+
+    <div class="section">
+      <h2>Fonctionnalites de la page aide</h2>
+      <table>
+        <thead><tr><th>Fonctionnalite</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Sidebar sticky</td><td>6 modules avec compteur. Reste visible au scroll. Clic recharge le module et efface la recherche.</td></tr>
+          <tr><td>Barre de recherche</td><td>Recherche plein texte sur 58 articles. Raccourci <code>Ctrl+K</code> pour focus. Active des 2 caracteres.</td></tr>
+          <tr><td>Resultats groupes</td><td>Les resultats de recherche sont regroupes par module avec sous-titres.</td></tr>
+          <tr><td>Surlignage</td><td>Les termes recherches sont surligns dans la question et la reponse (balise <code>&lt;mark&gt;</code>).</td></tr>
+          <tr><td>URL ancrable</td><td>Chaque article possede un <code>id</code>. Le clic sur un accordeon met <code>#article-id</code> dans l'URL via <code>history.replaceState</code>.</td></tr>
+          <tr><td>Copie lien direct</td><td>Bouton icone visible au hover sur l'accordeon ouvert. Copie l'URL complete avec ancre.</td></tr>
+          <tr><td>Ouverture par ancre</td><td>Au chargement, si l'URL contient un hash, l'article correspondant s'ouvre et scroll automatiquement.</td></tr>
+          <tr><td>Navigation modules</td><td>Grille de raccourcis vers les autres modules affichee en bas de page.</td></tr>
+          <tr><td>Rendu Markdown</td><td>Le texte <code>**gras**</code> est rendu avec <code>&lt;strong&gt;</code> colore en vert emeraude.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ CONTENU ═══ -->
+  <div id="tab-content" class="tab-pane">
+
+    <div class="section">
+      <h2>Structure des donnees</h2>
+      <p>Tout le contenu est dans <code>src/lib/help-content.ts</code>. Pas d'API, pas de base de donnees. Le fichier exporte 3 constantes et 3 fonctions.</p>
+      <table>
+        <thead><tr><th>Module</th><th>ID</th><th>Nb articles</th><th>Pages cibles principales</th></tr></thead>
+        <tbody>
+          <tr><td>Animaux 🐾</td><td><code>animaux</code></td><td>10</td><td>/app/animaux, /app/animaux/[id], /app/animaux/new</td></tr>
+          <tr><td>Seances 📅</td><td><code>seances</code></td><td>10</td><td>/app/seances, /app/seances/[id], /app/seances/new</td></tr>
+          <tr><td>Devis &amp; Factures 📄</td><td><code>devis-factures</code></td><td>10</td><td>/app/devis, /app/factures, /app/devis/[id], /app/factures/[id]</td></tr>
+          <tr><td>Clients &amp; Tiers 👥</td><td><code>clients</code></td><td>10</td><td>/app/clients, /app/clients/[id], /app/clients/new</td></tr>
+          <tr><td>Comptabilite 📊</td><td><code>comptabilite</code></td><td>10</td><td>/app/comptabilite, /app/compta-fec, /app/reglements</td></tr>
+          <tr><td>CRM 💼</td><td><code>crm</code></td><td>10</td><td>/app/crm, /app/crm/leads, /app/crm/opportunites</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Interface TypeScript</h2>
+      <div class="code-block">
+<span class="kw">export interface</span> <span class="ty">HelpArticle</span> {<br>
+&nbsp;&nbsp;id: <span class="ty">string</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// ex: "ani-01", "sea-03", "crm-07"</span><br>
+&nbsp;&nbsp;moduleId: <span class="ty">string</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// ex: "animaux", "seances", "crm"</span><br>
+&nbsp;&nbsp;question: <span class="ty">string</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Question affichee dans l'accordeon</span><br>
+&nbsp;&nbsp;answer: <span class="ty">string</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Supporte **gras** (rendu en vert)</span><br>
+&nbsp;&nbsp;pages?: <span class="ty">string[]</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Ex: ["/app/animaux/[id]"] — [id] = regex</span><br>
+&nbsp;&nbsp;tags?: <span class="ty">string[]</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Mots-cles pour la recherche (score x2)</span><br>
+}<br><br>
+<span class="kw">export interface</span> <span class="ty">HelpModule</span> {<br>
+&nbsp;&nbsp;id: <span class="ty">string</span>;<br>
+&nbsp;&nbsp;label: <span class="ty">string</span>;<br>
+&nbsp;&nbsp;icon: <span class="ty">string</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Emoji</span><br>
+&nbsp;&nbsp;description: <span class="ty">string</span>;<br>
+}
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Algorithme de recherche (searchArticles)</h2>
+      <table>
+        <thead><tr><th>Zone de correspondance</th><th>Score par terme</th><th>Raison</th></tr></thead>
+        <tbody>
+          <tr><td>Question</td><td>+3</td><td>Correspondance la plus pertinente</td></tr>
+          <tr><td>Tags</td><td>+2</td><td>Mots-cles curates par le redacteur</td></tr>
+          <tr><td>Reponse</td><td>+1</td><td>Contexte supplementaire</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px">Les scores sont cumules sur tous les termes de la requete. Les articles avec score = 0 sont filtres. Le resultat est trie par score decroissant.</p>
+    </div>
+
+    <div class="section">
+      <h2>Ajouter ou modifier un article</h2>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-num">1</div><div class="flow-text">Ouvrir <code>src/lib/help-content.ts</code></div></div>
+        <div class="flow-step"><div class="flow-num">2</div><div class="flow-text">Ajouter un objet dans le tableau <code>HELP_ARTICLES</code> (ou modifier un existant)</div></div>
+        <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">Renseigner <code>id</code> unique, <code>moduleId</code>, <code>question</code>, <code>answer</code>, <code>pages[]</code>, <code>tags[]</code></div></div>
+        <div class="flow-step"><div class="flow-num">4</div><div class="flow-text">Rebuild : <code>docker compose build frontend &amp;&amp; docker compose up -d frontend &amp;&amp; docker compose restart nginx</code></div></div>
+      </div>
+      <div class="info-box" style="margin-top:12px">Les routes dynamiques s'ecrivent avec <code>[id]</code> dans le tableau <code>pages</code>. La fonction <code>getArticlesForPage()</code> les convertit automatiquement en regex. Ex: <code>"/app/animaux/[id]"</code> matche <code>/app/animaux/42</code> et <code>/app/animaux/abc123</code>.</div>
+    </div>
+  </div>
+
+  <!-- ═══ SPEC TECHNIQUE ═══ -->
+  <div id="tab-tech" class="tab-pane">
+
+    <div class="section">
+      <h2>Fichiers et emplacements</h2>
+      <table>
+        <thead><tr><th>Fichier source</th><th>Chemin cible dans le projet</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td><code>help-content.ts</code></td><td><code>src/lib/help-content.ts</code></td><td>Donnees : articles, modules, fonctions utilitaires</td></tr>
+          <tr><td><code>HelpPanel.tsx</code></td><td><code>src/components/HelpPanel.tsx</code></td><td>Composant bouton FAB + panneau flottant</td></tr>
+          <tr><td><code>aide-page.tsx</code></td><td><code>src/app/app/aide/page.tsx</code></td><td>Page centre d'aide complet</td></tr>
+          <tr><td><code>layout.tsx</code></td><td><code>src/app/app/layout.tsx</code></td><td>Patch : ajout de &lt;HelpPanel /&gt; uniquement</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Fonctions utilitaires exportees</h2>
+      <table>
+        <thead><tr><th>Fonction</th><th>Signature</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td><code>getArticlesForPage</code></td><td><code>(pathname: string) =&gt; HelpArticle[]</code></td><td>Filtre les articles par page, gere les routes dynamiques [id] via regex</td></tr>
+          <tr><td><code>searchArticles</code></td><td><code>(query: string) =&gt; HelpArticle[]</code></td><td>Recherche plein texte avec scoring pondère, tri par pertinence</td></tr>
+          <tr><td><code>getArticlesByModule</code></td><td><code>(moduleId: string) =&gt; HelpArticle[]</code></td><td>Retourne tous les articles d'un module pour la page aide</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Dependances et imports</h2>
+      <table>
+        <thead><tr><th>Import</th><th>Package</th><th>Usage</th></tr></thead>
+        <tbody>
+          <tr><td><code>usePathname</code></td><td>next/navigation</td><td>Detection de la page courante pour le contexte</td></tr>
+          <tr><td><code>useState, useEffect, useRef</code></td><td>react</td><td>Etat panneau, fermeture auto, focus recherche</td></tr>
+          <tr><td><code>Link</code></td><td>next/link</td><td>Navigation vers /app/aide depuis le panneau</td></tr>
+          <tr><td><code>PageHeader</code></td><td>@/components/PageHeader</td><td>En-tete de la page aide (composant existant)</td></tr>
+        </tbody>
+      </table>
+      <div class="info-box" style="margin-top:12px">Zero dependance npm supplementaire. Aucun <code>npm install</code> requis apres deploiement.</div>
+    </div>
+
+    <div class="section">
+      <h2>Ajout dans layout.tsx — 2 lignes exactement</h2>
+      <div class="code-block">
+<span class="cm">// src/app/app/layout.tsx — AVANT</span><br>
+<span class="kw">import</span> { Sidebar } <span class="kw">from</span> <span class="str">"@/components/Sidebar"</span>;<br>
+<span class="kw">import</span> { Topbar } <span class="kw">from</span> <span class="str">"@/components/Topbar"</span>;<br><br>
+
+<span class="cm">// src/app/app/layout.tsx — APRES (2 lignes ajoutees)</span><br>
+<span class="kw">import</span> { Sidebar } <span class="kw">from</span> <span class="str">"@/components/Sidebar"</span>;<br>
+<span class="kw">import</span> { Topbar } <span class="kw">from</span> <span class="str">"@/components/Topbar"</span>;<br>
+<span style="background:rgba(29,158,117,0.15);display:inline-block;width:100%;border-radius:3px"><span class="kw">import</span> { HelpPanel } <span class="kw">from</span> <span class="str">"@/components/HelpPanel"</span>; <span class="cm">// &lt;-- ligne 1</span></span><br><br>
+<span class="cm">// Dans le JSX, avant la fermeture du tag racine :</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+<span style="background:rgba(29,158,117,0.15);display:inline-block;width:100%;border-radius:3px">&nbsp;&nbsp;&nbsp;&nbsp;&lt;HelpPanel /&gt; <span class="cm">// &lt;-- ligne 2</span></span><br>
+&nbsp;&nbsp;&lt;/div&gt;
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Maintenance et depannage</h2>
+      <table>
+        <thead><tr><th>Situation</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Ajouter une page au contexte d'un article</td><td>Ajouter le pathname dans <code>pages[]</code> de l'article concerné dans <code>help-content.ts</code></td></tr>
+          <tr><td>Ajouter un nouveau module</td><td>Ajouter dans <code>HELP_MODULES[]</code> + creer les articles avec le <code>moduleId</code> correspondant</td></tr>
+          <tr><td>Modifier un article existant</td><td>Editer directement dans <code>HELP_ARTICLES[]</code> puis rebuild</td></tr>
+          <tr><td>Le bouton ? n'apparait pas</td><td>Verifier que le pathname commence par <code>/app</code> et que <code>&lt;HelpPanel /&gt;</code> est bien dans <code>layout.tsx</code></td></tr>
+          <tr><td>Le panneau s'ouvre mais vide</td><td>La page n'a pas d'articles avec son pathname dans <code>pages[]</code> — ajouter les articles manquants</td></tr>
+          <tr><td>La recherche ne trouve pas un article</td><td>Enrichir le tableau <code>tags[]</code> avec les mots-cles probables de l'utilisateur</td></tr>
+          <tr><td>Erreur "PageHeader not found"</td><td>Verifier le chemin d'import <code>@/components/PageHeader</code> ou adapter au composant existant</td></tr>
+          <tr><td>Layout casse apres deploiement</td><td><code>git restore src/app/app/layout.tsx</code> puis patch manuel des 2 lignes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+</script
+</div>
+
+<footer class="doc-footer">
+  <strong>Anim'Gest</strong> &mdash; NoSage's Editor &mdash; Documentation technique<br>
+  <small>Plateforme SaaS ERP pour professionnels du soin animal &mdash; 10 metiers &mdash; Sprint S61</small>
+</footer>
+</body>
+</html>

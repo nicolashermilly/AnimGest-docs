@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mémoire Eliot Persistée BDD — Anim'Gest Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F172A;
+    --navy-mid: #1E293B;
+    --navy-light: #334155;
+    --gold: #F59E0B;
+    --gold-dark: #B45309;
+    --cyan: #06B6D4;
+    --violet: #4F46E5;
+    --green: #10B981;
+    --red: #EF4444;
+    --orange: #F97316;
+    --white: #F8FAFC;
+    --muted: #94A3B8;
+    --border: rgba(255,255,255,0.08);
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.07);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); font-weight: 700; letter-spacing: -0.5px; }
+  .nav-brand span { color: var(--cyan); }
+  .nav-links { display: flex; gap: 0.5rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; transition: all 0.2s; }
+  .nav-links a:hover { color: var(--white); background: var(--surface-hover); }
+  .badge { background: var(--violet); color: #fff; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 20px; font-weight: 600; margin-left: 0.4rem; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 1100px; margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
+    color: var(--green); font-size: 0.78rem; font-weight: 600;
+    padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 1.5rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 700;
+    line-height: 1.15; margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero-sub {
+    color: var(--muted); font-size: 1.05rem; max-width: 680px;
+    margin-bottom: 2rem; line-height: 1.8;
+  }
+  .hero-meta {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+  }
+  .meta-chip {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.85rem; color: var(--muted);
+  }
+  .meta-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-green { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .dot-gold { background: var(--gold); }
+  .dot-cyan { background: var(--cyan); }
+
+  /* ── LAYOUT ── */
+  .layout { display: grid; grid-template-columns: 260px 1fr; gap: 0; max-width: 1100px; margin: 0 auto; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--border);
+    position: sticky; top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 2px; }
+  .sidebar-title { font-size: 0.7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+  .sidebar-nav { list-style: none; }
+  .sidebar-nav li a {
+    display: block; padding: 0.45rem 0.75rem; border-radius: 6px;
+    color: var(--muted); text-decoration: none; font-size: 0.88rem;
+    transition: all 0.15s; border-left: 2px solid transparent;
+    margin-bottom: 0.1rem;
+  }
+  .sidebar-nav li a:hover { color: var(--white); background: var(--surface-hover); border-left-color: var(--gold); }
+  .sidebar-nav li a.active { color: var(--gold); background: rgba(245,158,11,0.08); border-left-color: var(--gold); }
+  .sidebar-section { margin-top: 1.5rem; }
+
+  /* ── CONTENT ── */
+  .content { padding: 2.5rem 3rem; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 3.5rem; }
+  .section-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .icon-green { background: rgba(16,185,129,0.15); }
+  .icon-gold { background: rgba(245,158,11,0.15); }
+  .icon-cyan { background: rgba(6,182,212,0.15); }
+  .icon-violet { background: rgba(79,70,229,0.15); }
+  .icon-red { background: rgba(239,68,68,0.15); }
+  .icon-orange { background: rgba(249,115,22,0.15); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; }
+
+  h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--white); }
+  p { color: #CBD5E1; margin-bottom: 1rem; }
+
+  /* ── ALERT BOX ── */
+  .alert {
+    padding: 1rem 1.25rem; border-radius: 10px;
+    margin-bottom: 1.5rem; font-size: 0.9rem;
+    display: flex; gap: 0.75rem;
+  }
+  .alert-law {
+    background: rgba(79,70,229,0.12); border: 1px solid rgba(79,70,229,0.35);
+    color: #C4B5FD;
+  }
+  .alert-warning {
+    background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+    color: #FCA5A5;
+  }
+  .alert-info {
+    background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.3);
+    color: #67E8F9;
+  }
+  .alert-success {
+    background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+    color: #6EE7B7;
+  }
+  .alert-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  thead th {
+    background: var(--navy-mid); padding: 0.8rem 1rem;
+    text-align: left; font-weight: 600; font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface-hover); }
+  tbody td { padding: 0.75rem 1rem; color: #CBD5E1; vertical-align: top; }
+  .td-key { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: var(--cyan); }
+  .td-type { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--gold); }
+  .td-req { color: var(--red); font-weight: 700; font-size: 0.75rem; }
+  .td-opt { color: var(--muted); font-size: 0.75rem; }
+
+  /* ── CODE ── */
+  .code-block {
+    background: #020617; border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem;
+  }
+  .code-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.6rem 1rem; background: var(--navy-mid);
+    border-bottom: 1px solid var(--border); font-size: 0.78rem; color: var(--muted);
+  }
+  .code-lang {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--cyan); font-size: 0.72rem; font-weight: 600;
+    background: rgba(6,182,212,0.12); padding: 0.15rem 0.5rem; border-radius: 4px;
+  }
+  pre { padding: 1.25rem; overflow-x: auto; font-size: 0.83rem; line-height: 1.7; }
+  code { font-family: 'JetBrains Mono', monospace; color: #E2E8F0; }
+  .kw { color: #7C3AED; }
+  .str { color: #10B981; }
+  .cm { color: #64748B; font-style: italic; }
+  .fn { color: #F59E0B; }
+  .ty { color: #06B6D4; }
+  .num { color: #F97316; }
+
+  /* ── GRID CARDS ── */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem;
+    transition: all 0.2s;
+  }
+  .card:hover { border-color: rgba(245,158,11,0.3); background: var(--surface-hover); }
+  .card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .card-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .card-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── MÉTIER BADGES ── */
+  .metier-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .metier-badge {
+    display: flex; align-items: center; gap: 0.4rem;
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.35rem 0.75rem; border-radius: 20px;
+    font-size: 0.83rem; color: #CBD5E1;
+    transition: all 0.15s;
+  }
+  .metier-badge.active { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.4); color: var(--green); }
+  .metier-badge.planned { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); color: var(--gold); }
+
+  /* ── STATUS FLOW ── */
+  .flow { display: flex; align-items: center; gap: 0; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .flow-step {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.6rem 1.1rem; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 500;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .flow-step.s-active { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4); color: var(--green); }
+  .flow-step.s-warn { background: rgba(249,115,22,0.12); border-color: rgba(249,115,22,0.35); color: var(--orange); }
+  .flow-step.s-close { background: rgba(100,116,139,0.15); border-color: rgba(100,116,139,0.3); color: var(--muted); }
+  .flow-arrow { padding: 0 0.5rem; color: var(--muted); font-size: 1rem; }
+
+  /* ── CHAMP OBLIGATOIRE LEGEND ── */
+  .field-legend { display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.82rem; }
+  .fl-item { display: flex; align-items: center; gap: 0.4rem; }
+
+  /* ── RULE BOX ── */
+  .rule-list { list-style: none; }
+  .rule-list li {
+    display: flex; gap: 0.75rem; padding: 0.75rem;
+    border-radius: 8px; margin-bottom: 0.5rem;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 0.88rem; color: #CBD5E1;
+    align-items: flex-start;
+  }
+  .rule-icon { flex-shrink: 0; margin-top: 1px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 4rem; padding: 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center; color: var(--muted); font-size: 0.82rem;
+  }
+  .footer strong { color: var(--gold); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 3px; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand">Anim'Gest <span>Docs</span></div>
+  <div class="nav-links">
+    <a href="index.html">Index</a>
+    <a href="17-api-reference.html">API</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="20-pilotage-projet.html">Pilotage</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-tag" style="background:rgba(79,70,229,0.12);border:1px solid rgba(79,70,229,0.3);color:#C4B5FD;">🧠 Eliot IA · Planifié S68</div>
+  <h1>Eliot — <em>Mémoire</em><br>Persistée</h1>
+  <p class="hero-sub">Mémoire contextuelle persistée en BDD pour l'agent Eliot — préférences praticien, contexte métier, informations animaux et clients mémorisées entre les sessions.</p>
+  <div class="hero-meta"><div class="meta-chip"><div class="dot" style="background:var(--violet);box-shadow:0 0 8px var(--violet)"></div> Planifié S68</div><div class="meta-chip"><div class="dot" style="background:var(--gold)"></div> 2 nouvelles tables BDD</div><div class="meta-chip"><div class="dot" style="background:var(--cyan)"></div> Tool memoriser + injection system prompt</div></div>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Sur cette page</div>
+    <ul class="sidebar-nav"><li><a href="#vue-ensemble" class="active">Vue d'ensemble</a></li>
+<li><a href="#bdd" >Structure BDD</a></li>
+<li><a href="#injection" >Injection dans le prompt</a></li>
+<li><a href="#tool-memoriser" >Tool memoriser</a></li>
+<li><a href="#admin" >Page admin</a></li>
+<li><a href="#deploiement" >Déploiement S68</a></li></ul>
+    <div class="sidebar-section"><div class="sidebar-title">Docs liées</div><ul class="sidebar-nav"><li><a href="17-api-reference.html">API Reference</a></li>
+<li><a href="61-eliot-tools-registre.html">Eliot Tools Registre</a></li></ul></div>
+  </aside>
+  <main class="content">
+<section class="section" id="vue-ensemble">
+  <div class="section-header"><div class="section-icon icon-violet">🧠</div><h2 class="section-title">Vue d'ensemble</h2></div>
+  <p>Actuellement, Eliot repart de zéro à chaque session. La mémoire persistée lui permet de se souvenir des préférences du praticien, du contexte métier, et des informations importantes sur les animaux et clients — sans que le praticien ait à se répéter.</p>
+  <div class="cards-grid">
+    <div class="card"><div class="card-icon">💾</div><div class="card-title">Faits persistants</div><div class="card-text">Table <code>eliot_memoire</code> — faits catégorisés (PREFERENCE, CONTEXTE, ANIMAL, CLIENT, PROCEDURE) avec niveau de confiance et expiration optionnelle.</div></div>
+    <div class="card"><div class="card-icon">📖</div><div class="card-title">Historique résumé</div><div class="card-text">Table <code>eliot_contexte_session</code> — résumé automatique de chaque conversation pour garder une trace légère de l'historique.</div></div>
+    <div class="card"><div class="card-icon">🔧</div><div class="card-title">Tool memoriser</div><div class="card-text">Eliot peut lui-même décider de mémoriser un fait important quand le praticien mentionne une information récurrente.</div></div>
+    <div class="card"><div class="card-icon">👁️</div><div class="card-title">Page admin</div><div class="card-text">Page <code>/app/parametres/eliot-memoire</code> pour visualiser, corriger et supprimer les faits mémorisés par Eliot.</div></div>
+  </div>
+</section>
+
+<section class="section" id="bdd">
+  <div class="section-header"><div class="section-icon icon-cyan">🗃️</div><h2 class="section-title">Structure BDD</h2></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Colonne</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td class="td-key">EM_CATEGORIE</td><td class="td-type">ENUM</td><td>PREFERENCE · CONTEXTE · ANIMAL · CLIENT · PROCEDURE · ALERTE</td></tr>
+      <tr><td class="td-key">EM_CLE</td><td class="td-type">VARCHAR(100)</td><td>Identifiant court du fait — ex: <code>race_preferee</code>, <code>ani_22_allergies</code></td></tr>
+      <tr><td class="td-key">EM_VALEUR</td><td class="td-type">TEXT</td><td>Valeur mémorisée (texte libre ou JSON)</td></tr>
+      <tr><td class="td-key">EM_CONFIANCE</td><td class="td-type">TINYINT</td><td>0 = incertain (déduit), 1 = confirmé (dit explicitement)</td></tr>
+      <tr><td class="td-key">EM_NB_MENTIONS</td><td class="td-type">INT</td><td>Nombre de fois que ce fait a été mentionné — aide à la priorisation</td></tr>
+      <tr><td class="td-key">EM_EXPIRES_AT</td><td class="td-type">DATETIME</td><td>NULL = permanent. Permet des faits temporaires (ex: client absent en août)</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Exemples de faits mémorisés</h3>
+  <div class="code-block"><div class="code-header"><span>Faits réalistes</span><span class="code-lang">SQL</span></div>
+  <pre><code>PREFERENCE  | langue_reponse     | français
+PREFERENCE  | format_dates       | JJ/MM/AAAA
+CONTEXTE    | metier_principal   | Comportementaliste canin
+CONTEXTE    | heure_ouverture    | 9h-18h lundi-samedi
+ANIMAL      | ani_22_allergies   | Frimousse allergique au poulet
+CLIENT      | tie_1_absence      | Jean Dujardin absent en août 2026
+PROCEDURE   | creation_seance    | Toujours demander le motif</code></pre></div>
+</section>
+
+<section class="section" id="injection">
+  <div class="section-header"><div class="section-icon icon-gold">💉</div><h2 class="section-title">Injection dans le prompt</h2></div>
+  <p>À chaque appel <code>POST /ia/chat</code>, la mémoire est lue depuis la BDD et injectée en fin du system prompt, sous forme de section <code>## Mémoire contextuelle</code>.</p>
+  <div class="alert alert-info"><div class="alert-icon">💡</div><div>Maximum 30 faits injectés (triés par nombre de mentions). Seuls les faits <code>EM_CONFIANCE = 1</code> et non expirés sont inclus. Si la mémoire est vide, rien n'est ajouté — comportement identique à l'actuel.</div></div>
+  <div class="code-block"><div class="code-header"><span>System prompt enrichi</span><span class="code-lang">Prompt</span></div>
+  <pre><code>[Prompt système Eliot existant...]
+
+## Mémoire contextuelle
+### PREFERENCE
+- langue_reponse: français
+- format_dates: JJ/MM/AAAA
+
+### CONTEXTE
+- metier_principal: Comportementaliste canin
+- heure_ouverture: 9h-18h lundi-samedi
+
+### ANIMAL
+- ani_22_allergies: Frimousse allergique au poulet</code></pre></div>
+</section>
+
+<section class="section" id="tool-memoriser">
+  <div class="section-header"><div class="section-icon icon-violet">🧠</div><h2 class="section-title">Tool memoriser</h2></div>
+  <p>Eliot appelle ce tool quand il détecte une information récurrente ou une préférence exprimée par le praticien.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Paramètre</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td class="td-key">categorie</td><td class="td-type">enum</td><td>PREFERENCE · CONTEXTE · ANIMAL · CLIENT · PROCEDURE</td></tr>
+      <tr><td class="td-key">cle</td><td class="td-type">string</td><td>Identifiant court — ex: <code>ani_22_allergies</code></td></tr>
+      <tr><td class="td-key">valeur</td><td class="td-type">string</td><td>Valeur du fait à mémoriser</td></tr>
+      <tr><td class="td-key">confiance</td><td class="td-type">number</td><td>0 = déduit (incertain), 1 = dit explicitement (confirmé)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="alert alert-gold"><div class="alert-icon">💡</div><div>Eliot utilise <code>confiance = 0</code> pour les informations déduites (ex: "il semble préférer les réponses courtes"), et <code>confiance = 1</code> pour les informations explicites (ex: "je préfère les réponses en français").</div></div>
+</section>
+
+<section class="section" id="admin">
+  <div class="section-header"><div class="section-icon icon-blue">🖥️</div><h2 class="section-title">Page admin</h2></div>
+  <p>Nouvelle page <code>/app/parametres/eliot-memoire</code> permettant au praticien de contrôler ce qu'Eliot a mémorisé.</p>
+  <ul class="rule-list">
+    <li><span>👁️</span><div>Tableau filtrable par catégorie : Catégorie · Clé · Valeur · Confiance · Nb mentions · Date MàJ</div></li>
+    <li><span>🗑️</span><div>Bouton "Oublier" par ligne — le praticien peut corriger les faits incorrects</div></li>
+    <li><span>📖</span><div>Section historique — 20 dernières sessions avec résumé automatique et nombre de messages</div></li>
+    <li><span>⚠️</span><div>Bouton "Vider toute la mémoire" avec confirmation — pour repartir de zéro</div></li>
+  </ul>
+</section>
+
+<section class="section" id="deploiement">
+  <div class="section-header"><div class="section-icon icon-green">🚀</div><h2 class="section-title">Déploiement S68</h2></div>
+  <ul class="rule-list">
+    <li><span>1️⃣</span><div>Exécuter SQL : <code>CREATE TABLE eliot_memoire</code> + <code>CREATE TABLE eliot_contexte_session</code> dans HeidiSQL</div></li>
+    <li><span>2️⃣</span><div>Patch <code>custom-routes.ts</code> : ajouter routes <code>GET/POST/DELETE /ia/memoire</code></div></li>
+    <li><span>3️⃣</span><div>Patch <code>POST /ia/chat</code> : injection mémoire dans le system prompt avant l'appel Anthropic</div></li>
+    <li><span>4️⃣</span><div>Ajouter tool <code>memoriser</code> dans <code>tools[]</code> et <code>execTool</code></div></li>
+    <li><span>5️⃣</span><div>Créer page <code>/app/parametres/eliot-memoire/page.tsx</code> + lien sidebar Paramètres</div></li>
+    <li><span>6️⃣</span><div>Test : "Je préfère les réponses en français" → Eliot appelle memoriser → vérifier en BDD</div></li>
+  </ul>
+</section>
+</main>
+</div>
+<div class="footer">
+  <strong>Anim'Gest</strong> — NoSage's Editor &nbsp;·&nbsp; Mémoire Eliot Persistée — Planifié S68 &nbsp;·&nbsp;
+  <span style="color:var(--muted)">07/04/2026</span>
+</div>
+<script>
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sidebar-nav li a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.sidebar-nav li a[href="#' + e.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

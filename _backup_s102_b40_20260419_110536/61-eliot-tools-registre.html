@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliot Tools Registre Sanitaire — Anim'Gest Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F172A;
+    --navy-mid: #1E293B;
+    --navy-light: #334155;
+    --gold: #F59E0B;
+    --gold-dark: #B45309;
+    --cyan: #06B6D4;
+    --violet: #4F46E5;
+    --green: #10B981;
+    --red: #EF4444;
+    --orange: #F97316;
+    --white: #F8FAFC;
+    --muted: #94A3B8;
+    --border: rgba(255,255,255,0.08);
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.07);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); font-weight: 700; letter-spacing: -0.5px; }
+  .nav-brand span { color: var(--cyan); }
+  .nav-links { display: flex; gap: 0.5rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; transition: all 0.2s; }
+  .nav-links a:hover { color: var(--white); background: var(--surface-hover); }
+  .badge { background: var(--violet); color: #fff; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 20px; font-weight: 600; margin-left: 0.4rem; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 1100px; margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
+    color: var(--green); font-size: 0.78rem; font-weight: 600;
+    padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 1.5rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 700;
+    line-height: 1.15; margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero-sub {
+    color: var(--muted); font-size: 1.05rem; max-width: 680px;
+    margin-bottom: 2rem; line-height: 1.8;
+  }
+  .hero-meta {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+  }
+  .meta-chip {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.85rem; color: var(--muted);
+  }
+  .meta-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-green { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .dot-gold { background: var(--gold); }
+  .dot-cyan { background: var(--cyan); }
+
+  /* ── LAYOUT ── */
+  .layout { display: grid; grid-template-columns: 260px 1fr; gap: 0; max-width: 1100px; margin: 0 auto; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--border);
+    position: sticky; top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 2px; }
+  .sidebar-title { font-size: 0.7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+  .sidebar-nav { list-style: none; }
+  .sidebar-nav li a {
+    display: block; padding: 0.45rem 0.75rem; border-radius: 6px;
+    color: var(--muted); text-decoration: none; font-size: 0.88rem;
+    transition: all 0.15s; border-left: 2px solid transparent;
+    margin-bottom: 0.1rem;
+  }
+  .sidebar-nav li a:hover { color: var(--white); background: var(--surface-hover); border-left-color: var(--gold); }
+  .sidebar-nav li a.active { color: var(--gold); background: rgba(245,158,11,0.08); border-left-color: var(--gold); }
+  .sidebar-section { margin-top: 1.5rem; }
+
+  /* ── CONTENT ── */
+  .content { padding: 2.5rem 3rem; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 3.5rem; }
+  .section-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .icon-green { background: rgba(16,185,129,0.15); }
+  .icon-gold { background: rgba(245,158,11,0.15); }
+  .icon-cyan { background: rgba(6,182,212,0.15); }
+  .icon-violet { background: rgba(79,70,229,0.15); }
+  .icon-red { background: rgba(239,68,68,0.15); }
+  .icon-orange { background: rgba(249,115,22,0.15); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; }
+
+  h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--white); }
+  p { color: #CBD5E1; margin-bottom: 1rem; }
+
+  /* ── ALERT BOX ── */
+  .alert {
+    padding: 1rem 1.25rem; border-radius: 10px;
+    margin-bottom: 1.5rem; font-size: 0.9rem;
+    display: flex; gap: 0.75rem;
+  }
+  .alert-law {
+    background: rgba(79,70,229,0.12); border: 1px solid rgba(79,70,229,0.35);
+    color: #C4B5FD;
+  }
+  .alert-warning {
+    background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+    color: #FCA5A5;
+  }
+  .alert-info {
+    background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.3);
+    color: #67E8F9;
+  }
+  .alert-success {
+    background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+    color: #6EE7B7;
+  }
+  .alert-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  thead th {
+    background: var(--navy-mid); padding: 0.8rem 1rem;
+    text-align: left; font-weight: 600; font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface-hover); }
+  tbody td { padding: 0.75rem 1rem; color: #CBD5E1; vertical-align: top; }
+  .td-key { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: var(--cyan); }
+  .td-type { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--gold); }
+  .td-req { color: var(--red); font-weight: 700; font-size: 0.75rem; }
+  .td-opt { color: var(--muted); font-size: 0.75rem; }
+
+  /* ── CODE ── */
+  .code-block {
+    background: #020617; border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem;
+  }
+  .code-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.6rem 1rem; background: var(--navy-mid);
+    border-bottom: 1px solid var(--border); font-size: 0.78rem; color: var(--muted);
+  }
+  .code-lang {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--cyan); font-size: 0.72rem; font-weight: 600;
+    background: rgba(6,182,212,0.12); padding: 0.15rem 0.5rem; border-radius: 4px;
+  }
+  pre { padding: 1.25rem; overflow-x: auto; font-size: 0.83rem; line-height: 1.7; }
+  code { font-family: 'JetBrains Mono', monospace; color: #E2E8F0; }
+  .kw { color: #7C3AED; }
+  .str { color: #10B981; }
+  .cm { color: #64748B; font-style: italic; }
+  .fn { color: #F59E0B; }
+  .ty { color: #06B6D4; }
+  .num { color: #F97316; }
+
+  /* ── GRID CARDS ── */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem;
+    transition: all 0.2s;
+  }
+  .card:hover { border-color: rgba(245,158,11,0.3); background: var(--surface-hover); }
+  .card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .card-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .card-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── MÉTIER BADGES ── */
+  .metier-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .metier-badge {
+    display: flex; align-items: center; gap: 0.4rem;
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.35rem 0.75rem; border-radius: 20px;
+    font-size: 0.83rem; color: #CBD5E1;
+    transition: all 0.15s;
+  }
+  .metier-badge.active { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.4); color: var(--green); }
+  .metier-badge.planned { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); color: var(--gold); }
+
+  /* ── STATUS FLOW ── */
+  .flow { display: flex; align-items: center; gap: 0; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .flow-step {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.6rem 1.1rem; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 500;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .flow-step.s-active { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4); color: var(--green); }
+  .flow-step.s-warn { background: rgba(249,115,22,0.12); border-color: rgba(249,115,22,0.35); color: var(--orange); }
+  .flow-step.s-close { background: rgba(100,116,139,0.15); border-color: rgba(100,116,139,0.3); color: var(--muted); }
+  .flow-arrow { padding: 0 0.5rem; color: var(--muted); font-size: 1rem; }
+
+  /* ── CHAMP OBLIGATOIRE LEGEND ── */
+  .field-legend { display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.82rem; }
+  .fl-item { display: flex; align-items: center; gap: 0.4rem; }
+
+  /* ── RULE BOX ── */
+  .rule-list { list-style: none; }
+  .rule-list li {
+    display: flex; gap: 0.75rem; padding: 0.75rem;
+    border-radius: 8px; margin-bottom: 0.5rem;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 0.88rem; color: #CBD5E1;
+    align-items: flex-start;
+  }
+  .rule-icon { flex-shrink: 0; margin-top: 1px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 4rem; padding: 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center; color: var(--muted); font-size: 0.82rem;
+  }
+  .footer strong { color: var(--gold); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 3px; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand">Anim'Gest <span>Docs</span></div>
+  <div class="nav-links">
+    <a href="index.html">Index</a>
+    <a href="17-api-reference.html">API</a>
+    <a href="06-roadmap.html">Roadmap</a>
+    <a href="20-pilotage-projet.html">Pilotage</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-tag" style="background:rgba(79,70,229,0.12);border:1px solid rgba(79,70,229,0.3);color:#C4B5FD;">🤖 Eliot IA · Planifié S68</div>
+  <h1>Eliot — Tools <em>Registre</em><br>Sanitaire</h1>
+  <p class="hero-sub">3 nouveaux outils Eliot pour consulter et alimenter le Registre Sanitaire via l'agent IA — consultation des séjours en cours, journal d'événements vocal, alertes vaccins automatiques.</p>
+  <div class="hero-meta"><div class="meta-chip"><div class="dot" style="background:var(--violet);box-shadow:0 0 8px var(--violet)"></div> Planifié S68</div><div class="meta-chip"><div class="dot" style="background:var(--gold)"></div> Tools #14 #15 #16</div><div class="meta-chip"><div class="dot" style="background:var(--cyan)"></div> Rebuild API uniquement</div></div>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Sur cette page</div>
+    <ul class="sidebar-nav"><li><a href="#vue-ensemble" class="active">Vue d'ensemble</a></li>
+<li><a href="#tool-get-registre" >get_registre_sanitaire</a></li>
+<li><a href="#tool-create-evenement" >create_evenement_sanitaire</a></li>
+<li><a href="#tool-alertes-vaccins" >get_alertes_vaccins</a></li>
+<li><a href="#deploiement" >Déploiement S68</a></li>
+<li><a href="#regles" >Règles métier</a></li></ul>
+    <div class="sidebar-section"><div class="sidebar-title">Docs liées</div><ul class="sidebar-nav"><li><a href="58-registre-sanitaire.html">Registre Sanitaire</a></li>
+<li><a href="17-api-reference.html">API Reference</a></li>
+<li><a href="62-notifications-portail.html">Notifications Portail</a></li></ul></div>
+  </aside>
+  <main class="content">
+<section class="section" id="vue-ensemble">
+  <div class="section-header"><div class="section-icon icon-violet">🤖</div><h2 class="section-title">Vue d'ensemble</h2></div>
+  <p>3 nouveaux outils Eliot permettent d'interagir avec le Registre Sanitaire (arrêté 3 avril 2014) via l'agent IA. Le praticien peut consulter les séjours, enregistrer des observations vocalement, et recevoir des alertes vaccins — sans quitter la conversation.</p>
+  <div class="alert alert-success"><div class="alert-icon">✅</div><div>Le registre sanitaire reste pleinement fonctionnel sans Eliot. Ces outils sont une extension commerciale, pas un prérequis réglementaire.</div></div>
+  <div class="cards-grid">
+    <div class="card"><div class="card-icon">📋</div><div class="card-title">get_registre_sanitaire</div><div class="card-text">Lister les séjours en cours avec statuts, vaccins, contacts vétérinaires et alertes. Filtrable par métier et statut.</div></div>
+    <div class="card"><div class="card-icon">📝</div><div class="card-title">create_evenement_sanitaire</div><div class="card-text">Ajouter un événement au journal d'un séjour. URGENCE → passage automatique en INCIDENT et alerte immédiate.</div></div>
+    <div class="card"><div class="card-icon">💉</div><div class="card-title">get_alertes_vaccins</div><div class="card-text">Lister les animaux dont la vaccination antirabique expire dans les N prochains jours. Aide à anticiper les refus d'accueil.</div></div>
+  </div>
+</section>
+
+<section class="section" id="tool-get-registre">
+  <div class="section-header"><div class="section-icon icon-cyan">📋</div><h2 class="section-title">get_registre_sanitaire</h2></div>
+  <p>Consultation des séjours du registre sanitaire, avec jointures animal, tiers, vaccins et alertes.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Paramètre</th><th>Type</th><th>Requis</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td class="td-key">statut</td><td class="td-type">enum</td><td class="td-opt">Non</td><td>EN_COURS (défaut) · INCIDENT · CLOTURE</td></tr>
+      <tr><td class="td-key">metier</td><td class="td-type">enum</td><td class="td-opt">Non</td><td>PENSION · PET_SITTER · EQUESTRE</td></tr>
+      <tr><td class="td-key">limit</td><td class="td-type">number</td><td class="td-opt">Non</td><td>Nombre de résultats. Défaut : 10</td></tr>
+    </tbody>
+  </table></div>
+  <div class="code-block"><div class="code-header"><span>Exemple de dialogue</span><span class="code-lang">Chat</span></div>
+  <pre><code>👤 "Quels animaux sont en pension en ce moment ?"
+→ get_registre_sanitaire(statut="EN_COURS", metier="PENSION")
+→ Retourne : liste + vaccins + alertes
+
+👤 "Y a-t-il des séjours avec incident ?"
+→ get_registre_sanitaire(statut="INCIDENT")
+→ Retourne : séjours INCIDENT + coordonnées urgence</code></pre></div>
+</section>
+
+<section class="section" id="tool-create-evenement">
+  <div class="section-header"><div class="section-icon icon-orange">📝</div><h2 class="section-title">create_evenement_sanitaire</h2></div>
+  <div class="alert alert-warning" style="background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.3);color:#FDBA74;"><div class="alert-icon">⚠️</div><div><strong>Traçabilité réglementaire :</strong> Tous les événements créés par Eliot sont marqués <code>RSE_AUTEUR = 'Eliot'</code>. Ils ne peuvent pas être supprimés — le registre sanitaire est immutable.</div></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Paramètre</th><th>Type</th><th>Requis</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td class="td-key">rss_id</td><td class="td-type">number</td><td class="td-req">✦</td><td>Identifiant du séjour (RSS_ID)</td></tr>
+      <tr><td class="td-key">type</td><td class="td-type">enum</td><td class="td-req">✦</td><td>ALIMENTATION · SANTE · COMPORTEMENT · TRAITEMENT · VETERINAIRE · AUTRE</td></tr>
+      <tr><td class="td-key">description</td><td class="td-type">string</td><td class="td-req">✦</td><td>Description de l'observation ou de l'événement</td></tr>
+      <tr><td class="td-key">gravite</td><td class="td-type">enum</td><td class="td-opt">Non</td><td>FAIBLE (défaut) · MODEREE · ELEVEE · URGENCE</td></tr>
+    </tbody>
+  </table></div>
+  <div class="alert alert-info"><div class="alert-icon">🔔</div><div>Si <code>gravite = URGENCE</code>, le séjour passe automatiquement en statut <strong>INCIDENT</strong>. Eliot ne peut jamais clôturer un séjour — seul le praticien via l'interface peut le faire.</div></div>
+</section>
+
+<section class="section" id="tool-alertes-vaccins">
+  <div class="section-header"><div class="section-icon icon-red">💉</div><h2 class="section-title">get_alertes_vaccins</h2></div>
+  <p>Retourne les animaux dont le vaccin antirabique est expiré, expire bientôt ou n'est pas renseigné — parmi les séjours EN_COURS uniquement.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Paramètre</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td class="td-key">jours_anticipation</td><td class="td-type">number</td><td>Jours avant expiration pour déclencher l'alerte. Défaut : 30</td></tr>
+      <tr><td class="td-key">metier</td><td class="td-type">enum</td><td>Filtrer par métier. Optionnel.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Retourne des compteurs séparés : <code>expires</code>, <code>bientot</code>, <code>non_renseignes</code> — et un message synthétique ✅ ou ⚠️.</p>
+</section>
+
+<section class="section" id="deploiement">
+  <div class="section-header"><div class="section-icon icon-green">🚀</div><h2 class="section-title">Déploiement S68</h2></div>
+  <ul class="rule-list">
+    <li><span>1️⃣</span><div>Ajouter les 3 déclarations dans <code>tools[]</code> après les 13 tools existants → tools #14, #15, #16</div></li>
+    <li><span>2️⃣</span><div>Ajouter les 3 <code>case</code> dans <code>execTool</code> avec <code>getDb()</code> + <code>db.end()</code> en finally</div></li>
+    <li><span>3️⃣</span><div>Rebuild API uniquement — aucun changement frontend nécessaire</div></li>
+    <li><span>4️⃣</span><div>Test : "Quels animaux sont en pension ?" + "Note que [animal] a refusé de manger"</div></li>
+  </ul>
+  <div class="alert alert-success"><div class="alert-icon">✅</div><div>Après déploiement : <strong>16 tools Eliot actifs</strong> (13 existants + 3 registre sanitaire)</div></div>
+</section>
+
+<section class="section" id="regles">
+  <div class="section-header"><div class="section-icon icon-red">⚡</div><h2 class="section-title">Règles métier</h2></div>
+  <ul class="rule-list">
+    <li><span>✍️</span><div><code>RSE_AUTEUR = 'Eliot'</code> — tous les événements créés par l'IA sont traçables et distinguables des saisies manuelles</div></li>
+    <li><span>🔒</span><div>Séjour CLOTURE → refus d'ajout d'événement avec erreur explicite</div></li>
+    <li><span>🚨</span><div>URGENCE → passage automatique en INCIDENT (jamais en CLOTURE directe)</div></li>
+    <li><span>❌</span><div>Eliot ne peut PAS clôturer un séjour, supprimer un événement, ni modifier les données réglementaires</div></li>
+    <li><span>🛡️</span><div>Fonctionnement sans Eliot garanti — ces tools sont une option commerciale, pas un prérequis</div></li>
+  </ul>
+</section>
+</main>
+</div>
+<div class="footer">
+  <strong>Anim'Gest</strong> — NoSage's Editor &nbsp;·&nbsp; Eliot Tools Registre Sanitaire — Planifié S68 &nbsp;·&nbsp;
+  <span style="color:var(--muted)">07/04/2026</span>
+</div>
+<script>
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sidebar-nav li a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.sidebar-nav li a[href="#' + e.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

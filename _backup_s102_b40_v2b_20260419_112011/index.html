@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anim'Gest — Documentation S101 — no-sages-editor.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ── Anim'Gest Design System ── */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ag-navy:   #0F172A;
+    --ag-navy2:  #1E293B;
+    --ag-navy3:  #334155;
+    --ag-gold:   #B8860B;
+    --ag-gold2:  #D4A017;
+    --ag-gold3:  #F5D76E;
+    --ag-white:  #F8FAFC;
+    --ag-muted:  #94A3B8;
+    --ag-accent: #4F46E5;
+    --ag-cyan:   #06B6D4;
+    --ag-green:  #10B981;
+    --ag-red:    #EF4444;
+    --ag-orange: #F59E0B;
+    --ag-radius: 10px;
+    --ag-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    --ag-font-heading: 'Playfair Display', Georgia, serif;
+    --ag-font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ag-navy);
+    color: var(--ag-white);
+    font-family: var(--ag-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--ag-font-heading);
+    color: var(--ag-white);
+    letter-spacing: -0.5px;
+  }
+
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--ag-gold2); }
+  h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+
+  a { color: var(--ag-gold2); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--ag-gold3); text-decoration: underline; }
+
+  .ag-header {
+    background: var(--ag-navy2);
+    border-bottom: 2px solid var(--ag-gold);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ag-header .ag-logo {
+    font-family: var(--ag-font-heading);
+    font-size: 1.6rem;
+    color: var(--ag-gold2);
+    letter-spacing: -1px;
+  }
+  .ag-header .ag-subtitle {
+    font-size: 0.85rem;
+    color: var(--ag-muted);
+  }
+  .ag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(184,134,11,0.15);
+    color: var(--ag-gold2);
+    border: 1px solid rgba(184,134,11,0.3);
+  }
+  .ag-card {
+    background: var(--ag-navy2);
+    border: 1px solid var(--ag-navy3);
+    border-radius: var(--ag-radius);
+    padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ag-card:hover { border-color: var(--ag-gold); box-shadow: var(--ag-shadow); }
+
+  .ag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: var(--ag-radius);
+    font-family: var(--ag-font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .ag-btn-primary {
+    background: linear-gradient(135deg, var(--ag-accent), var(--ag-cyan));
+    color: #fff;
+  }
+  .ag-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-gold {
+    background: linear-gradient(135deg, var(--ag-gold), var(--ag-gold2));
+    color: var(--ag-navy);
+  }
+  .ag-btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
+  .ag-btn-ghost {
+    background: transparent;
+    border: 1px solid var(--ag-navy3);
+    color: var(--ag-muted);
+  }
+  .ag-btn-ghost:hover { border-color: var(--ag-gold); color: var(--ag-gold2); }
+
+  .ag-tag-rouge  { background: rgba(239,68,68,0.15);  color: #F87171; border: 1px solid rgba(239,68,68,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-orange { background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-vert   { background: rgba(16,185,129,0.15); color: #34D399; border: 1px solid rgba(16,185,129,0.3); border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+  .ag-tag-bleu   { background: rgba(79,70,229,0.15);  color: #818CF8; border: 1px solid rgba(79,70,229,0.3);  border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 0.6rem 0.8rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ag-muted); border-bottom: 1px solid var(--ag-navy3); }
+  td { padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(51,65,85,0.5); font-size: 0.875rem; }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+
+  code, pre { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); border-radius: 4px; }
+  code { padding: 0.1rem 0.4rem; color: var(--ag-gold3); }
+  pre { padding: 1rem 1.25rem; overflow-x: auto; border: 1px solid var(--ag-navy3); color: #E2E8F0; line-height: 1.7; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--ag-navy); }
+  ::-webkit-scrollbar-thumb { background: var(--ag-navy3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ag-gold); }
+  /* ── Fin charte Anim'Gest ── */
+
+</style>
+<style>
+  :root {
+    --navy:#0D2137;--navy-mid:#112845;--navy-light:#1a3558;
+    --gold:#D4A843;--gold-dim:rgba(212,168,67,0.15);
+    --text:#e8e4d8;--muted:#8a9ab5;
+    --surface:#0f2030;--card:#132a42;--card-hover:#1a3555;
+    --border:rgba(212,168,67,0.2);
+    --vert:#3fb87a;--rouge:#e05252;--orange:#e07c2e;
+    --violet:#534ab7;--cyan:#06B6D4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6;}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .hb{display:flex;align-items:center;gap:16px;}
+  .hl{width:42px;height:42px;background:linear-gradient(135deg,var(--violet),var(--cyan));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+  .ht{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);letter-spacing:-0.5px;}
+  .hs{font-size:12px;color:var(--muted);margin-top:1px;}
+  .hm{display:flex;gap:16px;align-items:center;}
+  .badge{background:var(--gold-dim);border:1px solid var(--border);color:var(--gold);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;}
+  .hd{font-size:12px;color:var(--muted);}
+  .kpi-bar{background:var(--navy-mid);border-bottom:1px solid var(--border);padding:16px 40px;display:flex;gap:32px;flex-wrap:wrap;}
+  .ki{display:flex;align-items:baseline;gap:8px;}
+  .kv{font-family:'Playfair Display',serif;font-size:26px;color:var(--gold);font-weight:700;}
+  .kl{font-size:12px;color:var(--muted);}
+  .ks{width:1px;background:var(--border);align-self:stretch;}
+  main{max-width:1400px;margin:0 auto;padding:40px;}
+  .sh{display:flex;align-items:center;gap:12px;margin:44px 0 20px;}
+  .sh:first-of-type{margin-top:0;}
+  .sl{flex:1;height:1px;background:var(--border);}
+  .slb{font-family:'Playfair Display',serif;font-size:13px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;white-space:nowrap;}
+  .sc{background:var(--gold-dim);border:1px solid var(--border);color:var(--gold);padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+  .gw{grid-template-columns:repeat(auto-fill,minmax(340px,1fr));}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:8px;transition:all .2s;position:relative;overflow:hidden;}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .2s;}
+  .card:hover{background:var(--card-hover);border-color:rgba(212,168,67,.4);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+  .card:hover::before{opacity:1;}
+  .ci{font-size:22px;}
+  .ct{font-family:'Playfair Display',serif;font-size:15px;color:var(--text);font-weight:600;line-height:1.3;}
+  .cd{font-size:12px;color:var(--muted);line-height:1.5;}
+  .cn{position:absolute;top:12px;right:14px;font-size:10px;color:rgba(212,168,67,.4);font-weight:600;letter-spacing:.5px;font-family:monospace;}
+  .tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;margin-top:4px;align-self:flex-start;}
+  .tn{background:rgba(63,184,122,.15);color:var(--vert);border:1px solid rgba(63,184,122,.3);}
+  .ts{background:rgba(83,74,183,.2);color:#a89cf7;border:1px solid rgba(83,74,183,.3);}
+  .ta{background:rgba(6,182,212,.15);color:var(--cyan);border:1px solid rgba(6,182,212,.3);}
+  .ti{background:rgba(224,82,82,.12);color:#f08080;border:1px solid rgba(224,82,82,.25);}
+  .t6{background:rgba(224,124,46,.12);color:#e89a60;border:1px solid rgba(224,124,46,.25);}
+  .hero{grid-column:span 2;background:linear-gradient(135deg,var(--navy-light),var(--card));border-color:rgba(212,168,67,.35);padding:28px;}
+  .hero .ct{font-size:18px;}
+  .hero .cd{font-size:13px;}
+  @media(max-width:700px){.hero{grid-column:span 1;}}
+  .sp{display:inline-flex;align-items:center;gap:6px;background:var(--gold-dim);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--gold);font-weight:600;margin-bottom:4px;}
+  .sd{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:p 2s infinite;}
+  @keyframes p{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 0;}
+  .si{background:rgba(0,0,0,.2);border-radius:8px;padding:10px;text-align:center;}
+  .sv{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);font-weight:700;}
+  .sa{font-size:10px;color:var(--muted);margin-top:2px;}
+  @media(max-width:600px){.sg{grid-template-columns:repeat(2,1fr);}}
+  footer{border-top:1px solid var(--border);padding:24px 40px;margin-top:60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .fb{font-family:'Playfair Display',serif;color:var(--gold);font-size:14px;}
+  .fm{font-size:12px;color:var(--muted);}
+  .fl{display:flex;gap:20px;}
+  .fl a{font-size:12px;color:var(--muted);text-decoration:none;}
+  .fl a:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hb">
+    <div class="hl">🐾</div>
+    <div><div class="ht">Anim'Gest</div><div class="hs">NoSage's Editor — Documentation technique</div></div>
+  </div>
+  <div class="hm">
+    <span class="badge">Sprint S101</span>
+    <span class="hd">19 avril 2026</span>
+  </div>
+</header>
+
+<div class="kpi-bar">
+  <div class="ki"><span class="kv">120</span><span class="kl">Pages documentation</span></div>
+  <div class="ks"></div>
+  <div class="ki"><span class="kv">130</span><span class="kl">Pages UI</span></div>
+  <div class="ks"></div>
+  <div class="ki"><span class="kv">~329</span><span class="kl">Routes API</span></div>
+  <div class="ks"></div>
+  <div class="ki"><span class="kv">22</span><span class="kl">Outils Eliot</span></div>
+  <div class="ks"></div>
+  <div class="ki"><span class="kv">97/100</span><span class="kl">Score global S101</span></div>
+  <div class="ks"></div>
+  <div class="ki"><span class="kv">11</span><span class="kl">Métiers couverts</span></div>
+</div>
+
+<main>
+
+<!-- S87 -->
+<div class="sh"><div class="sl"></div><span class="slb">Sprint S101 — Livré</span><div class="sl"></div></div>
+<div class="grid gw">
+  <a href="index-complet.html" class="card hero">
+    <div class="sp"><div class="sd"></div>S100 livré · S101 en cours</div>
+    <div class="ci">🚀</div>
+    <div class="ct">Anim'Gest S101 — Domaine no-sages-editor.com</div>
+    <div class="cd">Migration infra · Domaine pro no-sages-editor.com · Repo privé confidentiel · 4 emails pro · Notes de frais complètes · 130 pages UI · ~329 routes · Score 97/100</div>
+    <div class="sg">
+      <div class="si"><div class="sv">130</div><div class="sa">Pages UI</div></div>
+      <div class="si"><div class="sv">~329</div><div class="sa">Routes API</div></div>
+      <div class="si"><div class="sv">22</div><div class="sa">Outils Eliot</div></div>
+      <div class="si"><div class="sv">97/100</div><div class="sa">Score</div></div>
+    </div>
+    <span class="tag tn">S101 Livré</span>
+  </a>
+  <a href="notice-utilisation.html" class="card">
+    <div class="ci">📖</div>
+    <div class="ct">Notice d'utilisation S101</div>
+    <div class="cd">Notes de frais · GED · Réseaux sociaux · Module NDF complet · OCR justificatifs · Score 99/100</div>
+    <span class="tag tn">Mis à jour S101</span>
+  </a>
+  <a href="ref-faq.html" class="card">
+    <div class="ci">❓</div>
+    <div class="ct">FAQ S101</div>
+    <div class="cd">Notes de frais · GED filesystem · Réseaux sociaux · Séances groupe · Webhooks Calendly · no-sages-editor.com</div>
+    <span class="tag tn">Mis à jour S101</span>
+  </a>
+  <a href="docs-changelog.html" class="card">
+    <div class="ci">📋</div>
+    <div class="ct">Changelogs S30 → S101</div>
+    <div class="cd">57 sprints documentés · Commits · Front/Back/BDD par sprint · Scores qualité · Onglets interactifs</div>
+    <span class="tag tn">S30 → S101</span>
+  </a>
+  <a href="guide-parametrage.html" class="card">
+    <div class="ci">⚙️</div>
+    <div class="ct">Guide de paramétrage S101</div>
+    <div class="cd">Configuration initiale · Charte graphique · GED · SMTP · Eliot IA · Métiers · Utilisateurs</div>
+    <span class="tag ts">S85</span>
+  </a>
+  <a href="64-eliot-memoire.html" class="card">
+    <div class="ci">🧠</div>
+    <div class="ct">Mémoire Eliot Persistée</div>
+    <div class="cd">2 tables BDD · Injection system prompt · Tool memoriser · Page admin /parametres/eliot-memoire</div>
+    <span class="tag" style="background:rgba(79,70,229,0.12);color:#A5B4FC">Planifié S68</span>
+  </a>
+  <a href="62-tarification-3-methodes.html" class="card">
+    <div class="ci">💰</div>
+    <div class="ct">Tarification 3 méthodes</div>
+    <div class="cd">COEF_FG+MARGE · COEF_VTE · PRIX_DIRECT · table param_tarification · 3 routes API · verrouillage devis · historique coefficients</div>
+    <span class="tag ts">S64</span>
+  </a>
+</div>
+
+<!-- SAV -->
+<div class="sh"><div class="sl"></div><span class="slb">Outils SAV</span><span class="sc">9 outils</span><div class="sl"></div></div>
+<div class="grid">
+  <a href="SAV_Launcher.html" class="card"><div class="cn">SAV</div><div class="ci">🚀</div><div class="ct">SAV Launcher</div><div class="cd">Flux de démarrage 6 étapes · Accès rapide tous outils · Mis à jour S101</div><span class="tag ts">SAV</span></a>
+  <a href="SAV_Pilotage_Qualite.html" class="card"><div class="cn">SAV</div><div class="ci">🎯</div><div class="ct">Pilotage Qualité</div><div class="cd">8 tuiles · Checklist enrichie S61 · Scoring Backend / Frontend / BDD</div><span class="tag ts">SAV</span></a>
+  <a href="SAV_Dashboard_Revue_Code.html" class="card"><div class="cn">SAV</div><div class="ci">📊</div><div class="ct">Dashboard Revue de Code</div><div class="cd">FUSION Qualité + Maintenance + Dette + Règles · S54 → S61</div><span class="tag ts">SAV</span></a>
+  <a href="sav-suite.html" class="card"><div class="cn">SAV</div><div class="ci">&#9881;</div><div class="ct">SAV Suite v3.0</div><div class="cd">Analyseur dette &middot; Gestionnaire maintenance &middot; G&eacute;n&eacute;rateur handover &middot; Donn&eacute;es dynamiques depuis HANDOVER</div><span class="tag ts">SAV</span></a>
+  <a href="SAV_Regles_Metier.html" class="card"><div class="cn">SAV</div><div class="ci">📐</div><div class="ct">Règles Métier</div><div class="cd">15 règles · Exemples OK/NOK · Matrice couverture · Export</div><span class="tag tn">Nouveau S61</span></a>
+  <a href="SAV_Dashboard_Maintenance.html" class="card"><div class="cn">SAV</div><div class="ci">🛠️</div><div class="ct">Dashboard Maintenance</div><div class="cd">Historique corrections · Bugs ouverts / fermés · Statistiques</div><span class="tag ts">SAV</span></a>
+  <a href="SAV_Dashboard_Qualite.html" class="card"><div class="cn">SAV</div><div class="ci">✅</div><div class="ct">Dashboard Qualité</div><div class="cd">Scores par sprint · Évolution axes Backend/Frontend/BDD · Tendances</div><span class="tag ts">SAV</span></a>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="sh"><div class="sl"></div><span class="slb">Architecture &amp; Technique</span><div class="sl"></div></div>
+<div class="grid">
+  <a href="07-audit-stack.html" class="card"><div class="cn">#07</div><div class="ci">🏗️</div><div class="ct">Audit Stack</div><div class="cd">Next.js 15 · NestJS · MariaDB · Docker · nginx · Mis à jour S101</div><span class="tag tn">MàJ S62</span></a>
+  <a href="17-api-reference.html" class="card"><div class="cn">#17</div><div class="ci">📡</div><div class="ct">Référence API</div><div class="cd">~329 routes · custom-routes.ts ~11050 lignes · Portail · IA · Editions · Elevage · CRM</div><span class="tag ta">API</span></a>
+  <a href="20-pilotage-projet.html" class="card"><div class="cn">#20</div><div class="ci">🎯</div><div class="ct">Pilotage Projet</div><div class="cd">Historique sprints · Scores S54 → S101 · Métriques JSDoc, BDD, Routes</div></a>
+  <a href="01-synthese-projet.html" class="card"><div class="cn">#01</div><div class="ci">📌</div><div class="ct">Synthèse projet</div><div class="cd">Vision produit · 11 métiers · 3 tiers (Essentiel / Pro / Expert) · Module Eliot IA</div></a>
+  <a href="06-roadmap.html" class="card"><div class="cn">#06</div><div class="ci">🗺️</div><div class="ct">Roadmap</div><div class="cd">S62 : Portail Client · S63 : Notifs + Stripe · S70+ : IA licence · Carte Identité Animale</div></a>
+</div>
+
+<!-- MODULES -->
+<div class="sh"><div class="sl"></div><span class="slb">Modules fonctionnels</span><div class="sl"></div></div>
+<div class="grid">
+  <a href="58-registre-sanitaire.html" class="card"><div class="cn">#58</div><div class="ci">📋</div><div class="ct">Registre Sanitaire</div><div class="cd">Arrêté 3 avril 2014 · Séjour + Journal événements · Pension · Pet-Sitter · Conservation 5 ans</div><span class="tag tn">Nouveau S65</span></a>
+  <a href="61-eliot-tools-registre.html" class="card"><div class="cn">#61</div><div class="ci">🤖</div><div class="ct">Eliot Tools Registre</div><div class="cd">3 tools Eliot registre sanitaire — S68</div><span class="tag" style="background:rgba(79,70,229,0.12);color:#A5B4FC">S68</span></a>
+  <a href="62-notifications-portail.html" class="card"><div class="cn">#62</div><div class="ci">📬</div><div class="ct">Notifications Portail</div><div class="cd">Email/SMS auto portail client — S68</div><span class="tag" style="background:rgba(79,70,229,0.12);color:#A5B4FC">S68</span></a>
+  <a href="63-export-csv-reglements.html" class="card"><div class="cn">#63</div><div class="ci">📥</div><div class="ct">Export CSV Règlements</div><div class="cd">1 route + bouton UI · UTF-8 BOM — S67-S68</div><span class="tag ts">S67-S68</span></a>
+  <a href="62-tarification-3-methodes.html" class="card"><div class="cn">#65</div><div class="ci">💰</div><div class="ct">Tarification 3 méthodes</div><div class="cd">COEF_FG+MARGE · COEF_VTE · PRIX_DIRECT · param_tarification · 3 routes · verrouillage devis · S64</div><span class="tag ts">S64</span></a>
+  <a href="64-eliot-memoire.html" class="card"><div class="cn">#64</div><div class="ci">🧠</div><div class="ct">Mémoire Eliot</div><div class="cd">2 tables BDD · injection prompt · tool memoriser — S68</div><span class="tag" style="background:rgba(79,70,229,0.12);color:#A5B4FC">S68</span></a>
+  <a href="60-registre-carnivores.html" class="card"><div class="cn">#60</div><div class="ci">🐾</div><div class="ct">Registre Carnivores Domestiques</div><div class="cd">Arrêté 19 juin 2025 · Élevage + Pension + Pet-Sitter · Dématérialisation 2029 · Chaîne réglementaire 1992→2025</div><span class="tag tn">Nouveau S66</span></a>
+  <a href="changelog-sprint-S66.html" class="card"><div class="cn">S66</div><div class="ci">📋</div><div class="ct">Changelog S66</div><div class="cd">Registre Carnivores Domestiques · Fix clients/[id] · Migration GED · 115 pages UI · Score 91/100</div><span class="tag tn">Nouveau S66</span></a>
+  <a href="59-registre-entrees-sorties.html" class="card"><div class="cn">#59</div><div class="ci">🐾</div><div class="ct">Registre Entrées/Sorties Carnivores</div><div class="cd">Arrêté 9 nov. 2023 art.45 · Chiens, Chats, Furets · Délai J0/72h · I-CAD · Conservation 3 ans</div><span class="tag tn">Nouveau S65</span></a>
+  <a href="57-module-portail-client.html" class="card"><div class="cn">#57</div><div class="ci">🔑</div><div class="ct">Portail Client</div><div class="cd">Login token · Séances · CAC/BC · Devis · Factures · PDF · Confirmation/Annulation</div><span class="tag t6">S62 ROUGE</span></a>
+  <a href="03-notice-utilisateur.html" class="card"><div class="cn">#03</div><div class="ci">📖</div><div class="ct">Notice utilisateur v4</div><div class="cd">Guide complet par module · Aide contextuelle par page · 15 sections</div></a>
+  <a href="02-guide-parametrage.html" class="card"><div class="cn">#02</div><div class="ci">⚙️</div><div class="ct">Guide de paramétrage</div><div class="cd">Entreprise · Editions · SMTP · SMS · Stripe · Klarna · Yousign · Widget IA</div></a>
+  <a href="18-questionnaires.html" class="card"><div class="cn">#18</div><div class="ci">📋</div><div class="ct">Module Questionnaires</div><div class="cd">25 modèles × 11 métiers · Types : admission / bilan / satisfaction</div></a>
+  <a href="33-module-achats-complet.html" class="card"><div class="cn">#33</div><div class="ci">🛒</div><div class="ct">Module Achats</div><div class="cd">Commandes fournisseurs · Réceptions · Avoirs · Règlements achats</div></a>
+  <a href="72-droits-utilisateurs.html" class="card"><div class="cn">#72</div><div class="ci">🔐</div><div class="ct">Droits utilisateurs</div><div class="cd">Rôles · Permissions · Matrice accès par module</div></a>
+  <a href="74-planning-multi-metier.html" class="card"><div class="cn">#74</div><div class="ci">📅</div><div class="ct">Planning multi-métier</div><div class="cd">Vue semaine / jour / mois · Drag &amp; Drop · Couleurs par type de séance</div></a>
+  <a href="45-dashboards-ceo-bi.html" class="card"><div class="cn">#45</div><div class="ci">📊</div><div class="ct">Dashboards CEO / BI</div><div class="cd">7 métiers · KPIs temps réel · Graphiques CA · Séances · Conversion</div></a>
+  <a href="07-audit-stack.html" class="card"><div class="ci">✨</div><div class="ct">Widget Eliot IA</div><div class="cd">Proxy Anthropic · drag &amp; drop · 20 avatars BIB_Widget · Web Speech API POC · règles sécurité</div><span class="tag ti">Module IA</span></a>
+</div>
+
+<!-- MÉTIERS -->
+<div class="sh"><div class="sl"></div><span class="slb">Pages métier</span><span class="sc">11 métiers</span><div class="sl"></div></div>
+<div class="grid">
+  <a href="36-metier-comportementaliste.html" class="card"><div class="ci">🐕</div><div class="ct">Comportementaliste canin</div><div class="cd">BC · Suivi CAC · Programmes · ACACED · Dashboard CEO · Règle séance</div></a>
+  <a href="37-metier-toiletteur.html" class="card"><div class="ci">✂️</div><div class="ct">Toiletteur</div><div class="cd">Planning · Forfaits toilettage · Fiches races · Dashboard CEO</div></a>
+  <a href="40-metier-educateur.html" class="card"><div class="ci">🎓</div><div class="ct">Éducateur canin</div><div class="cd">Programmes d'éducation · Séances groupe · Niveaux · Dashboard CEO</div></a>
+  <a href="38-metier-petsitter.html" class="card"><div class="ci">🏠</div><div class="ct">Pet-sitter</div><div class="cd">Visites planning · Journal de visite · Géolocalisation · Dashboard CEO</div></a>
+  <a href="48-module-pension-chenil.html" class="card"><div class="ci">🏨</div><div class="ct">Pension</div><div class="cd">Réservations · Gestion places · Contrats pension · Dashboard CEO</div></a>
+  <a href="39-metier-eleveur.html" class="card"><div class="ci">🐣</div><div class="ct">Éleveur</div><div class="cd">Portées · Géniteurs · Généalogie · Réservations · Mortalité</div></a>
+  <a href="47-module-equestre.html" class="card"><div class="ci">🐎</div><div class="ct">Centre équestre</div><div class="cd">Séances groupe · Planning chevaux · Dashboard CEO</div></a>
+  <a href="49-module-veterinaire.html" class="card"><div class="ci">🩺</div><div class="ct">Vétérinaire</div><div class="cd">Consultations · Ordonnances · Suivi vaccins · Dashboard CEO</div></a>
+  <a href="56-metier-osteopathe.html" class="card"><div class="ci">💆</div><div class="ct">Ostéopathe animalier</div><div class="cd">Bilans · Séances · Suivi protocoles · Dashboard CEO</div></a>
+  <a href="57-metier-club-sport.html" class="card"><div class="ci">🏆</div><div class="ct">Sport canin</div><div class="cd">Compétitions · Entraînements · Performances · Dashboard CEO</div></a>
+  <a href="69-metier-naturopathe.html" class="card"><div class="ci">🌿</div><div class="ct">Naturopathe / Bien-être</div><div class="cd">Protocoles · Séances bien-être · Compléments · Dashboard CEO</div></a>
+</div>
+
+<!-- COMMERCIAL -->
+<div class="sh"><div class="sl"></div><span class="slb">Commercial &amp; Juridique</span><div class="sl"></div></div>
+<div class="grid">
+  <a href="CGV_AnimGest.pdf" class="card"><div class="ci">📄</div><div class="ct">CGV Anim'Gest</div><div class="cd">Conditions Générales de Vente · 3 tiers (Essentiel / Professionnel / Expert) · Module Eliot</div></a>
+  <a href="09-scenario-video.html" class="card"><div class="cn">#09</div><div class="ci">🎬</div><div class="ct">Scénario vidéo commerciale</div><div class="cd">Démo 7 min · Parcours utilisateur · Points clés par métier</div></a>
+  <a href="15-rgpd-conformite.html" class="card"><div class="cn">#15</div><div class="ci">🛡️</div><div class="ct">RGPD &amp; Conformité</div><div class="cd">Données personnelles · Consentement · Droits · NF525</div></a>
+</div>
+
+</main>
+
+
+
+</main>
+
+<footer>
+  <div class="fb">Anim'Gest · NoSage's Editor</div>
+  <div class="fm">Sprint S101 · 19 avril 2026 · 120 pages · v3.0</div>
+  <div class="fl">
+    <a href="https://github.com/nicolashermilly/AnimGest-docs" target="_blank">GitHub</a>
+    <a href="07-audit-stack.html">Stack</a>
+    <a href="SAV_Launcher.html">SAV</a>
+    <a href="docs-changelog.html">Changelogs</a>
+  </div>
+</footer>
+</body>
+</html>
+

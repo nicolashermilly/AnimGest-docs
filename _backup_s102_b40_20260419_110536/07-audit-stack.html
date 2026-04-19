@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Stack — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F172A; --navy-light: #1E293B; --navy-mid: #334155;
+    --gold: #F59E0B; --gold-light: #FCD34D; --white: #F8FAFC;
+    --text: #E2E8F0; --text-muted: #94A3B8;
+    --rouge: #EF4444; --orange: #F97316; --jaune: #EAB308;
+    --vert: #22C55E; --cyan: #06B6D4; --violet: #8B5CF6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.7; }
+  nav {
+    background: var(--navy-light); border-bottom: 1px solid rgba(245,158,11,0.2);
+    padding: 0 2rem; position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 1.5rem; height: 56px;
+  }
+  nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  nav a:hover { color: var(--gold); }
+  nav .nav-brand { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; margin-right: auto; }
+  .header { background: linear-gradient(135deg, var(--navy-light), var(--navy)); border-bottom: 2px solid var(--gold); padding: 3rem 2rem 2.5rem; }
+  .header-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--gold); padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem; }
+  .header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--white); }
+  .header h1 span { color: var(--gold); }
+  .header .meta { color: var(--text-muted); font-size: 13px; display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 0.75rem; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 2.5rem 2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; color: var(--white); margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(245,158,11,0.2); display: flex; align-items: center; gap: 0.6rem; }
+  .rules-grid { display: grid; gap: 0.7rem; }
+  .rule-card {
+    background: var(--navy-light); border: 1px solid var(--navy-mid);
+    border-radius: 8px; padding: 1rem 1.5rem;
+    display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; align-items: start;
+  }
+  .rule-card.critical { border-left: 3px solid var(--rouge); }
+  .rule-card.important { border-left: 3px solid var(--gold); }
+  .rule-card.note { border-left: 3px solid var(--cyan); }
+  .rule-num {
+    width: 2rem; height: 2rem; background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.2); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-weight: 700; color: var(--gold); font-size: 13px;
+    flex-shrink: 0;
+  }
+  .rule-card.critical .rule-num { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.2); color: var(--rouge); }
+  .rule-card.note .rule-num { background: rgba(6,182,212,0.1); border-color: rgba(6,182,212,0.2); color: var(--cyan); }
+  .rule-content h3 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+  .rule-content p { font-size: 13px; color: var(--text-muted); }
+  .rule-content code { background: rgba(245,158,11,0.1); color: var(--gold-light); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 12px; font-family: 'Courier New', monospace; }
+  .rule-content .badge { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-left: 0.4rem; }
+  .badge-new { background: rgba(34,197,94,0.15); color: var(--vert); border: 1px solid rgba(34,197,94,0.3); }
+  .badge-updated { background: rgba(245,158,11,0.15); color: var(--gold); border: 1px solid rgba(245,158,11,0.3); }
+  .code-block {
+    background: #0D1117; border: 1px solid var(--navy-mid); border-radius: 8px;
+    padding: 1.2rem 1.5rem; font-family: 'Courier New', monospace; font-size: 13px;
+    color: #E2E8F0; overflow-x: auto; margin-bottom: 1rem;
+  }
+  .code-block .comment { color: #6A9955; }
+  .code-block .keyword { color: #569CD6; }
+  .code-block .string { color: #CE9178; }
+  .code-block .number { color: #B5CEA8; }
+  .debt-table { width: 100%; border-collapse: collapse; }
+  .debt-table th { text-align: left; padding: 0.6rem 1rem; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); background: var(--navy-light); border-bottom: 1px solid var(--navy-mid); }
+  .debt-table td { padding: 0.7rem 1rem; font-size: 13px; border-bottom: 1px solid rgba(51,65,85,0.5); vertical-align: top; }
+  .debt-table tr:last-child td { border-bottom: none; }
+  .debt-table code { background: rgba(245,158,11,0.1); color: var(--gold-light); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 12px; font-family: 'Courier New', monospace; }
+  .sev { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+  .sev-high { background: rgba(239,68,68,0.15); color: var(--rouge); }
+  .sev-med { background: rgba(249,115,22,0.15); color: var(--orange); }
+  .sev-low { background: rgba(234,179,8,0.15); color: var(--jaune); }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .stat-card { background: var(--navy-light); border: 1px solid rgba(245,158,11,0.15); border-radius: 10px; padding: 1rem 1.2rem; text-align: center; }
+  .stat-card .num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--gold); display: block; }
+  .stat-card .label { font-size: 12px; color: var(--text-muted); }
+  footer { border-top: 1px solid rgba(245,158,11,0.15); padding: 1.5rem 2rem; text-align: center; color: var(--text-muted); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Anim'Gest</span>
+  <a href="index.html">← Accueil</a>
+  <a href="17-api-reference.html">API Référence</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <a href="changelog-sprint-S63.html">Changelog S63</a>
+</nav>
+
+<div class="header">
+  <div class="header-badge">🔧 Référence Technique</div>
+  <h1>Audit <span>Stack</span></h1>
+  <p style="color:var(--text-muted);font-size:14px;margin-top:0.4rem;">Règles architecturales absolues — custom-routes.ts — Dette technique — Workflows</p>
+  <div class="meta">
+    <span>📅 MàJ S64 — 1er avril 2026</span>
+    <span>📄 custom-routes.ts : 3 846 lignes</span>
+    <span>🔌 ~115 routes</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- MÉTRIQUES CUSTOM-ROUTES -->
+  <div class="section">
+    <div class="section-title"><span>📊</span> État custom-routes.ts (S63)</div>
+    <div class="stats-grid">
+      <div class="stat-card"><span class="num">3 846</span><div class="label">Lignes</div></div>
+      <div class="stat-card"><span class="num">48</span><div class="label">instance.use() ✅</div></div>
+      <div class="stat-card"><span class="num">102</span><div class="label">app.use() ⚠️ dette</div></div>
+      <div class="stat-card"><span class="num">117</span><div class="label">getDb() utilisations</div></div>
+      <div class="stat-card"><span class="num">4</span><div class="label">createConnection GED</div></div>
+      <div class="stat-card"><span class="num">10</span><div class="label">Tools Eliot actifs</div></div>
+    </div>
+  </div>
+
+  <!-- 14 RÈGLES CRITIQUES -->
+  <div class="section">
+    <div class="section-title"><span>🚨</span> 14 Règles techniques critiques</div>
+    <div class="rules-grid">
+
+      <div class="rule-card critical">
+        <div class="rule-num">1</div>
+        <div class="rule-content">
+          <h3><code>instance.use()</code> uniquement — jamais <code>app.use()</code> <span class="badge badge-updated">MàJ S63</span></h3>
+          <p>NestJS exige <code>instance.use()</code> pour les routes injectées. Les 102 <code>app.use()</code> restants sont de la dette technique en cours de migration progressive.</p>
+        </div>
+      </div>
+
+      <div class="rule-card critical">
+        <div class="rule-num">2</div>
+        <div class="rule-content">
+          <h3><code>getDb()</code> par connexion + <code>db.end()</code> dans <code>finally</code></h3>
+          <p>Toujours ouvrir une connexion par requête, toujours la fermer dans le bloc <code>finally</code>. Ne jamais réutiliser une connexion entre requêtes.</p>
+        </div>
+      </div>
+
+      <div class="rule-card critical">
+        <div class="rule-num">3</div>
+        <div class="rule-content">
+          <h3>nginx strips <code>/api/</code> — routes définies sans ce préfixe</h3>
+          <p>Le proxy nginx supprime le préfixe <code>/api/</code> avant de transmettre à l'API. Les routes dans <code>custom-routes.ts</code> ne commencent jamais par <code>/api/</code>.</p>
+        </div>
+      </div>
+
+      <div class="rule-card critical">
+        <div class="rule-num">4</div>
+        <div class="rule-content">
+          <h3>PDF → Modal uniquement — jamais <code>window.open()</code></h3>
+          <p>Toute génération PDF doit s'ouvrir dans une modal <code>&lt;iframe&gt;</code> intégrée à la page. La navigation vers un nouvel onglet est interdite.</p>
+        </div>
+      </div>
+
+      <div class="rule-card important">
+        <div class="rule-num">5</div>
+        <div class="rule-content">
+          <h3>Portail Client → <code>sessionStorage</code> exclusivement</h3>
+          <p>Le token de session du portail client est stocké uniquement en <code>sessionStorage</code>, jamais en <code>localStorage</code>.</p>
+        </div>
+      </div>
+
+      <div class="rule-card important">
+        <div class="rule-num">6</div>
+        <div class="rule-content">
+          <h3>BC = Bilan Comportemental — jamais EDC</h3>
+          <p>La terminologie officielle est <strong>BC (Bilan Comportemental)</strong>. Le terme EDC (Étude de Comportement) est proscrit dans tout le code, la documentation et l'interface.</p>
+        </div>
+      </div>
+
+      <div class="rule-card critical">
+        <div class="rule-num">7</div>
+        <div class="rule-content">
+          <h3>Eliot → <code>http.request</code> (pas <code>https</code>) dans Docker <span class="badge badge-updated">MàJ S62</span></h3>
+          <p>Les appels internes Eliot vers <code>localhost:8080</code> dans le container Docker utilisent <code>http.request</code>, pas <code>https</code>. L'utilisation de <code>https</code> provoquerait des erreurs SSL.</p>
+        </div>
+      </div>
+
+      <div class="rule-card critical">
+        <div class="rule-num">8</div>
+        <div class="rule-content">
+          <h3><code>instance.use()</code> POST → <code>_readBody()</code> obligatoire <span class="badge badge-new">NOUVEAU S63</span></h3>
+          <p>NestJS ne parse pas automatiquement le body des requêtes passant par <code>instance.use()</code>. Toutes les routes POST doivent utiliser le helper <code>_readBody()</code> pour accéder aux données envoyées.</p>
+        </div>
+      </div>
+
+      <div class="rule-card note">
+        <div class="rule-num">9</div>
+        <div class="rule-content">
+          <h3>PowerShell → <code>-LiteralPath</code> pour chemins avec <code>[id]</code></h3>
+          <p>Les chemins contenant des crochets (ex: <code>src/app/[id]/page.tsx</code>) doivent utiliser le paramètre <code>-LiteralPath</code> en PowerShell pour éviter l'interprétation des wildcards.</p>
+        </div>
+      </div>
+
+      <div class="rule-card important">
+        <div class="rule-num">10</div>
+        <div class="rule-content">
+          <h3>Eliot est une Option commerciale — app fonctionnelle sans lui</h3>
+          <p>Toutes les fonctionnalités de l'application doivent fonctionner indépendamment d'Eliot. L'agent IA est une couche optionnelle, jamais un prérequis fonctionnel.</p>
+        </div>
+      </div>
+
+      <div class="rule-card important">
+        <div class="rule-num">11</div>
+        <div class="rule-content">
+          <h3><code>COPIER_TOUTES_PAGES_v2.ps1</code> obligatoire avant tout build frontend</h3>
+          <p>Le script de copie doit être exécuté avant chaque <code>docker compose build frontend</code>. L'erreur <code>files.zip</code> éventuellement affichée est inoffensive (verrou OneDrive).</p>
+        </div>
+      </div>
+
+      <div class="rule-card important">
+        <div class="rule-num">12</div>
+        <div class="rule-content">
+          <h3>API rebuild : <code>build --no-cache</code> → <code>up -d</code> → <code>restart nginx</code></h3>
+          <p>Ne jamais utiliser <code>docker compose restart api</code> seul — cela ne prend pas la nouvelle image. Toujours rebuilder puis redémarrer nginx.</p>
+        </div>
+      </div>
+
+      <div class="rule-card note">
+        <div class="rule-num">13</div>
+        <div class="rule-content">
+          <h3>Scripts Python → toujours dans <code>$env:USERPROFILE\Downloads\</code></h3>
+          <p>Jamais dans le répertoire OneDrive du projet. Les scripts Python de manipulation TypeScript évitent les problèmes d'encodage PowerShell avec les caractères français et les backticks.</p>
+        </div>
+      </div>
+
+      <div class="rule-card note">
+        <div class="rule-num">14</div>
+        <div class="rule-content">
+          <h3><code>git pull --rebase</code> avant tout push sur <code>petsuite-docs</code></h3>
+          <p>Le repo docs peut recevoir des commits de plusieurs sessions. Toujours rebaser avant de pousser pour éviter les conflits de merge.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMMANDES DOCKER -->
+  <div class="section">
+    <div class="section-title"><span>🐳</span> Commandes Docker essentielles</div>
+    <div class="code-block">
+<span class="comment"># Toujours depuis le dossier deploy !</span>
+cd <span class="string">"D:\...\micro_logiciel_frontend_nextjs\deploy"</span>
+
+<span class="comment"># Rebuild API (après modif custom-routes.ts)</span>
+docker compose build api --no-cache
+docker compose up -d api
+docker compose restart nginx
+
+<span class="comment"># Rebuild Frontend (après modif pages .tsx)</span>
+cd ..
+.\COPIER_TOUTES_PAGES_v2.ps1
+cd deploy
+docker compose build frontend
+docker compose up -d frontend
+docker compose restart nginx
+
+<span class="comment"># Inspection / debug</span>
+docker compose ps
+docker compose logs api --tail=30
+docker builder prune --force   <span class="comment"># Si --no-cache ne suffit pas</span>
+    </div>
+
+    <div class="code-block">
+<span class="comment"># Python scripts — toujours dans Downloads</span>
+C:\Python314\python.exe $env:USERPROFILE\Downloads\nom_script.py
+
+<span class="comment"># Git push dev</span>
+git add api/src/custom-routes.ts src/components/ClaudeWidget.tsx
+git commit -m <span class="string">"S6x - description"</span>
+git push
+
+<span class="comment"># Git push docs</span>
+cd C:\AnimGest_Sav
+git pull --rebase
+git add .
+git commit -m <span class="string">"description"</span>
+git push
+    </div>
+  </div>
+
+  <!-- DETTE TECHNIQUE -->
+  <div class="section">
+    <div class="section-title"><span>⚠️</span> Dette technique — Catalogue S64</div>
+    <table class="debt-table">
+      <thead>
+        <tr>
+          <th>Dette</th>
+          <th>Localisation</th>
+          <th>Sévérité</th>
+          <th>Plan d'action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>102 <code>app.use()</code> → migrer vers <code>instance.use()</code></td>
+          <td>custom-routes.ts — liste via <code>mon_script.py</code></td>
+          <td><span class="sev sev-high">HAUTE</span></td>
+          <td>Migration progressive par module (formules, devis, factures…)</td>
+        </tr>
+        <tr>
+          <td>4 <code>createConnection</code> sur BDD GED</td>
+          <td>L2286, L2317, L2355, L2393</td>
+          <td><span class="sev sev-med">MOYENNE</span></td>
+          <td>Créer helper <code>getDbGed()</code> + remplacer les 4 occurrences</td>
+        </tr>
+        <tr>
+          <td>3 tools Eliot en doublon dans la liste déclarée</td>
+          <td>Bloc déclaration tools <code>custom-routes.ts</code></td>
+          <td><span class="sev sev-med">MOYENNE</span></td>
+          <td>Supprimer les 3 doublons (implémentation déjà propre)</td>
+        </tr>
+        <tr>
+          <td><code>REG_STATUT</code> résiduel dans un INSERT reglement</td>
+          <td>~L56376 custom-routes.ts</td>
+          <td><span class="sev sev-high">HAUTE</span></td>
+          <td>Localiser et supprimer (<code>mon_script.py</code> peut identifier la ligne)</td>
+        </tr>
+        <tr>
+          <td><code>PUT /devis/:id</code> — lignes non supportées</td>
+          <td>Route PUT devis</td>
+          <td><span class="sev sev-high">HAUTE</span></td>
+          <td>Ajouter logique DELETE/INSERT lignes + whitelist colonnes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ELIOT RÈGLES MÉTIER -->
+  <div class="section">
+    <div class="section-title"><span>🤖</span> Eliot — Règles métier immuables</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div style="background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:1.2rem;">
+        <div style="color:var(--vert);font-weight:600;font-size:13px;margin-bottom:0.8rem;">✅ AUTORISÉ</div>
+        <ul style="list-style:none;font-size:13px;color:var(--text-muted);line-height:2;">
+          <li>✓ Lecture (clients, animaux, devis, séances)</li>
+          <li>✓ Création (devis, règlements, factures)</li>
+          <li>✓ Modification statut devis</li>
+          <li>✓ Envoi email avec PDF en PJ</li>
+          <li>✓ Envoi lien portail client</li>
+        </ul>
+      </div>
+      <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:1.2rem;">
+        <div style="color:var(--rouge);font-weight:600;font-size:13px;margin-bottom:0.8rem;">❌ JAMAIS</div>
+        <ul style="list-style:none;font-size:13px;color:var(--text-muted);line-height:2;">
+          <li>✗ Suppression de données</li>
+          <li>✗ Modification de pages ou de code</li>
+          <li>✗ Exécution SQL direct (passer par les routes API)</li>
+          <li>✗ Création ou modification de tables BDD</li>
+          <li>✗ Accès aux fichiers du serveur</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS ELIOT S63 -->
+  <div class="section">
+    <div class="section-title"><span>🔧</span> Tools Eliot — État S63 (10 actifs)</div>
+    <div style="display:grid;gap:0.5rem;">
+      <div style="background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:6px;padding:0.8rem 1.2rem;display:grid;grid-template-columns:12rem 1fr 5rem;gap:1rem;align-items:center;font-size:13px;">
+        <span style="font-family:'Courier New',monospace;color:var(--cyan);">search_client</span>
+        <span style="color:var(--text-muted);">Recherche tiers + animal par nom</span>
+        <span style="color:var(--vert);font-size:11px;font-weight:600;">✅ S62</span>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:6px;padding:0.8rem 1.2rem;display:grid;grid-template-columns:12rem 1fr 5rem;gap:1rem;align-items:center;font-size:13px;">
+        <span style="font-family:'Courier New',monospace;color:var(--cyan);">get_articles</span>
+        <span style="color:var(--text-muted);">Liste des prestations avec prix</span>
+        <span style="color:var(--vert);font-size:11px;font-weight:600;">✅ S62</span>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:6px;padding:0.8rem 1.2rem;display:grid;grid-template-columns:12rem 1fr 5rem;gap:1rem;align-items:center;font-size:13px;">
+        <span style="font-family:'Courier New',monospace;color:var(--cyan);">create_devis</span>
+        <span style="color:var(--text-muted);">Crée devis + lignes via POST /devis</span>
+        <span style="color:var(--vert);font-size:11px;font-weight:600;">✅ S62</span>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:6px;padding:0.8rem 1.2rem;display:grid;grid-template-columns:12rem 1fr 5rem;gap:1rem;align-items:center;font-size:13px;">
+        <span style="font-family:'Courier New',monospace;color:var(--cyan);">get_devis</span>
+        <span style="color:var(--text-muted);">Lecture devis + lignes par ID</span>
+        <span style="color:var(--vert);font-size:11px;font-weight:600;">✅ S62</span>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:6px;padding:0.8rem 1.2rem;display:grid;grid-template-columns:12rem 1fr 5rem;gap:1rem;align-items:center;font-size:13px;">
+        <span style="font-family:'Courier New',monospace;color:var(--cyan);">open_pdf_modal</span>
+        <span style="color:var(--text-muted);">Signal UI → modal PDF dans le widget</span>
+        <span style="color:var(--vert);font-size:11px;font-weight:600;">✅ S62</span>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:6px;padding:0.8rem 1.2rem;display:grid;grid-template-columns:12rem 1fr 5rem;gap:1rem;align-items:center;font-size:13px;">
+        <span style="font-family:'Courier New',monospace;color:var(--cyan);">send_email</span>
+        <span style="color:var(--text-muted);">Envoi email devis/facture avec PDF (nodemailer réel)</span>
+        <span style="color:var(--vert);font-size:11px;font-weight:600;">✅ S63</span>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:6px;padding:0.8rem 1.2rem;display:grid;grid-template-columns:12rem 1fr 5rem;gap:1rem;align-items:center;font-size:13px;">
+        <span style="font-family:'Courier New',monospace;color:var(--cyan);">get_seances</span>
+        <span style="color:var(--text-muted);">Séances d'un client</span>
+        <span style="color:var(--vert);font-size:11px;font-weight:600;">✅ S62</span>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:6px;padding:0.8rem 1.2rem;display:grid;grid-template-columns:12rem 1fr 5rem;gap:1rem;align-items:center;font-size:13px;">
+        <span style="font-family:'Courier New',monospace;color:var(--cyan);">update_statut_devis</span>
+        <span style="color:var(--text-muted);">Transitions BROUILLON→ENVOYE→ACCEPTE→REFUSE→ANNULE</span>
+        <span style="color:var(--vert);font-size:11px;font-weight:600;">✅ S63</span>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:6px;padding:0.8rem 1.2rem;display:grid;grid-template-columns:12rem 1fr 5rem;gap:1rem;align-items:center;font-size:13px;">
+        <span style="font-family:'Courier New',monospace;color:var(--cyan);">create_facture_depuis_devis</span>
+        <span style="color:var(--text-muted);">Convertit devis ACCEPTE en facture</span>
+        <span style="color:var(--vert);font-size:11px;font-weight:600;">✅ S63</span>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--navy-mid);border-radius:6px;padding:0.8rem 1.2rem;display:grid;grid-template-columns:12rem 1fr 5rem;gap:1rem;align-items:center;font-size:13px;">
+        <span style="font-family:'Courier New',monospace;color:var(--cyan);">create_reglement</span>
+        <span style="color:var(--text-muted);">INSERT reglement (REG_DATE, REG_MONTANT, REG_MODE, REG_REFERENCE)</span>
+        <span style="color:var(--vert);font-size:11px;font-weight:600;">✅ S63</span>
+      </div>
+    </div>
+    <p style="color:var(--orange);font-size:12px;margin-top:0.8rem;">⚠️ 3 doublons dans la liste déclarée (pas dans l'implémentation) — à corriger en S64</p>
+    <p style="color:var(--text-muted);font-size:12px;margin-top:0.3rem;">S64+ prévu : <code>create_seance</code> · <code>get_planning</code> · <code>send_portail_link</code></p>
+  </div>
+
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor · Audit Stack MàJ S64 · 1er avril 2026 · <a href="index.html" style="color:var(--gold);text-decoration:none;">Retour à l'index</a>
+</footer>
+
+</body>
+</html>
