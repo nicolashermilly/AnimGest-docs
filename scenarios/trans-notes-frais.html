@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes de frais &mdash; Anim'Gest</title>
+<style>
+  :root { --navy:#0F172A; --gold:#F59E0B; --text:#E2E8F0; --muted:#94A3B8; --card:#1E293B; }
+  body { background:var(--navy); color:var(--text); font-family:'DM Sans',sans-serif; margin:0; padding:2rem; }
+  h1 { color:var(--gold); font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:.25rem; }
+  .badge { background:var(--gold); color:var(--navy); font-size:.75rem; font-weight:700; padding:.15rem .5rem; border-radius:.25rem; }
+  .subtitle { color:var(--muted); margin-bottom:2rem; }
+  .kpis { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem; }
+  .kpi { background:var(--card); border-radius:.5rem; padding:1rem 1.5rem; text-align:center; min-width:110px; }
+  .kpi strong { font-size:1.8rem; color:var(--gold); display:block; }
+  .kpi span { font-size:.8rem; color:var(--muted); }
+  .steps { border-left:2px solid var(--gold); padding-left:1.5rem; }
+  .step { position:relative; margin-bottom:2rem; }
+  .step-num { position:absolute; left:-2.25rem; top:0; background:var(--gold); color:var(--navy);
+    width:1.6rem; height:1.6rem; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-weight:700; font-size:.85rem; }
+  .step h3 { color:var(--gold); margin:0 0 .5rem; }
+  .step ul { margin:.25rem 0; padding-left:1.25rem; }
+  .step li { margin:.2rem 0; color:var(--muted); }
+  .step li strong { color:var(--text); }
+  .tip { background:var(--card); border-left:3px solid var(--gold); padding:.75rem 1rem;
+    border-radius:0 .25rem .25rem 0; margin-top:.75rem; font-size:.9rem; }
+  .nav { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+  .nav a { background:var(--card); color:var(--muted); text-decoration:none; font-size:.8rem;
+    padding:.3rem .75rem; border-radius:.25rem; }
+  .nav a:hover { color:var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="../index-complet.html">&larr; Documentation</a>
+  <a href="index.html">&larr; Sc&eacute;narios</a>
+  <a href="trans-compta-fec.html">Comptabilit&eacute; &amp; FEC</a>
+</div>
+
+<span class="badge">SC&Eacute;NARIO TRANSVERSE</span>
+<h1>&#128179; Notes de frais</h1>
+<p class="subtitle">De la saisie manuelle &agrave; la validation comptable &mdash; gestion compl&egrave;te des d&eacute;penses professionnelles</p>
+
+<div class="kpis">
+  <div class="kpi"><strong>6</strong><span>Etapes</span></div>
+  <div class="kpi"><strong>4</strong><span>Statuts</span></div>
+  <div class="kpi"><strong>PCG</strong><span>Plan comptable</span></div>
+  <div class="kpi"><strong>0</strong><span>Erreur tol&eacute;r&eacute;e</span></div>
+  <div class="kpi"><strong>OCR</strong><span>IA vision</span></div>
+</div>
+
+<div class="steps">
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <h3>ETAPE 1 &mdash; Cr&eacute;er une note de frais</h3>
+    <ul>
+      <li>&rarr; <strong>Comptabilit&eacute; &rarr; Notes de frais &rarr; Nouvelle note</strong></li>
+      <li>La num&eacute;rotation est automatique&nbsp;: <strong>NF-YYMM-NNNN</strong></li>
+      <li>Renseignez la description et la p&eacute;riode concern&eacute;e</li>
+      <li>Statut initial&nbsp;: <strong>Brouillon</strong></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <h3>ETAPE 2 &mdash; Saisir les lignes de d&eacute;penses</h3>
+    <ul>
+      <li>Pour chaque d&eacute;pense&nbsp;: date, libell&eacute;, cat&eacute;gorie PCG, montant TTC, taux TVA</li>
+      <li>Cat&eacute;gories disponibles&nbsp;: carburant (606100), repas (625700), mat&eacute;riel (606400), d&eacute;placements (625100), h&ocirc;tel (625200), t&eacute;l&eacute;phone (626000), autre</li>
+      <li>Le montant HT est calcul&eacute; automatiquement</li>
+      <li>Le total HT et TVA se met &agrave; jour en temps r&eacute;el</li>
+    </ul>
+    <div class="tip">&#128161; Conservez vos justificatifs (tickets, factures) pour le contr&ocirc;le fiscal. L'OCR automatique arrive en S83.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <h3>ETAPE 3 &mdash; Soumettre pour validation</h3>
+    <ul>
+      <li>V&eacute;rifiez toutes les lignes et le total</li>
+      <li>Cliquez <strong>Soumettre</strong> &rarr; statut passe &agrave; <strong>Soumise</strong></li>
+      <li>La note devient non modifiable (repassez en Brouillon si n&eacute;cessaire)</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <h3>ETAPE 4 &mdash; Valider et rembourser</h3>
+    <ul>
+      <li><strong>Valid&eacute;e</strong>&nbsp;: la d&eacute;pense est accept&eacute;e comptablement</li>
+      <li><strong>Rembours&eacute;e</strong>&nbsp;: le remboursement a &eacute;t&eacute; effectu&eacute;</li>
+      <li>Workflow complet&nbsp;: Brouillon &rarr; Soumise &rarr; Valid&eacute;e &rarr; Rembours&eacute;e</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-num">5</div>
+    <h3>ETAPE 5 &mdash; Export comptable</h3>
+    <ul>
+      <li>Exportez en <strong>CSV</strong> (UTF-8 BOM, s&eacute;parateur&nbsp;;) pour Excel ou votre comptable</li>
+      <li>Bient&ocirc;t&nbsp;: export <strong>FEC</strong> journal OD/AC directement int&eacute;grable</li>
+      <li>Bient&ocirc;t&nbsp;: <strong>OCR scan tickets</strong> via IA pour saisie automatique des lignes</li>
+    </ul>
+  </div>
+
+</div>
+
+<p style="color:var(--muted);font-size:.8rem;margin-top:3rem">
+  Anim'Gest &mdash; NoSage's Editor &mdash; Document&eacute; S82 &mdash; 12/04/2026
+</p>
+
+  <div class="step">
+    <div class="step-num">&#10003;</div>
+    <h3>BONUS &mdash; Scanner un ticket avec l&#39;IA</h3>
+    <ul>
+      <li>&rarr; Dans le modal de cr&eacute;ation, cliquez sur <strong>Scanner un ticket</strong></li>
+      <li>&rarr; S&eacute;lectionnez une photo ou image du ticket (JPG, PNG, WebP)</li>
+      <li>&rarr; L&#39;IA (Claude Vision) analyse le ticket et pr&eacute;-remplit automatiquement :</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;&#8226; <strong>Date</strong> de la d&eacute;pense</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;&#8226; <strong>Libell&eacute;</strong> (description courte)</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;&#8226; <strong>Montant TTC</strong> et taux de TVA</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;&#8226; <strong>Cat&eacute;gorie PCG</strong> (Repas, Transport, Mat&eacute;riel&hellip;)</li>
+    </ul>
+    <div class="tip">&#128161; Si la derni&egrave;re ligne est vide, elle est remplie automatiquement. Sinon une nouvelle ligne est ajout&eacute;e. V&eacute;rifiez toujours les valeurs pr&eacute;-remplies avant validation.</div>
+  </div>
+
+</body>
+</html>

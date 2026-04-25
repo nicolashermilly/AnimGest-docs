@@ -1,0 +1,223 @@
+
+<!-- Polices, variables CSS, composants communs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+
+<style>
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:20px}
+.gterm{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px 20px}
+.gterm-word{font-weight:700;font-size:14px;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.gterm-tag{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600;text-transform:uppercase}
+.gterm-def{font-size:13px;color:#94A3B8;line-height:1.6}
+.faq-item{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.faq-q{padding:16px 20px;font-weight:600;font-size:14px;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q:hover{background:rgba(255,255,255,.03)}
+.faq-a{padding:0 20px 16px;font-size:13px;color:#94A3B8;line-height:1.7;display:none}
+.faq-a.open{display:block}
+.checklist-section{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;margin-bottom:20px}
+.checklist-title{font-weight:700;font-size:15px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;color:#94A3B8}
+.check-item:last-child{border-bottom:none}
+.check-box{width:20px;height:20px;border-radius:5px;border:2px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all .2s;margin-top:1px}
+.check-box.done{background:#10B981;border-color:#10B981;color:#fff}
+.check-label{flex:1}
+.check-label strong{color:#fff;display:block;margin-bottom:3px}
+.time-badge{font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(245,158,11,.15);color:#fcd34d;font-weight:600;white-space:nowrap;flex-shrink:0}
+.module-card{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;transition:all .2s}
+.module-card:hover{border-color:rgba(255,255,255,.2)}
+.module-name{font-weight:700;font-size:14px;color:#fff;margin-bottom:8px}
+.module-desc{font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:10px}
+.module-deps{font-size:11px;color:#64748B}
+.dep-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;background:rgba(79,70,229,.15);color:#a5b4fc;margin:2px}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+.formula-card{border-radius:16px;padding:28px;border:2px solid transparent;transition:all .2s}
+.formula-card:hover{transform:translateY(-4px)}
+.formula-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:6px}
+.formula-price{font-size:28px;font-weight:700;margin:12px 0}
+.formula-price span{font-size:14px;font-weight:400;color:#94A3B8}
+.formula-features{list-style:none;margin-top:16px}
+.formula-features li{padding:6px 0;font-size:13px;color:#94A3B8;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px}
+.formula-features li:last-child{border-bottom:none}
+.feature-yes{color:#10B981}
+.feature-no{color:#64748B}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);color:#94A3B8;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.08)}
+.data-table td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);color:#94A3B8;vertical-align:top}
+.data-table td:first-child{color:#F1F5F9;font-weight:500}
+.table-wrap{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;margin:20px 0}
+.alert-box{border-radius:12px;padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start;font-size:13px}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#fcd34d}
+.alert-ok{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:#6ee7b7}
+.alert-danger{background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);color:#fda4af}
+.alert-info{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);color:#67e8f9}
+.roi-calc{background:#1E293B;border:1px solid rgba(79,70,229,.3);border-radius:16px;padding:28px}
+.roi-input{margin-bottom:16px}
+.roi-label{font-size:13px;color:#94A3B8;margin-bottom:8px;display:block}
+.roi-slider{width:100%;accent-color:#4F46E5}
+.roi-value{font-size:20px;font-weight:700;color:#fff;text-align:center;padding:12px;background:rgba(79,70,229,.15);border-radius:10px;margin-top:8px}
+</style><title>Migration depuis un autre logiciel — Anim'Gest</title></head>
+<body>
+<nav class="nav-bar">
+  <a class="nav-link home" href="index-complet.html">🏠 Index</a>
+  <a class="nav-link" href="ref-glossaire.html">📖 Glossaire</a>
+  <a class="nav-link" href="ref-raccourcis.html">⌨️ Raccourcis</a>
+  <a class="nav-link" href="ref-faq.html">❓ FAQ</a>
+  <a class="nav-link" href="ops-cloture-mensuelle.html">📅 Clôture mensuelle</a>
+  <a class="nav-link" href="ops-cloture-annuelle.html">📆 Clôture annuelle</a>
+  <a class="nav-link" href="ops-migration.html">🚀 Migration</a>
+  <a class="nav-link" href="ops-reprise-incident.html">🚨 Incident</a>
+  <a class="nav-link" href="tech-schema-donnees.html">🗄️ Schéma données</a>
+  <a class="nav-link" href="tech-carte-modules.html">🗺️ Modules</a>
+  <a class="nav-link" href="tech-rgpd.html">🔒 RGPD</a>
+  <a class="nav-link" href="com-formules.html">💎 Formules</a>
+  <a class="nav-link" href="com-roi.html">📊 ROI</a>
+  <a class="nav-link" href="com-onboarding.html">🎯 Onboarding</a>
+  <a class="nav-link" href="adv-multi-utilisateurs.html">👥 Multi-users</a>
+  <a class="nav-link" href="adv-multi-sites.html">🏢 Multi-sites</a>
+  <a class="nav-link" href="adv-compta-avancee.html">📊 Compta avancée</a>
+  <a class="nav-link" href="adv-impayes.html">⚠️ Impayés</a>
+  <a class="nav-link" href="adv-tarification-avancee.html">💰 Tarification</a>
+  <a class="nav-link" href="adv-eliot-avance.html">🤖 Eliot avancé</a>
+</nav>
+<div class="hero" style="padding:48px">
+  <div class="hero-badge" style="background:linear-gradient(135deg,var(--violet),var(--violet)aa)">Guide opérationnel</div>
+  <h1>🚀 Migration depuis un autre logiciel</h1>
+  <p class="hero-sub">Import de vos données clients, animaux et articles — de la préparation au basculement définitif</p>
+</div>
+<div class="container">
+
+<div class="alert-box alert-info"><span>🚀</span><span>La migration depuis un autre logiciel se fait en 3 phases : préparation des données, import, validation. Comptez 1 à 3 jours selon le volume de données.</span></div>
+
+<div class="section-title">Phase 1 — Préparer vos données</div>
+<div class="table-wrap"><table class="data-table">
+<thead><tr><th>Données</th><th>Format d'import</th><th>Colonnes obligatoires</th><th>Priorité</th></tr></thead>
+<tbody>
+<tr><td>Clients</td><td>CSV ou Excel</td><td>nom, prénom, email, téléphone, adresse</td><td>Obligatoire</td></tr>
+<tr><td>Animaux</td><td>CSV ou Excel</td><td>nom, espèce, race, propriétaire (nom client), date naissance, puce</td><td>Obligatoire</td></tr>
+<tr><td>Articles / Prestations</td><td>CSV ou Excel</td><td>référence, désignation, prix HT, taux TVA, type (service/produit)</td><td>Obligatoire</td></tr>
+<tr><td>Fournisseurs</td><td>CSV ou Excel</td><td>raison sociale, SIRET, email, téléphone, adresse</td><td>Recommandé</td></tr>
+<tr><td>Historique factures</td><td>PDF uniquement</td><td>Import manuel en GED — pas d'import comptable historique</td><td>Optionnel</td></tr>
+<tr><td>Historique séances</td><td>Non importable</td><td>Renseignement manuel si nécessaire</td><td>Optionnel</td></tr>
+</tbody></table></div>
+
+<div class="section-title">Phase 2 — Import dans Anim'Gest</div><div class="checklist-section"><div class="checklist-title"><span style="font-size:20px">👤</span>Import clients</div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Télécharger le modèle CSV clients</strong>Clients → Importer → Télécharger le modèle</div>
+<span class="time-badge">2 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Remplir le modèle avec vos données</strong>Copier-coller depuis votre ancien logiciel en respectant les colonnes</div>
+<span class="time-badge">30-120 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Nettoyer les doublons</strong>Supprimer les lignes dupliquées avant l'import</div>
+<span class="time-badge">15 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Importer le fichier CSV</strong>Clients → Importer → Sélectionner le fichier → Valider</div>
+<span class="time-badge">5 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Vérifier un échantillon de 10 fiches</strong>Contrôler que les données sont correctement reprises</div>
+<span class="time-badge">10 min</span></div></div><div class="checklist-section"><div class="checklist-title"><span style="font-size:20px">🐾</span>Import animaux</div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Télécharger le modèle CSV animaux</strong>Animaux → Importer → Télécharger le modèle</div>
+<span class="time-badge">2 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Renseigner la colonne propriétaire</strong>Le nom du propriétaire doit correspondre exactement à la fiche client importée</div>
+<span class="time-badge">20 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Importer le fichier CSV animaux</strong>Animaux → Importer → Sélectionner → Valider</div>
+<span class="time-badge">5 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Vérifier les liaisons animal-client</strong>Ouvrir 5 fiches clients → vérifier que les animaux apparaissent bien</div>
+<span class="time-badge">5 min</span></div></div><div class="checklist-section"><div class="checklist-title"><span style="font-size:20px">📦</span>Import articles</div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Récupérer votre catalogue</strong>Export depuis l'ancien logiciel en CSV ou ressaisie manuelle</div>
+<span class="time-badge">30-60 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Importer dans Anim'Gest</strong>Stock → Articles → Importer</div>
+<span class="time-badge">5 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Vérifier les taux de TVA</strong>Contrôler que chaque article a le bon taux TVA</div>
+<span class="time-badge">10 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Configurer le stock initial</strong>Pour chaque article stocké, saisir une entrée de stock initiale</div>
+<span class="time-badge">20-60 min</span></div></div>
+<div class="section-title">Phase 3 — Configuration post-import</div>
+<div class="alert-box alert-warn"><span>⚠️</span><span>La comptabilité repart de zéro dans Anim'Gest. Les historiques de factures N-1 restent dans votre ancien logiciel. Seuls les nouveaux documents créés dans Anim'Gest alimentent le FEC.</span></div><div class="checklist-section"><div class="checklist-title"><span style="font-size:20px">✅</span>Validation finale</div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Créer un client de test</strong>Vérifier tout le parcours : séance → devis → facture → règlement</div>
+<span class="time-badge">20 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Tester l'envoi d'email</strong>Envoyer une facture de test à votre propre adresse</div>
+<span class="time-badge">5 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Configurer la numérotation</strong>Paramètres → Numérotation → définir les numéros de départ</div>
+<span class="time-badge">5 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Former votre équipe</strong>1-2h de formation sur les fonctions principales</div>
+<span class="time-badge">1-2h</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Période de double saisie</strong>Saisir dans les 2 logiciels pendant 2 semaines pour sécuriser la transition</div>
+<span class="time-badge">14 jours</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Basculement définitif</strong>Arrêter l'ancien logiciel → Anim'Gest devient le système principal</div>
+<span class="time-badge">—</span></div></div><div class="result-box"><div class="result-title">✅ Migration réussie</div><div class="result-grid"><div class="result-item"><span>👤</span><span>Clients importés</span></div><div class="result-item"><span>🐾</span><span>Animaux importés</span></div><div class="result-item"><span>📦</span><span>Catalogue configuré</span></div><div class="result-item"><span>🚀</span><span>Anim'Gest opérationnel</span></div></div></div>
+</div>
+<footer>Anim'Gest · NoSage's Editor — Migration depuis un autre logiciel — Sprint S107 · 2026</footer>
+<script>
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
+  q.nextElementSibling.classList.toggle('open');
+  q.querySelector('.faq-arrow').textContent=q.nextElementSibling.classList.contains('open')?'−':'+';
+}));
+document.querySelectorAll('.check-box').forEach(b=>b.addEventListener('click',()=>{
+  b.classList.toggle('done');
+  b.textContent=b.classList.contains('done')?'✓':'';
+}));
+</script>
+</body></html>

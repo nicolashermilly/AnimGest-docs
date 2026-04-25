@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pet-sitter &mdash; Anim'Gest</title>
+<style>
+  :root { --navy:#0F172A; --gold:#F59E0B; --text:#E2E8F0; --muted:#94A3B8; --card:#1E293B; --border:#334155; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--navy); color:var(--text); font-family:'DM Sans',Arial,sans-serif; padding:2rem; line-height:1.6; }
+  nav { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+  nav a { background:var(--card); color:var(--muted); text-decoration:none; font-size:.8rem; padding:.3rem .75rem; border-radius:.25rem; }
+  nav a:hover { color:var(--gold); }
+  .badge { display:inline-block; background:var(--gold); color:var(--navy); font-size:.75rem; font-weight:700; padding:.15rem .6rem; border-radius:.25rem; margin-bottom:.75rem; }
+  h1 { font-family:'Playfair Display',Georgia,serif; font-size:2.2rem; color:var(--gold); margin-bottom:.25rem; }
+  .subtitle { color:var(--muted); margin-bottom:2rem; font-size:1rem; }
+  .tags { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+  .tag { background:var(--card); color:var(--muted); font-size:.8rem; padding:.3rem .75rem; border-radius:.25rem; border:1px solid var(--border); }
+  .kpis { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2.5rem; }
+  .kpi { background:var(--card); border-radius:.75rem; padding:1rem 1.5rem; text-align:center; min-width:110px; border:1px solid var(--border); }
+  .kpi strong { font-size:2rem; color:var(--gold); display:block; line-height:1.2; }
+  .kpi span { font-size:.78rem; color:var(--muted); }
+  .steps { border-left:2px solid var(--gold); padding-left:1.75rem; }
+  .step { position:relative; margin-bottom:2rem; }
+  .step-num { position:absolute; left:-2.35rem; top:0; background:var(--gold); color:var(--navy);
+    width:1.7rem; height:1.7rem; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-weight:700; font-size:.85rem; flex-shrink:0; }
+  .step h3 { color:var(--gold); margin-bottom:.5rem; font-size:1rem; }
+  .step ul { padding-left:1.25rem; }
+  .step li { color:var(--muted); margin:.25rem 0; }
+  .step li strong { color:var(--text); }
+  .tip { background:var(--card); border-left:3px solid var(--gold); padding:.75rem 1rem;
+    border-radius:0 .375rem .375rem 0; margin-top:.75rem; font-size:.9rem; color:var(--muted); }
+  .tip strong { color:var(--text); }
+  footer { margin-top:3rem; color:var(--muted); font-size:.78rem; border-top:1px solid var(--border); padding-top:1rem; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index-complet.html">&larr; Documentation</a>
+  <a href="index.html">&larr; Tous les sc&eacute;narios</a>
+</nav>
+<span class="badge">SC&Eacute;NARIO M&Eacute;TIER</span>
+<h1>&#128062; Pet-sitter</h1>
+<p class="subtitle">Visites &agrave; domicile, promenades, garde &agrave; domicile &mdash; suivi temps r&eacute;el et facturation</p>
+<div class="tags"><span class="tag">Visites domicile</span><span class="tag">Registre sanitaire</span><span class="tag">Portail client</span><span class="tag">Carnivores</span></div>
+<div class="kpis"><div class="kpi"><strong>12</strong><span>Etapes</span></div><div class="kpi"><strong>GPS</strong><span>G&eacute;olocalisation</span></div><div class="kpi"><strong>Temps r&eacute;el</strong><span>Compte-rendu</span></div><div class="kpi"><strong>0</strong><span>Erreur tol&eacute;r&eacute;e</span></div></div>
+<div class="steps">
+  <div class="step">
+    <div class="step-num">1</div>
+    <h3>ETAPE 1 &mdash; Configurer le profil pet-sitter</h3>
+    <ul><li>&rarr; <strong>Param&egrave;tres &rarr; Mon m&eacute;tier</strong> : s&eacute;lectionner Pet-sitter</li><li>Renseigner les zones d'intervention et les types de services (visite, promenade, garde)</li><li>Configurer les tarifs par type de prestation et dur&eacute;e</li><li>Activer le registre sanitaire s&eacute;jour si garde &agrave; domicile</li></ul>
+    
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <h3>ETAPE 2 &mdash; Cr&eacute;er le dossier client et animal</h3>
+    <ul><li>&rarr; <strong>Clients &rarr; Nouveau client</strong> : coordonn&eacute;es + adresse domicile</li><li>Cr&eacute;er la fiche animal : esp&egrave;ce, race, vaccins, vet&eacute;rinaire r&eacute;f&eacute;rent</li><li>Renseigner les consignes sp&eacute;cifiques (alimentation, m&eacute;dicaments, comportement)</li><li>Pour carnivores : v&eacute;rifier carnet de vaccination &agrave; jour (rage obligatoire)</li></ul>
+    <div class="tip">&#128161; Le portail client permet au propri&eacute;taire de valider les informations de son animal et de signer le contrat en ligne.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <h3>ETAPE 3 &mdash; Etablir le devis / contrat de garde</h3>
+    <ul><li>&rarr; <strong>Devis &rarr; Nouveau devis &rarr; mod&egrave;le Pet-sitter</strong></li><li>S&eacute;lectionner les prestations : visite (20 min / 45 min), promenade, garde nuit</li><li>D&eacute;finir la p&eacute;riode et le nombre de passages</li><li>Envoyer via portail client pour signature &eacute;lectronique</li></ul>
+    
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <h3>ETAPE 4 &mdash; Planifier les interventions</h3>
+    <ul><li>&rarr; <strong>Agenda</strong> : cr&eacute;er les s&eacute;ances de visite avec adresse</li><li>Configurer les rappels SMS/email (J-1 et H-1)</li><li>Vue semaine pour visualiser la charge journali&egrave;re</li></ul>
+    
+  </div>
+  <div class="step">
+    <div class="step-num">5</div>
+    <h3>ETAPE 5 &mdash; Effectuer la visite et envoyer le compte-rendu</h3>
+    <ul><li>Ouvrir la s&eacute;ance depuis l'agenda : noter l'heure d'arriv&eacute;e et de d&eacute;part</li><li>Saisir les observations : alimentation, comportement, &eacute;liminations, jeux</li><li>Envoyer le compte-rendu au propri&eacute;taire via <strong>Questionnaires &rarr; Envoyer</strong></li><li>Joindre une photo si n&eacute;cessaire (GED)</li></ul>
+    <div class="tip">&#128161; Les propri&eacute;taires appr&eacute;cient un compte-rendu syst&eacute;matique &mdash; c'est un facteur cl&eacute; de fid&eacute;lisation.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">6</div>
+    <h3>ETAPE 6 &mdash; Registre sanitaire s&eacute;jour</h3>
+    <ul><li>&rarr; <strong>Pet-sitter &rarr; Registre</strong> pour les gardes &agrave; domicile</li><li>Enregistrer : date arriv&eacute;e, date d&eacute;part, animal, propri&eacute;taire, &eacute;tat sanitaire</li><li>Obligatoire pour tout accueil d'animal m&ecirc;me occasionnel</li><li>Export disponible pour contr&ocirc;le DDPP</li></ul>
+    
+  </div>
+  <div class="step">
+    <div class="step-num">7</div>
+    <h3>ETAPE 7 &mdash; Registre des carnivores</h3>
+    <ul><li>&rarr; <strong>Pet-sitter &rarr; Registre carnivores</strong></li><li>Enregistrer chiens et chats accueillis : identification, vaccin rage, propri&eacute;taire</li><li>Obligatoire m&ecirc;me pour une seule nuit de garde</li></ul>
+    
+  </div>
+  <div class="step">
+    <div class="step-num">8</div>
+    <h3>ETAPE 8 &mdash; Facturation et r&egrave;glement</h3>
+    <ul><li>&rarr; <strong>Factures &rarr; Nouvelle facture</strong> depuis le devis valid&eacute;</li><li>V&eacute;rifier les prestations r&eacute;alis&eacute;es vs pr&eacute;vues</li><li>Envoyer par email avec PDF en pi&egrave;ce jointe</li><li>Enregistrer le r&egrave;glement (virement, esp&egrave;ces, CB via Stripe)</li></ul>
+    
+  </div>
+  <div class="step">
+    <div class="step-num">9</div>
+    <h3>ETAPE 9 &mdash; Abonnements et formules r&eacute;currentes</h3>
+    <ul><li>&rarr; <strong>Formules &rarr; Nouveau mod&egrave;le &rarr; Pet-sitter</strong></li><li>Cr&eacute;er des forfaits mensuels (ex: 20 visites/mois)</li><li>Facturation automatique en d&eacute;but de p&eacute;riode</li><li>Suivi du solde de s&eacute;ances restantes par client</li></ul>
+    
+  </div>
+  <div class="step">
+    <div class="step-num">10</div>
+    <h3>ETAPE 10 &mdash; Statistiques et suivi activit&eacute;</h3>
+    <ul><li>&rarr; <strong>Statistiques</strong> : CA par p&eacute;riode, s&eacute;ances par type</li><li>Identifier les clients les plus actifs et les services les plus demand&eacute;s</li><li>Exporter les donn&eacute;es pour votre comptable</li></ul>
+    
+  </div>
+  <div class="step">
+    <div class="step-num">11</div>
+    <h3>ETAPE 11 &mdash; Export comptable</h3>
+    <ul><li>&rarr; <strong>Comptabilit&eacute; &rarr; Export FEC</strong> pour votre expert-comptable</li><li>Export TVA : <strong>Facturation &rarr; Export TVA</strong> pour votre d&eacute;claration CA3</li><li>Notes de frais : d&eacute;placements, mat&eacute;riel, alimentation animaux</li></ul>
+    
+  </div>
+  <div class="step">
+    <div class="step-num">12</div>
+    <h3>ETAPE 12 &mdash; Conformit&eacute; r&eacute;glementaire</h3>
+    <ul><li>ACACED (Attestation de Connaissances) : obligatoire pour garde &agrave; domicile</li><li>D&eacute;claration DDPP si accueil r&eacute;gulier de carnivores</li><li>Assurance responsabilit&eacute; civile professionnelle obligatoire</li><li>RGPD : donn&eacute;es clients et animaux prot&eacute;g&eacute;es &mdash; voir <strong>Param&egrave;tres &rarr; RGPD</strong></li></ul>
+    
+  </div>
+</div>
+<footer>Anim'Gest &mdash; NoSage's Editor &mdash; Document&eacute; S82 &mdash; 12/04/2026</footer>
+</body>
+</html>

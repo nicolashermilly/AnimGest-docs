@@ -1,0 +1,185 @@
+
+<!-- Polices, variables CSS, composants communs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+<title>Pension / Chenil — Anim'Gest</title></head>
+
+<body>
+<nav class="nav-bar">
+  <a class="nav-link home" href="index.html">🏠 Index</a>
+  <a class="nav-link" href="metier-comportementaliste.html">🧠 Comportementaliste</a>
+  <a class="nav-link" href="metier-toiletteur.html">✂️ Toiletteur</a>
+  <a class="nav-link" href="metier-petsitter.html">🏃 Pet-sitter</a>
+  <a class="nav-link" href="metier-eleveur.html">🐣 Éleveur</a>
+  <a class="nav-link" href="metier-pension.html">🏠 Pension</a>
+  <a class="nav-link" href="metier-equestre.html">🐴 Équestre</a>
+  <a class="nav-link" href="metier-veterinaire.html">💉 Vétérinaire</a>
+  <a class="nav-link" href="metier-osteopathe.html">🙌 Ostéopathe</a>
+  <a class="nav-link" href="metier-sport-canin.html">🏆 Sport canin</a>
+  <a class="nav-link" href="metier-naturopathe.html">🌿 Naturopathe</a>
+  <a class="nav-link" href="trans-facturation.html">🧾 Facturation</a>
+  <a class="nav-link" href="trans-compta-fec.html">📊 Compta/FEC</a>
+  <a class="nav-link" href="trans-rfe.html">⚡ RFE</a>
+  <a class="nav-link" href="trans-stock-inventaire.html">📦 Stock</a>
+  <a class="nav-link" href="trans-achats.html">🏪 Achats</a>
+  <a class="nav-link" href="trans-portail-client.html">🌐 Portail</a>
+  <a class="nav-link" href="trans-crm-leads.html">📈 CRM</a>
+  <a class="nav-link" href="trans-reseaux-sociaux.html">📱 Réseaux</a>
+  <a class="nav-link" href="trans-ged.html">🗂️ GED</a>
+  <a class="nav-link" href="trans-registres.html">📜 Registres</a>
+  <a class="nav-link" href="trans-eliot.html">🤖 Eliot</a>
+</nav>
+<div class="hero">
+  <div class="hero-badge">Scénario Métier</div>
+  <h1>🏠 Pension / Chenil</h1>
+  <p class="hero-sub">Gestion complète d'une structure d'accueil : réservations, planning capacités, arrivées/départs, soins quotidiens et registres sanitaires</p>
+  <div class="hero-meta"><div class="hero-meta-item"><span>🏠 Pension agréée</span></div><div class="hero-meta-item"><span>📋 Registres sanitaires</span></div><div class="hero-meta-item"><span>🐕 Multi-animaux</span></div><div class="hero-meta-item"><span>📅 Planning capacités</span></div></div>
+</div>
+<div class="container">
+  <div class="stats-row"><div class="stat-card"><div class="stat-val">9</div><div class="stat-lbl">Étapes</div></div><div class="stat-card"><div class="stat-val">8</div><div class="stat-lbl">Box disponibles</div></div><div class="stat-card"><div class="stat-val">45 €</div><div class="stat-lbl">Tarif nuit moyen</div></div><div class="stat-card"><div class="stat-val">3 600 €</div><div class="stat-lbl">CA/semaine estivale</div></div></div>
+  <div class="timeline">
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">1</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 1</span>
+            <span class="step-title">Configuration de la pension</span>
+          </div>
+          <div class="step-body">Configurez votre capacité d'accueil dans les paramètres.<ul><li>Paramètres → Pension → Capacité : 8 box (6 chiens, 2 chats)</li><li>Définir les types de box : Standard 35€/nuit, Premium 45€/nuit, Suite 60€/nuit</li><li>Configurer les options : promenade 12€/j, médicaments 5€/j, bain de sortie 25€</li><li>Paramétrer les tarifs haute saison (juillet-août : +20%)</li><li>Définir les règles d'accueil : carnet de vaccination à jour obligatoire</li></ul><div class="step-note">💡 La capacité est vérifiée automatiquement à chaque nouvelle réservation. Les jours complets apparaissent en rouge.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">2</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 2</span>
+            <span class="step-title">Prise de réservation estivale</span>
+          </div>
+          <div class="step-body">Juillet arrive : gérez le pic de réservations.<ul><li>Famille Moreau : Rex (Berger Allemand) + Luna (chatte), 10-24 juillet (14 nuits)</li><li>Vérifier disponibilités : Planning → juillet → 2 places disponibles ✓</li><li>Rex : box Standard 35€ + promenade 12€ = 47€/nuit × 14 = 658€</li><li>Luna : box chat 30€/nuit × 14 = 420€</li><li>Total Moreau : 1 078€ TTC · Acompte 30% = 323,40€ demandé</li><li>Envoyer la confirmation avec fiche d'informations à compléter (alimentation, médicaments, vétérinaire)</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">3</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 3</span>
+            <span class="step-title">Vérification sanitaire à l'arrivée</span>
+          </div>
+          <div class="step-body">Le 10 juillet, la famille Moreau dépose Rex et Luna.<ul><li>Vérifier le carnet de vaccination Rex : CHPPiL2 valide jusqu'au 15/08/2026 ✓</li><li>Vérifier carnet Luna : Typhus + Leucose valides ✓</li><li>Si vaccination expirée → refus d'accueil (obligation légale)</li><li>Compléter la fiche d'entrée : alimentation, médicaments, comportements</li><li>Enregistrer l'entrée de Rex : fiche séjour → Enregistrer l'entrée (10/07 09h15)</li><li>Enregistrer l'entrée de Luna : même opération</li><li>Registre sanitaire de séjour alimenté automatiquement pour Rex et Luna</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">4</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Étape 4</span>
+            <span class="step-title">Gestion quotidienne du séjour</span>
+          </div>
+          <div class="step-body">Pendant 14 jours, assurez le suivi de chaque pensionnaire.<ul><li>Chaque matin : consulter le planning du jour (arrivées, départs, soins, promenades)</li><li>Rex : promenade 8h + repas 8h30 + 18h + coucher 21h</li><li>Luna : alimentation Royal Canin Sterilised 30g × 2 + jeu 2× 15min</li><li>Médicaments Rex : Bravecto — 1 comprimé au repas du soir (noté dans fiche)</li><li>Enregistrer chaque prise de médicament dans l'onglet Soins</li><li>Envoyer photo quotidienne aux Moreau (Rex au jardin, Luna sur son hamac)</li></ul><div class="step-note">💡 Les propriétaires adorent les photos quotidiennes. C'est votre meilleur argument face aux concurrents.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--rose)">5</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--rose)">Étape 5</span>
+            <span class="step-title">Gestion d'un incident sanitaire</span>
+          </div>
+          <div class="step-body">Le 15 juillet, Médor (un autre pensionnaire) présente des vomissements.<ul><li>Isoler Médor dans un box séparé immédiatement</li><li>Contacter le vétérinaire référent des propriétaires</li><li>Enregistrer l'événement : Registres → Sanitaire événements → + Événement</li><li>Saisir : date 15/07, animal Médor, type Symptômes gastro-entérites</li><li>Ce registre doit être complété dans les 24h (obligation légale)</li><li>Prévenir les propriétaires de Médor par téléphone</li><li>Suivi vétérinaire : diagnostic gastrite légère, prescription Smecta</li></ul><div class="step-warn">⚖️ Tout incident sanitaire doit être consigné dans les 24h. Défaut → risque de retrait d'agrément.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:#a78bfa">6</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:#a78bfa">Étape 6</span>
+            <span class="step-title">Gestion du planning haute saison</span>
+          </div>
+          <div class="step-body">Juillet complet : gérez la liste d'attente et les refus.<ul><li>Planning → 15 juillet au 15 août : tous les box affichés complets</li><li>3 demandes refusées → les ajouter en liste d'attente CRM</li><li>Si annulation : contacter le premier de la liste d'attente automatiquement</li><li>Configurer message de refus automatique avec dates de disponibilités alternatives</li><li>Proposer un partenariat avec une pension amie pour les débordements</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--amber)">7</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--amber)">Étape 7</span>
+            <span class="step-title">Enregistrement des sorties et facturation</span>
+          </div>
+          <div class="step-body">Le 24 juillet, la famille Moreau récupère Rex et Luna.<ul><li>Enregistrer la sortie de Rex : 24/07 17h30 (registre sanitaire mis à jour)</li><li>Enregistrer la sortie de Luna : 24/07 17h30</li><li>Vérifier : 14 nuits réalisées, 14 promenades Rex, 0 incident</li><li>Bain de sortie Rex : ajouté lors de la demande → +25€</li><li>Facture solde : 1 078€ + 25€ bain - 323,40€ acompte = 779,60€</li><li>Règlement CB 779,60€ · Reçu envoyé par email</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">8</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 8</span>
+            <span class="step-title">Registres sanitaires — Bilan de saison</span>
+          </div>
+          <div class="step-body">En fin de saison, archivez et vérifiez tous les registres.<ul><li>Registre carnivores : tous les animaux accueillis en juillet-août documentés</li><li>Registre sanitaire séjour : 47 séjours, tous avec entrée/sortie enregistrées</li><li>Registre événements sanitaires : 2 incidents (gastrite Médor + boiterie Bella)</li><li>Exporter les 3 registres en PDF (archive annuelle obligatoire)</li><li>ACACED : contrôle validité + renouvellement si nécessaire</li><li>Bilan financier juillet : 32 séjours · CA 14 800€ TTC</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">9</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 9</span>
+            <span class="step-title">Analyse et fidélisation post-saison</span>
+          </div>
+          <div class="step-body">Exploitez les données de la saison pour fidéliser et améliorer.<ul><li>Statistiques : taux d'occupation juillet = 97% · CA estival = 14 800€</li><li>NPS clients : envoyer enquête satisfaction (email automatique J+7 après départ)</li><li>Familles Moreau, Bernard, Petit → 3 étoiles : proposer réservation Noël prioritaire</li><li>Campagne email : 'Réservez vos vacances de Noël avant le 15 octobre'</li><li>CRM → 6 prospects liste d'attente été → relancer pour hors-saison</li></ul></div>
+        </div>
+      </div></div>
+  <div class="result-box">
+    <div class="result-title">✅ Résultats du parcours</div>
+    <div class="result-grid"><div class="result-item"><span>💰</span><span>CA estival : 14 800 €</span></div><div class="result-item"><span>🐕</span><span>47 séjours juillet-août</span></div><div class="result-item"><span>📋</span><span>Registres DDPP complets</span></div><div class="result-item"><span>⭐</span><span>Taux occupation 97%</span></div><div class="result-item"><span>📱</span><span>Photos quotidiennes</span></div><div class="result-item"><span>🔄</span><span>Réservations Noël déjà prises</span></div></div>
+  </div>
+</div>
+<footer>Anim'Gest · NoSage's Editor — Scénario Pension / Chenil — Sprint S78 · 2026</footer>
+</body></html>

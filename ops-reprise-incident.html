@@ -1,0 +1,232 @@
+
+<!-- Polices, variables CSS, composants communs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+
+<style>
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:20px}
+.gterm{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px 20px}
+.gterm-word{font-weight:700;font-size:14px;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.gterm-tag{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600;text-transform:uppercase}
+.gterm-def{font-size:13px;color:#94A3B8;line-height:1.6}
+.faq-item{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.faq-q{padding:16px 20px;font-weight:600;font-size:14px;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q:hover{background:rgba(255,255,255,.03)}
+.faq-a{padding:0 20px 16px;font-size:13px;color:#94A3B8;line-height:1.7;display:none}
+.faq-a.open{display:block}
+.checklist-section{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;margin-bottom:20px}
+.checklist-title{font-weight:700;font-size:15px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;color:#94A3B8}
+.check-item:last-child{border-bottom:none}
+.check-box{width:20px;height:20px;border-radius:5px;border:2px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all .2s;margin-top:1px}
+.check-box.done{background:#10B981;border-color:#10B981;color:#fff}
+.check-label{flex:1}
+.check-label strong{color:#fff;display:block;margin-bottom:3px}
+.time-badge{font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(245,158,11,.15);color:#fcd34d;font-weight:600;white-space:nowrap;flex-shrink:0}
+.module-card{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;transition:all .2s}
+.module-card:hover{border-color:rgba(255,255,255,.2)}
+.module-name{font-weight:700;font-size:14px;color:#fff;margin-bottom:8px}
+.module-desc{font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:10px}
+.module-deps{font-size:11px;color:#64748B}
+.dep-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;background:rgba(79,70,229,.15);color:#a5b4fc;margin:2px}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+.formula-card{border-radius:16px;padding:28px;border:2px solid transparent;transition:all .2s}
+.formula-card:hover{transform:translateY(-4px)}
+.formula-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:6px}
+.formula-price{font-size:28px;font-weight:700;margin:12px 0}
+.formula-price span{font-size:14px;font-weight:400;color:#94A3B8}
+.formula-features{list-style:none;margin-top:16px}
+.formula-features li{padding:6px 0;font-size:13px;color:#94A3B8;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px}
+.formula-features li:last-child{border-bottom:none}
+.feature-yes{color:#10B981}
+.feature-no{color:#64748B}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);color:#94A3B8;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.08)}
+.data-table td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);color:#94A3B8;vertical-align:top}
+.data-table td:first-child{color:#F1F5F9;font-weight:500}
+.table-wrap{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;margin:20px 0}
+.alert-box{border-radius:12px;padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start;font-size:13px}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#fcd34d}
+.alert-ok{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:#6ee7b7}
+.alert-danger{background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);color:#fda4af}
+.alert-info{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);color:#67e8f9}
+.roi-calc{background:#1E293B;border:1px solid rgba(79,70,229,.3);border-radius:16px;padding:28px}
+.roi-input{margin-bottom:16px}
+.roi-label{font-size:13px;color:#94A3B8;margin-bottom:8px;display:block}
+.roi-slider{width:100%;accent-color:#4F46E5}
+.roi-value{font-size:20px;font-weight:700;color:#fff;text-align:center;padding:12px;background:rgba(79,70,229,.15);border-radius:10px;margin-top:8px}
+</style><title>Reprise après incident — Anim'Gest</title></head>
+<body>
+<nav class="nav-bar">
+  <a class="nav-link home" href="index-complet.html">🏠 Index</a>
+  <a class="nav-link" href="ref-glossaire.html">📖 Glossaire</a>
+  <a class="nav-link" href="ref-raccourcis.html">⌨️ Raccourcis</a>
+  <a class="nav-link" href="ref-faq.html">❓ FAQ</a>
+  <a class="nav-link" href="ops-cloture-mensuelle.html">📅 Clôture mensuelle</a>
+  <a class="nav-link" href="ops-cloture-annuelle.html">📆 Clôture annuelle</a>
+  <a class="nav-link" href="ops-migration.html">🚀 Migration</a>
+  <a class="nav-link" href="ops-reprise-incident.html">🚨 Incident</a>
+  <a class="nav-link" href="tech-schema-donnees.html">🗄️ Schéma données</a>
+  <a class="nav-link" href="tech-carte-modules.html">🗺️ Modules</a>
+  <a class="nav-link" href="tech-rgpd.html">🔒 RGPD</a>
+  <a class="nav-link" href="com-formules.html">💎 Formules</a>
+  <a class="nav-link" href="com-roi.html">📊 ROI</a>
+  <a class="nav-link" href="com-onboarding.html">🎯 Onboarding</a>
+  <a class="nav-link" href="adv-multi-utilisateurs.html">👥 Multi-users</a>
+  <a class="nav-link" href="adv-multi-sites.html">🏢 Multi-sites</a>
+  <a class="nav-link" href="adv-compta-avancee.html">📊 Compta avancée</a>
+  <a class="nav-link" href="adv-impayes.html">⚠️ Impayés</a>
+  <a class="nav-link" href="adv-tarification-avancee.html">💰 Tarification</a>
+  <a class="nav-link" href="adv-eliot-avance.html">🤖 Eliot avancé</a>
+</nav>
+<div class="hero" style="padding:48px">
+  <div class="hero-badge" style="background:linear-gradient(135deg,var(--rose),var(--rose)aa)">Guide opérationnel</div>
+  <h1>🚨 Reprise après incident</h1>
+  <p class="hero-sub">Diagnostic, redémarrage et restauration — procédures pas-à-pas pour résoudre les incidents en autonomie</p>
+</div>
+<div class="container">
+
+<div class="alert-box alert-danger"><span>🚨</span><span>En cas d'incident majeur, gardez votre calme. La plupart des problèmes se résolvent en quelques minutes. Ne relancez jamais les containers en boucle — attendez et lisez les logs.</span></div>
+
+<div class="section-title">Diagnostic rapide — Identifier le problème</div>
+<div class="table-wrap"><table class="data-table">
+<thead><tr><th>Symptôme</th><th>Cause probable</th><th>Solution rapide</th></tr></thead>
+<tbody>
+<tr><td>Page blanche ou erreur 502</td><td>Container frontend ou nginx arrêté</td><td>docker compose restart nginx frontend</td></tr>
+<tr><td>API ne répond pas (erreur 500)</td><td>Container API planté</td><td>docker compose restart api puis vérifier les logs</td></tr>
+<tr><td>Base de données inaccessible</td><td>MariaDB sur 192.168.1.62 non joignable</td><td>Vérifier que la machine serveur BDD est allumée et accessible</td></tr>
+<tr><td>PDF ne génère pas</td><td>Puppeteer / Chromium dans le container API</td><td>Rebuild API --no-cache ou redémarrer le container API</td></tr>
+<tr><td>Emails ne partent pas</td><td>Configuration SMTP incorrecte ou serveur mail down</td><td>Paramètres → SMTP → Tester la configuration</td></tr>
+<tr><td>GED inaccessible</td><td>Dossier C:\AnimGest_GED\ non monté ou supprimé</td><td>Vérifier que le dossier existe et que le volume Docker est monté</td></tr>
+<tr><td>Le logiciel est très lent</td><td>Ressources serveur saturées</td><td>Vérifier RAM et CPU du serveur, fermer les applications inutiles</td></tr>
+</tbody></table></div><div class="checklist-section"><div class="checklist-title"><span style="font-size:20px">🔄</span>Procédure de redémarrage standard</div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Vérifier l'état des containers</strong>cd deploy && docker compose ps</div>
+<span class="time-badge">1 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Redémarrer nginx en premier</strong>docker compose restart nginx</div>
+<span class="time-badge">1 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Tester l'accès : http://localhost</strong>Si ça répond → nginx OK → problème ailleurs</div>
+<span class="time-badge">1 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Redémarrer le frontend</strong>docker compose restart frontend</div>
+<span class="time-badge">2 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Redémarrer l'API</strong>docker compose restart api</div>
+<span class="time-badge">2 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Redémarrer nginx à nouveau</strong>Toujours relancer nginx après un rebuild</div>
+<span class="time-badge">1 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Tester une route API</strong>Invoke-RestMethod http://localhost/api/bilan</div>
+<span class="time-badge">1 min</span></div></div><div class="checklist-section"><div class="checklist-title"><span style="font-size:20px">🔧</span>Si un container ne démarre pas</div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Lire les logs du container</strong>docker compose logs [nom_container] --tail 50</div>
+<span class="time-badge">2 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Identifier l'erreur dans les logs</strong>Chercher ERROR, FATAL, SyntaxError, Cannot find module</div>
+<span class="time-badge">5 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Si erreur TypeScript dans custom-routes.ts</strong>Corriger le fichier puis rebuild API --no-cache</div>
+<span class="time-badge">15-30 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Si erreur Next.js dans une page</strong>Corriger le fichier TSX puis rebuild frontend --no-cache</div>
+<span class="time-badge">15-30 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Si la BDD est inaccessible</strong>Vérifier 192.168.1.62:3307 avec HeidiSQL ou ping</div>
+<span class="time-badge">5 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Si rien ne fonctionne</strong>Restaurer depuis la dernière sauvegarde</div>
+<span class="time-badge">30-60 min</span></div></div><div class="checklist-section"><div class="checklist-title"><span style="font-size:20px">💾</span>Restauration depuis sauvegarde</div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Localiser la dernière sauvegarde</strong>C:\Backup\micro_logiciel\ → dossier le plus récent</div>
+<span class="time-badge">2 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Arrêter tous les containers</strong>docker compose down</div>
+<span class="time-badge">1 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Restaurer la BDD</strong>Importer le fichier .sql via HeidiSQL sur 192.168.1.62:3307</div>
+<span class="time-badge">10-20 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Restaurer la GED</strong>Copier le dossier sauvegardé vers C:\AnimGest_GED\</div>
+<span class="time-badge">5-10 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Restaurer les fichiers source</strong>Copier les fichiers source frontend/API sauvegardés</div>
+<span class="time-badge">10 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Relancer les containers</strong>docker compose up -d && docker compose restart nginx</div>
+<span class="time-badge">5 min</span></div><div class="check-item">
+<div class="check-box"></div>
+<div class="check-label"><strong>Tester le fonctionnement</strong>Connexion → créer un client test → facture → PDF</div>
+<span class="time-badge">10 min</span></div></div>
+<div class="section-title">Contacts et ressources</div>
+<div class="table-wrap"><table class="data-table">
+<thead><tr><th>Ressource</th><th>Accès</th><th>Utilisation</th></tr></thead>
+<tbody>
+<tr><td>Support technique</td><td>Email depuis Anim'Gest → Aide → Support</td><td>Bugs, questions techniques, incidents bloquants</td></tr>
+<tr><td>Backup propre S77</td><td>C:\Backup\micro_logiciel\20260315_0002</td><td>Référence de code source stable</td></tr>
+<tr><td>Documentation technique</td><td>nicolashermilly.github.io/AnimGest-docs/</td><td>Architecture, routes API, règles critiques</td></tr>
+<tr><td>Logs Docker</td><td>docker compose logs [container] --tail 100</td><td>Diagnostic des erreurs runtime</td></tr>
+</tbody></table></div>
+</div>
+<footer>Anim'Gest · NoSage's Editor — Reprise après incident — Sprint S107 · 2026</footer>
+<script>
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
+  q.nextElementSibling.classList.toggle('open');
+  q.querySelector('.faq-arrow').textContent=q.nextElementSibling.classList.contains('open')?'−':'+';
+}));
+document.querySelectorAll('.check-box').forEach(b=>b.addEventListener('click',()=>{
+  b.classList.toggle('done');
+  b.textContent=b.classList.contains('done')?'✓':'';
+}));
+</script>
+</body></html>

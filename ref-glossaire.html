@@ -1,0 +1,199 @@
+
+<!-- Polices, variables CSS, composants communs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+
+<style>
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:20px}
+.gterm{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px 20px}
+.gterm-word{font-weight:700;font-size:14px;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.gterm-tag{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600;text-transform:uppercase}
+.gterm-def{font-size:13px;color:#94A3B8;line-height:1.6}
+.faq-item{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.faq-q{padding:16px 20px;font-weight:600;font-size:14px;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q:hover{background:rgba(255,255,255,.03)}
+.faq-a{padding:0 20px 16px;font-size:13px;color:#94A3B8;line-height:1.7;display:none}
+.faq-a.open{display:block}
+.checklist-section{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;margin-bottom:20px}
+.checklist-title{font-weight:700;font-size:15px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;color:#94A3B8}
+.check-item:last-child{border-bottom:none}
+.check-box{width:20px;height:20px;border-radius:5px;border:2px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all .2s;margin-top:1px}
+.check-box.done{background:#10B981;border-color:#10B981;color:#fff}
+.check-label{flex:1}
+.check-label strong{color:#fff;display:block;margin-bottom:3px}
+.time-badge{font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(245,158,11,.15);color:#fcd34d;font-weight:600;white-space:nowrap;flex-shrink:0}
+.module-card{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;transition:all .2s}
+.module-card:hover{border-color:rgba(255,255,255,.2)}
+.module-name{font-weight:700;font-size:14px;color:#fff;margin-bottom:8px}
+.module-desc{font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:10px}
+.module-deps{font-size:11px;color:#64748B}
+.dep-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;background:rgba(79,70,229,.15);color:#a5b4fc;margin:2px}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+.formula-card{border-radius:16px;padding:28px;border:2px solid transparent;transition:all .2s}
+.formula-card:hover{transform:translateY(-4px)}
+.formula-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:6px}
+.formula-price{font-size:28px;font-weight:700;margin:12px 0}
+.formula-price span{font-size:14px;font-weight:400;color:#94A3B8}
+.formula-features{list-style:none;margin-top:16px}
+.formula-features li{padding:6px 0;font-size:13px;color:#94A3B8;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px}
+.formula-features li:last-child{border-bottom:none}
+.feature-yes{color:#10B981}
+.feature-no{color:#64748B}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);color:#94A3B8;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.08)}
+.data-table td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);color:#94A3B8;vertical-align:top}
+.data-table td:first-child{color:#F1F5F9;font-weight:500}
+.table-wrap{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;margin:20px 0}
+.alert-box{border-radius:12px;padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start;font-size:13px}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#fcd34d}
+.alert-ok{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:#6ee7b7}
+.alert-danger{background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);color:#fda4af}
+.alert-info{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);color:#67e8f9}
+.roi-calc{background:#1E293B;border:1px solid rgba(79,70,229,.3);border-radius:16px;padding:28px}
+.roi-input{margin-bottom:16px}
+.roi-label{font-size:13px;color:#94A3B8;margin-bottom:8px;display:block}
+.roi-slider{width:100%;accent-color:#4F46E5}
+.roi-value{font-size:20px;font-weight:700;color:#fff;text-align:center;padding:12px;background:rgba(79,70,229,.15);border-radius:10px;margin-top:8px}
+</style><title>Glossaire — Anim'Gest</title></head>
+<body>
+<nav class="nav-bar">
+  <a class="nav-link home" href="index-complet.html">🏠 Index</a>
+  <a class="nav-link" href="ref-glossaire.html">📖 Glossaire</a>
+  <a class="nav-link" href="ref-raccourcis.html">⌨️ Raccourcis</a>
+  <a class="nav-link" href="ref-faq.html">❓ FAQ</a>
+  <a class="nav-link" href="ops-cloture-mensuelle.html">📅 Clôture mensuelle</a>
+  <a class="nav-link" href="ops-cloture-annuelle.html">📆 Clôture annuelle</a>
+  <a class="nav-link" href="ops-migration.html">🚀 Migration</a>
+  <a class="nav-link" href="ops-reprise-incident.html">🚨 Incident</a>
+  <a class="nav-link" href="tech-schema-donnees.html">🗄️ Schéma données</a>
+  <a class="nav-link" href="tech-carte-modules.html">🗺️ Modules</a>
+  <a class="nav-link" href="tech-rgpd.html">🔒 RGPD</a>
+  <a class="nav-link" href="com-formules.html">💎 Formules</a>
+  <a class="nav-link" href="com-roi.html">📊 ROI</a>
+  <a class="nav-link" href="com-onboarding.html">🎯 Onboarding</a>
+  <a class="nav-link" href="adv-multi-utilisateurs.html">👥 Multi-users</a>
+  <a class="nav-link" href="adv-multi-sites.html">🏢 Multi-sites</a>
+  <a class="nav-link" href="adv-compta-avancee.html">📊 Compta avancée</a>
+  <a class="nav-link" href="adv-impayes.html">⚠️ Impayés</a>
+  <a class="nav-link" href="adv-tarification-avancee.html">💰 Tarification</a>
+  <a class="nav-link" href="adv-eliot-avance.html">🤖 Eliot avancé</a>
+</nav>
+<div class="hero" style="padding:48px">
+  <div class="hero-badge" style="background:linear-gradient(135deg,var(--cyan),var(--cyan)aa)">Référence</div>
+  <h1>📖 Glossaire</h1>
+  <p class="hero-sub">Tous les termes techniques, réglementaires et métier d'Anim'Gest expliqués</p>
+</div>
+<div class="container">
+<div class="glossary-grid"><div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(244,63,94,.2);color:#fda4af">Réglementaire</span>ACACED</div><div class="gterm-def">Attestation de Connaissance des Animaux de Compagnie d'Espèces Domestiques. Obligatoire pour toute personne exerçant une activité professionnelle rémunérée auprès d'animaux.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(79,70,229,.2);color:#a5b4fc">Comptabilité</span>Avoir</div><div class="gterm-def">Document comptable qui annule partiellement ou totalement une facture. Numéroté dans la séquence AV-. Ne peut pas être supprimé (NF525).</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(168,85,247,.2);color:#d8b4fe">Comportementaliste</span>BC — Bilan Comportemental</div><div class="gterm-def">Séance diagnostique initiale permettant d'évaluer le comportement d'un animal sur 4 sections (Comportement, Alimentation, Contacts, Territoire) et 14 critères CAC.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(245,158,11,.2);color:#fcd34d">Achats</span>BC — Bon de Commande</div><div class="gterm-def">Document envoyé à un fournisseur pour commander des marchandises. Génère un Bon de Livraison à la réception.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(245,158,11,.2);color:#fcd34d">Achats</span>BL — Bon de Livraison</div><div class="gterm-def">Document qui acte la réception d'une commande fournisseur. Il déclenche la mise à jour du stock et le calcul du nouveau PMP.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(245,158,11,.2);color:#fcd34d">Achats</span>BR — Bon de Retour</div><div class="gterm-def">Document qui acte le retour de marchandises à un fournisseur. Génère une Demande d'Avoir Fournisseur.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(168,85,247,.2);color:#d8b4fe">Comportementaliste</span>CAC</div><div class="gterm-def">Critères d'Aptitude Comportementale. Grille de 14 critères (Communication, Autocontrôle, Confiance, Calme, Concentration, Contact, Cohérence, Constance, Coopération, Curiosité, Confort, Capacité d'adaptation, Cognition, Courage) évalués de 0 à 4.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(20,184,166,.2);color:#99f6e4">Commercial</span>CGV</div><div class="gterm-def">Conditions Générales de Vente. Document légal obligatoire annexé aux devis et factures. Doit mentionner les conditions de paiement, de résiliation et de litiges.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(245,158,11,.2);color:#fcd34d">Achats</span>DAF — Demande d'Avoir Fournisseur</div><div class="gterm-def">Document émis suite à un retour marchandise. Déclenche l'émission d'un avoir par le fournisseur.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(244,63,94,.2);color:#fda4af">Réglementaire</span>DDPP</div><div class="gterm-def">Direction Départementale de la Protection des Populations. Autorité de contrôle pour les activités animalières. Peut diligenter des inspections à tout moment.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(6,182,212,.2);color:#67e8f9">IA</span>Eliot</div><div class="gterm-def">Assistant IA intégré à Anim'Gest. Dispose de 22 outils pour créer, rechercher et gérer les données du logiciel en langage naturel. Option commerciale Pro/Expert.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(244,63,94,.2);color:#fda4af">Réglementaire</span>eIDAS</div><div class="gterm-def">Règlement européen sur l'identification électronique et les services de confiance. Donne une valeur légale aux signatures électroniques qualifiées (Yousign).</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(79,70,229,.2);color:#a5b4fc">Comptabilité</span>Exercice comptable</div><div class="gterm-def">Période comptable annuelle (généralement 1er jan - 31 déc). Toutes les écritures lui sont rattachées. Base de l'export FEC.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(239,68,68,.2);color:#fca5a5">RFE</span>Factur-X</div><div class="gterm-def">Format de facture électronique hybride : PDF lisible par l'humain + XML structuré EN16931 intégré. Conforme à la Réforme de la Facturation Électronique.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(79,70,229,.2);color:#a5b4fc">Comptabilité</span>FEC</div><div class="gterm-def">Fichier des Écritures Comptables. Fichier TXT normalisé (18 colonnes) exigé par l'administration fiscale. Débit = Crédit obligatoire. Conservation 10 ans.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(245,158,11,.2);color:#fcd34d">Achats</span>FF — Facture Fournisseur</div><div class="gterm-def">Facture reçue d'un fournisseur. À enregistrer dans les achats et régler à l'échéance. Génère une écriture comptable crédit 401 / débit 607.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(99,102,241,.2);color:#c7d2fe">Général</span>GED</div><div class="gterm-def">Gestion Électronique des Documents. Système de stockage et d'indexation des fichiers. Dans Anim'Gest, tous les fichiers sont sur disque (C:\AnimGest_GED\), jamais en base64 en BDD.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(16,185,129,.2);color:#6ee7b7">Élevage</span>LOF</div><div class="gterm-def">Livre des Origines Français. Registre officiel des chiens de race géré par la SCC. Obligatoire pour les élevages qui souhaitent inscrire leurs chiots.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(79,70,229,.2);color:#a5b4fc">Comptabilité</span>NF525</div><div class="gterm-def">Norme française qui impose l'inaltérabilité des données de caisse (factures, règlements). Toute facture validée ne peut être supprimée — seul un avoir peut l'annuler.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(239,68,68,.2);color:#fca5a5">RFE</span>PDP</div><div class="gterm-def">Plateforme de Dématérialisation Partenaire. Intermédiaire agréé par l'État pour la transmission des factures électroniques B2B. Obligatoire à partir de 2026-2027.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(234,179,8,.2);color:#fef08a">Stock</span>PMP</div><div class="gterm-def">Prix Moyen Pondéré. Méthode de valorisation du stock recalculée à chaque réception. PMP = (stock existant × PMP actuel + qté reçue × prix achat) / total stock.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(99,102,241,.2);color:#c7d2fe">Général</span>Portail Client</div><div class="gterm-def">Espace en ligne sécurisé accessible au client via un lien unique. Il peut y consulter ses animaux, séances, comptes-rendus, factures et signer des devis.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(244,63,94,.2);color:#fda4af">Réglementaire</span>RFE</div><div class="gterm-def">Réforme de la Facturation Électronique. Obligation progressive 2026-2027 d'émettre et recevoir des factures au format structuré via une PDP agréée.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(59,130,246,.2);color:#bfdbfe">Paiement</span>SEPA</div><div class="gterm-def">Single Euro Payments Area. Zone de paiement en euros. Le mandat SEPA autorise le prélèvement automatique sur le compte bancaire du client.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(217,119,6,.2);color:#fcd34d">Équestre</span>SIRE</div><div class="gterm-def">Système d'Information Relatif aux Équidés. Identifiant officiel de chaque cheval en France. Obligatoire pour tout déplacement et compétition.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(16,185,129,.2);color:#6ee7b7">Élevage</span>SCC</div><div class="gterm-def">Société Centrale Canine. Organisation gérant le LOF et les registres officiels de races canines en France.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(79,70,229,.2);color:#a5b4fc">Comptabilité</span>TVA</div><div class="gterm-def">Taxe sur la Valeur Ajoutée. Taux principaux en France : 20% (standard), 10% (réduit), 5,5% (super-réduit), 0% (exonéré). Médicaments vétérinaires : 7%.</div></div>
+<div class="gterm"><div class="gterm-word"><span class="gterm-tag" style="background:rgba(139,92,246,.2);color:#ddd6fe">Signature</span>Yousign</div><div class="gterm-def">Prestataire de signature électronique qualifiée intégré à Anim'Gest. Les signatures sont horodatées, certifiées eIDAS et stockées en GED.</div></div>
+</div>
+</div>
+<footer>Anim'Gest · NoSage's Editor — Glossaire — Sprint S107 · 2026</footer>
+<script>
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
+  q.nextElementSibling.classList.toggle('open');
+  q.querySelector('.faq-arrow').textContent=q.nextElementSibling.classList.contains('open')?'−':'+';
+}));
+document.querySelectorAll('.check-box').forEach(b=>b.addEventListener('click',()=>{
+  b.classList.toggle('done');
+  b.textContent=b.classList.contains('done')?'✓':'';
+}));
+</script>
+
+    <!-- S83-GLOSSAIRE -->
+    <div style="margin-top:2rem;border-top:1px solid #334155;padding-top:1rem">
+      <h3 style="color:#F59E0B">Nouveaux termes S82</h3>
+      <dl style="display:grid;grid-template-columns:200px 1fr;gap:.5rem 1rem">
+        <dt style="color:#F59E0B;font-weight:700">BC</dt>
+        <dd style="color:#94A3B8;margin:0">Bilan Comportemental &mdash; anciennement nomm&eacute; &laquo; Etude De Comportement&nbsp;&raquo;. Tables&nbsp;: bc_fiche, bc_probleme.</dd>
+
+        <dt style="color:#F59E0B;font-weight:700">Note de frais</dt>
+        <dd style="color:#94A3B8;margin:0">D&eacute;pense professionnelle saisie et valid&eacute;e dans le module Comptabilit&eacute;. Num&eacute;rotation NF-YYMM-NNNN.</dd>
+
+        <dt style="color:#F59E0B;font-weight:700">Export TVA</dt>
+        <dd style="color:#94A3B8;margin:0">Etat r&eacute;capitulatif des montants de TVA collect&eacute;s par taux sur une p&eacute;riode donn&eacute;e, export&eacute; en CSV.</dd>
+
+        <dt style="color:#F59E0B;font-weight:700">S&eacute;ance de groupe</dt>
+        <dd style="color:#94A3B8;margin:0">Session collective avec capacit&eacute; maximum et tarification diff&eacute;renci&eacute;e selon le nombre d'animaux par participant.</dd>
+
+        <dt style="color:#F59E0B;font-weight:700">PCG</dt>
+        <dd style="color:#94A3B8;margin:0">Plan Comptable G&eacute;n&eacute;ral fran&ccedil;ais &mdash; r&eacute;f&eacute;rentiel des comptes utilis&eacute;s dans les notes de frais et l'export FEC.</dd>
+      </dl>
+    </div>
+
+  </body></html>

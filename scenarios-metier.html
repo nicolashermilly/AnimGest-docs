@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scénarios Métier — Anim'Gest · NoSage's Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F172A;
+    --navy-mid: #1E293B;
+    --navy-light: #334155;
+    --gold: #F59E0B;
+    --gold-light: #FCD34D;
+    --violet: #4F46E5;
+    --cyan: #06B6D4;
+    --emerald: #10B981;
+    --rose: #F43F5E;
+    --amber: #F59E0B;
+    --surface: #1E293B;
+    --border: rgba(255,255,255,0.08);
+    --text: #F1F5F9;
+    --muted: #94A3B8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; line-height: 1.6; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0F172A 0%, #1a1040 50%, #0F172A 100%);
+    padding: 60px 40px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(79,70,229,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(6,182,212,0.12) 0%, transparent 60%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--violet), var(--cyan));
+    color: #fff;
+    padding: 6px 20px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, var(--gold-light) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero p { font-size: 18px; color: var(--muted); max-width: 600px; margin: 0 auto; position: relative; }
+
+  /* NAV SCÉNARIOS */
+  .nav-scenarios {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 24px 40px;
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-btn {
+    padding: 8px 20px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    background: var(--violet);
+    color: #fff;
+    border-color: var(--violet);
+  }
+
+  /* MAIN */
+  .container { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
+
+  /* SCENARIO HEADER */
+  .scenario-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 48px;
+    padding: 32px;
+    background: var(--surface);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+  .scenario-icon { font-size: 56px; flex-shrink: 0; }
+  .scenario-meta { flex: 1; }
+  .scenario-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .scenario-desc { color: var(--muted); font-size: 15px; margin-bottom: 16px; }
+  .scenario-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .stag {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 48px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--violet), var(--cyan), var(--emerald));
+  }
+  .step {
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .step-dot {
+    position: absolute;
+    left: -36px;
+    top: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    border: 2px solid var(--navy);
+  }
+  .step-card {
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    transition: all 0.3s;
+  }
+  .step-card:hover { border-color: rgba(255,255,255,0.15); transform: translateX(4px); }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .step-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .step-body { color: var(--muted); font-size: 14px; line-height: 1.7; }
+  .step-body ul { list-style: none; margin-top: 10px; space-y: 4px; }
+  .step-body li { padding: 4px 0; display: flex; align-items: flex-start; gap: 8px; }
+  .step-body li::before { content: '→'; color: var(--violet); flex-shrink: 0; }
+  .step-note {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    background: rgba(245,158,11,0.1);
+    border-left: 3px solid var(--gold);
+    color: var(--gold-light);
+  }
+  .step-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(79,70,229,0.2);
+    color: #a5b4fc;
+    text-decoration: none;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    padding-top: 48px;
+  }
+  .section-sub { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+  .section-divider { height: 1px; background: var(--border); margin: 48px 0; }
+
+  /* STATS ROW */
+  .stats-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 40px; }
+  .stat-card {
+    flex: 1;
+    min-width: 140px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-val { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #fff; }
+  .stat-lbl { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* RESULT BOX */
+  .result-box {
+    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(6,182,212,0.1));
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-top: 32px;
+  }
+  .result-title { font-size: 16px; font-weight: 600; color: var(--emerald); margin-bottom: 12px; }
+  .result-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .result-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+  .result-item span:first-child { font-size: 20px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Anim'Gest · NoSage's Editor</div>
+  <h1>Scénarios Métier</h1>
+  <p>Parcours complets illustrés pour chaque activité — de l'accueil client à la clôture comptable</p>
+</div>
+
+<nav class="nav-scenarios">
+  <a class="nav-btn active" href="#comportementaliste">🧠 Comportementaliste</a>
+  <a class="nav-btn" href="#toiletteur">✂️ Toiletteur</a>
+  <a class="nav-btn" href="#stock">📦 Vie des articles</a>
+  <a class="nav-btn" href="#compta">📊 Plan comptable → FEC</a>
+</nav>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCÉNARIO 1 : COMPORTEMENTALISTE COMPLET
+  ══════════════════════════════════════════════════════════ -->
+  <div id="comportementaliste">
+    <div class="scenario-header">
+      <div class="scenario-icon">🧠</div>
+      <div class="scenario-meta">
+        <div class="scenario-title">Parcours comportementaliste complet</div>
+        <div class="scenario-desc">
+          De la première prise de contact jusqu'au règlement final — 3 animaux, bilan comportemental,
+          programme de suivi, portail client, gardiennage et registres réglementaires.
+        </div>
+        <div class="scenario-tags">
+          <span class="stag" style="background:rgba(79,70,229,0.2);color:#a5b4fc">Client</span>
+          <span class="stag" style="background:rgba(16,185,129,0.2);color:#6ee7b7">Animaux</span>
+          <span class="stag" style="background:rgba(245,158,11,0.2);color:#fcd34d">BC / Séances</span>
+          <span class="stag" style="background:rgba(244,63,94,0.2);color:#fda4af">Facturation</span>
+          <span class="stag" style="background:rgba(6,182,212,0.2);color:#67e8f9">Portail</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-val">12</div><div class="stat-lbl">Étapes clés</div></div>
+      <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Animaux</div></div>
+      <div class="stat-card"><div class="stat-val">6</div><div class="stat-lbl">Séances de suivi</div></div>
+      <div class="stat-card"><div class="stat-val">1 850 €</div><div class="stat-lbl">CA moyen</div></div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">1</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 1</span>
+            <span class="step-title">Création du client et de ses animaux</span>
+          </div>
+          <div class="step-body">
+            Marie Dupont contacte votre cabinet pour son Malinois agressif.
+            <ul>
+              <li>Créer la fiche client Dupont Marie (email, téléphone, adresse)</li>
+              <li>Ajouter Animal 1 : Rex, Malinois, 4 ans, puce 250-268-712-024-567</li>
+              <li>Ajouter Animal 2 : Luna, Berger Allemand, 2 ans (chienne de Rex)</li>
+              <li>Ajouter Animal 3 : Miko, Jack Russell, 7 ans (problème de cohabitation)</li>
+              <li>Renseigner vétérinaire référent : Dr Marchand, Clinique du Parc</li>
+              <li>Saisir les antécédents médicaux (allergie aux puces pour Rex)</li>
+            </ul>
+            <div class="step-note">💡 Le numéro de fiche client est attribué automatiquement. Vérifiez le format de puce (15 chiffres ISO).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">2</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 2</span>
+            <span class="step-title">Planification et réalisation du Bilan Comportemental</span>
+          </div>
+          <div class="step-body">
+            Le BC est la première séance payante. Elle génère le rapport d'évaluation.
+            <ul>
+              <li>Créer une séance de type BC pour Rex (1h30, tarif 120€)</li>
+              <li>Planifier dans l'agenda : mardi 14h - 15h30</li>
+              <li>Réaliser la séance : remplir les 4 sections du formulaire BC</li>
+              <li>Section Comportement : 8 critères oui/non (réactivité, ressources…)</li>
+              <li>Section Alimentation : régime, fréquence, problèmes</li>
+              <li>Section Contacts : relations avec humains, chiens, chats</li>
+              <li>Section Territoire : comportement chez lui, en balade</li>
+              <li>Renseigner les 14 CAC initiaux (snapshot de départ)</li>
+            </ul>
+            <div class="step-note">💡 Le snapshot CAC initial est la photo de départ. Il servira de référence pour mesurer la progression lors des séances de suivi.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">3</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 3</span>
+            <span class="step-title">Création du devis et signature</span>
+          </div>
+          <div class="step-body">
+            Sur la base du BC, proposez un programme de suivi chiffré.
+            <ul>
+              <li>Créer devis depuis la fiche séance BC : bouton "Générer un devis"</li>
+              <li>Ligne 1 : Bilan Comportemental Rex — 120,00 € HT</li>
+              <li>Ligne 2 : Forfait 5 séances de suivi Rex — 350,00 € HT</li>
+              <li>Ligne 3 : Séance cohabitation Rex + Miko — 80,00 € HT</li>
+              <li>Ligne 4 : Séance bilan intermédiaire Luna — 80,00 € HT</li>
+              <li>Total : 630,00 € HT · 756,00 € TTC (TVA 20%)</li>
+              <li>Envoyer le devis par email (PDF en pièce jointe)</li>
+              <li>Activer la demande de signature Yousign</li>
+            </ul>
+            <div class="step-note">💡 Une fois le devis signé électroniquement, son statut passe automatiquement à Accepté. La signature est horodatée.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">4</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Étape 4</span>
+            <span class="step-title">Planification des 5 séances de suivi</span>
+          </div>
+          <div class="step-body">
+            Le devis est signé. Planifiez les séances dans l'agenda.
+            <ul>
+              <li>Créer Séance de suivi 1 (Rex) — semaine 1, jeudi 10h</li>
+              <li>Créer Séance de suivi 2 (Rex) — semaine 2, jeudi 10h</li>
+              <li>Créer Séance de suivi 3 (Rex + Miko cohabitation) — semaine 3</li>
+              <li>Créer Séance de suivi 4 (Rex) — semaine 4</li>
+              <li>Créer Séance de suivi 5 / Bilan (Rex) — semaine 5</li>
+              <li>Utiliser la récurrence pour les séances hebdomadaires identiques</li>
+              <li>Envoyer un email de confirmation avec le planning récapitulatif</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:#a78bfa">5</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:#a78bfa">Étape 5</span>
+            <span class="step-title">Réalisation des séances — Suivi CAC</span>
+          </div>
+          <div class="step-body">
+            Après chaque séance réalisée, mettez à jour les 14 critères CAC.
+            <ul>
+              <li>Marquer la séance comme Réalisée</li>
+              <li>Saisir le compte-rendu de la séance (exercices, progrès, points)</li>
+              <li>Évaluer les 14 critères CAC de 0 à 4 avec commentaires</li>
+              <li>Le score CAC de Rex est mis à jour automatiquement</li>
+              <li>Envoyer le compte-rendu par email à Marie après chaque séance</li>
+              <li>Vérifier la progression dans la fiche animal Rex (graphique CAC)</li>
+            </ul>
+            <div class="step-note">💡 Le score initial de Rex était 24/100. Après 5 séances, il est passé à 67/100 — une progression visible et partageable avec le propriétaire.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--rose)">6</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--rose)">Étape 6</span>
+            <span class="step-title">Facturation et règlement</span>
+          </div>
+          <div class="step-body">
+            Après la dernière séance, créez la facture depuis le devis accepté.
+            <ul>
+              <li>Depuis le devis, cliquer sur "Créer la facture"</li>
+              <li>Vérifier les lignes et montants (630€ HT · 756€ TTC)</li>
+              <li>Envoyer la facture par email à Marie</li>
+              <li>Enregistrer le règlement : CB 756€ le 15/05/2026</li>
+              <li>Générer le reçu de paiement (envoyé automatiquement)</li>
+              <li>La facture passe en statut Payée</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">7</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 7</span>
+            <span class="step-title">Activation du Portail Client</span>
+          </div>
+          <div class="step-body">
+            Donnez à Marie accès à son espace personnel sécurisé.
+            <ul>
+              <li>Dans la fiche client, onglet Portail : Activer le portail</li>
+              <li>Marie reçoit un email avec son lien d'accès unique</li>
+              <li>Elle peut voir : ses animaux (Rex, Luna, Miko), ses séances passées</li>
+              <li>Elle consulte les comptes-rendus de chaque séance</li>
+              <li>Elle télécharge sa facture réglée</li>
+              <li>Elle voit le graphique d'évolution CAC de Rex</li>
+            </ul>
+            <div class="step-note">💡 Le portail est un puissant outil de fidélisation. Marie suit la progression de Rex en temps réel — ce qui renforce sa confiance dans votre travail.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">8</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 8</span>
+            <span class="step-title">Réservation de gardiennage (pension)</span>
+          </div>
+          <div class="step-body">
+            Marie part en vacances et demande un gardiennage pour Rex.
+            <ul>
+              <li>Créer une réservation de pension : Rex, 15 au 22 juillet (7 nuits)</li>
+              <li>Options : 2 promenades/jour, bain de sortie</li>
+              <li>Tarif : 30€/nuit + 20€ options = 230€ TTC</li>
+              <li>Imprimer la fiche de séjour (alimentation, médicaments, vétérinaire)</li>
+              <li>Enregistrer l'entrée de Rex le 15 juillet</li>
+              <li>Alimenter le registre sanitaire de séjour automatiquement</li>
+              <li>Envoyer des nouvelles quotidiennes avec photos</li>
+              <li>Enregistrer la sortie le 22 juillet et facturer le séjour</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">9</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Étape 9</span>
+            <span class="step-title">Vérification des registres réglementaires</span>
+          </div>
+          <div class="step-body">
+            Toutes les obligations légales doivent être à jour.
+            <ul>
+              <li>Registre des carnivores : Rex, Luna, Miko enregistrés à chaque accueil</li>
+              <li>Registre sanitaire de séjour : séjour Rex correctement documenté</li>
+              <li>Votre ACACED : valide jusqu'au 15/03/2028 (alerte à 60 jours)</li>
+              <li>Exporter le registre en PDF pour archive annuelle</li>
+            </ul>
+            <div class="step-note">💡 En cas de contrôle DDPP, ces registres doivent être présentés immédiatement. Tenez-les à jour après chaque accueil.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="result-box">
+      <div class="result-title">✅ Résultat du parcours comportementaliste</div>
+      <div class="result-items">
+        <div class="result-item"><span>💰</span><span>CA généré : 986 € TTC (suivi + pension)</span></div>
+        <div class="result-item"><span>📈</span><span>Score CAC Rex : 24 → 67/100</span></div>
+        <div class="result-item"><span>🌐</span><span>Portail actif — Marie fidélisée</span></div>
+        <div class="result-item"><span>📜</span><span>Registres conformes DDPP</span></div>
+        <div class="result-item"><span>🧾</span><span>FEC alimenté automatiquement</span></div>
+        <div class="result-item"><span>⭐</span><span>Client satisfait — bouche-à-oreille</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCÉNARIO 2 : TOILETTEUR
+  ══════════════════════════════════════════════════════════ -->
+  <div id="toiletteur">
+    <div class="scenario-header">
+      <div class="scenario-icon">✂️</div>
+      <div class="scenario-meta">
+        <div class="scenario-title">Parcours toiletteur complet</div>
+        <div class="scenario-desc">
+          Séances de toilettage, vente de produits, gestion du stock salon et réapprovisionnement.
+        </div>
+        <div class="scenario-tags">
+          <span class="stag" style="background:rgba(245,158,11,0.2);color:#fcd34d">Séances</span>
+          <span class="stag" style="background:rgba(16,185,129,0.2);color:#6ee7b7">Stock</span>
+          <span class="stag" style="background:rgba(79,70,229,0.2);color:#a5b4fc">Facturation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">1</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Étape 1</span>
+            <span class="step-title">Accueil du client et de l'animal</span>
+          </div>
+          <div class="step-body">
+            Paul Morin arrive avec Noisette, Bichon 3 ans, pour un toilettage complet.
+            <ul>
+              <li>Rechercher le client Morin Paul (ou créer si premier passage)</li>
+              <li>Vérifier les antécédents de Noisette (allergies, traitement en cours)</li>
+              <li>Créer la séance de toilettage : Noisette, jeudi 9h, durée 1h30</li>
+              <li>Sélectionner le type de prestation : Toilettage complet (bain, séchage, coupe, griffes)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">2</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 2</span>
+            <span class="step-title">Saisie des produits utilisés (déduction stock)</span>
+          </div>
+          <div class="step-body">
+            Pendant ou après la séance, enregistrez les produits consommés.
+            <ul>
+              <li>Dans la fiche séance, onglet Produits utilisés</li>
+              <li>Shampoing démêlant 100ml : -0.1 unité du stock (lot SH-2026-03)</li>
+              <li>Soin hydratant 50ml : -0.05 unité du stock</li>
+              <li>Spray finissant : -1 application</li>
+              <li>Les quantités sont déduites automatiquement du stock salon</li>
+              <li>Si stock sous le seuil d'alerte → notification dans le tableau de bord</li>
+            </ul>
+            <div class="step-note">💡 Configurez un seuil minimum pour chaque produit. Anim'Gest vous alerte avant la rupture.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">3</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 3</span>
+            <span class="step-title">Vente de produits au client</span>
+          </div>
+          <div class="step-body">
+            Paul souhaite acheter un shampoing et un démêlant pour entretenir Noisette chez lui.
+            <ul>
+              <li>Dans la fiche séance ou depuis une nouvelle facture, ajouter des lignes produits</li>
+              <li>Shampoing Bichon Pro 250ml — 18,50 € TTC</li>
+              <li>Spray démêlant 200ml — 12,00 € TTC</li>
+              <li>Ces ventes déduisent aussi le stock</li>
+              <li>Total séance + produits : 65€ (séance) + 30,50€ (produits) = 95,50€ TTC</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--rose)">4</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--rose)">Étape 4</span>
+            <span class="step-title">Facturation et encaissement</span>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>Générer la facture depuis la séance : séance + produits</li>
+              <li>Vérifier le calcul TVA (20% sur prestation, 20% sur produits)</li>
+              <li>Enregistrer le règlement CB 95,50€</li>
+              <li>Imprimer ou envoyer le reçu par email</li>
+              <li>La caisse du jour est mise à jour automatiquement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">5</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 5</span>
+            <span class="step-title">Réapprovisionnement stock</span>
+          </div>
+          <div class="step-body">
+            En fin de semaine, vérifiez les niveaux de stock et commandez.
+            <ul>
+              <li>Aller dans Stock > Réapprovisionnement</li>
+              <li>Liste automatique des articles sous le seuil minimum</li>
+              <li>Shampoing démêlant : stock actuel 2 / seuil 5 → à commander</li>
+              <li>Spray finissant : stock actuel 1 / seuil 3 → à commander</li>
+              <li>Sélectionner tous les articles à réapprovisionner</li>
+              <li>Créer un bon de commande fournisseur en un clic</li>
+              <li>Envoyer le BC par email au fournisseur</li>
+            </ul>
+            <div class="step-note">💡 Configurez un fournisseur préférentiel pour chaque article. La commande est pré-remplie avec le dernier prix d'achat.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="result-box">
+      <div class="result-title">✅ Résultat du parcours toiletteur</div>
+      <div class="result-items">
+        <div class="result-item"><span>💰</span><span>CA séance : 65 € + 30,50 € produits</span></div>
+        <div class="result-item"><span>📦</span><span>Stock mis à jour en temps réel</span></div>
+        <div class="result-item"><span>🔔</span><span>Alertes stock avant rupture</span></div>
+        <div class="result-item"><span>🛒</span><span>Commande fournisseur automatique</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCÉNARIO 3 : VIE DES ARTICLES
+  ══════════════════════════════════════════════════════════ -->
+  <div id="stock">
+    <div class="scenario-header">
+      <div class="scenario-icon">📦</div>
+      <div class="scenario-meta">
+        <div class="scenario-title">Vie des articles — Entrées, sorties et inventaire de clôture</div>
+        <div class="scenario-desc">
+          Traçabilité complète d'un article de sa réception à sa sortie, incluant l'inventaire annuel et le calcul du PMP.
+        </div>
+        <div class="scenario-tags">
+          <span class="stag" style="background:rgba(16,185,129,0.2);color:#6ee7b7">Stock</span>
+          <span class="stag" style="background:rgba(245,158,11,0.2);color:#fcd34d">PMP</span>
+          <span class="stag" style="background:rgba(79,70,229,0.2);color:#a5b4fc">Inventaire</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">1</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Entrée stock</span>
+            <span class="step-title">Réception d'une commande fournisseur</span>
+          </div>
+          <div class="step-body">
+            Vous recevez 24 flacons de shampoing démêlant Pro (réf. SH-001).
+            <ul>
+              <li>Ouvrir la commande fournisseur correspondante</li>
+              <li>Cliquer sur Réceptionner : quantité reçue = 24</li>
+              <li>Prix d'achat HT : 8,50 € / flacon</li>
+              <li>Nouveau stock : 26 flacons (2 anciens + 24 reçus)</li>
+              <li>Nouveau PMP : (2×9€ + 24×8,50€) / 26 = 8,54 € / flacon</li>
+              <li>Un bon de réception est généré et archivé en GED</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">2</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Sorties stock</span>
+            <span class="step-title">Consommation et vente au fil des semaines</span>
+          </div>
+          <div class="step-body">
+            Sur 3 semaines, le shampoing est consommé et vendu.
+            <ul>
+              <li>Semaine 1 : 5 sorties consommation séances toilettage</li>
+              <li>Semaine 2 : 3 ventes clients (facturées) + 4 consommations</li>
+              <li>Semaine 3 : 2 ventes clients + 3 consommations</li>
+              <li>Stock théorique en fin de semaine 3 : 26 - 17 = 9 flacons</li>
+              <li>Toutes les sorties sont tracées avec la date et le motif</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">3</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Inventaire</span>
+            <span class="step-title">Comptage physique et inventaire de clôture</span>
+          </div>
+          <div class="step-body">
+            En fin d'exercice, vous réalisez l'inventaire physique du stock.
+            <ul>
+              <li>Créer un inventaire : Stock > Inventaires > + Nouvel inventaire</li>
+              <li>L'inventaire est créé avec le stock théorique (9 flacons)</li>
+              <li>Comptage physique dans le salon : vous comptez 8 flacons</li>
+              <li>Saisir la quantité réelle = 8</li>
+              <li>Écart = -1 flacon → régularisation automatique</li>
+              <li>Valider l'inventaire : stock ajusté à 8</li>
+              <li>L'écart est enregistré avec le motif (Casse/Perte/Vol)</li>
+            </ul>
+            <div class="step-note">💡 L'inventaire validé est irréversible. Faites-le en deux temps : comptage d'abord, puis validation après vérification.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--rose)">4</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--rose)">Valorisation</span>
+            <span class="step-title">Calcul de la valeur du stock pour le bilan</span>
+          </div>
+          <div class="step-body">
+            À la clôture, le stock est valorisé au PMP pour le bilan comptable.
+            <ul>
+              <li>8 flacons × 8,54 € PMP = 68,32 € (valeur stock SH-001)</li>
+              <li>Rapport Stock > Valorisation globale : total tous articles</li>
+              <li>Ce montant est transmis à votre expert-comptable</li>
+              <li>Il apparaît dans le bilan sous "Stocks et en-cours"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCÉNARIO 4 : PLAN COMPTABLE → FEC → BILAN
+  ══════════════════════════════════════════════════════════ -->
+  <div id="compta">
+    <div class="scenario-header">
+      <div class="scenario-icon">📊</div>
+      <div class="scenario-meta">
+        <div class="scenario-title">Plan comptable → FEC → Bilan</div>
+        <div class="scenario-desc">
+          De la première facture à l'export FEC équilibré — comment Anim'Gest alimente votre comptabilité automatiquement.
+        </div>
+        <div class="scenario-tags">
+          <span class="stag" style="background:rgba(79,70,229,0.2);color:#a5b4fc">Comptabilité</span>
+          <span class="stag" style="background:rgba(244,63,94,0.2);color:#fda4af">FEC</span>
+          <span class="stag" style="background:rgba(16,185,129,0.2);color:#6ee7b7">Bilan</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">1</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Plan comptable</span>
+            <span class="step-title">Comptes utilisés par défaut</span>
+          </div>
+          <div class="step-body">
+            Anim'Gest utilise le PCG (Plan Comptable Général) français. Les principaux comptes configurés :
+            <ul>
+              <li><strong>706xxx</strong> — Prestations de services (séances, BC, suivi)</li>
+              <li><strong>707xxx</strong> — Ventes de marchandises (produits toilettage)</li>
+              <li><strong>411xxx</strong> — Clients (créances clients)</li>
+              <li><strong>445xxx</strong> — TVA collectée / déductible</li>
+              <li><strong>512xxx</strong> — Banque (règlements reçus)</li>
+              <li><strong>401xxx</strong> — Fournisseurs (dettes achats)</li>
+              <li><strong>607xxx</strong> — Achats de marchandises</li>
+            </ul>
+            <div class="step-note">💡 Vous pouvez personnaliser les comptes dans Paramètres > Plan comptable pour correspondre exactement à votre plan fourni par votre expert-comptable.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">2</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Écriture automatique</span>
+            <span class="step-title">Génération d'une écriture de vente</span>
+          </div>
+          <div class="step-body">
+            Chaque facture validée génère automatiquement une écriture comptable.
+            <ul>
+              <li>Facture FAC-2026-0001 — Marie Dupont — 756,00 € TTC</li>
+              <li>Débit 411001 Clients 756,00 €</li>
+              <li>Crédit 706100 Prestations comportementaliste 630,00 €</li>
+              <li>Crédit 445710 TVA collectée 20% 126,00 €</li>
+              <li>Équilibre : 756 = 630 + 126 ✅</li>
+              <li>Lors du règlement CB : Débit 512000 Banque 756€ / Crédit 411001 756€</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">3</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Export FEC</span>
+            <span class="step-title">Génération du Fichier des Écritures Comptables</span>
+          </div>
+          <div class="step-body">
+            En fin d'exercice (31 décembre), exportez le FEC pour votre expert-comptable.
+            <ul>
+              <li>Comptabilité > Export FEC > Exercice 2026</li>
+              <li>Cliquer sur Générer le FEC</li>
+              <li>Vérifier : Total Débit = Total Crédit (équilibre obligatoire)</li>
+              <li>Format : fichier TXT tabulation conforme à l'article A47 A-1 CGI</li>
+              <li>Colonnes : JournalCode, JournalLib, EcritureNum, EcritureDate, CompteNum, CompteLib, CompAuxNum, CompAuxLib, PieceRef, PieceDate, EcritureLib, Debit, Credit, EcritureLet, DateLet, ValidDate, Montantdevise, Idevise</li>
+              <li>Transmettre le fichier .txt à votre expert-comptable</li>
+            </ul>
+            <div class="step-note">💡 Le FEC est le document de référence en cas de contrôle fiscal. Conservez-en une copie pendant 10 ans.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">4</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Balance</span>
+            <span class="step-title">Vérification de la balance des comptes</span>
+          </div>
+          <div class="step-body">
+            Avant l'export FEC, vérifiez la balance dans Anim'Gest.
+            <ul>
+              <li>Comptabilité > Balance > Exercice 2026</li>
+              <li>Vérifier que le solde débiteur total = solde créditeur total</li>
+              <li>Identifier les comptes 411 (clients) avec un solde débiteur résiduel (impayés)</li>
+              <li>Identifier les comptes 401 (fournisseurs) avec solde créditeur résiduel (factures dues)</li>
+              <li>Exporter la balance en PDF pour votre expert-comptable</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="result-box">
+      <div class="result-title">✅ Votre comptabilité en ordre</div>
+      <div class="result-items">
+        <div class="result-item"><span>✅</span><span>FEC équilibré (débit = crédit)</span></div>
+        <div class="result-item"><span>📋</span><span>Toutes les écritures auto-générées</span></div>
+        <div class="result-item"><span>👨‍💼</span><span>Expert-comptable satisfait</span></div>
+        <div class="result-item"><span>🏛️</span><span>Conformité fiscale assurée</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <strong>Anim'Gest · NoSage's Editor</strong> — Scénarios Métier — Sprint S107 · 2026
+</footer>
+
+<script>
+  // Navigation active
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  // Scroll spy
+  const sections = ['comportementaliste','toiletteur','stock','compta'];
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
