@@ -1,0 +1,226 @@
+
+<!-- Polices, variables CSS, composants communs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+<title>Comportementaliste / Éducateur canin — Anim'Gest</title></head>
+
+<body>
+<nav class="nav-bar">
+  <a class="nav-link home" href="index.html">🏠 Index</a>
+  <a class="nav-link" href="metier-comportementaliste.html">🧠 Comportementaliste</a>
+  <a class="nav-link" href="metier-toiletteur.html">✂️ Toiletteur</a>
+  <a class="nav-link" href="metier-petsitter.html">🏃 Pet-sitter</a>
+  <a class="nav-link" href="metier-eleveur.html">🐣 Éleveur</a>
+  <a class="nav-link" href="metier-pension.html">🏠 Pension</a>
+  <a class="nav-link" href="metier-equestre.html">🐴 Équestre</a>
+  <a class="nav-link" href="metier-veterinaire.html">💉 Vétérinaire</a>
+  <a class="nav-link" href="metier-osteopathe.html">🙌 Ostéopathe</a>
+  <a class="nav-link" href="metier-sport-canin.html">🏆 Sport canin</a>
+  <a class="nav-link" href="metier-naturopathe.html">🌿 Naturopathe</a>
+  <a class="nav-link" href="trans-facturation.html">🧾 Facturation</a>
+  <a class="nav-link" href="trans-compta-fec.html">📊 Compta/FEC</a>
+  <a class="nav-link" href="trans-rfe.html">⚡ RFE</a>
+  <a class="nav-link" href="trans-stock-inventaire.html">📦 Stock</a>
+  <a class="nav-link" href="trans-achats.html">🏪 Achats</a>
+  <a class="nav-link" href="trans-portail-client.html">🌐 Portail</a>
+  <a class="nav-link" href="trans-crm-leads.html">📈 CRM</a>
+  <a class="nav-link" href="trans-reseaux-sociaux.html">📱 Réseaux</a>
+  <a class="nav-link" href="trans-ged.html">🗂️ GED</a>
+  <a class="nav-link" href="trans-registres.html">📜 Registres</a>
+  <a class="nav-link" href="trans-eliot.html">🤖 Eliot</a>
+</nav>
+<div class="hero">
+  <div class="hero-badge">Scénario Métier</div>
+  <h1>🧠 Comportementaliste / Éducateur canin</h1>
+  <p class="hero-sub">Parcours complet : premier contact → Bilan Comportemental → programme de suivi → facturation → portail → gardiennage → registres DDPP</p>
+  <div class="hero-meta"><div class="hero-meta-item"><span>🐾 10 métiers</span></div><div class="hero-meta-item"><span>📋 12 étapes</span></div><div class="hero-meta-item"><span>⏱ 6 semaines</span></div><div class="hero-meta-item"><span>🇫🇷 Conforme DDPP</span></div></div>
+</div>
+<div class="container">
+  <div class="stats-row"><div class="stat-card"><div class="stat-val">12</div><div class="stat-lbl">Étapes clés</div></div><div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Animaux</div></div><div class="stat-card"><div class="stat-val">6</div><div class="stat-lbl">Séances suivi</div></div><div class="stat-card"><div class="stat-val">1 850 €</div><div class="stat-lbl">CA moyen</div></div></div>
+  <div class="timeline">
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">1</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 1</span>
+            <span class="step-title">Premier contact et création du dossier client</span>
+          </div>
+          <div class="step-body">Marie Dupont contacte votre cabinet par téléphone pour son Malinois agressif envers les autres chiens. Vous créez immédiatement le dossier.<ul><li>Créer la fiche client Dupont Marie (email, tél, adresse géolocalisée)</li><li>Ajouter Animal 1 : Rex, Malinois mâle 4 ans, puce 250-268-712-024-567</li><li>Ajouter Animal 2 : Luna, Berger Allemand femelle 2 ans (même foyer)</li><li>Ajouter Animal 3 : Miko, Jack Russell 7 ans (problème cohabitation avec Rex)</li><li>Renseigner vétérinaire référent : Dr Marchand, Clinique du Parc, 04 92 XX XX XX</li><li>Saisir antécédents médicaux Rex : allergie aux puces, traitement Bravecto en cours</li><li>Ajouter note interne : propriétaire anxieux, préférer les RDV en semaine</li></ul><div class="step-note">💡 Le numéro de fiche client est attribué automatiquement. Vérifiez le format puce ISO (15 chiffres).</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">2</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 2</span>
+            <span class="step-title">Planification et préparation du Bilan Comportemental</span>
+          </div>
+          <div class="step-body">Le BC est la séance diagnostique payante. Elle dure 1h30 à domicile ou au cabinet.<ul><li>Créer séance de type BC pour Rex — mardi 14h, durée 1h30, tarif 120€ HT</li><li>Bloquer le créneau dans l'agenda (vue semaine)</li><li>Envoyer email de confirmation au client avec le questionnaire pré-BC</li><li>Préparer : questionnaire comportemental, fiche Rex, carnet de notes CAC</li></ul><div class="step-note">💡 Activez les rappels automatiques : SMS J-1 + email J-2 pour réduire les lapins.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">3</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 3</span>
+            <span class="step-title">Réalisation du Bilan Comportemental — 4 sections</span>
+          </div>
+          <div class="step-body">Dans la fiche séance BC, remplissez les 4 sections du formulaire EC :<ul><li>Section Comportement : réactivité congénères (score 4/4), possession (2/4), frustration (3/4)</li><li>Section Alimentation : croquettes 2x/jour, possessif sur gamelle, vole nourriture</li><li>Section Contacts : excellent avec humains adultes, évitement enfants, réactivité chiens</li><li>Section Territoire : aboiements en voiture, fugues tentées 3x, destruction en absence</li><li>Évaluer les 14 critères CAC initiaux (snapshot de départ) : score initial Rex = 22/100</li><li>Prendre des photos des comportements si accord du client (archivage GED)</li></ul><div class="step-note">💡 Le snapshot CAC est figé à ce moment. Il servira de baseline de référence.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">4</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Étape 4</span>
+            <span class="step-title">Création du devis de programme de suivi</span>
+          </div>
+          <div class="step-body">Sur la base du BC, proposez un programme chiffré. Générez le devis depuis la fiche séance.<ul><li>Ligne 1 — Bilan Comportemental Rex : 120,00 € HT</li><li>Ligne 2 — Forfait 5 séances suivi Rex (individuel) : 350,00 € HT</li><li>Ligne 3 — Séance cohabitation Rex + Miko : 80,00 € HT</li><li>Ligne 4 — Bilan intermédiaire Luna : 80,00 € HT</li><li>Remise fidélité 5% : -31,50 € HT</li><li>Total : 598,50 € HT · 718,20 € TTC (TVA 20%)</li><li>Durée de validité : 30 jours · Acompte 30% demandé : 215,46 € TTC</li><li>Envoyer le devis par email + demande de signature Yousign</li></ul><div class="step-note">💡 Utilisez le modèle Forfait Comportementaliste Standard pour aller plus vite.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--rose)">5</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--rose)">Étape 5</span>
+            <span class="step-title">Signature et facturation de l'acompte</span>
+          </div>
+          <div class="step-body">Marie signe le devis depuis son smartphone via le lien Yousign.<ul><li>Notification de signature reçue → devis passe en statut Accepté</li><li>Générer la facture d'acompte 30% : 215,46 € TTC</li><li>Envoyer la facture d'acompte par email</li><li>Marie règle par virement : enregistrer règlement virement 215,46 € le 15/04</li><li>La facture d'acompte passe en statut Payée</li></ul><div class="step-note">💡 La signature électronique Yousign est horodatée et juridiquement valide en France.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:#a78bfa">6</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:#a78bfa">Étape 6</span>
+            <span class="step-title">Planification des 6 séances de suivi</span>
+          </div>
+          <div class="step-body">Planifiez toutes les séances en une seule action grâce à la récurrence.<ul><li>Séance suivi 1 (Rex individuel) — jeudi 10h, semaine 1</li><li>Séance suivi 2 (Rex individuel) — jeudi 10h, semaine 2</li><li>Séance suivi 3 (Rex + Miko cohabitation) — mardi 14h, semaine 3</li><li>Séance suivi 4 (Rex individuel) — jeudi 10h, semaine 4</li><li>Séance suivi 5 (Luna bilan intermédiaire) — mercredi 9h, semaine 5</li><li>Séance suivi 6 (Rex bilan final) — jeudi 10h, semaine 6</li><li>Utiliser la récurrence hebdomadaire pour les séances Rex individuelles</li><li>Envoyer planning récapitulatif par email à Marie</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--amber)">7</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--amber)">Étape 7</span>
+            <span class="step-title">Réalisation des séances — Mise à jour CAC</span>
+          </div>
+          <div class="step-body">Après chaque séance réalisée, mettez à jour les 14 critères CAC de Rex.<ul><li>Marquer la séance Réalisée · Rédiger le compte-rendu (exercices, progrès, points de vigilance)</li><li>Réévaluer les 14 critères CAC (0-4) avec commentaires par critère</li><li>Score CAC Rex : S1→31, S2→42, S3→49, S4→57, S5→63, S6→71</li><li>Envoyer le compte-rendu par email après chaque séance</li><li>Résultat : Rex a progressé de 22 à 71/100 en 6 semaines</li></ul><div class="step-note">💡 Le graphique d'évolution CAC est visible par Marie dans son Portail Client — excellent outil de fidélisation.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">8</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 8</span>
+            <span class="step-title">Facturation finale et règlement du solde</span>
+          </div>
+          <div class="step-body">Après la dernière séance, créez la facture de solde depuis le devis.<ul><li>Depuis le devis accepté : Créer la facture de solde</li><li>Montant solde : 718,20 - 215,46 (acompte) = 502,74 € TTC</li><li>Vérifier les lignes et le calcul de TVA</li><li>Envoyer la facture par email</li><li>Marie règle par CB : enregistrer règlement 502,74 € le 28/05</li><li>La facture passe en statut Payée · CA total : 718,20 € TTC</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">9</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 9</span>
+            <span class="step-title">Activation du Portail Client</span>
+          </div>
+          <div class="step-body">Offrez à Marie un espace personnel pour suivre la progression de Rex.<ul><li>Fiche client → onglet Portail → Activer le portail</li><li>Marie reçoit un email avec son lien d'accès unique sécurisé</li><li>Elle consulte : ses 3 animaux, les 6 comptes-rendus, ses factures, le graphique CAC Rex</li><li>Elle télécharge ses factures en PDF</li><li>Elle peut signer de futurs devis directement depuis le portail</li></ul><div class="step-note">💡 Le portail est le meilleur outil de fidélisation — le client suit les progrès objectivement.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">10</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 10</span>
+            <span class="step-title">Réservation de gardiennage (pension d'été)</span>
+          </div>
+          <div class="step-body">Marie part en vacances et demande un gardiennage pour Rex uniquement.<ul><li>Créer réservation pension : Rex, du 15 au 22 juillet 2026 (7 nuits)</li><li>Options : 2 promenades/jour (15€/j) + bain de sortie (25€)</li><li>Calcul : 7 × 30€ nuit + 7 × 15€ promenades + 25€ bain = 340€ TTC</li><li>Imprimer la fiche de séjour : alimentation Bravecto, vétérinaire Dr Marchand</li><li>Enregistrer l'entrée de Rex le 15 juillet (→ registre sanitaire de séjour auto)</li><li>Envoyer photos quotidiennes à Marie via le compte-rendu de séjour</li><li>Enregistrer la sortie le 22 juillet · Facturer le séjour : 340€ TTC</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">11</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Étape 11</span>
+            <span class="step-title">Vérification des registres réglementaires</span>
+          </div>
+          <div class="step-body">Toutes les obligations légales doivent être à jour avant un contrôle DDPP.<ul><li>Registre des carnivores : Rex, Luna, Miko enregistrés à chaque accueil ✓</li><li>Registre sanitaire de séjour : séjour Rex 15-22 juillet correctement documenté ✓</li><li>Votre ACACED : valide jusqu'au 15/03/2028 (alerte configurée à J-60) ✓</li><li>Exporter les registres en PDF pour archive annuelle</li><li>Vérifier que la structure GED C:\AnimGest_GED\SCT_001\ est conforme</li></ul><div class="step-warn">⚖️ En cas de contrôle DDPP, ces registres doivent être présentés immédiatement.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--rose)">12</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--rose)">Étape 12</span>
+            <span class="step-title">Analyse et fidélisation — Bilan du parcours</span>
+          </div>
+          <div class="step-body">Rex a terminé son programme. Analysez les résultats et préparez la suite.<ul><li>Statistiques : CA total Marie Dupont = 1 058,20 € TTC (suivi + pension)</li><li>Score CAC Rex : 22 → 71/100 (+49 points en 6 semaines)</li><li>Portail actif : Marie suit les progrès en autonomie</li><li>Envoyer un email de bilan avec le PDF du score CAC final</li><li>Proposer un programme d'entretien mensuel (1 séance/mois)</li><li>Créer un nouveau lead CRM pour le bouche-à-oreille Marie</li><li>Ajouter Marie au segment Clients satisfaits pour les campagnes email</li></ul><div class="step-note">💡 Un client satisfait génère en moyenne 2,3 nouveaux clients par recommandation.</div></div>
+        </div>
+      </div></div>
+  <div class="result-box">
+    <div class="result-title">✅ Résultats du parcours</div>
+    <div class="result-grid"><div class="result-item"><span>💰</span><span>CA total : 1 058 € TTC</span></div><div class="result-item"><span>📈</span><span>Score CAC Rex : 22 → 71/100</span></div><div class="result-item"><span>🌐</span><span>Portail actif · Marie fidélisée</span></div><div class="result-item"><span>📜</span><span>Registres conformes DDPP</span></div><div class="result-item"><span>🧾</span><span>FEC alimenté automatiquement</span></div><div class="result-item"><span>⭐</span><span>Programme entretien proposé</span></div></div>
+  </div>
+</div>
+<footer>Anim'Gest · NoSage's Editor — Scénario Comportementaliste / Éducateur canin — Sprint S78 · 2026</footer>
+
+    <!-- S83-BC -->
+    <div style="background:#1E293B;border-left:3px solid #F59E0B;padding:.75rem 1rem;border-radius:0 .25rem .25rem 0;margin:1rem 0;font-size:.9rem">
+      &#128276; <strong>Bilan Comportemental (S82)</strong> &mdash; La terminologie est unifi&eacute;e sur <strong>BC Bilan Comportemental</strong>.
+      Tables BDD&nbsp;: bc_fiche (BCF_*), bc_probleme (BCP_*). Route&nbsp;: /seances/bc.
+    </div>
+    <div style="background:#1E293B;border-left:3px solid #F59E0B;padding:.75rem 1rem;border-radius:0 .25rem .25rem 0;margin:1rem 0;font-size:.9rem">
+      &#128101; <strong>S&eacute;ances de groupe (S82)</strong> &mdash; Organisez des ateliers collectifs depuis
+      <strong>S&eacute;ances &rarr; S&eacute;ances de groupe</strong>. Capacit&eacute; max, tarification 1 animal / 2+ animaux, jauge de remplissage.
+    </div>
+
+  </body></html>

@@ -1,0 +1,209 @@
+
+<!-- Polices, variables CSS, composants communs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+<title>Comptabilité & Export FEC — Anim'Gest</title></head>
+
+<body>
+<nav class="nav-bar">
+  <a class="nav-link home" href="index.html">🏠 Index</a>
+  <a class="nav-link" href="metier-comportementaliste.html">🧠 Comportementaliste</a>
+  <a class="nav-link" href="metier-toiletteur.html">✂️ Toiletteur</a>
+  <a class="nav-link" href="metier-petsitter.html">🏃 Pet-sitter</a>
+  <a class="nav-link" href="metier-eleveur.html">🐣 Éleveur</a>
+  <a class="nav-link" href="metier-pension.html">🏠 Pension</a>
+  <a class="nav-link" href="metier-equestre.html">🐴 Équestre</a>
+  <a class="nav-link" href="metier-veterinaire.html">💉 Vétérinaire</a>
+  <a class="nav-link" href="metier-osteopathe.html">🙌 Ostéopathe</a>
+  <a class="nav-link" href="metier-sport-canin.html">🏆 Sport canin</a>
+  <a class="nav-link" href="metier-naturopathe.html">🌿 Naturopathe</a>
+  <a class="nav-link" href="trans-facturation.html">🧾 Facturation</a>
+  <a class="nav-link" href="trans-compta-fec.html">📊 Compta/FEC</a>
+  <a class="nav-link" href="trans-rfe.html">⚡ RFE</a>
+  <a class="nav-link" href="trans-stock-inventaire.html">📦 Stock</a>
+  <a class="nav-link" href="trans-achats.html">🏪 Achats</a>
+  <a class="nav-link" href="trans-portail-client.html">🌐 Portail</a>
+  <a class="nav-link" href="trans-crm-leads.html">📈 CRM</a>
+  <a class="nav-link" href="trans-reseaux-sociaux.html">📱 Réseaux</a>
+  <a class="nav-link" href="trans-ged.html">🗂️ GED</a>
+  <a class="nav-link" href="trans-registres.html">📜 Registres</a>
+  <a class="nav-link" href="trans-eliot.html">🤖 Eliot</a>
+</nav>
+<div class="hero">
+  <div class="hero-badge">Scénario Transverse</div>
+  <h1>📊 Comptabilité & Export FEC</h1>
+  <p class="hero-sub">De la première écriture à l'export FEC normalisé — plan comptable, balance, contrôles et transmission à l'expert-comptable</p>
+  <div class="hero-meta"><div class="hero-meta-item"><span>📊 PCG français</span></div><div class="hero-meta-item"><span>⚖️ Débit = Crédit</span></div><div class="hero-meta-item"><span>📋 FEC normalisé</span></div><div class="hero-meta-item"><span>👨‍💼 Expert-comptable</span></div></div>
+</div>
+<div class="container">
+  <div class="stats-row"><div class="stat-card"><div class="stat-val">10</div><div class="stat-lbl">Étapes</div></div><div class="stat-card"><div class="stat-val">7</div><div class="stat-lbl">Comptes principaux</div></div><div class="stat-card"><div class="stat-val">18</div><div class="stat-lbl">Colonnes FEC</div></div><div class="stat-card"><div class="stat-val">0</div><div class="stat-lbl">Erreur tolérée</div></div></div>
+  <div class="timeline">
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">1</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 1</span>
+            <span class="step-title">Configuration du plan comptable</span>
+          </div>
+          <div class="step-body">Avant de commencer, vérifiez votre plan comptable avec votre expert-comptable.<ul><li>Paramètres → Plan comptable → vérifier les comptes par défaut</li><li>706100 — Prestations comportementalistes</li><li>706200 — Prestations toilettage</li><li>707000 — Ventes de marchandises (produits)</li><li>411000 — Clients (créances)</li><li>445710 — TVA collectée 20%</li><li>512000 — Banque (BNP Paribas)</li><li>401000 — Fournisseurs</li><li>Adapter si votre comptable utilise une sous-numérotation différente</li></ul><div class="step-note">💡 Demandez à votre expert-comptable le plan comptable exact qu'il souhaite utiliser. Le paramétrage initial est crucial.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">2</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 2</span>
+            <span class="step-title">Création de l'exercice comptable</span>
+          </div>
+          <div class="step-body">Créez l'exercice avant toute première facture.<ul><li>Comptabilité → Exercices → + Nouvel exercice 2026</li><li>Date début : 01/01/2026 · Date fin : 31/12/2026</li><li>Code exercice : EX2026 · Libellé : Exercice comptable 2026</li><li>Marquer comme exercice courant (toutes les nouvelles pièces s'y rattachent)</li><li>Vérifier que l'exercice précédent (2025) est bien clôturé si applicable</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">3</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 3</span>
+            <span class="step-title">Écriture automatique — Vente d'une prestation</span>
+          </div>
+          <div class="step-body">À chaque facture validée, Anim'Gest génère l'écriture comptable.<ul><li>Facture FAC-2026-0001 — Dupont Marie — 756,00€ TTC émise</li><li>Écriture générée automatiquement :</li><li>  Débit 411001 Dupont Marie 756,00€</li><li>  Crédit 706100 Prestations comportementalistes 630,00€</li><li>  Crédit 445710 TVA collectée 20% 126,00€</li><li>Équilibre : 756 = 630 + 126 ✅</li><li>Référence pièce : FAC-2026-0001 · Journal : VTE (ventes)</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">4</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Étape 4</span>
+            <span class="step-title">Écriture automatique — Règlement client</span>
+          </div>
+          <div class="step-body">Quand le client paye, l'écriture de trésorerie est générée.<ul><li>Règlement CB 756,00€ enregistré le 15/05/2026</li><li>Écriture générée :</li><li>  Débit 512000 Banque 756,00€</li><li>  Crédit 411001 Dupont Marie 756,00€</li><li>Journal : BNQ (banque)</li><li>Le compte 411001 (Dupont Marie) est soldé → aucun impayé résiduel</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--rose)">5</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--rose)">Étape 5</span>
+            <span class="step-title">Consultation de la balance</span>
+          </div>
+          <div class="step-body">En cours d'exercice, vérifiez régulièrement votre balance.<ul><li>Comptabilité → Balance → Exercice 2026 · Période : janvier-mai</li><li>Pour chaque compte : Débit cumulé, Crédit cumulé, Solde</li><li>Compte 411 : solde débiteur = impayés clients (cible : le moins possible)</li><li>Compte 512 : solde débiteur = trésorerie disponible</li><li>Compte 706 : solde créditeur = CA prestations (le croissant)</li><li>Vérification globale : Total Débit = Total Crédit ✅</li><li>Exporter la balance en PDF pour votre comptable</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:#a78bfa">6</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:#a78bfa">Étape 6</span>
+            <span class="step-title">Génération du FEC</span>
+          </div>
+          <div class="step-body">En fin d'exercice, générez le Fichier des Écritures Comptables.<ul><li>Comptabilité → Export FEC → Exercice 2026 → Générer</li><li>Fichier TXT généré : FEC_2026_AnimGest.txt</li><li>18 colonnes obligatoires : JournalCode, JournalLib, EcritureNum, EcritureDate, CompteNum...</li><li>Vérification automatique : Total Débit = Total Crédit ✅</li><li>Taille fichier : environ 450 lignes pour une activité standard</li><li>Télécharger le fichier et le transmettre à votre expert-comptable</li></ul><div class="step-warn">⚖️ Le FEC est exigible par l'administration fiscale en cas de contrôle. Délai de conservation : 10 ans.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--amber)">7</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--amber)">Étape 7</span>
+            <span class="step-title">Vérification qualité du FEC</span>
+          </div>
+          <div class="step-body">Avant de transmettre, vérifiez la qualité du fichier.<ul><li>Ouvrir le FEC dans Excel : vérifier que les 18 colonnes sont présentes</li><li>Colonne Debit + colonne Credit : calculer les sommes (=SOMME)</li><li>Les deux totaux doivent être strictement égaux</li><li>Vérifier que la colonne EcritureNum est séquentielle (pas de trou)</li><li>Vérifier que les dates sont au format AAAAMMJJ (ex : 20260515)</li><li>Vérifier que la colonne CompteNum commence toujours par un chiffre</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">8</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 8</span>
+            <span class="step-title">Transmission et clôture de l'exercice</span>
+          </div>
+          <div class="step-body">Transmettez le FEC et clôturez l'exercice comptable.<ul><li>Envoyer le FEC à votre expert-comptable par email sécurisé ou plateforme partagée</li><li>Joindre : balance des comptes PDF + relevés bancaires de l'année</li><li>Joindre : état des immobilisations si applicable</li><li>Attendre la validation de votre comptable avant de clôturer</li><li>Comptabilité → Exercices → EX2026 → Clôturer l'exercice</li><li>Une fois clôturé : aucune nouvelle écriture possible sur cet exercice</li><li>Créer immédiatement l'exercice 2027</li></ul></div>
+        </div>
+      </div></div>
+  <div class="result-box">
+    <div class="result-title">✅ Résultats du parcours</div>
+    <div class="result-grid"><div class="result-item"><span>📊</span><span>Balance équilibrée</span></div><div class="result-item"><span>📋</span><span>FEC 18 colonnes normalisé</span></div><div class="result-item"><span>⚖️</span><span>Débit = Crédit garanti</span></div><div class="result-item"><span>👨‍💼</span><span>Expert-comptable satisfait</span></div><div class="result-item"><span>🏛️</span><span>Conformité fiscale</span></div><div class="result-item"><span>📁</span><span>Archivage 10 ans</span></div></div>
+  </div>
+</div>
+<footer>Anim'Gest · NoSage's Editor — Scénario Comptabilité & Export FEC — Sprint S78 · 2026</footer>
+
+    <!-- S83-TVA -->
+    <section class="step" style="margin-top:2rem">
+      <div class="step-number">9</div>
+      <div class="step-content">
+        <h3>ETAPE 9 &mdash; Export TVA par taux</h3>
+        <p>Acc&eacute;dez &agrave; <strong>Facturation &rarr; Export TVA</strong> pour g&eacute;n&eacute;rer un &eacute;tat d&eacute;taill&eacute; par taux sur la p&eacute;riode de votre choix.</p>
+        <ul>
+          <li>&rarr; S&eacute;lectionnez la p&eacute;riode (raccourcis : mois courant, trimestre, ann&eacute;e)</li>
+          <li>&rarr; Visualisez la r&eacute;partition par taux : 0&nbsp;% / 5,5&nbsp;% / 10&nbsp;% / 20&nbsp;%</li>
+          <li>&rarr; Exportez en CSV (UTF-8 BOM, s&eacute;parateur&nbsp;;) compatible Excel</li>
+          <li>&rarr; Transmettez &agrave; votre expert-comptable ou int&eacute;grez dans votre d&eacute;claration CA3</li>
+        </ul>
+        <p><em>Route API&nbsp;: GET /tva/export?date_debut=YYYY-MM-DD&amp;date_fin=YYYY-MM-DD&amp;format=csv</em></p>
+      </div>
+    </section>
+
+    <!-- S83-NF -->
+    <section class="step" style="margin-top:2rem">
+      <div class="step-number">10</div>
+      <div class="step-content">
+        <h3>ETAPE 10 &mdash; Notes de frais</h3>
+        <p>G&eacute;rez vos d&eacute;penses professionnelles depuis <strong>Comptabilit&eacute; &rarr; Notes de frais</strong>.</p>
+        <ul>
+          <li>&rarr; Cr&eacute;ez une note de frais (num&eacute;rotation auto NF-YYMM-NNNN)</li>
+          <li>&rarr; Saisissez les lignes de d&eacute;penses avec cat&eacute;gorie PCG (carburant, repas, mat&eacute;riel...)</li>
+          <li>&rarr; Le calcul HT/TVA est automatique</li>
+          <li>&rarr; Workflow statut&nbsp;: Brouillon &rarr; Soumise &rarr; Valid&eacute;e &rarr; Rembours&eacute;e</li>
+          <li>&rarr; Export CSV pour int&eacute;gration comptable</li>
+        </ul>
+        <p><em>Bient&ocirc;t&nbsp;: OCR scan tickets via IA, export FEC journal OD/AC</em></p>
+      </div>
+    </section>
+
+  </body></html>

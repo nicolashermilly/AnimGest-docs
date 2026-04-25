@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Simulateur ROI --- Anim'Gest</title>
+<style>
+:root{--navy:#0F172A;--gold:#F59E0B;--violet:#4F46E5;--cyan:#06B6D4;--surface:#1E293B;--border:#334155;--text:#F1F5F9;--muted:#94A3B8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+
+/* NAV */
+.nav-bar{background:#0a1120;border-bottom:1px solid var(--border);padding:10px 20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.nav-bar a{color:var(--muted);text-decoration:none;font-size:12px;padding:5px 10px;border-radius:6px;border:1px solid transparent;transition:all .2s;}
+.nav-bar a:hover{color:var(--gold);border-color:var(--gold);}
+.nav-bar a.active{background:var(--violet);color:#fff;border-color:var(--violet);}
+
+/* HERO */
+.hero{text-align:center;padding:50px 20px 30px;background:linear-gradient(180deg,#0a1120 0%,var(--navy) 100%);}
+.hero-badge{display:inline-block;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:16px;background:linear-gradient(135deg,var(--gold),#d97706);}
+.hero h1{font-size:2rem;font-weight:800;margin-bottom:12px;}
+.hero-sub{color:var(--muted);font-size:1rem;}
+
+/* SIMULATEUR */
+.sim-wrap{max-width:900px;margin:0 auto;padding:30px 20px 60px;}
+
+.sim-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:30px;margin-bottom:24px;}
+.sim-card h2{font-size:1.1rem;font-weight:700;margin-bottom:24px;color:var(--gold);}
+
+.slider-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:600px){.slider-grid{grid-template-columns:1fr;}}
+
+.slider-block{display:flex;flex-direction:column;gap:10px;}
+.slider-label{font-size:.85rem;color:var(--muted);font-weight:500;}
+.slider-bounds{display:flex;justify-content:space-between;font-size:.75rem;color:var(--border);}
+input[type=range]{width:100%;accent-color:var(--violet);height:6px;cursor:pointer;}
+.slider-val{text-align:center;font-size:1.3rem;font-weight:800;color:var(--text);background:#0F172A;border-radius:10px;padding:10px;}
+
+/* RESULTATS */
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+@media(max-width:600px){.results-grid{grid-template-columns:1fr;}}
+
+.result-card{border-radius:14px;padding:24px;text-align:center;}
+.result-card.primary{background:linear-gradient(135deg,var(--violet),#3730a3);border:1px solid var(--violet);}
+.result-card.secondary{background:var(--surface);border:1px solid var(--border);}
+.result-card .rc-label{font-size:.8rem;color:rgba(255,255,255,.7);margin-bottom:8px;font-weight:500;}
+.result-card .rc-value{font-size:2rem;font-weight:900;color:#fff;}
+.result-card .rc-sub{font-size:.8rem;color:rgba(255,255,255,.6);margin-top:6px;}
+
+/* DETAIL */
+.detail-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.detail-table th{text-align:left;padding:10px 14px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border);}
+.detail-table td{padding:10px 14px;border-bottom:1px solid #1e293b;}
+.detail-table tr:last-child td{border-bottom:none;}
+.val-pos{color:#4ade80;font-weight:700;}
+.val-time{color:var(--cyan);font-weight:700;}
+
+/* FOOTER */
+footer{text-align:center;padding:30px;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="/docs/index-complet.html">&#127968; Index</a>
+  <a href="/docs/glossaire.html">&#128214; Glossaire</a>
+  <a href="/docs/faq.html">&#10067; FAQ</a>
+  <a href="/docs/com-formules.html">&#128142; Formules</a>
+  <a href="/docs/com-roi.html" class="active">&#128202; ROI</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Commercial</div>
+  <h1>&#128202; Simulateur de gain</h1>
+  <p class="hero-sub">Combien de temps allez-vous r&eacute;cup&eacute;rer pour vous concentrer sur vos clients&nbsp;?</p>
+</div>
+
+<div class="sim-wrap">
+
+  <!-- INPUTS -->
+  <div class="sim-card">
+    <h2>&#9881; Votre situation actuelle</h2>
+    <div class="slider-grid">
+
+      <div class="slider-block">
+        <span class="slider-label">Nombre de clients actifs</span>
+        <div class="slider-bounds"><span>10</span><span>200</span></div>
+        <input type="range" id="nb_clients" min="10" max="200" value="50" oninput="calc()"/>
+        <div class="slider-val" id="v_clients">50 clients</div>
+      </div>
+
+      <div class="slider-block">
+        <span class="slider-label">S&eacute;ances par client / mois</span>
+        <div class="slider-bounds"><span>1</span><span>8</span></div>
+        <input type="range" id="nb_seances" min="1" max="8" value="3" oninput="calc()"/>
+        <div class="slider-val" id="v_seances">3 s&eacute;ances</div>
+      </div>
+
+      <div class="slider-block">
+        <span class="slider-label">Temps admin par s&eacute;ance (minutes)</span>
+        <div class="slider-bounds"><span>5 min</span><span>45 min</span></div>
+        <input type="range" id="admin_seance" min="5" max="45" value="20" oninput="calc()"/>
+        <div class="slider-val" id="v_admin">20 min</div>
+      </div>
+
+      <div class="slider-block">
+        <span class="slider-label">Dur&eacute;e moyenne d'une s&eacute;ance (minutes)</span>
+        <div class="slider-bounds"><span>30 min</span><span>120 min</span></div>
+        <input type="range" id="duree_seance" min="30" max="120" value="60" oninput="calc()"/>
+        <div class="slider-val" id="v_duree">60 min</div>
+      </div>
+
+      <div class="slider-block">
+        <span class="slider-label">Tarif moyen par s&eacute;ance (&euro;)</span>
+        <div class="slider-bounds"><span>30 &euro;</span><span>200 &euro;</span></div>
+        <input type="range" id="tarif_seance" min="30" max="200" value="70" oninput="calc()"/>
+        <div class="slider-val" id="v_tarif">70 &euro;</div>
+      </div>
+
+      <div class="slider-block">
+        <span class="slider-label">R&eacute;duction admin estim&eacute;e avec Anim'Gest</span>
+        <div class="slider-bounds"><span>30%</span><span>80%</span></div>
+        <input type="range" id="gain_pct" min="30" max="80" value="60" oninput="calc()"/>
+        <div class="slider-val" id="v_gain">60%</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESULTATS TEMPS -->
+  <div class="sim-card">
+    <h2>&#9203; Temps r&eacute;cup&eacute;r&eacute; chaque mois</h2>
+    <div class="results-grid">
+      <div class="result-card primary">
+        <div class="rc-label">Heures lib&eacute;r&eacute;es / mois</div>
+        <div class="rc-value" id="r_heures">---</div>
+        <div class="rc-sub">actuellement consacr&eacute;es &agrave; l'administratif</div>
+      </div>
+      <div class="result-card primary">
+        <div class="rc-label">S&eacute;ances suppl&eacute;mentaires possibles</div>
+        <div class="rc-value" id="r_seances_sup">---</div>
+        <div class="rc-sub">avec ce temps r&eacute;cup&eacute;r&eacute;</div>
+      </div>
+    </div>
+    <table class="detail-table">
+      <thead><tr><th>D&eacute;tail</th><th>Avant Anim'Gest</th><th>Avec Anim'Gest</th><th>Gain</th></tr></thead>
+      <tbody>
+        <tr><td>Temps admin / mois</td><td id="d_avant">---</td><td id="d_apres">---</td><td class="val-time" id="d_gain_t">---</td></tr>
+        <tr><td>Temps dispo pour les clients</td><td id="d_dispo_avant">---</td><td id="d_dispo_apres">---</td><td class="val-time" id="d_gain_dispo">---</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RESULTATS FINANCIERS -->
+  <div class="sim-card">
+    <h2>&#128181; Impact financier estim&eacute;</h2>
+    <div class="results-grid">
+      <div class="result-card secondary">
+        <div class="rc-label">CA suppl&eacute;mentaire possible / mois</div>
+        <div class="rc-value" id="r_ca_sup">---</div>
+        <div class="rc-sub">si les s&eacute;ances lib&eacute;r&eacute;es sont remplies</div>
+      </div>
+      <div class="result-card secondary">
+        <div class="rc-label">CA suppl&eacute;mentaire / an</div>
+        <div class="rc-value" id="r_ca_an">---</div>
+        <div class="rc-sub">potentiel annuel</div>
+      </div>
+    </div>
+    <p style="font-size:.8rem;color:var(--muted);margin-top:12px;line-height:1.6;">
+      &#8505;&#65039; Ces estimations sont bas&eacute;es sur un taux de remplissage de 100% des cr&eacute;neaux lib&eacute;r&eacute;s.
+      Le gain r&eacute;el d&eacute;pend de votre activit&eacute; et de votre planning.
+    </p>
+  </div>
+
+</div>
+
+<footer>Anim'Gest &middot; NoSage's Editor &mdash; Simulateur de gain &mdash; Sprint S107 &middot; 2026</footer>
+
+<script>
+function fmt(n){return n.toLocaleString('fr-FR');}
+function fmtH(min){
+  var h=Math.floor(min/60), m=Math.round(min%60);
+  return h>0?(m>0?h+'h'+String(m).padStart(2,'0'):h+'h'):m+'min';
+}
+function calc(){
+  var clients   = parseInt(document.getElementById('nb_clients').value);
+  var seances   = parseInt(document.getElementById('nb_seances').value);
+  var admin_min = parseInt(document.getElementById('admin_seance').value);
+  var duree_min = parseInt(document.getElementById('duree_seance').value);
+  var tarif     = parseInt(document.getElementById('tarif_seance').value);
+  var gain_pct  = parseInt(document.getElementById('gain_pct').value) / 100;
+
+  // Affichage valeurs sliders
+  document.getElementById('v_clients').textContent = clients + ' clients';
+  document.getElementById('v_seances').textContent = seances + ' séance' + (seances>1?'s':'');
+  document.getElementById('v_admin').textContent   = admin_min + ' min';
+  document.getElementById('v_duree').textContent   = duree_min + ' min';
+  document.getElementById('v_tarif').textContent   = tarif + ' €';
+  document.getElementById('v_gain').textContent    = Math.round(gain_pct*100) + '%';
+
+  // Calculs
+  var total_seances  = clients * seances;                         // nb seances/mois
+  var admin_total    = total_seances * admin_min;                 // minutes admin/mois avant
+  var admin_apres    = admin_total * (1 - gain_pct);             // minutes admin/mois apres
+  var gain_min       = admin_total - admin_apres;                 // minutes liberees/mois
+  var gain_h         = gain_min / 60;                             // heures liberees
+
+  var seances_sup    = Math.floor(gain_min / duree_min);          // seances sup possibles
+  var ca_sup_mois    = seances_sup * tarif;
+  var ca_sup_an      = ca_sup_mois * 12;
+
+  // Temps dispo client (base 35h/semaine = 140h/mois)
+  var base_h_mois    = 140;
+  var dispo_avant    = base_h_mois - admin_total/60;
+  var dispo_apres    = base_h_mois - admin_apres/60;
+
+  // Affichage resultats temps
+  document.getElementById('r_heures').textContent     = Math.round(gain_h*10)/10 + 'h';
+  document.getElementById('r_seances_sup').textContent = '+' + seances_sup + ' séances';
+
+  document.getElementById('d_avant').textContent       = fmtH(admin_total);
+  document.getElementById('d_apres').textContent       = fmtH(admin_apres);
+  document.getElementById('d_gain_t').textContent      = '- ' + fmtH(gain_min);
+  document.getElementById('d_dispo_avant').textContent = Math.round(dispo_avant) + 'h/mois';
+  document.getElementById('d_dispo_apres').textContent = Math.round(dispo_apres) + 'h/mois';
+  document.getElementById('d_gain_dispo').textContent  = '+' + Math.round(gain_h) + 'h/mois';
+
+  // Affichage resultats financiers
+  document.getElementById('r_ca_sup').textContent = fmt(ca_sup_mois) + ' €';
+  document.getElementById('r_ca_an').textContent  = fmt(ca_sup_an) + ' €';
+}
+calc();
+</script>
+</body>
+</html>

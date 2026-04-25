@@ -1,0 +1,202 @@
+
+<!-- Polices, variables CSS, composants communs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+<title>Cycle de facturation complet — Anim'Gest</title></head>
+
+<body>
+<nav class="nav-bar">
+  <a class="nav-link home" href="index.html">🏠 Index</a>
+  <a class="nav-link" href="metier-comportementaliste.html">🧠 Comportementaliste</a>
+  <a class="nav-link" href="metier-toiletteur.html">✂️ Toiletteur</a>
+  <a class="nav-link" href="metier-petsitter.html">🏃 Pet-sitter</a>
+  <a class="nav-link" href="metier-eleveur.html">🐣 Éleveur</a>
+  <a class="nav-link" href="metier-pension.html">🏠 Pension</a>
+  <a class="nav-link" href="metier-equestre.html">🐴 Équestre</a>
+  <a class="nav-link" href="metier-veterinaire.html">💉 Vétérinaire</a>
+  <a class="nav-link" href="metier-osteopathe.html">🙌 Ostéopathe</a>
+  <a class="nav-link" href="metier-sport-canin.html">🏆 Sport canin</a>
+  <a class="nav-link" href="metier-naturopathe.html">🌿 Naturopathe</a>
+  <a class="nav-link" href="trans-facturation.html">🧾 Facturation</a>
+  <a class="nav-link" href="trans-compta-fec.html">📊 Compta/FEC</a>
+  <a class="nav-link" href="trans-rfe.html">⚡ RFE</a>
+  <a class="nav-link" href="trans-stock-inventaire.html">📦 Stock</a>
+  <a class="nav-link" href="trans-achats.html">🏪 Achats</a>
+  <a class="nav-link" href="trans-portail-client.html">🌐 Portail</a>
+  <a class="nav-link" href="trans-crm-leads.html">📈 CRM</a>
+  <a class="nav-link" href="trans-reseaux-sociaux.html">📱 Réseaux</a>
+  <a class="nav-link" href="trans-ged.html">🗂️ GED</a>
+  <a class="nav-link" href="trans-registres.html">📜 Registres</a>
+  <a class="nav-link" href="trans-eliot.html">🤖 Eliot</a>
+</nav>
+<div class="hero">
+  <div class="hero-badge">Scénario Transverse</div>
+  <h1>🧾 Cycle de facturation complet</h1>
+  <p class="hero-sub">Devis → acompte → signature → réalisation → facture solde → relance → avoir — tous les cas de figure couverts</p>
+  <div class="hero-meta"><div class="hero-meta-item"><span>🧾 NF525</span></div><div class="hero-meta-item"><span>✍️ Yousign</span></div><div class="hero-meta-item"><span>🔁 Relances auto</span></div><div class="hero-meta-item"><span>↩️ Avoirs</span></div></div>
+</div>
+<div class="container">
+  <div class="stats-row"><div class="stat-card"><div class="stat-val">10</div><div class="stat-lbl">Étapes</div></div><div class="stat-card"><div class="stat-val">4</div><div class="stat-lbl">Statuts facture</div></div><div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Niveaux relance</div></div><div class="stat-card"><div class="stat-val">100%</div><div class="stat-lbl">Conformité NF525</div></div></div>
+  <div class="timeline">
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">1</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 1</span>
+            <span class="step-title">Création du devis</span>
+          </div>
+          <div class="step-body">Tout commence par un devis en brouillon.<ul><li>+ Nouveau devis → sélectionner client + animal</li><li>Ajouter les lignes depuis le catalogue articles (tarifs pré-remplis)</li><li>Appliquer remise éventuelle (ligne ou globale)</li><li>Définir l'acompte demandé : 30% du total TTC</li><li>Valider la date de validité (30 jours par défaut)</li><li>Sauvegarder en Brouillon — modifiable à volonté</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">2</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 2</span>
+            <span class="step-title">Envoi et signature électronique</span>
+          </div>
+          <div class="step-body">Envoyez le devis et déclenchez la signature Yousign.<ul><li>Bouton Envoyer par email → PDF joint automatiquement</li><li>Simultanément : demande de signature Yousign envoyée au client</li><li>Client reçoit 2 emails : devis PDF + lien de signature</li><li>Client signe depuis son téléphone (moins de 2 minutes)</li><li>Notification automatique : 'Votre devis a été signé' → statut Accepté</li><li>Date et heure de signature horodatées → archivées en GED</li></ul><div class="step-note">💡 La signature électronique Yousign est juridiquement équivalente à une signature manuscrite (eIDAS).</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">3</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 3</span>
+            <span class="step-title">Facture d'acompte</span>
+          </div>
+          <div class="step-body">Générez et encaissez l'acompte avant de commencer.<ul><li>Depuis le devis accepté : Émettre un acompte 30% = 226,80€ TTC</li><li>Facture d'acompte numérotée FAC-2026-0041 (NF525)</li><li>Envoyer par email · Client règle par virement</li><li>Enregistrer le règlement : virement 226,80€ · date de valeur</li><li>La facture d'acompte passe en Payée</li><li>Le devis affiche : Acompte reçu 226,80€ · Reste dû : 529,20€</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">4</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Étape 4</span>
+            <span class="step-title">Réalisation de la prestation</span>
+          </div>
+          <div class="step-body">Réalisez les séances et marquez-les comme effectuées.<ul><li>Chaque séance réalisée → Marquer comme Réalisée + compte-rendu</li><li>Le suivi des séances est lié au devis</li><li>À la dernière séance : toutes les lignes du devis sont couvertes</li><li>Vérification : 5/5 séances réalisées, 0 annulation</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--rose)">5</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--rose)">Étape 5</span>
+            <span class="step-title">Facture de solde</span>
+          </div>
+          <div class="step-body">Après la dernière séance, créez la facture définitive.<ul><li>Depuis le devis : Créer la facture → lignes pré-remplies</li><li>La facture de solde déduit automatiquement l'acompte déjà facturé</li><li>Total facture : 756€ TTC · Acompte déduit : 226,80€ · Net à payer : 529,20€</li><li>Envoyer par email · Générer PDF en modal</li><li>Le client paie par CB : enregistrer règlement 529,20€</li><li>Toutes les factures passent en Payée · Dossier soldé</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:#a78bfa">6</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:#a78bfa">Étape 6</span>
+            <span class="step-title">Relance automatique impayé</span>
+          </div>
+          <div class="step-body">Un autre client n'a pas réglé sous 30 jours. Les relances s'enclenchent.<ul><li>J+7 après échéance : relance niveau 1 (ton amical) — email automatique</li><li>J+15 : relance niveau 2 (ton ferme) — rappel montant et références bancaires</li><li>J+30 : relance niveau 3 (mise en demeure) — mentionner les intérêts de retard légaux</li><li>Chaque relance est enregistrée dans l'historique de la facture</li><li>Si règlement reçu après relance → enregistrer + marquer la relance comme résolue</li><li>Si toujours impayé : export dossier pour recouvrement</li></ul><div class="step-note">💡 Configurez les délais et modèles de relance dans Paramètres → Relances.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--amber)">7</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--amber)">Étape 7</span>
+            <span class="step-title">Avoir total — Annulation facture</span>
+          </div>
+          <div class="step-body">Le client conteste une prestation non réalisée. Vous annulez la facture.<ul><li>Ouvrir la facture concernée → Créer un avoir total</li><li>Avoir AV-2026-0008 généré · Montant : -756€ TTC (annule la facture)</li><li>Motif de l'avoir saisi : Prestation non conforme — accord amiable</li><li>La facture et l'avoir s'équilibrent comptablement (FEC équilibré)</li><li>Option : rembourser en virement OU imputer sur prochaine facture</li><li>Si remboursement : enregistrer le remboursement → avoir en Remboursé</li></ul><div class="step-warn">⚖️ Une facture NF525 ne peut jamais être supprimée — l'avoir est la seule façon d'annuler.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">8</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 8</span>
+            <span class="step-title">Avoir partiel — Remise a posteriori</span>
+          </div>
+          <div class="step-body">Vous accordez une remise commerciale après facturation.<ul><li>Facture FAC-2026-0052 : 350€ TTC · Client fidèle depuis 5 ans</li><li>Décision commerciale : remise 15% = 52,50€</li><li>Créer un avoir partiel de 52,50€ TTC</li><li>Le client peut l'imputer sur sa prochaine facture</li><li>Aucun remboursement en espèces → avoir en solde comptable</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">9</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 9</span>
+            <span class="step-title">Facture proforma</span>
+          </div>
+          <div class="step-body">Un client veut un document pour sa mutuelle avant de s'engager.<ul><li>Créer une facture de type Proforma (non comptabilisée, pas de numéro NF525)</li><li>La proforma a le même format PDF que la facture définitive</li><li>Mentionné clairement : PROFORMA — Document non fiscal</li><li>Une fois l'accord obtenu : Valider en facture définitive → numérotée NF525</li><li>Utilisation typique : remboursement mutuelle, devis avant accord employeur</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">10</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 10</span>
+            <span class="step-title">Export et contrôle des factures</span>
+          </div>
+          <div class="step-body">En fin de mois, contrôlez et exportez votre activité de facturation.<ul><li>Factures → filtrer par mois → exporter CSV pour tableau de bord</li><li>Vérifier : aucune facture sans règlement ni avoir (trous comptables)</li><li>Balance clients : total débiteur = factures impayées</li><li>FEC : les écritures de facturation sont automatiquement équilibrées</li><li>Rapport CA mensuel : HT par taux de TVA + total TTC</li><li>Transmettre au comptable : FEC + relevé bancaire + état des impayés</li></ul></div>
+        </div>
+      </div></div>
+  <div class="result-box">
+    <div class="result-title">✅ Résultats du parcours</div>
+    <div class="result-grid"><div class="result-item"><span>🧾</span><span>Numérotation NF525 parfaite</span></div><div class="result-item"><span>✍️</span><span>Signatures Yousign tracées</span></div><div class="result-item"><span>🔁</span><span>Relances auto 3 niveaux</span></div><div class="result-item"><span>↩️</span><span>Avoirs total & partiel</span></div><div class="result-item"><span>📊</span><span>FEC équilibré auto</span></div><div class="result-item"><span>⚖️</span><span>100% conformité légale</span></div></div>
+  </div>
+</div>
+<footer>Anim'Gest · NoSage's Editor — Scénario Cycle de facturation complet — Sprint S78 · 2026</footer>
+
+    <!-- S83-TVA-FACTURATION -->
+    <div style="background:#1E293B;border-left:3px solid #F59E0B;padding:.75rem 1rem;border-radius:0 .25rem .25rem 0;margin:1rem 0;font-size:.9rem">
+      &#128200; <strong>Export TVA (nouveau S82)</strong> &mdash; Consultez <strong>Facturation &rarr; Export TVA</strong>
+      pour un &eacute;tat d&eacute;taill&eacute; par taux sur toute p&eacute;riode. Export CSV compatible Excel pour votre d&eacute;claration CA3.
+    </div>
+
+  </body></html>

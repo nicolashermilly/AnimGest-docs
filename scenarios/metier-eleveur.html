@@ -1,0 +1,185 @@
+
+<!-- Polices, variables CSS, composants communs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+<title>Éleveur de chiens — Anim'Gest</title></head>
+
+<body>
+<nav class="nav-bar">
+  <a class="nav-link home" href="index.html">🏠 Index</a>
+  <a class="nav-link" href="metier-comportementaliste.html">🧠 Comportementaliste</a>
+  <a class="nav-link" href="metier-toiletteur.html">✂️ Toiletteur</a>
+  <a class="nav-link" href="metier-petsitter.html">🏃 Pet-sitter</a>
+  <a class="nav-link" href="metier-eleveur.html">🐣 Éleveur</a>
+  <a class="nav-link" href="metier-pension.html">🏠 Pension</a>
+  <a class="nav-link" href="metier-equestre.html">🐴 Équestre</a>
+  <a class="nav-link" href="metier-veterinaire.html">💉 Vétérinaire</a>
+  <a class="nav-link" href="metier-osteopathe.html">🙌 Ostéopathe</a>
+  <a class="nav-link" href="metier-sport-canin.html">🏆 Sport canin</a>
+  <a class="nav-link" href="metier-naturopathe.html">🌿 Naturopathe</a>
+  <a class="nav-link" href="trans-facturation.html">🧾 Facturation</a>
+  <a class="nav-link" href="trans-compta-fec.html">📊 Compta/FEC</a>
+  <a class="nav-link" href="trans-rfe.html">⚡ RFE</a>
+  <a class="nav-link" href="trans-stock-inventaire.html">📦 Stock</a>
+  <a class="nav-link" href="trans-achats.html">🏪 Achats</a>
+  <a class="nav-link" href="trans-portail-client.html">🌐 Portail</a>
+  <a class="nav-link" href="trans-crm-leads.html">📈 CRM</a>
+  <a class="nav-link" href="trans-reseaux-sociaux.html">📱 Réseaux</a>
+  <a class="nav-link" href="trans-ged.html">🗂️ GED</a>
+  <a class="nav-link" href="trans-registres.html">📜 Registres</a>
+  <a class="nav-link" href="trans-eliot.html">🤖 Eliot</a>
+</nav>
+<div class="hero">
+  <div class="hero-badge">Scénario Métier</div>
+  <h1>🐣 Éleveur de chiens</h1>
+  <p class="hero-sub">Gestion de portée complète : saillie → naissance → vaccination → réservations → cession → registres DDPP → LOF</p>
+  <div class="hero-meta"><div class="hero-meta-item"><span>🐕 Portées LOF</span></div><div class="hero-meta-item"><span>📋 Registres DDPP</span></div><div class="hero-meta-item"><span>💌 Réservations</span></div><div class="hero-meta-item"><span>🏛️ Déclarations</span></div></div>
+</div>
+<div class="container">
+  <div class="stats-row"><div class="stat-card"><div class="stat-val">9</div><div class="stat-lbl">Étapes</div></div><div class="stat-card"><div class="stat-val">6</div><div class="stat-lbl">Chiots portée</div></div><div class="stat-card"><div class="stat-val">4</div><div class="stat-lbl">Réservations</div></div><div class="stat-card"><div class="stat-val">4 200 €</div><div class="stat-lbl">CA portée moyen</div></div></div>
+  <div class="timeline">
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">1</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 1</span>
+            <span class="step-title">Création des fiches géniteurs</span>
+          </div>
+          <div class="step-body">Avant toute portée, constituez les fiches reproducteurs complètes.<ul><li>Élevage → Géniteurs → + Nouveau géniteur</li><li>Mère : Bella, Golden Retriever femelle 3 ans, LOF 123456, HD-A (dysplasie hanche)</li><li>Père : Max (prêt), Golden Retriever mâle 4 ans, LOF 789012, HD-A, champion de France 2024</li><li>Renseigner les tests génétiques : PRA négatif, ichtyose N/N, GR-PRA1 N/N</li><li>Ajouter le pédigrée sur 4 générations (import PDF possible)</li><li>Vérifier les certificats de santé obligatoires (attestation vétérinaire < 1 an)</li></ul><div class="step-note">💡 Les tests génétiques obligatoires pour le LOF sont vérifiés automatiquement selon la race configurée.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">2</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 2</span>
+            <span class="step-title">Enregistrement de la saillie</span>
+          </div>
+          <div class="step-body">La saillie a eu lieu le 1er mars. Créez l'événement dans le registre.<ul><li>Élevage → Saillies → + Nouvelle saillie</li><li>Sélectionner Bella (mère) + Max (père)</li><li>Date de saillie : 01/03/2026</li><li>Date de naissance prévue : 03/05/2026 (63 jours calculés automatiquement)</li><li>Taille de portée estimée : 6-8 chiots (selon historique de Bella)</li><li>Programmer l'alerte : échographie de confirmation J+28</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">3</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 3</span>
+            <span class="step-title">Enregistrement des naissances</span>
+          </div>
+          <div class="step-body">Le 4 mai, Bella met bas 6 chiots. Enregistrez chaque naissance.<ul><li>Élevage → Portées → Portée Bella 05/2026 → + Enregistrer les naissances</li><li>Chiot 1 : mâle fauve, poids 320g, né 08h12, vivant ✓</li><li>Chiot 2 : femelle crème, poids 295g, née 08h47, vivante ✓</li><li>Chiot 3 : mâle fauve, poids 340g, né 09h15, vivant ✓</li><li>Chiots 4, 5, 6 : enregistrés de même</li><li>Registre de l'élevage mis à jour automatiquement (obligation légale)</li><li>Déclaration SCC (Société Centrale Canine) à faire sous 14 jours</li></ul><div class="step-warn">⚖️ Tout décès doit être enregistré dans les 24h dans le registre de mortalité.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">4</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Étape 4</span>
+            <span class="step-title">Identification et vaccination des chiots</span>
+          </div>
+          <div class="step-body">À 7 semaines, identifiez les chiots (puce obligatoire LOF).<ul><li>Vétérinaire Dr Marchand identifie les 6 chiots par puce électronique</li><li>Enregistrer chaque puce dans la fiche chiot : 250-268-XXX-XXX-XXX</li><li>Vaccination primovaccination : CHPPiL2 à 7 semaines</li><li>Ajouter les vaccinations dans la fiche santé de chaque chiot</li><li>Rappel automatique : 2ème vaccination à 11 semaines</li><li>Générer les carnets de santé PDF depuis la fiche animal</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--rose)">5</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--rose)">Étape 5</span>
+            <span class="step-title">Gestion des réservations et acomptes</span>
+          </div>
+          <div class="step-body">Vous avez 4 réservations fermes avant même la naissance.<ul><li>Élevage → Réservations → voir les 4 acquéreurs en liste d'attente</li><li>Associer chaque chiot à un acquéreur selon le sexe et la couleur souhaités</li><li>Chiot 1 (mâle fauve) → M. Bernard : générer facture d'acompte 500€</li><li>Chiot 3 (mâle fauve) → Mme Petit : facture d'acompte 500€</li><li>Chiots 2 et 5 (femelles) → réservations préexistantes avec acomptes déjà reçus</li><li>Gérer les 2 chiots restants : annonce sur le site via formulaire lead</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:#a78bfa">6</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:#a78bfa">Étape 6</span>
+            <span class="step-title">Cession des chiots à 8 semaines</span>
+          </div>
+          <div class="step-body">Le 30 juin, les chiots partent chez leurs nouveaux propriétaires.<ul><li>Créer les fiches clients des acquéreurs</li><li>Transférer la propriété de chaque chiot (fiche animal → Actions → Transférer)</li><li>Générer les certificats de cession (PDF) avec les infos obligatoires</li><li>Générer les certificats vétérinaires de bonne santé</li><li>Facturer le solde : 700€ (prix 1200€ - acompte 500€) × 4 chiots confirmés</li><li>Chiots 5 et 6 : vente directe sur place 1200€ chacun · Règlement CB</li></ul><div class="step-warn">⚖️ La cession avant 56 jours est interdite. Vérifiez que la date est correcte.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--amber)">7</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--amber)">Étape 7</span>
+            <span class="step-title">Déclarations DDPP et SCC</span>
+          </div>
+          <div class="step-body">Complétez les obligations déclaratives dans les délais.<ul><li>Élevage → Déclarations DDPP → Portée Bella 05/2026</li><li>Formulaire pré-rempli : race, nombre de nés vivants/morts, dates, identifications</li><li>Télécharger le PDF et envoyer à la DDPP de votre département</li><li>Déclaration SCC : enregistrement de la portée au livre des origines</li><li>Demande de confirmation LOF pour chaque chiot (document SCC)</li><li>Archiver tous les documents dans la GED de la portée</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">8</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 8</span>
+            <span class="step-title">Registres de l'élevage — Contrôle de conformité</span>
+          </div>
+          <div class="step-body">Vérifiez que tous les registres obligatoires sont à jour.<ul><li>Registre de l'élevage : naissances, décès, cessions toutes documentées ✓</li><li>Registre des carnivores : 6 chiots + Bella + Max enregistrés ✓</li><li>ACACED : valide et à jour ✓</li><li>Déclaration activité élevage en DDPP : à renouveler si > 1 portée/an</li><li>Contrat de vente : 6 exemplaires signés archivés en GED</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">9</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 9</span>
+            <span class="step-title">Bilan financier de la portée</span>
+          </div>
+          <div class="step-body">Analysez la rentabilité complète de la portée.<ul><li>CA portée : 6 × 1 200€ = 7 200€ TTC</li><li>Coûts directs : vétérinaire (vaccins + identification) 480€, alimentation 120€, SCC 180€</li><li>Marge brute estimée : 6 420€</li><li>FEC : toutes les ventes enregistrées avec TVA 20% sur vente d'animaux</li><li>Bilan annuel : 2 portées = 12 400€ CA · Seuil déclaration activité : atteint</li></ul></div>
+        </div>
+      </div></div>
+  <div class="result-box">
+    <div class="result-title">✅ Résultats du parcours</div>
+    <div class="result-grid"><div class="result-item"><span>💰</span><span>CA portée : 7 200 € TTC</span></div><div class="result-item"><span>🐕</span><span>6 chiots LOF cédés</span></div><div class="result-item"><span>📋</span><span>Registres DDPP conformes</span></div><div class="result-item"><span>🏛️</span><span>Déclarations SCC complètes</span></div><div class="result-item"><span>🧾</span><span>FEC alimenté</span></div><div class="result-item"><span>⭐</span><span>4 acquéreurs satisfaits</span></div></div>
+  </div>
+</div>
+<footer>Anim'Gest · NoSage's Editor — Scénario Éleveur de chiens — Sprint S78 · 2026</footer>
+</body></html>

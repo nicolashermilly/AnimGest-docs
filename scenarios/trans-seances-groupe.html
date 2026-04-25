@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S&eacute;ances de groupe &mdash; Anim'Gest</title>
+<style>
+  :root { --navy:#0F172A; --gold:#F59E0B; --text:#E2E8F0; --muted:#94A3B8; --card:#1E293B; }
+  body { background:var(--navy); color:var(--text); font-family:'DM Sans',sans-serif; margin:0; padding:2rem; }
+  h1 { color:var(--gold); font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:.25rem; }
+  .badge { background:var(--gold); color:var(--navy); font-size:.75rem; font-weight:700; padding:.15rem .5rem; border-radius:.25rem; }
+  .subtitle { color:var(--muted); margin-bottom:2rem; }
+  .kpis { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem; }
+  .kpi { background:var(--card); border-radius:.5rem; padding:1rem 1.5rem; text-align:center; min-width:110px; }
+  .kpi strong { font-size:1.8rem; color:var(--gold); display:block; }
+  .kpi span { font-size:.8rem; color:var(--muted); }
+  .metiers { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+  .metier { background:var(--card); color:var(--muted); font-size:.8rem; padding:.3rem .75rem; border-radius:.25rem; }
+  .steps { border-left:2px solid var(--gold); padding-left:1.5rem; }
+  .step { position:relative; margin-bottom:2rem; }
+  .step-num { position:absolute; left:-2.25rem; top:0; background:var(--gold); color:var(--navy);
+    width:1.6rem; height:1.6rem; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-weight:700; font-size:.85rem; }
+  .step h3 { color:var(--gold); margin:0 0 .5rem; }
+  .step ul { margin:.25rem 0; padding-left:1.25rem; }
+  .step li { margin:.2rem 0; color:var(--muted); }
+  .step li strong { color:var(--text); }
+  .tip { background:var(--card); border-left:3px solid var(--gold); padding:.75rem 1rem;
+    border-radius:0 .25rem .25rem 0; margin-top:.75rem; font-size:.9rem; }
+  .nav { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+  .nav a { background:var(--card); color:var(--muted); text-decoration:none; font-size:.8rem;
+    padding:.3rem .75rem; border-radius:.25rem; }
+  .nav a:hover { color:var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="../index-complet.html">&larr; Documentation</a>
+  <a href="index.html">&larr; Sc&eacute;narios</a>
+</div>
+
+<span class="badge">SC&Eacute;NARIO TRANSVERSE</span>
+<h1>&#128101; S&eacute;ances de groupe</h1>
+<p class="subtitle">Organisez des sessions collectives avec gestion de la capacit&eacute; et tarification diff&eacute;renci&eacute;e</p>
+
+<div class="kpis">
+  <div class="kpi"><strong>5</strong><span>Etapes</span></div>
+  <div class="kpi"><strong>Badge</strong><span>Type &amp; m&eacute;tier</span></div>
+  <div class="kpi"><strong>Jauge</strong><span>Remplissage color&eacute;</span></div>
+  <div class="kpi"><strong>Tarifs</strong><span>Diff&eacute;renci&eacute;s</span></div>
+  <div class="kpi"><strong>0</strong><span>Erreur tol&eacute;r&eacute;e</span></div>
+</div>
+
+<div class="metiers">
+  <span class="metier">&#129337; Comportementaliste</span>
+  <span class="metier">&#128014; Equestre</span>
+  <span class="metier">&#127944; Sport canin</span>
+  <span class="metier">&#9988; Toiletteur</span>
+  <span class="metier">&#127968; Pension</span>
+</div>
+
+  <div class="tip" style="margin-bottom:1.5rem;">
+    &#x1F4CC; <strong>Nouveaut&eacute; S84 :</strong> La page s&eacute;ances de groupe affiche d&eacute;sormais un <strong>badge de type/m&eacute;tier</strong> sur chaque s&eacute;ance, ainsi qu&#39;une <strong>jauge de remplissage</strong> color&eacute;e (vert &lt; 70%, orange 70-99%, rouge = complet) pour visualiser instantan&eacute;ment la disponibilit&eacute;.
+  </div>
+
+
+<div class="steps">
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <h3>ETAPE 1 &mdash; Cr&eacute;er une s&eacute;ance de groupe</h3>
+    <ul>
+      <li>&rarr; <strong>S&eacute;ances &rarr; S&eacute;ances de groupe &rarr; Nouvelle s&eacute;ance</strong></li>
+      <li>Renseignez&nbsp;: titre, date, heure, type de s&eacute;ance, lieu</li>
+      <li>D&eacute;finissez la <strong>capacit&eacute; maximum</strong> (ex. 8 participants)</li>
+      <li>D&eacute;finissez les tarifs&nbsp;: <strong>tarif 1 animal</strong> et <strong>tarif 2+ animaux</strong></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <h3>ETAPE 2 &mdash; Ajouter des participants</h3>
+    <ul>
+      <li>Recherchez un client dans la liste</li>
+      <li>S&eacute;lectionnez l'animal concern&eacute;</li>
+      <li>Le tarif est automatiquement calcul&eacute; selon le nombre d'animaux du client</li>
+      <li>La jauge de remplissage se met &agrave; jour en temps r&eacute;el</li>
+    </ul>
+    <div class="tip">&#128161; Si la capacit&eacute; maximum est atteinte, l'ajout est bloqu&eacute; automatiquement.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <h3>ETAPE 3 &mdash; G&eacute;rer les participants</h3>
+    <ul>
+      <li>Consultez la liste des participants avec leur tarif individuel</li>
+      <li>Retirez un participant si annulation</li>
+      <li>Modifiez le statut de la s&eacute;ance (Planifi&eacute;e, En cours, Termin&eacute;e, Annul&eacute;e)</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <h3>ETAPE 4 &mdash; Conduire la s&eacute;ance</h3>
+    <ul>
+      <li>Passez le statut &agrave; <strong>En cours</strong> au d&eacute;but</li>
+      <li>Prenez les pr&eacute;sences et notez les observations par animal</li>
+      <li>Terminez en passant &agrave; <strong>Termin&eacute;e</strong></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-num">5</div>
+    <h3>ETAPE 5 &mdash; Facturation (bient&ocirc;t disponible)</h3>
+    <ul>
+      <li>G&eacute;n&eacute;ration de factures individuelles par participant</li>
+      <li>Ventilation automatique selon le tarif assign&eacute;</li>
+      <li>Suivi des r&egrave;glements par participant</li>
+      <li><em>Disponible en S83-S84</em></li>
+    </ul>
+  </div>
+
+</div>
+
+<p style="color:var(--muted);font-size:.8rem;margin-top:3rem">
+  Anim'Gest &mdash; NoSage's Editor &mdash; Document&eacute; S82 &mdash; 12/04/2026
+</p>
+</body>
+</html>

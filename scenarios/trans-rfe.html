@@ -1,0 +1,165 @@
+
+<!-- Polices, variables CSS, composants communs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+<title>Réforme de la Facturation Électronique (RFE) — Anim'Gest</title></head>
+
+<body>
+<nav class="nav-bar">
+  <a class="nav-link home" href="index.html">🏠 Index</a>
+  <a class="nav-link" href="metier-comportementaliste.html">🧠 Comportementaliste</a>
+  <a class="nav-link" href="metier-toiletteur.html">✂️ Toiletteur</a>
+  <a class="nav-link" href="metier-petsitter.html">🏃 Pet-sitter</a>
+  <a class="nav-link" href="metier-eleveur.html">🐣 Éleveur</a>
+  <a class="nav-link" href="metier-pension.html">🏠 Pension</a>
+  <a class="nav-link" href="metier-equestre.html">🐴 Équestre</a>
+  <a class="nav-link" href="metier-veterinaire.html">💉 Vétérinaire</a>
+  <a class="nav-link" href="metier-osteopathe.html">🙌 Ostéopathe</a>
+  <a class="nav-link" href="metier-sport-canin.html">🏆 Sport canin</a>
+  <a class="nav-link" href="metier-naturopathe.html">🌿 Naturopathe</a>
+  <a class="nav-link" href="trans-facturation.html">🧾 Facturation</a>
+  <a class="nav-link" href="trans-compta-fec.html">📊 Compta/FEC</a>
+  <a class="nav-link" href="trans-rfe.html">⚡ RFE</a>
+  <a class="nav-link" href="trans-stock-inventaire.html">📦 Stock</a>
+  <a class="nav-link" href="trans-achats.html">🏪 Achats</a>
+  <a class="nav-link" href="trans-portail-client.html">🌐 Portail</a>
+  <a class="nav-link" href="trans-crm-leads.html">📈 CRM</a>
+  <a class="nav-link" href="trans-reseaux-sociaux.html">📱 Réseaux</a>
+  <a class="nav-link" href="trans-ged.html">🗂️ GED</a>
+  <a class="nav-link" href="trans-registres.html">📜 Registres</a>
+  <a class="nav-link" href="trans-eliot.html">🤖 Eliot</a>
+</nav>
+<div class="hero">
+  <div class="hero-badge">Scénario Transverse</div>
+  <h1>⚡ Réforme de la Facturation Électronique (RFE)</h1>
+  <p class="hero-sub">Comprendre et appliquer la RFE 2026-2027 : Factur-X, PDP, e-reporting — votre calendrier de mise en conformité</p>
+  <div class="hero-meta"><div class="hero-meta-item"><span>⚡ Factur-X EN16931</span></div><div class="hero-meta-item"><span>🏛️ PDP agréée</span></div><div class="hero-meta-item"><span>📅 2026-2027</span></div><div class="hero-meta-item"><span>📊 E-reporting</span></div></div>
+</div>
+<div class="container">
+  <div class="stats-row"><div class="stat-card"><div class="stat-val">7</div><div class="stat-lbl">Étapes</div></div><div class="stat-card"><div class="stat-val">2</div><div class="stat-lbl">Formats supportés</div></div><div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Statuts facture RFE</div></div><div class="stat-card"><div class="stat-val">100%</div><div class="stat-lbl">Conformité cible</div></div></div>
+  <div class="timeline">
+      <div class="step">
+        <div class="step-dot" style="background:var(--violet)">1</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--violet)">Étape 1</span>
+            <span class="step-title">Comprendre la RFE et votre calendrier</span>
+          </div>
+          <div class="step-body">La Réforme de la Facturation Électronique s'applique progressivement.<ul><li>Septembre 2026 : grandes entreprises (CA > 250M€) — obligation de réception</li><li>Septembre 2026 : ETI (CA > 50M€) — obligation émission + réception</li><li>Juillet 2027 : PME et micro-entreprises (VOUS) — obligation émission + réception</li><li>Votre obligation : émettre des factures au format structuré via une PDP agréée</li><li>Format obligatoire : Factur-X (PDF+XML) ou UBL ou CII</li><li>Amende en cas de non-conformité : jusqu'à 15€ par facture manquante</li></ul><div class="step-warn">⚠️ Vérifiez votre date exacte selon votre CA. Consultez impots.gouv.fr pour les mises à jour.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--cyan)">2</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--cyan)">Étape 2</span>
+            <span class="step-title">Choisir votre PDP (Plateforme de Dématérialisation Partenaire)</span>
+          </div>
+          <div class="step-body">Vous devez passer par une PDP agréée par l'administration fiscale.<ul><li>Liste des PDP agréées disponible sur impots.gouv.fr</li><li>Options courantes : Pennylane, Chorus Pro (gratuit B2G), Sellsy, Sage, Cegid</li><li>Critères de choix : tarif, intégration API, support, volume de factures</li><li>Anim'Gest → Paramètres → RFE → Configurer votre PDP</li><li>Renseigner les identifiants API de votre PDP choisie</li><li>Tester l'envoi d'une facture de test avant la date d'obligation</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--emerald)">3</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--emerald)">Étape 3</span>
+            <span class="step-title">Générer une facture au format Factur-X</span>
+          </div>
+          <div class="step-body">Le format Factur-X est un PDF classique avec un fichier XML intégré.<ul><li>Créer votre facture normalement dans Anim'Gest</li><li>Au moment du PDF : choisir Format Factur-X (au lieu du PDF standard)</li><li>Le fichier généré contient : PDF lisible + XML structuré EN16931 intégré</li><li>Le fichier XML contient : SIREN émetteur, SIREN destinataire, lignes de facture, TVA</li><li>Le client peut l'ouvrir comme un PDF normal ET l'intégrer dans son système comptable</li><li>Votre PDP lit le XML et transmet la facture au réseau de dématérialisation</li></ul><div class="step-note">💡 Pour les clients particuliers (B2C), le format Factur-X n'est pas obligatoire. PDF standard suffisant.</div></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--gold)">4</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--gold)">Étape 4</span>
+            <span class="step-title">Cycle de vie d'une facture électronique B2B</span>
+          </div>
+          <div class="step-body">Une facture électronique passe par plusieurs statuts réglementaires.<ul><li>DEPOSEE : la facture est transmise à votre PDP ✓</li><li>TRANSMISE : la PDP a transmis au destinataire ✓</li><li>ACCEPTEE : le destinataire a validé la facture ✓</li><li>EN_LITIGE : le destinataire conteste (délai de réponse 15 jours)</li><li>REFUSEE : contestation non résolue → émettre un avoir + nouvelle facture</li><li>Chaque statut est tracé dans Anim'Gest avec date et heure</li><li>Un avoir annulant une facture refusée doit aussi passer par la PDP</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--rose)">5</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--rose)">Étape 5</span>
+            <span class="step-title">E-reporting — Vos obligations de déclaration</span>
+          </div>
+          <div class="step-body">En plus des factures, vous devez déclarer vos transactions B2C.<ul><li>E-reporting : transmission des données de transactions non soumises à facturation électronique</li><li>Concerne : ventes B2C (particuliers), ventes internationales</li><li>Fréquence : mensuelle ou trimestrielle selon votre CA</li><li>Format : fichier structuré transmis à votre PDP → transmis à l'administration</li><li>Données : montant HT, TVA, devise, type de transaction</li><li>Anim'Gest génère automatiquement le fichier d'e-reporting depuis vos règlements</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:#a78bfa">6</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:#a78bfa">Étape 6</span>
+            <span class="step-title">Mise en place progressive — Plan d'action</span>
+          </div>
+          <div class="step-body">Préparez-vous maintenant pour éviter le rush de juillet 2027.<ul><li>Dès maintenant : activer le module RFE dans Paramètres → Modules</li><li>Choisir votre PDP et configurer les identifiants API (3 mois avant obligation)</li><li>Former votre équipe : 1 heure suffit pour comprendre le nouveau workflow</li><li>Tester avec 5 vraies factures clients avant la date d'obligation</li><li>Informer vos clients B2B : ils devront indiquer leur SIREN sur leurs commandes</li><li>Mettre à jour vos CGV : mentionner la facturation électronique</li></ul></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot" style="background:var(--amber)">7</div>
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num" style="color:var(--amber)">Étape 7</span>
+            <span class="step-title">Vérification de conformité</span>
+          </div>
+          <div class="step-body">Utilisez le tableau de bord RFE pour suivre votre conformité.<ul><li>Factures → RFE : tableau de bord des statuts de transmission</li><li>Indicateurs : % factures transmises, % acceptées, % en litige, % refusées</li><li>Objectif : 100% acceptées · Alerte si > 2% en litige</li><li>Rapport mensuel e-reporting : vérifier que toutes les transactions B2C sont déclarées</li><li>Archive : conserver les accusés de réception PDP pendant 10 ans</li><li>Contact PDP : numéro de support en cas de problème de transmission</li></ul></div>
+        </div>
+      </div></div>
+  <div class="result-box">
+    <div class="result-title">✅ Résultats du parcours</div>
+    <div class="result-grid"><div class="result-item"><span>⚡</span><span>Factur-X EN16931 généré</span></div><div class="result-item"><span>🏛️</span><span>PDP configurée</span></div><div class="result-item"><span>📊</span><span>E-reporting automatisé</span></div><div class="result-item"><span>✅</span><span>Statuts tracés en temps réel</span></div><div class="result-item"><span>📅</span><span>Conforme juillet 2027</span></div><div class="result-item"><span>🏛️</span><span>Amende = 0 €</span></div></div>
+  </div>
+</div>
+<footer>Anim'Gest · NoSage's Editor — Scénario Réforme de la Facturation Électronique (RFE) — Sprint S78 · 2026</footer>
+</body></html>

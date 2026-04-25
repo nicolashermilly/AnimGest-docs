@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webhook Calendly — Anim'Gest Docs</title>
+<style>
+  body { font-family: 'DM Sans', sans-serif; background: #0F172A; color: #E2E8F0; margin: 0; padding: 24px; }
+  h1 { color: #F59E0B; font-size: 1.5rem; margin-bottom: 4px; }
+  h2 { color: #F59E0B; font-size: 1.1rem; margin-top: 2rem; border-bottom: 1px solid #1E293B; padding-bottom: 6px; }
+  h3 { color: #94A3B8; font-size: 0.95rem; margin-top: 1.2rem; }
+  .subtitle { color: #64748B; font-size: 0.9rem; margin-bottom: 2rem; }
+  .card { background: #1E293B; border: 1px solid #334155; border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge-green { background: #14532D; color: #4ADE80; }
+  .badge-blue { background: #1E3A5F; color: #60A5FA; }
+  .badge-yellow { background: #713F12; color: #FCD34D; }
+  code { background: #0F172A; color: #34D399; padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; font-family: monospace; }
+  pre { background: #0F172A; border: 1px solid #334155; border-radius: 8px; padding: 16px; overflow-x: auto; font-size: 0.82rem; color: #94A3B8; }
+  .step { display: flex; gap: 12px; margin-bottom: 12px; }
+  .step-num { background: #F59E0B; color: #0F172A; font-weight: 700; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
+  .step-content { flex: 1; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #0F172A; color: #94A3B8; padding: 8px 12px; text-align: left; }
+  td { padding: 8px 12px; border-bottom: 1px solid #1E293B; }
+  .warning { background: #431407; border: 1px solid #C2410C; border-radius: 8px; padding: 12px 16px; color: #FED7AA; font-size: 0.85rem; margin: 12px 0; }
+  .info { background: #0C1A2E; border: 1px solid #1E3A5F; border-radius: 8px; padding: 12px 16px; color: #93C5FD; font-size: 0.85rem; margin: 12px 0; }
+</style>
+</head>
+<body>
+
+<h1>Webhook Calendly</h1>
+<div class="subtitle">Integration automatique des reservations en ligne — S83</div>
+
+<div class="card">
+  <h2>Principe</h2>
+  <p style="font-size:0.9rem;color:#94A3B8;">Lorsqu'un client reserve un creneau sur Calendly, Calendly envoie automatiquement
+  un <strong>webhook HTTP POST</strong> vers Anim'Gest. Le systeme cree alors une <strong>seance</strong>
+  en base de donnees sans intervention manuelle.</p>
+  <div style="display:flex;gap:12px;align-items:center;margin-top:16px;flex-wrap:wrap;">
+    <div style="background:#0F172A;padding:8px 16px;border-radius:8px;font-size:0.85rem;">Client reserve sur Calendly</div>
+    <div style="color:#F59E0B;">&#8594;</div>
+    <div style="background:#0F172A;padding:8px 16px;border-radius:8px;font-size:0.85rem;">POST /api/webhooks/calendly</div>
+    <div style="color:#F59E0B;">&#8594;</div>
+    <div style="background:#14532D;padding:8px 16px;border-radius:8px;font-size:0.85rem;color:#4ADE80;">Seance creee en BDD</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Configuration dans Calendly</h2>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <strong>Copier l'URL Webhook</strong><br>
+      <span style="color:#94A3B8;font-size:0.85rem;">Dans Anim'Gest : Parametres &gt; Calendly &gt; encart "URL Webhook Calendly"<br>
+      Cliquer sur "Copier" pour copier l'URL.</span>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <strong>Dans Calendly.com</strong><br>
+      <span style="color:#94A3B8;font-size:0.85rem;">Settings &gt; Integrations &gt; Webhooks &gt; + New Webhook</span>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <strong>Configurer le webhook</strong><br>
+      <span style="color:#94A3B8;font-size:0.85rem;">
+        URL : coller l'URL copiee depuis Anim'Gest<br>
+        Evenement a ecouter : <code>invitee.created</code><br>
+        Scope : Organization ou User selon votre compte
+      </span>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <strong>Tester</strong><br>
+      <span style="color:#94A3B8;font-size:0.85rem;">Faire une reservation test sur Calendly — verifier dans Anim'Gest &gt; Seances qu'une nouvelle seance apparait.</span>
+    </div>
+  </div>
+
+  <div class="warning">
+    <strong>Important :</strong> Le webhook Calendly necessite que votre serveur Anim'Gest soit accessible depuis Internet
+    (URL publique). En environnement local (localhost), utiliser un tunnel comme <strong>ngrok</strong> pour les tests.
+  </div>
+</div>
+
+<div class="card">
+  <h2>Mapping types de RDV</h2>
+  <p style="font-size:0.85rem;color:#94A3B8;">Le systeme associe automatiquement le slug Calendly au type de seance Anim'Gest.</p>
+  <table>
+    <tr><th>Slug Calendly</th><th>Type de seance</th><th>Metier</th></tr>
+    <tr><td><code>ec-1h30</code></td><td>Bilan Comportemental</td><td>Comportementaliste</td></tr>
+    <tr><td><code>suivi-1h</code></td><td>Seance de suivi</td><td>Comportementaliste</td></tr>
+    <tr><td><code>educ-cours</code></td><td>Cours individuel education</td><td>Educateur</td></tr>
+    <tr><td><code>toilettage</code></td><td>Toilettage</td><td>Toiletteur</td></tr>
+    <tr><td><code>garde-visite</code></td><td>Visite a domicile</td><td>Pet-Sitter</td></tr>
+    <tr><td><code>garde-pension</code></td><td>Garde / Pension</td><td>Pet-Sitter</td></tr>
+    <tr><td><code>cours-equit</code></td><td>Cours equitation individuel</td><td>Centre Equestre</td></tr>
+    <tr><td><code>balade-equit</code></td><td>Balade equestre</td><td>Centre Equestre</td></tr>
+    <tr><td><code>consult-elev</code></td><td>Suivi portee / elevage</td><td>Eleveur</td></tr>
+  </table>
+  <div class="info" style="margin-top:12px;">
+    Le slug correspond au nom de l'event type dans l'URL Calendly (ex: calendly.com/votre-nom/<strong>ec-1h30</strong>).
+    Nommez vos event types en respectant ces slugs pour que le mapping soit automatique.
+  </div>
+</div>
+
+<div class="card">
+  <h2>Comportement du systeme</h2>
+  <table>
+    <tr><th>Situation</th><th>Comportement</th></tr>
+    <tr><td>Client reconnu par email</td><td>Seance liee au client existant (TIE_ID)</td></tr>
+    <tr><td>Client reconnu par nom</td><td>Seance liee au client (recherche approx.)</td></tr>
+    <tr><td>Client inconnu</td><td>Seance creee sans lien client (a completer manuellement)</td></tr>
+    <tr><td>Type RDV reconnu (slug)</td><td>STY_ID associe automatiquement</td></tr>
+    <tr><td>Type RDV inconnu</td><td>Seance creee sans type (a renseigner)</td></tr>
+    <tr><td>Evenement autre que invitee.created</td><td>Ignore (reponse 200 OK)</td></tr>
+  </table>
+  <p style="font-size:0.85rem;color:#94A3B8;margin-top:12px;">
+    Toutes les seances creees par webhook sont en statut <span class="badge badge-blue">PLANIFIEE</span>
+    et <span class="badge badge-green">FACTURABLE</span> par defaut.
+    Un log est enregistre dans <code>param_config</code> (groupe CALENDLY_LOG) pour chaque appel recu.
+  </p>
+</div>
+
+<div class="card">
+  <h2>Route API</h2>
+  <pre>POST /api/webhooks/calendly
+Content-Type: application/json
+
+// Payload Calendly (invitee.created)
+{
+  "event": "invitee.created",
+  "payload": {
+    "event": {
+      "start_time": "2026-05-03T10:00:00Z",
+      "end_time":   "2026-05-03T11:30:00Z",
+      "location":   { "location": "Cabinet Paris 15" }
+    },
+    "invitee": {
+      "name":  "Marie Dupont",
+      "email": "marie@exemple.fr"
+    },
+    "event_type": {
+      "name": "Bilan comportemental 1h30",
+      "slug": "ec-1h30"
+    }
+  }
+}
+
+// Reponse OK
+{ "ok": true, "created": true }
+
+// Reponse evenement ignore
+{ "ok": true, "skipped": true }</pre>
+</div>
+
+<div style="text-align:center;color:#334155;font-size:0.75rem;margin-top:32px;">
+  Anim'Gest — NoSage's Editor — S83 — 12/04/2026
+</div>
+</body>
+</html>
