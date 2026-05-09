@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP — Model Context Protocol — Anim'Gest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --ag-navy:   #0F172A;
+    --ag-navy2:  #1E293B;
+    --ag-navy3:  #334155;
+    --ag-gold:   #B8860B;
+    --ag-gold2:  #D4A017;
+    --ag-gold3:  #F5D76E;
+    --ag-white:  #F8FAFC;
+    --ag-muted:  #94A3B8;
+    --ag-accent: #4F46E5;
+    --ag-cyan:   #06B6D4;
+    --ag-green:  #10B981;
+    --ag-red:    #EF4444;
+    --ag-orange: #F59E0B;
+    --ag-rose:   #F43F5E;
+    --gold-dim:  rgba(212,168,67,0.15);
+    --border:    rgba(212,168,67,0.2);
+    --radius:    10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+    background: var(--ag-navy);
+    color: var(--ag-white);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+}
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: var(--ag-white);
+    letter-spacing: -0.5px;
+}
+a { color: var(--ag-gold2); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--ag-gold3); }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em;
+    background: rgba(0,0,0,0.3);
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    color: var(--ag-gold3);
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(135deg, #0F172A 0%, #1a1040 50%, #0F172A 100%);
+    padding: 56px 48px 72px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 2px solid var(--ag-gold);
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(79,70,229,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(6,182,212,0.14) 0%, transparent 60%);
+    pointer-events: none;
+}
+.hero-back {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ag-muted);
+    font-size: 13px;
+    text-decoration: none;
+    margin-bottom: 24px;
+    transition: color 0.2s;
+}
+.hero-back:hover { color: var(--ag-gold2); }
+.hero-back::before { content: '←'; }
+.hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--ag-accent), var(--ag-cyan));
+    color: #fff;
+    padding: 5px 18px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    position: relative;
+}
+.hero h1 {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, var(--ag-gold3) 60%, var(--ag-gold2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 14px;
+    position: relative;
+    line-height: 1.1;
+}
+.hero p.lead {
+    font-size: 17px;
+    color: var(--ag-muted);
+    max-width: 760px;
+    position: relative;
+    line-height: 1.6;
+}
+.hero-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+    position: relative;
+}
+.hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ag-gold2);
+    background: rgba(184,134,11,0.1);
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 48px 80px;
+}
+
+/* SECTIONS */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 56px 0 24px;
+}
+.section-header:first-child { margin-top: 0; }
+.section-header .line { flex: 1; height: 1px; background: var(--border); }
+.section-header h2 {
+    font-size: 22px;
+    color: var(--ag-gold2);
+    white-space: nowrap;
+}
+.section-header .num {
+    font-family: 'Playfair Display', serif;
+    color: var(--ag-gold2);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* KPI BAR */
+.kpi-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+@media (max-width: 700px) {
+    .kpi-bar { grid-template-columns: repeat(2, 1fr); }
+}
+.kpi {
+    background: var(--ag-navy2);
+    border: 1px solid var(--ag-navy3);
+    border-radius: var(--radius);
+    padding: 20px 16px;
+    text-align: center;
+}
+.kpi-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ag-gold2);
+}
+.kpi-lbl {
+    font-size: 12px;
+    color: var(--ag-muted);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* CARDS */
+.card {
+    background: var(--ag-navy2);
+    border: 1px solid var(--ag-navy3);
+    border-left: 4px solid var(--ag-accent);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 20px;
+}
+.card.success { border-left-color: var(--ag-green); }
+.card.warning { border-left-color: var(--ag-orange); }
+.card.danger  { border-left-color: var(--ag-red); }
+.card.cyan    { border-left-color: var(--ag-cyan); }
+.card.gold    { border-left-color: var(--ag-gold2); }
+.card h3 {
+    font-size: 18px;
+    color: var(--ag-gold3);
+    margin-bottom: 10px;
+}
+.card.success h3 { color: #6ee7b7; }
+.card.warning h3 { color: #fcd34d; }
+.card.danger h3  { color: #fca5a5; }
+.card.cyan h3    { color: #67e8f9; }
+.card p {
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+.card p:last-child { margin-bottom: 0; }
+
+/* TWO COL */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+@media (max-width: 768px) {
+    .two-col { grid-template-columns: 1fr; }
+}
+
+/* USE CASE GRID */
+.use-cases {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin: 24px 0;
+}
+.use-case {
+    background: var(--ag-navy2);
+    border: 1px solid var(--ag-navy3);
+    border-radius: var(--radius);
+    padding: 22px;
+    transition: all 0.2s;
+}
+.use-case:hover {
+    border-color: var(--ag-gold);
+    transform: translateY(-2px);
+}
+.use-case .icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+.use-case h4 {
+    font-size: 16px;
+    color: var(--ag-white);
+    margin-bottom: 6px;
+}
+.use-case p {
+    font-size: 13px;
+    color: var(--ag-muted);
+    line-height: 1.6;
+}
+
+/* TAGS */
+.tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.tag {
+    display: inline-block;
+    background: var(--gold-dim);
+    color: var(--ag-gold2);
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    letter-spacing: 0.3px;
+}
+.tag.green  { background: rgba(16,185,129,0.15); color: #34D399; border-color: rgba(16,185,129,0.3); }
+.tag.cyan   { background: rgba(6,182,212,0.15); color: #67e8f9; border-color: rgba(6,182,212,0.3); }
+.tag.violet { background: rgba(79,70,229,0.18); color: #a5b4fc; border-color: rgba(79,70,229,0.35); }
+.tag.red    { background: rgba(239,68,68,0.15); color: #f87171; border-color: rgba(239,68,68,0.3); }
+.tag.orange { background: rgba(245,158,11,0.15); color: #fcd34d; border-color: rgba(245,158,11,0.3); }
+
+/* TABLES */
+table.tbl {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    background: var(--ag-navy2);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--ag-navy3);
+}
+table.tbl th {
+    background: rgba(184,134,11,0.12);
+    color: var(--ag-gold2);
+    text-align: left;
+    padding: 12px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--ag-navy3);
+}
+table.tbl td {
+    padding: 11px 14px;
+    border-top: 1px solid rgba(51,65,85,0.5);
+    font-size: 14px;
+    color: var(--ag-white);
+    vertical-align: top;
+}
+table.tbl tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+table.tbl td.muted { color: var(--ag-muted); }
+
+/* SVG DIAGRAMS */
+.diagram-wrap {
+    background: var(--ag-navy2);
+    border: 1px solid var(--ag-navy3);
+    border-radius: var(--radius);
+    padding: 28px 24px 20px;
+    margin: 24px 0;
+    text-align: center;
+    overflow-x: auto;
+}
+.diagram-wrap svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+.diagram-caption {
+    margin-top: 16px;
+    color: var(--ag-muted);
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+/* FEATURE LIST */
+ul.features {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+}
+ul.features li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.5;
+}
+ul.features li::before {
+    content: '✓';
+    position: absolute;
+    left: 4px;
+    color: var(--ag-green);
+    font-weight: 700;
+    font-size: 16px;
+    top: 7px;
+}
+ul.features li.danger::before  { content: '✗'; color: var(--ag-red); }
+ul.features li.warn::before    { content: '!'; color: var(--ag-orange); }
+ul.features li.info::before    { content: '→'; color: var(--ag-cyan); }
+
+/* CALL TO ACTION */
+.cta {
+    background: linear-gradient(135deg, rgba(79,70,229,0.12), rgba(6,182,212,0.10));
+    border: 1px solid rgba(79,70,229,0.3);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin: 48px 0 24px;
+    text-align: center;
+}
+.cta h3 {
+    font-size: 22px;
+    color: var(--ag-white);
+    margin-bottom: 12px;
+}
+.cta p {
+    color: var(--ag-muted);
+    margin-bottom: 18px;
+    font-size: 15px;
+}
+.cta-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.cta-btn-primary {
+    background: linear-gradient(135deg, var(--ag-accent), var(--ag-cyan));
+    color: #fff;
+}
+.cta-btn-primary:hover { transform: translateY(-1px); opacity: 0.92; }
+.cta-btn-ghost {
+    background: transparent;
+    border: 1px solid var(--ag-navy3);
+    color: var(--ag-muted);
+}
+.cta-btn-ghost:hover { border-color: var(--ag-gold); color: var(--ag-gold2); }
+
+/* FOOTER */
+footer {
+    background: var(--ag-navy2);
+    border-top: 1px solid var(--ag-navy3);
+    padding: 32px 48px;
+    text-align: center;
+    color: var(--ag-muted);
+    font-size: 13px;
+}
+footer .brand {
+    font-family: 'Playfair Display', serif;
+    color: var(--ag-gold2);
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HERO                                                          -->
+<!-- ============================================================ -->
+<div class="hero">
+    <a href="index-complet.html" class="hero-back">Retour à la documentation complète</a>
+    <span class="hero-badge">Référence technique · Architecture</span>
+    <h1>MCP — Model Context Protocol</h1>
+    <p class="lead">
+        Ouvrir Anim'Gest aux clients d'IA externes (Claude Desktop, Claude Web, intégrations
+        partenaires) en gardant le contrôle total sur les données, les droits et les règles
+        métier. Architecture pensée pour la confidentialité, l'auditabilité et la conformité RGPD.
+    </p>
+    <div class="hero-meta">
+        <span class="hero-meta-item">🔐 5 couches de sécurité</span>
+        <span class="hero-meta-item">🛡️ Multi-tenant natif</span>
+        <span class="hero-meta-item">📋 Audit RGPD-safe</span>
+        <span class="hero-meta-item">⚡ Stateless & scalable</span>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- 1. VUE D'ENSEMBLE                                             -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Qu'est-ce qu'un serveur MCP ?</h2>
+    <div class="line"></div>
+    <span class="num">01</span>
+</div>
+
+<p style="color:#cbd5e1; margin-bottom: 16px;">
+    Le <strong>Model Context Protocol</strong> est un standard ouvert qui permet à un assistant IA
+    (comme Claude) d'accéder à des données et d'effectuer des actions dans des applications tierces
+    de manière contrôlée. Anim'Gest expose un serveur MCP dédié, séparé de l'interface utilisateur
+    classique, qui sert de <strong>passerelle sécurisée</strong> entre clients IA externes et le
+    système d'information.
+</p>
+
+<div class="kpi-bar">
+    <div class="kpi">
+        <div class="kpi-val">REST</div>
+        <div class="kpi-lbl">Mode par défaut</div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-val">5</div>
+        <div class="kpi-lbl">Couches sécurité</div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-val">100%</div>
+        <div class="kpi-lbl">Audit traçabilité</div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-val">RGPD</div>
+        <div class="kpi-lbl">By design</div>
+    </div>
+</div>
+
+<div class="card cyan">
+    <h3>Différence avec Eliot</h3>
+    <p>
+        <strong>Eliot</strong> est l'agent IA <em>intégré dans Anim'Gest</em> — l'utilisateur
+        interagit avec lui depuis l'interface du logiciel pour automatiser ses tâches courantes
+        (créer un devis, programmer une séance, etc.).
+    </p>
+    <p>
+        <strong>Le serveur MCP</strong> est un canal <em>complémentaire pour les clients IA externes</em>.
+        Il permet par exemple à un cabinet d'utiliser Claude Desktop directement sur son poste pour
+        interagir avec ses données Anim'Gest, sans passer par l'interface web. Les deux canaux
+        respectent strictement les mêmes règles métier — pas de duplication de logique, pas de
+        risque d'incohérence.
+    </p>
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. POUR QUI                                                   -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Cas d'usage concrets</h2>
+    <div class="line"></div>
+    <span class="num">02</span>
+</div>
+
+<div class="use-cases">
+    <div class="use-case">
+        <div class="icon">💼</div>
+        <h4>Cabinets sophistiqués</h4>
+        <p>
+            Un vétérinaire utilise Claude Desktop pour générer ses comptes rendus depuis ses notes
+            vocales, puis pousse directement le résumé dans la fiche animal Anim'Gest.
+        </p>
+    </div>
+    <div class="use-case">
+        <div class="icon">🤝</div>
+        <h4>Intégrations partenaires</h4>
+        <p>
+            Un éditeur tiers (CRM, comptabilité) consomme les données Anim'Gest via MCP au lieu
+            de coder une intégration REST custom — gain de temps des deux côtés.
+        </p>
+    </div>
+    <div class="use-case">
+        <div class="icon">🚀</div>
+        <h4>Automatisations CI/CD</h4>
+        <p>
+            Un pipeline de migration ou de test peut interagir avec Anim'Gest comme avec n'importe
+            quelle autre API, mais avec validation et audit renforcés.
+        </p>
+    </div>
+    <div class="use-case">
+        <div class="icon">📊</div>
+        <h4>Reporting consolidé</h4>
+        <p>
+            Une chaîne de cabinets exploite des analyses cross-sites pour suivre des KPIs
+            agrégés, sans accès aux données individuelles client.
+        </p>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 3. ARCHITECTURE                                               -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Architecture haut niveau</h2>
+    <div class="line"></div>
+    <span class="num">03</span>
+</div>
+
+<p style="color:#cbd5e1; margin-bottom: 16px;">
+    Le serveur MCP est un service indépendant, isolé du reste du système Anim'Gest. Il ne dispose
+    pas d'accès direct aux interfaces utilisateurs ni à la base de données métier en écriture —
+    chaque demande passe par les mêmes routes API que celles utilisées par l'interface web.
+</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 1000 460" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans, sans-serif">
+    <!-- Internet zone -->
+    <rect x="20" y="20" width="960" height="100" rx="14" fill="#0f172a" stroke="#334155" stroke-width="1" stroke-dasharray="6 4"/>
+    <text x="40" y="48" fill="#94a3b8" font-size="13" font-weight="600">Internet — clients IA externes</text>
+
+    <rect x="100" y="60" width="200" height="50" rx="10" fill="#1a1040" stroke="#4F46E5" stroke-width="2"/>
+    <text x="200" y="82" fill="#a5b4fc" font-size="13" font-weight="600" text-anchor="middle">Claude Desktop</text>
+    <text x="200" y="100" fill="#94a3b8" font-size="11" text-anchor="middle">Application native</text>
+
+    <rect x="380" y="60" width="200" height="50" rx="10" fill="#1a1040" stroke="#4F46E5" stroke-width="2"/>
+    <text x="480" y="82" fill="#a5b4fc" font-size="13" font-weight="600" text-anchor="middle">Claude Web</text>
+    <text x="480" y="100" fill="#94a3b8" font-size="11" text-anchor="middle">Navigateur</text>
+
+    <rect x="660" y="60" width="200" height="50" rx="10" fill="#1a1040" stroke="#4F46E5" stroke-width="2"/>
+    <text x="760" y="82" fill="#a5b4fc" font-size="13" font-weight="600" text-anchor="middle">Intégrations tierces</text>
+    <text x="760" y="100" fill="#94a3b8" font-size="11" text-anchor="middle">CRM, partenaires</text>
+
+    <!-- Arrows down -->
+    <line x1="200" y1="115" x2="200" y2="145" stroke="#4F46E5" stroke-width="2" marker-end="url(#arr-violet)"/>
+    <line x1="480" y1="115" x2="480" y2="145" stroke="#4F46E5" stroke-width="2" marker-end="url(#arr-violet)"/>
+    <line x1="760" y1="115" x2="760" y2="145" stroke="#4F46E5" stroke-width="2" marker-end="url(#arr-violet)"/>
+
+    <!-- HTTPS bar -->
+    <rect x="100" y="148" width="760" height="34" rx="8" fill="#0e7490" stroke="#06b6d4" stroke-width="1.5"/>
+    <text x="480" y="170" fill="#67e8f9" font-size="13" font-weight="700" text-anchor="middle">🔐 HTTPS — Authentification Bearer JWT</text>
+
+    <!-- Arrow down -->
+    <line x1="480" y1="186" x2="480" y2="208" stroke="#06b6d4" stroke-width="2" marker-end="url(#arr-cyan)"/>
+
+    <!-- Anim'Gest zone -->
+    <rect x="20" y="210" width="960" height="220" rx="14" fill="#1E293B" stroke="#B8860B" stroke-width="2"/>
+    <text x="40" y="240" fill="#D4A017" font-size="14" font-weight="700">Anim'Gest — Périmètre serveur protégé</text>
+
+    <!-- Reverse proxy -->
+    <rect x="100" y="260" width="760" height="50" rx="10" fill="#0F172A" stroke="#F59E0B" stroke-width="2"/>
+    <text x="480" y="282" fill="#fcd34d" font-size="13" font-weight="700" text-anchor="middle">Reverse proxy + filtrage des accès</text>
+    <text x="480" y="300" fill="#94a3b8" font-size="11" text-anchor="middle">Routage /mcp/* avec contrôle d'authentification obligatoire</text>
+
+    <!-- Two boxes: MCP server + API -->
+    <rect x="100" y="335" width="370" height="80" rx="10" fill="#0F172A" stroke="#06B6D4" stroke-width="2.5"/>
+    <text x="285" y="362" fill="#67e8f9" font-size="14" font-weight="700" text-anchor="middle">Serveur MCP</text>
+    <text x="285" y="382" fill="#cbd5e1" font-size="12" text-anchor="middle">Validation droits · Pool sessions</text>
+    <text x="285" y="398" fill="#cbd5e1" font-size="12" text-anchor="middle">Audit · Mode REST par défaut</text>
+
+    <rect x="490" y="335" width="370" height="80" rx="10" fill="#0F172A" stroke="#10B981" stroke-width="2"/>
+    <text x="675" y="362" fill="#6ee7b7" font-size="14" font-weight="700" text-anchor="middle">API métier Anim'Gest</text>
+    <text x="675" y="382" fill="#cbd5e1" font-size="12" text-anchor="middle">Routes REST · Règles métier</text>
+    <text x="675" y="398" fill="#cbd5e1" font-size="12" text-anchor="middle">Triggers BDD · Workflow</text>
+
+    <!-- Arrow MCP -> API -->
+    <line x1="470" y1="375" x2="490" y2="375" stroke="#06B6D4" stroke-width="2" marker-end="url(#arr-cyan)"/>
+
+    <defs>
+        <marker id="arr-violet" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#4F46E5"/>
+        </marker>
+        <marker id="arr-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#06B6D4"/>
+        </marker>
+    </defs>
+</svg>
+<div class="diagram-caption">
+    Schéma 1 — Architecture haut niveau. Le serveur MCP n'est jamais exposé directement à
+    Internet : tout passe par le reverse proxy avec authentification obligatoire. Côté serveur,
+    le MCP délègue les opérations à l'API métier qui applique les règles d'Anim'Gest.
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 4. MODES                                                      -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Modes d'accès aux données</h2>
+    <div class="line"></div>
+    <span class="num">04</span>
+</div>
+
+<p style="color:#cbd5e1; margin-bottom: 16px;">
+    Le serveur MCP propose deux modes d'accès, choisis au moment de la conception de chaque outil
+    et jamais modifiables au runtime. Le mode par défaut est volontairement restrictif : tout
+    passe par l'API métier.
+</p>
+
+<div class="two-col">
+    <div class="card success">
+        <div class="tag-row">
+            <span class="tag green">Mode par défaut</span>
+            <span class="tag">Lecture &amp; écriture</span>
+        </div>
+        <h3>Via l'API métier</h3>
+        <p>
+            Le serveur MCP appelle l'API REST interne d'Anim'Gest, exactement comme le ferait
+            l'interface web. Ce mode garantit que toutes les règles métier sont automatiquement
+            appliquées : validations, calculs de TVA, tarification, workflow de validation des
+            devis, journal comptable, etc.
+        </p>
+        <ul class="features">
+            <li>Triggers de cohérence respectés</li>
+            <li>Filtres d'archivage appliqués</li>
+            <li>Validations automatiques en cascade</li>
+            <li>Workflow conforme à l'interface utilisateur</li>
+        </ul>
+    </div>
+    <div class="card gold">
+        <div class="tag-row">
+            <span class="tag orange">Mode analytique</span>
+            <span class="tag">Lecture seule stricte</span>
+        </div>
+        <h3>Accès direct en lecture</h3>
+        <p>
+            Pour des besoins d'analyse ou de reporting cross-tables, certains outils peuvent lire
+            directement la base de données. Cet accès est <strong>strictement en lecture</strong>,
+            avec un compte dédié dépourvu de tout droit d'écriture, plus une validation
+            applicative qui rejette toute tentative de modification.
+        </p>
+        <ul class="features">
+            <li>Compte de lecture sans privilèges d'écriture</li>
+            <li>Validation applicative anti-écriture</li>
+            <li>Limite stricte du nombre de lignes retournées</li>
+            <li>Aucune table sensible accessible</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 5. CYCLE D'UN APPEL                                           -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Cycle d'un appel</h2>
+    <div class="line"></div>
+    <span class="num">05</span>
+</div>
+
+<p style="color:#cbd5e1; margin-bottom: 16px;">
+    Toute action déclenchée par un client IA externe suit le même chemin : authentification,
+    résolution de contexte, validation des droits, validation des arguments, exécution déléguée,
+    audit. Aucune étape n'est court-circuitée.
+</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 1000 460" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans, sans-serif">
+    <!-- Flow boxes -->
+    <g font-size="12">
+        <!-- Step 1 -->
+        <rect x="40" y="40" width="180" height="80" rx="12" fill="#1a1040" stroke="#4F46E5" stroke-width="2"/>
+        <circle cx="60" cy="60" r="14" fill="#4F46E5"/>
+        <text x="60" y="65" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">1</text>
+        <text x="130" y="86" fill="#a5b4fc" font-size="13" font-weight="700" text-anchor="middle">Authentification</text>
+        <text x="130" y="104" fill="#94a3b8" font-size="11" text-anchor="middle">Bearer JWT signé</text>
+
+        <line x1="220" y1="80" x2="260" y2="80" stroke="#94a3b8" stroke-width="2" marker-end="url(#flow-arrow-grey)"/>
+
+        <!-- Step 2 -->
+        <rect x="260" y="40" width="180" height="80" rx="12" fill="#0e7490" stroke="#06B6D4" stroke-width="2"/>
+        <circle cx="280" cy="60" r="14" fill="#06B6D4"/>
+        <text x="280" y="65" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">2</text>
+        <text x="350" y="86" fill="#67e8f9" font-size="13" font-weight="700" text-anchor="middle">Résolution contexte</text>
+        <text x="350" y="104" fill="#94a3b8" font-size="11" text-anchor="middle">Compte client + droits</text>
+
+        <line x1="440" y1="80" x2="480" y2="80" stroke="#94a3b8" stroke-width="2" marker-end="url(#flow-arrow-grey)"/>
+
+        <!-- Step 3 -->
+        <rect x="480" y="40" width="180" height="80" rx="12" fill="#78350f" stroke="#F59E0B" stroke-width="2"/>
+        <circle cx="500" cy="60" r="14" fill="#F59E0B"/>
+        <text x="500" y="65" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">3</text>
+        <text x="570" y="86" fill="#fcd34d" font-size="13" font-weight="700" text-anchor="middle">Validation droits</text>
+        <text x="570" y="104" fill="#94a3b8" font-size="11" text-anchor="middle">Plan + consentements</text>
+
+        <line x1="660" y1="80" x2="700" y2="80" stroke="#94a3b8" stroke-width="2" marker-end="url(#flow-arrow-grey)"/>
+
+        <!-- Step 4 -->
+        <rect x="700" y="40" width="180" height="80" rx="12" fill="#064e3b" stroke="#10B981" stroke-width="2"/>
+        <circle cx="720" cy="60" r="14" fill="#10B981"/>
+        <text x="720" y="65" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">4</text>
+        <text x="790" y="86" fill="#6ee7b7" font-size="13" font-weight="700" text-anchor="middle">Validation entrée</text>
+        <text x="790" y="104" fill="#94a3b8" font-size="11" text-anchor="middle">Schéma typé strict</text>
+
+        <!-- Down arrow -->
+        <line x1="790" y1="120" x2="790" y2="160" stroke="#94a3b8" stroke-width="2" marker-end="url(#flow-arrow-grey)"/>
+
+        <!-- Step 5 -->
+        <rect x="700" y="160" width="180" height="80" rx="12" fill="#1E293B" stroke="#B8860B" stroke-width="2"/>
+        <circle cx="720" cy="180" r="14" fill="#B8860B"/>
+        <text x="720" y="185" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">5</text>
+        <text x="790" y="206" fill="#D4A017" font-size="13" font-weight="700" text-anchor="middle">Exécution</text>
+        <text x="790" y="224" fill="#94a3b8" font-size="11" text-anchor="middle">Délégation API métier</text>
+
+        <line x1="700" y1="200" x2="660" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#flow-arrow-grey)"/>
+
+        <!-- Step 6 -->
+        <rect x="480" y="160" width="180" height="80" rx="12" fill="#1E293B" stroke="#06B6D4" stroke-width="2"/>
+        <circle cx="500" cy="180" r="14" fill="#06B6D4"/>
+        <text x="500" y="185" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">6</text>
+        <text x="570" y="206" fill="#67e8f9" font-size="13" font-weight="700" text-anchor="middle">Réponse</text>
+        <text x="570" y="224" fill="#94a3b8" font-size="11" text-anchor="middle">Format MCP standard</text>
+
+        <line x1="480" y1="200" x2="440" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#flow-arrow-grey)"/>
+
+        <!-- Step 7 -->
+        <rect x="260" y="160" width="180" height="80" rx="12" fill="#1E293B" stroke="#94a3b8" stroke-width="2"/>
+        <circle cx="280" cy="180" r="14" fill="#94a3b8"/>
+        <text x="280" y="185" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">7</text>
+        <text x="350" y="206" fill="#cbd5e1" font-size="13" font-weight="700" text-anchor="middle">Audit RGPD</text>
+        <text x="350" y="224" fill="#94a3b8" font-size="11" text-anchor="middle">Hash payload tracé</text>
+
+        <!-- Final response back to client -->
+        <line x1="260" y1="200" x2="130" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#flow-arrow-grey)"/>
+        <rect x="40" y="160" width="180" height="80" rx="12" fill="#0F172A" stroke="#4F46E5" stroke-width="2" stroke-dasharray="6 3"/>
+        <text x="130" y="206" fill="#a5b4fc" font-size="13" font-weight="700" text-anchor="middle">↩ Réponse client</text>
+        <text x="130" y="224" fill="#94a3b8" font-size="11" text-anchor="middle">Résultat ou erreur</text>
+    </g>
+
+    <!-- Failure cases -->
+    <rect x="100" y="290" width="800" height="140" rx="10" fill="#0F172A" stroke="#EF4444" stroke-width="1" stroke-dasharray="6 3"/>
+    <text x="500" y="316" fill="#f87171" font-size="13" font-weight="700" text-anchor="middle">⚠ Échec à n'importe quelle étape = arrêt immédiat</text>
+
+    <text x="180" y="346" fill="#94a3b8" font-size="11" text-anchor="middle">Token invalide</text>
+    <text x="180" y="362" fill="#fca5a5" font-size="10" text-anchor="middle">→ 401</text>
+
+    <text x="340" y="346" fill="#94a3b8" font-size="11" text-anchor="middle">Compte suspendu</text>
+    <text x="340" y="362" fill="#fca5a5" font-size="10" text-anchor="middle">→ 403</text>
+
+    <text x="500" y="346" fill="#94a3b8" font-size="11" text-anchor="middle">Plan insuffisant</text>
+    <text x="500" y="362" fill="#fca5a5" font-size="10" text-anchor="middle">→ 403</text>
+
+    <text x="660" y="346" fill="#94a3b8" font-size="11" text-anchor="middle">Argument invalide</text>
+    <text x="660" y="362" fill="#fca5a5" font-size="10" text-anchor="middle">→ 422</text>
+
+    <text x="820" y="346" fill="#94a3b8" font-size="11" text-anchor="middle">Règle métier</text>
+    <text x="820" y="362" fill="#fca5a5" font-size="10" text-anchor="middle">→ 409</text>
+
+    <text x="500" y="400" fill="#cbd5e1" font-size="12" text-anchor="middle">Toute erreur est tracée dans l'audit avec son code et son contexte minimal.</text>
+    <text x="500" y="416" fill="#94a3b8" font-size="11" text-anchor="middle">Aucune information sensible n'est jamais renvoyée au client en cas d'échec.</text>
+
+    <defs>
+        <marker id="flow-arrow-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+        </marker>
+    </defs>
+</svg>
+<div class="diagram-caption">
+    Schéma 2 — Cycle complet d'un appel. Les sept étapes sont enchaînées en fail-fast :
+    si l'une échoue, les suivantes ne sont jamais exécutées et l'événement est tracé.
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 6. AUTORISATIONS                                              -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Pipeline d'autorisation</h2>
+    <div class="line"></div>
+    <span class="num">06</span>
+</div>
+
+<p style="color:#cbd5e1; margin-bottom: 16px;">
+    L'autorisation s'effectue en quatre niveaux successifs, chacun pouvant refuser l'opération
+    avec un code d'erreur explicite. Chaque niveau est indépendant des autres : un attaquant
+    devrait franchir les quatre simultanément, ce qui est rendu très difficile par construction.
+</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans, sans-serif">
+    <!-- Layer 1: JWT -->
+    <rect x="60" y="40" width="880" height="60" rx="10" fill="#1a1040" stroke="#4F46E5" stroke-width="2"/>
+    <text x="100" y="65" fill="#a5b4fc" font-size="14" font-weight="700">1. Token signé</text>
+    <text x="100" y="85" fill="#94a3b8" font-size="12">Vérification cryptographique du token : émetteur, expiration, intégrité</text>
+    <rect x="780" y="55" width="140" height="30" rx="6" fill="#312e81" stroke="#4F46E5"/>
+    <text x="850" y="74" fill="#a5b4fc" font-size="11" text-anchor="middle">→ Compte identifié</text>
+
+    <line x1="500" y1="100" x2="500" y2="118" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <!-- Layer 2: Account validity -->
+    <rect x="60" y="120" width="880" height="60" rx="10" fill="#0e7490" stroke="#06B6D4" stroke-width="2"/>
+    <text x="100" y="145" fill="#67e8f9" font-size="14" font-weight="700">2. Validité du compte</text>
+    <text x="100" y="165" fill="#94a3b8" font-size="12">Compte actif · Abonnement en cours · Date d'expiration valide</text>
+    <rect x="780" y="135" width="140" height="30" rx="6" fill="#0e7490" stroke="#06B6D4"/>
+    <text x="850" y="154" fill="#67e8f9" font-size="11" text-anchor="middle">→ Plan déterminé</text>
+
+    <line x1="500" y1="180" x2="500" y2="198" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <!-- Layer 3: Tool flags -->
+    <rect x="60" y="200" width="880" height="60" rx="10" fill="#78350f" stroke="#F59E0B" stroke-width="2"/>
+    <text x="100" y="225" fill="#fcd34d" font-size="14" font-weight="700">3. Droits sur l'outil demandé</text>
+    <text x="100" y="245" fill="#94a3b8" font-size="12">L'outil est-il inclus dans la formule ? Le consentement requis est-il donné ?</text>
+    <rect x="780" y="215" width="140" height="30" rx="6" fill="#78350f" stroke="#F59E0B"/>
+    <text x="850" y="234" fill="#fcd34d" font-size="11" text-anchor="middle">→ Outil débloqué</text>
+
+    <line x1="500" y1="260" x2="500" y2="278" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <!-- Layer 4: Argument validation -->
+    <rect x="60" y="280" width="880" height="60" rx="10" fill="#064e3b" stroke="#10B981" stroke-width="2"/>
+    <text x="100" y="305" fill="#6ee7b7" font-size="14" font-weight="700">4. Validation des arguments</text>
+    <text x="100" y="325" fill="#94a3b8" font-size="12">Types · Plages numériques · Formats date · Longueurs · Énumérations</text>
+    <rect x="780" y="295" width="140" height="30" rx="6" fill="#064e3b" stroke="#10B981"/>
+    <text x="850" y="314" fill="#6ee7b7" font-size="11" text-anchor="middle">→ Exécution OK</text>
+</svg>
+<div class="diagram-caption">
+    Schéma 3 — Quatre niveaux successifs de validation. Chaque niveau est documenté et
+    journalisé : en cas de refus, la cause est connue, traçable et expliquable au client.
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 7. RESTRICTIONS                                               -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Ce qui est autorisé · ce qui ne l'est pas</h2>
+    <div class="line"></div>
+    <span class="num">07</span>
+</div>
+
+<p style="color:#cbd5e1; margin-bottom: 16px;">
+    Les règles de sécurité sont implémentées <strong>par construction</strong>, pas par convention.
+    Un client IA externe, même malveillant, ne peut techniquement pas contourner ces règles : elles
+    sont appliquées à plusieurs niveaux (permissions de la base, code applicatif, registre des outils).
+</p>
+
+<div class="two-col">
+    <div class="card success">
+        <h3>✓ Autorisé</h3>
+        <ul class="features">
+            <li>Recherche, lecture et listes (clients, animaux, devis, factures, agenda, etc.)</li>
+            <li>Création de nouveaux enregistrements (devis, séances, paiements, animaux)</li>
+            <li>Modification de statut (valider un devis, marquer une facture payée)</li>
+            <li>Génération de PDF (devis, factures, documents)</li>
+            <li>Envoi d'emails via les canaux configurés du compte</li>
+            <li>Lecture de statistiques agrégées sur le compte</li>
+        </ul>
+    </div>
+    <div class="card danger">
+        <h3>✗ Strictement interdit</h3>
+        <ul class="features">
+            <li class="danger">Suppression d'enregistrement, sous toute forme, sans exception</li>
+            <li class="danger">Modification directe de la base (toute opération d'écriture brute)</li>
+            <li class="danger">Modification de la structure des données (création/suppression de tables, colonnes)</li>
+            <li class="danger">Création ou modification d'utilisateurs ou de comptes</li>
+            <li class="danger">Accès aux données d'un autre cabinet que le sien</li>
+            <li class="danger">Contournement des consentements RGPD</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card warning" style="margin-top: 20px;">
+    <h3>⚠ Pourquoi ces interdictions sont absolues</h3>
+    <p>
+        Les opérations destructives ou structurelles présentent des risques de perte de données ou
+        de cohérence métier qui ne peuvent pas être validés correctement par une IA, même
+        sophistiquée. Plutôt que de tenter de filtrer au cas par cas, nous interdisons par
+        principe ces opérations au niveau du serveur MCP. Les utilisateurs gardent évidemment
+        toutes ces possibilités dans l'interface web classique d'Anim'Gest, qui dispose des
+        garde-fous interactifs nécessaires (confirmations, rollbacks, journaux, etc.).
+    </p>
+</div>
+
+<!-- ============================================================ -->
+<!-- 8. DEFENSE                                                    -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Défense en profondeur</h2>
+    <div class="line"></div>
+    <span class="num">08</span>
+</div>
+
+<p style="color:#cbd5e1; margin-bottom: 16px;">
+    La sécurité du serveur MCP repose sur cinq couches indépendantes. Chaque couche est suffisante
+    pour bloquer une catégorie d'attaques, mais aucune n'est seule responsable de la sécurité du
+    système. Pour qu'un attaquant atteigne les données, il doit franchir successivement les cinq
+    couches.
+</p>
+
+<div class="diagram-wrap">
+<svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans, sans-serif">
+    <!-- Concentric layers -->
+    <circle cx="450" cy="240" r="220" fill="none" stroke="#4F46E5" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+    <circle cx="450" cy="240" r="180" fill="none" stroke="#06B6D4" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+    <circle cx="450" cy="240" r="140" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+    <circle cx="450" cy="240" r="100" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+    <circle cx="450" cy="240" r="60" fill="none" stroke="#EF4444" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+
+    <!-- Inner core: Data -->
+    <circle cx="450" cy="240" r="50" fill="#312e81" stroke="#B8860B" stroke-width="2"/>
+    <text x="450" y="235" fill="#D4A017" font-size="13" font-weight="700" text-anchor="middle">Données</text>
+    <text x="450" y="252" fill="#94a3b8" font-size="11" text-anchor="middle">du cabinet</text>
+
+    <!-- Layer 5 outermost -->
+    <rect x="20" y="20" width="220" height="60" rx="10" fill="#1a1040" stroke="#4F46E5" stroke-width="2"/>
+    <text x="130" y="42" fill="#a5b4fc" font-size="13" font-weight="700">5. Réseau</text>
+    <text x="130" y="60" fill="#94a3b8" font-size="11">Service isolé</text>
+    <text x="130" y="74" fill="#94a3b8" font-size="11">Pas d'accès direct externe</text>
+
+    <!-- Layer 4 -->
+    <rect x="660" y="20" width="220" height="60" rx="10" fill="#0e7490" stroke="#06B6D4" stroke-width="2"/>
+    <text x="770" y="42" fill="#67e8f9" font-size="13" font-weight="700">4. Authentification</text>
+    <text x="770" y="60" fill="#94a3b8" font-size="11">Token signé · Durée limitée</text>
+    <text x="770" y="74" fill="#94a3b8" font-size="11">Rotation régulière</text>
+
+    <!-- Layer 3 -->
+    <rect x="20" y="400" width="220" height="60" rx="10" fill="#064e3b" stroke="#10B981" stroke-width="2"/>
+    <text x="130" y="422" fill="#6ee7b7" font-size="13" font-weight="700">3. Autorisation</text>
+    <text x="130" y="440" fill="#94a3b8" font-size="11">Plan + consentements</text>
+    <text x="130" y="454" fill="#94a3b8" font-size="11">Validation arguments stricte</text>
+
+    <!-- Layer 2 -->
+    <rect x="660" y="400" width="220" height="60" rx="10" fill="#78350f" stroke="#F59E0B" stroke-width="2"/>
+    <text x="770" y="422" fill="#fcd34d" font-size="13" font-weight="700">2. Code applicatif</text>
+    <text x="770" y="440" fill="#94a3b8" font-size="11">Garde-fous logiciels</text>
+    <text x="770" y="454" fill="#94a3b8" font-size="11">Registre des outils contrôlé</text>
+
+    <!-- Layer 1 closest to data -->
+    <rect x="340" y="400" width="220" height="60" rx="10" fill="#7f1d1d" stroke="#EF4444" stroke-width="2"/>
+    <text x="450" y="422" fill="#fca5a5" font-size="13" font-weight="700">1. Permissions BDD</text>
+    <text x="450" y="440" fill="#94a3b8" font-size="11">Compte technique en lecture</text>
+    <text x="450" y="454" fill="#94a3b8" font-size="11">Aucun droit d'écriture</text>
+
+    <!-- Lines from labels to circles -->
+    <line x1="240" y1="50" x2="320" y2="120" stroke="#4F46E5" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <line x1="660" y1="50" x2="580" y2="120" stroke="#06B6D4" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <line x1="240" y1="430" x2="320" y2="360" stroke="#10B981" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <line x1="660" y1="430" x2="580" y2="360" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <line x1="450" y1="400" x2="450" y2="300" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="3 3"/>
+</svg>
+<div class="diagram-caption">
+    Schéma 4 — Cinq couches concentriques de sécurité. Le principe est qu'aucune couche ne peut
+    être contournée par les autres. Une vulnérabilité dans une couche n'expose pas le système si
+    les autres couches restent intactes.
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 9. AUDIT RGPD                                                 -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Audit & traçabilité RGPD</h2>
+    <div class="line"></div>
+    <span class="num">09</span>
+</div>
+
+<p style="color:#cbd5e1; margin-bottom: 16px;">
+    Chaque appel d'outil est tracé dans un journal d'audit centralisé. Le contenu du journal
+    respecte par défaut le principe de minimisation RGPD : aucune donnée personnelle n'est
+    stockée en clair.
+</p>
+
+<div class="card cyan">
+    <h3>Ce qui est tracé pour chaque appel</h3>
+    <ul class="features">
+        <li>Quel outil a été appelé (ex : <code>create_devis</code>)</li>
+        <li>Quel cabinet et quel utilisateur ont effectué l'appel</li>
+        <li>Date et heure précises</li>
+        <li>Statut : succès, refus ou erreur</li>
+        <li>Latence d'exécution en millisecondes</li>
+        <li>Empreinte cryptographique des arguments (pas leur contenu)</li>
+        <li>Code et message d'erreur le cas échéant</li>
+    </ul>
+</div>
+
+<div class="card success" style="margin-top: 16px;">
+    <h3>Pourquoi une empreinte plutôt que le contenu</h3>
+    <p>
+        Stocker les arguments en clair impliquerait de garder potentiellement des données
+        personnelles dans les journaux. À la place, nous stockons une empreinte cryptographique
+        (hash SHA-256) des arguments. Cette empreinte permet :
+    </p>
+    <ul class="features">
+        <li>De détecter des patterns d'usage (même argument répété plusieurs fois)</li>
+        <li>De prouver juridiquement qu'un appel a bien eu lieu (auditabilité)</li>
+        <li>De ne jamais exposer de données client en cas d'audit ou de fuite</li>
+        <li>De respecter le principe de minimisation imposé par le RGPD</li>
+    </ul>
+</div>
+
+<!-- ============================================================ -->
+<!-- 10. PERFORMANCE                                               -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Performance & disponibilité</h2>
+    <div class="line"></div>
+    <span class="num">10</span>
+</div>
+
+<p style="color:#cbd5e1; margin-bottom: 16px;">
+    Le serveur MCP est conçu pour servir plusieurs cabinets simultanément avec une latence
+    perçue identique à celle de l'interface web classique. Il est <strong>stateless</strong> :
+    aucune donnée n'est conservée entre les requêtes, ce qui simplifie le redémarrage et le
+    passage à l'échelle.
+</p>
+
+<table class="tbl">
+<thead>
+<tr><th>Type d'opération</th><th>Latence cible (95e centile)</th><th>Comportement en cas d'incident</th></tr>
+</thead>
+<tbody>
+<tr><td>Recherche / lecture simple</td><td class="muted">moins de 100 ms</td><td class="muted">Réessai automatique côté client MCP</td></tr>
+<tr><td>Création / modification</td><td class="muted">moins de 300 ms</td><td class="muted">Erreur explicite + journal d'audit</td></tr>
+<tr><td>Analytique multi-tables</td><td class="muted">moins de 500 ms</td><td class="muted">Limite dure du nombre de lignes</td></tr>
+<tr><td>Validation droits</td><td class="muted">moins de 50 ms</td><td class="muted">Cache local avec invalidation</td></tr>
+</tbody>
+</table>
+
+<div class="card warning" style="margin-top: 20px;">
+    <h3>Disponibilité indépendante de l'interface utilisateur</h3>
+    <p>
+        Une indisponibilité du serveur MCP n'affecte ni l'interface web ni les sauvegardes ni
+        les emails automatiques. Réciproquement, une interruption de l'interface web n'empêche
+        pas l'API métier (et donc le serveur MCP) de continuer à fonctionner. Cette
+        indépendance est volontaire et améliore la robustesse globale du système.
+    </p>
+</div>
+
+<!-- ============================================================ -->
+<!-- 11. ROADMAP                                                   -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Et pour la suite ?</h2>
+    <div class="line"></div>
+    <span class="num">11</span>
+</div>
+
+<p style="color:#cbd5e1; margin-bottom: 16px;">
+    Le serveur MCP est mis en place progressivement, par phases :
+</p>
+
+<div class="use-cases">
+    <div class="use-case">
+        <div class="icon">🌱</div>
+        <h4>Phase 1 — Lecture seule</h4>
+        <p>
+            Un client IA peut consulter ses données : clients, animaux, devis, factures.
+            Aucune action d'écriture autorisée durant cette phase.
+        </p>
+    </div>
+    <div class="use-case">
+        <div class="icon">📝</div>
+        <h4>Phase 2 — Création basique</h4>
+        <p>
+            Création de devis, séances, animaux, paiements. Triggers métier appliqués
+            comme dans l'interface utilisateur classique.
+        </p>
+    </div>
+    <div class="use-case">
+        <div class="icon">🤝</div>
+        <h4>Phase 3 — Multi-cabinet</h4>
+        <p>
+            Vue consolidée pour les chaînes de cabinets, avec respect strict des consentements
+            RGPD du propriétaire de l'animal.
+        </p>
+    </div>
+    <div class="use-case">
+        <div class="icon">🚀</div>
+        <h4>Phase 4 — Intégrations</h4>
+        <p>
+            Ouverture aux partenaires externes, écosystème d'outils et flux automatisés
+            certifiés.
+        </p>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- CTA                                                           -->
+<!-- ============================================================ -->
+<div class="cta">
+    <h3>Une question, un cas d'usage ?</h3>
+    <p>
+        Le serveur MCP d'Anim'Gest est en construction. Si vous êtes éditeur, intégrateur ou
+        cabinet pilote intéressé par cette fonctionnalité, parlons-en.
+    </p>
+    <div class="cta-btns">
+        <a href="docs-commercial.html" class="cta-btn cta-btn-primary">Voir l'offre commerciale</a>
+        <a href="index-complet.html" class="cta-btn cta-btn-ghost">Documentation complète</a>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- AUTRES REFS                                                   -->
+<!-- ============================================================ -->
+<div class="section-header">
+    <h2>Pour aller plus loin</h2>
+    <div class="line"></div>
+    <span class="num">+</span>
+</div>
+
+<div class="use-cases">
+    <a href="adv-eliot-avance.html" class="use-case" style="text-decoration:none;">
+        <div class="icon">🤖</div>
+        <h4>Eliot IA — Référence</h4>
+        <p>L'agent IA intégré dans Anim'Gest, complémentaire au serveur MCP.</p>
+    </a>
+    <a href="tech-rgpd.html" class="use-case" style="text-decoration:none;">
+        <div class="icon">🔒</div>
+        <h4>Guide RGPD</h4>
+        <p>Données traitées, droits des personnes, obligations Anim'Gest.</p>
+    </a>
+    <a href="17-api-reference.html" class="use-case" style="text-decoration:none;">
+        <div class="icon">📡</div>
+        <h4>Référence API</h4>
+        <p>L'API métier sous-jacente utilisée par le serveur MCP.</p>
+    </a>
+    <a href="tech-schema-donnees.html" class="use-case" style="text-decoration:none;">
+        <div class="icon">🗄️</div>
+        <h4>Schéma de données</h4>
+        <p>Tables principales, relations et conventions de nommage.</p>
+    </a>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                        -->
+<!-- ============================================================ -->
+<footer>
+    <div class="brand">Anim'Gest · NoSage's Editor</div>
+    <p>Documentation publique — <a href="https://no-sages-editor.com">no-sages-editor.com</a></p>
+    <p style="margin-top:8px; font-size:11px;">
+        MCP : Model Context Protocol · Standard ouvert proposé par Anthropic
+    </p>
+</footer>
+
+</body>
+</html>
