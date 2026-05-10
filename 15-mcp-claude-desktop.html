@@ -27,16 +27,8 @@
       margin: 0;
       padding: 0;
     }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-    }
-    header {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1rem;
-      margin-bottom: 2rem;
-    }
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
     header h1 {
       font-family: Georgia, serif;
       font-size: 2.2rem;
@@ -46,10 +38,7 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    header .subtitle {
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
+    header .subtitle { color: var(--text-muted); font-size: 1rem; }
     h2 {
       font-size: 1.5rem;
       margin-top: 2.5rem;
@@ -57,18 +46,9 @@
       border-bottom: 1px solid var(--border);
       padding-bottom: 0.3rem;
     }
-    h3 {
-      font-size: 1.2rem;
-      margin-top: 1.5rem;
-      color: var(--text);
-    }
-    p, li {
-      color: var(--text);
-    }
-    a {
-      color: var(--secondary);
-      text-decoration: none;
-    }
+    h3 { font-size: 1.2rem; margin-top: 1.5rem; color: var(--text); }
+    p, li { color: var(--text); }
+    a { color: var(--secondary); text-decoration: none; }
     a:hover { text-decoration: underline; }
     code {
       background: var(--code-bg);
@@ -87,26 +67,10 @@
       font-size: 0.85rem;
       line-height: 1.4;
     }
-    pre code {
-      background: transparent;
-      padding: 0;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-      font-size: 0.95rem;
-    }
-    th, td {
-      padding: 0.6rem 0.8rem;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-    }
-    th {
-      background: var(--bg-light);
-      color: var(--secondary);
-      font-weight: 600;
-    }
+    pre code { background: transparent; padding: 0; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
+    th, td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border); text-align: left; }
+    th { background: var(--bg-light); color: var(--secondary); font-weight: 600; }
     .callout {
       border-left: 3px solid var(--primary);
       padding: 0.8rem 1rem;
@@ -114,12 +78,8 @@
       background: var(--bg-light);
       border-radius: 0 6px 6px 0;
     }
-    .callout.warning {
-      border-left-color: var(--warning);
-    }
-    .callout.success {
-      border-left-color: var(--success);
-    }
+    .callout.warning { border-left-color: var(--warning); }
+    .callout.success { border-left-color: var(--success); }
     .badge {
       display: inline-block;
       padding: 0.15rem 0.5rem;
@@ -128,20 +88,10 @@
       font-weight: 600;
       text-transform: uppercase;
     }
-    .badge-beta {
-      background: var(--warning);
-      color: var(--bg);
-    }
-    .badge-coming {
-      background: var(--bg-light);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-    }
-    nav.breadcrumb {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-    }
+    .badge-beta { background: var(--warning); color: var(--bg); }
+    .badge-coming { background: var(--bg-light); color: var(--text-muted); border: 1px solid var(--border); }
+    .badge-new { background: var(--success); color: var(--bg); }
+    nav.breadcrumb { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; }
     nav.breadcrumb a { color: var(--text-muted); }
     footer {
       margin-top: 4rem;
@@ -187,10 +137,10 @@
       <tr><th>Composant</th><th>Détail</th></tr>
     </thead>
     <tbody>
-      <tr><td>Claude Desktop</td><td>Installé et à jour avec support MCP SSE</td></tr>
+      <tr><td>Claude Desktop</td><td>Installé et à jour avec support MCP</td></tr>
       <tr><td>Abonnement Anim'Gest</td><td>Formule incluant l'option MCP (Pro ou Expert)</td></tr>
       <tr><td>Token d'accès personnel</td><td>Fourni par votre administrateur Anim'Gest, valide 1 heure</td></tr>
-      <tr><td>URL MCP du cabinet</td><td>Fournie avec votre token (forme <code>https://&lt;votre-cabinet&gt;.animgest.fr/mcp/sse</code>)</td></tr>
+      <tr><td>Configuration MCP</td><td>Fournie avec votre token (selon le mode de déploiement choisi)</td></tr>
     </tbody>
   </table>
 
@@ -213,28 +163,48 @@
   </table>
   <p>Si le fichier n'existe pas, créez-le.</p>
 
-  <h3>3.2 Contenu à coller</h3>
+  <h3>3.2 Configuration recommandée — mode local <span class="badge badge-new">Nouveau</span></h3>
+  <p>
+    Le mode recommandé exécute le serveur MCP localement comme sous-processus de Claude Desktop. Pas de port HTTP
+    à configurer, pas de proxy intermédiaire, pas de connexion réseau exposée.
+  </p>
   <pre><code>{
   "mcpServers": {
     "animgest": {
-      "command": "npx",
+      "command": "node",
       "args": [
-        "-y",
-        "@modelcontextprotocol/inspector-cli",
-        "--transport", "sse",
-        "--url", "&lt;URL_MCP_FOURNIE_PAR_VOTRE_ADMIN&gt;",
-        "--header", "Authorization: Bearer ${ANIMGEST_TOKEN}"
+        "&lt;CHEMIN_FOURNI_PAR_VOTRE_ADMINISTRATEUR&gt;"
       ],
       "env": {
-        "ANIMGEST_TOKEN": "&lt;TOKEN_FOURNI_PAR_VOTRE_ADMIN&gt;"
+        "ANIMGEST_TOKEN": "&lt;TOKEN_FOURNI_PAR_VOTRE_ADMINISTRATEUR&gt;"
       }
     }
   }
 }</code></pre>
 
-  <p>Remplacez les deux valeurs entre chevrons par celles fournies par votre administrateur Anim'Gest.</p>
+  <p>
+    Votre administrateur Anim'Gest vous fournit le chemin exact (selon votre OS) et le token personnel.
+    Aucune autre information n'est nécessaire&nbsp;: la configuration locale du cabinet est gérée côté serveur Anim'Gest.
+  </p>
 
-  <h3>3.3 Redémarrage</h3>
+  <h3>3.3 Configuration alternative — mode distant</h3>
+  <p>
+    Si votre cabinet utilise une instance MCP hébergée (déploiement multi-cabinets), votre administrateur peut vous
+    fournir une configuration distante via SSE. Format générique&nbsp;:
+  </p>
+  <pre><code>{
+  "mcpServers": {
+    "animgest": {
+      "command": "&lt;COMMANDE_FOURNIE&gt;",
+      "args": [ "&lt;ARGUMENTS_FOURNIS&gt;" ],
+      "env": {
+        "ANIMGEST_TOKEN": "&lt;TOKEN&gt;"
+      }
+    }
+  }
+}</code></pre>
+
+  <h3>3.4 Redémarrage</h3>
   <p>Après modification du fichier&nbsp;:</p>
   <ol>
     <li>Fermez complètement Claude Desktop (vérifiez la barre des tâches)</li>
@@ -331,12 +301,16 @@
     </thead>
     <tbody>
       <tr>
-        <td>Pastille rouge "Connection refused"</td>
-        <td>Le serveur MCP n'est pas joignable. Vérifiez l'URL avec votre administrateur.</td>
+        <td>Pastille rouge "Failed to spawn process"</td>
+        <td>Le chemin du serveur MCP fourni est invalide ou le fichier n'a pas été déployé. Contactez votre administrateur.</td>
       </tr>
       <tr>
-        <td>Pastille rouge "401 Unauthorized"</td>
-        <td>Votre token est expiré ou invalide. Demandez-en un nouveau à votre administrateur.</td>
+        <td>Pastille rouge "Token manquant"</td>
+        <td>Le token n'est pas présent dans la configuration. Vérifiez la valeur de <code>ANIMGEST_TOKEN</code>.</td>
+      </tr>
+      <tr>
+        <td>Pastille rouge "Token invalide"</td>
+        <td>Votre token est expiré ou malformé. Demandez-en un nouveau à votre administrateur.</td>
       </tr>
       <tr>
         <td>Pastille rouge "Cabinet inactif"</td>
@@ -357,7 +331,6 @@
   <ul>
     <li>Mode beta technique — disponibilité conditionnée à la livraison infrastructure multi-tenant.</li>
     <li>4 capacités exposées en V0, l'ensemble des fonctionnalités Anim'Gest sera couvert progressivement en V1.</li>
-    <li>Pas encore de connexion en mode "stdio direct" — Claude Desktop utilise un proxy SSE intermédiaire.</li>
     <li>Une seule session Claude Desktop par token recommandée.</li>
   </ul>
 
@@ -368,7 +341,7 @@
   </p>
 
   <footer>
-    Anim'Gest — NoSage's Editor — Guide MCP Claude Desktop<br>
+    Anim'Gest — NoSage's Editor — Guide MCP Claude Desktop v2<br>
     Mise à jour&nbsp;: mai 2026
   </footer>
 
