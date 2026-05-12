@@ -171,7 +171,7 @@
 </style>
 <style>
 :root{
-  --navy:#0D2137;--navy-l:#112840;--navy-m:#1a3a5c;
+  --navy:#0f172a;--navy-l:#112840;--navy-m:#1a3a5c;
   --gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);
   --text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;
   --bdr:rgba(255,255,255,.08);
@@ -236,7 +236,7 @@ input[type=text],input[type=number],input[type=password],select,textarea{
   border-radius:8px;padding:.52rem .85rem;color:var(--text);font-size:.83rem;
   font-family:inherit;outline:none;transition:border-color .2s}
 input:focus,select:focus,textarea:focus{border-color:var(--gold-b)}
-select option{background:#0D2137}
+select option{background:#0f172a}
 textarea{resize:vertical;min-height:58px;line-height:1.5}
 
 .ri{display:flex;gap:6px;align-items:center;margin-bottom:5px}
@@ -767,7 +767,7 @@ function generate(){
 
   // Chemins dynamiques depuis le DEFAULT mis à jour
   var docsLocal = 'C:\\\\AnimGest_Repo_Git\\\\petsuite-docs';
-  var savScript = 'C:\\\\AnimGest_Sav\\\\Sauvegarde_micro_logiciel.ps1';
+  var savScript = 'C:\\\\AnimGest_Sav\\\\Sauvegarde_base applicative.ps1';
   var apiLines = S.nb_routes + ' (~' + (S.nb_routes > 85 ? '2800' : '2736') + ' lignes)';
 
   var md =
@@ -794,7 +794,7 @@ function generate(){
    +'| Docs local | '+docsLocal+' |\n'
    +'| Backup propre | C:\\\\AnimGest_Sav\\\\ (nightly) |\n'
    +'| Sauvegarde script | '+savScript+' |\n'
-   +'| BDD | 192.168.1.62:3307 — micro_logiciel |\n'
+   +'| BDD | MariaDB (LAN) — base applicative |\n'
    +'| Scripts Python | $env:USERPROFILE\\\\Downloads\\\\ (jamais dans OneDrive) |\n\n'
    +'---\n\n'
    +'## 1. Ce qui a été accompli en '+sp+'\n\n'
@@ -915,7 +915,7 @@ function generate(){
    +'<div style="flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center"><div style="font-size:1.4rem;font-weight:700;font-family:serif;color:'+scoreColor(S.sd)+'">'+S.sd+'</div><div style="font-size:.65rem;color:#8fa3b8;margin-top:.2rem">BDD</div></div>'
    +'<div style="flex:1;min-width:80px;background:rgba(0,0,0,.2);border-radius:8px;padding:.65rem;text-align:center"><div style="font-size:1.4rem;font-weight:700;font-family:serif;color:'+scoreColor(glo())+'">'+glo()+'</div><div style="font-size:.65rem;color:#8fa3b8;margin-top:.2rem">Global</div></div>'
    +'</div>'
-   +'<a href="'+dashUrl+'" style="display:block;width:100%;padding:.7rem;background:#D4A843;color:#0D2137;border:none;border-radius:8px;font-size:.85rem;font-weight:700;text-align:center;text-decoration:none;cursor:pointer">Ouvrir le Dashboard Qualité avec ces scores →</a>'
+   +'<a href="'+dashUrl+'" style="display:block;width:100%;padding:.7rem;background:#D4A843;color:#0f172a;border:none;border-radius:8px;font-size:.85rem;font-weight:700;text-align:center;text-decoration:none;cursor:pointer">Ouvrir le Dashboard Qualité avec ces scores →</a>'
    +'</div>';
   document.getElementById('scores-summary').style.display = 'block';
 }

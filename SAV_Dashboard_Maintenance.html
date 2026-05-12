@@ -170,7 +170,7 @@
     font-family: 'DM Sans','Space Grotesk','Syne','IBM Plex Sans',sans-serif; }
 </style>
 <style>
-:root{--navy:#0D2137;--navy-l:#112840;--navy-m:#1a3a5c;--gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);--text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;--bdr:rgba(255,255,255,.08);--ok:#4caf82;--warn:#e8a84a;--err:#e05c5c;--info:#5b9bd5;--r:10px;}
+:root{--navy:#0f172a;--navy-l:#112840;--navy-m:#1a3a5c;--gold:#D4A843;--gold-l:#e8c265;--gold-p:rgba(212,168,67,.13);--gold-b:rgba(212,168,67,.28);--text:#e8edf2;--muted:#8fa3b8;--dim:#4a6a82;--bdr:rgba(255,255,255,.08);--ok:#4caf82;--warn:#e8a84a;--err:#e05c5c;--info:#5b9bd5;--r:10px;}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',system-ui;background:var(--navy);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
 a{color:var(--gold);text-decoration:none}
@@ -560,7 +560,7 @@ function render(){
     ['Vérifier conteneurs', 'docker ps'],
     ['Relancer le stack', 'cd "'+ROOT_PATH+'\\deploy"\ndocker compose up -d'],
     ['Rebuild API après fix', 'cd "'+ROOT_PATH+'\\deploy"\ndocker compose build api --no-cache && docker compose up -d api && docker compose restart nginx'],
-    ['Sauvegarde manuelle', 'PowerShell -ExecutionPolicy Bypass -File "G:\\Sauvegarde_micro_logiciel\\Sauvegarde_micro_logiciel.ps1"'],
+    ['Sauvegarde manuelle', 'PowerShell -ExecutionPolicy Bypass -File "G:\\Sauvegarde_base applicative\\Sauvegarde_base applicative.ps1"'],
     ['Nettoyage cache Docker', 'docker builder prune --force'],
     ['Lister les .bak à supprimer', 'Get-ChildItem "'+ROOT_PATH+'" -Recurse -Filter "*.bak*" | Where-Object {$_.FullName -notlike "*node_modules*"} | Select-Object FullName'],
   ];

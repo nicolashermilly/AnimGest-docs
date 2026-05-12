@@ -142,7 +142,7 @@ footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20p
 <tbody>
 <tr><td>Page blanche ou erreur 502</td><td>Container frontend ou nginx arrêté</td><td>docker compose restart nginx frontend</td></tr>
 <tr><td>API ne répond pas (erreur 500)</td><td>Container API planté</td><td>docker compose restart api puis vérifier les logs</td></tr>
-<tr><td>Base de données inaccessible</td><td>MariaDB sur 192.168.1.62 non joignable</td><td>Vérifier que la machine serveur BDD est allumée et accessible</td></tr>
+<tr><td>Base de données inaccessible</td><td>MariaDB sur MariaDB (LAN) non joignable</td><td>Vérifier que la machine serveur BDD est allumée et accessible</td></tr>
 <tr><td>PDF ne génère pas</td><td>Puppeteer / Chromium dans le container API</td><td>Rebuild API --no-cache ou redémarrer le container API</td></tr>
 <tr><td>Emails ne partent pas</td><td>Configuration SMTP incorrecte ou serveur mail down</td><td>Paramètres → SMTP → Tester la configuration</td></tr>
 <tr><td>GED inaccessible</td><td>Dossier C:\AnimGest_GED\ non monté ou supprimé</td><td>Vérifier que le dossier existe et que le volume Docker est monté</td></tr>
@@ -182,19 +182,19 @@ footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20p
 <div class="check-label"><strong>Si erreur Next.js dans une page</strong>Corriger le fichier TSX puis rebuild frontend --no-cache</div>
 <span class="time-badge">15-30 min</span></div><div class="check-item">
 <div class="check-box"></div>
-<div class="check-label"><strong>Si la BDD est inaccessible</strong>Vérifier 192.168.1.62:3307 avec HeidiSQL ou ping</div>
+<div class="check-label"><strong>Si la BDD est inaccessible</strong>Vérifier MariaDB (LAN) avec HeidiSQL ou ping</div>
 <span class="time-badge">5 min</span></div><div class="check-item">
 <div class="check-box"></div>
 <div class="check-label"><strong>Si rien ne fonctionne</strong>Restaurer depuis la dernière sauvegarde</div>
 <span class="time-badge">30-60 min</span></div></div><div class="checklist-section"><div class="checklist-title"><span style="font-size:20px">💾</span>Restauration depuis sauvegarde</div><div class="check-item">
 <div class="check-box"></div>
-<div class="check-label"><strong>Localiser la dernière sauvegarde</strong>C:\Backup\micro_logiciel\ → dossier le plus récent</div>
+<div class="check-label"><strong>Localiser la dernière sauvegarde</strong>C:\Backup\base applicative\ → dossier le plus récent</div>
 <span class="time-badge">2 min</span></div><div class="check-item">
 <div class="check-box"></div>
 <div class="check-label"><strong>Arrêter tous les containers</strong>docker compose down</div>
 <span class="time-badge">1 min</span></div><div class="check-item">
 <div class="check-box"></div>
-<div class="check-label"><strong>Restaurer la BDD</strong>Importer le fichier .sql via HeidiSQL sur 192.168.1.62:3307</div>
+<div class="check-label"><strong>Restaurer la BDD</strong>Importer le fichier .sql via HeidiSQL sur MariaDB (LAN)</div>
 <span class="time-badge">10-20 min</span></div><div class="check-item">
 <div class="check-box"></div>
 <div class="check-label"><strong>Restaurer la GED</strong>Copier le dossier sauvegardé vers C:\AnimGest_GED\</div>
@@ -213,12 +213,12 @@ footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20p
 <thead><tr><th>Ressource</th><th>Accès</th><th>Utilisation</th></tr></thead>
 <tbody>
 <tr><td>Support technique</td><td>Email depuis Anim'Gest → Aide → Support</td><td>Bugs, questions techniques, incidents bloquants</td></tr>
-<tr><td>Backup propre S77</td><td>C:\Backup\micro_logiciel\20260315_0002</td><td>Référence de code source stable</td></tr>
+<tr><td>Backup propre S77</td><td>C:\Backup\base applicative\20260315_0002</td><td>Référence de code source stable</td></tr>
 <tr><td>Documentation technique</td><td>nicolashermilly.github.io/AnimGest-docs/</td><td>Architecture, routes API, règles critiques</td></tr>
 <tr><td>Logs Docker</td><td>docker compose logs [container] --tail 100</td><td>Diagnostic des erreurs runtime</td></tr>
 </tbody></table></div>
 </div>
-<footer>Anim'Gest · NoSage's Editor — Reprise après incident — Sprint S107 · 2026</footer>
+<footer>Anim'Gest · NoSage's Editor — Reprise après incident — Sprint S114 · 2026</footer>
 <script>
 document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
   q.nextElementSibling.classList.toggle('open');
