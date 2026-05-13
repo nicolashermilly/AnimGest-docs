@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Nos formules - Anim'Gest</title>
+<meta name="description" content="Choisissez la formule Anim'Gest adaptee a votre activite : Starter pour demarrer, Pro pour les structures etablies, Enterprise pour les groupes multi-etablissements.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root {
+    --c-primaire: #4F46E5;
+    --c-secondaire: #06B6D4;
+    --c-fond: #0F172A;
+    --c-fond2: #1E293B;
+    --c-fond3: #334155;
+    --c-texte: #F8FAFC;
+    --c-texte2: #CBD5E1;
+    --c-titre: #E0E7FF;
+    --c-success: #10b981;
+    --c-warning: #f59e0b;
+    --c-danger: #ef4444;
+    --c-grass: #65a30d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--c-fond);
+    color: var(--c-texte);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+  }
+
+  /* ===== Header / Nav ===== */
+  header.nav {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--c-fond3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--c-texte);
+  }
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--c-primaire), var(--c-secondaire));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    font-family: Georgia, serif;
+  }
+  .logo-text {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    letter-spacing: -1px;
+  }
+  .logo-text .sub {
+    font-size: 10px;
+    color: var(--c-secondaire);
+    display: block;
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--c-texte2);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--c-titre); }
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--c-primaire), var(--c-secondaire));
+    color: white;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79,70,229,0.4);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--c-titre);
+    border: 1px solid var(--c-fond3);
+  }
+  .btn-outline:hover {
+    border-color: var(--c-primaire);
+    color: var(--c-primaire);
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 80px 24px 60px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at top, rgba(79,70,229,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(6,182,212,0.1) 0%, transparent 60%);
+  }
+  .hero-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hero .pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(79,70,229,0.15);
+    color: var(--c-primaire);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(79,70,229,0.3);
+  }
+  .hero h1 {
+    font-family: Georgia, serif;
+    font-size: 48px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: var(--c-titre);
+    letter-spacing: -1px;
+  }
+  .hero h1 .accent {
+    background: linear-gradient(135deg, var(--c-primaire), var(--c-secondaire));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: 18px;
+    color: var(--c-texte2);
+    margin-bottom: 32px;
+  }
+  .hero .cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero .features-strip {
+    margin-top: 48px;
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--c-texte2);
+  }
+  .hero .features-strip span::before {
+    content: "+ ";
+    color: var(--c-success);
+    font-weight: 700;
+  }
+
+  /* ===== Sections ===== */
+  section {
+    padding: 64px 24px;
+  }
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .section-header .eyebrow {
+    color: var(--c-secondaire);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .section-header h2 {
+    font-family: Georgia, serif;
+    font-size: 36px;
+    color: var(--c-titre);
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .section-header p {
+    color: var(--c-texte2);
+    font-size: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ===== Packs grid ===== */
+  .packs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .pack-card {
+    background: var(--c-fond2);
+    border: 1px solid var(--c-fond3);
+    border-radius: 16px;
+    padding: 32px 24px;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .pack-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    border-color: var(--c-fond3);
+  }
+  .pack-card.featured {
+    border: 2px solid var(--c-primaire);
+    background: linear-gradient(180deg, rgba(79,70,229,0.05) 0%, var(--c-fond2) 100%);
+    transform: scale(1.02);
+  }
+  .pack-card.featured:hover {
+    transform: scale(1.02) translateY(-4px);
+  }
+  .pack-card .ribbon {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--c-primaire), var(--c-secondaire));
+    color: white;
+    padding: 6px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(79,70,229,0.5);
+  }
+  .pack-card h3 {
+    font-family: Georgia, serif;
+    font-size: 26px;
+    color: var(--c-titre);
+    margin-bottom: 4px;
+  }
+  .pack-card .tagline {
+    color: var(--c-texte2);
+    font-size: 14px;
+    margin-bottom: 24px;
+    min-height: 40px;
+  }
+  .pack-card .price {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--c-fond3);
+  }
+  .pack-card .price .amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--c-titre);
+  }
+  .pack-card .price .period {
+    color: var(--c-texte2);
+    font-size: 14px;
+  }
+  .pack-card .price .note {
+    color: var(--c-texte2);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .pack-card .users-line {
+    font-size: 14px;
+    color: var(--c-titre);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .pack-card ul.features {
+    list-style: none;
+    margin-bottom: 32px;
+  }
+  .pack-card ul.features li {
+    padding: 6px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .pack-card ul.features li::before {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .pack-card ul.features li.yes {
+    color: var(--c-texte);
+  }
+  .pack-card ul.features li.yes::before {
+    content: "+";
+    background: rgba(16,185,129,0.2);
+    color: var(--c-success);
+  }
+  .pack-card ul.features li.no {
+    color: rgba(150,150,150,0.5);
+    text-decoration: line-through;
+  }
+  .pack-card ul.features li.no::before {
+    content: "-";
+    background: rgba(100,100,100,0.2);
+    color: rgba(150,150,150,0.7);
+  }
+  .pack-card .pack-cta {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ===== Comparison table ===== */
+  .compare-section {
+    background: var(--c-fond2);
+  }
+  .compare-table-wrap {
+    overflow-x: auto;
+    background: var(--c-fond);
+    border-radius: 12px;
+    border: 1px solid var(--c-fond3);
+  }
+  table.compare {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+  }
+  table.compare th, table.compare td {
+    padding: 14px 18px;
+    text-align: center;
+    border-bottom: 1px solid var(--c-fond3);
+  }
+  table.compare th {
+    background: var(--c-fond2);
+    color: var(--c-titre);
+    font-weight: 600;
+    font-size: 15px;
+  }
+  table.compare th.feature-col {
+    text-align: left;
+    color: var(--c-texte2);
+    font-weight: 500;
+  }
+  table.compare td.feature-col {
+    text-align: left;
+    color: var(--c-titre);
+    font-weight: 500;
+  }
+  table.compare td.feature-col .desc {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--c-texte2);
+    margin-top: 2px;
+  }
+  table.compare td .check {
+    color: var(--c-success);
+    font-size: 20px;
+    font-weight: 700;
+  }
+  table.compare td .cross {
+    color: rgba(150,150,150,0.4);
+    font-size: 18px;
+  }
+  table.compare th.recommended-col {
+    background: linear-gradient(135deg, rgba(79,70,229,0.2), rgba(6,182,212,0.1));
+    color: var(--c-titre);
+  }
+  table.compare tr:hover td:not(.feature-col) {
+    background: rgba(79,70,229,0.05);
+  }
+  table.compare tbody tr.category-header td {
+    background: var(--c-fond3);
+    color: var(--c-secondaire);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  /* ===== Use cases ===== */
+  .usecases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .usecase-card {
+    background: var(--c-fond2);
+    border: 1px solid var(--c-fond3);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .usecase-card .uc-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--c-primaire), var(--c-secondaire));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 24px;
+  }
+  .usecase-card h4 {
+    color: var(--c-titre);
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-family: Georgia, serif;
+  }
+  .usecase-card .badge-pack {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: rgba(79,70,229,0.15);
+    color: var(--c-primaire);
+    margin-bottom: 12px;
+  }
+  .usecase-card p {
+    color: var(--c-texte2);
+    font-size: 14px;
+  }
+
+  /* ===== Workflow ===== */
+  .workflow-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    position: relative;
+  }
+  .workflow-step {
+    background: var(--c-fond2);
+    border: 1px solid var(--c-fond3);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    position: relative;
+  }
+  .workflow-step .step-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--c-primaire), var(--c-secondaire));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0 auto 16px;
+  }
+  .workflow-step h4 {
+    color: var(--c-titre);
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  .workflow-step p {
+    color: var(--c-texte2);
+    font-size: 13px;
+  }
+
+  /* ===== FAQ ===== */
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .faq-item {
+    background: var(--c-fond2);
+    border: 1px solid var(--c-fond3);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .faq-item summary {
+    padding: 18px 24px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--c-titre);
+    font-size: 16px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-item summary::after {
+    content: "+";
+    color: var(--c-primaire);
+    font-size: 22px;
+    transition: transform 0.2s;
+  }
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item .faq-body {
+    padding: 0 24px 18px;
+    color: var(--c-texte2);
+    font-size: 14px;
+  }
+
+  /* ===== Final CTA ===== */
+  .final-cta {
+    text-align: center;
+    background:
+      radial-gradient(ellipse at center, rgba(79,70,229,0.15) 0%, transparent 60%),
+      var(--c-fond);
+  }
+  .final-cta h2 {
+    font-family: Georgia, serif;
+    font-size: 36px;
+    color: var(--c-titre);
+    margin-bottom: 16px;
+  }
+  .final-cta p {
+    color: var(--c-texte2);
+    margin-bottom: 32px;
+    font-size: 16px;
+  }
+  .final-cta .cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ===== Footer ===== */
+  footer.site-footer {
+    background: var(--c-fond2);
+    border-top: 1px solid var(--c-fond3);
+    padding: 32px 24px;
+    text-align: center;
+    color: var(--c-texte2);
+    font-size: 13px;
+  }
+  footer.site-footer a { color: var(--c-secondaire); text-decoration: none; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 900px) {
+    .hero h1 { font-size: 36px; }
+    .section-header h2 { font-size: 28px; }
+    .packs-grid { grid-template-columns: 1fr; }
+    .pack-card.featured { transform: none; }
+    .pack-card.featured:hover { transform: translateY(-4px); }
+    .usecases-grid { grid-template-columns: 1fr; }
+    .workflow-steps { grid-template-columns: 1fr 1fr; }
+    .nav-links a { display: none; }
+    .nav-links .btn { display: inline-block; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== NAV ====== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">AG</div>
+      <div class="logo-text">
+        Anim'Gest
+        <span class="sub">NoSage's Editor</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="#packs">Formules</a></li>
+      <li><a href="#comparer">Comparer</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact" class="btn btn-primary">Demander un devis</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- ====== HERO ====== -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="pill">Nos formules</span>
+    <h1>Une formule adaptee a <span class="accent">chaque metier animalier</span></h1>
+    <p>
+      Anim'Gest accompagne 11 metiers du secteur animalier : comportementaliste, toiletteur, eleveur, veterinaire, osteopathe, pet-sitter, pension, centre equestre, association et plus. Choisissez la formule qui correspond a la taille de votre structure et a vos besoins.
+    </p>
+    <div class="cta-row">
+      <a href="#packs" class="btn btn-primary">Decouvrir les formules</a>
+      <a href="#contact" class="btn btn-outline">Nous contacter</a>
+    </div>
+    <div class="features-strip">
+      <span>Sans engagement de duree</span>
+      <span>Essai gratuit 30 jours</span>
+      <span>Support 7j/7</span>
+      <span>Donnees hebergees en France</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PACKS ====== -->
+<section id="packs">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">Choisir une formule</div>
+      <h2>3 formules pour s'adapter a votre activite</h2>
+      <p>Toutes les formules incluent la gestion complete des animaux, clients, seances, factures et la conformite reglementaire (RGPD, registre carnivores, FEC).</p>
+    </div>
+
+    <div class="packs-grid">
+
+      <!-- Starter -->
+      <div class="pack-card">
+        <h3>Starter</h3>
+        <div class="tagline">Pour demarrer votre activite en toute serenite</div>
+        <div class="price">
+          <div class="amount">Sur devis</div>
+          <div class="note">A partir de 1 a 3 utilisateurs</div>
+        </div>
+        <div class="users-line">Jusqu'a 3 utilisateurs</div>
+        <ul class="features">
+          <li class="yes">Gestion complete des dossiers animaux</li>
+          <li class="yes">Devis, factures, encaissements</li>
+          <li class="yes">Agenda et seances</li>
+          <li class="yes">Conformite reglementaire</li>
+          <li class="yes">Support email</li>
+          <li class="no">Assistant IA</li>
+          <li class="no">OCR des factures</li>
+          <li class="no">Transfert comptable automatique</li>
+          <li class="no">SMS / Multi-etablissements</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline pack-cta">Demarrer en Starter</a>
+      </div>
+
+      <!-- Pro (featured) -->
+      <div class="pack-card featured">
+        <div class="ribbon">RECOMMANDE</div>
+        <h3>Pro</h3>
+        <div class="tagline">L'equilibre parfait pour les structures etablies</div>
+        <div class="price">
+          <div class="amount">Sur devis</div>
+          <div class="note">A partir de 4 a 10 utilisateurs</div>
+        </div>
+        <div class="users-line">Jusqu'a 10 utilisateurs</div>
+        <ul class="features">
+          <li class="yes">Tout ce qui est inclus dans Starter</li>
+          <li class="yes"><strong>Assistant IA Eliot</strong></li>
+          <li class="yes"><strong>OCR factures et tickets</strong></li>
+          <li class="yes"><strong>SMTP premium</strong> (deliverabilite garantie)</li>
+          <li class="yes">Templates emails avances</li>
+          <li class="yes">Support prioritaire 7j/7</li>
+          <li class="no">Transfert comptable automatique</li>
+          <li class="no">Multi-etablissements</li>
+          <li class="no">API externe et integrations</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary pack-cta">Choisir Pro</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pack-card">
+        <h3>Enterprise</h3>
+        <div class="tagline">Solutions completes pour groupes et reseaux</div>
+        <div class="price">
+          <div class="amount">Sur devis</div>
+          <div class="note">10 utilisateurs et plus</div>
+        </div>
+        <div class="users-line">Utilisateurs illimites</div>
+        <ul class="features">
+          <li class="yes">Tout ce qui est inclus dans Pro</li>
+          <li class="yes"><strong>Transfert comptable automatique</strong></li>
+          <li class="yes"><strong>Multi-etablissements</strong></li>
+          <li class="yes"><strong>API externe</strong> pour integrations partenaires</li>
+          <li class="yes"><strong>Synchronisation Calendly</strong></li>
+          <li class="yes">SLA prioritaire 99.9%</li>
+          <li class="yes">Account manager dedie</li>
+          <li class="yes">Formation sur site possible</li>
+          <li class="yes">Personnalisations sur demande</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline pack-cta">Discuter Enterprise</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== COMPARISON ====== -->
+<section id="comparer" class="compare-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">Comparer en detail</div>
+      <h2>Toutes les fonctionnalites par formule</h2>
+      <p>Le tableau complet pour identifier la formule qui correspond le mieux a vos besoins.</p>
+    </div>
+
+    <div class="compare-table-wrap">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th class="feature-col">Fonctionnalite</th>
+            <th>Starter</th>
+            <th class="recommended-col">Pro</th>
+            <th>Enterprise</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="category-header"><td colspan="4">Base metier</td></tr>
+          <tr>
+            <td class="feature-col">Gestion animaux et clients
+              <div class="desc">Dossiers complets, antecedents, suivi</div>
+            </td>
+            <td><span class="check">+</span></td>
+            <td><span class="check">+</span></td>
+            <td><span class="check">+</span></td>
+          </tr>
+          <tr>
+            <td class="feature-col">Facturation et devis
+              <div class="desc">Editions PDF, modeles, signatures electroniques</div>
+            </td>
+            <td><span class="check">+</span></td>
+            <td><span class="check">+</span></td>
+            <td><span class="check">+</span></td>
+          </tr>
+          <tr>
+            <td class="feature-col">Conformite reglementaire
+              <div class="desc">RGPD, registre carnivores, FEC, declarations</div>
+            </td>
+            <td><span class="check">+</span></td>
+            <td><span class="check">+</span></td>
+            <td><span class="check">+</span></td>
+          </tr>
+          <tr>
+            <td class="feature-col">Nombre d'utilisateurs</td>
+            <td>Jusqu'a 3</td>
+            <td>Jusqu'a 10</td>
+            <td>Illimite</td>
+          </tr>
+
+          <tr class="category-header"><td colspan="4">Intelligence artificielle</td></tr>
+          <tr>
+            <td class="feature-col">Assistant IA Eliot
+              <div class="desc">Aide conversationnelle pour redaction, conseils</div>
+            </td>
+            <td><span class="cross">-</span></td>
+            <td><span class="check">+</span></td>
+            <td><span class="check">+</span></td>
+          </tr>
+          <tr>
+            <td class="feature-col">OCR factures et tickets
+              <div class="desc">Reconnaissance automatique pour la saisie comptable</div>
+            </td>
+            <td><span class="cross">-</span></td>
+            <td><span class="check">+</span></td>
+            <td><span class="check">+</span></td>
+          </tr>
+
+          <tr class="category-header"><td colspan="4">Comptabilite</td></tr>
+          <tr>
+            <td class="feature-col">Transfert comptable automatique
+              <div class="desc">Export programme vers votre cabinet</div>
+            </td>
+            <td><span class="cross">-</span></td>
+            <td><span class="cross">-</span></td>
+            <td><span class="check">+</span></td>
+          </tr>
+
+          <tr class="category-header"><td colspan="4">Communication</td></tr>
+          <tr>
+            <td class="feature-col">SMTP premium
+              <div class="desc">Emails haute deliverabilite + templates avances</div>
+            </td>
+            <td><span class="cross">-</span></td>
+            <td><span class="check">+</span></td>
+            <td><span class="check">+</span></td>
+          </tr>
+          <tr>
+            <td class="feature-col">SMS notifications
+              <div class="desc">Rappels RDV automatiques (option additionnelle)</div>
+            </td>
+            <td><span class="cross">-</span></td>
+            <td>Option</td>
+            <td>Option</td>
+          </tr>
+
+          <tr class="category-header"><td colspan="4">Integrations</td></tr>
+          <tr>
+            <td class="feature-col">API externe
+              <div class="desc">Cles API pour outils partenaires</div>
+            </td>
+            <td><span class="cross">-</span></td>
+            <td>Option</td>
+            <td><span class="check">+</span></td>
+          </tr>
+          <tr>
+            <td class="feature-col">Synchronisation Calendly
+              <div class="desc">Agenda synchronise avec Calendly</div>
+            </td>
+            <td>Option</td>
+            <td>Option</td>
+            <td><span class="check">+</span></td>
+          </tr>
+
+          <tr class="category-header"><td colspan="4">Fonctionnalites premium</td></tr>
+          <tr>
+            <td class="feature-col">Multi-etablissements
+              <div class="desc">Plusieurs sites sous une seule licence</div>
+            </td>
+            <td><span class="cross">-</span></td>
+            <td><span class="cross">-</span></td>
+            <td><span class="check">+</span></td>
+          </tr>
+          <tr>
+            <td class="feature-col">SLA garanti</td>
+            <td>Best effort</td>
+            <td>99.5%</td>
+            <td>99.9%</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Support</td>
+            <td>Email</td>
+            <td>Prioritaire 7j/7</td>
+            <td>Account manager dedie</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="text-align: center; margin-top: 24px; color: var(--c-texte2); font-size: 14px;">
+      Besoin d'options personnalisees ? Toutes les fonctionnalites peuvent etre activees individuellement sur n'importe quelle formule, sur devis.
+    </p>
+  </div>
+</section>
+
+<!-- ====== USE CASES ====== -->
+<section id="cas-usage">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">Pour qui</div>
+      <h2>Quelle formule pour quel profil ?</h2>
+      <p>Des exemples concrets pour vous aider a choisir.</p>
+    </div>
+
+    <div class="usecases-grid">
+
+      <div class="usecase-card">
+        <div class="uc-icon">A</div>
+        <div class="badge-pack">Starter</div>
+        <h4>L'independant qui demarre</h4>
+        <p>
+          Comportementaliste, toiletteur ou pet-sitter en solo qui souhaite professionnaliser sa gestion sans complexite. Tout ce qu'il faut pour gerer ses clients, ses seances et sa facturation, sans frais inutiles.
+        </p>
+      </div>
+
+      <div class="usecase-card">
+        <div class="uc-icon">B</div>
+        <div class="badge-pack">Pro</div>
+        <h4>La structure etablie</h4>
+        <p>
+          Pension canine, cabinet veterinaire ou centre equestre avec une equipe de 4 a 10 personnes. L'assistant IA et l'OCR factures font gagner plusieurs heures par semaine, et les emails premium ameliorent la communication client.
+        </p>
+      </div>
+
+      <div class="usecase-card">
+        <div class="uc-icon">C</div>
+        <div class="badge-pack">Enterprise</div>
+        <h4>Le groupe multi-sites</h4>
+        <p>
+          Reseau d'elevages, franchise de toilettage ou association nationale. La gestion multi-etablissements centralise les operations, le transfert comptable automatique simplifie la cloture mensuelle, et les API permettent d'integrer vos outils partenaires.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== WORKFLOW ====== -->
+<section style="background: var(--c-fond2);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">Demarrage rapide</div>
+      <h2>Vous etes operationnel en 4 etapes</h2>
+      <p>De la souscription a la premiere utilisation, moins de 24h en moyenne.</p>
+    </div>
+
+    <div class="workflow-steps">
+      <div class="workflow-step">
+        <div class="step-num">1</div>
+        <h4>Demande de devis</h4>
+        <p>Decrivez-nous votre activite et vos besoins. Nous vous proposons la formule adaptee.</p>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">2</div>
+        <h4>Validation et signature</h4>
+        <p>Signature electronique du contrat. Recevez votre cle d'activation par email securise.</p>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">3</div>
+        <h4>Activation en ligne</h4>
+        <p>Tapez votre cle d'activation sur la page de demarrage. Votre espace est cree en quelques secondes.</p>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">4</div>
+        <h4>Premiere utilisation</h4>
+        <p>Importez vos donnees existantes (clients, animaux). Notre equipe vous accompagne pour la prise en main.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FAQ ====== -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">Vos questions</div>
+      <h2>Foire aux questions</h2>
+      <p>Les reponses aux questions les plus frequentes sur nos formules.</p>
+    </div>
+
+    <div class="faq-list">
+
+      <details class="faq-item">
+        <summary>Puis-je changer de formule en cours d'abonnement ?</summary>
+        <div class="faq-body">
+          Oui, vous pouvez evoluer vers une formule superieure a tout moment sans interruption de service. La transition est immediate. Pour passer a une formule inferieure, le changement prend effet a la prochaine periode de facturation.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Que se passe-t-il si je depasse le nombre d'utilisateurs ?</summary>
+        <div class="faq-body">
+          Nous vous proposons de basculer sur la formule superieure ou d'activer une extension utilisateurs additionnels. Aucune coupure de service, et vos donnees sont conservees.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Mes donnees sont-elles hebergees en France ?</summary>
+        <div class="faq-body">
+          Oui, toutes les donnees Anim'Gest sont hebergees sur des serveurs en France, conformes au RGPD. Vous gardez la propriete totale de vos donnees et pouvez les exporter a tout moment.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Y a-t-il un engagement de duree ?</summary>
+        <div class="faq-body">
+          Non, toutes nos formules sont sans engagement de duree. Vous pouvez resilier a tout moment avec un preavis d'un mois. Vos donnees vous sont restituees integralement.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Comment fonctionne l'essai gratuit ?</summary>
+        <div class="faq-body">
+          Vous beneficiez de 30 jours d'essai gratuit sur la formule de votre choix, sans engagement et sans saisie de moyen de paiement. A la fin de la periode, vous decidez si vous souhaitez continuer.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Puis-je activer une option en dehors de ma formule ?</summary>
+        <div class="faq-body">
+          Oui, chacune des 8 options (IA Eliot, OCR, transfert comptable, multi-etablissements, SMS, API externe, Calendly, SMTP premium) peut etre activee individuellement sur n'importe quelle formule, sur devis.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Comment fonctionne la cle d'activation ?</summary>
+        <div class="faq-body">
+          Apres la signature du contrat, vous recevez par email une cle d'activation unique au format XXXX-XXXX-XXXX-XXXX. Vous la tapez sur la page de demarrage d'Anim'Gest pour creer votre espace en quelques secondes. La cle est utilisable une seule fois et est valable 90 jours.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Quelle est la difference entre un metier et une formule ?</summary>
+        <div class="faq-body">
+          Anim'Gest couvre 11 metiers du secteur animalier (comportementaliste, toiletteur, eleveur, veterinaire, etc.). Chaque utilisateur de votre structure peut exercer un ou plusieurs metiers. La formule (Starter / Pro / Enterprise) determine le nombre d'utilisateurs et les fonctionnalites disponibles, independamment des metiers.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Y a-t-il un support technique ?</summary>
+        <div class="faq-body">
+          Oui :
+          <ul style="margin-top: 8px; padding-left: 20px;">
+            <li><strong>Starter</strong> : support par email avec reponse sous 48h ouvres.</li>
+            <li><strong>Pro</strong> : support prioritaire 7j/7 par email et chat, reponse sous 4h.</li>
+            <li><strong>Enterprise</strong> : account manager dedie, telephone direct, SLA 99.9%.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Puis-je migrer depuis un autre logiciel ?</summary>
+        <div class="faq-body">
+          Oui, notre equipe accompagne la migration depuis la plupart des logiciels concurrents (export CSV/Excel, integration sur mesure pour Enterprise). La migration est incluse pour les formules Pro et Enterprise.
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== FINAL CTA ====== -->
+<section id="contact" class="final-cta">
+  <div class="section-inner">
+    <h2>Pret a moderniser votre gestion ?</h2>
+    <p>Discutons de votre activite et trouvons ensemble la formule qui vous convient. Reponse sous 24h.</p>
+    <div class="cta-row">
+      <a href="mailto:contact@animgest.fr?subject=Demande de devis Anim'Gest" class="btn btn-primary">Demander un devis</a>
+      <a href="index.html" class="btn btn-outline">En savoir plus</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="site-footer">
+  <p>
+    Anim'Gest - NoSage's Editor - Solution SaaS pour les professionnels de l'animal<br>
+    <a href="index.html">Accueil</a> | <a href="#packs">Formules</a> | <a href="#faq">FAQ</a> | <a href="mailto:contact@animgest.fr">contact@animgest.fr</a>
+  </p>
+</footer>
+
+</body>
+</html>
