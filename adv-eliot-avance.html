@@ -1,110 +1,110 @@
-
-<!-- Polices, variables CSS, composants communs -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Eliot IA — Référence avancée — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8;--amber:#F59E0B}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
-.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
-.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
-.hero-back:hover{color:var(--text)}
-.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
-.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
-.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
-.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
-.container{max-width:1000px;margin:0 auto;padding:56px 48px}
-.timeline{position:relative;padding-left:52px}
-.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
-.step{position:relative;margin-bottom:28px}
-.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
-.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
-.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
-.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
-.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
-.step-title{font-size:15px;font-weight:600;color:#fff}
-.step-body{color:var(--muted);font-size:13px;line-height:1.7}
-.step-body ul{list-style:none;margin-top:8px}
-.step-body li{padding:3px 0;padding-left:16px;position:relative}
-.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
-.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
-.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
-.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
-.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
-.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
-.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
-.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
-.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
-.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
-.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
-.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
-.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
-.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
-.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
-footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
-</style>
 
-<style>
-.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:20px}
-.gterm{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px 20px}
-.gterm-word{font-weight:700;font-size:14px;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.gterm-tag{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600;text-transform:uppercase}
-.gterm-def{font-size:13px;color:#94A3B8;line-height:1.6}
-.faq-item{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:10px;overflow:hidden}
-.faq-q{padding:16px 20px;font-weight:600;font-size:14px;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.faq-q:hover{background:rgba(255,255,255,.03)}
-.faq-a{padding:0 20px 16px;font-size:13px;color:#94A3B8;line-height:1.7;display:none}
-.faq-a.open{display:block}
-.checklist-section{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;margin-bottom:20px}
-.checklist-title{font-weight:700;font-size:15px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;color:#94A3B8}
-.check-item:last-child{border-bottom:none}
-.check-box{width:20px;height:20px;border-radius:5px;border:2px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all .2s;margin-top:1px}
-.check-box.done{background:#10B981;border-color:#10B981;color:#fff}
-.check-label{flex:1}
-.check-label strong{color:#fff;display:block;margin-bottom:3px}
-.time-badge{font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(245,158,11,.15);color:#fcd34d;font-weight:600;white-space:nowrap;flex-shrink:0}
-.module-card{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;transition:all .2s}
-.module-card:hover{border-color:rgba(255,255,255,.2)}
-.module-name{font-weight:700;font-size:14px;color:#fff;margin-bottom:8px}
-.module-desc{font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:10px}
-.module-deps{font-size:11px;color:#64748B}
-.dep-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;background:rgba(79,70,229,.15);color:#a5b4fc;margin:2px}
-.formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
-.formula-card{border-radius:16px;padding:28px;border:2px solid transparent;transition:all .2s}
-.formula-card:hover{transform:translateY(-4px)}
-.formula-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:6px}
-.formula-price{font-size:28px;font-weight:700;margin:12px 0}
-.formula-price span{font-size:14px;font-weight:400;color:#94A3B8}
-.formula-features{list-style:none;margin-top:16px}
-.formula-features li{padding:6px 0;font-size:13px;color:#94A3B8;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px}
-.formula-features li:last-child{border-bottom:none}
-.feature-yes{color:#10B981}
-.feature-no{color:#64748B}
-.data-table{width:100%;border-collapse:collapse;font-size:13px}
-.data-table th{text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);color:#94A3B8;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.08)}
-.data-table td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);color:#94A3B8;vertical-align:top}
-.data-table td:first-child{color:#F1F5F9;font-weight:500}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 64px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--violet));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:720px;position:relative;line-height:1.6}
+.container{max-width:1100px;margin:0 auto;padding:48px 32px}
+
+.section-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;margin:48px 0 20px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
+.section-title:first-of-type{margin-top:0}
+.section-title .v2-pill{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:100px;text-transform:uppercase;vertical-align:middle}
+
+p.lead{color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.7}
+
+/* Banner V2 */
+.banner-v2{background:linear-gradient(135deg,rgba(79,70,229,.12),rgba(6,182,212,.08));border:1px solid rgba(79,70,229,.3);border-radius:16px;padding:24px 28px;margin-bottom:40px}
+.banner-v2 h3{font-family:'Playfair Display',serif;font-size:20px;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.banner-v2 p{color:var(--muted);font-size:14px;line-height:1.75;margin-bottom:8px}
+.banner-v2 strong{color:var(--violet);font-weight:600}
+.tag-soon{display:inline-block;background:rgba(245,158,11,.15);color:var(--gold);font-size:9px;font-weight:700;letter-spacing:1.5px;padding:3px 10px;border-radius:100px;border:1px solid rgba(245,158,11,.3);text-transform:uppercase}
+
+/* Stats row */
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:140px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:6px}
+.stat-card.v2{border-color:rgba(79,70,229,.3)}
+.stat-card.v2 .stat-val{color:var(--violet)}
+
+/* Table */
 .table-wrap{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;margin:20px 0}
-.alert-box{border-radius:12px;padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start;font-size:13px}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.08)}
+.data-table td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--muted);vertical-align:top}
+.data-table tr:last-child td{border-bottom:none}
+.data-table td:first-child{color:var(--text);font-weight:500;font-family:'DM Mono',monospace;font-size:12px;color:var(--cyan)}
+.data-table tr.v2-row{background:rgba(79,70,229,.06)}
+.data-table tr.v2-row td:first-child{color:var(--violet)}
+.data-table .badge-v2{display:inline-block;background:rgba(79,70,229,.15);color:var(--violet);font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:8px;margin-left:6px;text-transform:uppercase}
+
+/* Module cards */
+.module-card{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;margin-bottom:14px;transition:all .2s}
+.module-card:hover{border-color:rgba(255,255,255,.2)}
+.module-card.v2{border-color:rgba(79,70,229,.3)}
+.module-name{font-weight:700;font-size:15px;color:#fff;margin-bottom:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.module-desc{font-size:13px;color:var(--muted);line-height:1.7}
+.module-desc code{font-family:'DM Mono',monospace;font-size:0.85em;background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:4px;color:var(--gold)}
+
+/* Alerts */
+.alert-box{border-radius:12px;padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.7}
 .alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#fcd34d}
 .alert-ok{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:#6ee7b7}
 .alert-danger{background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);color:#fda4af}
 .alert-info{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);color:#67e8f9}
-.roi-calc{background:#1E293B;border:1px solid rgba(79,70,229,.3);border-radius:16px;padding:28px}
-.roi-input{margin-bottom:16px}
-.roi-label{font-size:13px;color:#94A3B8;margin-bottom:8px;display:block}
-.roi-slider{width:100%;accent-color:#4F46E5}
-.roi-value{font-size:20px;font-weight:700;color:#fff;text-align:center;padding:12px;background:rgba(79,70,229,.15);border-radius:10px;margin-top:8px}
-</style><title>Eliot IA — Référence avancée — Anim'Gest</title></head>
+.alert-violet{background:rgba(79,70,229,.08);border:1px solid rgba(79,70,229,.2);color:#a5b4fc}
+
+/* Workflow */
+.workflow-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:24px 0}
+.wf-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;position:relative}
+.wf-card.prepare{border-color:rgba(245,158,11,.4)}
+.wf-card.confirm{border-color:rgba(79,70,229,.4)}
+.wf-card.execute{border-color:rgba(16,185,129,.4)}
+.wf-card.audit{border-color:rgba(6,182,212,.4)}
+.wf-step{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.wf-icon{font-size:32px;margin-bottom:10px}
+.wf-title{font-weight:600;font-size:14px;color:#fff;margin-bottom:6px}
+.wf-desc{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* Limits */
+.limits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px}
+.limit-card{background:rgba(244,63,94,.05);border:1px solid rgba(244,63,94,.2);border-radius:12px;padding:18px}
+.limit-title{font-size:14px;font-weight:600;color:#fda4af;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.limit-desc{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* Permissions table */
+.perm-table{margin-top:20px}
+.perm-row{display:grid;grid-template-columns:120px 100px 1fr;gap:16px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;font-size:13px;align-items:center}
+.perm-role{font-weight:600;color:#fff}
+.perm-tier{font-family:'DM Mono',monospace;color:var(--gold);text-align:center}
+.perm-can{color:var(--muted);line-height:1.6}
+
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 32px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+
+@media (max-width:720px){
+  .container{padding:24px 16px}
+  .hero{padding:32px 20px}
+  .perm-row{grid-template-columns:1fr}
+}
+</style>
+</head>
 <body>
+
 <nav class="nav-bar">
   <a class="nav-link home" href="index-complet.html">🏠 Index</a>
   <a class="nav-link" href="ref-glossaire.html">📖 Glossaire</a>
@@ -127,73 +127,282 @@ footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20p
   <a class="nav-link" href="adv-tarification-avancee.html">💰 Tarification</a>
   <a class="nav-link" href="adv-eliot-avance.html">🤖 Eliot avancé</a>
 </nav>
-<div class="hero" style="padding:48px">
-  <div class="hero-badge" style="background:linear-gradient(135deg,var(--violet),var(--violet)aa)">Avancé</div>
+
+<div class="hero">
+  <div class="hero-badge">Référence avancée</div>
   <h1>🤖 Eliot IA — Référence avancée</h1>
-  <p class="hero-sub">Référence complète des 22 outils, boucles agentiques complexes, limites de sécurité et bonnes pratiques</p>
+  <p class="hero-sub">Référence complète des outils d'Eliot V1 (22 outils), aperçu de la V2 en préparation (analyse libre, workflow d'action, audit, permissions héritées) et bonnes pratiques pour les utilisateurs avancés.</p>
 </div>
+
 <div class="container">
 
-<div class="section-title">Référence complète des 22 outils Eliot</div>
-<div class="table-wrap"><table class="data-table">
-<thead><tr><th>#</th><th>Outil</th><th>Action</th><th>Exemple de commande</th></tr></thead>
-<tbody>
-<tr><td>1</td><td>search_clients</td><td>Recherche clients par nom, email ou téléphone</td><td>"Trouve le client Dupont Marie"</td></tr>
-<tr><td>2</td><td>get_client_details</td><td>Détail complet d'un client avec animaux et historique</td><td>"Montre-moi la fiche complète de Marie Dupont"</td></tr>
-<tr><td>3</td><td>search_animals</td><td>Recherche animaux par nom ou espèce</td><td>"Trouve tous les Malinois en base"</td></tr>
-<tr><td>4</td><td>get_animal_cac</td><td>Score CAC actuel et historique d'un animal</td><td>"Quel est le score CAC de Rex ?"</td></tr>
-<tr><td>5</td><td>list_seances</td><td>Liste des séances avec filtres (date, statut, client)</td><td>"Quelles séances sont planifiées cette semaine ?"</td></tr>
-<tr><td>6</td><td>create_seance</td><td>Créer une nouvelle séance</td><td>"Planifie un BC pour Rex, vendredi 14h"</td></tr>
-<tr><td>7</td><td>update_seance_statut</td><td>Changer le statut d'une séance</td><td>"Marque la séance de Rex du mardi comme réalisée"</td></tr>
-<tr><td>8</td><td>list_devis</td><td>Liste des devis avec filtres</td><td>"Montre les devis en attente de réponse"</td></tr>
-<tr><td>9</td><td>create_devis</td><td>Créer un devis depuis un modèle ou des lignes libres</td><td>"Crée un devis pour Marie, 5 séances suivi 70€"</td></tr>
-<tr><td>10</td><td>update_devis_statut</td><td>Changer le statut d'un devis</td><td>"Marque le devis DEV-2026-0031 comme accepté"</td></tr>
-<tr><td>11</td><td>list_factures</td><td>Liste des factures avec filtres (impayées, période)</td><td>"Liste les factures impayées depuis 30 jours"</td></tr>
-<tr><td>12</td><td>create_facture</td><td>Créer une facture depuis un devis ou de zéro</td><td>"Transforme le devis 0031 en facture"</td></tr>
-<tr><td>13</td><td>create_reglement</td><td>Enregistrer un règlement sur une facture</td><td>"Enregistre un paiement CB de 420€ sur FAC-2026-0051"</td></tr>
-<tr><td>14</td><td>get_statistiques</td><td>CA, nombre séances, clients actifs sur une période</td><td>"Quel est le CA du mois de mai ?"</td></tr>
-<tr><td>15</td><td>list_stock_alertes</td><td>Articles sous le seuil minimum</td><td>"Y a-t-il des articles en rupture ?"</td></tr>
-<tr><td>16</td><td>add_note_client</td><td>Ajouter une note interne sur une fiche client</td><td>"Ajoute une note sur Marie : préfère les RDV le matin"</td></tr>
-<tr><td>17</td><td>create_reminder</td><td>Créer un rappel ou une tâche</td><td>"Rappelle-moi de relancer Paul dans 3 jours"</td></tr>
-<tr><td>18</td><td>send_email_relance</td><td>Envoyer un email de relance impayé</td><td>"Envoie une relance à M. Bernard pour sa facture en retard"</td></tr>
-<tr><td>19</td><td>get_agenda</td><td>Voir l'agenda d'une période avec les séances</td><td>"Qu'est-ce que j'ai ce vendredi ?"</td></tr>
-<tr><td>20</td><td>get_registres</td><td>Consulter les registres réglementaires</td><td>"Qui est en pension ce week-end ?"</td></tr>
-<tr><td>21</td><td>get_impayes_summary</td><td>Synthèse des impayés par client et montant</td><td>"Quel est le total des impayés en cours ?"</td></tr>
-<tr><td>22</td><td>ui_actions</td><td>Déclencher des actions dans l'interface (navigation)</td><td>"Ouvre la fiche de Marie Dupont"</td></tr>
-</tbody></table></div>
+  <!-- Banner V2 -->
+  <div class="banner-v2">
+    <h3>🚀 Eliot V2 — En préparation <span class="tag-soon">Roadmap S122</span></h3>
+    <p>
+      Eliot V2 introduira une refonte profonde de l'agent IA, avec quatre apports majeurs : <strong>analyse libre</strong> de vos données via un nouveau tool <code style="background:rgba(79,70,229,0.15);padding:2px 8px;border-radius:4px;color:var(--violet);font-family:'DM Mono',monospace;">query_database</code>, <strong>workflow d'action en deux temps</strong> avec panneau de préparation et modal de confirmation, <strong>audit complet</strong> de chaque interaction (qui, quand, quel résultat), et <strong>permissions héritées strictes</strong> du rôle de l'utilisateur connecté.
+    </p>
+    <p>
+      Première vague de livraison : métier <strong>comportementaliste / éducateur canin</strong> (S122, soit ~4 jours de développement). Extension progressive aux 11 autres métiers ensuite, à raison d'un toutes les 1-2 semaines selon la complexité.
+    </p>
+  </div>
 
-<div class="section-title">Commandes complexes — Boucles agentiques</div>
-<div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px">
-<div class="module-card">
-<div class="module-name">Commande multi-étapes : Rapport impayés complet</div>
-<div class="module-desc">"Donne-moi la liste de tous les clients avec des impayés, triée par montant décroissant, avec leur téléphone pour que je puisse les rappeler."<br><br>
-→ Eliot appelle list_factures (filtre impayées) → group_by client → get_client_details (pour le téléphone) → formate et présente la liste en 5 secondes.</div>
-</div>
-<div class="module-card">
-<div class="module-name">Commande multi-étapes : Préparation semaine</div>
-<div class="module-desc">"Prépare ma semaine du 20 au 24 mai : liste les séances, vérifie les impayés des clients concernés et dis-moi si des animaux ont des vaccinations qui expirent ce mois."<br><br>
-→ 3 appels parallèles : get_agenda + list_factures (filtre clients de la semaine) + search_animals (filtre vaccins mois) → synthèse complète.</div>
-</div>
-<div class="module-card">
-<div class="module-name">Commande de création en cascade</div>
-<div class="module-desc">"Crée un nouveau client, Jean Martin, jean.martin@gmail.com, 06 12 34 56 78, avec son chien Max (Labrador 3 ans) et planifie un BC pour lundi prochain à 10h."<br><br>
-→ create_client → create_animal (lié au client) → create_seance (type BC, lundi prochain 10h) → confirmation avec liens vers les 3 fiches créées.</div>
-</div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-val">22</div><div class="stat-lbl">Outils V1</div></div>
+    <div class="stat-card v2"><div class="stat-val">+6</div><div class="stat-lbl">Outils V2 prévus</div></div>
+    <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Niveaux permission</div></div>
+    <div class="stat-card"><div class="stat-val">2</div><div class="stat-lbl">Modèles IA (V2)</div></div>
+    <div class="stat-card"><div class="stat-val">6</div><div class="stat-lbl">Itérations max</div></div>
+  </div>
+
+  <!-- ========== SECTION 1 : 22 tools V1 ========== -->
+  <h2 class="section-title">Référence complète des 22 outils Eliot V1</h2>
+  <p class="lead">Outils disponibles aujourd'hui dans Eliot V1. Chacun est appelable en langage naturel et passe par les API sécurisées du logiciel.</p>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th style="width:50px">#</th><th>Outil</th><th>Action</th><th>Exemple de commande</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>search_clients</td><td>Recherche clients par nom, email ou téléphone</td><td>« Trouve le client Dupont Marie »</td></tr>
+        <tr><td>2</td><td>get_client_details</td><td>Détail complet d'un client avec animaux et historique</td><td>« Montre-moi la fiche complète de Marie Dupont »</td></tr>
+        <tr><td>3</td><td>search_animals</td><td>Recherche animaux par nom ou espèce</td><td>« Trouve tous les Malinois en base »</td></tr>
+        <tr><td>4</td><td>get_animal_cac</td><td>Score CAC actuel et historique d'un animal</td><td>« Quel est le score CAC de Rex ? »</td></tr>
+        <tr><td>5</td><td>list_seances</td><td>Liste des séances avec filtres (date, statut, client)</td><td>« Quelles séances sont planifiées cette semaine ? »</td></tr>
+        <tr><td>6</td><td>create_seance</td><td>Créer une nouvelle séance</td><td>« Planifie un BC pour Rex, vendredi 14 h »</td></tr>
+        <tr><td>7</td><td>update_seance_statut</td><td>Changer le statut d'une séance</td><td>« Marque la séance de Rex du mardi comme réalisée »</td></tr>
+        <tr><td>8</td><td>list_devis</td><td>Liste des devis avec filtres</td><td>« Montre les devis en attente de réponse »</td></tr>
+        <tr><td>9</td><td>create_devis</td><td>Créer un devis depuis un modèle ou des lignes libres</td><td>« Crée un devis pour Marie, 5 séances suivi 70 € »</td></tr>
+        <tr><td>10</td><td>update_devis_statut</td><td>Changer le statut d'un devis</td><td>« Marque le devis DEV-2026-0031 comme accepté »</td></tr>
+        <tr><td>11</td><td>list_factures</td><td>Liste des factures avec filtres (impayées, période)</td><td>« Liste les factures impayées depuis 30 jours »</td></tr>
+        <tr><td>12</td><td>create_facture</td><td>Créer une facture depuis un devis ou de zéro</td><td>« Transforme le devis 0031 en facture »</td></tr>
+        <tr><td>13</td><td>create_reglement</td><td>Enregistrer un règlement sur une facture</td><td>« Enregistre un paiement CB de 420 € sur FAC-2026-0051 »</td></tr>
+        <tr><td>14</td><td>get_statistiques</td><td>CA, nombre séances, clients actifs sur une période</td><td>« Quel est le CA du mois de mai ? »</td></tr>
+        <tr><td>15</td><td>list_stock_alertes</td><td>Articles sous le seuil minimum</td><td>« Y a-t-il des articles en rupture ? »</td></tr>
+        <tr><td>16</td><td>add_note_client</td><td>Ajouter une note interne sur une fiche client</td><td>« Ajoute une note sur Marie : préfère les RDV le matin »</td></tr>
+        <tr><td>17</td><td>create_reminder</td><td>Créer un rappel ou une tâche</td><td>« Rappelle-moi de relancer Paul dans 3 jours »</td></tr>
+        <tr><td>18</td><td>send_email_relance</td><td>Envoyer un email de relance impayé</td><td>« Envoie une relance à M. Bernard pour sa facture en retard »</td></tr>
+        <tr><td>19</td><td>get_agenda</td><td>Voir l'agenda d'une période avec les séances</td><td>« Qu'est-ce que j'ai ce vendredi ? »</td></tr>
+        <tr><td>20</td><td>get_registres</td><td>Consulter les registres réglementaires</td><td>« Qui est en pension ce week-end ? »</td></tr>
+        <tr><td>21</td><td>get_impayes_summary</td><td>Synthèse des impayés par client et montant</td><td>« Quel est le total des impayés en cours ? »</td></tr>
+        <tr><td>22</td><td>ui_actions</td><td>Déclencher des actions dans l'interface (navigation)</td><td>« Ouvre la fiche de Marie Dupont »</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== SECTION 2 : Nouveaux outils V2 ========== -->
+  <h2 class="section-title">Nouveaux outils Eliot V2 <span class="v2-pill">S122</span></h2>
+  <p class="lead">Eliot V2 ajoutera 6 nouveaux outils orientés analyse et synthèse métier. La grande nouveauté est <code style="background:rgba(79,70,229,0.15);padding:2px 8px;border-radius:4px;color:var(--violet);font-family:'DM Mono',monospace;font-size:0.9em;">query_database</code> qui rendra Eliot capable de répondre à n'importe quelle question analytique.</p>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th style="width:50px">#</th><th>Outil</th><th>Action</th><th>Exemple de commande</th></tr></thead>
+      <tbody>
+        <tr class="v2-row"><td>23</td><td>query_database <span class="badge-v2">V2</span></td><td>Analyse libre via SQL généré et validé par parser strict (LECTURE SEULE)</td><td>« Combien de clients dans le département 69 ? »</td></tr>
+        <tr class="v2-row"><td>24</td><td>get_dashboard_metrics <span class="badge-v2">V2</span></td><td>KPIs métier formatés (CA, séances, top problématiques)</td><td>« Donne-moi le tableau de bord du mois »</td></tr>
+        <tr class="v2-row"><td>25</td><td>get_bc_animal <span class="badge-v2">V2</span></td><td>Détail Bilan Comportemental + grille CAC + évolution N séances</td><td>« Évolution complète du BC de Rex sur 6 mois »</td></tr>
+        <tr class="v2-row"><td>26</td><td>get_planning v2 <span class="badge-v2">V2</span></td><td>Planning avec détection conflits et filtrage avancé</td><td>« Conflits dans mon agenda du 1er au 15 juin ? »</td></tr>
+        <tr class="v2-row"><td>27</td><td>search_client v2 <span class="badge-v2">V2</span></td><td>Recherche enrichie + stats client (CA, séances, abonnements)</td><td>« Stats complètes de la famille Dujardin »</td></tr>
+        <tr class="v2-row"><td>28</td><td>get_seances v2 <span class="badge-v2">V2</span></td><td>Séances avec agrégations (par mois, par type, par animal)</td><td>« CA par type de séance trimestre dernier »</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert-box alert-violet">
+    <span style="font-size:18px;flex-shrink:0">🛡️</span>
+    <div>
+      <strong>Sécurité query_database</strong> : malgré son nom, ce tool ne donne pas d'accès brut à la base. Chaque requête est analysée par un parser SQL côté serveur qui refuse <strong>toute opération de modification</strong> (INSERT, UPDATE, DELETE, DROP, TRUNCATE) et toute tentative d'accès aux tables sensibles (mots de passe, clés API, audit, signatures électroniques, tokens). Un timeout de 5 secondes empêche les requêtes coûteuses, et un compte technique dédié en lecture seule est utilisé pour l'exécution. <strong>Eliot ne peut jamais écrire via ce canal</strong>, même si vous le lui demandez explicitement.
+    </div>
+  </div>
+
+  <!-- ========== SECTION 3 : Workflow PREPARE -> CONFIRM ========== -->
+  <h2 class="section-title">Workflow d'action en 2 temps <span class="v2-pill">V2</span></h2>
+  <p class="lead">Eliot V2 introduira un workflow systématique pour toute action de modification : Eliot prépare l'action, vous validez. Vous gardez la maîtrise totale, et chaque étape est tracée.</p>
+
+  <div class="workflow-grid">
+    <div class="wf-card prepare">
+      <div class="wf-step">Étape 1</div>
+      <div class="wf-icon">📋</div>
+      <div class="wf-title">PREPARE</div>
+      <div class="wf-desc">Eliot prépare l'action et affiche un panneau latéral avec le détail complet (entête, lignes, totaux, animal concerné, type séance...). Aucune écriture en base à ce stade.</div>
+    </div>
+    <div class="wf-card confirm">
+      <div class="wf-step">Étape 2</div>
+      <div class="wf-icon">✋</div>
+      <div class="wf-title">CONFIRM</div>
+      <div class="wf-desc">Vous cliquez sur « Valider », une modal de confirmation s'ouvre avec récap concis. Vous pouvez annuler ou confirmer. Toutes les étapes sont auditées.</div>
+    </div>
+    <div class="wf-card execute">
+      <div class="wf-step">Étape 3</div>
+      <div class="wf-icon">✅</div>
+      <div class="wf-title">EXECUTE</div>
+      <div class="wf-desc">L'action est exécutée via les API normales du logiciel (même chemin que si vous aviez cliqué dans l'interface). Résultat injecté dans la conversation Eliot.</div>
+    </div>
+    <div class="wf-card audit">
+      <div class="wf-step">Étape 4</div>
+      <div class="wf-icon">📊</div>
+      <div class="wf-title">AUDIT</div>
+      <div class="wf-desc">Chaque étape PREPARE / CONFIRM / EXECUTE est tracée : qui, quand, quoi, durée, statut. Consultable dans Paramètres → Eliot → Historique.</div>
+    </div>
+  </div>
+
+  <div class="alert-box alert-ok">
+    <span style="font-size:18px;flex-shrink:0">💡</span>
+    <div><strong>Pourquoi deux étapes UX (panneau puis modal) ?</strong> Le panneau donne le contexte complet et le temps de relire (utile pour un devis multi-lignes). La modal impose ensuite une décision binaire claire. L'audit log distingue les deux moments, ce qui permet d'identifier les hésitations et de surveiller les abandons d'action.</div>
+  </div>
+
+  <!-- ========== SECTION 4 : Permissions héritées ========== -->
+  <h2 class="section-title">Permissions héritées du rôle utilisateur <span class="v2-pill">V2</span></h2>
+  <p class="lead">Eliot V2 héritera strictement des droits du compte connecté. Un utilisateur ne pourra demander à Eliot que ce qu'il pourrait faire lui-même dans l'interface.</p>
+
+  <div class="perm-table">
+    <div class="perm-row" style="background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2)">
+      <div class="perm-role">ADMIN</div>
+      <div class="perm-tier">Tier 3</div>
+      <div class="perm-can">Tous les outils (lecture, création, modification statut). Configure les niveaux de permission depuis <code>/parametres/eliot-permissions</code>.</div>
+    </div>
+    <div class="perm-row" style="background:rgba(79,70,229,0.06);border-color:rgba(79,70,229,0.2)">
+      <div class="perm-role">MANAGER</div>
+      <div class="perm-tier">Tier 2</div>
+      <div class="perm-can">Lecture complète + création devis/factures/règlements avec confirmation. Modification statuts commerciaux. Pas d'accès aux paramètres sensibles.</div>
+    </div>
+    <div class="perm-row" style="background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2)">
+      <div class="perm-role">ADMINISTRATIF</div>
+      <div class="perm-tier">Tier 1</div>
+      <div class="perm-can">Lecture complète + planification de séances + envoi de liens portail client. Pas de création de devis/factures via Eliot (refusé par permission).</div>
+    </div>
+  </div>
+
+  <div class="alert-box alert-info">
+    <span style="font-size:18px;flex-shrink:0">🔐</span>
+    <div>
+      <strong>3 niveaux par outil configurables</strong> dans Paramètres → Eliot → Permissions :
+      <ul style="margin-top:8px;list-style:none;padding-left:0">
+        <li>• <strong style="color:var(--emerald);">AUTO</strong> — exécution directe (lecture uniquement par défaut)</li>
+        <li>• <strong style="color:var(--gold);">CONFIRM</strong> — passe par le workflow PREPARE → CONFIRM</li>
+        <li>• <strong style="color:#fda4af;">DENIED</strong> — outil désactivé pour ce compte</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 5 : Commandes complexes (boucles agentiques) ========== -->
+  <h2 class="section-title">Commandes complexes — Boucles agentiques</h2>
+  <p class="lead">Eliot peut enchaîner jusqu'à 6 actions pour répondre à une demande complexe. Exemples qui illustrent la puissance de l'agent quand il combine plusieurs outils.</p>
+
+  <div class="module-card">
+    <div class="module-name">Rapport impayés complet <span style="font-size:11px;color:var(--muted);font-weight:400;">— V1 disponible</span></div>
+    <div class="module-desc">« Donne-moi la liste de tous les clients avec des impayés, triée par montant décroissant, avec leur téléphone pour que je puisse les rappeler. »<br><br>→ Eliot appelle <code>list_factures</code> (filtre impayées) → regroupe par client → <code>get_client_details</code> (pour le téléphone) → formate et présente la liste en 5 secondes.</div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-name">Préparation semaine complète <span style="font-size:11px;color:var(--muted);font-weight:400;">— V1 disponible</span></div>
+    <div class="module-desc">« Prépare ma semaine du 20 au 24 mai : liste les séances, vérifie les impayés des clients concernés et dis-moi si des animaux ont des vaccinations qui expirent ce mois. »<br><br>→ 3 appels parallèles : <code>get_agenda</code> + <code>list_factures</code> (filtre clients de la semaine) + <code>search_animals</code> (filtre vaccins mois) → synthèse complète.</div>
+  </div>
+
+  <div class="module-card v2">
+    <div class="module-name">Analyse business multi-dimensions <span class="badge-v2">V2 — Nouveau</span></div>
+    <div class="module-desc">« Analyse mon activité du trimestre : top 5 clients en CA, évolution comparée à T-1, clients perdus depuis 6 mois, et stocks à risque. »<br><br>→ <code style="color:var(--violet);">query_database</code> avec 4 requêtes SQL générées par Eliot, validées par parser, exécutées sur le compte lecture seule → synthèse formatée. Impossible en V1 (pas d'outil analytique libre).</div>
+  </div>
+
+  <div class="module-card v2">
+    <div class="module-name">Création en cascade avec validation <span class="badge-v2">V2 — Workflow</span></div>
+    <div class="module-desc">« Crée un nouveau client, Jean Martin, jean.martin@gmail.com, 06 12 34 56 78, avec son chien Max (Labrador 3 ans) et planifie un BC pour lundi prochain à 10 h. »<br><br>→ Eliot prépare les 3 actions et les présente dans le panneau latéral → vous confirmez chaque étape (ou tout d'un coup) → <code>create_client</code> → <code>create_animal</code> → <code>create_seance</code> → confirmation avec liens vers les 3 fiches.</div>
+  </div>
+
+  <!-- ========== SECTION 6 : Audit complet ========== -->
+  <h2 class="section-title">Audit complet de chaque action <span class="v2-pill">V2</span></h2>
+  <p class="lead">Eliot V2 conservera un historique détaillé de chaque interaction, consultable par les administrateurs depuis Paramètres → Eliot → Historique.</p>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>Information</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Date / Heure</td><td>Horodatage précis de l'action (préparation et confirmation séparées)</td></tr>
+        <tr><td>Utilisateur</td><td>Compte ayant initié l'action + compte ayant confirmé (peut différer)</td></tr>
+        <tr><td>Rôle</td><td>Snapshot du rôle au moment de l'action (résiste aux renommages futurs)</td></tr>
+        <tr><td>Outil appelé</td><td>Nom du tool Eliot utilisé (query_database, create_devis, etc.)</td></tr>
+        <tr><td>Étape</td><td>READ / PREPARE / CONFIRM / EXECUTE / REFUSE</td></tr>
+        <tr><td>Détail requête</td><td>Payload envoyé à Eliot + SQL effectif si query_database</td></tr>
+        <tr><td>Durée d'exécution</td><td>Milliseconds — utile pour identifier les ralentissements</td></tr>
+        <tr><td>Statut final</td><td>SUCCESS / ERROR / TIMEOUT / REFUSED_BY_USER / REFUSED_BY_GUARD / REFUSED_BY_PERMISSION</td></tr>
+        <tr><td>Coût</td><td>Tokens entrée + sortie consommés (suivi budgétaire Anthropic)</td></tr>
+        <tr><td>Modèle utilisé</td><td>Sonnet 4 ou Opus 4 (snapshot)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert-box alert-info">
+    <span style="font-size:18px;flex-shrink:0">📊</span>
+    <div>Filtres : par utilisateur, par date, par tool, par statut, par session de conversation. Export CSV pour conformité ou analyse externe. Rétention par défaut : 12 mois (configurable par administrateur).</div>
+  </div>
+
+  <!-- ========== SECTION 7 : Choix modèle ========== -->
+  <h2 class="section-title">Choix du modèle d'IA <span class="v2-pill">V2</span></h2>
+  <p class="lead">Eliot V2 vous laissera choisir entre deux modèles Anthropic selon vos besoins et votre budget. Configurable depuis Paramètres → Assistant IA.</p>
+
+  <div class="module-card">
+    <div class="module-name">🚀 Claude Sonnet 4 — Recommandé par défaut</div>
+    <div class="module-desc">
+      Rapide et économique. Convient à environ 80 % des cas d'usage : recherche d'informations, création de devis et factures, questions analytiques simples.<br>
+      <strong>Coût indicatif</strong> : environ 3 USD par million de tokens en entrée, 15 USD par million de tokens en sortie.<br>
+      <strong>Performance</strong> : excellent rapport qualité/prix pour l'usage quotidien d'un ERP métier.
+    </div>
+  </div>
+
+  <div class="module-card">
+    <div class="module-name">⭐ Claude Opus 4 — Raisonnement avancé</div>
+    <div class="module-desc">
+      Recommandé si vous utilisez Eliot pour des analyses complexes multi-tables, des synthèses business approfondies, ou si Sonnet vous semble approximatif sur vos requêtes.<br>
+      <strong>Coût indicatif</strong> : environ 15 USD par million de tokens en entrée, 75 USD par million de tokens en sortie (environ 5× le coût de Sonnet).<br>
+      <strong>Performance</strong> : raisonnement multi-étapes plus fiable, meilleures requêtes SQL complexes.
+    </div>
+  </div>
+
+  <div class="alert-box alert-warn">
+    <span style="font-size:18px;flex-shrink:0">💰</span>
+    <div><strong>Tarification Anthropic</strong> : chaque tenant utilise sa propre clé API Anthropic, achetée directement sur <a href="https://console.anthropic.com" style="color:var(--gold);text-decoration:underline;" target="_blank" rel="noopener">console.anthropic.com</a>. Le solde restant sera affiché en temps réel dans la page Assistant IA. Cap mensuel optionnel à venir.</div>
+  </div>
+
+  <!-- ========== SECTION 8 : Limites strictes ========== -->
+  <h2 class="section-title">Limites strictes de sécurité</h2>
+  <p class="lead">Ce qu'Eliot <strong>ne fait jamais</strong>, quelle que soit la version (V1 ou V2). Limites garanties par l'architecture du logiciel, pas seulement par la « bonne volonté » de l'IA.</p>
+
+  <div class="limits-grid">
+    <div class="limit-card">
+      <div class="limit-title">🚫 Suppression de données</div>
+      <div class="limit-desc">Aucun outil de suppression n'est exposé à Eliot. Clients, animaux, factures, séances : intactes.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-title">🚫 Modification du code</div>
+      <div class="limit-desc">Eliot ne peut pas modifier les pages, le schéma BDD ou la configuration du logiciel.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-title">🚫 Accès aux secrets</div>
+      <div class="limit-desc">Mots de passe, clés API, tokens portail : chiffrés AES-GCM, jamais lus par Eliot.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-title">🚫 Sortie du tenant</div>
+      <div class="limit-desc">Isolation stricte multi-tenant : Eliot d'un compte ne voit jamais les données d'un autre.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-title">🚫 Contournement NF525</div>
+      <div class="limit-desc">Numérotation séquentielle des factures, inaltérabilité : Eliot respecte ces règles.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-title">🚫 Modification audit</div>
+      <div class="limit-desc">Eliot ne peut pas effacer ses propres traces : table d'audit en GRANT INSERT only.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-title">🚫 Registres réglementaires</div>
+      <div class="limit-desc">Registre carnivores, sanitaire : lecture uniquement. Modifications via interface humaine obligatoire.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-title">🚫 Élévation privilèges</div>
+      <div class="limit-desc">Eliot V2 hérite strictement du rôle de l'utilisateur connecté. Pas de bypass possible.</div>
+    </div>
+  </div>
+
 </div>
 
-<div class="section-title">Limites absolues — Ce qu'Eliot ne fera jamais</div>
-<div class="alert-box alert-danger"><span>🔒</span><span><strong>Garanties de sécurité non négociables :</strong> Eliot ne peut pas supprimer de données, modifier le code source, exécuter du SQL direct, modifier le schéma BDD, contourner la numérotation NF525, accéder aux données d'autres instances, ou émettre des factures sans validation humaine. Ces limites sont imposées par l'architecture et ne peuvent pas être contournées par la formulation de la demande.</span></div>
-
-</div>
-<footer>Anim'Gest · NoSage's Editor — Eliot IA — Référence avancée — Sprint S114 · 2026</footer>
-<script>
-document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
-  q.nextElementSibling.classList.toggle('open');
-  q.querySelector('.faq-arrow').textContent=q.nextElementSibling.classList.contains('open')?'−':'+';
-}));
-document.querySelectorAll('.check-box').forEach(b=>b.addEventListener('click',()=>{
-  b.classList.toggle('done');
-  b.textContent=b.classList.contains('done')?'✓':'';
-}));
-</script>
-</body></html>
+<footer>Anim'Gest · NoSage's Editor — Référence avancée Eliot · V1 disponible · V2 prévue S122 · 2026</footer>
+</body>
+</html>
