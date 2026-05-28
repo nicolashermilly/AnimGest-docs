@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centre &eacute;questre &mdash; Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --gold-pale: #FEF3C7;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 56px 32px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero .emoji { display: block; font-size: 2.4rem; margin-bottom: 8px; line-height: 1; }
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.hero-tags {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
+  margin-top: 18px; position: relative; z-index: 1;
+}
+.hero-tag {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 14px;
+}
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,158,11,0.1);
+  border-top: 1px solid rgba(245,158,11,0.1);
+  border-bottom: 1px solid rgba(245,158,11,0.1);
+}
+.kpi-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.kpi-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi-card {
+  background: var(--navy);
+  padding: 26px 18px;
+  text-align: center;
+  transition: background .2s;
+}
+.kpi-card:hover { background: var(--navy-800); }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.kpi-badge {
+  display: inline-block;
+  background: rgba(16,185,129,0.1);
+  color: var(--green);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px 32px; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+.section { margin-bottom: 48px; }
+.section-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+
+/* STEP LIST (adapte de sprint-list) */
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.step-item:hover { border-color: rgba(245,158,11,0.25); }
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 50px;
+  text-align: center;
+}
+.step-title { font-weight: 600; font-size: 0.95rem; flex: 1; color: #F8FAFC; }
+.step-body {
+  padding: 0 20px 18px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.step-intro { color: var(--text-muted); font-size: 0.88rem; padding-top: 14px; margin-bottom: 8px; font-style: italic; }
+.step-items { list-style: none; padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.step-items.no-pad { padding-top: 0; }
+.step-items li {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  padding-left: 18px;
+  position: relative;
+}
+.step-items li::before {
+  content: '▸';
+  position: absolute; left: 0; top: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+.step-items li strong { color: var(--text); font-weight: 600; }
+.step-items li code, .step-items li .mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+.step-tip {
+  background: rgba(245,158,11,0.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+}
+.step-tip strong { color: var(--gold); }
+.step-warn {
+  background: rgba(239,68,68,0.06);
+  border-left: 3px solid var(--red);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #FCA5A5;
+}
+.step-warn strong { color: var(--red); }
+.step-ok {
+  background: rgba(16,185,129,0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #86EFAC;
+}
+.step-ok strong { color: var(--green); }
+.step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+/* TAGS */
+.tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.tag-fix { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.tag-violet { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+
+/* TABLE */
+.table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 8px; background: var(--card); border-radius: 8px; overflow: hidden; }
+.table th { text-align: left; padding: 10px 14px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+.table tr:last-child td { border-bottom: none; }
+.table td:first-child { color: var(--text); font-weight: 500; }
+.mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; }
+
+/* INDEX CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.scenario-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all .2s;
+}
+.scenario-card:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); }
+.scenario-card .icon { font-size: 1.6rem; }
+.scenario-card .title { font-weight: 600; font-size: 0.98rem; color: #F8FAFC; }
+.scenario-card .desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.scenario-card .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 28px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 40px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .kpi-grid, .kpi-grid.cols-5, .kpi-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 1.8rem; }
+  .main { padding: 32px 18px; }
+  nav { padding: 12px 18px; gap: 18px; }
+  .nav-badge { margin-left: 0; }
+}
+
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="scenarios-index.html">Sc&eacute;narios</a>
+  <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
+  <a href="15-rgpd-conformite.html">RGPD</a>
+  <span class="nav-badge">S122</span>
+</nav>
+<div class="hero">
+  <div class="hero-label">SC&Eacute;NARIO M&Eacute;TIER</div>
+  <span class="emoji">&#128014;</span>
+  <h1>Centre &eacute;questre</h1>
+  <p>Pension de chevaux, cours et stages, licences FFE, comp&eacute;titions et suivi sanitaire des &eacute;quid&eacute;s.</p>
+  <div class="hero-tags"><span class="hero-tag">Pension box</span><span class="hero-tag">Licences FFE</span><span class="hero-tag">Galops 1-7</span><span class="hero-tag">Comp&eacute;titions</span><span class="hero-tag">Stages</span></div>
+</div>
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-value">8</div><div class="kpi-label">&Eacute;tapes</div></div>
+  <div class="kpi-card"><div class="kpi-value">15</div><div class="kpi-label">Chevaux en pension</div></div>
+  <div class="kpi-card"><div class="kpi-value">107 K&euro;</div><div class="kpi-label">CA annuel</div></div>
+  <div class="kpi-card"><div class="kpi-value">FFE</div><div class="kpi-label">Affiliation</div></div>
+</div>
+<div class="main">
+<div class="section">
+  <div class="section-title"><span class="num">01</span> &Eacute;tapes du sc&eacute;nario</div>
+  
+  <div class="step-list">
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">01</span>
+    <span class="step-title">Configurer le centre &eacute;questre</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Param&egrave;tres &rarr; Mon m&eacute;tier</strong> : s&eacute;lectionner &Eacute;questre</li><li>Num&eacute;ro SIRET, affiliation FFE, num&eacute;ro de structure</li><li>Activit&eacute;s : pension, cours, stages, comp&eacute;titions, randonn&eacute;es</li><li>Tarifs pension : box (450&euro;/mois), paddock (320&euro;/mois), pr&eacute; (180&euro;/mois)</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">02</span>
+    <span class="step-title">Cr&eacute;er les fiches cavaliers et chevaux</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Clients</strong> : fiche cavalier avec num&eacute;ro de licence FFE et niveau Galop</li><li><strong>Animaux</strong> : fiche cheval &mdash; SIRE, race, robe, date naissance, propri&eacute;taire</li><li>Documents obligatoires : carte d'immatriculation SIRE, carnet de sant&eacute;</li><li>Vaccins requis : rhinopneumonie, grippe + t&eacute;tanos, vermifuge tous les 3 mois</li><li>Attestation d'assurance RC cavalier &mdash; contr&ocirc;le annuel</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">03</span>
+    <span class="step-title">Gestion de la pension chevaux</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>&Eacute;levage &rarr; R&eacute;servations</strong> pour les pensions mensuelles</li><li>Type de pension : box, paddock ou pr&eacute; (avec ou sans nourriture/litage)</li><li>Services optionnels : pansage, soins, mar&eacute;chal-ferrant, v&eacute;t&eacute;rinaire</li><li>Facturation mensuelle automatique avec pr&eacute;l&egrave;vement SEPA</li><li>Quittance de loyer pension dat&eacute;e et num&eacute;rot&eacute;e</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">04</span>
+    <span class="step-title">Planifier les cours et s&eacute;ances</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>S&eacute;ances de groupe</strong> pour les cours collectifs</li><li>Niveau Galop 1-7 (d&eacute;butant &agrave; confirm&eacute;), moniteur, carr&eacute; ou man&egrave;ge</li><li>Capacit&eacute; max par cours (s&eacute;curit&eacute; : ratio 8 cavaliers/moniteur max)</li><li>Cours particuliers : s&eacute;ances individuelles pour perfectionnement ou pr&eacute;paration concours</li><li>Jauge de remplissage color&eacute;e visible (vert &lt; 70%, orange 70-99%, rouge = complet)</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">05</span>
+    <span class="step-title">Stages et &eacute;v&eacute;nements</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>S&eacute;ances de groupe</strong> &rarr; type Stage (demi-pension, pension compl&egrave;te)</li><li>Devis stage incluant h&eacute;bergement + cours + pension cheval</li><li>Gestion des inscriptions et des acomptes via portail</li><li>Programme du stage transmis aux participants par email</li><li>Intervenant ext&eacute;rieur : g&eacute;rer comme fournisseur dans Achats</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">06</span>
+    <span class="step-title">Comp&eacute;titions et concours</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Gestion des engagements en comp&eacute;tition FFE Compet</li><li>Devis pour sorties comp&eacute;tition : transport, engagement, accompagnement</li><li>Suivi des r&eacute;sultats par cavalier dans sa fiche client (palmar&egrave;s)</li><li>Bilan annuel comp&eacute;tition pour les cavaliers abonn&eacute;s</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">07</span>
+    <span class="step-title">Suivi sant&eacute; des chevaux</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Carnet de sant&eacute; num&eacute;rique : vaccins, vermifuge, mar&eacute;chal-ferrant, dentiste &eacute;quin</li><li>Alertes de rappel de vaccination configur&eacute;es dans l'agenda</li><li>Incidents (boiteries, coliques) : noter dans la fiche animal + registre</li><li>V&eacute;t&eacute;rinaire r&eacute;f&eacute;rent renseign&eacute; dans Param&egrave;tres</li></ul>
+    <div class="step-warn"><strong>&#9888; Attention :</strong> Vaccins grippe + t&eacute;tanos obligatoires pour tous les chevaux en pension et comp&eacute;tition FFE.</div>
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">08</span>
+    <span class="step-title">Formules cavaliers, statistiques et conformit&eacute;</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Formules &rarr; mod&egrave;le &Eacute;questre</strong> : forfaits 4 ou 8 cours/mois, cours illimit&eacute;s</li><li>Combin&eacute;s pension + cours pour les cavaliers propri&eacute;taires</li><li>Statistiques : CA par activit&eacute;, taux de remplissage des cours</li><li>Top cavaliers par fr&eacute;quence et CA</li><li>Affiliation FFE annuelle de la structure &agrave; renouveler</li><li>BPJEPS / DEJEPS obligatoire pour encadrement r&eacute;mun&eacute;r&eacute;</li><li>Export FEC + TVA pour expert-comptable</li></ul>
+    
+    
+  </div>
+</div>
+  </div>
+</div>
+
+</div>
+<footer>
+  Anim'Gest &mdash; NoSage's Editor &mdash; Sprint S122 &middot; 28/05/2026
+  <br><a href="scenarios-index.html">&larr; Tous les sc&eacute;narios</a>
+  &middot;
+  <a href="index.html">Documentation</a>
+</footer>
+
+</body>
+</html>

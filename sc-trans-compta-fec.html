@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comptabilit&eacute; &amp; FEC &mdash; Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --gold-pale: #FEF3C7;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 56px 32px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero .emoji { display: block; font-size: 2.4rem; margin-bottom: 8px; line-height: 1; }
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.hero-tags {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
+  margin-top: 18px; position: relative; z-index: 1;
+}
+.hero-tag {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 14px;
+}
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,158,11,0.1);
+  border-top: 1px solid rgba(245,158,11,0.1);
+  border-bottom: 1px solid rgba(245,158,11,0.1);
+}
+.kpi-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.kpi-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi-card {
+  background: var(--navy);
+  padding: 26px 18px;
+  text-align: center;
+  transition: background .2s;
+}
+.kpi-card:hover { background: var(--navy-800); }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.kpi-badge {
+  display: inline-block;
+  background: rgba(16,185,129,0.1);
+  color: var(--green);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px 32px; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+.section { margin-bottom: 48px; }
+.section-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+
+/* STEP LIST (adapte de sprint-list) */
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.step-item:hover { border-color: rgba(245,158,11,0.25); }
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 50px;
+  text-align: center;
+}
+.step-title { font-weight: 600; font-size: 0.95rem; flex: 1; color: #F8FAFC; }
+.step-body {
+  padding: 0 20px 18px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.step-intro { color: var(--text-muted); font-size: 0.88rem; padding-top: 14px; margin-bottom: 8px; font-style: italic; }
+.step-items { list-style: none; padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.step-items.no-pad { padding-top: 0; }
+.step-items li {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  padding-left: 18px;
+  position: relative;
+}
+.step-items li::before {
+  content: '▸';
+  position: absolute; left: 0; top: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+.step-items li strong { color: var(--text); font-weight: 600; }
+.step-items li code, .step-items li .mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+.step-tip {
+  background: rgba(245,158,11,0.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+}
+.step-tip strong { color: var(--gold); }
+.step-warn {
+  background: rgba(239,68,68,0.06);
+  border-left: 3px solid var(--red);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #FCA5A5;
+}
+.step-warn strong { color: var(--red); }
+.step-ok {
+  background: rgba(16,185,129,0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #86EFAC;
+}
+.step-ok strong { color: var(--green); }
+.step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+/* TAGS */
+.tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.tag-fix { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.tag-violet { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+
+/* TABLE */
+.table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 8px; background: var(--card); border-radius: 8px; overflow: hidden; }
+.table th { text-align: left; padding: 10px 14px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+.table tr:last-child td { border-bottom: none; }
+.table td:first-child { color: var(--text); font-weight: 500; }
+.mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; }
+
+/* INDEX CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.scenario-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all .2s;
+}
+.scenario-card:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); }
+.scenario-card .icon { font-size: 1.6rem; }
+.scenario-card .title { font-weight: 600; font-size: 0.98rem; color: #F8FAFC; }
+.scenario-card .desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.scenario-card .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 28px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 40px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .kpi-grid, .kpi-grid.cols-5, .kpi-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 1.8rem; }
+  .main { padding: 32px 18px; }
+  nav { padding: 12px 18px; gap: 18px; }
+  .nav-badge { margin-left: 0; }
+}
+
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="scenarios-index.html">Sc&eacute;narios</a>
+  <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
+  <a href="15-rgpd-conformite.html">RGPD</a>
+  <span class="nav-badge">S122</span>
+</nav>
+<div class="hero">
+  <div class="hero-label">SC&Eacute;NARIO TRANSVERSE</div>
+  <span class="emoji">&#128202;</span>
+  <h1>Comptabilit&eacute; &amp; FEC</h1>
+  <p>Plan comptable, &eacute;critures automatiques, balance, export FEC normalis&eacute; et transmission expert-comptable.</p>
+  <div class="hero-tags"><span class="hero-tag">PCG fran&ccedil;ais</span><span class="hero-tag">18 colonnes FEC</span><span class="hero-tag">&Eacute;critures auto</span><span class="hero-tag">Bilan</span><span class="hero-tag">Cl&ocirc;ture exercice</span></div>
+</div>
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-value">10</div><div class="kpi-label">&Eacute;tapes</div></div>
+  <div class="kpi-card"><div class="kpi-value">PCG</div><div class="kpi-label">Plan comptable</div></div>
+  <div class="kpi-card"><div class="kpi-value">18</div><div class="kpi-label">Colonnes FEC</div></div>
+  <div class="kpi-card"><div class="kpi-value">Auto</div><div class="kpi-label">&Eacute;critures</div></div>
+</div>
+<div class="main">
+<div class="section">
+  <div class="section-title"><span class="num">01</span> &Eacute;tapes du sc&eacute;nario</div>
+  
+  <div class="step-list">
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">01</span>
+    <span class="step-title">Configuration du plan comptable</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Comptabilit&eacute; &rarr; Plan comptable</strong> : adapt&eacute; au m&eacute;tier choisi</li><li>Comptes obligatoires : 411 (clients), 401 (fournisseurs), 706 (prestations), 707 (ventes)</li><li>Comptes TVA : 44566 (d&eacute;ductible), 44571 (collect&eacute;e), 44551 (&agrave; payer)</li><li>Comptes sp&eacute;cifiques m&eacute;tier : 6064 (consommables), 6257 (repas), 6251 (d&eacute;placements)</li><li>Personnalisation possible : ajouter des sous-comptes (706.1 toilettage, 706.2 pension...)</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">02</span>
+    <span class="step-title">Cr&eacute;ation de l'exercice comptable</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Comptabilit&eacute; &rarr; Exercices &rarr; + Nouvel exercice</strong></li><li>Date d&eacute;but : 01/01/2026, date fin : 31/12/2026</li><li>Statut : Ouvert (modifiable) &rarr; Cl&ocirc;tur&eacute; (verrouill&eacute;)</li><li>Un seul exercice actif &agrave; la fois pour les nouvelles &eacute;critures</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">03</span>
+    <span class="step-title">&Eacute;criture automatique &mdash; Vente d'une prestation</span>
+  </div>
+  <div class="step-body">
+    <div class="step-intro">Lors de la facturation, l'&eacute;criture est g&eacute;n&eacute;r&eacute;e automatiquement.</div>
+    <ul class="step-items no-pad"><li>Facture 120&euro; TTC = 100&euro; HT + 20&euro; TVA 20%</li><li>Journal AC (ventes) :</li><li>&nbsp;&nbsp;&bullet; D&eacute;bit 411 (Client X) : 120,00 &euro;</li><li>&nbsp;&nbsp;&bullet; Cr&eacute;dit 706 (Prestations) : 100,00 &euro;</li><li>&nbsp;&nbsp;&bullet; Cr&eacute;dit 44571 (TVA collect&eacute;e) : 20,00 &euro;</li><li>Lib&eacute;ll&eacute; : <code>FAC-2606-0078 / Client X / BC Rex</code></li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">04</span>
+    <span class="step-title">&Eacute;criture automatique &mdash; R&egrave;glement client</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Lors de l'encaissement Stripe/virement : nouvelle &eacute;criture</li><li>Journal BQ (banque) :</li><li>&nbsp;&nbsp;&bullet; D&eacute;bit 512 (Banque) : 120,00 &euro;</li><li>&nbsp;&nbsp;&bullet; Cr&eacute;dit 411 (Client X) : 120,00 &euro;</li><li>Le compte client est sold&eacute; automatiquement</li><li>Rapprochement bancaire facilit&eacute; (m&ecirc;me r&eacute;f&eacute;rence dans les deux &eacute;critures)</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">05</span>
+    <span class="step-title">Consultation de la balance</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Comptabilit&eacute; &rarr; Balance</strong> &mdash; vue par compte</li><li>Pour chaque compte : Solde d&eacute;but, Mouvements d&eacute;bit/cr&eacute;dit, Solde fin</li><li>Filtres : p&eacute;riode, classe de compte, journal</li><li>Compte 411 (clients) : solde d&eacute;biteur = factures impay&eacute;es</li><li>Compte 706 (ventes) : solde cr&eacute;diteur = CA du mois</li><li>Export PDF ou CSV de la balance</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">06</span>
+    <span class="step-title">G&eacute;n&eacute;ration du FEC</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Comptabilit&eacute; &rarr; Export FEC</strong></li><li>Format normalis&eacute; : 18 colonnes (article L47 A-I du LPF)</li><li>JournalCode, JournalLib, EcritureNum, EcritureDate, CompteNum, CompteLib, CompAuxNum, CompAuxLib, PieceRef, PieceDate, EcritureLib, Debit, Credit, EcritureLet, DateLet, ValidDate, Montantdevise, Idevise</li><li>Format texte tabul&eacute;, UTF-8, conforme &agrave; l'arr&ecirc;t&eacute; du 29 juillet 2013</li><li>Nom de fichier : <code>SIREN_FECYYYYMMDD.txt</code></li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">07</span>
+    <span class="step-title">V&eacute;rification qualit&eacute; du FEC</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Avant export : check-list automatique de conformit&eacute;</li><li>Toutes les &eacute;critures sont &eacute;quilibr&eacute;es (somme d&eacute;bits = somme cr&eacute;dits)</li><li>Aucune &eacute;criture en doublon (m&ecirc;me r&eacute;f&eacute;rence)</li><li>Tous les comptes utilis&eacute;s existent dans le plan comptable</li><li>Format des dates et montants conforme</li><li>Test validation Test-Compta-Demat (DGFiP) recommand&eacute; avant transmission</li></ul>
+    <div class="step-ok"><strong>&#10003; Bonne pratique :</strong> Un FEC propre &eacute;vite les demandes de correction lors d'un contr&ocirc;le fiscal.</div>
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">08</span>
+    <span class="step-title">Transmission et cl&ocirc;ture de l'exercice</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Transmission FEC &agrave; l'expert-comptable par email ou via plateforme s&eacute;curis&eacute;e</li><li>L'expert-comptable r&eacute;alise les &eacute;critures d'inventaire (amortissements, provisions)</li><li>Renvoi du FEC final pour archivage</li><li><strong>Comptabilit&eacute; &rarr; Exercices &rarr; Cl&ocirc;turer</strong> : l'exercice est verrouill&eacute;</li><li>G&eacute;n&eacute;ration du bilan et du compte de r&eacute;sultat</li><li>Archive l&eacute;gale 10 ans &mdash; conservation dans GED + sauvegarde NAS</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">09</span>
+    <span class="step-title">Export TVA par taux</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Comptabilit&eacute; &rarr; Export TVA</strong> &mdash; ventilation par taux</li><li>Base HT et TVA pour 0%, 5,5%, 10%, 20% s&eacute;par&eacute;ment</li><li>Vue mensuelle ou trimestrielle selon votre r&eacute;gime</li><li>Pr&eacute;-remplissage des cases CA3 (chiffre d'affaires r&eacute;alis&eacute; HT)</li><li>T&eacute;l&eacute;d&eacute;claration via votre espace impots.gouv.fr</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">10</span>
+    <span class="step-title">Notes de frais et d&eacute;ductions</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Les notes de frais valid&eacute;es g&eacute;n&egrave;rent des &eacute;critures dans le journal OD/AC</li><li>TVA d&eacute;ductible automatiquement enregistr&eacute;e (44566)</li><li>Cat&eacute;gories PCG : 6064 (consommables), 6257 (repas), 6251 (d&eacute;placements)</li><li>Export CSV par cat&eacute;gorie pour le bilan annuel</li><li>Justificatifs scann&eacute;s (OCR IA) archiv&eacute;s en GED</li></ul>
+    
+    
+  </div>
+</div>
+  </div>
+</div>
+
+</div>
+<footer>
+  Anim'Gest &mdash; NoSage's Editor &mdash; Sprint S122 &middot; 28/05/2026
+  <br><a href="scenarios-index.html">&larr; Tous les sc&eacute;narios</a>
+  &middot;
+  <a href="index.html">Documentation</a>
+</footer>
+
+</body>
+</html>

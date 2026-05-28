@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>&Eacute;leveur de chiens &mdash; Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --gold-pale: #FEF3C7;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 56px 32px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero .emoji { display: block; font-size: 2.4rem; margin-bottom: 8px; line-height: 1; }
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.hero-tags {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
+  margin-top: 18px; position: relative; z-index: 1;
+}
+.hero-tag {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 14px;
+}
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,158,11,0.1);
+  border-top: 1px solid rgba(245,158,11,0.1);
+  border-bottom: 1px solid rgba(245,158,11,0.1);
+}
+.kpi-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.kpi-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi-card {
+  background: var(--navy);
+  padding: 26px 18px;
+  text-align: center;
+  transition: background .2s;
+}
+.kpi-card:hover { background: var(--navy-800); }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.kpi-badge {
+  display: inline-block;
+  background: rgba(16,185,129,0.1);
+  color: var(--green);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px 32px; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+.section { margin-bottom: 48px; }
+.section-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+
+/* STEP LIST (adapte de sprint-list) */
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.step-item:hover { border-color: rgba(245,158,11,0.25); }
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 50px;
+  text-align: center;
+}
+.step-title { font-weight: 600; font-size: 0.95rem; flex: 1; color: #F8FAFC; }
+.step-body {
+  padding: 0 20px 18px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.step-intro { color: var(--text-muted); font-size: 0.88rem; padding-top: 14px; margin-bottom: 8px; font-style: italic; }
+.step-items { list-style: none; padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.step-items.no-pad { padding-top: 0; }
+.step-items li {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  padding-left: 18px;
+  position: relative;
+}
+.step-items li::before {
+  content: '▸';
+  position: absolute; left: 0; top: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+.step-items li strong { color: var(--text); font-weight: 600; }
+.step-items li code, .step-items li .mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+.step-tip {
+  background: rgba(245,158,11,0.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+}
+.step-tip strong { color: var(--gold); }
+.step-warn {
+  background: rgba(239,68,68,0.06);
+  border-left: 3px solid var(--red);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #FCA5A5;
+}
+.step-warn strong { color: var(--red); }
+.step-ok {
+  background: rgba(16,185,129,0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #86EFAC;
+}
+.step-ok strong { color: var(--green); }
+.step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+/* TAGS */
+.tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.tag-fix { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.tag-violet { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+
+/* TABLE */
+.table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 8px; background: var(--card); border-radius: 8px; overflow: hidden; }
+.table th { text-align: left; padding: 10px 14px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+.table tr:last-child td { border-bottom: none; }
+.table td:first-child { color: var(--text); font-weight: 500; }
+.mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; }
+
+/* INDEX CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.scenario-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all .2s;
+}
+.scenario-card:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); }
+.scenario-card .icon { font-size: 1.6rem; }
+.scenario-card .title { font-weight: 600; font-size: 0.98rem; color: #F8FAFC; }
+.scenario-card .desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.scenario-card .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 28px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 40px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .kpi-grid, .kpi-grid.cols-5, .kpi-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 1.8rem; }
+  .main { padding: 32px 18px; }
+  nav { padding: 12px 18px; gap: 18px; }
+  .nav-badge { margin-left: 0; }
+}
+
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="scenarios-index.html">Sc&eacute;narios</a>
+  <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
+  <a href="15-rgpd-conformite.html">RGPD</a>
+  <span class="nav-badge">S122</span>
+</nav>
+<div class="hero">
+  <div class="hero-label">SC&Eacute;NARIO M&Eacute;TIER</div>
+  <span class="emoji">&#128035;</span>
+  <h1>&Eacute;leveur de chiens</h1>
+  <p>De la saillie &agrave; la cession des chiots &mdash; planning de reproduction, identification LOF, r&eacute;servations, contrats, d&eacute;clarations DDPP et SCC.</p>
+  <div class="hero-tags"><span class="hero-tag">LOF / SCC</span><span class="hero-tag">Saillie planning</span><span class="hero-tag">R&eacute;servations chiots</span><span class="hero-tag">Cessions contrats</span><span class="hero-tag">DDPP</span></div>
+</div>
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-value">9</div><div class="kpi-label">&Eacute;tapes</div></div>
+  <div class="kpi-card"><div class="kpi-value">LOF</div><div class="kpi-label">Identification</div></div>
+  <div class="kpi-card"><div class="kpi-value">7 200 &euro;</div><div class="kpi-label">CA port&eacute;e moyenne</div></div>
+  <div class="kpi-card"><div class="kpi-value">8 sem.</div><div class="kpi-label">Cession l&eacute;gale</div></div>
+</div>
+<div class="main">
+<div class="section">
+  <div class="section-title"><span class="num">01</span> &Eacute;tapes du sc&eacute;nario</div>
+  
+  <div class="step-list">
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">01</span>
+    <span class="step-title">Cr&eacute;ation des fiches g&eacute;niteurs</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Animaux &rarr; Nouvel animal</strong> : Lice Athena (Berger Australien, LOF n&deg; 285794, 3 ans)</li><li>Renseigner les tests g&eacute;n&eacute;tiques : MDR1, HSF4, CEA, dysplasie hanche/coude (radio)</li><li>Carnet de vaccination &agrave; jour, vermifuge, antiparasitaire</li><li>Documenter les confirmations SCC, expositions et titres obtenus</li><li>M&ecirc;me chose pour le m&acirc;le repr&eacute;cieur Hercule (ext&eacute;rieur, fiche &laquo;&nbsp;m&acirc;le visiteur&nbsp;&raquo;)</li></ul>
+    <div class="step-tip"><strong>&#128161; Conseil :</strong> Les tests sant&eacute; documents&eacute;s rassurent les futurs acqu&eacute;reurs et justifient les tarifs LOF.</div>
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">02</span>
+    <span class="step-title">Enregistrement de la saillie</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>&Eacute;levage &rarr; Saillies &rarr; Nouvelle saillie</strong></li><li>Date saillie 1 : 15/01/2026, lice Athena, m&acirc;le Hercule</li><li>Date saillie 2 : 17/01/2026 (saillie de confirmation)</li><li>Date pr&eacute;visionnelle de mise-bas : 17/03/2026 (gestation ~63 jours)</li><li>G&eacute;n&eacute;rer le contrat de saillie SCC (formulaire pr&eacute;-rempli)</li><li>D&eacute;claration de saillie LOF dans les 8 semaines</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">03</span>
+    <span class="step-title">Enregistrement des naissances</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>&Eacute;levage &rarr; Port&eacute;es &rarr; Nouvelle port&eacute;e</strong></li><li>Date mise-bas : 18/03/2026, m&egrave;re Athena, p&egrave;re Hercule</li><li>Saisir les 7 chiots un par un : sexe, poids naissance, couleur, marques distinctives</li><li>Photo de chaque chiot &agrave; J+1 (album port&eacute;e dans la GED)</li><li>Suivi du poids quotidien pendant les 3 premi&egrave;res semaines</li><li>Lettre annuelle SCC : ann&eacute;e 2026 = lettre <strong>U</strong> &mdash; tous les noms commencent par U</li></ul>
+    <div class="step-ok"><strong>&#10003; Bonne pratique :</strong> Le suivi de poids quotidien permet de d&eacute;tecter rapidement un chiot en difficult&eacute;.</div>
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">04</span>
+    <span class="step-title">Identification et vaccination des chiots</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>&Agrave; 7-8 semaines : identification par puce &eacute;lectronique chez le v&eacute;t&eacute;rinaire</li><li>Saisir les num&eacute;ros de puce pour chaque chiot (format ISO 15 chiffres)</li><li>Premi&egrave;re vaccination CHPL (J60) &mdash; rappel J90</li><li>Vermifuge J15, J30, J45, J60</li><li>D&eacute;claration ICAD automatique depuis la fiche animal</li><li>Test de comportement (m&eacute;thode Campbell ou Pat Hastings) document&eacute; en GED</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">05</span>
+    <span class="step-title">Gestion des r&eacute;servations et acomptes</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Liste d'attente : 12 demandes &mdash; classement par anciennet&eacute; et crit&egrave;res</li><li><strong>&Eacute;levage &rarr; R&eacute;servations</strong> : assigner un chiot &agrave; un futur propri&eacute;taire</li><li>G&eacute;n&eacute;rer le devis de r&eacute;servation : 1 200&euro; (acompte 300&euro; non remboursable)</li><li>Envoi via portail client &mdash; signature &eacute;lectronique du compromis</li><li>Encaissement de l'acompte &mdash; statut chiot <code>RESERVE</code></li><li>Visites de pr&eacute;-cession programm&eacute;es dans l'agenda</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">06</span>
+    <span class="step-title">Cession des chiots &agrave; 8 semaines</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>L&eacute;gal : aucune cession avant 8 semaines (56 jours)</li><li>&Agrave; J56+, g&eacute;n&eacute;rer le dossier de cession complet (1 chiot) :</li><li>&nbsp;&nbsp;&bullet; Contrat de cession SCC pr&eacute;-rempli (16 pages)</li><li>&nbsp;&nbsp;&bullet; Certificat v&eacute;t&eacute;rinaire de bonne sant&eacute; (J-5)</li><li>&nbsp;&nbsp;&bullet; Carnet de sant&eacute; europ&eacute;en (vaccins, identification, vermifuge)</li><li>&nbsp;&nbsp;&bullet; Attestation cession LOF (si confirmation parents OK)</li><li>Facture du solde : 900&euro; (1200&euro; - 300&euro; acompte d&eacute;j&agrave; r&eacute;gl&eacute;)</li><li>Transfert ICAD au nouveau propri&eacute;taire</li></ul>
+    <div class="step-warn"><strong>&#9888; Attention :</strong> Toute cession avant 8 semaines est un d&eacute;lit puni par l'article L214-8 du Code rural.</div>
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">07</span>
+    <span class="step-title">D&eacute;clarations DDPP et SCC</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>DDPP : d&eacute;claration de port&eacute;e dans les 7 jours (formulaire Cerfa)</li><li>SCC : d&eacute;claration de port&eacute;e LOF dans les 8 semaines</li><li>SCC : confirmation des chiots &agrave; 12-15 mois (dispense pour LOOF chats)</li><li>Maintien du num&eacute;ro d'&eacute;levage SIRET et num&eacute;ro RNE</li><li>Identification ICAD pour chaque cession</li><li>Les formulaires sont pr&eacute;-remplis depuis la fiche port&eacute;e &mdash; export PDF</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">08</span>
+    <span class="step-title">Registres de l'&eacute;levage &mdash; Contr&ocirc;le de conformit&eacute;</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Registres &rarr; Carnivores DDPP</strong> &mdash; saillie, naissance, cession enregistr&eacute;es</li><li><strong>Registres &rarr; Sanitaire</strong> &mdash; vaccins, traitements, v&eacute;rifications v&eacute;t&eacute;rinaires</li><li><strong>Registres &rarr; &Eacute;v&eacute;nements</strong> &mdash; incidents, c&eacute;sariennes, d&eacute;c&egrave;s n&eacute;onatal</li><li>Conservation l&eacute;gale : 5 ans &agrave; compter du dernier &eacute;v&eacute;nement</li><li>Pr&eacute;paration contr&ocirc;le DDPP : check-list automatique + dossier complet PDF</li></ul>
+    <div class="step-tip"><strong>&#128161; Conseil :</strong> Les registres &agrave; jour rassurent en cas de contr&ocirc;le inopin&eacute;. Pr&eacute;parez le dossier annuellement.</div>
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">09</span>
+    <span class="step-title">Bilan financier de la port&eacute;e</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Recettes : 7 chiots &times; 1 200&euro; = <strong>8 400 &euro;</strong></li><li>Co&ucirc;ts : saillie, suivi gestation, &eacute;chographies, mise bas v&eacute;t&eacute;rinaire, alimentation, identification, vaccins, vermifuges = ~1 200&euro;</li><li><strong>Marge nette port&eacute;e : ~7 200 &euro;</strong></li><li>Comptabilit&eacute; : ventilation automatique en compte 706 (prestations) ou 707 (ventes selon r&eacute;gime)</li><li>Export TVA si applicable (auto-entrepreneur ou r&eacute;gime r&eacute;el)</li><li>Bilan annuel cumul&eacute; sur 2-3 port&eacute;es par an</li></ul>
+    
+    
+  </div>
+</div>
+  </div>
+</div>
+
+</div>
+<footer>
+  Anim'Gest &mdash; NoSage's Editor &mdash; Sprint S122 &middot; 28/05/2026
+  <br><a href="scenarios-index.html">&larr; Tous les sc&eacute;narios</a>
+  &middot;
+  <a href="index.html">Documentation</a>
+</footer>
+
+</body>
+</html>
