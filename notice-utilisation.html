@@ -3,1859 +3,778 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notice d'utilisation — Anim'Gest · NoSage's Editor</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Notice d'utilisation &mdash; Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0F172A;
-    --navy-mid: #1E293B;
-    --navy-light: #334155;
-    --gold: #F59E0B;
-    --gold-light: #FCD34D;
-    --violet: #4F46E5;
-    --cyan: #06B6D4;
-    --emerald: #10B981;
-    --rose: #F43F5E;
-    --amber: #F59E0B;
-    --surface: #1E293B;
-    --border: rgba(255,255,255,0.08);
-    --text: #F1F5F9;
-    --muted: #94A3B8;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; line-height: 1.7; }
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --gold-pale: #FEF3C7;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
 
-  /* LAYOUT */
-  .layout { display: flex; min-height: 100vh; }
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
 
-  /* SIDEBAR NAV */
-  .sidenav {
-    width: 280px;
-    flex-shrink: 0;
-    background: var(--navy-mid);
-    border-right: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    padding: 24px 0;
-  }
-  .sidenav-logo {
-    padding: 0 20px 24px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 16px;
-  }
-  .sidenav-logo .brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    background: linear-gradient(135deg, #fff, var(--gold-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .sidenav-logo .version {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-  .nav-section-title {
-    padding: 8px 20px 4px;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--muted);
-  }
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 20px;
-    font-size: 13px;
-    color: var(--muted);
-    text-decoration: none;
-    transition: all 0.15s;
-    border-left: 2px solid transparent;
-  }
-  .nav-link:hover { color: var(--text); background: rgba(255,255,255,0.04); }
-  .nav-link.active { color: var(--violet); border-left-color: var(--violet); background: rgba(79,70,229,0.08); font-weight: 500; }
-  .nav-link .icon { font-size: 15px; width: 20px; text-align: center; flex-shrink: 0; }
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 56px 32px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero .emoji { display: block; font-size: 2.4rem; margin-bottom: 8px; line-height: 1; }
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.hero-tags {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
+  margin-top: 18px; position: relative; z-index: 1;
+}
+.hero-tag {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 14px;
+}
 
-  /* MAIN */
-  .main { flex: 1; min-width: 0; }
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,158,11,0.1);
+  border-top: 1px solid rgba(245,158,11,0.1);
+  border-bottom: 1px solid rgba(245,158,11,0.1);
+}
+.kpi-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.kpi-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi-card {
+  background: var(--navy);
+  padding: 26px 18px;
+  text-align: center;
+  transition: background .2s;
+}
+.kpi-card:hover { background: var(--navy-800); }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.kpi-badge {
+  display: inline-block;
+  background: rgba(16,185,129,0.1);
+  color: var(--green);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
 
-  /* HERO */
-  .hero {
-    background: linear-gradient(135deg, #0F172A 0%, #1a1040 60%, #0F172A 100%);
-    padding: 64px 60px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 70% 30%, rgba(79,70,229,0.18) 0%, transparent 60%),
-                radial-gradient(ellipse at 10% 80%, rgba(6,182,212,0.12) 0%, transparent 50%);
-  }
-  .hero-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--violet), var(--cyan));
-    color: #fff;
-    padding: 5px 18px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    position: relative;
-  }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 4vw, 58px);
-    font-weight: 900;
-    line-height: 1.1;
-    background: linear-gradient(135deg, #fff 0%, var(--gold-light) 60%, var(--gold) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 16px;
-    position: relative;
-  }
-  .hero-sub { font-size: 17px; color: var(--muted); max-width: 560px; position: relative; line-height: 1.6; }
-  .hero-meta {
-    display: flex;
-    gap: 24px;
-    margin-top: 32px;
-    position: relative;
-    flex-wrap: wrap;
-  }
-  .hero-meta-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
-  .hero-meta-item span:first-child { font-size: 16px; }
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px 32px; }
 
-  /* SECTION */
-  .section { padding: 56px 60px; border-bottom: 1px solid var(--border); scroll-margin-top: 0; }
-  .section:last-child { border-bottom: none; }
-  .section-header { margin-bottom: 36px; }
-  .section-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-  }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(22px, 3vw, 32px);
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 12px;
-  }
-  .section-desc { color: var(--muted); font-size: 15px; max-width: 680px; }
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+.section { margin-bottom: 48px; }
+.section-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
 
-  /* CONTENT BLOCKS */
-  .prose { color: var(--muted); font-size: 14px; line-height: 1.8; max-width: 720px; }
-  .prose p { margin-bottom: 16px; }
-  .prose strong { color: var(--text); font-weight: 600; }
-  .prose h3 { font-size: 16px; font-weight: 600; color: #fff; margin: 24px 0 10px; }
-  .prose code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-family: monospace; color: var(--cyan); font-size: 12px; }
+/* STEP LIST (adapte de sprint-list) */
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.step-item:hover { border-color: rgba(245,158,11,0.25); }
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 50px;
+  text-align: center;
+}
+.step-title { font-weight: 600; font-size: 0.95rem; flex: 1; color: #F8FAFC; }
+.step-body {
+  padding: 0 20px 18px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.step-intro { color: var(--text-muted); font-size: 0.88rem; padding-top: 14px; margin-bottom: 8px; font-style: italic; }
+.step-items { list-style: none; padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.step-items.no-pad { padding-top: 0; }
+.step-items li {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  padding-left: 18px;
+  position: relative;
+}
+.step-items li::before {
+  content: '▸';
+  position: absolute; left: 0; top: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+.step-items li strong { color: var(--text); font-weight: 600; }
+.step-items li code, .step-items li .mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+.step-tip {
+  background: rgba(245,158,11,0.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+}
+.step-tip strong { color: var(--gold); }
+.step-warn {
+  background: rgba(239,68,68,0.06);
+  border-left: 3px solid var(--red);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #FCA5A5;
+}
+.step-warn strong { color: var(--red); }
+.step-ok {
+  background: rgba(16,185,129,0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #86EFAC;
+}
+.step-ok strong { color: var(--green); }
+.step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 
-  /* CARDS GRID */
-  .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    transition: all 0.2s;
-  }
-  .card:hover { border-color: rgba(255,255,255,0.14); transform: translateY(-2px); }
-  .card-icon { font-size: 28px; margin-bottom: 14px; }
-  .card-title { font-weight: 600; font-size: 15px; color: #fff; margin-bottom: 8px; }
-  .card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
-  .card-path {
-    display: inline-block;
-    margin-top: 12px;
-    font-size: 11px;
-    font-family: monospace;
-    padding: 3px 8px;
-    border-radius: 5px;
-    background: rgba(0,0,0,0.3);
-    color: var(--cyan);
-    border: 1px solid rgba(6,182,212,0.15);
-  }
+/* TAGS */
+.tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.tag-fix { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.tag-violet { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
 
-  /* STEP LIST */
-  .steps { display: flex; flex-direction: column; gap: 0; }
-  .step-row {
-    display: flex;
-    gap: 20px;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .step-row:last-child { border-bottom: none; }
-  .step-num-badge {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 15px;
-    flex-shrink: 0;
-    color: #fff;
-  }
-  .step-content { flex: 1; }
-  .step-name { font-weight: 600; font-size: 15px; color: #fff; margin-bottom: 6px; }
-  .step-detail { font-size: 13px; color: var(--muted); line-height: 1.6; }
-  .step-detail ul { list-style: none; margin-top: 8px; }
-  .step-detail li { padding: 3px 0; padding-left: 16px; position: relative; }
-  .step-detail li::before { content: '→'; position: absolute; left: 0; color: var(--violet); }
+/* TABLE */
+.table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 8px; background: var(--card); border-radius: 8px; overflow: hidden; }
+.table th { text-align: left; padding: 10px 14px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+.table tr:last-child td { border-bottom: none; }
+.table td:first-child { color: var(--text); font-weight: 500; }
+.mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; }
 
-  /* INFO BOX */
-  .info-box {
-    border-radius: 14px;
-    padding: 20px 24px;
-    margin: 20px 0;
-    display: flex;
-    gap: 14px;
-  }
-  .info-box .box-icon { font-size: 20px; flex-shrink: 0; }
-  .info-box p { font-size: 13px; line-height: 1.6; }
-  .info-tip { background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.2); }
-  .info-tip p { color: #67e8f9; }
-  .info-warn { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); }
-  .info-warn p { color: #fcd34d; }
-  .info-danger { background: rgba(244,63,94,0.08); border: 1px solid rgba(244,63,94,0.2); }
-  .info-danger p { color: #fda4af; }
-  .info-ok { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); }
-  .info-ok p { color: #6ee7b7; }
+/* INDEX CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.scenario-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all .2s;
+}
+.scenario-card:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); }
+.scenario-card .icon { font-size: 1.6rem; }
+.scenario-card .title { font-weight: 600; font-size: 0.98rem; color: #F8FAFC; }
+.scenario-card .desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.scenario-card .meta { display: flex; flex-wrap: wrap; gap: 6px; }
 
-  /* STATUS BADGES */
-  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
-  .badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 500;
-    border: 1px solid var(--border);
-  }
-  .badge-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 28px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 40px;
+}
+footer a { color: var(--gold); text-decoration: none; }
 
-  /* TABLE */
-  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .data-table th {
-    text-align: left;
-    padding: 12px 16px;
-    background: rgba(255,255,255,0.04);
-    color: var(--muted);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-bottom: 1px solid var(--border);
-  }
-  .data-table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    color: var(--muted);
-    vertical-align: top;
-  }
-  .data-table td:first-child { color: var(--text); font-weight: 500; }
-  .data-table tr:last-child td { border-bottom: none; }
-  .table-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-    margin: 20px 0;
-  }
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .kpi-grid, .kpi-grid.cols-5, .kpi-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 1.8rem; }
+  .main { padding: 32px 18px; }
+  nav { padding: 12px 18px; gap: 18px; }
+  .nav-badge { margin-left: 0; }
+}
 
-  /* SHORTCUT */
-  .shortcut-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
-  .shortcut {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-size: 13px;
-  }
-  .shortcut kbd {
-    padding: 3px 8px;
-    background: var(--navy-light);
-    border-radius: 5px;
-    font-size: 12px;
-    font-family: monospace;
-    color: var(--gold-light);
-    border: 1px solid var(--border);
-    flex-shrink: 0;
-  }
 
-  /* ACCORDION */
-  .accordion { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--surface); }
-  .acc-item { border-bottom: 1px solid var(--border); }
-  .acc-item:last-child { border-bottom: none; }
-  .acc-header {
-    padding: 16px 24px;
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--text);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: background 0.15s;
-  }
-  .acc-header:hover { background: rgba(255,255,255,0.03); }
-  .acc-body { padding: 0 24px 20px; color: var(--muted); font-size: 13px; line-height: 1.7; display: none; }
-  .acc-body.open { display: block; }
+/* FAQ accordion */
+.faq-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.faq-item:hover { border-color: rgba(245,158,11,0.2); }
+.faq-item details summary {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #F8FAFC;
+  display: flex; align-items: center; gap: 12px;
+  list-style: none;
+}
+.faq-item details summary::-webkit-details-marker { display: none; }
+.faq-item details summary::before {
+  content: '+';
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 6px;
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.faq-item details[open] summary::before { content: '-'; }
+.faq-item details summary:hover { color: var(--gold); }
+.faq-answer {
+  padding: 0 18px 16px 52px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+.faq-answer code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+.faq-answer strong { color: var(--text); }
 
-  /* SUB-SECTION TITLE */
-  .subsection-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    margin: 40px 0 16px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-  }
-  .subsection-title:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+/* Reference content blocks */
+.ref-block {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-bottom: 14px;
+}
+.ref-block h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: #F8FAFC;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.ref-block p, .ref-block li { color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; }
+.ref-block p { margin-bottom: 8px; }
+.ref-block ul { list-style: none; padding-left: 0; }
+.ref-block ul li {
+  padding-left: 18px; position: relative; margin-bottom: 4px;
+}
+.ref-block ul li::before {
+  content: '▸';
+  position: absolute; left: 0;
+  color: var(--gold);
+  font-size: 0.78rem;
+}
+.ref-block strong { color: var(--text); font-weight: 600; }
+.ref-block code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
 
-  footer {
-    padding: 32px 60px;
-    background: var(--navy-mid);
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 13px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  footer a { color: var(--cyan); text-decoration: none; }
-  footer a:hover { color: var(--gold-light); }
+/* Tables (reference, pricing, etc.) */
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 14px 0;
+  font-size: 0.88rem;
+}
+.ref-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+}
+.ref-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-muted);
+}
+.ref-table tr:last-child td { border-bottom: none; }
+.ref-table td:first-child { color: var(--text); font-weight: 500; }
+.ref-table tr:hover td { background: rgba(255,255,255,0.02); }
+.ref-table code { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--gold-light); }
+
+/* Callout boxes */
+.callout {
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  border-left: 3px solid;
+}
+.callout-info { background: rgba(6,182,212,0.06); border-color: var(--cyan); color: #67E8F9; }
+.callout-warn { background: rgba(245,158,11,0.06); border-color: var(--gold); color: var(--gold-light); }
+.callout-danger { background: rgba(239,68,68,0.06); border-color: var(--red); color: #FCA5A5; }
+.callout-success { background: rgba(16,185,129,0.06); border-color: var(--green); color: #86EFAC; }
+.callout strong { font-weight: 700; }
+
+/* TOC */
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.toc-link {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  display: flex; align-items: center; gap: 10px;
+  transition: all .2s;
+}
+.toc-link:hover { border-color: rgba(245,158,11,0.3); color: var(--gold); }
+.toc-link .num {
+  font-family: 'DM Mono', monospace;
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
 </style>
 </head>
 <body>
-
-<div class="layout">
-
-<!-- ════════════════════════════════════════════════════
-     NAVIGATION LATÉRALE
-════════════════════════════════════════════════════ -->
-<nav class="sidenav">
-  <div class="sidenav-logo">
-    <div class="brand">Anim'Gest</div>
-    <div class="version">NoSage's Editor · Notice d'utilisation · S114</div>
-  </div>
-
-  <div class="nav-section-title">Introduction</div>
-  <a class="nav-link active" href="#intro"><span class="icon">🏠</span> Prise en main</a>
-  <a class="nav-link" href="#interface"><span class="icon">🖥️</span> Interface</a>
-
-  <div class="nav-section-title">Gestion Clients</div>
-  <a class="nav-link" href="#clients"><span class="icon">👤</span> Clients & Contacts</a>
-  <a class="nav-link" href="#animaux"><span class="icon">🐾</span> Animaux</a>
-  <a class="nav-link" href="#crm"><span class="icon">📈</span> CRM & Leads</a>
-  <a class="nav-link" href="#portail"><span class="icon">🌐</span> Portail Client</a>
-  <a class="nav-link" href="#questionnaires"><span class="icon">📨</span> Questionnaires</a>
-
-  <div class="nav-section-title">Activité</div>
-  <a class="nav-link" href="#seances"><span class="icon">📋</span> Séances</a>
-  <a class="nav-link" href="#programmes"><span class="icon">🎯</span> Programmes & Formules</a>
-  <a class="nav-link" href="#parcours"><span class="icon">🗺️</span> Parcours géo</a>
-  <a class="nav-link" href="#agenda"><span class="icon">📅</span> Agenda</a>
-  <a class="nav-link" href="#bc-cac"><span class="icon">🧠</span> BC & Suivi CAC</a>
-
-  <div class="nav-section-title">Commercial</div>
-  <a class="nav-link" href="#devis"><span class="icon">📝</span> Devis & Contrats</a>
-  <a class="nav-link" href="#factures"><span class="icon">🧾</span> Factures</a>
-  <a class="nav-link" href="#reglements"><span class="icon">💳</span> Règlements</a>
-  <a class="nav-link" href="#avoirs"><span class="icon">↩️</span> Avoirs</a>
-  <a class="nav-link" href="#calendly"><span class="icon">📆</span> Calendly</a>
-
-  <div class="nav-section-title">Achats, Stock & Dépenses</div>
-  <a class="nav-link" href="#achats"><span class="icon">🏪</span> Achats Fournisseurs</a>
-  <a class="nav-link" href="#stock"><span class="icon">📦</span> Stock & Inventaires</a>
-  <a class="nav-link" href="#notes-frais"><span class="icon">🧮</span> Notes de frais</a>
-
-  <div class="nav-section-title">Comptabilité</div>
-  <a class="nav-link" href="#compta"><span class="icon">📊</span> Compta · TVA · FEC · PDF</a>
-
-  <div class="nav-section-title">Métiers</div>
-  <a class="nav-link" href="#pension"><span class="icon">🏠</span> Pension & Pet-sitter</a>
-  <a class="nav-link" href="#elevage"><span class="icon">🐕</span> Élevage</a>
-  <a class="nav-link" href="#sport"><span class="icon">🏆</span> Sport Canin</a>
-  <a class="nav-link" href="#associations"><span class="icon">🎗️</span> Associations</a>
-  <a class="nav-link" href="#autres-metiers"><span class="icon">⭐</span> Autres métiers</a>
-
-  <div class="nav-section-title">Communication & Documents</div>
-  <a class="nav-link" href="#communication"><span class="icon">📣</span> Communication</a>
-  <a class="nav-link" href="#ged"><span class="icon">🗂️</span> GED Documents</a>
-
-  <div class="nav-section-title">Administration & Conformité</div>
-  <a class="nav-link" href="#parametres"><span class="icon">⚙️</span> Paramètres</a>
-  <a class="nav-link" href="#registres"><span class="icon">📜</span> Registres</a>
-  <a class="nav-link" href="#eliot"><span class="icon">🤖</span> Eliot IA</a>
-  <a class="nav-link" href="#conformite"><span class="icon">⚖️</span> Conformité</a>
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="scenarios/index.html">Sc&eacute;narios</a>
+  <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
+  <a href="15-rgpd-conformite.html">RGPD</a>
+  <span class="nav-badge">S122</span>
 </nav>
-
-<!-- ════════════════════════════════════════════════════
-     CONTENU PRINCIPAL
-════════════════════════════════════════════════════ -->
-<main class="main">
-
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-badge">Notice d'utilisation</div>
-    <h1>Anim'Gest<br>Guide complet</h1>
-    <p class="hero-sub">Référence exhaustive de toutes les fonctionnalités du logiciel pour professionnels animaliers — de la prise de contact jusqu'à la déclaration fiscale.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><span>📦</span> Version S114</div>
-      <div class="hero-meta-item"><span>📋</span> 32 modules documentés</div>
-      <div class="hero-meta-item"><span>🐾</span> 12 métiers couverts</div>
-      <div class="hero-meta-item"><span>🇫🇷</span> Conformité NF525 & RFE</div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════
-       1. INTRODUCTION
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="intro">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--violet)">Introduction</div>
-      <div class="section-title">Bienvenue dans Anim'Gest</div>
-      <div class="section-desc">Logiciel de gestion tout-en-un pour les professionnels animaliers français — de la séance à la comptabilité.</div>
-    </div>
-
-    <div class="prose">
-      <p>Anim'Gest (NoSage's Editor) est un ERP multi-métiers conçu spécifiquement pour les professionnels du secteur animalier en France. Il couvre l'intégralité du cycle de gestion : de la prise de contact avec un client jusqu'à l'export comptable FEC, en passant par la planification, la facturation, le suivi comportemental, les registres réglementaires DDPP et la communication.</p>
-      <p>Le logiciel est <strong>modulaire</strong> : vous activez uniquement les fonctionnalités utiles à votre activité. Il est <strong>conforme aux normes françaises</strong> : NF525 (inaltérabilité des données de caisse), RFE (Réforme de la Facturation Électronique 2026-2027), RGPD et obligations DDPP.</p>
-      <p>Anim'Gest est <strong>internationalisable</strong> depuis le sprint S110 : 12 locales et 5 devises sont disponibles (Belgique, Suisse, Allemagne, Italie, Espagne, Royaume-Uni, États-Unis, Portugal, Canada) tout en restant ancré sur la conformité française.</p>
-    </div>
-
-    <div class="info-box info-ok" style="margin-top:24px">
-      <span class="box-icon">✅</span>
-      <p><strong>Principe fondamental :</strong> Toutes les fonctionnalités du logiciel fonctionnent indépendamment de l'assistant IA Eliot. Eliot est une option qui accélère certaines tâches, mais n'est jamais nécessaire pour utiliser le logiciel.</p>
-    </div>
-
-    <div class="cards-grid" style="margin-top:32px">
-      <div class="card">
-        <div class="card-icon">🔑</div>
-        <div class="card-title">Connexion sécurisée</div>
-        <div class="card-desc">Authentification par cookie JWT (S114) signé HS256, durée 12h, httpOnly. Cochez "Rester connecté" pour une session de 30 jours. Multi-rôle (Admin / Manager / Opérateur).</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🏠</div>
-        <div class="card-title">Tableau de bord</div>
-        <div class="card-desc">CA du jour et du mois, séances à venir, impayés, alertes stock, anniversaires d'animaux, tâches du jour. Widgets configurables par utilisateur.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">📱</div>
-        <div class="card-title">Accès mobile</div>
-        <div class="card-desc">Toutes les fonctionnalités sont accessibles depuis un smartphone ou une tablette. L'interface s'adapte automatiquement à la taille de l'écran.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">❓</div>
-        <div class="card-title">Aide contextuelle</div>
-        <div class="card-desc">Chaque page dispose d'un bouton ? en haut à droite. Cliquez dessus pour accéder aux questions/réponses spécifiques à la page en cours. Ouverture vers la FAQ référencée.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       2. INTERFACE
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="interface">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--cyan)">Interface</div>
-      <div class="section-title">Découvrir l'interface</div>
-      <div class="section-desc">Comprendre la navigation et les éléments communs à toutes les pages.</div>
-    </div>
-
-    <div class="prose">
-      <h3>La barre de navigation latérale</h3>
-      <p>À gauche de l'écran, la sidebar liste tous les modules disponibles regroupés par catégorie. Les modules désactivés dans Paramètres > Modules n'y apparaissent pas. Sur mobile, la sidebar se replie en une icône menu. La version du logiciel et votre identité sont affichées en bas.</p>
-      <h3>L'en-tête de page</h3>
-      <p>Chaque page affiche un en-tête avec le titre, les boutons d'action principaux (+ Nouveau, Export, Filtres) et le bouton d'aide contextuelle. Le bouton de changement de thème (clair/sombre) est en haut à droite, à côté de votre avatar et du sélecteur de locale.</p>
-      <h3>Charte personnalisable</h3>
-      <p>Depuis le sprint S105, votre charte graphique est entièrement personnalisable : couleur primaire, secondaire, tertiaire, statuts, fonds — 36 variables CSS sont éditables dans <code>Paramètres → Charte graphique</code>. Toutes les pages utilisent ces variables ; aucune couleur n'est codée en dur.</p>
-      <h3>Les listes et tableaux</h3>
-      <p>La plupart des modules affichent une liste filtrée et triable. Utilisez la barre de recherche pour filtrer par texte. Les colonnes cliquables permettent de trier. Le bouton Export génère un CSV ou PDF de la liste filtrée. Les lignes des listes sont cliquables (depuis S86) pour ouvrir directement la fiche détail.</p>
-    </div>
-
-    <div class="shortcut-grid" style="margin-top:28px">
-      <div class="shortcut"><kbd>Ctrl+K</kbd><span>Recherche globale</span></div>
-      <div class="shortcut"><kbd>N</kbd><span>Nouveau (contexte actif)</span></div>
-      <div class="shortcut"><kbd>Échap</kbd><span>Fermer modal / annuler</span></div>
-      <div class="shortcut"><kbd>Ctrl+S</kbd><span>Sauvegarder formulaire</span></div>
-      <div class="shortcut"><kbd>?</kbd><span>Aide contextuelle</span></div>
-      <div class="shortcut"><kbd>Alt+←</kbd><span>Page précédente</span></div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       3. CLIENTS
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="clients">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--violet)">Module</div>
-      <div class="section-title">👤 Clients & Contacts</div>
-      <div class="section-desc">Gestion complète des fiches clients, contacts associés et historique de la relation.</div>
-    </div>
-
-    <div class="steps">
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--violet)">1</div>
-        <div class="step-content">
-          <div class="step-name">Créer un nouveau client</div>
-          <div class="step-detail">
-            <ul>
-              <li>Cliquez sur <strong>+ Nouveau client</strong> en haut de la liste</li>
-              <li>Renseignez le nom, prénom, email et téléphone (champs obligatoires)</li>
-              <li>L'adresse complète permet la géolocalisation sur la carte et le calcul de parcours</li>
-              <li>Le numéro de fiche est attribué automatiquement (séquentiel)</li>
-              <li>Sauvegardez — le client est immédiatement disponible</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--cyan)">2</div>
-        <div class="step-content">
-          <div class="step-name">Ajouter des contacts secondaires</div>
-          <div class="step-detail">
-            Dans la fiche client, onglet <strong>Contacts</strong>, ajoutez les personnes liées : conjoint, autre propriétaire, vétérinaire référent, personne de confiance. Chaque contact a un rôle, un email et un téléphone. Il n'y a pas de limite de contacts.
-          </div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--emerald)">3</div>
-        <div class="step-content">
-          <div class="step-name">Historique client complet</div>
-          <div class="step-detail">
-            La fiche client centralise 8 onglets : <strong>Séances</strong> (toutes les séances), <strong>Facturation</strong> (factures, règlements et solde), <strong>Animaux</strong> (fiches animaux liées), <strong>Documents</strong> (GED), <strong>Notes</strong> (notes internes privées), <strong>Portail</strong> (accès espace client), <strong>Questionnaires</strong> (envois et réponses) et <strong>Communication</strong> (emails et SMS envoyés).
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="info-box info-tip" style="margin-top:24px">
-      <span class="box-icon">💡</span>
-      <p>La vue <strong>Carte</strong> affiche les clients géolocalisés sur une carte Leaflet interactive. Idéal pour un pet-sitter qui souhaite visualiser ses clients par zone géographique et optimiser ses déplacements (voir aussi <strong>Parcours géo</strong> depuis S97).</p>
-    </div>
-
-    <div class="table-wrap" style="margin-top:28px">
-      <table class="data-table">
-        <thead><tr><th>Statut client</th><th>Description</th><th>Visible dans les listes</th></tr></thead>
-        <tbody>
-          <tr><td>Actif</td><td>Client en cours de suivi</td><td>Oui (par défaut)</td></tr>
-          <tr><td>Inactif</td><td>Client archivé, plus de suivi actif</td><td>Non (filtre « Afficher inactifs »)</td></tr>
-          <tr><td>Prospect</td><td>Venu du CRM, pas encore converti</td><td>Non dans Clients, oui dans CRM</td></tr>
-          <tr><td>Membre</td><td>Adhérent (métier Associations)</td><td>Oui dans Associations → Membres</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       4. ANIMAUX
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="animaux">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--emerald)">Module</div>
-      <div class="section-title">🐾 Animaux</div>
-      <div class="section-desc">Fiches animaux complètes — identification, santé, comportement, historique et CAC.</div>
-    </div>
-
-    <div class="cards-grid">
-      <div class="card">
-        <div class="card-icon">🪪</div>
-        <div class="card-title">Identification</div>
-        <div class="card-desc">Nom, espèce, race, date de naissance, sexe, stérilisation, couleur, numéro de puce (format ISO 15 chiffres), tatouage, LOF/LOOF. La puce est vérifiée en temps réel.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">❤️‍🩹</div>
-        <div class="card-title">Santé</div>
-        <div class="card-desc">Vaccinations avec dates de rappel (alertes auto à J-30), traitements en cours, allergies, antécédents chirurgicaux, vétérinaire référent. Visible par l'intervenant avant chaque séance.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">📊</div>
-        <div class="card-title">Score CAC</div>
-        <div class="card-desc">Les 14 critères comportementaux (Communication, Autocontrôle, Confiance…) avec leur historique d'évolution. Score 0-100 calculé automatiquement. Graphique de progression dans le portail.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🖼️</div>
-        <div class="card-title">Photo & Carte d'identité</div>
-        <div class="card-desc">Photo uploadable (JPG/PNG/WEBP). Génération d'une carte d'identité PDF avec photo, puce et QR code. Pratique pour les visites vétérinaires ou les expositions.</div>
-      </div>
-    </div>
-
-    <div class="info-box info-warn" style="margin-top:24px">
-      <span class="box-icon">⚠️</span>
-      <p><strong>Animal de référence :</strong> L'animal Frimousse (ANI_ID=22, Malinois) est l'animal de démonstration du logiciel. Ne le supprimez jamais — il est utilisé pour les tests, les démos et les scénarios de formation.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       5. CRM
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="crm">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--gold)">Module</div>
-      <div class="section-title">📈 CRM & Leads</div>
-      <div class="section-desc">Gestion des prospects, pipeline commercial et campagnes de communication.</div>
-    </div>
-
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead><tr><th>Statut Lead</th><th>Description</th><th>Prochaine action</th></tr></thead>
-        <tbody>
-          <tr><td>Nouveau</td><td>Lead entrant non traité</td><td>Qualifier en moins de 24h</td></tr>
-          <tr><td>Qualifié</td><td>Besoin confirmé, budget compatible</td><td>Envoyer un devis ou RDV</td></tr>
-          <tr><td>En cours</td><td>Devis envoyé, attente réponse</td><td>Relance à J+7</td></tr>
-          <tr><td>Gagné</td><td>Devis accepté, client créé</td><td>Planifier première séance</td></tr>
-          <tr><td>Perdu</td><td>Lead non converti</td><td>Analyser le motif de perte</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="prose" style="margin-top:24px">
-      <h3>Formulaire de contact pour votre site web</h3>
-      <p>Dans <code>CRM → Formulaires</code>, générez un formulaire personnalisé. Copiez le code HTML fourni et collez-le sur votre site internet. Les soumissions arrivent automatiquement dans votre liste de leads avec la source <strong>Site web</strong>. Aucune configuration technique supplémentaire.</p>
-      <h3>Pipeline visuel</h3>
-      <p>Vue Kanban des leads avec drag & drop entre statuts. Filtrage par source (Site web, Réseaux sociaux, Recommandation, Salon, Calendly…), par responsable et par période. KPIs : taux de conversion, valeur moyenne d'un devis, durée moyenne d'un cycle.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       6. PORTAIL CLIENT
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="portail">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--violet)">Outil</div>
-      <div class="section-title">🌐 Portail Client</div>
-      <div class="section-desc">Espace personnalisé en ligne pour chaque client — consultation, signature et paiement.</div>
-    </div>
-
-    <div class="cards-grid">
-      <div class="card">
-        <div class="card-icon">📱</div>
-        <div class="card-title">Accès sécurisé</div>
-        <div class="card-desc">Lien unique par client. Accessible depuis tout navigateur sans installation. Authentification par token signé, session courte.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">👁️</div>
-        <div class="card-title">Ce que voit le client</div>
-        <div class="card-desc">Ses animaux, ses séances passées et à venir, ses comptes-rendus, ses factures téléchargeables, ses devis à signer, son score CAC, ses adhésions et reçus fiscaux (Associations).</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">✍️</div>
-        <div class="card-title">Signature en ligne</div>
-        <div class="card-desc">Si Yousign activé : le client signe ses devis directement depuis le portail. Signature horodatée, valeur légale.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">💳</div>
-        <div class="card-title">Paiement en ligne</div>
-        <div class="card-desc">Si module paiement en ligne activé : le client règle ses factures par CB depuis le portail. Règlement enregistré automatiquement.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       7. QUESTIONNAIRES (NEW S90)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="questionnaires">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--cyan)">Module · Nouveauté S90</div>
-      <div class="section-title">📨 Questionnaires multi-canal</div>
-      <div class="section-desc">Envoyez questionnaires d'évaluation, sondages et formulaires à vos clients par Email, WhatsApp ou SMS.</div>
-    </div>
-
-    <div class="prose">
-      <p>Le module Questionnaires permet de créer des formulaires personnalisés et de les envoyer en masse ou unitairement à vos clients. Trois canaux d'envoi disponibles :</p>
-    </div>
-
-    <div class="cards-grid" style="margin-top:16px">
-      <div class="card">
-        <div class="card-icon">📧</div>
-        <div class="card-title">Email</div>
-        <div class="card-desc">Envoi via votre SMTP configuré. Lien personnalisé vers le formulaire en ligne. Suivi d'ouverture et de réponse.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">📱</div>
-        <div class="card-title">SMS</div>
-        <div class="card-desc">Envoi via passerelle SMS (à configurer dans Paramètres). Message court avec lien tracké. Idéal pour les enquêtes de satisfaction post-séance.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">💬</div>
-        <div class="card-title">WhatsApp</div>
-        <div class="card-desc">Via API Business si configurée. Message texte + lien. Le client répond depuis WhatsApp ou clique vers le formulaire web.</div>
-      </div>
-    </div>
-
-    <div class="prose" style="margin-top:24px">
-      <h3>Types de questionnaires fournis</h3>
-      <p>Modèles pré-configurés à activer en un clic : <strong>Satisfaction post-séance</strong> (4 questions notées), <strong>Enquête bilan trimestriel</strong> (10 questions ouvertes + notées), <strong>Recueil d'informations comportementales</strong> (intégration BC), <strong>Validation pré-séance pension</strong> (vaccinations, traitements en cours), <strong>NPS</strong> (Net Promoter Score), <strong>Renouvellement adhésion</strong> (Associations).</p>
-      <h3>Suivi des envois</h3>
-      <p>La table <code>questionnaire_envoi</code> trace chaque envoi avec son canal, sa date, son statut (Envoyé / Ouvert / Répondu / Échec) et la réponse complète (JSON). Reporting agrégé par questionnaire avec taux de réponse, score moyen, distribution des notes.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       8. SÉANCES (enrichi)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="seances">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--gold)">Module</div>
-      <div class="section-title">📋 Séances</div>
-      <div class="section-desc">Planification, réalisation, compte-rendu et facturation des séances de travail — individuelles et de groupe.</div>
-    </div>
-
-    <div class="prose">
-      <p>Une <strong>séance</strong> est l'unité de travail centrale d'Anim'Gest. Elle relie un client, un animal, un type de prestation, une date et un intervenant. Chaque séance peut être enrichie d'un compte-rendu, de produits utilisés, d'un suivi CAC et de documents GED.</p>
-    </div>
-
-    <div class="badge-row">
-      <div class="badge"><div class="badge-dot" style="background:#94A3B8"></div>Planifiée</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--emerald)"></div>Réalisée</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--rose)"></div>Annulée</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--gold)"></div>Reportée</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--violet)"></div>Facturée</div>
-    </div>
-
-    <div class="subsection-title">Séances individuelles</div>
-
-    <div class="steps">
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--gold);font-size:18px">1</div>
-        <div class="step-content">
-          <div class="step-name">Créer une séance</div>
-          <div class="step-detail">Cliquez sur <strong>+ Nouvelle séance</strong>. Sélectionnez le client, l'animal, le type de séance, la date et l'heure. La durée est pré-remplie selon le type. Confirmez — la séance apparaît dans l'agenda.</div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--emerald);font-size:18px">2</div>
-        <div class="step-content">
-          <div class="step-name">Réaliser la séance</div>
-          <div class="step-detail">Après la séance, ouvrez la fiche et cliquez sur <strong>Marquer comme réalisée</strong>. Renseignez le compte-rendu. Pour les séances de type Bilan Comportemental ou Suivi, des onglets spécifiques apparaissent (BC, CAC). Pour les séances Toilettage, l'onglet Produits utilisés permet de décompter le stock.</div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--violet);font-size:18px">3</div>
-        <div class="step-content">
-          <div class="step-name">Facturer la séance</div>
-          <div class="step-detail">Depuis la fiche séance réalisée, cliquez sur <strong>Facturer cette séance</strong>. Une facture est créée automatiquement avec les lignes correspondant au type de séance. Vous pouvez aussi regrouper plusieurs séances sur une même facture mensuelle.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="info-box info-tip">
-      <span class="box-icon">💡</span>
-      <p>La <strong>récurrence</strong> permet de créer plusieurs séances d'un coup. Cochez <em>Récurrent</em> lors de la création et définissez la fréquence (hebdomadaire, bi-mensuelle) et le nombre de répétitions. Gain de temps considérable pour les programmes de suivi.</p>
-    </div>
-
-    <div class="subsection-title">Séances de groupe (S82 + S84 + S90)</div>
-
-    <div class="prose">
-      <p>Une <strong>séance de groupe</strong> rassemble plusieurs animaux et leurs propriétaires sur un même créneau — cours d'agility, atelier socialisation, balade collective, randonnée canicross, etc. La gestion est différente d'une séance individuelle car elle implique des participants multiples.</p>
-      <h3>Création et gestion</h3>
-      <p>Dans <code>Séances → Groupes</code>, créez une séance de groupe avec : titre, date, lieu, durée, capacité maximale, tarif par participant. Ajoutez les participants un par un — chacun est lié à un client + animal. La table sous-jacente est <code>seance_groupe</code> + <code>seance_groupe_participant</code>.</p>
-      <h3>CAC individuel par animal (S90)</h3>
-      <p>Innovation S90 : chaque animal d'une séance de groupe peut recevoir un <strong>suivi CAC individuel</strong> (table <code>seance_groupe_cac</code>). Notez les 14 critères critère par critère pour chaque chien, indépendamment des autres. Le score individuel alimente l'historique CAC de la fiche animal. Idéal pour les cours collectifs où chaque chien progresse à son rythme.</p>
-      <h3>Facturation individuelle</h3>
-      <p>Chaque participant reçoit sa propre facture (champ <code>FAC_REF_GROUPE</code> dans <code>facture</code> qui pointe vers la séance de groupe). Le tarif appliqué peut être ajusté par participant (réductions, abonnement). L'export d'une liste CSV des participants est disponible avant et après séance.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       9. PROGRAMMES & FORMULES (NEW S87-S91)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="programmes">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--violet)">Module · Nouveauté S87-S91</div>
-      <div class="section-title">🎯 Programmes & Formules</div>
-      <div class="section-desc">Packagez vos prestations en programmes de suivi ou en formules d'abonnement.</div>
-    </div>
-
-    <div class="prose">
-      <p>Anim'Gest distingue deux notions complémentaires : les <strong>programmes</strong> (parcours pédagogique structuré sur N séances) et les <strong>formules</strong> (offre commerciale d'un volume de séances à un tarif global).</p>
-    </div>
-
-    <div class="cards-grid" style="margin-top:16px">
-      <div class="card">
-        <div class="card-icon">📚</div>
-        <div class="card-title">Programmes</div>
-        <div class="card-desc">Parcours pédagogique : ex. "Éducation chiot 8 séances" avec objectifs par séance, progression CAC attendue, fiches techniques. Réutilisable sur tous vos clients.</div>
-        <span class="card-path">/app/programmes</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">💼</div>
-        <div class="card-title">Formules</div>
-        <div class="card-desc">Offre commerciale : ex. "Forfait 10 séances toilettage" à tarif préférentiel. Décompte automatique à chaque réalisation. Verrouillage du devis associé.</div>
-        <span class="card-path">/app/formules</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">📑</div>
-        <div class="card-title">Templates devis (55)</div>
-        <div class="card-desc">55 modèles pré-rédigés (5 par métier × 11 métiers). Activez en un clic le modèle correspondant à votre offre. Modifiable à volonté.</div>
-        <span class="card-path">/parametres/devis-templates</span>
-      </div>
-    </div>
-
-    <div class="prose" style="margin-top:24px">
-      <h3>Workflow d'un programme</h3>
-      <p>1. Créez le programme avec ses N séances types (intervalle, durée, objectif). 2. Affectez-le à un client/animal : les N séances sont créées en récurrence. 3. Suivez la progression CAC séance après séance. 4. Une fois terminé, un bilan final est généré (PDF + portail).</p>
-      <h3>Formule vs Programme</h3>
-      <p>La formule est <strong>commerciale</strong> (volume, prix) ; le programme est <strong>pédagogique</strong> (contenu, objectifs). Une formule peut s'appuyer sur un programme — c'est même la combinaison la plus puissante : tarif global + structure de séances + suivi.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       10. PARCOURS GÉO (NEW S97)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="parcours">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--emerald)">Module · Nouveauté S97</div>
-      <div class="section-title">🗺️ Parcours géolocalisés</div>
-      <div class="section-desc">Tracés GPS pour balades, randonnées canicross, parcours d'éducation en extérieur.</div>
-    </div>
-
-    <div class="prose">
-      <p>Le module Parcours permet de tracer, sauvegarder et associer aux séances des itinéraires géolocalisés. Idéal pour les pet-sitters (balades types), les éducateurs (parcours d'éducation), les sportifs canins (canicross, agility outdoor).</p>
-      <h3>Création d'un parcours</h3>
-      <p>Dans <code>Parcours → + Nouveau</code>, tracez l'itinéraire sur la carte Leaflet par clics successifs (waypoints) ou importez un fichier GPX. Renseignez le titre, le niveau de difficulté, la distance (calculée automatiquement), la dénivelée, le point de rendez-vous (adresse remplie par reverse geocoding Nominatim OSM).</p>
-      <h3>Statuts</h3>
-      <p>Un parcours passe par 2 statuts : <strong>Brouillon</strong> (en cours de création, invisible dans les listes séances) et <strong>Actif</strong> (publié, sélectionnable lors de la création d'une séance ou d'une séance de groupe).</p>
-      <h3>Liaison avec séances</h3>
-      <p>Table <code>parcours_seance</code> : un parcours peut être lié à une ou plusieurs séances (individuelles ou groupes). Inversement, une séance peut référencer un parcours pour indiquer le tracé prévu et faciliter la communication au client (le parcours apparaît dans son portail).</p>
-    </div>
-
-    <div class="info-box info-tip">
-      <span class="box-icon">🗺️</span>
-      <p>Les parcours utilisent OpenStreetMap via la bibliothèque Leaflet. Aucun compte tiers requis, aucune limite d'utilisation. Les tracés sont stockés en GeoJSON dans la base.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       11. AGENDA
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="agenda">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--cyan)">Module</div>
-      <div class="section-title">📅 Agenda</div>
-      <div class="section-desc">Vue calendrier de toutes vos séances, séances de groupe, événements et blocages.</div>
-    </div>
-
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead><tr><th>Vue</th><th>Utilisation</th><th>Fonctionnalités clés</th></tr></thead>
-        <tbody>
-          <tr><td>Jour</td><td>Détail d'une journée, séances denses</td><td>Grille horaire 7h-20h, drag & drop</td></tr>
-          <tr><td>Semaine</td><td>Vue par défaut — planification semaine</td><td>Glisser-déposer, multi-intervenant</td></tr>
-          <tr><td>Mois</td><td>Vue d'ensemble, jours fériés</td><td>Comptage séances/jour, impression</td></tr>
-          <tr><td>Liste</td><td>Liste filtrée par période</td><td>Export CSV, filtres avancés</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="prose" style="margin-top:24px">
-      <h3>Glisser-déposer (drag & drop)</h3>
-      <p>En vue Semaine ou Jour, saisissez un créneau et déplacez-le vers la nouvelle case horaire. Une confirmation s'affiche avant l'enregistrement. La séance est mise à jour immédiatement dans la base de données.</p>
-      <h3>Blocages et événements personnels</h3>
-      <p>Créez des blocages (réunion, déplacement, congé) directement dans l'agenda. Ces créneaux sont réservés et n'acceptent pas de nouvelles séances. Différents des congés configurés dans Paramètres.</p>
-      <h3>Intégration Calendly</h3>
-      <p>Les créneaux disponibles d'Anim'Gest sont synchronisés avec Calendly (voir section <a href="#calendly" style="color:var(--cyan)">Calendly</a>). Les RDV pris par les clients sur Calendly apparaissent automatiquement dans l'agenda Anim'Gest, et inversement les blocages Anim'Gest masquent les créneaux Calendly.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       12. BC & CAC (enrichi)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="bc-cac">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--violet)">Module</div>
-      <div class="section-title">🧠 Bilan Comportemental & Suivi CAC</div>
-      <div class="section-desc">Outils spécialisés pour les comportementalistes et éducateurs canins.</div>
-    </div>
-
-    <div class="prose">
-      <h3>Le Bilan Comportemental (BC)</h3>
-      <p>Le BC est une séance de type particulier. Il génère une fiche structurée en 4 sections :</p>
-    </div>
-
-    <div class="cards-grid" style="margin:20px 0">
-      <div class="card">
-        <div class="card-icon">🐕</div>
-        <div class="card-title">Section Comportement</div>
-        <div class="card-desc">8 critères oui/non sur la réactivité, l'agressivité ressource, la frustration, la prédation, la peur, l'anxiété. Plus un champ commentaire libre.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🥩</div>
-        <div class="card-title">Section Alimentation</div>
-        <div class="card-desc">11 champs sur le régime alimentaire, les horaires de repas, les comportements alimentaires, la possession de gamelle, les friandises.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🤝</div>
-        <div class="card-title">Section Contacts</div>
-        <div class="card-desc">11 champs sur les relations avec les humains adultes, enfants, chiens, chats. Niveau de socialisation, réactivité en laisse.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🏠</div>
-        <div class="card-title">Section Territoire</div>
-        <div class="card-desc">9 champs sur le comportement chez lui, en voiture, en balade, les fugues, les destructions, les aboiements.</div>
-      </div>
-    </div>
-
-    <div class="prose">
-      <h3>Les 14 critères CAC</h3>
-      <p>À la fin du BC, évaluez les 14 critères CAC (Comportement Attendu du Chien) sur une échelle de 0 à 4. Ce snapshot de départ sert de référence pour mesurer la progression lors des séances de suivi.</p>
-      <p>Les 14 critères sont : <strong>Communication, Autocontrôle, Confiance, Concentration, Contact, Calme, Cohérence, Constance, Coopération, Curiosité, Confort, Capacité d'adaptation, Cognition, Courage</strong>.</p>
-      <h3>Suivi CAC en séance</h3>
-      <p>Lors de chaque séance de suivi (individuelle ou de groupe), réévaluez les 14 critères. Le score global est calculé automatiquement (0-100). Le graphique de progression de l'animal est mis à jour en temps réel dans sa fiche et dans le portail client.</p>
-      <h3>Cadre des règles métier B62 (S105)</h3>
-      <p>Depuis le sprint S105, les règles métier critiques sont protégées par des triggers SQL au format <code>CODE|MSG|DETAIL</code>. Exemple : une seule séance par animal et par créneau, score CAC obligatoire avant facturation d'un bilan. En cas de violation, un modal explicatif s'affiche immédiatement.</p>
-    </div>
-
-    <div class="info-box info-ok" style="margin-top:20px">
-      <span class="box-icon">📈</span>
-      <p>Le score CAC et son historique sont visibles par le propriétaire dans le <strong>Portail Client</strong>. C'est un puissant argument de valeur — le client voit objectivement la progression de son animal séance après séance.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       13. DEVIS (enrichi)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="devis">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--gold)">Module</div>
-      <div class="section-title">📝 Devis & Contrats</div>
-      <div class="section-desc">De la proposition commerciale à la signature électronique — 55 modèles métier prêts à l'emploi.</div>
-    </div>
-
-    <div class="steps">
-      <div class="step-row">
-        <div class="step-num-badge" style="background:#94A3B8">1</div>
-        <div class="step-content">
-          <div class="step-name">Brouillon — Rédaction du devis</div>
-          <div class="step-detail">Créez le devis depuis un <strong>modèle métier</strong> (55 disponibles) ou en partant de zéro. Ajoutez les lignes (prestations, produits, forfaits), appliquez les remises. Définissez la date de validité (30 jours par défaut). Le devis reste modifiable tant qu'il est en Brouillon.</div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--cyan)">2</div>
-        <div class="step-content">
-          <div class="step-name">Envoyé — Transmission au client</div>
-          <div class="step-detail">Cliquez sur <strong>Envoyer par email</strong>. Le PDF est joint automatiquement. La date d'envoi est enregistrée. Le statut passe à Envoyé. Si Yousign activé, une demande de signature électronique est envoyée simultanément.</div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--emerald)">3</div>
-        <div class="step-content">
-          <div class="step-name">Accepté — Signature et conversion</div>
-          <div class="step-detail">Lorsque le client accepte (retour mail, signature Yousign ou accord oral), changez le statut en Accepté. Vous pouvez alors créer la facture depuis ce devis en un clic. Si une formule est associée, le compteur de séances est initialisé.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="info-box info-tip">
-      <span class="box-icon">✍️</span>
-      <p><strong>Signature électronique Yousign :</strong> Si le module Signatures est activé, vos clients reçoivent un lien pour signer le devis depuis leur téléphone ou ordinateur. La signature est certifiée, horodatée et stockée en GED. Elle a la même valeur légale qu'une signature manuscrite.</p>
-    </div>
-
-    <div class="prose" style="margin-top:24px">
-      <h3>55 modèles métier (S87 + S89)</h3>
-      <p>Anim'Gest fournit 55 modèles de devis répartis sur 11 métiers, soit 5 modèles par métier : Comportementaliste, Éducateur, Pet-sitter, Toiletteur, Vétérinaire, Éleveur, Pension, Ostéopathe, Sport canin, Nutritionniste, Associations. Chaque modèle est éditable et copiable. Vous pouvez créer vos propres modèles depuis <code>Paramètres → Modèles de devis</code>.</p>
-      <h3>Gestion des acomptes</h3>
-      <p>Sur un devis accepté, vous pouvez demander un acompte avant de commencer le travail. Indiquez le montant ou pourcentage. Une <strong>facture d'acompte numérotée</strong> est générée. Elle sera déduite de la facture de solde à la fin de la prestation.</p>
-      <h3>Tarification 3 méthodes (S64)</h3>
-      <p>Pour les lignes de devis, trois méthodes de tarification sont disponibles : <strong>COEF_FG+MARGE</strong> (frais généraux + marge), <strong>COEF_VTE</strong> (coefficient de vente direct sur prix d'achat), <strong>PRIX_DIRECT</strong> (saisie libre). La table <code>param_tarification</code> conserve l'historique des coefficients et permet le verrouillage des devis après signature.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       14. FACTURES
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="factures">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--rose)">Module</div>
-      <div class="section-title">🧾 Factures</div>
-      <div class="section-desc">Facturation conforme NF525, gestion de la TVA, envoi et suivi des paiements — RFE 2026-2027 Factur-X.</div>
-    </div>
-
-    <div class="info-box info-warn">
-      <span class="box-icon">⚖️</span>
-      <p><strong>Conformité NF525 :</strong> Les factures sont numérotées séquentiellement sans trou ni doublon. Une facture validée ne peut pas être supprimée — créez un avoir pour l'annuler. Cette règle est imposée par la norme française NF525 sur l'inaltérabilité des données de caisse.</p>
-    </div>
-
-    <div class="table-wrap" style="margin-top:24px">
-      <table class="data-table">
-        <thead><tr><th>Type</th><th>Usage</th><th>Numérotée NF525</th></tr></thead>
-        <tbody>
-          <tr><td>Facture proforma</td><td>Estimation, pas encore définitive</td><td>Non</td></tr>
-          <tr><td>Facture définitive</td><td>Document fiscal officiel</td><td>Oui</td></tr>
-          <tr><td>Facture d'acompte</td><td>Acompte sur devis</td><td>Oui</td></tr>
-          <tr><td>Facture séance de groupe</td><td>Facture individuelle d'un participant</td><td>Oui (FAC_REF_GROUPE)</td></tr>
-          <tr><td>Avoir</td><td>Annulation partielle ou totale</td><td>Oui (numérotation AV-)</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="prose" style="margin-top:24px">
-      <h3>Réforme de la Facturation Électronique (RFE 2026)</h3>
-      <p>À partir de septembre 2026 (grandes entreprises) et juillet 2027 (PME/micro-entreprises), toutes les factures B2B en France devront être émises en format électronique structuré via une Plateforme de Dématérialisation Partenaire (PDP). Anim'Gest supporte l'export en format <strong>Factur-X</strong> (PDF + XML intégré, conforme EN16931).</p>
-      <p>Activez le module RFE dans <code>Paramètres → RFE</code> pour accéder aux options de transmission électronique et configurer votre PDP.</p>
-      <h3>Statuts de facture</h3>
-    </div>
-
-    <div class="badge-row">
-      <div class="badge"><div class="badge-dot" style="background:#94A3B8"></div>Brouillon</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--gold)"></div>Émise</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--emerald)"></div>Payée</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--rose)"></div>Annulée</div>
-    </div>
-
-    <div class="info-box info-tip" style="margin-top:24px">
-      <span class="box-icon">🎨</span>
-      <p>Depuis S105, les éditions PDF utilisent une palette de <strong>10 couleurs sémantiques</strong> (B67) qui dérive automatiquement de votre charte graphique : verts pour les montants payés, rouges pour les impayés, violets pour les acomptes, etc. Vos factures sont aux couleurs de votre marque sans la moindre configuration.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       15. RÈGLEMENTS
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="reglements">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--emerald)">Module</div>
-      <div class="section-title">💳 Règlements</div>
-      <div class="section-desc">Enregistrement des paiements, gestion de caisse et états d'encaissement.</div>
-    </div>
-
-    <div class="cards-grid">
-      <div class="card">
-        <div class="card-icon">💵</div>
-        <div class="card-title">Espèces</div>
-        <div class="card-desc">Saisissez le montant reçu. La monnaie rendue est calculée automatiquement. La caisse journalière est mise à jour.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">💳</div>
-        <div class="card-title">Carte bancaire</div>
-        <div class="card-desc">Mode le plus courant. Saisissez le montant et la date. Si terminal de paiement connecté, la validation est automatique.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🏦</div>
-        <div class="card-title">Virement</div>
-        <div class="card-desc">Enregistrez la référence du virement. Le rapprochement avec le relevé bancaire peut être fait manuellement ou via import OFX (à venir).</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">📄</div>
-        <div class="card-title">Chèque</div>
-        <div class="card-desc">Statuts À encaisser / Encaissé. Un état des chèques à remettre en banque est disponible pour simplifier votre remise.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🌐</div>
-        <div class="card-title">Paiement en ligne</div>
-        <div class="card-desc">Via Stripe (à activer dans Paramètres). Le client paie depuis le portail. Le règlement est enregistré automatiquement à validation Stripe.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">↩️</div>
-        <div class="card-title">Imputation avoir</div>
-        <div class="card-desc">Un avoir existant peut être imputé sur une facture du même client. Sélectionnez l'avoir lors de l'enregistrement du règlement.</div>
-      </div>
-    </div>
-
-    <div class="info-box info-tip" style="margin-top:24px">
-      <span class="box-icon">💡</span>
-      <p>Les règlements partiels sont supportés. La facture affiche le solde restant dû. Vous pouvez compléter le règlement en plusieurs fois avec des modes de paiement différents (ex. acompte CB + solde par chèque).</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       16. AVOIRS
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="avoirs">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--violet)">Module</div>
-      <div class="section-title">↩️ Avoirs</div>
-      <div class="section-desc">Annulation partielle ou totale de factures — remboursement ou imputation.</div>
-    </div>
-
-    <div class="prose">
-      <p>Un avoir est généré depuis une facture existante. Il peut être <strong>total</strong> (annulation complète) ou <strong>partiel</strong> (annulation d'une ou plusieurs lignes, ou d'un montant libre). L'avoir est numéroté dans la séquence AV- et apparaît dans le FEC sur le journal de ventes.</p>
-      <p>Après émission, l'avoir peut être :</p>
-    </div>
-    <div class="cards-grid" style="margin-top:16px">
-      <div class="card">
-        <div class="card-icon">💸</div>
-        <div class="card-title">Remboursé</div>
-        <div class="card-desc">Virement, espèces ou chèque vers le client. L'avoir passe en statut Remboursé. Référence bancaire enregistrée.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🔄</div>
-        <div class="card-title">Imputé</div>
-        <div class="card-desc">Déduit d'une prochaine facture du même client. Sélectionnez l'avoir lors de l'enregistrement du règlement.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       17. CALENDLY (NEW S83+S90)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="calendly">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--cyan)">Intégration · Nouveauté S83-S90</div>
-      <div class="section-title">📆 Calendly</div>
-      <div class="section-desc">Synchronisation bidirectionnelle avec Calendly pour la prise de rendez-vous en ligne.</div>
-    </div>
-
-    <div class="prose">
-      <p>Si vous utilisez Calendly pour permettre à vos clients ou prospects de prendre rendez-vous en ligne, Anim'Gest s'y intègre nativement. Les créneaux disponibles dans Anim'Gest sont reflétés dans Calendly et inversement.</p>
-      <h3>Configuration</h3>
-      <p>Dans <code>Paramètres → Calendly</code>, renseignez votre clé API Calendly et l'URL du webhook (généré automatiquement). Sélectionnez les types d'événements Calendly à synchroniser et le type de séance Anim'Gest à créer pour chacun.</p>
-      <h3>Webhook</h3>
-      <p>Quand un rendez-vous est pris sur Calendly, un événement est envoyé à Anim'Gest qui crée automatiquement : 1) le lead (si nouveau prospect) ou récupère le client existant, 2) la séance dans l'agenda avec le type configuré, 3) une notification interne. La signature HMAC du webhook est validée pour empêcher les usurpations.</p>
-      <h3>Annulations</h3>
-      <p>Si le client annule depuis Calendly, la séance Anim'Gest passe automatiquement en statut <strong>Annulée</strong>. Si vous annulez depuis Anim'Gest, le créneau redevient disponible dans Calendly.</p>
-    </div>
-
-    <div class="info-box info-tip">
-      <span class="box-icon">🔌</span>
-      <p>Pour les tests locaux du webhook, Anim'Gest fournit une page <code>/parametres/calendly/test-ngrok</code> qui guide la configuration avec ngrok pour exposer votre instance locale à Calendly.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       18. ACHATS FOURNISSEURS
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="achats">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--gold)">Module</div>
-      <div class="section-title">🏪 Achats & Fournisseurs</div>
-      <div class="section-desc">Circuit complet des achats — de la demande de prix à la réception et au règlement fournisseur.</div>
-    </div>
-
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead><tr><th>Document</th><th>Acronyme</th><th>Rôle</th></tr></thead>
-        <tbody>
-          <tr><td>Bon de commande fournisseur</td><td>BC</td><td>Commande envoyée au fournisseur</td></tr>
-          <tr><td>Bon de livraison fournisseur</td><td>BL</td><td>Réception des marchandises (alimente le stock)</td></tr>
-          <tr><td>Facture fournisseur</td><td>FF</td><td>Facture reçue du fournisseur (rapprochée au BL)</td></tr>
-          <tr><td>Bon de retour</td><td>BR</td><td>Retour marchandise au fournisseur</td></tr>
-          <tr><td>Demande d'avoir fournisseur</td><td>DAF</td><td>Demande de remboursement</td></tr>
-          <tr><td>Avoir fournisseur</td><td>AC</td><td>Avoir reçu du fournisseur</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="prose" style="margin-top:24px">
-      <h3>Calcul automatique du PMP</h3>
-      <p>Le <strong>Prix Moyen Pondéré</strong> (PMP) de chaque article est recalculé automatiquement à chaque réception. Il prend en compte le stock existant et le nouveau prix d'achat pour donner le coût moyen de revient exact de votre stock. Le PMP alimente automatiquement la valorisation de stock et les marges sur vente.</p>
-      <h3>Édition PDF avec couleurs sémantiques</h3>
-      <p>Les bons de commande, bons de retour et factures fournisseur héritent automatiquement de la charte graphique configurée. Les statuts utilisent les 10 couleurs sémantiques B67 (vert pour reçu, orange pour partiel, rouge pour litige, etc.).</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       19. STOCK
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="stock">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--cyan)">Module</div>
-      <div class="section-title">📦 Stock & Inventaires</div>
-      <div class="section-desc">Gestion du stock en temps réel, alertes de seuil et inventaires de clôture.</div>
-    </div>
-
-    <div class="cards-grid">
-      <div class="card">
-        <div class="card-icon">📥</div>
-        <div class="card-title">Entrées de stock</div>
-        <div class="card-desc">Automatiques lors des réceptions de BL fournisseur. Manuelles pour les ajustements, dons ou corrections.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">📤</div>
-        <div class="card-title">Sorties de stock</div>
-        <div class="card-desc">Automatiques lors des ventes (lignes facture) et consommations en séance (toilettage, soins). Manuelles pour les pertes ou casses.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🔔</div>
-        <div class="card-title">Alertes seuil</div>
-        <div class="card-desc">Configurez un seuil minimum par article. Alerte dans le tableau de bord quand le stock passe en dessous. Liste de réapprovisionnement automatique avec génération de BC fournisseur en un clic.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">📋</div>
-        <div class="card-title">Inventaire</div>
-        <div class="card-desc">Créez un inventaire à tout moment. Saisissez les quantités réelles. Les écarts sont calculés et régularisés. L'inventaire validé est irréversible (NF525).</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       20. NOTES DE FRAIS (NEW S82-S89)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="notes-frais">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--gold)">Module · Nouveauté S82-S89</div>
-      <div class="section-title">🧮 Notes de frais</div>
-      <div class="section-desc">Saisie, validation et remboursement des dépenses professionnelles — OCR scan ticket + GED + intégration FEC.</div>
-    </div>
-
-    <div class="prose">
-      <p>Le module Notes de frais permet de gérer le cycle complet des dépenses professionnelles : carburant, restauration, fournitures, formations, déplacements. Chaque note groupe une ou plusieurs lignes (une par justificatif).</p>
-      <h3>Workflow</h3>
-    </div>
-
-    <div class="badge-row">
-      <div class="badge"><div class="badge-dot" style="background:#94A3B8"></div>Brouillon</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--gold)"></div>Soumise</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--emerald)"></div>Validée</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--cyan)"></div>Remboursée</div>
-      <div class="badge"><div class="badge-dot" style="background:var(--rose)"></div>Rejetée</div>
-    </div>
-
-    <div class="steps" style="margin-top:24px">
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--gold)">1</div>
-        <div class="step-content">
-          <div class="step-name">Saisie</div>
-          <div class="step-detail">Créez une note de frais. Ajoutez une ligne par justificatif : catégorie (Restauration / Carburant / Fournitures…), montant TTC, date, optionnellement le numéro de TVA. Le HT et la TVA sont calculés automatiquement selon le taux de la catégorie.</div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--cyan)">2</div>
-        <div class="step-content">
-          <div class="step-name">OCR scan ticket (S84-S86)</div>
-          <div class="step-detail">Bouton <strong>📷 Scanner un ticket</strong> : prenez en photo le justificatif. L'OCR (proxy Anthropic Claude Vision) extrait automatiquement le montant TTC, la date, le commerçant et la catégorie probable. Vérifiez et validez. L'image est sauvegardée en GED (module <code>Notes_Frais</code>).</div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--emerald)">3</div>
-        <div class="step-content">
-          <div class="step-name">Soumission et validation</div>
-          <div class="step-detail">Soumettez la note quand toutes les lignes sont saisies. Si vous êtes Admin/Manager, vous pouvez valider ou rejeter. La validation passe la note en statut Validée et bloque toute modification.</div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--violet)">4</div>
-        <div class="step-content">
-          <div class="step-name">Remboursement</div>
-          <div class="step-detail">Enregistrez le remboursement (virement, chèque) en indiquant la référence bancaire. La note passe en statut Remboursée. Cette opération génère une écriture FEC automatique.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="info-box info-ok" style="margin-top:24px">
-      <span class="box-icon">📊</span>
-      <p><strong>Intégration comptable :</strong> Les notes de frais validées sont automatiquement intégrées dans l'export TVA (TVA déductible) et dans le FEC sur le journal AC (vue <code>v_fec_complet</code>). Aucune ressaisie comptable nécessaire.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       21. COMPTABILITÉ (enrichi)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="compta">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--rose)">Module</div>
-      <div class="section-title">📊 Comptabilité · TVA · FEC · Éditions PDF</div>
-      <div class="section-desc">Écritures automatiques, déclarations TVA, export FEC normalisé, bilan comptable, tarification et personnalisation des PDF.</div>
-    </div>
-
-    <div class="prose">
-      <p>Anim'Gest génère automatiquement les <strong>écritures comptables</strong> à chaque événement (émission de facture, enregistrement de règlement, création d'avoir, réception d'une facture fournisseur, validation d'une note de frais). Vous n'avez pas à saisir les écritures manuellement.</p>
-    </div>
-
-    <div class="subsection-title">Export TVA (S87)</div>
-    <div class="prose">
-      <p>La page <code>/app/factures/tva</code> génère votre déclaration TVA pour la période choisie. Elle inclut :</p>
-      <ul style="list-style:none;padding-left:0;margin:8px 0;">
-        <li style="padding:4px 0;color:var(--muted);">→ TVA collectée (factures de vente + acomptes)</li>
-        <li style="padding:4px 0;color:var(--muted);">→ TVA déductible (factures fournisseurs + notes de frais)</li>
-        <li style="padding:4px 0;color:var(--muted);">→ TVA à payer ou crédit de TVA</li>
-        <li style="padding:4px 0;color:var(--muted);">→ Détail par taux (20%, 10%, 5.5%, 2.1%, 0%)</li>
-      </ul>
-      <p>Export CSV ou PDF compatible avec votre comptable et la pré-saisie en ligne sur impots.gouv.fr.</p>
-    </div>
-
-    <div class="subsection-title">Export FEC (S88-S89)</div>
-    <div class="prose">
-      <p>Le <strong>Fichier des Écritures Comptables</strong> (FEC) est obligatoire en cas de contrôle fiscal. Anim'Gest le génère au format normalisé (texte tabulé UTF-8) avec toutes les écritures de l'exercice :</p>
-      <ul style="list-style:none;padding-left:0;margin:8px 0;">
-        <li style="padding:4px 0;color:var(--muted);">→ Journal de ventes (factures + avoirs)</li>
-        <li style="padding:4px 0;color:var(--muted);">→ Journal d'achats (factures fournisseurs)</li>
-        <li style="padding:4px 0;color:var(--muted);">→ Journal AC (notes de frais)</li>
-        <li style="padding:4px 0;color:var(--muted);">→ Journal de trésorerie (règlements)</li>
-        <li style="padding:4px 0;color:var(--muted);">→ Journal des OD (opérations diverses)</li>
-      </ul>
-      <p>La vue SQL <code>v_fec_complet</code> agrège l'ensemble. Procédure stockée <code>sp_fec_generer_par_exercice</code> pour l'export par exercice fiscal complet.</p>
-    </div>
-
-    <div class="subsection-title">Bilan comptable (S89)</div>
-    <div class="prose">
-      <p>Le bilan comptable est calculé en temps réel sur la base de la vue <code>v_fec_complet</code>. Il affiche : <strong>charges_ht = achats + notes de frais</strong>, produits_ht = ventes, résultat = produits - charges, TVA collectée vs déductible. Filtrage par exercice. Export PDF pour communication à votre expert-comptable.</p>
-    </div>
-
-    <div class="subsection-title">Tarification 3 méthodes (S64)</div>
-    <div class="prose">
-      <p>Trois méthodes de tarification disponibles pour les lignes de devis et facture :</p>
-      <ul style="list-style:none;padding-left:0;margin:8px 0;">
-        <li style="padding:4px 0;color:var(--muted);">→ <code>COEF_FG+MARGE</code> : frais généraux (coefficient sur achat) + marge (% sur HT)</li>
-        <li style="padding:4px 0;color:var(--muted);">→ <code>COEF_VTE</code> : coefficient direct sur prix d'achat (multiplicateur)</li>
-        <li style="padding:4px 0;color:var(--muted);">→ <code>PRIX_DIRECT</code> : saisie libre du prix de vente HT</li>
-      </ul>
-      <p>Table <code>param_tarification</code>. Choix par défaut configurable par catégorie d'article. Historique des coefficients conservé pour les audits.</p>
-    </div>
-
-    <div class="subsection-title">Éditions PDF — 10 couleurs sémantiques (B67 / S105)</div>
-    <div class="prose">
-      <p>Toutes les éditions PDF (devis, factures, avoirs, bons de commande, registres, comptes-rendus) utilisent 10 couleurs sémantiques qui dérivent automatiquement de votre charte :</p>
-    </div>
-
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead><tr><th>Couleur</th><th>Usage</th></tr></thead>
-        <tbody>
-          <tr><td>Primaire</td><td>Titres, en-têtes, accents</td></tr>
-          <tr><td>Secondaire</td><td>Sous-titres, encadrés info</td></tr>
-          <tr><td>Tertiaire</td><td>Liens, références croisées</td></tr>
-          <tr><td>Succès (vert)</td><td>Factures payées, validations</td></tr>
-          <tr><td>Alerte (orange)</td><td>Échéances proches, acomptes</td></tr>
-          <tr><td>Danger (rouge)</td><td>Impayés, annulations</td></tr>
-          <tr><td>Info (cyan)</td><td>Notes, légendes</td></tr>
-          <tr><td>Neutre (gris)</td><td>Texte secondaire</td></tr>
-          <tr><td>Fond clair</td><td>Encadrés, surlignages</td></tr>
-          <tr><td>Fond sombre</td><td>Bandeaux, footers</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="info-box info-tip">
-      <span class="box-icon">🎨</span>
-      <p>Vos PDF sont aux couleurs de votre marque sans configuration supplémentaire. Modifiez votre charte dans <code>Paramètres → Charte</code> : tous les PDF émis ensuite utilisent automatiquement la nouvelle palette.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       22. PENSION
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="pension">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--emerald)">Métier</div>
-      <div class="section-title">🏠 Pension & Pet-sitter</div>
-      <div class="section-desc">Gestion des garderies, séjours en pension et services à domicile.</div>
-    </div>
-
-    <div class="steps">
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--emerald)">1</div>
-        <div class="step-content">
-          <div class="step-name">Créer une réservation de séjour</div>
-          <div class="step-detail">Dans <code>Pension → + Nouvelle réservation</code>. Sélectionnez le client, l'animal, les dates d'entrée et de sortie. Ajoutez les options (promenades, médicaments, bain de sortie). Le tarif est calculé automatiquement selon votre grille et les options.</div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--violet)">2</div>
-        <div class="step-content">
-          <div class="step-name">Gestion du séjour</div>
-          <div class="step-detail">Enregistrer l'entrée (horodatage → registre sanitaire), suivre les médicaments dans l'onglet Soins, envoyer des nouvelles quotidiennes avec photos au propriétaire (visible dans le portail), enregistrer la sortie.</div>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num-badge" style="background:var(--cyan)">3</div>
-        <div class="step-content">
-          <div class="step-name">Facturation du séjour</div>
-          <div class="step-detail">À la sortie, cliquez sur <strong>Facturer le séjour</strong>. La facture est calculée selon le nombre de nuits, les options et les éventuels jours fériés (majoration). Ajustez si nécessaire et envoyez par email.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="info-box info-warn">
-      <span class="box-icon">⚖️</span>
-      <p>Toute pension agréée doit tenir un <strong>registre sanitaire de séjour</strong> et un <strong>registre des carnivores domestiques</strong>. Anim'Gest les alimente automatiquement à chaque entrée/sortie (voir section <a href="#registres" style="color:#fcd34d">Registres</a>).</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       23. ÉLEVAGE
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="elevage">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--gold)">Métier</div>
-      <div class="section-title">🐕 Élevage</div>
-      <div class="section-desc">Gestion des portées, géniteurs, naissances et déclarations réglementaires.</div>
-    </div>
-
-    <div class="cards-grid">
-      <div class="card">
-        <div class="card-icon">🐣</div>
-        <div class="card-title">Portées</div>
-        <div class="card-desc">Créez une portée avec les géniteurs, la date de saillie, la date de naissance prévue et réelle. Les chiots sont enregistrés individuellement avec leur sexe, couleur et puce.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🎖️</div>
-        <div class="card-title">Géniteurs</div>
-        <div class="card-desc">Fiches reproducteurs avec pédigrée, tests génétiques, dysplasies (HD/ED), titres de champion et planning de reproduction.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">📋</div>
-        <div class="card-title">Réservations</div>
-        <div class="card-desc">Gérez les acheteurs intéressés avec dépôt de réservation. Associez chaque chiot à un acheteur. Générez les factures d'acompte. Suivi adoption / retours.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🏛️</div>
-        <div class="card-title">Déclarations DDPP</div>
-        <div class="card-desc">Formulaires pré-remplis pour les déclarations auprès de la Direction Départementale de la Protection des Populations (saillies, naissances, ventes).</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       24. SPORT CANIN
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="sport">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--violet)">Métier</div>
-      <div class="section-title">🏆 Sport Canin</div>
-      <div class="section-desc">Gestion des cours, stages et compétitions en agility, obéissance, ring et plus.</div>
-    </div>
-
-    <div class="prose">
-      <p>Le module Sport canin gère les <strong>cours collectifs</strong> (agility, obéissance, ring, canicross, flyball, frisbee, nosework…), les <strong>stages</strong> avec inscriptions et liste d'attente, les <strong>compétitions</strong> avec résultats et palmarès, et les <strong>abonnements</strong> de cours en forfait.</p>
-      <p>La progression de chaque chien dans sa discipline est suivie (niveaux Débutant → Amateur → Open → Élite) et visible dans la fiche animal.</p>
-      <h3>Intégration parcours</h3>
-      <p>Les parcours géolocalisés (canicross, agility outdoor) peuvent être associés aux séances. Le client voit le tracé dans son portail avant la séance. Distance et dénivelée calculées automatiquement.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       25. ASSOCIATIONS (NEW S89-S92 — BIG SECTION)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="associations">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--rose)">Métier · Nouveauté S89-S92</div>
-      <div class="section-title">🎗️ Associations</div>
-      <div class="section-desc">Module complet pour les associations loi 1901 — adhésions, reçus fiscaux, événements, bénévoles.</div>
-    </div>
-
-    <div class="prose">
-      <p>Conçu pour les associations loi 1901 du secteur animalier (refuges, sauvetage, sensibilisation, éducation), le module Associations s'appuie sur 70% des fonctionnalités existantes d'Anim'Gest (clients = membres, facturation = cotisations, FEC, GED, SMTP) et ajoute 30% de fonctionnalités spécifiques.</p>
-    </div>
-
-    <div class="subsection-title">Membres et adhésions</div>
-    <div class="prose">
-      <p>Les <strong>membres</strong> sont des fiches client avec un statut <em>Membre</em>. Chaque membre peut avoir une ou plusieurs <strong>adhésions</strong> (table <code>adhesion</code>) avec dates de début/fin, montant, statut (Active / Expirée / À renouveler), type (Adhérent / Bienfaiteur / Bénévole). Numérotation automatique <code>ADH-YYYYMM-XXXX</code>.</p>
-      <h3>Renouvellement</h3>
-      <p>Bouton <strong>Renouveler</strong> sur une adhésion active : crée une nouvelle adhésion pour l'année suivante, génère la facture de cotisation. Alerte automatique 30 jours avant expiration. Envoi possible d'un questionnaire de renouvellement multi-canal.</p>
-    </div>
-
-    <div class="subsection-title">Reçus fiscaux Cerfa 11580*03</div>
-    <div class="prose">
-      <p>Pour les dons et cotisations éligibles, Anim'Gest génère le <strong>reçu fiscal Cerfa 11580*03</strong> au format PDF. Table <code>recu_fiscal</code>. Numérotation annuelle <code>RFI-YYYY-XXXX</code>. Le PDF est archivé en GED et téléchargeable depuis le portail membre.</p>
-      <p>Workflow : créer le reçu (depuis un règlement ou manuellement) → générer le PDF (<code>/pdf/recu-fiscal/:id</code>) → envoyer par email au donateur → statut Envoyé. Récap annuel exportable pour le rapport financier de l'AG.</p>
-    </div>
-
-    <div class="subsection-title">Événements et billetterie</div>
-    <div class="prose">
-      <p>Tables <code>evenement</code> et <code>evenement_inscription</code>. Créez un événement (titre, date, lieu, capacité max, tarif) → ouvrez les inscriptions → enregistrez les paiements → checkin le jour J.</p>
-      <h3>Inscriptions</h3>
-      <p>Les membres et non-membres s'inscrivent depuis le portail public ou via votre saisie manuelle. Capacité automatiquement bloquée à la limite. Liste d'attente possible. Paiement immédiat (Stripe) ou différé (sur place).</p>
-      <h3>Check-in</h3>
-      <p>Le jour de l'événement, scannez le QR code envoyé aux inscrits ou cochez manuellement dans la liste. Export CSV de la liste des participants pour les badges, attestations ou rapports DDPP en cas d'événement public.</p>
-    </div>
-
-    <div class="subsection-title">Tâches bénévoles (Kanban)</div>
-    <div class="prose">
-      <p>Table <code>tache_benevole</code>. Vue Kanban des tâches à réaliser par les bénévoles : <em>À faire / En cours / Terminée</em>. Affectation à un bénévole (membre avec rôle Bénévole). Priorité, échéance, description. Notifications email pour les bénévoles à l'affectation et à l'approche de l'échéance.</p>
-    </div>
-
-    <div class="subsection-title">Formulaire d'adhésion public</div>
-    <div class="prose">
-      <p>Un formulaire d'adhésion public est généré automatiquement avec un token unique (configuré dans <code>param_entreprise.MET_ADHESION_TOKEN</code>). URL type : <code>/portail/adhesion/&lt;token&gt;</code>. Le visiteur remplit ses coordonnées, choisit son type d'adhésion, paie en ligne (Stripe). Création automatique de la fiche membre + adhésion + facture + reçu fiscal.</p>
-    </div>
-
-    <div class="info-box info-ok">
-      <span class="box-icon">⭐</span>
-      <p><strong>Tableau de bord association :</strong> nombre de membres actifs, taux de renouvellement, total des cotisations sur la période, total des dons, total des reçus fiscaux émis, prochains événements, tâches bénévoles en retard. Tout en une seule vue.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       26. AUTRES MÉTIERS (NEW regroupé)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="autres-metiers">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--cyan)">Métiers spécialisés</div>
-      <div class="section-title">⭐ Autres métiers</div>
-      <div class="section-desc">8 métiers supplémentaires couverts par les fonctionnalités cœur enrichies de spécificités.</div>
-    </div>
-
-    <div class="prose">
-      <p>En plus de Pension, Élevage, Sport canin et Associations, Anim'Gest couvre 8 métiers complémentaires. Chacun bénéficie des fonctionnalités cœur (clients, animaux, séances, factures, BC/CAC) plus de modèles de devis dédiés et des écrans adaptés.</p>
-    </div>
-
-    <div class="cards-grid">
-      <div class="card">
-        <div class="card-icon">🧠</div>
-        <div class="card-title">Comportementaliste</div>
-        <div class="card-desc">BC structuré 4 sections + suivi CAC 14 critères + comptes-rendus PDF + protocoles personnalisés. Module historique d'Anim'Gest.</div>
-        <span class="card-path">5 modèles devis</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">🎓</div>
-        <div class="card-title">Éducateur (S88-S90)</div>
-        <div class="card-desc">Programmes pédagogiques structurés, suivi de progression CAC, cours collectifs, ateliers thématiques (rappel, marche en laisse, socialisation).</div>
-        <span class="card-path">5 modèles devis</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">✂️</div>
-        <div class="card-title">Toiletteur</div>
-        <div class="card-desc">Fiches techniques de toilettage par race, consommation produits avec décompte stock, photo avant/après, fiches de soins.</div>
-        <span class="card-path">5 modèles devis</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">🩺</div>
-        <div class="card-title">Vétérinaire</div>
-        <div class="card-desc">Dossier médical (vaccinations, traitements, antécédents), ordonnances, certificats de bonne santé, certificats de stérilisation.</div>
-        <span class="card-path">5 modèles devis</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">🦴</div>
-        <div class="card-title">Ostéopathe</div>
-        <div class="card-desc">Bilans posturaux, compte-rendus de séances, planification de séances de suivi, fiches techniques par pathologie.</div>
-        <span class="card-path">5 modèles devis</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">🥗</div>
-        <div class="card-title">Nutritionniste</div>
-        <div class="card-desc">Bilans alimentaires, plans nutritionnels personnalisés, calcul de rations BARF/croquettes, suivi de poids et de la condition corporelle.</div>
-        <span class="card-path">5 modèles devis</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">🐎</div>
-        <div class="card-title">Centre équestre</div>
-        <div class="card-desc">Gestion des cours, pension chevaux, sorties en concours, planning des box, suivi vétérinaire et maréchal-ferrant.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🌿</div>
-        <div class="card-title">Naturopathe</div>
-        <div class="card-desc">Bilans énergétiques, conseils en phytothérapie/aromathérapie animale, plans de soins naturels, complémentation.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       27. COMMUNICATION (NEW S86+S91)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="communication">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--violet)">Module · Nouveauté S86-S91</div>
-      <div class="section-title">📣 Communication</div>
-      <div class="section-desc">Réseaux sociaux, email marketing, SMS — vos canaux de communication centralisés.</div>
-    </div>
-
-    <div class="subsection-title">Réseaux sociaux (S86)</div>
-    <div class="prose">
-      <p>Module de gestion centralisée de vos publications sur les réseaux sociaux : Facebook, Instagram, Twitter/X, LinkedIn. Rédigez, planifiez et publiez depuis Anim'Gest.</p>
-      <h3>Composer une publication</h3>
-      <p>Cliquez sur <strong>+ Nouvelle publication</strong>. Sélectionnez le réseau cible (un ou plusieurs simultanément), rédigez le contenu (avec limite de caractères affichée par réseau), ajoutez des images depuis votre GED ou en upload direct, choisissez la date de publication immédiate ou planifiée.</p>
-      <h3>Suivi</h3>
-      <p>La liste des publications affiche : réseau cible, extrait du contenu, date de publication, statut (Brouillon / Planifié / Publié / Échec). Statistiques d'engagement remontées via API si configurée (likes, partages, commentaires).</p>
-    </div>
-
-    <div class="subsection-title">Email marketing</div>
-    <div class="prose">
-      <p>Configuration SMTP dans <code>Paramètres → Email</code>. Anim'Gest utilise votre SMTP (pas un service tiers) pour conserver la maîtrise de votre délivrabilité. Templates d'emails personnalisables (en-tête, footer, charte graphique). Envoi unitaire ou en masse (campagnes), avec personnalisation des variables {{prenom}}, {{animal}}, {{prochain_rdv}}, etc.</p>
-      <h3>Modèles fournis</h3>
-      <p>Confirmation de RDV, rappel de RDV J-1, demande d'avis post-séance, relance impayé, anniversaire d'animal, newsletter trimestrielle, vœux saisonniers, fermeture annuelle, alerte vaccination.</p>
-    </div>
-
-    <div class="subsection-title">SMS</div>
-    <div class="prose">
-      <p>Via passerelle SMS (à configurer dans <code>Paramètres → SMS</code>, providers supportés à venir). Cas d'usage : confirmation RDV instantanée, rappel J-1, alerte annulation, questionnaire post-séance court (lien tracké).</p>
-    </div>
-
-    <div class="info-box info-warn">
-      <span class="box-icon">📬</span>
-      <p>Tous les envois (email, SMS, WhatsApp) sont tracés dans la table <code>questionnaire_envoi</code> ou <code>communication_log</code> selon le contexte. Historique complet par client visible dans son onglet <strong>Communication</strong>. Statut de livraison remonté quand le provider le supporte.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       28. GED
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="ged">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--cyan)">Outil</div>
-      <div class="section-title">🗂️ GED — Gestion Électronique des Documents</div>
-      <div class="section-desc">Stockage, organisation et retrouvabilité de tous vos documents métier — sur disque, jamais en base.</div>
-    </div>
-
-    <div class="prose">
-      <p>La GED est le coffre-fort numérique d'Anim'Gest. Tous les PDF générés (factures, devis, comptes-rendus, reçus fiscaux, cartes d'identité animaux, registres) sont automatiquement archivés. Vous pouvez y ajouter des documents externes (résultats d'examens vétérinaires, photos, contrats scannés, ordonnances).</p>
-      <p>Les fichiers sont stockés sur le <strong>disque serveur</strong> dans <code>C:\AnimGest_GED\SCT_001\</code>, organisés par module et par semaine. <strong>Aucune donnée sensible n'est stockée en base de données sous forme encodée</strong> — c'est une règle non négociable d'Anim'Gest.</p>
-    </div>
-
-    <div class="info-box info-ok" style="margin-top:20px">
-      <span class="box-icon">🔒</span>
-      <p>Structure GED : <strong>General\</strong> (Logo, CGV, Filigrane) · <strong>Widget\</strong> · <strong>Semaine_YYYY_NN\</strong> par module (Factures, Devis, Notes_Frais, Comptes_Rendus, Reçus_Fiscaux…). Chaque PDF est nommé selon le format <code>PIECE_horodatage.pdf</code>.</p>
-    </div>
-
-    <div class="prose" style="margin-top:24px">
-      <h3>Sauvegardes</h3>
-      <p>Le contenu de la GED est sauvegardé quotidiennement à 04h00 par le script <code>Sauvegarde_AnimGest_Global.ps1</code> v9 qui copie l'ensemble vers <code>G:\Sauvegarde_AnimGest_Global\</code> (BDD, projet, full copy, critiques). Rétention : 30 jours pour les BDD, 14 jours pour les ZIP, 60 jours pour les logs.</p>
-      <h3>Recherche</h3>
-      <p>Recherche full-text par nom de fichier, métadonnées et contenu PDF (OCR). Filtrage par module, par client, par animal, par période. Aperçu inline des PDF sans téléchargement.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       29. PARAMÈTRES (NEW agrégé)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="parametres">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--gold)">Administration</div>
-      <div class="section-title">⚙️ Paramètres</div>
-      <div class="section-desc">Configuration générale — entreprise, utilisateurs, charte, langues, modules, sauvegardes.</div>
-    </div>
-
-    <div class="subsection-title">Mon activité</div>
-    <div class="prose">
-      <p>Informations légales de votre entreprise : raison sociale, SIRET, APE, TVA intracom, adresse, IBAN/BIC. Vos certifications professionnelles (ACACED, certificat de capacité) avec dates d'obtention et de renouvellement (alerte 60 jours avant expiration). Logo et CGV au format PDF.</p>
-    </div>
-
-    <div class="subsection-title">Utilisateurs et rôles</div>
-    <div class="prose">
-      <p>Gestion des comptes utilisateurs avec 3 rôles : <strong>Admin</strong> (tout accès, configuration), <strong>Manager</strong> (validation NDF, factures, ventes), <strong>Opérateur</strong> (séances et clients uniquement). Création / désactivation / réinitialisation mot de passe.</p>
-      <h3>Auth JWT (S114)</h3>
-      <p>Depuis S114, l'authentification utilise un cookie JWT signé HS256 (<code>ml_session</code>), httpOnly, durée 12h (30j si "rester connecté"). Whitelist des routes publiques : <code>/auth/login</code>, <code>/auth/logout</code>, <code>/auth/preferences</code>. Guards NestJS avec décorateur <code>@Roles</code> pour le contrôle granulaire.</p>
-    </div>
-
-    <div class="subsection-title">Charte graphique (S105 — 36 variables)</div>
-    <div class="prose">
-      <p>Personnalisez l'ensemble du logiciel et de vos éditions PDF aux couleurs de votre marque. <strong>36 variables CSS</strong> sont éditables : 3 couleurs principales (primaire, secondaire, tertiaire), 4 statuts (succès, info, avertissement, danger), 4 fonds, 4 textes, 4 bordures, plus 13 dérivés calculés automatiquement (hover, focus, disabled, contrastes WCAG AA).</p>
-      <p>Aperçu en temps réel. Réinitialisation à la palette par défaut Anim'Gest possible à tout moment. Toutes les pages utilisent ces variables — aucune couleur n'est codée en dur (règle non-négociable du logiciel).</p>
-    </div>
-
-    <div class="subsection-title">Langues et devises (S110)</div>
-    <div class="prose">
-      <p>Anim'Gest est internationalisable avec <strong>12 locales</strong> et <strong>5 devises</strong> :</p>
-      <ul style="list-style:none;padding-left:0;margin:8px 0;">
-        <li style="padding:4px 0;color:var(--muted);">→ Locales : fr-FR, fr-BE, nl-BE, fr-CH, de-CH, it-CH, de-DE, it-IT, es-ES, en-GB, en-US, pt-PT</li>
-        <li style="padding:4px 0;color:var(--muted);">→ Devises : EUR, CHF, GBP, USD, CAD</li>
-      </ul>
-      <p>Sélectionnez la locale par défaut de votre cabinet. Les formats de date, nombre, montant, numéro de téléphone s'adaptent automatiquement via <code>src/lib/format.ts v2</code> (helpers <code>formatPrice</code>, <code>formatPercent</code>, <code>formatDate</code>, <code>formatPhone</code>).</p>
-    </div>
-
-    <div class="subsection-title">Multi-tenant (S114, fondations)</div>
-    <div class="prose">
-      <p>Depuis S114, Anim'Gest pose les fondations multi-tenant : deux instances MariaDB distinctes (<code>mariadb_ops</code> port 3330 pour la licence et l'authentification centralisée, <code>mariadb_tenants</code> port 3331 pour les données métier par tenant). Chaque cabinet aura sa propre base <code>animgest_tNNNNN</code>. Licences distribuées via JWT HS256.</p>
-      <p>Cette section sera enrichie au déploiement effectif (sprints S115+). Pour les déploiements mono-tenant (auto-hébergement, on-premise), aucune action requise.</p>
-    </div>
-
-    <div class="subsection-title">Modules</div>
-    <div class="prose">
-      <p>Activez ou désactivez les modules selon votre activité : Élevage, Sport canin, Associations, Notes de frais, Réseaux sociaux, Calendly, Eliot IA, Paiement en ligne, RFE, Signatures Yousign… Un module désactivé disparaît de la sidebar et n'affecte pas les performances.</p>
-    </div>
-
-    <div class="subsection-title">Sauvegardes</div>
-    <div class="prose">
-      <p>Tâche planifiée Windows quotidienne à 04h00 : script <code>Sauvegarde_AnimGest_Global.ps1</code> v9. Cible : <code>G:\Sauvegarde_AnimGest_Global\</code> avec sous-dossiers Logs / BDD / Projet / Full_Copy / Critiques. Backup secondaire local <code>C:\Backup\AnimGest\</code>. Découverte dynamique <code>C:\AnimGest*</code>. Rétention configurée.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       30. REGISTRES RÉGLEMENTAIRES
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="registres">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--emerald)">Réglementaire</div>
-      <div class="section-title">📜 Registres Réglementaires</div>
-      <div class="section-desc">Conformité DDPP — registres des carnivores, sanitaires de séjour et d'événements.</div>
-    </div>
-
-    <div class="cards-grid">
-      <div class="card">
-        <div class="card-icon">🐕</div>
-        <div class="card-title">Registre des carnivores domestiques</div>
-        <div class="card-desc">Obligatoire pour tout accueil de chiens/chats. Alimenté automatiquement lors des entrées en pension. Numéro de puce, nom de l'animal, nom du propriétaire, dates entrée/sortie. Exportable PDF pour contrôle DDPP.</div>
-        <span class="card-path">Registres → Carnivores</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">🏠</div>
-        <div class="card-title">Registre sanitaire de séjour</div>
-        <div class="card-desc">Document de suivi de chaque séjour en pension. Alimenté automatiquement à l'entrée et à la sortie : état général, vaccinations vérifiées, traitements en cours, observations. Obligatoire pour les pensions agréées.</div>
-        <span class="card-path">Registres → Sanitaire séjour</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">🚨</div>
-        <div class="card-title">Registre sanitaire événements</div>
-        <div class="card-desc">Signalement des événements sanitaires survenus durant les séjours (maladie, blessure, décès, fugue). Délai légal de 24h pour la saisie. Notification au propriétaire et au vétérinaire référent.</div>
-        <span class="card-path">Registres → Sanitaire événements</span>
-      </div>
-      <div class="card">
-        <div class="card-icon">✅</div>
-        <div class="card-title">ACACED / Certificat de capacité</div>
-        <div class="card-desc">Votre attestation de connaissance est suivie dans le logiciel. Alerte 60 jours avant expiration. Renseignée dans <code>Paramètres → Mon activité → Certifications</code>.</div>
-        <span class="card-path">Paramètres → Mon activité</span>
-      </div>
-    </div>
-
-    <div class="info-box info-warn" style="margin-top:24px">
-      <span class="box-icon">⚖️</span>
-      <p>Les registres réglementaires doivent être <strong>présentables immédiatement</strong> lors d'un contrôle DDPP. Veillez à saisir les entrées/sorties en temps réel et à exporter une version PDF après chaque contrôle pour vos archives. Anim'Gest conserve l'intégralité des registres en GED.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       31. ELIOT IA (enrichi)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="eliot">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--violet)">Option</div>
-      <div class="section-title">🤖 Eliot — Assistant IA</div>
-      <div class="section-desc">Assistant intelligent pour accélérer les tâches courantes en langage naturel — 22 outils + mémoire persistée.</div>
-    </div>
-
-    <div class="prose">
-      <p>Eliot est l'assistant IA intégré à Anim'Gest. Il comprend le langage naturel (français, anglais) et peut effectuer des actions dans le logiciel sur simple commande vocale ou textuelle. Il accède à <strong>22 outils</strong> spécialisés (lecture clients, animaux, séances, statistiques, création devis, etc.).</p>
-    </div>
-
-    <div class="cards-grid" style="margin:20px 0">
-      <div class="card">
-        <div class="card-icon">✅</div>
-        <div class="card-title">Ce qu'Eliot peut faire</div>
-        <div class="card-desc">Rechercher des clients et animaux, créer des séances et devis, enregistrer des règlements, générer des factures, consulter les statistiques, ajouter des notes, lister les impayés, planifier des récurrences, exporter des CSV.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🚫</div>
-        <div class="card-title">Ce qu'Eliot ne fait jamais</div>
-        <div class="card-desc">Supprimer des données, modifier le code source, exécuter du SQL direct, modifier le schéma de la base, accéder à des données hors de son périmètre client. Toute action irréversible est confirmée explicitement.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🧠</div>
-        <div class="card-title">Mémoire persistée</div>
-        <div class="card-desc">Eliot retient vos préférences (terminologie habituelle, raccourcis personnels, contexte récurrent). Configuration dans <code>Paramètres → Eliot IA → Mémoire</code>. Vous pouvez ajouter / consulter / supprimer les souvenirs à tout moment.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🔌</div>
-        <div class="card-title">MCP Server</div>
-        <div class="card-desc">Eliot expose un serveur Model Context Protocol qui permet à des clients externes (Claude Desktop, Cursor, Continue) d'interroger Anim'Gest en lecture sécurisée pour automatiser vos workflows hors-application.</div>
-      </div>
-    </div>
-
-    <div class="prose">
-      <h3>Exemples de commandes Eliot</h3>
-    </div>
-    <div class="accordion" style="margin-top:16px">
-      <div class="acc-item">
-        <div class="acc-header" onclick="this.nextElementSibling.classList.toggle('open')">
-          <span>« Crée un devis pour Mme Martin pour 5 séances d'agility à 60€ chacune »</span> <span>+</span>
-        </div>
-        <div class="acc-body">Eliot recherche la fiche client Martin, crée un nouveau devis, ajoute 5 lignes Séance agility à 60€ HT, calcule la TVA et affiche le devis pour validation avant envoi.</div>
-      </div>
-      <div class="acc-item">
-        <div class="acc-header" onclick="this.nextElementSibling.classList.toggle('open')">
-          <span>« Quels sont les clients qui n'ont pas payé depuis plus de 30 jours ? »</span> <span>+</span>
-        </div>
-        <div class="acc-body">Eliot interroge les factures en statut Émise avec une date d'échéance dépassée de plus de 30 jours et retourne la liste avec les montants, les coordonnées des clients et les jours de retard.</div>
-      </div>
-      <div class="acc-item">
-        <div class="acc-header" onclick="this.nextElementSibling.classList.toggle('open')">
-          <span>« Planifie 6 séances hebdomadaires de suivi pour Rex à partir de lundi prochain »</span> <span>+</span>
-        </div>
-        <div class="acc-body">Eliot identifie l'animal Rex, crée 6 séances de type Suivi comportemental en récurrence hebdomadaire à partir du lundi suivant, et affiche le récapitulatif dans l'agenda pour confirmation.</div>
-      </div>
-      <div class="acc-item">
-        <div class="acc-header" onclick="this.nextElementSibling.classList.toggle('open')">
-          <span>« Envoie un questionnaire de satisfaction aux 10 derniers clients facturés »</span> <span>+</span>
-        </div>
-        <div class="acc-body">Eliot identifie les 10 dernières factures émises et leurs clients, utilise le modèle "Satisfaction post-séance", l'envoie par email à chacun avec un lien personnalisé, et trace les envois dans la table <code>questionnaire_envoi</code>.</div>
-      </div>
-    </div>
-
-    <div class="info-box info-tip" style="margin-top:24px">
-      <span class="box-icon">💡</span>
-      <p>Eliot est une <strong>option commerciale</strong>. Il est disponible dans les formules Pro et Expert. Le logiciel fonctionne parfaitement sans lui. Activez-le dans <code>Paramètres → Modules → Eliot IA</code>.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       32. CONFORMITÉ (NEW)
-  ═══════════════════════════════════════════════════ -->
-  <section class="section" id="conformite">
-    <div class="section-header">
-      <div class="section-eyebrow" style="color:var(--rose)">Conformité</div>
-      <div class="section-title">⚖️ Conformité légale et réglementaire</div>
-      <div class="section-desc">Récapitulatif des normes auxquelles Anim'Gest répond — NF525, RFE, RGPD, DDPP.</div>
-    </div>
-
-    <div class="cards-grid">
-      <div class="card">
-        <div class="card-icon">🇫🇷</div>
-        <div class="card-title">NF525</div>
-        <div class="card-desc">Norme française d'inaltérabilité des données de caisse : factures numérotées séquentiellement, suppression interdite (avoir obligatoire), traçabilité de chaque modification. Anim'Gest est conforme nativement.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">📡</div>
-        <div class="card-title">RFE 2026-2027</div>
-        <div class="card-desc">Réforme de la Facturation Électronique B2B : Anim'Gest exporte en Factur-X (PDF + XML EN16931). Configuration de la PDP dans <code>Paramètres → RFE</code>. Calendrier : grandes entreprises septembre 2026, PME/micro juillet 2027.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🔐</div>
-        <div class="card-title">RGPD</div>
-        <div class="card-desc">Consentement explicite collecté lors de la création client (portail). Export complet des données d'un client (droit à la portabilité). Anonymisation/suppression sur demande. Registre des traitements documenté.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🏛️</div>
-        <div class="card-title">DDPP</div>
-        <div class="card-desc">Registres carnivores et sanitaires obligatoires alimentés automatiquement. Déclarations de saillies/naissances/ventes pour les éleveurs. ACACED suivi avec alerte d'expiration.</div>
-      </div>
-    </div>
-
-    <div class="info-box info-ok" style="margin-top:24px">
-      <span class="box-icon">📋</span>
-      <p>Anim'Gest est <strong>auto-hébergeable</strong> (on-premise). Vos données ne quittent jamais vos serveurs. Vous restez seul propriétaire et responsable de leur traitement. Anim'Gest fournit le logiciel et son support, jamais l'hébergement de vos données.</p>
-    </div>
-
-    <div class="info-box info-warn" style="margin-top:12px">
-      <span class="box-icon">⚖️</span>
-      <p>Cette notice présente les fonctionnalités d'Anim'Gest. Elle ne se substitue pas aux textes légaux. En cas de doute sur une obligation réglementaire, consultez votre expert-comptable, votre conseil juridique ou la DDPP de votre département.</p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════
-       FOOTER
-  ═══════════════════════════════════════════════════ -->
-  <footer>
-    <div><strong>Anim'Gest · NoSage's Editor</strong> — Notice d'utilisation complète</div>
-    <div>Sprint S114 · 13 mai 2026 · <a href="https://github.com/nicolashermilly/AnimGest-docs">github.com/nicolashermilly/AnimGest-docs</a></div>
-  </footer>
-
-</main>
+<div class="hero">
+  <div class="hero-label">GUIDE UTILISATEUR</div>
+  <span class="emoji">&#128214;</span>
+  <h1>Notice d'utilisation</h1>
+  <p>Guide complet par module : prise en main, fonctionnalit&eacute;s essentielles et bonnes pratiques. Le compagnon quotidien de votre &eacute;quipe.</p>
+  <div class="hero-tags"><span class="hero-tag">Tous m&eacute;tiers</span><span class="hero-tag">15 sections</span><span class="hero-tag">MaJ S122</span></div>
 </div>
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-value">15</div><div class="kpi-label">Sections</div></div>
+  <div class="kpi-card"><div class="kpi-value">146</div><div class="kpi-label">&Eacute;crans couverts</div></div>
+  <div class="kpi-card"><div class="kpi-value">11</div><div class="kpi-label">M&eacute;tiers</div></div>
+  <div class="kpi-card"><div class="kpi-value">S122</div><div class="kpi-label">Version</div><div class="kpi-badge">MaJ</div></div>
+</div>
+<div class="main">
+<div class="section">
+  <div class="section-title"><span class="num">00</span> Table des mati&egrave;res</div>
+  <p class="section-intro">Naviguer rapidement vers la rubrique souhait&eacute;e.</p>
+  <div class="toc-grid">
+<a class="toc-link" href="#intro"><span class="num">01</span> Premiers pas</a>
+<a class="toc-link" href="#dashboard"><span class="num">02</span> Tableau de bord</a>
+<a class="toc-link" href="#clients"><span class="num">03</span> Clients et animaux</a>
+<a class="toc-link" href="#agenda"><span class="num">04</span> Agenda &amp; s&eacute;ances</a>
+<a class="toc-link" href="#facturation"><span class="num">05</span> Devis et factures</a>
+<a class="toc-link" href="#reglements"><span class="num">06</span> R&egrave;glements</a>
+<a class="toc-link" href="#stock"><span class="num">07</span> Stock et achats</a>
+<a class="toc-link" href="#ged"><span class="num">08</span> GED documents</a>
+<a class="toc-link" href="#ndf"><span class="num">09</span> Notes de frais</a>
+<a class="toc-link" href="#compta"><span class="num">10</span> Comptabilit&eacute;</a>
+<a class="toc-link" href="#portail"><span class="num">11</span> Portail client</a>
+<a class="toc-link" href="#eliot"><span class="num">12</span> Eliot IA</a>
+<a class="toc-link" href="#registres"><span class="num">13</span> Registres r&eacute;glementaires</a>
+<a class="toc-link" href="#stats"><span class="num">14</span> Statistiques</a>
+<a class="toc-link" href="#mobile"><span class="num">15</span> Mobile et terrain</a>
+</div>
+</div><div class="section" id="intro">
+  <div class="section-title"><span class="num">01</span> Premiers pas</div>
+  <p class="section-intro">D&eacute;couvrir l'interface en 5 minutes.</p>
+  <div class="ref-block">
+  <h3>Se connecter et s'orienter</h3>
+  <ul>
+    <li>Ouvrir Anim'Gest &agrave; l'adresse fournie (en local ou via votre nom de domaine)</li>
+    <li>Saisir email et mot de passe &mdash; clic <strong>Se connecter</strong></li>
+    <li>L'&eacute;cran d'accueil affiche votre tableau de bord personnalis&eacute; selon votre m&eacute;tier</li>
+    <li>Le menu lat&eacute;ral gauche regroupe tous les modules ; le contenu central change selon votre s&eacute;lection</li>
+    <li>En haut &agrave; droite : votre nom, profil utilisateur, et bouton de d&eacute;connexion</li>
+  </ul>
+</div>
+<div class="ref-block">
+  <h3>Activer le widget Eliot (si licence active)</h3>
+  <p>Le bouton flottant en bas &agrave; droite ouvre le chat avec votre assistant IA. Posez vos questions en langage naturel : recherche de clients, statistiques, cr&eacute;ation de s&eacute;ances et de devis sous confirmation.</p>
+</div>
+</div><div class="section" id="dashboard">
+  <div class="section-title"><span class="num">02</span> Tableau de bord</div>
+  <p class="section-intro">Vos indicateurs cl&eacute;s en un coup d'&oelig;il.</p>
+  <div class="ref-block">
+  <h3>Lecture du tableau de bord m&eacute;tier</h3>
+  <ul>
+    <li>KPIs du jour : RDV pr&eacute;vus, chiffre d'affaires en cours, factures impay&eacute;es</li>
+    <li>Graphique d'&eacute;volution du CA (mois en cours vs mois pr&eacute;c&eacute;dent)</li>
+    <li>Top clients par CA depuis le 1er janvier</li>
+    <li>Actions urgentes : factures en retard, devis &agrave; relancer, RDV non confirm&eacute;s</li>
+    <li>Acc&egrave;s rapide aux modules les plus utilis&eacute;s</li>
+  </ul>
+</div>
+</div><div class="section" id="clients">
+  <div class="section-title"><span class="num">03</span> Clients et animaux</div>
+  <p class="section-intro">Le c&oelig;ur de votre base : prospects, clients, animaux.</p>
+  <div class="ref-block">
+  <h3>Cr&eacute;er un dossier client</h3>
+  <ul>
+    <li><strong>Clients &rarr; + Nouveau client</strong> : nom, email, t&eacute;l&eacute;phone, adresse (g&eacute;olocalis&eacute;e auto)</li>
+    <li>Ajouter une ou plusieurs fiches animal (esp&egrave;ce, race, identification, v&eacute;t&eacute;rinaire r&eacute;f&eacute;rent)</li>
+    <li>Documents associ&eacute;s : carnet de vaccins, contrats, photos &mdash; stock&eacute;s en GED</li>
+    <li>Historique complet : s&eacute;ances, devis, factures visibles depuis la fiche</li>
+    <li>Activation du portail client en 1 clic depuis la fiche</li>
+  </ul>
+</div>
+<div class="ref-block">
+  <h3>Rechercher efficacement</h3>
+  <ul>
+    <li>Barre de recherche globale (en haut) : nom, t&eacute;l&eacute;phone, num&eacute;ro de puce animal</li>
+    <li>Filtres avanc&eacute;s : esp&egrave;ce, race, ville, derni&egrave;re s&eacute;ance, CA total</li>
+    <li>Carte des clients g&eacute;olocalis&eacute;s (vue Leaflet) pour visualiser votre zone</li>
+  </ul>
+</div>
+</div><div class="section" id="agenda">
+  <div class="section-title"><span class="num">04</span> Agenda &amp; s&eacute;ances</div>
+  <p class="section-intro">Planifier, modifier, conduire vos prestations.</p>
+  <div class="ref-block">
+  <h3>Naviguer dans l'agenda</h3>
+  <ul>
+    <li>Vues disponibles : jour, semaine, mois &mdash; choisir selon vos besoins</li>
+    <li>Drag &amp; drop pour d&eacute;placer un RDV (mise &agrave; jour automatique du client)</li>
+    <li>Couleurs par type de s&eacute;ance (configurables dans Param&egrave;tres &rarr; Types s&eacute;ance)</li>
+    <li>Cr&eacute;er un RDV : clic sur un cr&eacute;neau libre &rarr; saisir client + animal + type</li>
+    <li>Tarif pr&eacute;-rempli selon le type de s&eacute;ance et le m&eacute;tier</li>
+    <li>Rappels automatiques J-1 par SMS/email (configurable)</li>
+  </ul>
+</div>
+</div><div class="section" id="facturation">
+  <div class="section-title"><span class="num">05</span> Devis et factures</div>
+  <p class="section-intro">Le cycle complet de vente avec signature et paiement.</p>
+  <div class="ref-block">
+  <h3>Cycle complet de facturation</h3>
+  <ul>
+    <li>Cr&eacute;ation devis &rarr; envoi par email + signature Yousign &rarr; statut Sign&eacute;</li>
+    <li>Conversion en facture : acompte 30%, puis solde &agrave; la fin de la prestation</li>
+    <li>Conformit&eacute; NF525 : facture valid&eacute;e = non modifiable (cr&eacute;er un avoir si erreur)</li>
+    <li>Avoir total (annulation) ou partiel (remise a posteriori)</li>
+    <li>Relances automatiques en cas d'impay&eacute; (J+7, J+15, J+30)</li>
+    <li>Indemnit&eacute; forfaitaire 40&euro; ajout&eacute;e automatiquement (art. L441-10 C. com.)</li>
+  </ul>
+</div>
+</div><div class="section" id="reglements">
+  <div class="section-title"><span class="num">06</span> R&egrave;glements</div>
+  <p class="section-intro">Encaissements et r&eacute;conciliation bancaire.</p>
+  <div class="ref-block">
+  <h3>Enregistrer un r&egrave;glement</h3>
+  <ul>
+    <li>Depuis la fiche facture : bouton <strong>+ R&egrave;glement</strong></li>
+    <li>Modes : CB, virement SEPA, ch&egrave;que, esp&egrave;ces, Stripe (auto)</li>
+    <li>Paiement &eacute;chelonn&eacute; possible : plusieurs r&egrave;glements partiels sur la m&ecirc;me facture</li>
+    <li>&Eacute;criture comptable auto : 512 (banque) / 411 (client)</li>
+    <li>Export CSV des r&egrave;glements par p&eacute;riode et mode de paiement</li>
+  </ul>
+</div>
+</div><div class="section" id="stock">
+  <div class="section-title"><span class="num">07</span> Stock et achats</div>
+  <p class="section-intro">Mouvements, PMP, r&eacute;appro et cycle BC&rarr;FF.</p>
+  <div class="ref-block">
+  <h3>G&eacute;rer le stock en temps r&eacute;el</h3>
+  <ul>
+    <li>Articles cr&eacute;&eacute;s dans Param&egrave;tres &rarr; Articles (avec seuil d'alerte)</li>
+    <li>Consommation pendant les s&eacute;ances : d&eacute;duction automatique du stock</li>
+    <li>PMP (Prix Moyen Pond&eacute;r&eacute;) recalcul&eacute; &agrave; chaque entr&eacute;e</li>
+    <li>R&eacute;approvisionnement : alerte d&egrave;s que seuil atteint &rarr; g&eacute;n&eacute;rer un BC fournisseur</li>
+    <li>Inventaire physique annuel obligatoire pour le bilan</li>
+  </ul>
+</div>
+<div class="ref-block">
+  <h3>Cycle d'achat fournisseur</h3>
+  <ul>
+    <li>BC (bon de commande) &rarr; envoi auto au fournisseur par email</li>
+    <li>BL (bon de livraison) &agrave; r&eacute;ception &rarr; stock incr&eacute;ment&eacute;</li>
+    <li>FF (facture fournisseur) &rarr; &eacute;ch&eacute;ance 30j typique</li>
+    <li>BR (bon de retour) si non-conforme &rarr; DAF (demande d'avoir) &rarr; AF (avoir re&ccedil;u)</li>
+  </ul>
+</div>
+</div><div class="section" id="ged">
+  <div class="section-title"><span class="num">08</span> GED Documents</div>
+  <p class="section-intro">Le centre documentaire unifi&eacute;.</p>
+  <div class="ref-block">
+  <h3>Stockage et recherche de documents</h3>
+  <ul>
+    <li>Tous les PDF g&eacute;n&eacute;r&eacute;s (factures, devis, contrats) sont archiv&eacute;s automatiquement</li>
+    <li>Upload manuel possible depuis n'importe quelle fiche (drag &amp; drop)</li>
+    <li>Recherche par nom, cat&eacute;gorie, client, animal, p&eacute;riode</li>
+    <li>Pr&eacute;visualisation PDF/image directement dans le navigateur</li>
+    <li>T&eacute;l&eacute;chargement individuel ou ZIP en lot</li>
+    <li>Tous les documents li&eacute;s &agrave; un client sont accessibles dans son portail</li>
+  </ul>
+</div>
+</div><div class="section" id="ndf">
+  <div class="section-title"><span class="num">09</span> Notes de frais</div>
+  <p class="section-intro">Saisie OCR par IA et validation comptable.</p>
+  <div class="ref-block">
+  <h3>Saisir une note de frais</h3>
+  <ul>
+    <li><strong>Comptabilit&eacute; &rarr; Notes de frais &rarr; + Nouvelle</strong></li>
+    <li>Pour chaque ligne : date, libell&eacute;, cat&eacute;gorie PCG, montant TTC, taux TVA</li>
+    <li>OCR IA : scanner un ticket avec l'appareil photo &rarr; champs pr&eacute;-remplis automatiquement</li>
+    <li>Workflow : Brouillon &rarr; Soumise &rarr; Valid&eacute;e &rarr; Rembours&eacute;e</li>
+    <li>Cat&eacute;gories PCG : carburant (606100), repas (625700), mat&eacute;riel (606400)...</li>
+    <li>Justificatifs scann&eacute;s automatiquement archiv&eacute;s en GED</li>
+  </ul>
+</div>
+</div><div class="section" id="compta">
+  <div class="section-title"><span class="num">10</span> Comptabilit&eacute;</div>
+  <p class="section-intro">&Eacute;critures automatiques, balance, FEC, TVA.</p>
+  <div class="ref-block">
+  <h3>Conserver une comptabilit&eacute; saine</h3>
+  <ul>
+    <li>&Eacute;critures comptables g&eacute;n&eacute;r&eacute;es automatiquement : ventes, r&egrave;glements, achats, paie</li>
+    <li>Balance et grand-livre consultables &agrave; tout moment</li>
+    <li>Export FEC normalis&eacute; (18 colonnes, format DGFiP) pour expert-comptable</li>
+    <li>Export TVA par taux (0%, 5,5%, 10%, 20%) pour d&eacute;claration CA3</li>
+    <li>Cl&ocirc;ture annuelle : verrouillage des &eacute;critures + bilan</li>
+  </ul>
+</div>
+</div><div class="section" id="portail">
+  <div class="section-title"><span class="num">11</span> Portail client</div>
+  <p class="section-intro">L'espace en libre-service de vos clients.</p>
+  <div class="ref-block">
+  <h3>Activer et utiliser le portail client</h3>
+  <ul>
+    <li>Depuis la fiche client : <strong>Activer le portail</strong> &rarr; email avec lien magique envoy&eacute;</li>
+    <li>Le client cr&eacute;e son mot de passe et acc&egrave;de aux onglets : animaux, s&eacute;ances, factures, documents</li>
+    <li>Signature de devis directement depuis le portail (Yousign int&eacute;gr&eacute;)</li>
+    <li>Paiement CB s&eacute;curis&eacute; via Stripe Checkout</li>
+    <li>Personnalisation aux couleurs de votre marque (white-label)</li>
+  </ul>
+</div>
+</div><div class="section" id="eliot">
+  <div class="section-title"><span class="num">12</span> Eliot IA</div>
+  <p class="section-intro">Votre assistant pour gagner du temps.</p>
+  <div class="ref-block">
+  <h3>Utiliser Eliot au quotidien</h3>
+  <ul>
+    <li>Ouvrir le widget Eliot (bouton flottant en bas &agrave; droite)</li>
+    <li>Demandes type : "Quel CA depuis le 1er janvier ?", "Quels chiens ont un vaccin rage expirant ?"</li>
+    <li>Cr&eacute;ation guid&eacute;e : "Cr&eacute;e une s&eacute;ance pour Marie Dupont demain 14h" &rarr; confirmation requise</li>
+    <li>Aucune action irr&eacute;versible sans confirmation explicite</li>
+    <li>Boucle agentique : Eliot ench&acirc;ine plusieurs outils pour r&eacute;pondre &agrave; une question complexe</li>
+    <li>Voir le sc&eacute;nario <strong>Eliot &mdash; Assistant IA</strong> pour les exemples d&eacute;taill&eacute;s</li>
+  </ul>
+</div>
+</div><div class="section" id="registres">
+  <div class="section-title"><span class="num">13</span> Registres r&eacute;glementaires</div>
+  <p class="section-intro">DDPP, sanitaire, &eacute;v&eacute;nements &mdash; tra&ccedil;abilit&eacute; obligatoire.</p>
+  <div class="ref-block">
+  <h3>Tenir les registres r&eacute;glementaires</h3>
+  <ul>
+    <li><strong>Registre carnivores DDPP</strong> (arr&ecirc;t&eacute; 3 avril 2014) : entr&eacute;e auto d&egrave;s qu'un chien/chat est accueilli</li>
+    <li><strong>Registre sanitaire s&eacute;jour</strong> : &eacute;tat &agrave; l'arriv&eacute;e et au d&eacute;part</li>
+    <li><strong>Registre des &eacute;v&eacute;nements</strong> : incidents sanitaires document&eacute;s</li>
+    <li>Conservation l&eacute;gale : 5 ans &agrave; compter du dernier enregistrement</li>
+    <li>Export PDF horodat&eacute; disponible pour contr&ocirc;le DDPP</li>
+  </ul>
+</div>
+</div><div class="section" id="stats">
+  <div class="section-title"><span class="num">14</span> Statistiques</div>
+  <p class="section-intro">Piloter votre activit&eacute; avec les bons indicateurs.</p>
+  <div class="ref-block">
+  <h3>Consulter vos statistiques</h3>
+  <ul>
+    <li>CA par p&eacute;riode (jour, semaine, mois, ann&eacute;e, comparaison N-1)</li>
+    <li>Top clients par CA, fr&eacute;quence, anciennet&eacute;</li>
+    <li>R&eacute;partition par esp&egrave;ce, race, m&eacute;tier (si multi)</li>
+    <li>Taux de conversion : leads &rarr; clients, devis &rarr; factures</li>
+    <li>ROI campagnes marketing email (ratio moyen 17&times;)</li>
+    <li>Export CSV de tous les indicateurs</li>
+  </ul>
+</div>
+</div><div class="section" id="mobile">
+  <div class="section-title"><span class="num">15</span> Mobile et terrain</div>
+  <p class="section-intro">Anim'Gest dans votre poche.</p>
+  <div class="ref-block">
+  <h3>Utiliser Anim'Gest en mobilit&eacute;</h3>
+  <ul>
+    <li>Interface 100% responsive : smartphone, tablette, ordinateur portable</li>
+    <li>Ajouter en raccourci sur l'&eacute;cran d'accueil (PWA) pour un acc&egrave;s 1-clic</li>
+    <li>Check-in pension/registres directement depuis le mobile en moins d'1 minute</li>
+    <li>Photo souvenir post-s&eacute;ance et envoi au client en quelques clics</li>
+    <li>R&eacute;ponse aux urgences SAV en mobilit&eacute;</li>
+    <li>Compte-rendu de s&eacute;ance dict&eacute; (Web Speech API) sur navigateur compatible</li>
+  </ul>
+</div>
+</div>
+</div>
+<footer>
+  Anim'Gest &mdash; NoSage's Editor &mdash; Sprint S122 &middot; 28/05/2026 &middot; Notice utilisateur compl&egrave;te
+  <br><a href="index.html">&larr; Documentation</a>
+  &middot;
+  <a href="scenarios/index.html">Sc&eacute;narios</a>
+  &middot;
+  &#128231; <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a>
+</footer>
 
-<script>
-  // Scroll spy sidebar
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-        if (active) active.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-30% 0px -60% 0px' });
-  sections.forEach(s => observer.observe(s));
-</script>
 </body>
 </html>

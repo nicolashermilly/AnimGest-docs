@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>S&eacute;ances de groupe &mdash; Anim'Gest</title>
+<title>GED &mdash; Gestion &Eacute;lectronique de Documents &mdash; Anim'Gest</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -348,16 +348,16 @@ footer a { color: var(--gold); text-decoration: none; }
 </nav>
 <div class="hero">
   <div class="hero-label">SC&Eacute;NARIO TRANSVERSE</div>
-  <span class="emoji">&#128101;</span>
-  <h1>S&eacute;ances de groupe</h1>
-  <p>Organisez des sessions collectives avec gestion de capacit&eacute;, tarification diff&eacute;renci&eacute;e, badge m&eacute;tier et jauge de remplissage color&eacute;e.</p>
-  <div class="hero-tags"><span class="hero-tag">Capacit&eacute; max</span><span class="hero-tag">Tarifs diff&eacute;renci&eacute;s</span><span class="hero-tag">Jauge remplissage</span><span class="hero-tag">Badge m&eacute;tier</span><span class="hero-tag">Multi-m&eacute;tiers</span></div>
+  <span class="emoji">&#128194;</span>
+  <h1>GED &mdash; Gestion &Eacute;lectronique de Documents</h1>
+  <p>Architecture disque, g&eacute;n&eacute;ration automatique de PDF, recherche, partage s&eacute;curis&eacute;, sauvegarde NAS et conformit&eacute; RGPD.</p>
+  <div class="hero-tags"><span class="hero-tag">Disque local</span><span class="hero-tag">PDF auto</span><span class="hero-tag">Recherche</span><span class="hero-tag">RGPD</span><span class="hero-tag">Archivage 10 ans</span></div>
 </div>
 <div class="kpi-grid">
-  <div class="kpi-card"><div class="kpi-value">5</div><div class="kpi-label">&Eacute;tapes</div></div>
-  <div class="kpi-card"><div class="kpi-value">Jauge</div><div class="kpi-label">Remplissage</div></div>
-  <div class="kpi-card"><div class="kpi-value">Badge</div><div class="kpi-label">Type m&eacute;tier</div></div>
-  <div class="kpi-card"><div class="kpi-value">Tarifs</div><div class="kpi-label">Diff&eacute;renci&eacute;s</div></div>
+  <div class="kpi-card"><div class="kpi-value">7</div><div class="kpi-label">&Eacute;tapes</div></div>
+  <div class="kpi-card"><div class="kpi-value">10 ans</div><div class="kpi-label">Conservation l&eacute;gale</div></div>
+  <div class="kpi-card"><div class="kpi-value">Disque</div><div class="kpi-label">Architecture</div></div>
+  <div class="kpi-card"><div class="kpi-value">NAS</div><div class="kpi-label">Sauvegarde</div></div>
 </div>
 <div class="main">
 <div class="section">
@@ -367,35 +367,35 @@ footer a { color: var(--gold); text-decoration: none; }
 <div class="step-item">
   <div class="step-header">
     <span class="step-num">01</span>
-    <span class="step-title">Cr&eacute;er une s&eacute;ance de groupe</span>
+    <span class="step-title">Architecture de la GED</span>
   </div>
   <div class="step-body">
-    
-    <ul class="step-items"><li><strong>S&eacute;ances &rarr; S&eacute;ances de groupe &rarr; Nouvelle s&eacute;ance</strong></li><li>Renseigner : titre, date, heure, type de s&eacute;ance, lieu</li><li>D&eacute;finir la <strong>capacit&eacute; maximum</strong> (ex. 8 participants)</li><li>Tarifs : <strong>tarif 1 animal</strong> et <strong>tarif 2+ animaux</strong> (fid&eacute;lit&eacute; multi-animaux)</li><li>Le badge type/m&eacute;tier s'affiche automatiquement sur la s&eacute;ance</li></ul>
-    
+    <div class="step-intro">La GED Anim'Gest stocke les documents sur le disque local du serveur, jamais en base de donn&eacute;es (performances + RGPD).</div>
+    <ul class="step-items no-pad"><li>Racine GED : <code>C:\AnimGest_GED\SCT_001\</code> (configurable)</li><li>Structure : un dossier par module (Clients, Animaux, S&eacute;ances, Factures, Devis...)</li><li>Sous-dossiers par semaine : <code>Semaine_2026_22\</code></li><li>Nom du fichier : <code>PIECE_horodatage.pdf</code> (ex. FAC_20260528_143042.pdf)</li><li>Dossier <code>General\</code> pour logos, CGV, filigranes communs</li><li>Dossier <code>Widget\</code> pour images et vid&eacute;os widget</li></ul>
+    <div class="step-warn"><strong>&#9888; Attention :</strong> Aucun fichier n'est stock&eacute; en base de donn&eacute;es (m&ecirc;me pas en base64). Tous les fichiers vivent sur disque pour des raisons de performance et de portabilit&eacute;.</div>
     
   </div>
 </div>
 <div class="step-item">
   <div class="step-header">
     <span class="step-num">02</span>
-    <span class="step-title">Ajouter des participants</span>
+    <span class="step-title">G&eacute;n&eacute;ration automatique de PDF</span>
   </div>
   <div class="step-body">
     
-    <ul class="step-items"><li>Rechercher un client dans la liste avec autocompl&eacute;tion</li><li>S&eacute;lectionner l'animal concern&eacute;</li><li>Le tarif est automatiquement calcul&eacute; selon le nombre d'animaux du client</li><li>La jauge de remplissage se met &agrave; jour en temps r&eacute;el</li><li>Vert &lt; 70%, orange 70-99%, rouge = complet</li></ul>
-    <div class="step-tip"><strong>&#128161; Conseil :</strong> Si la capacit&eacute; maximum est atteinte, l'ajout est bloqu&eacute; automatiquement pour respecter les ratios encadrant/animaux.</div>
+    <ul class="step-items"><li>&Agrave; chaque facture cr&eacute;&eacute;e : PDF g&eacute;n&eacute;r&eacute; automatiquement et archiv&eacute; en GED</li><li>M&ecirc;me chose pour : devis, bons de livraison, ordonnances v&eacute;t&eacute;rinaires, contrats</li><li>Ent&ecirc;te avec votre logo + couleurs depuis charte graphique</li><li>Filigrane optionnel (PROFORMA, COPIE, ANNUL&Eacute;) si applicable</li><li>CGV automatiquement ajout&eacute;es en derni&egrave;re page</li><li>Conservation l&eacute;gale 10 ans pour factures, contrats, ordonnances</li></ul>
+    
     
   </div>
 </div>
 <div class="step-item">
   <div class="step-header">
     <span class="step-num">03</span>
-    <span class="step-title">G&eacute;rer les participants</span>
+    <span class="step-title">Upload manuel de documents</span>
   </div>
   <div class="step-body">
     
-    <ul class="step-items"><li>Consulter la liste des participants avec leur tarif individuel</li><li>Retirer un participant en cas d'annulation</li><li>Modifier le statut de la s&eacute;ance : Planifi&eacute;e &rarr; En cours &rarr; Termin&eacute;e &rarr; Annul&eacute;e</li><li>Notifier les participants en cas de modification (email + portail)</li></ul>
+    <ul class="step-items"><li>Depuis n'importe quelle fiche (client, animal, s&eacute;ance) : <strong>+ Document</strong></li><li>Drag &amp; drop ou navigation classique</li><li>Formats accept&eacute;s : PDF, JPG, PNG, WebP, MP4, DOCX</li><li>Taille max par fichier : 50 Mo (configurable)</li><li>Cat&eacute;gorisation auto : carnet vaccins, ordonnance, photo, contrat...</li><li>Description et tags pour faciliter la recherche ult&eacute;rieure</li></ul>
     
     
   </div>
@@ -403,11 +403,11 @@ footer a { color: var(--gold); text-decoration: none; }
 <div class="step-item">
   <div class="step-header">
     <span class="step-num">04</span>
-    <span class="step-title">Conduire la s&eacute;ance</span>
+    <span class="step-title">Recherche et consultation</span>
   </div>
   <div class="step-body">
     
-    <ul class="step-items"><li>Passer le statut &agrave; <strong>En cours</strong> au d&eacute;but de la s&eacute;ance</li><li>Prendre les pr&eacute;sences depuis le mobile (check-in 1 clic)</li><li>Saisir les observations par animal (comportement, performances)</li><li>Terminer en passant &agrave; <strong>Termin&eacute;e</strong></li><li>Compte-rendu individuel envoy&eacute; automatiquement &agrave; chaque propri&eacute;taire</li></ul>
+    <ul class="step-items"><li><strong>GED &rarr; Recherche globale</strong> ou depuis n'importe quelle fiche</li><li>Recherche par nom, cat&eacute;gorie, date, tag, client, animal</li><li>Pr&eacute;visualisation directe dans le navigateur (PDF embeded, image, vid&eacute;o)</li><li>T&eacute;l&eacute;chargement individuel ou ZIP en lot</li><li>Tri par r&eacute;cent / volumineux / cat&eacute;gorie</li><li>Filtre par p&eacute;riode (utile pour audit, contr&ocirc;le)</li></ul>
     
     
   </div>
@@ -415,11 +415,35 @@ footer a { color: var(--gold); text-decoration: none; }
 <div class="step-item">
   <div class="step-header">
     <span class="step-num">05</span>
-    <span class="step-title">Facturation individuelle</span>
+    <span class="step-title">Partage s&eacute;curis&eacute; avec le client</span>
   </div>
   <div class="step-body">
     
-    <ul class="step-items"><li>G&eacute;n&eacute;ration de factures individuelles par participant</li><li>Ventilation automatique selon le tarif assign&eacute; (1 animal / 2+ animaux)</li><li>Suivi des r&egrave;glements par participant</li><li>Possibilit&eacute; de facturer en lot tous les participants en un clic</li><li>Pour les abonn&eacute;s : d&eacute;duction automatique d'une s&eacute;ance du forfait</li></ul>
+    <ul class="step-items"><li>Tous les documents li&eacute;s &agrave; un client sont accessibles depuis son portail</li><li>Le client voit uniquement <strong>ses</strong> documents (filtrage par TIE_ID)</li><li>Lien magique &agrave; envoyer (valable 7 jours) pour acc&egrave;s ponctuel sans portail</li><li>T&eacute;l&eacute;chargement direct depuis le portail (CB sur facture, contrat &agrave; signer)</li><li>Notification email d&egrave;s qu'un nouveau document est mis &agrave; disposition</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">06</span>
+    <span class="step-title">Sauvegarde et redondance</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Sauvegarde quotidienne automatique sur NAS (RAID 6)</li><li>Sauvegarde secondaire externe (G:\ ou cloud chiffr&eacute;) hebdomadaire</li><li>Rotation : 30 jours quotidienne, 12 semaines hebdo, 12 mois mensuelle, 7 ans annuelle</li><li>Restauration t&eacute;moin test&eacute;e mensuellement</li><li>T&acirc;che planifi&eacute;e Windows ou cron Linux pour automatisation</li><li>Logs de sauvegarde consultables depuis Param&egrave;tres &rarr; Maintenance</li></ul>
+    <div class="step-ok"><strong>&#10003; Bonne pratique :</strong> Une bonne sauvegarde respecte la r&egrave;gle 3-2-1 : 3 copies, sur 2 supports diff&eacute;rents, dont 1 hors site.</div>
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">07</span>
+    <span class="step-title">RGPD et conformit&eacute;</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Conservation l&eacute;gale par type :</li><li>&nbsp;&nbsp;&bullet; Factures et comptable : 10 ans</li><li>&nbsp;&nbsp;&bullet; Contrats : dur&eacute;e + 10 ans apr&egrave;s fin de relation</li><li>&nbsp;&nbsp;&bullet; Donn&eacute;es marketing (RGPD) : 3 ans apr&egrave;s dernier contact</li><li>&nbsp;&nbsp;&bullet; Registres r&eacute;glementaires : 5 ans</li><li>Droit &agrave; l'oubli RGPD : suppression sur demande client (sauf obligations l&eacute;gales)</li><li>Export RGPD : tous les documents personnels d'un client en un ZIP</li><li>Chiffrement au repos recommand&eacute; (BitLocker Windows, LUKS Linux)</li></ul>
     
     
   </div>

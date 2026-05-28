@@ -1,175 +1,475 @@
-
-<!-- Polices, variables CSS, composants communs -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Eliot &mdash; Votre assistant IA &mdash; Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
-.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
-.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
-.hero-back:hover{color:var(--text)}
-.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
-.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
-.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
-.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
-.container{max-width:1000px;margin:0 auto;padding:56px 48px}
-.timeline{position:relative;padding-left:52px}
-.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
-.step{position:relative;margin-bottom:28px}
-.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
-.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
-.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
-.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
-.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
-.step-title{font-size:15px;font-weight:600;color:#fff}
-.step-body{color:var(--muted);font-size:13px;line-height:1.7}
-.step-body ul{list-style:none;margin-top:8px}
-.step-body li{padding:3px 0;padding-left:16px;position:relative}
-.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
-.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
-.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
-.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
-.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
-.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
-.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
-.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
-.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
-.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
-.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
-.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
-.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
-.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
-.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
-footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
-</style>
-<title>Eliot — L'assistant IA d'Anim'Gest — Anim'Gest</title></head>
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --gold-pale: #FEF3C7;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
 
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 56px 32px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero .emoji { display: block; font-size: 2.4rem; margin-bottom: 8px; line-height: 1; }
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.hero-tags {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
+  margin-top: 18px; position: relative; z-index: 1;
+}
+.hero-tag {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 14px;
+}
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,158,11,0.1);
+  border-top: 1px solid rgba(245,158,11,0.1);
+  border-bottom: 1px solid rgba(245,158,11,0.1);
+}
+.kpi-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.kpi-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi-card {
+  background: var(--navy);
+  padding: 26px 18px;
+  text-align: center;
+  transition: background .2s;
+}
+.kpi-card:hover { background: var(--navy-800); }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.kpi-badge {
+  display: inline-block;
+  background: rgba(16,185,129,0.1);
+  color: var(--green);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px 32px; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+.section { margin-bottom: 48px; }
+.section-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+
+/* STEP LIST (adapte de sprint-list) */
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.step-item:hover { border-color: rgba(245,158,11,0.25); }
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 50px;
+  text-align: center;
+}
+.step-title { font-weight: 600; font-size: 0.95rem; flex: 1; color: #F8FAFC; }
+.step-body {
+  padding: 0 20px 18px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.step-intro { color: var(--text-muted); font-size: 0.88rem; padding-top: 14px; margin-bottom: 8px; font-style: italic; }
+.step-items { list-style: none; padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.step-items.no-pad { padding-top: 0; }
+.step-items li {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  padding-left: 18px;
+  position: relative;
+}
+.step-items li::before {
+  content: '▸';
+  position: absolute; left: 0; top: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+.step-items li strong { color: var(--text); font-weight: 600; }
+.step-items li code, .step-items li .mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+.step-tip {
+  background: rgba(245,158,11,0.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+}
+.step-tip strong { color: var(--gold); }
+.step-warn {
+  background: rgba(239,68,68,0.06);
+  border-left: 3px solid var(--red);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #FCA5A5;
+}
+.step-warn strong { color: var(--red); }
+.step-ok {
+  background: rgba(16,185,129,0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #86EFAC;
+}
+.step-ok strong { color: var(--green); }
+.step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+/* TAGS */
+.tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.tag-fix { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.tag-violet { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+
+/* TABLE */
+.table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 8px; background: var(--card); border-radius: 8px; overflow: hidden; }
+.table th { text-align: left; padding: 10px 14px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+.table tr:last-child td { border-bottom: none; }
+.table td:first-child { color: var(--text); font-weight: 500; }
+.mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; }
+
+/* INDEX CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.scenario-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all .2s;
+}
+.scenario-card:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); }
+.scenario-card .icon { font-size: 1.6rem; }
+.scenario-card .title { font-weight: 600; font-size: 0.98rem; color: #F8FAFC; }
+.scenario-card .desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.scenario-card .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 28px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 40px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .kpi-grid, .kpi-grid.cols-5, .kpi-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 1.8rem; }
+  .main { padding: 32px 18px; }
+  nav { padding: 12px 18px; gap: 18px; }
+  .nav-badge { margin-left: 0; }
+}
+
+</style>
+</head>
 <body>
-<nav class="nav-bar">
-  <a class="nav-link home" href="index.html">🏠 Index</a>
-  <a class="nav-link" href="metier-comportementaliste.html">🧠 Comportementaliste</a>
-  <a class="nav-link" href="metier-toiletteur.html">✂️ Toiletteur</a>
-  <a class="nav-link" href="metier-petsitter.html">🏃 Pet-sitter</a>
-  <a class="nav-link" href="metier-eleveur.html">🐣 Éleveur</a>
-  <a class="nav-link" href="metier-pension.html">🏠 Pension</a>
-  <a class="nav-link" href="metier-equestre.html">🐴 Équestre</a>
-  <a class="nav-link" href="metier-veterinaire.html">💉 Vétérinaire</a>
-  <a class="nav-link" href="metier-osteopathe.html">🙌 Ostéopathe</a>
-  <a class="nav-link" href="metier-sport-canin.html">🏆 Sport canin</a>
-  <a class="nav-link" href="metier-naturopathe.html">🌿 Naturopathe</a>
-  <a class="nav-link" href="trans-facturation.html">🧾 Facturation</a>
-  <a class="nav-link" href="trans-compta-fec.html">📊 Compta/FEC</a>
-  <a class="nav-link" href="trans-rfe.html">⚡ RFE</a>
-  <a class="nav-link" href="trans-stock-inventaire.html">📦 Stock</a>
-  <a class="nav-link" href="trans-achats.html">🏪 Achats</a>
-  <a class="nav-link" href="trans-portail-client.html">🌐 Portail</a>
-  <a class="nav-link" href="trans-crm-leads.html">📈 CRM</a>
-  <a class="nav-link" href="trans-reseaux-sociaux.html">📱 Réseaux</a>
-  <a class="nav-link" href="trans-ged.html">🗂️ GED</a>
-  <a class="nav-link" href="trans-registres.html">📜 Registres</a>
-  <a class="nav-link" href="trans-eliot.html">🤖 Eliot</a>
+<nav>
+  <a href="../index-complet.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="../index-complet.html">Documentation</a>
+  <a href="index.html">Sc&eacute;narios</a>
+  <a href="../17-api-reference.html">API</a>
+  <a href="../20-pilotage-projet.html">Pilotage</a>
+  <span class="nav-badge">S122</span>
 </nav>
 <div class="hero">
-  <div class="hero-badge">Scénario Transverse</div>
-  <h1>🤖 Eliot — L'assistant IA d'Anim'Gest</h1>
-  <p class="hero-sub">22 outils à votre disposition : créer, rechercher, planifier, facturer — tout par commande naturelle</p>
-  <div class="hero-meta"><div class="hero-meta-item"><span>🤖 22 outils</span></div><div class="hero-meta-item"><span>💬 Langage naturel</span></div><div class="hero-meta-item"><span>🔒 Jamais de suppression</span></div><div class="hero-meta-item"><span>⚡ Réponse < 3 sec</span></div></div>
+  <div class="hero-label">SC&Eacute;NARIO TRANSVERSE</div>
+  <span class="emoji">&#129302;</span>
+  <h1>Eliot &mdash; Votre assistant IA</h1>
+  <p>Activation, recherche, cr&eacute;ation de s&eacute;ances et devis, facturation, planification &mdash; comment Eliot vous fait gagner du temps au quotidien.</p>
+  <div class="hero-tags"><span class="hero-tag">22 outils</span><span class="hero-tag">Sonnet/Opus</span><span class="hero-tag">Chat vocal</span><span class="hero-tag">Boucle agentique</span><span class="hero-tag">Anthropic API</span></div>
 </div>
-<div class="container">
-  <div class="stats-row"><div class="stat-card"><div class="stat-val">8</div><div class="stat-lbl">Étapes</div></div><div class="stat-card"><div class="stat-val">22</div><div class="stat-lbl">Outils Eliot</div></div><div class="stat-card"><div class="stat-val">6</div><div class="stat-lbl">Itérations max</div></div><div class="stat-card"><div class="stat-val">100%</div><div class="stat-lbl">Actions via API sécurisée</div></div></div>
-  <div class="timeline">
-      <div class="step">
-        <div class="step-dot" style="background:var(--violet)">1</div>
-        <div class="step-card">
-          <div class="step-header">
-            <span class="step-num" style="color:var(--violet)">Étape 1</span>
-            <span class="step-title">Activer et démarrer Eliot</span>
-          </div>
-          <div class="step-body">Eliot est une option disponible dans les formules Pro et Expert.<ul><li>Paramètres → Modules → Eliot IA → Activer</li><li>Le bouton Eliot (icône robot 🤖) apparaît en bas à droite de toutes les pages</li><li>Cliquer sur le bouton → fenêtre de chat s'ouvre</li><li>Taper votre première demande en langage naturel</li><li>Eliot répond en moins de 3 secondes avec l'action effectuée ou une demande de précision</li><li>Fermer la fenêtre → Eliot se referme, vous restez sur la même page</li></ul><div class="step-note">💡 Eliot est une option commerciale. Le logiciel fonctionne parfaitement sans lui.</div></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-dot" style="background:var(--cyan)">2</div>
-        <div class="step-card">
-          <div class="step-header">
-            <span class="step-num" style="color:var(--cyan)">Étape 2</span>
-            <span class="step-title">Eliot — Recherche d'informations</span>
-          </div>
-          <div class="step-body">Utilisez Eliot pour retrouver rapidement des informations.<ul><li>'Quelles sont les factures impayées depuis plus de 30 jours ?' → liste avec montants et clients</li><li>'Montre-moi les animaux de Marie Dupont' → Rex, Luna, Miko avec leurs infos</li><li>'Quel est le score CAC actuel de Rex ?' → 71/100, progression +49 depuis le BC</li><li>'Combien j'ai fait de CA ce mois ?' → 3 847€ TTC (détail par type de séance)</li><li>'Y a-t-il des stocks en alerte ?' → Shampoing Bichon Pro (2 flacons, seuil 3)</li><li>'Quand est la prochaine séance de Rex ?' → Mardi 20 mai, 10h, Séance suivi</li></ul></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-dot" style="background:var(--emerald)">3</div>
-        <div class="step-card">
-          <div class="step-header">
-            <span class="step-num" style="color:var(--emerald)">Étape 3</span>
-            <span class="step-title">Eliot — Création de séances et devis</span>
-          </div>
-          <div class="step-body">Créez des documents complets en une phrase.<ul><li>'Crée une séance de bilan comportemental pour Rex, vendredi prochain à 14h'</li><li>→ Séance créée : type BC, Rex, vendredi 23/05, 14h, durée 1h30, tarif 120€</li><li>'Génère un devis pour Marie pour 5 séances de suivi à 70€ chacune'</li><li>→ Devis DEV-2026-0031 créé : 5 lignes × 70€ = 350€ HT · 420€ TTC</li><li>'Duplique le dernier devis de Marie avec une remise de 10%'</li><li>→ Devis dupliqué avec remise appliquée sur toutes les lignes</li></ul></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-dot" style="background:var(--gold)">4</div>
-        <div class="step-card">
-          <div class="step-header">
-            <span class="step-num" style="color:var(--gold)">Étape 4</span>
-            <span class="step-title">Eliot — Facturation et règlements</span>
-          </div>
-          <div class="step-body">Accélérez les tâches de facturation répétitives.<ul><li>'Transforme le devis de Marie en facture'</li><li>→ FAC-2026-0051 créée depuis DEV-2026-0031 avec toutes les lignes</li><li>'Enregistre un règlement CB de 420€ sur la facture 51'</li><li>→ Règlement enregistré · Facture en statut Payée</li><li>'Liste les factures non réglées de la semaine'</li><li>→ 3 factures : Bernard 350€ (éch. 20/05), Petit 180€ (éch. 22/05), Martin 95€ (éch. 18/05 — EN RETARD)</li><li>'Envoie une relance par email à Martin pour sa facture en retard'</li><li>→ Email de relance envoyé à g.martin@email.com avec le détail de la facture</li></ul></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-dot" style="background:var(--rose)">5</div>
-        <div class="step-card">
-          <div class="step-header">
-            <span class="step-num" style="color:var(--rose)">Étape 5</span>
-            <span class="step-title">Eliot — Planification et agenda</span>
-          </div>
-          <div class="step-body">Gérez votre planning par la voix ou par texte.<ul><li>'Planifie 6 séances hebdomadaires de suivi pour Rex à partir de lundi prochain, jeudi 10h'</li><li>→ 6 séances créées en récurrence · Affichées dans l'agenda</li><li>'Y a-t-il des conflits dans mon agenda cette semaine ?'</li><li>→ Mardi 14h : chevauchement entre Rex et Luna → à résoudre</li><li>'Déplace la séance du mardi 14h au mercredi 15h'</li><li>→ Séance mise à jour · Client notifié automatiquement</li><li>'Quelles séances n'ont pas encore été facturées ?'</li><li>→ 4 séances réalisées non liées à une facture : Rex S3, S4, S5, S6</li></ul></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-dot" style="background:#a78bfa">6</div>
-        <div class="step-card">
-          <div class="step-header">
-            <span class="step-num" style="color:#a78bfa">Étape 6</span>
-            <span class="step-title">Ce qu'Eliot ne fait jamais</span>
-          </div>
-          <div class="step-body">Les limites strictes d'Eliot pour protéger vos données.<ul><li>❌ Supprimer des données (clients, animaux, factures, séances)</li><li>❌ Modifier le code source du logiciel</li><li>❌ Exécuter du SQL direct dans la base de données</li><li>❌ Modifier le schéma de la base de données</li><li>❌ Accéder aux données d'autres comptes</li><li>❌ Contourner les règles NF525 (numérotation, inaltérabilité)</li><li>✅ Toutes ses actions passent par les mêmes API sécurisées que l'interface normale</li></ul><div class="step-ok">🔒 La sécurité d'Eliot est garantie par architecture : il ne peut pas faire ce que l'interface ne permet pas.</div></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-dot" style="background:var(--amber)">7</div>
-        <div class="step-card">
-          <div class="step-header">
-            <span class="step-num" style="color:var(--amber)">Étape 7</span>
-            <span class="step-title">Exemples avancés de commandes Eliot</span>
-          </div>
-          <div class="step-body">Quelques commandes complexes qui illustrent la puissance d'Eliot.<ul><li>'Génère un rapport des animaux dont la vaccination expire dans les 30 prochains jours'</li><li>'Crée un devis Forfait Comportementaliste Standard pour la famille Moreau pour leur chien Max'</li><li>'Quels clients n'ont pas eu de séance depuis plus de 3 mois ? Liste-les avec leur dernier contact'</li><li>'Envoie un email à tous les clients avec une séance cette semaine pour rappeler leur RDV'</li><li>'Calcule le CA moyen par séance pour le mois de mai'</li><li>'Quels sont les 5 clients avec le plus de CA cette année ?'</li></ul></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-dot" style="background:var(--violet)">8</div>
-        <div class="step-card">
-          <div class="step-header">
-            <span class="step-num" style="color:var(--violet)">Étape 8</span>
-            <span class="step-title">Boucle agentique — Comment Eliot travaille</span>
-          </div>
-          <div class="step-body">Eliot peut enchaîner jusqu'à 6 actions pour répondre à une demande complexe.<ul><li>Votre demande : 'Crée un devis complet pour la famille Leclerc pour leur chiot Pixel'</li><li>Eliot étape 1 : recherche le client Leclerc → trouvé (ID 847)</li><li>Eliot étape 2 : recherche l'animal Pixel → trouvé (ID 312, Border Collie)</li><li>Eliot étape 3 : sélectionne le modèle de devis Agility Débutant</li><li>Eliot étape 4 : crée le devis DEV-2026-0034 avec les bonnes lignes</li><li>Eliot étape 5 : confirme et affiche le résultat avec lien vers le devis</li><li>Total : 5 actions en 4 secondes · Vous avez juste cliqué sur Envoyer</li></ul></div>
-        </div>
-      </div></div>
-  <div class="result-box">
-    <div class="result-title">✅ Résultats du parcours</div>
-    <div class="result-grid"><div class="result-item"><span>🤖</span><span>22 outils disponibles</span></div><div class="result-item"><span>⚡</span><span>< 3 sec par action</span></div><div class="result-item"><span>🔒</span><span>0 suppression possible</span></div><div class="result-item"><span>💬</span><span>Langage naturel</span></div><div class="result-item"><span>🔄</span><span>6 actions enchaînées max</span></div><div class="result-item"><span>✅</span><span>Actions via API sécurisée</span></div></div>
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-value">8</div><div class="kpi-label">&Eacute;tapes</div></div>
+  <div class="kpi-card"><div class="kpi-value">22</div><div class="kpi-label">Outils</div><div class="kpi-badge">Tools</div></div>
+  <div class="kpi-card"><div class="kpi-value">Claude</div><div class="kpi-label">Mod&egrave;le</div></div>
+  <div class="kpi-card"><div class="kpi-value">100%</div><div class="kpi-label">S&eacute;curis&eacute;</div></div>
+</div>
+<div class="main">
+<div class="section">
+  <div class="section-title"><span class="num">01</span> &Eacute;tapes du sc&eacute;nario</div>
+  
+  <div class="step-list">
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">01</span>
+    <span class="step-title">Activer et d&eacute;marrer Eliot</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li><strong>Param&egrave;tres &rarr; Eliot</strong> : configurer l'API Anthropic et activer</li><li>Choisir le mod&egrave;le : <code>claude-sonnet-4</code> (rapide) ou <code>claude-opus-4</code> (avanc&eacute;)</li><li>Personnaliser : nom de l'assistant, avatar, voix synth&egrave;se</li><li>Le widget Eliot appara&icirc;t en bas &agrave; droite de toutes les pages</li><li>Cliquer pour ouvrir le chat &mdash; saisir au clavier ou activer le micro</li></ul>
+    <div class="step-tip"><strong>&#128161; Conseil :</strong> Eliot est optionnel et facturable s&eacute;par&eacute;ment. Vous gardez le contr&ocirc;le total : activation, mod&egrave;le, limites, et surtout les permissions.</div>
+    
   </div>
 </div>
-<footer>Anim'Gest · NoSage's Editor — Scénario Eliot — L'assistant IA d'Anim'Gest — Sprint S114 · 2026</footer>
-</body></html>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">02</span>
+    <span class="step-title">Eliot &mdash; Recherche d'informations</span>
+  </div>
+  <div class="step-body">
+    <div class="step-intro">Posez des questions en langage naturel, Eliot interroge votre base de donn&eacute;es.</div>
+    <ul class="step-items no-pad"><li>&laquo;&nbsp;Combien j'ai de clients actifs ce mois-ci ?&nbsp;&raquo;</li><li>&laquo;&nbsp;Quel est mon CA depuis le 1er janvier ?&nbsp;&raquo;</li><li>&laquo;&nbsp;Quelles factures sont impay&eacute;es depuis plus de 30 jours ?&nbsp;&raquo;</li><li>&laquo;&nbsp;Quel animal n'a pas eu de s&eacute;ance depuis 6 mois ?&nbsp;&raquo;</li><li>&laquo;&nbsp;Trouve-moi tous les Berger Australien dans ma base&nbsp;&raquo;</li><li>&laquo;&nbsp;R&eacute;sumer mon planning de la semaine prochaine&nbsp;&raquo;</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">03</span>
+    <span class="step-title">Eliot &mdash; Cr&eacute;ation de s&eacute;ances et devis</span>
+  </div>
+  <div class="step-body">
+    <div class="step-intro">Eliot peut cr&eacute;er des donn&eacute;es pour vous, apr&egrave;s confirmation explicite.</div>
+    <ul class="step-items no-pad"><li>&laquo;&nbsp;Cr&eacute;e une s&eacute;ance pour Marie Dupont demain &agrave; 14h, type BC, 1h30, 120&euro;&nbsp;&raquo;</li><li>&laquo;&nbsp;G&eacute;n&egrave;re un devis Comportementaliste pour Mme Dupont avec 6 s&eacute;ances de suivi&nbsp;&raquo;</li><li>Eliot pr&eacute;sente un r&eacute;capitulatif et demande votre confirmation</li><li>Cliquer <strong>Valider</strong> &mdash; la s&eacute;ance/devis est cr&eacute;&eacute; en base</li><li>Cliquer <strong>Annuler</strong> &mdash; aucune action effectu&eacute;e</li></ul>
+    <div class="step-ok"><strong>&#10003; Bonne pratique :</strong> Aucune action sensible n'est ex&eacute;cut&eacute;e sans votre validation explicite. Vous gardez la main.</div>
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">04</span>
+    <span class="step-title">Eliot &mdash; Facturation et r&egrave;glements</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>&laquo;&nbsp;Cr&eacute;e une facture d'acompte de 30% sur le devis n&deg; 0042&nbsp;&raquo;</li><li>&laquo;&nbsp;Convertis le devis 0042 en facture totale&nbsp;&raquo;</li><li>&laquo;&nbsp;Enregistre un r&egrave;glement de 280&euro; en CB pour la facture 0078&nbsp;&raquo;</li><li>&laquo;&nbsp;Envoie une relance polie pour la facture impay&eacute;e 0034&nbsp;&raquo;</li><li>Toutes les actions de modification financi&egrave;re demandent confirmation</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">05</span>
+    <span class="step-title">Eliot &mdash; Planification et agenda</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>&laquo;&nbsp;Quels sont mes RDV demain ?&nbsp;&raquo;</li><li>&laquo;&nbsp;Y a-t-il un cr&eacute;neau libre lundi prochain entre 14h et 17h ?&nbsp;&raquo;</li><li>&laquo;&nbsp;D&eacute;cale tous mes RDV du vendredi 28 mai d'une heure plus t&ocirc;t&nbsp;&raquo;</li><li>&laquo;&nbsp;Envoie un rappel SMS &agrave; tous mes RDV de demain&nbsp;&raquo;</li><li>Vue planning g&eacute;n&eacute;r&eacute;e instantan&eacute;ment dans le chat</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">06</span>
+    <span class="step-title">Ce qu'Eliot ne fait jamais</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>Eliot ne supprime <strong>jamais</strong> de donn&eacute;es (clients, animaux, factures)</li><li>Eliot ne modifie pas les param&egrave;tres syst&egrave;me ou comptables sensibles</li><li>Eliot ne consulte pas Internet (acc&egrave;s strict &agrave; votre base de donn&eacute;es uniquement)</li><li>Eliot ne stocke pas vos donn&eacute;es chez Anthropic au-del&agrave; de la session</li><li>Eliot demande syst&eacute;matiquement confirmation avant toute action irr&eacute;versible</li></ul>
+    <div class="step-warn"><strong>&#9888; Attention :</strong> Pour les actions destructives (suppression, archivage), repassez par l'interface classique. Eliot privil&eacute;gie la s&eacute;curit&eacute;.</div>
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">07</span>
+    <span class="step-title">Exemples avanc&eacute;s de commandes Eliot</span>
+  </div>
+  <div class="step-body">
+    
+    <ul class="step-items"><li>&laquo;&nbsp;Compare mon CA du 1er trimestre 2026 vs 2025&nbsp;&raquo;</li><li>&laquo;&nbsp;Quel est mon panier moyen et mes top 5 clients ?&nbsp;&raquo;</li><li>&laquo;&nbsp;Quels chiens ont un vaccin rage expirant dans les 60 jours ?&nbsp;&raquo;</li><li>&laquo;&nbsp;Trouve-moi tous les clients sans s&eacute;ance depuis 3 mois et propose un email de relance&nbsp;&raquo;</li><li>&laquo;&nbsp;Cr&eacute;e une campagne email pour les clients ayant fait un bilan en mars 2026&nbsp;&raquo;</li></ul>
+    
+    
+  </div>
+</div>
+<div class="step-item">
+  <div class="step-header">
+    <span class="step-num">08</span>
+    <span class="step-title">Boucle agentique &mdash; Comment Eliot travaille</span>
+  </div>
+  <div class="step-body">
+    <div class="step-intro">Eliot d&eacute;compose votre demande en plusieurs &eacute;tapes (outils) et les ex&eacute;cute en cha&icirc;ne.</div>
+    <ul class="step-items no-pad"><li>&Eacute;tape 1 : Eliot analyse votre demande en langage naturel</li><li>&Eacute;tape 2 : il identifie les outils n&eacute;cessaires parmi 22 disponibles</li><li>&Eacute;tape 3 : il ex&eacute;cute les outils en s&eacute;quence (lecture BDD principalement)</li><li>&Eacute;tape 4 : il consolide les r&eacute;sultats et formule une r&eacute;ponse</li><li>&Eacute;tape 5 : pour les actions, il demande votre confirmation explicite</li><li>Cette logique &laquo;&nbsp;agentique&nbsp;&raquo; permet de r&eacute;soudre des questions complexes en un seul &eacute;change</li></ul>
+    
+    
+  </div>
+</div>
+  </div>
+</div>
+
+</div>
+<footer>
+  Anim'Gest &mdash; NoSage's Editor &mdash; Sprint S122 &middot; 28/05/2026
+  <br><a href="index.html">&larr; Tous les sc&eacute;narios</a>
+  &middot;
+  <a href="../index-complet.html">Documentation compl&egrave;te</a>
+</footer>
+
+</body>
+</html>

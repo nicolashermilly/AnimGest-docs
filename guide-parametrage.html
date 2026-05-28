@@ -3,675 +3,709 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guide de paramétrage — Anim'Gest · NoSage's Editor</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Guide de param&eacute;trage &mdash; Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0F172A;
-    --navy-mid: #1E293B;
-    --gold: #F59E0B;
-    --gold-light: #FCD34D;
-    --violet: #4F46E5;
-    --cyan: #06B6D4;
-    --emerald: #10B981;
-    --rose: #F43F5E;
-    --surface: #1E293B;
-    --border: rgba(255,255,255,0.08);
-    --text: #F1F5F9;
-    --muted: #94A3B8;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; line-height: 1.6; }
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --gold-pale: #FEF3C7;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
 
-  /* HERO */
-  .hero {
-    background: linear-gradient(135deg, #0F172A 0%, #0d1e38 100%);
-    padding: 60px 40px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-  }
-  .hero-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--emerald), var(--cyan));
-    color: #fff;
-    padding: 6px 20px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 5vw, 56px);
-    font-weight: 900;
-    background: linear-gradient(135deg, #fff 0%, var(--gold-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 16px;
-  }
-  .hero p { font-size: 17px; color: var(--muted); max-width: 560px; margin: 0 auto; }
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
 
-  /* PROGRESS BAR */
-  .progress-bar {
-    display: flex;
-    align-items: center;
-    padding: 20px 40px;
-    background: var(--navy-mid);
-    border-bottom: 1px solid var(--border);
-    gap: 0;
-    overflow-x: auto;
-  }
-  .prog-step {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-  }
-  .prog-dot {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-  .prog-label { font-size: 12px; font-weight: 500; white-space: nowrap; }
-  .prog-line { flex: 1; height: 2px; min-width: 20px; }
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 56px 32px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero .emoji { display: block; font-size: 2.4rem; margin-bottom: 8px; line-height: 1; }
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.hero-tags {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
+  margin-top: 18px; position: relative; z-index: 1;
+}
+.hero-tag {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 14px;
+}
 
-  /* CONTAINER */
-  .container { max-width: 960px; margin: 0 auto; padding: 60px 40px; }
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,158,11,0.1);
+  border-top: 1px solid rgba(245,158,11,0.1);
+  border-bottom: 1px solid rgba(245,158,11,0.1);
+}
+.kpi-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.kpi-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi-card {
+  background: var(--navy);
+  padding: 26px 18px;
+  text-align: center;
+  transition: background .2s;
+}
+.kpi-card:hover { background: var(--navy-800); }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.kpi-badge {
+  display: inline-block;
+  background: rgba(16,185,129,0.1);
+  color: var(--green);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
 
-  /* PHASE */
-  .phase {
-    margin-bottom: 60px;
-    scroll-margin-top: 80px;
-  }
-  .phase-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 32px;
-    padding: 28px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-  }
-  .phase-num {
-    width: 56px; height: 56px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 900;
-    flex-shrink: 0;
-    color: #fff;
-  }
-  .phase-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-  }
-  .phase-sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
-  .phase-time {
-    margin-left: auto;
-    padding: 6px 16px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 600;
-    flex-shrink: 0;
-    background: rgba(255,255,255,0.06);
-    color: var(--muted);
-  }
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px 32px; }
 
-  /* TASK LIST */
-  .task-list { display: flex; flex-direction: column; gap: 12px; }
-  .task {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px 24px;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    transition: all 0.2s;
-  }
-  .task:hover { border-color: rgba(255,255,255,0.15); }
-  .task-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
-  .task-content { flex: 1; }
-  .task-title { font-weight: 600; font-size: 15px; color: #fff; margin-bottom: 6px; }
-  .task-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
-  .task-path {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-family: monospace;
-    background: rgba(0,0,0,0.3);
-    color: var(--cyan);
-    border: 1px solid rgba(6,182,212,0.2);
-  }
-  .task-required {
-    flex-shrink: 0;
-    padding: 3px 10px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .req { background: rgba(244,63,94,0.15); color: #fda4af; }
-  .opt { background: rgba(148,163,184,0.15); color: var(--muted); }
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+.section { margin-bottom: 48px; }
+.section-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
 
-  /* TIP BOX */
-  .tip-box {
-    background: rgba(245,158,11,0.08);
-    border: 1px solid rgba(245,158,11,0.2);
-    border-radius: 14px;
-    padding: 20px 24px;
-    margin-top: 16px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-  }
-  .tip-box .tip-icon { font-size: 20px; flex-shrink: 0; }
-  .tip-box p { font-size: 13px; color: #fcd34d; line-height: 1.6; }
+/* STEP LIST (adapte de sprint-list) */
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.step-item:hover { border-color: rgba(245,158,11,0.25); }
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 50px;
+  text-align: center;
+}
+.step-title { font-weight: 600; font-size: 0.95rem; flex: 1; color: #F8FAFC; }
+.step-body {
+  padding: 0 20px 18px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.step-intro { color: var(--text-muted); font-size: 0.88rem; padding-top: 14px; margin-bottom: 8px; font-style: italic; }
+.step-items { list-style: none; padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.step-items.no-pad { padding-top: 0; }
+.step-items li {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  padding-left: 18px;
+  position: relative;
+}
+.step-items li::before {
+  content: '▸';
+  position: absolute; left: 0; top: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+.step-items li strong { color: var(--text); font-weight: 600; }
+.step-items li code, .step-items li .mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+.step-tip {
+  background: rgba(245,158,11,0.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+}
+.step-tip strong { color: var(--gold); }
+.step-warn {
+  background: rgba(239,68,68,0.06);
+  border-left: 3px solid var(--red);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #FCA5A5;
+}
+.step-warn strong { color: var(--red); }
+.step-ok {
+  background: rgba(16,185,129,0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #86EFAC;
+}
+.step-ok strong { color: var(--green); }
+.step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 
-  /* CHECKLIST */
-  .checklist {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px 28px;
-    margin-top: 48px;
-  }
-  .checklist h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 20px;
-  }
-  .check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
-  .check-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--muted);
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .check-item:last-child { border-bottom: none; }
-  .check-box {
-    width: 18px; height: 18px;
-    border-radius: 4px;
-    border: 2px solid var(--border);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .check-box.checked { background: var(--emerald); border-color: var(--emerald); color: #fff; }
+/* TAGS */
+.tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.tag-fix { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.tag-violet { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
 
-  footer {
-    background: var(--navy-mid);
-    border-top: 1px solid var(--border);
-    padding: 24px 40px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
-  }
+/* TABLE */
+.table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 8px; background: var(--card); border-radius: 8px; overflow: hidden; }
+.table th { text-align: left; padding: 10px 14px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+.table tr:last-child td { border-bottom: none; }
+.table td:first-child { color: var(--text); font-weight: 500; }
+.mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; }
+
+/* INDEX CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.scenario-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all .2s;
+}
+.scenario-card:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); }
+.scenario-card .icon { font-size: 1.6rem; }
+.scenario-card .title { font-weight: 600; font-size: 0.98rem; color: #F8FAFC; }
+.scenario-card .desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.scenario-card .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 28px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 40px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .kpi-grid, .kpi-grid.cols-5, .kpi-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 1.8rem; }
+  .main { padding: 32px 18px; }
+  nav { padding: 12px 18px; gap: 18px; }
+  .nav-badge { margin-left: 0; }
+}
+
+
+/* FAQ accordion */
+.faq-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.faq-item:hover { border-color: rgba(245,158,11,0.2); }
+.faq-item details summary {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #F8FAFC;
+  display: flex; align-items: center; gap: 12px;
+  list-style: none;
+}
+.faq-item details summary::-webkit-details-marker { display: none; }
+.faq-item details summary::before {
+  content: '+';
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 6px;
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.faq-item details[open] summary::before { content: '-'; }
+.faq-item details summary:hover { color: var(--gold); }
+.faq-answer {
+  padding: 0 18px 16px 52px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+.faq-answer code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+.faq-answer strong { color: var(--text); }
+
+/* Reference content blocks */
+.ref-block {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-bottom: 14px;
+}
+.ref-block h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: #F8FAFC;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.ref-block p, .ref-block li { color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; }
+.ref-block p { margin-bottom: 8px; }
+.ref-block ul { list-style: none; padding-left: 0; }
+.ref-block ul li {
+  padding-left: 18px; position: relative; margin-bottom: 4px;
+}
+.ref-block ul li::before {
+  content: '▸';
+  position: absolute; left: 0;
+  color: var(--gold);
+  font-size: 0.78rem;
+}
+.ref-block strong { color: var(--text); font-weight: 600; }
+.ref-block code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+
+/* Tables (reference, pricing, etc.) */
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 14px 0;
+  font-size: 0.88rem;
+}
+.ref-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+}
+.ref-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-muted);
+}
+.ref-table tr:last-child td { border-bottom: none; }
+.ref-table td:first-child { color: var(--text); font-weight: 500; }
+.ref-table tr:hover td { background: rgba(255,255,255,0.02); }
+.ref-table code { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--gold-light); }
+
+/* Callout boxes */
+.callout {
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  border-left: 3px solid;
+}
+.callout-info { background: rgba(6,182,212,0.06); border-color: var(--cyan); color: #67E8F9; }
+.callout-warn { background: rgba(245,158,11,0.06); border-color: var(--gold); color: var(--gold-light); }
+.callout-danger { background: rgba(239,68,68,0.06); border-color: var(--red); color: #FCA5A5; }
+.callout-success { background: rgba(16,185,129,0.06); border-color: var(--green); color: #86EFAC; }
+.callout strong { font-weight: 700; }
+
+/* TOC */
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.toc-link {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  display: flex; align-items: center; gap: 10px;
+  transition: all .2s;
+}
+.toc-link:hover { border-color: rgba(245,158,11,0.3); color: var(--gold); }
+.toc-link .num {
+  font-family: 'DM Mono', monospace;
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
 </style>
 </head>
 <body>
-
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="scenarios/index.html">Sc&eacute;narios</a>
+  <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
+  <a href="15-rgpd-conformite.html">RGPD</a>
+  <span class="nav-badge">S122</span>
+</nav>
 <div class="hero">
-  <div class="hero-badge">Guide de Paramétrage</div>
-  <h1>De zéro à opérationnel</h1>
-  <p>Paramétrez Anim'Gest en moins de 2 heures grâce à ce guide pas-à-pas séquentiel.</p>
+  <div class="hero-label">GUIDE OP&Eacute;RATIONNEL</div>
+  <span class="emoji">&#9881;&#65039;</span>
+  <h1>Guide de param&eacute;trage</h1>
+  <p>Configuration initiale &eacute;tape par &eacute;tape pour d&eacute;marrer avec Anim'Gest : entreprise, charte graphique, &eacute;ditions PDF, services externes (SMTP, Stripe, Yousign, Calendly), Eliot IA et m&eacute;tiers.</p>
+  <div class="hero-tags"><span class="hero-tag">Setup initial</span><span class="hero-tag">1-2 heures</span><span class="hero-tag">Tous les m&eacute;tiers</span></div>
 </div>
-
-<!-- Barre de progression -->
-<div class="progress-bar">
-  <div class="prog-step">
-    <div class="prog-dot" style="background:var(--violet);color:#fff">1</div>
-    <span class="prog-label" style="color:var(--violet)">Entreprise</span>
-  </div>
-  <div class="prog-line" style="background:var(--border)"></div>
-  <div class="prog-step">
-    <div class="prog-dot" style="background:var(--surface);color:var(--muted);border:1px solid var(--border)">2</div>
-    <span class="prog-label" style="color:var(--muted)">Activité</span>
-  </div>
-  <div class="prog-line" style="background:var(--border)"></div>
-  <div class="prog-step">
-    <div class="prog-dot" style="background:var(--surface);color:var(--muted);border:1px solid var(--border)">3</div>
-    <span class="prog-label" style="color:var(--muted)">Charte</span>
-  </div>
-  <div class="prog-line" style="background:var(--border)"></div>
-  <div class="prog-step">
-    <div class="prog-dot" style="background:var(--surface);color:var(--muted);border:1px solid var(--border)">4</div>
-    <span class="prog-label" style="color:var(--muted)">Catalogue</span>
-  </div>
-  <div class="prog-line" style="background:var(--border)"></div>
-  <div class="prog-step">
-    <div class="prog-dot" style="background:var(--surface);color:var(--muted);border:1px solid var(--border)">5</div>
-    <span class="prog-label" style="color:var(--muted)">Communication</span>
-  </div>
-  <div class="prog-line" style="background:var(--border)"></div>
-  <div class="prog-step">
-    <div class="prog-dot" style="background:var(--surface);color:var(--muted);border:1px solid var(--border)">6</div>
-    <span class="prog-label" style="color:var(--muted)">Comptabilité</span>
-  </div>
-  <div class="prog-line" style="background:var(--border)"></div>
-  <div class="prog-step">
-    <div class="prog-dot" style="background:var(--surface);color:var(--muted);border:1px solid var(--border)">7</div>
-    <span class="prog-label" style="color:var(--muted)">Premier client</span>
-  </div>
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-value">11</div><div class="kpi-label">&Eacute;tapes setup</div></div>
+  <div class="kpi-card"><div class="kpi-value">8</div><div class="kpi-label">Services externes</div></div>
+  <div class="kpi-card"><div class="kpi-value">2h</div><div class="kpi-label">Temps moyen</div></div>
+  <div class="kpi-card"><div class="kpi-value">S122</div><div class="kpi-label">Version</div><div class="kpi-badge">&Agrave; jour</div></div>
 </div>
-
-<div class="container">
-
-  <!-- PHASE 1 -->
-  <div class="phase" id="phase1">
-    <div class="phase-header" style="background:rgba(79,70,229,0.08);border-color:rgba(79,70,229,0.2)">
-      <div class="phase-num" style="background:var(--violet)">1</div>
-      <div>
-        <div class="phase-title">Informations de votre entreprise</div>
-        <div class="phase-sub">Identité légale, coordonnées, logo et documents PDF</div>
-      </div>
-      <div class="phase-time">~15 min</div>
-    </div>
-
-    <div class="task-list">
-      <div class="task">
-        <div class="task-icon">🏢</div>
-        <div class="task-content">
-          <div class="task-title">Raison sociale et coordonnées légales</div>
-          <div class="task-desc">Renseignez le nom de votre entreprise, votre forme juridique (EI, EURL, SARL…), votre SIRET, numéro TVA intracommunautaire, adresse complète et téléphone. Ces informations apparaissent sur tous vos documents officiels.</div>
-          <span class="task-path">Paramètres → Mon entreprise → Informations légales</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">🖼️</div>
-        <div class="task-content">
-          <div class="task-title">Logo et filigrane</div>
-          <div class="task-desc">Importez votre logo (PNG ou SVG, fond transparent, max 2 Mo) et votre filigrane optionnel. Ces fichiers sont stockés dans le dossier GED General et lus lors de chaque génération de PDF.</div>
-          <span class="task-path">Paramètres → Mon entreprise → Documents</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">📋</div>
-        <div class="task-content">
-          <div class="task-title">Conditions Générales de Vente (CGV)</div>
-          <div class="task-desc">Rédigez ou collez vos CGV. Elles s'ajoutent automatiquement en dernière page de chaque devis et facture. Si vous avez des CGV différentes pour particuliers/professionnels, créez deux versions.</div>
-          <span class="task-path">Paramètres → Éditions → CGV</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">🔢</div>
-        <div class="task-content">
-          <div class="task-title">Numérotation des documents</div>
-          <div class="task-desc">Définissez le préfixe et le numéro de départ pour chaque type de document. Exemple : FAC-2026-0001 pour les factures, DEV-2026-0001 pour les devis. La numérotation est séquentielle et irréversible.</div>
-          <span class="task-path">Paramètres → Numérotation</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">💶</div>
-        <div class="task-content">
-          <div class="task-title">Taux de TVA</div>
-          <div class="task-desc">Vérifiez et confirmez les taux de TVA utilisés dans votre activité. Si vous êtes en franchise de TVA (CA &lt; seuil), désactivez la TVA dans vos paramètres. Sinon, configurez les taux 0%, 5,5%, 10% et/ou 20% selon vos prestations.</div>
-          <span class="task-path">Paramètres → TVA</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">💳</div>
-        <div class="task-content">
-          <div class="task-title">Coordonnées bancaires</div>
-          <div class="task-desc">Saisissez votre IBAN et BIC pour les faire apparaître sur vos factures (virements bancaires). Ces informations ne sont utilisées que pour l'affichage sur les documents — aucune opération bancaire automatique.</div>
-          <span class="task-path">Paramètres → Mon entreprise → Banque</span>
-        </div>
-        <span class="task-required opt">Recommandé</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- PHASE 2 -->
-  <div class="phase" id="phase2">
-    <div class="phase-header" style="background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.2)">
-      <div class="phase-num" style="background:var(--emerald)">2</div>
-      <div>
-        <div class="phase-title">Votre activité et vos métiers</div>
-        <div class="phase-sub">Sélection des modules et paramétrage métier</div>
-      </div>
-      <div class="phase-time">~10 min</div>
-    </div>
-
-    <div class="task-list">
-      <div class="task">
-        <div class="task-icon">🐾</div>
-        <div class="task-content">
-          <div class="task-title">Sélection de votre ou vos métiers</div>
-          <div class="task-desc">Cochez votre activité principale et les activités secondaires : Comportementaliste/Éducateur, Toiletteur, Pet-sitter, Éleveur, Pension/Chenil, Centre équestre, Vétérinaire, Ostéopathe, Sport canin, Naturopathe. Les menus et formulaires s'adaptent à votre sélection.</div>
-          <span class="task-path">Paramètres → Mon activité</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">✅</div>
-        <div class="task-content">
-          <div class="task-title">Certifications et agréments (ACACED, etc.)</div>
-          <div class="task-desc">Renseignez votre numéro ACACED et sa date de validité. Si vous possédez d'autres certifications (BEPA, titre professionnel…), ajoutez-les également. Le logiciel vous alertera 60 jours avant expiration.</div>
-          <span class="task-path">Paramètres → Mon activité → Certifications</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">📅</div>
-        <div class="task-content">
-          <div class="task-title">Types de séances et durées par défaut</div>
-          <div class="task-desc">Créez vos types de séances avec nom, durée et couleur. Exemples : Bilan Comportemental (1h30, violet), Séance de suivi (1h, bleu), Toilettage complet (1h30, vert), Promenade (45 min, orange). Assignez un article de facturation à chaque type.</div>
-          <span class="task-path">Paramètres → Types de séances</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">🕐</div>
-        <div class="task-content">
-          <div class="task-title">Horaires de travail et jours d'ouverture</div>
-          <div class="task-desc">Définissez vos horaires quotidiens (début/fin) et vos jours de travail. Ces plages apparaissent dans l'agenda. Les jours fermés sont grisés et n'acceptent pas de réservations en ligne.</div>
-          <span class="task-path">Paramètres → Agenda → Horaires</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">📜</div>
-        <div class="task-content">
-          <div class="task-title">Modules à activer</div>
-          <div class="task-desc">Activez uniquement les modules utiles à votre activité. Désactivez les modules inutilisés pour simplifier l'interface. Les modules disponibles : Élevage, Sport canin, Portail Client, GED, RFE, CRM, Réseaux sociaux, Signatures Yousign, Eliot IA.</div>
-          <span class="task-path">Paramètres → Modules</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- PHASE 3 -->
-  <div class="phase" id="phase3">
-    <div class="phase-header" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.2)">
-      <div class="phase-num" style="background:var(--gold)">3</div>
-      <div>
-        <div class="phase-title">Charte graphique</div>
-        <div class="phase-sub">Personnalisez l'interface et vos documents aux couleurs de votre cabinet</div>
-      </div>
-      <div class="phase-time">~5 min</div>
-    </div>
-
-    <div class="task-list">
-      <div class="task">
-        <div class="task-icon">🎨</div>
-        <div class="task-content">
-          <div class="task-title">Couleurs primaire et secondaire</div>
-          <div class="task-desc">Choisissez votre couleur principale (utilisée pour les boutons, titres et accents) et votre couleur secondaire. Ces couleurs sont appliquées à toute l'interface via des variables CSS. Elles sont aussi reprises dans les PDF si activé.</div>
-          <span class="task-path">Paramètres → Charte graphique</span>
-        </div>
-        <span class="task-required opt">Recommandé</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">🌙</div>
-        <div class="task-content">
-          <div class="task-title">Mode sombre / mode clair</div>
-          <div class="task-desc">Choisissez votre thème préféré. Le mode sombre (par défaut) est conçu pour une utilisation intensive sur écran. Le mode clair est préférable pour les démonstrations et l'impression. Ce réglage est par utilisateur.</div>
-          <span class="task-path">En-tête → Icône thème (soleil/lune)</span>
-        </div>
-        <span class="task-required opt">Optionnel</span>
-      </div>
-    </div>
-
-    <div class="tip-box">
-      <span class="tip-icon">💡</span>
-      <p>La charte graphique s'applique à l'ensemble du logiciel en temps réel. Aucun rechargement n'est nécessaire. Testez plusieurs combinaisons avant de valider votre charte définitive.</p>
-    </div>
-  </div>
-
-  <!-- PHASE 4 -->
-  <div class="phase" id="phase4">
-    <div class="phase-header" style="background:rgba(6,182,212,0.08);border-color:rgba(6,182,212,0.2)">
-      <div class="phase-num" style="background:var(--cyan)">4</div>
-      <div>
-        <div class="phase-title">Catalogue articles et tarification</div>
-        <div class="phase-sub">Vos prestations et produits avec leurs tarifs</div>
-      </div>
-      <div class="phase-time">~20 min</div>
-    </div>
-
-    <div class="task-list">
-      <div class="task">
-        <div class="task-icon">📋</div>
-        <div class="task-content">
-          <div class="task-title">Créer les articles de prestation</div>
-          <div class="task-desc">Créez un article pour chaque type de prestation : Bilan Comportemental, Séance de suivi individuelle, Cours collectif, Toilettage complet, Promenade, Garde journée, Pension nuit. Définissez le prix de vente HT, le taux de TVA et l'unité.</div>
-          <span class="task-path">Stock → Articles → + Nouvel article (type : Service)</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">📦</div>
-        <div class="task-content">
-          <div class="task-title">Créer les articles produits (si vente de produits)</div>
-          <div class="task-desc">Si vous vendez des produits physiques (shampoings, accessoires, compléments alimentaires), créez un article par référence avec son code barre, prix d'achat, prix de vente, seuil de stock minimum et fournisseur.</div>
-          <span class="task-path">Stock → Articles → + Nouvel article (type : Produit)</span>
-        </div>
-        <span class="task-required opt">Si applicable</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">💰</div>
-        <div class="task-content">
-          <div class="task-title">Grilles tarifaires</div>
-          <div class="task-desc">Créez une ou plusieurs grilles de prix si vous avez des tarifs différents selon les clients (tarif standard, tarif fidélité, tarif association). Les grilles sont assignables par client et appliquées automatiquement sur les devis.</div>
-          <span class="task-path">Paramètres → Tarification</span>
-        </div>
-        <span class="task-required opt">Si applicable</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">📁</div>
-        <div class="task-content">
-          <div class="task-title">Modèles de devis</div>
-          <div class="task-desc">Créez des modèles de devis types pour vos forfaits récurrents. Exemple : Forfait Comportementaliste Standard (1 BC + 5 séances), Forfait Toilettage Mensuel (4 séances). Ces modèles accélèrent la création de devis.</div>
-          <span class="task-path">Devis → Modèles → + Nouveau modèle</span>
-        </div>
-        <span class="task-required opt">Recommandé</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- PHASE 5 -->
-  <div class="phase" id="phase5">
-    <div class="phase-header" style="background:rgba(244,63,94,0.08);border-color:rgba(244,63,94,0.2)">
-      <div class="phase-num" style="background:var(--rose)">5</div>
-      <div>
-        <div class="phase-title">Communication clients</div>
-        <div class="phase-sub">Email SMTP, SMS et modèles de messages</div>
-      </div>
-      <div class="phase-time">~15 min</div>
-    </div>
-
-    <div class="task-list">
-      <div class="task">
-        <div class="task-icon">📧</div>
-        <div class="task-content">
-          <div class="task-title">Configuration SMTP (envoi d'emails)</div>
-          <div class="task-desc">Saisissez vos paramètres SMTP : serveur (smtp.gmail.com, ssl0.ovh.net, smtp.office365.com…), port (587 STARTTLS ou 465 SSL), identifiant et mot de passe. Cliquez sur Tester pour vérifier que la configuration fonctionne.</div>
-          <span class="task-path">Paramètres → SMTP</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">💬</div>
-        <div class="task-content">
-          <div class="task-title">Modèles de messages email</div>
-          <div class="task-desc">Personnalisez les modèles d'email pour : envoi de devis, envoi de facture, rappel de séance (J-1), relance impayé (niveau 1 et 2), confirmation de réservation pension, compte-rendu de séance. Utilisez les variables {{nom_client}}, {{date_seance}}, etc.</div>
-          <span class="task-path">Paramètres → Messages → Modèles email</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">📱</div>
-        <div class="task-content">
-          <div class="task-title">Configuration SMS (optionnel — Twilio)</div>
-          <div class="task-desc">Si vous souhaitez envoyer des rappels de séance par SMS, configurez votre compte Twilio (Account SID, Auth Token, numéro d'expédition). Les SMS sont facturés par Twilio selon votre usage.</div>
-          <span class="task-path">Paramètres → SMS</span>
-        </div>
-        <span class="task-required opt">Optionnel</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">🔔</div>
-        <div class="task-content">
-          <div class="task-title">Relances automatiques d'impayés</div>
-          <div class="task-desc">Activez et configurez les relances automatiques : délai avant première relance (ex : 7 jours après échéance), délai avant deuxième relance (ex : 15 jours), délai avant mise en demeure (ex : 30 jours). Personnalisez chaque niveau de relance.</div>
-          <span class="task-path">Paramètres → Relances</span>
-        </div>
-        <span class="task-required opt">Recommandé</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- PHASE 6 -->
-  <div class="phase" id="phase6">
-    <div class="phase-header" style="background:rgba(79,70,229,0.08);border-color:rgba(79,70,229,0.2)">
-      <div class="phase-num" style="background:var(--violet)">6</div>
-      <div>
-        <div class="phase-title">Comptabilité</div>
-        <div class="phase-sub">Exercice comptable, plan de comptes et FEC</div>
-      </div>
-      <div class="phase-time">~10 min</div>
-    </div>
-
-    <div class="task-list">
-      <div class="task">
-        <div class="task-icon">📅</div>
-        <div class="task-content">
-          <div class="task-title">Créer l'exercice comptable</div>
-          <div class="task-desc">Créez votre exercice comptable pour l'année en cours (ex : du 01/01/2026 au 31/12/2026). Toutes les factures et règlements sont rattachés à cet exercice pour le FEC et la balance.</div>
-          <span class="task-path">Comptabilité → Exercices → + Nouvel exercice</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">📖</div>
-        <div class="task-content">
-          <div class="task-title">Vérifier le plan comptable</div>
-          <div class="task-desc">Consultez le plan comptable par défaut et adaptez les numéros de comptes si votre expert-comptable utilise une numérotation différente. Les comptes 411, 706, 707, 445, 512 sont les plus importants à vérifier.</div>
-          <span class="task-path">Paramètres → Plan comptable</span>
-        </div>
-        <span class="task-required opt">Recommandé</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- PHASE 7 -->
-  <div class="phase" id="phase7">
-    <div class="phase-header" style="background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.2)">
-      <div class="phase-num" style="background:var(--emerald)">7</div>
-      <div>
-        <div class="phase-title">Premier client de test</div>
-        <div class="phase-sub">Validez toute la chaîne avant de passer en production</div>
-      </div>
-      <div class="phase-time">~15 min</div>
-    </div>
-
-    <div class="task-list">
-      <div class="task">
-        <div class="task-icon">🧪</div>
-        <div class="task-content">
-          <div class="task-title">Créer un client de test et un animal</div>
-          <div class="task-desc">Créez un client fictif (ex : Test Dupont) avec un animal. Créez une séance, un devis, une facture, enregistrez un règlement. Vérifiez que le PDF s'affiche correctement avec votre logo et vos informations. Supprimez ce client de test avant la mise en production.</div>
-          <span class="task-path">Clients → + Nouveau client → suivre tout le parcours</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">📧</div>
-        <div class="task-content">
-          <div class="task-title">Tester l'envoi d'email</div>
-          <div class="task-desc">Depuis une facture de test, envoyez-la à votre propre adresse email. Vérifiez que l'email arrive correctement avec le PDF en pièce jointe, que le nom de l'expéditeur est le bon et que les informations de l'email de test sont correctes.</div>
-          <span class="task-path">Facture de test → Envoyer par email → votre@email.com</span>
-        </div>
-        <span class="task-required req">Obligatoire</span>
-      </div>
-
-      <div class="task">
-        <div class="task-icon">✅</div>
-        <div class="task-content">
-          <div class="task-title">Valider le FEC de test</div>
-          <div class="task-desc">Générez un premier export FEC avec votre facture de test. Vérifiez que Débit = Crédit. Si votre expert-comptable peut valider ce FEC de test, c'est un excellent signe de conformité avant la mise en production réelle.</div>
-          <span class="task-path">Comptabilité → Export FEC → Générer</span>
-        </div>
-        <span class="task-required opt">Recommandé</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- CHECKLIST RÉCAPITULATIF -->
-  <div class="checklist">
-    <h3>✅ Checklist de mise en route</h3>
-    <div class="check-grid">
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Raison sociale et SIRET renseignés</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Logo et filigrane importés</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>CGV rédigées</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>TVA configurée</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Numérotation définie</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>IBAN renseigné</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Métier(s) sélectionné(s)</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>ACACED renseigné</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Types de séances créés</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Horaires de travail configurés</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Articles/prestations créés</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Email SMTP configuré et testé</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Modèles de messages créés</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Exercice comptable 2026 créé</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>Test client complet réalisé</div>
-      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked');this.textContent=this.classList.contains('checked')?'✓':''"></div>FEC de test validé</div>
-    </div>
-  </div>
-
+<div class="main">
+<div class="section">
+  <div class="section-title"><span class="num">00</span> Table des mati&egrave;res</div>
+  
+  <div class="toc-grid">
+<a class="toc-link" href="#ent"><span class="num">01</span> Profil entreprise</a>
+<a class="toc-link" href="#metier"><span class="num">02</span> M&eacute;tier et activit&eacute;s</a>
+<a class="toc-link" href="#charte"><span class="num">03</span> Charte graphique</a>
+<a class="toc-link" href="#pdf"><span class="num">04</span> &Eacute;ditions PDF</a>
+<a class="toc-link" href="#ged"><span class="num">05</span> GED Documents</a>
+<a class="toc-link" href="#smtp"><span class="num">06</span> SMTP &amp; SMS</a>
+<a class="toc-link" href="#stripe"><span class="num">07</span> Stripe paiements</a>
+<a class="toc-link" href="#yousign"><span class="num">08</span> Yousign signatures</a>
+<a class="toc-link" href="#calendly"><span class="num">09</span> Calendly webhook</a>
+<a class="toc-link" href="#eliot"><span class="num">10</span> Eliot IA</a>
+<a class="toc-link" href="#users"><span class="num">11</span> Utilisateurs et r&ocirc;les</a>
 </div>
-
+</div><div class="section" id="ent">
+  <div class="section-title"><span class="num">01</span> Profil entreprise</div>
+  <p class="section-intro">Vos coordonn&eacute;es commerciales &mdash; alimentent vos PDF et signatures.</p>
+  <div class="ref-block">
+  <h3>Informations de base</h3>
+  <p>Renseignez votre identit&eacute; commerciale &mdash; ces donn&eacute;es alimentent automatiquement vos PDF, factures et signatures email.</p>
+  <ul>
+    <li><strong>Param&egrave;tres &rarr; Mon entreprise</strong> : raison sociale, SIRET, code APE, num&eacute;ro TVA intracom</li>
+    <li>Adresse compl&egrave;te du si&egrave;ge (g&eacute;olocalis&eacute;e automatiquement)</li>
+    <li>Coordonn&eacute;es de contact : t&eacute;l&eacute;phone, email principal, site web</li>
+    <li>Capital social, RCS, num&eacute;ro RNE si applicable</li>
+    <li>Logo principal : format PNG transparent recommand&eacute; (512&times;512 px)</li>
+  </ul>
+</div>
+</div><div class="section" id="metier">
+  <div class="section-title"><span class="num">02</span> M&eacute;tier et activit&eacute;s</div>
+  <p class="section-intro">S&eacute;lection du m&eacute;tier ou multi-m&eacute;tier.</p>
+  <div class="ref-block">
+  <h3>Configurer votre activit&eacute; principale</h3>
+  <ul>
+    <li><strong>Param&egrave;tres &rarr; Mon m&eacute;tier</strong> : s&eacute;lectionner parmi les 11 m&eacute;tiers disponibles</li>
+    <li>Multi-m&eacute;tier : si vous exercez plusieurs activit&eacute;s, activer toutes celles concern&eacute;es</li>
+    <li>Chaque m&eacute;tier active automatiquement : ses sp&eacute;cificit&eacute;s d'agenda, ses types de s&eacute;ance, ses registres r&eacute;glementaires, ses dashboards CEO</li>
+    <li>Pour comportementaliste/&eacute;leveur : ACACED, BPJEPS, num&eacute;ro de capacit&eacute;</li>
+    <li>Pour v&eacute;t&eacute;rinaire : num&eacute;ro Ordre, certifications sp&eacute;cifiques</li>
+  </ul>
+</div>
+</div><div class="section" id="charte">
+  <div class="section-title"><span class="num">03</span> Charte graphique</div>
+  <p class="section-intro">Couleurs, logo, favicon, police.</p>
+  <div class="ref-block">
+  <h3>Personnaliser l'interface aux couleurs de votre marque</h3>
+  <ul>
+    <li><strong>Param&egrave;tres &rarr; Charte graphique</strong>",
+    "Couleur primaire, secondaire, accent (palette compl&egrave;te)</li>
+    <li>Mode clair et mode sombre auto-g&eacute;n&eacute;r&eacute;s &agrave; partir de votre palette</li>
+    <li>Logo header (apparaisant en haut de chaque page UI) : SVG ou PNG &lt; 200 Ko</li>
+    <li>Favicon : 32&times;32 px PNG ou ICO</li>
+    <li>Police personnalis&eacute;e (Google Fonts uniquement)</li>
+    <li>Pr&eacute;visualisation en temps r&eacute;el avant validation</li>
+    <li>49 colonnes <code>app_charte_graphique</code> personnalisables</li>
+  </ul>
+</div>
+</div><div class="section" id="pdf">
+  <div class="section-title"><span class="num">04</span> &Eacute;ditions PDF</div>
+  <p class="section-intro">Personnalisation des PDF g&eacute;n&eacute;r&eacute;s.</p>
+  <div class="ref-block">
+  <h3>Personnaliser vos PDF (devis, factures, contrats)</h3>
+  <ul>
+    <li><strong>Param&egrave;tres &rarr; &Eacute;ditions</strong>",
+    "Logo factur&eacute; (peut &ecirc;tre diff&eacute;rent du logo header)</li>
+    <li>Filigrane optionnel : PROFORMA, COPIE, ANNUL&Eacute;</li>
+    <li>CGV : t&eacute;l&eacute;verser votre PDF (sera ajout&eacute; en derni&egrave;re page de chaque PDF)</li>
+    <li>Pied de page personnalis&eacute; : mentions l&eacute;gales, signature</li>
+    <li>Couleur primaire des PDF (bandeau en-t&ecirc;te)</li>
+    <li>Format pr&eacute;cis : A4, marges 15mm, police standard</li>
+  </ul>
+</div>
+</div><div class="section" id="ged">
+  <div class="section-title"><span class="num">05</span> GED Documents</div>
+  <p class="section-intro">Chemins, sauvegardes, conservation l&eacute;gale.</p>
+  <div class="ref-block">
+  <h3>Configurer la GED (Gestion &Eacute;lectronique de Documents)</h3>
+  <ul>
+    <li>Chemin du dossier GED : <code>C:\AnimGest_GED\SCT_001\</code> (configurable)</li>
+    <li>Sauvegarde automatique quotidienne sur NAS RAID 6</li>
+    <li>Sauvegarde secondaire hebdomadaire (G:\ ou cloud chiffr&eacute;)</li>
+    <li>Rotation : 30 jours/12 semaines/12 mois/7 ans</li>
+    <li>Conservation l&eacute;gale 10 ans pour factures et contrats</li>
+  </ul>
+</div>
+</div><div class="section" id="smtp">
+  <div class="section-title"><span class="num">06</span> SMTP &amp; SMS</div>
+  <p class="section-intro">Email et SMS transactionnels.</p>
+  <div class="ref-block">
+  <h3>Configurer l'envoi d'emails (SMTP)</h3>
+  <ul>
+    <li><strong>Param&egrave;tres &rarr; SMTP</strong> : configurer votre serveur d'envoi</li>
+    <li>Recommand&eacute; : Brevo (ex-Sendinblue) 300 emails/jour gratuit, Gmail SMTP avec mot de passe d'application</li>
+    <li>Adresse exp&eacute;diteur (visible par vos clients)</li>
+    <li>Nom exp&eacute;diteur (par exemple "Cabinet Dr Martin")</li>
+    <li>Bouton "Tester l'envoi" pour valider la configuration</li>
+  </ul>
+</div>
+<div class="ref-block">
+  <h3>SMS (optionnel)</h3>
+  <ul>
+    <li><strong>Param&egrave;tres &rarr; SMS</strong> : Free Mobile API, OVH, Twilio</li>
+    <li>Utilis&eacute; pour les rappels de RDV J-1 et l'OTP signature Yousign</li>
+    <li>Co&ucirc;t typique : 0.05&euro; &agrave; 0.10&euro; par SMS selon op&eacute;rateur</li>
+  </ul>
+</div>
+</div><div class="section" id="stripe">
+  <div class="section-title"><span class="num">07</span> Stripe paiements</div>
+  <p class="section-intro">Encaissement CB en ligne.</p>
+  <div class="ref-block">
+  <h3>Activer les paiements en ligne</h3>
+  <ul>
+    <li>Cr&eacute;er un compte Stripe sur <code>stripe.com</code> (validation 2-3 jours ouvr&eacute;s)</li>
+    <li><strong>Param&egrave;tres &rarr; Stripe</strong> : coller votre <code>STRIPE_SECRET_KEY</code> (mode live)</li>
+    <li>Webhook URL : <code>https://votre-domaine/api/webhooks/stripe</code></li>
+    <li>Frais Stripe : 1.4% + 0.25&euro; par transaction CB europ&eacute;enne</li>
+    <li>Active : paiement direct facture, abonnements, paiement &eacute;chelonn&eacute; 3x/4x</li>
+  </ul>
+</div>
+</div><div class="section" id="yousign">
+  <div class="section-title"><span class="num">08</span> Yousign signatures</div>
+  <p class="section-intro">Signatures &eacute;lectroniques qualifi&eacute;es eIDAS.</p>
+  <div class="ref-block">
+  <h3>Activer la signature &eacute;lectronique qualifi&eacute;e</h3>
+  <ul>
+    <li>Cr&eacute;er un compte Yousign sur <code>yousign.com</code> (essai gratuit 14 jours)</li>
+    <li><strong>Param&egrave;tres &rarr; Yousign</strong> : coller votre cl&eacute; API</li>
+    <li>Choisir le niveau : Simple (SES), Avanc&eacute; (AES), Qualifi&eacute; (QES eIDAS)</li>
+    <li>Tarif typique : 0.50&euro; &agrave; 2&euro; par signature selon niveau</li>
+    <li>Active : signature devis, contrats, mandat SEPA, autorisations</li>
+  </ul>
+</div>
+</div><div class="section" id="calendly">
+  <div class="section-title"><span class="num">09</span> Calendly webhook</div>
+  <p class="section-intro">R&eacute;servations en ligne automatiques.</p>
+  <div class="ref-block">
+  <h3>Recevoir des r&eacute;servations en ligne via Calendly</h3>
+  <ul>
+    <li><strong>Param&egrave;tres &rarr; Calendly</strong> : copier l'URL webhook</li>
+    <li>Dans Calendly.com &rarr; Settings &rarr; Integrations &rarr; Webhooks &rarr; + Nouveau</li>
+    <li>URL : URL webhook copi&eacute;e &mdash; &Eacute;v&eacute;nement : <code>invitee.created</code></li>
+    <li>Mapping automatique de 9 slugs Calendly &rarr; types de s&eacute;ance Anim'Gest</li>
+    <li>Voir le sc&eacute;nario <strong>Webhook Calendly</strong> pour les d&eacute;tails complets</li>
+  </ul>
+</div>
+</div><div class="section" id="eliot">
+  <div class="section-title"><span class="num">10</span> Eliot IA</div>
+  <p class="section-intro">Assistant intelligent Anthropic.</p>
+  <div class="ref-block">
+  <h3>Activer l'assistant IA Eliot</h3>
+  <ul>
+    <li>Cr&eacute;er un compte Anthropic sur <code>console.anthropic.com</code></li>
+    <li><strong>Param&egrave;tres &rarr; Eliot</strong> : coller la cl&eacute; API <code>sk-ant-...</code></li>
+    <li>Choisir le mod&egrave;le : Claude Sonnet 4 (rapide, &eacute;conomique) ou Opus 4 (avanc&eacute;)</li>
+    <li>Personnaliser : nom de l'assistant, avatar (parmi 20), voix synth&egrave;se vocale</li>
+    <li>D&eacute;finir les limites : budget mensuel max, m&eacute;tier autoris&eacute; (selon votre licence)</li>
+    <li>Voir <strong>R&eacute;f&eacute;rence avanc&eacute;e Eliot</strong> pour les 22 outils disponibles</li>
+  </ul>
+</div>
+</div><div class="section" id="users">
+  <div class="section-title"><span class="num">11</span> Utilisateurs et r&ocirc;les</div>
+  <p class="section-intro">Acc&egrave;s &eacute;quipe avec permissions RBAC.</p>
+  <div class="ref-block">
+  <h3>Cr&eacute;er les acc&egrave;s de votre &eacute;quipe</h3>
+  <ul>
+    <li><strong>Param&egrave;tres &rarr; Utilisateurs</strong> : nouvel utilisateur (email + r&ocirc;le)</li>
+    <li>R&ocirc;les RBAC disponibles : ADMIN (acc&egrave;s total), GESTION (m&eacute;tier complet), CONSULT (lecture seule), COMPTA (comptabilit&eacute; uniquement)</li>
+    <li>Personnaliser les permissions par module dans la matrice acc&egrave;s</li>
+    <li>L'utilisateur re&ccedil;oit un email d'invitation pour d&eacute;finir son mot de passe</li>
+    <li>Activation/d&eacute;sactivation possible &agrave; tout moment</li>
+    <li>Journal d'audit : tra&ccedil;abilit&eacute; des actions sensibles par utilisateur</li>
+  </ul>
+</div>
+</div>
+</div>
 <footer>
-  <strong>Anim'Gest · NoSage's Editor</strong> — Guide de paramétrage — Sprint S114 · 2026
+  Anim'Gest &mdash; NoSage's Editor &mdash; Sprint S122 &middot; 28/05/2026 &middot; Guide de param&eacute;trage
+  <br><a href="index.html">&larr; Documentation</a>
+  &middot;
+  <a href="scenarios/index.html">Sc&eacute;narios</a>
+  &middot;
+  &#128231; <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a>
 </footer>
 
 </body>
