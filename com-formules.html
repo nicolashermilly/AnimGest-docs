@@ -1,232 +1,592 @@
-
-<!-- Polices, variables CSS, composants communs -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Nos formules &mdash; Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
-.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
-.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
-.hero-back:hover{color:var(--text)}
-.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
-.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
-.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
-.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
-.container{max-width:1000px;margin:0 auto;padding:56px 48px}
-.timeline{position:relative;padding-left:52px}
-.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
-.step{position:relative;margin-bottom:28px}
-.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
-.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
-.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
-.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
-.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
-.step-title{font-size:15px;font-weight:600;color:#fff}
-.step-body{color:var(--muted);font-size:13px;line-height:1.7}
-.step-body ul{list-style:none;margin-top:8px}
-.step-body li{padding:3px 0;padding-left:16px;position:relative}
-.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
-.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
-.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
-.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
-.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
-.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
-.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
-.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
-.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
-.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
-.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
-.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
-.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
-.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
-.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
-footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --gold-pale: #FEF3C7;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 56px 32px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero .emoji { display: block; font-size: 2.4rem; margin-bottom: 8px; line-height: 1; }
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.hero-tags {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
+  margin-top: 18px; position: relative; z-index: 1;
+}
+.hero-tag {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 14px;
+}
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,158,11,0.1);
+  border-top: 1px solid rgba(245,158,11,0.1);
+  border-bottom: 1px solid rgba(245,158,11,0.1);
+}
+.kpi-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.kpi-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi-card {
+  background: var(--navy);
+  padding: 26px 18px;
+  text-align: center;
+  transition: background .2s;
+}
+.kpi-card:hover { background: var(--navy-800); }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.kpi-badge {
+  display: inline-block;
+  background: rgba(16,185,129,0.1);
+  color: var(--green);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px 32px; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+.section { margin-bottom: 48px; }
+.section-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+
+/* STEP LIST (adapte de sprint-list) */
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.step-item:hover { border-color: rgba(245,158,11,0.25); }
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 50px;
+  text-align: center;
+}
+.step-title { font-weight: 600; font-size: 0.95rem; flex: 1; color: #F8FAFC; }
+.step-body {
+  padding: 0 20px 18px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.step-intro { color: var(--text-muted); font-size: 0.88rem; padding-top: 14px; margin-bottom: 8px; font-style: italic; }
+.step-items { list-style: none; padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.step-items.no-pad { padding-top: 0; }
+.step-items li {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  padding-left: 18px;
+  position: relative;
+}
+.step-items li::before {
+  content: '▸';
+  position: absolute; left: 0; top: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+.step-items li strong { color: var(--text); font-weight: 600; }
+.step-items li code, .step-items li .mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+.step-tip {
+  background: rgba(245,158,11,0.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+}
+.step-tip strong { color: var(--gold); }
+.step-warn {
+  background: rgba(239,68,68,0.06);
+  border-left: 3px solid var(--red);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #FCA5A5;
+}
+.step-warn strong { color: var(--red); }
+.step-ok {
+  background: rgba(16,185,129,0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #86EFAC;
+}
+.step-ok strong { color: var(--green); }
+.step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+/* TAGS */
+.tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.tag-fix { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.tag-violet { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+
+/* TABLE */
+.table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 8px; background: var(--card); border-radius: 8px; overflow: hidden; }
+.table th { text-align: left; padding: 10px 14px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+.table tr:last-child td { border-bottom: none; }
+.table td:first-child { color: var(--text); font-weight: 500; }
+.mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; }
+
+/* INDEX CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.scenario-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all .2s;
+}
+.scenario-card:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); }
+.scenario-card .icon { font-size: 1.6rem; }
+.scenario-card .title { font-weight: 600; font-size: 0.98rem; color: #F8FAFC; }
+.scenario-card .desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.scenario-card .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 28px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 40px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .kpi-grid, .kpi-grid.cols-5, .kpi-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 1.8rem; }
+  .main { padding: 32px 18px; }
+  nav { padding: 12px 18px; gap: 18px; }
+  .nav-badge { margin-left: 0; }
+}
+
+
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 8px; }
+@media(max-width:760px){ .pricing-grid{ grid-template-columns:1fr; } }
+.price-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 24px 22px;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.price-card.featured { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(245,158,11,0.2); }
+.price-badge {
+  position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--gold), #d97706);
+  color: #0F172A; font-size: 0.66rem; font-weight: 800;
+  padding: 4px 14px; border-radius: 12px; letter-spacing: 0.05em; text-transform: uppercase;
+}
+.price-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: #F8FAFC; margin-bottom: 4px; }
+.price-tagline { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px; min-height: 38px; }
+.price-amount { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); margin-bottom: 2px; }
+.price-users { font-size: 0.78rem; color: var(--cyan); margin-bottom: 18px; font-weight: 600; }
+.price-feats { list-style: none; padding: 0; margin: 0 0 20px; flex: 1; }
+.price-feats li { font-size: 0.84rem; color: var(--text-muted); padding: 6px 0 6px 22px; position: relative; line-height: 1.4; }
+.price-feats li::before { content: "\2713"; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+.price-feats li.no { color: rgba(255,255,255,0.3); }
+.price-feats li.no::before { content: "\2014"; color: rgba(255,255,255,0.2); }
+.price-cta {
+  display: block; text-align: center; text-decoration: none;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  color: #F8FAFC; font-weight: 600; font-size: 0.88rem;
+  padding: 11px; border-radius: 8px; transition: all .2s;
+}
+.price-card.featured .price-cta { background: linear-gradient(135deg, var(--gold), #d97706); color: #0F172A; border: none; }
+.price-cta:hover { border-color: var(--gold); }
+.cmp-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+.cmp-table th { text-align: left; padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+.cmp-table th.col { text-align: center; width: 120px; }
+.cmp-table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+.cmp-table td.center { text-align: center; }
+.cmp-table .yes { color: var(--green); font-weight: 700; }
+.cmp-table .no { color: rgba(255,255,255,0.25); }
+.cmp-table .opt { color: var(--gold); font-size: 0.78rem; }
+.cmp-cat { background: rgba(255,255,255,0.02); font-weight: 700; color: var(--gold); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.profil-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+@media(max-width:760px){ .profil-grid{ grid-template-columns:1fr; } }
+.profil-card { background: var(--card); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 18px; border-top: 3px solid var(--violet); }
+.profil-card.b { border-top-color: var(--gold); }
+.profil-card.c { border-top-color: var(--cyan); }
+.profil-tier { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gold); margin-bottom: 6px; }
+.profil-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: #F8FAFC; margin-bottom: 8px; }
+.profil-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.55; }
+.steps-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+@media(max-width:760px){ .steps-row{ grid-template-columns:1fr 1fr; } }
+.step-box { background: var(--card); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 16px; text-align: center; }
+.step-num { width: 32px; height: 32px; margin: 0 auto 10px; border-radius: 50%; background: rgba(245,158,11,0.12); color: var(--gold); font-weight: 800; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; }
+.step-title { font-weight: 600; color: #F8FAFC; font-size: 0.88rem; margin-bottom: 6px; }
+.step-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
 </style>
-
-<style>
-.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:20px}
-.gterm{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px 20px}
-.gterm-word{font-weight:700;font-size:14px;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.gterm-tag{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600;text-transform:uppercase}
-.gterm-def{font-size:13px;color:#94A3B8;line-height:1.6}
-.faq-item{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:10px;overflow:hidden}
-.faq-q{padding:16px 20px;font-weight:600;font-size:14px;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.faq-q:hover{background:rgba(255,255,255,.03)}
-.faq-a{padding:0 20px 16px;font-size:13px;color:#94A3B8;line-height:1.7;display:none}
-.faq-a.open{display:block}
-.checklist-section{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;margin-bottom:20px}
-.checklist-title{font-weight:700;font-size:15px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;color:#94A3B8}
-.check-item:last-child{border-bottom:none}
-.check-box{width:20px;height:20px;border-radius:5px;border:2px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;transition:all .2s;margin-top:1px}
-.check-box.done{background:#10B981;border-color:#10B981;color:#fff}
-.check-label{flex:1}
-.check-label strong{color:#fff;display:block;margin-bottom:3px}
-.time-badge{font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(245,158,11,.15);color:#fcd34d;font-weight:600;white-space:nowrap;flex-shrink:0}
-.module-card{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;transition:all .2s}
-.module-card:hover{border-color:rgba(255,255,255,.2)}
-.module-name{font-weight:700;font-size:14px;color:#fff;margin-bottom:8px}
-.module-desc{font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:10px}
-.module-deps{font-size:11px;color:#64748B}
-.dep-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;background:rgba(79,70,229,.15);color:#a5b4fc;margin:2px}
-.formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
-.formula-card{border-radius:16px;padding:28px;border:2px solid transparent;transition:all .2s}
-.formula-card:hover{transform:translateY(-4px)}
-.formula-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:6px}
-.formula-price{font-size:28px;font-weight:700;margin:12px 0}
-.formula-price span{font-size:14px;font-weight:400;color:#94A3B8}
-.formula-features{list-style:none;margin-top:16px}
-.formula-features li{padding:6px 0;font-size:13px;color:#94A3B8;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px}
-.formula-features li:last-child{border-bottom:none}
-.feature-yes{color:#10B981}
-.feature-no{color:#64748B}
-.data-table{width:100%;border-collapse:collapse;font-size:13px}
-.data-table th{text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);color:#94A3B8;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.08)}
-.data-table td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);color:#94A3B8;vertical-align:top}
-.data-table td:first-child{color:#F1F5F9;font-weight:500}
-.table-wrap{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;margin:20px 0}
-.alert-box{border-radius:12px;padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start;font-size:13px}
-.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#fcd34d}
-.alert-ok{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:#6ee7b7}
-.alert-danger{background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);color:#fda4af}
-.alert-info{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);color:#67e8f9}
-.roi-calc{background:#1E293B;border:1px solid rgba(79,70,229,.3);border-radius:16px;padding:28px}
-.roi-input{margin-bottom:16px}
-.roi-label{font-size:13px;color:#94A3B8;margin-bottom:8px;display:block}
-.roi-slider{width:100%;accent-color:#4F46E5}
-.roi-value{font-size:20px;font-weight:700;color:#fff;text-align:center;padding:12px;background:rgba(79,70,229,.15);border-radius:10px;margin-top:8px}
-</style><title>Comparatif des formules — Anim'Gest</title></head>
+</head>
 <body>
-<nav class="nav-bar">
-  <a class="nav-link home" href="index-complet.html">🏠 Index</a>
-  <a class="nav-link" href="ref-glossaire.html">📖 Glossaire</a>
-  <a class="nav-link" href="ref-raccourcis.html">⌨️ Raccourcis</a>
-  <a class="nav-link" href="ref-faq.html">❓ FAQ</a>
-  <a class="nav-link" href="ops-cloture-mensuelle.html">📅 Clôture mensuelle</a>
-  <a class="nav-link" href="ops-cloture-annuelle.html">📆 Clôture annuelle</a>
-  <a class="nav-link" href="ops-migration.html">🚀 Migration</a>
-  <a class="nav-link" href="ops-reprise-incident.html">🚨 Incident</a>
-  <a class="nav-link" href="tech-schema-donnees.html">🗄️ Schéma données</a>
-  <a class="nav-link" href="tech-carte-modules.html">🗺️ Modules</a>
-  <a class="nav-link" href="tech-rgpd.html">🔒 RGPD</a>
-  <a class="nav-link" href="com-formules.html">💎 Formules</a>
-  <a class="nav-link" href="com-roi.html">📊 ROI</a>
-  <a class="nav-link" href="com-onboarding.html">🎯 Onboarding</a>
-  <a class="nav-link" href="adv-multi-utilisateurs.html">👥 Multi-users</a>
-  <a class="nav-link" href="adv-multi-sites.html">🏢 Multi-sites</a>
-  <a class="nav-link" href="adv-compta-avancee.html">📊 Compta avancée</a>
-  <a class="nav-link" href="adv-impayes.html">⚠️ Impayés</a>
-  <a class="nav-link" href="adv-tarification-avancee.html">💰 Tarification</a>
-  <a class="nav-link" href="adv-eliot-avance.html">🤖 Eliot avancé</a>
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="scenarios-index.html">Sc&eacute;narios</a>
+  <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
+  <a href="15-rgpd-conformite.html">RGPD</a>
+  <span class="nav-badge">S122</span>
 </nav>
-<div class="hero" style="padding:48px">
-  <div class="hero-badge" style="background:linear-gradient(135deg,var(--gold),var(--gold)aa)">Commercial</div>
-  <h1>💎 Comparatif des formules</h1>
-  <p class="hero-sub">Starter · Pro · Expert — fonctionnalités et guide de choix selon votre activité</p>
+<div class="hero">
+  <div class="hero-label">COMMERCIAL &middot; FORMULES</div>
+  <span class="emoji">&#128142;</span>
+  <h1>Nos formules</h1>
+  <p>Une formule adapt&eacute;e &agrave; chaque m&eacute;tier animalier. Anim'Gest accompagne 11 m&eacute;tiers du secteur &mdash; choisissez la formule qui correspond &agrave; la taille de votre structure et &agrave; vos besoins.</p>
 </div>
-<div class="container">
-
-<div class="section-title">Choisissez la formule adaptée à votre activité</div>
-<div class="formula-grid">
-
-<div class="formula-card" style="background:rgba(99,102,241,.08);border-color:rgba(99,102,241,.3)">
-<div class="formula-name" style="color:#a5b4fc">Starter</div>
-<div style="font-size:13px;color:#94A3B8">Débutant / Auto-entrepreneur</div>
-<div class="formula-price" style="color:#a5b4fc">49 € <span>/mois HT</span></div>
-<ul class="formula-features">
-<li><span class="feature-yes">✓</span> Clients & Animaux illimités</li>
-<li><span class="feature-yes">✓</span> Agenda & Séances</li>
-<li><span class="feature-yes">✓</span> Devis & Facturation NF525</li>
-<li><span class="feature-yes">✓</span> Règlements & Avoirs</li>
-<li><span class="feature-yes">✓</span> GED Documents</li>
-<li><span class="feature-yes">✓</span> Export FEC</li>
-<li><span class="feature-yes">✓</span> 1 utilisateur</li>
-<li><span class="feature-yes">✓</span> Support email</li>
-<li><span class="feature-no">✗</span> Stock & Achats</li>
-<li><span class="feature-no">✗</span> Portail Client</li>
-<li><span class="feature-no">✗</span> CRM & Leads</li>
-<li><span class="feature-no">✗</span> Eliot IA</li>
-<li><span class="feature-no">✗</span> Signatures Yousign</li>
-</ul>
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-value">3</div><div class="kpi-label">Formules</div></div>
+  <div class="kpi-card"><div class="kpi-value">11</div><div class="kpi-label">M&eacute;tiers couverts</div></div>
+  <div class="kpi-card"><div class="kpi-value">30j</div><div class="kpi-label">Essai gratuit</div></div>
+  <div class="kpi-card"><div class="kpi-value">France</div><div class="kpi-label">H&eacute;bergement</div></div>
 </div>
+<div class="main">
+<div class="section">
+  <div class="section-title"><span class="num">01</span> 3 formules pour s'adapter &agrave; votre activit&eacute;</div>
+  
+  <div class="pricing-grid">
+  <div class="price-card">
+    <div class="price-name">Starter</div>
+    <div class="price-tagline">Pour d&eacute;marrer votre activit&eacute; en toute s&eacute;r&eacute;nit&eacute;</div>
+    <div class="price-amount">Sur devis</div>
+    <div class="price-users">Jusqu'&agrave; 3 utilisateurs</div>
+    <ul class="price-feats">
+      <li>Gestion compl&egrave;te animaux &amp; clients</li>
+      <li>Agenda &amp; s&eacute;ances</li>
+      <li>Devis, factures NF525, encaissements</li>
+      <li>R&egrave;glements &amp; avoirs</li>
+      <li>GED documents</li>
+      <li>Export FEC</li>
+      <li>Conformit&eacute; r&eacute;glementaire (RGPD, registre carnivores)</li>
+      <li>Support email</li>
+      <li class="no">Stock &amp; achats</li>
+      <li class="no">Portail Client</li>
+      <li class="no">Eliot IA</li>
+    </ul>
+    <a class="price-cta" href="index.html">Demander un devis</a>
+  </div>
 
-<div class="formula-card" style="background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.5);position:relative">
-<div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:#0F172A;padding:4px 16px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap">⭐ Le plus populaire</div>
-<div class="formula-name" style="color:#fcd34d">Pro</div>
-<div style="font-size:13px;color:#94A3B8">Professionnel établi / Cabinet</div>
-<div class="formula-price" style="color:#fcd34d">99 € <span>/mois HT</span></div>
-<ul class="formula-features">
-<li><span class="feature-yes">✓</span> Tout Starter inclus</li>
-<li><span class="feature-yes">✓</span> Stock & Achats fournisseurs</li>
-<li><span class="feature-yes">✓</span> Portail Client</li>
-<li><span class="feature-yes">✓</span> CRM & Leads</li>
-<li><span class="feature-yes">✓</span> Réseaux Sociaux</li>
-<li><span class="feature-yes">✓</span> Signatures Yousign</li>
-<li><span class="feature-yes">✓</span> RFE Facturation électronique</li>
-<li><span class="feature-yes">✓</span> 3 utilisateurs</li>
-<li><span class="feature-yes">✓</span> Eliot Agent IA (22 outils)</li>
-<li><span class="feature-yes">✓</span> Support prioritaire</li>
-<li><span class="feature-no">✗</span> Multi-sites</li>
-<li><span class="feature-no">✗</span> API personnalisée</li>
-</ul>
-</div>
+  <div class="price-card featured">
+    <div class="price-badge">Recommand&eacute;</div>
+    <div class="price-name">Pro</div>
+    <div class="price-tagline">L'&eacute;quilibre parfait pour les structures &eacute;tablies</div>
+    <div class="price-amount">Sur devis</div>
+    <div class="price-users">Jusqu'&agrave; 10 utilisateurs</div>
+    <ul class="price-feats">
+      <li>Tout ce qui est inclus dans Starter</li>
+      <li>Stock &amp; achats fournisseurs</li>
+      <li>Portail Client</li>
+      <li>CRM &amp; Leads</li>
+      <li>R&eacute;seaux sociaux</li>
+      <li>Signatures Yousign</li>
+      <li>RFE facturation &eacute;lectronique</li>
+      <li>Eliot Agent IA (22 outils)</li>
+      <li>OCR factures et tickets</li>
+      <li>SMTP premium (d&eacute;liverabilit&eacute; garantie)</li>
+      <li>Support prioritaire 7j/7</li>
+    </ul>
+    <a class="price-cta" href="index.html">Choisir Pro</a>
+  </div>
 
-<div class="formula-card" style="background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.3)">
-<div class="formula-name" style="color:#6ee7b7">Expert</div>
-<div style="font-size:13px;color:#94A3B8">Structure multi-praticiens / Entreprise</div>
-<div class="formula-price" style="color:#6ee7b7">199 € <span>/mois HT</span></div>
-<ul class="formula-features">
-<li><span class="feature-yes">✓</span> Tout Pro inclus</li>
-<li><span class="feature-yes">✓</span> Utilisateurs illimités</li>
-<li><span class="feature-yes">✓</span> Multi-sites</li>
-<li><span class="feature-yes">✓</span> Gestion des droits avancée</li>
-<li><span class="feature-yes">✓</span> API personnalisée</li>
-<li><span class="feature-yes">✓</span> Intégration comptable avancée</li>
-<li><span class="feature-yes">✓</span> Onboarding dédié</li>
-<li><span class="feature-yes">✓</span> Support téléphonique</li>
-<li><span class="feature-yes">✓</span> Formation équipe incluse</li>
-<li><span class="feature-yes">✓</span> SLA garantie disponibilité</li>
-</ul>
+  <div class="price-card">
+    <div class="price-name">Expert</div>
+    <div class="price-tagline">Solutions compl&egrave;tes pour groupes et r&eacute;seaux</div>
+    <div class="price-amount">Sur devis</div>
+    <div class="price-users">Utilisateurs illimit&eacute;s</div>
+    <ul class="price-feats">
+      <li>Tout ce qui est inclus dans Pro</li>
+      <li>Multi-&eacute;tablissements</li>
+      <li>Gestion des droits avanc&eacute;e</li>
+      <li>API externe pour int&eacute;grations partenaires</li>
+      <li>Int&eacute;gration comptable avanc&eacute;e</li>
+      <li>Synchronisation Calendly</li>
+      <li>SLA prioritaire 99.9%</li>
+      <li>Account manager d&eacute;di&eacute;</li>
+      <li>Onboarding et formation sur site</li>
+      <li>Personnalisations sur demande</li>
+    </ul>
+    <a class="price-cta" href="index.html">Discuter Expert</a>
+  </div>
+</div><div class="callout callout-info">Toutes les formules incluent la gestion compl&egrave;te des animaux, clients, s&eacute;ances, factures et la conformit&eacute; r&eacute;glementaire (RGPD, registre carnivores, FEC). Essai gratuit 30 jours, sans engagement de dur&eacute;e, donn&eacute;es h&eacute;berg&eacute;es en France.</div>
+</div>
+<div class="section">
+  <div class="section-title"><span class="num">02</span> Comparer en d&eacute;tail</div>
+  <p class="section-intro">Le tableau complet pour identifier la formule qui correspond le mieux &agrave; vos besoins.</p>
+  <table class="cmp-table">
+  <thead><tr><th>Fonctionnalit&eacute;</th><th class="col">Starter</th><th class="col">Pro</th><th class="col">Expert</th></tr></thead>
+  <tbody>
+<tr class="cmp-cat"><td colspan="4">Base m&eacute;tier</td></tr>
+<tr><td>Gestion animaux et clients<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Dossiers complets, ant&eacute;c&eacute;dents, suivi</span></td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+<tr><td>Facturation et devis<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">&Eacute;ditions PDF, mod&egrave;les, signatures</span></td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+<tr><td>Conformit&eacute; r&eacute;glementaire<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">RGPD, registre carnivores, FEC</span></td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+<tr><td>Nombre d'utilisateurs</td><td class="center">Jusqu'&agrave; 3</td><td class="center">Jusqu'&agrave; 10</td><td class="center">Illimit&eacute;</td></tr>
+<tr class="cmp-cat"><td colspan="4">Intelligence artificielle</td></tr>
+<tr><td>Assistant IA Eliot<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">22 outils, aide conversationnelle</span></td><td class="center no">&mdash;</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+<tr><td>OCR factures et tickets<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Reconnaissance auto pour la saisie</span></td><td class="center no">&mdash;</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+<tr class="cmp-cat"><td colspan="4">Comptabilit&eacute;</td></tr>
+<tr><td>Transfert comptable automatique<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Export vers votre cabinet</span></td><td class="center no">&mdash;</td><td class="center no">&mdash;</td><td class="center yes">&#10003;</td></tr>
+<tr class="cmp-cat"><td colspan="4">Communication</td></tr>
+<tr><td>SMTP premium<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Emails haute d&eacute;liverabilit&eacute;</span></td><td class="center no">&mdash;</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+<tr><td>SMS notifications<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Rappels RDV automatiques</span></td><td class="center no">&mdash;</td><td class="center opt">Option</td><td class="center opt">Option</td></tr>
+<tr class="cmp-cat"><td colspan="4">Int&eacute;grations</td></tr>
+<tr><td>API externe<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Cl&eacute;s API pour outils partenaires</span></td><td class="center no">&mdash;</td><td class="center opt">Option</td><td class="center yes">&#10003;</td></tr>
+<tr><td>Synchronisation Calendly<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Agenda synchronis&eacute;</span></td><td class="center opt">Option</td><td class="center opt">Option</td><td class="center yes">&#10003;</td></tr>
+<tr class="cmp-cat"><td colspan="4">Premium</td></tr>
+<tr><td>Multi-&eacute;tablissements<br><span style="font-size:0.75rem;color:rgba(255,255,255,0.4);">Plusieurs sites, une licence</span></td><td class="center no">&mdash;</td><td class="center no">&mdash;</td><td class="center yes">&#10003;</td></tr>
+<tr><td>SLA garanti</td><td class="center">Best effort</td><td class="center">99.5%</td><td class="center">99.9%</td></tr>
+<tr><td>Support</td><td class="center">Email</td><td class="center">Prioritaire 7j/7</td><td class="center">Account manager</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="section">
+  <div class="section-title"><span class="num">03</span> Quelle formule pour quel profil ?</div>
+  <p class="section-intro">Des exemples concrets pour vous aider &agrave; choisir.</p>
+  <div class="profil-grid">
+  <div class="profil-card">
+    <div class="profil-tier">Starter</div>
+    <div class="profil-title">L'ind&eacute;pendant qui d&eacute;marre</div>
+    <div class="profil-desc">Comportementaliste, toiletteur ou pet-sitter en solo qui souhaite professionnaliser sa gestion sans complexit&eacute;. Tout ce qu'il faut pour g&eacute;rer ses clients, ses s&eacute;ances et sa facturation, sans frais inutiles.</div>
+  </div>
+  <div class="profil-card b">
+    <div class="profil-tier">Pro</div>
+    <div class="profil-title">La structure &eacute;tablie</div>
+    <div class="profil-desc">Pension canine, cabinet v&eacute;t&eacute;rinaire ou centre &eacute;questre avec une &eacute;quipe de 4 &agrave; 10 personnes. L'assistant IA et l'OCR factures font gagner plusieurs heures par semaine, et les emails premium am&eacute;liorent la communication client.</div>
+  </div>
+  <div class="profil-card c">
+    <div class="profil-tier">Expert</div>
+    <div class="profil-title">Le groupe multi-sites</div>
+    <div class="profil-desc">R&eacute;seau d'&eacute;levages, franchise de toilettage ou association nationale. La gestion multi-&eacute;tablissements centralise les op&eacute;rations, le transfert comptable automatique simplifie la cl&ocirc;ture, et les API permettent d'int&eacute;grer vos outils partenaires.</div>
+  </div>
 </div>
 </div>
+<div class="section">
+  <div class="section-title"><span class="num">04</span> Vous &ecirc;tes op&eacute;rationnel en 4 &eacute;tapes</div>
+  <p class="section-intro">De la souscription &agrave; la premi&egrave;re utilisation, moins de 24h en moyenne.</p>
+  <div class="steps-row">
+  <div class="step-box"><div class="step-num">1</div><div class="step-title">Demande de devis</div><div class="step-desc">D&eacute;crivez votre activit&eacute; et vos besoins. Nous proposons la formule adapt&eacute;e.</div></div>
+  <div class="step-box"><div class="step-num">2</div><div class="step-title">Validation et signature</div><div class="step-desc">Signature &eacute;lectronique du contrat. Recevez votre cl&eacute; d'activation par email s&eacute;curis&eacute;.</div></div>
+  <div class="step-box"><div class="step-num">3</div><div class="step-title">Activation en ligne</div><div class="step-desc">Tapez votre cl&eacute; sur la page de d&eacute;marrage. Votre espace est cr&eacute;&eacute; en quelques secondes.</div></div>
+  <div class="step-box"><div class="step-num">4</div><div class="step-title">Premi&egrave;re utilisation</div><div class="step-desc">Importez vos donn&eacute;es existantes. Notre &eacute;quipe vous accompagne pour la prise en main.</div></div>
+</div>
+</div>
+<div class="section">
+  <div class="section-title"><span class="num">05</span> Foire aux questions</div>
+  <p class="section-intro">Les r&eacute;ponses aux questions les plus fr&eacute;quentes sur nos formules.</p>
+  <details style="background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0;margin-bottom:8px;">
+  <summary style="padding:14px 16px;cursor:pointer;font-weight:600;color:#F8FAFC;font-size:0.9rem;list-style:none;">Puis-je changer de formule en cours d'abonnement ?</summary>
+  <div style="padding:0 16px 14px;color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Oui, vous pouvez &eacute;voluer vers une formule sup&eacute;rieure &agrave; tout moment sans interruption de service. La transition est imm&eacute;diate. Pour passer &agrave; une formule inf&eacute;rieure, le changement prend effet &agrave; la prochaine p&eacute;riode de facturation.</div>
+</details>
+<details style="background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0;margin-bottom:8px;">
+  <summary style="padding:14px 16px;cursor:pointer;font-weight:600;color:#F8FAFC;font-size:0.9rem;list-style:none;">Que se passe-t-il si je d&eacute;passe le nombre d'utilisateurs ?</summary>
+  <div style="padding:0 16px 14px;color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Nous vous proposons de basculer sur la formule sup&eacute;rieure ou d'activer une extension d'utilisateurs additionnels. Aucune coupure de service, et vos donn&eacute;es sont conserv&eacute;es.</div>
+</details>
+<details style="background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0;margin-bottom:8px;">
+  <summary style="padding:14px 16px;cursor:pointer;font-weight:600;color:#F8FAFC;font-size:0.9rem;list-style:none;">Mes donn&eacute;es sont-elles h&eacute;berg&eacute;es en France ?</summary>
+  <div style="padding:0 16px 14px;color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Oui, toutes les donn&eacute;es Anim'Gest sont h&eacute;berg&eacute;es sur des serveurs en France, conformes au RGPD. Vous gardez la propri&eacute;t&eacute; totale de vos donn&eacute;es et pouvez les exporter &agrave; tout moment.</div>
+</details>
+<details style="background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0;margin-bottom:8px;">
+  <summary style="padding:14px 16px;cursor:pointer;font-weight:600;color:#F8FAFC;font-size:0.9rem;list-style:none;">Y a-t-il un engagement de dur&eacute;e ?</summary>
+  <div style="padding:0 16px 14px;color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Non, toutes nos formules sont sans engagement de dur&eacute;e. Vous pouvez r&eacute;silier &agrave; tout moment avec un pr&eacute;avis d'un mois. Vos donn&eacute;es vous sont restitu&eacute;es int&eacute;gralement.</div>
+</details>
+<details style="background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0;margin-bottom:8px;">
+  <summary style="padding:14px 16px;cursor:pointer;font-weight:600;color:#F8FAFC;font-size:0.9rem;list-style:none;">Comment fonctionne l'essai gratuit ?</summary>
+  <div style="padding:0 16px 14px;color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Vous b&eacute;n&eacute;ficiez de 30 jours d'essai gratuit sur la formule de votre choix, sans engagement et sans saisie de moyen de paiement. &Agrave; la fin de la p&eacute;riode, vous d&eacute;cidez si vous souhaitez continuer.</div>
+</details>
+<details style="background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0;margin-bottom:8px;">
+  <summary style="padding:14px 16px;cursor:pointer;font-weight:600;color:#F8FAFC;font-size:0.9rem;list-style:none;">Puis-je activer une option en dehors de ma formule ?</summary>
+  <div style="padding:0 16px 14px;color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Oui, chacune des 8 options (IA Eliot, OCR, transfert comptable, multi-&eacute;tablissements, SMS, API externe, Calendly, SMTP premium) peut &ecirc;tre activ&eacute;e individuellement sur n'importe quelle formule, sur devis.</div>
+</details>
+<details style="background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0;margin-bottom:8px;">
+  <summary style="padding:14px 16px;cursor:pointer;font-weight:600;color:#F8FAFC;font-size:0.9rem;list-style:none;">Comment fonctionne la cl&eacute; d'activation ?</summary>
+  <div style="padding:0 16px 14px;color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Apr&egrave;s la signature du contrat, vous recevez par email une cl&eacute; unique au format XXXX-XXXX-XXXX-XXXX. Vous la tapez sur la page de d&eacute;marrage pour cr&eacute;er votre espace en quelques secondes. La cl&eacute; est utilisable une seule fois et valable 90 jours.</div>
+</details>
+<details style="background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0;margin-bottom:8px;">
+  <summary style="padding:14px 16px;cursor:pointer;font-weight:600;color:#F8FAFC;font-size:0.9rem;list-style:none;">Quelle diff&eacute;rence entre un m&eacute;tier et une formule ?</summary>
+  <div style="padding:0 16px 14px;color:var(--text-muted);font-size:0.85rem;line-height:1.6;">Anim'Gest couvre 11 m&eacute;tiers du secteur animalier. Chaque utilisateur peut exercer un ou plusieurs m&eacute;tiers. La formule (Starter / Pro / Expert) d&eacute;termine le nombre d'utilisateurs et les fonctionnalit&eacute;s disponibles, ind&eacute;pendamment des m&eacute;tiers.</div>
+</details>
+</div>
+</div>
+<footer>
+  Anim'Gest &mdash; NoSage's Editor &mdash; Sprint S122 &middot; 28/05/2026 &middot; Formules
+  <br><a href="index.html">&larr; Documentation</a> &middot; <a href="com-roi.html">Simulateur ROI</a> &middot; <a href="com-onboarding.html">D&eacute;marrage</a>
+</footer>
 
-<div class="section-title">Comparatif détaillé</div>
-<div class="table-wrap"><table class="data-table">
-<thead><tr><th>Fonctionnalité</th><th style="text-align:center">Starter</th><th style="text-align:center">Pro</th><th style="text-align:center">Expert</th></tr></thead>
-<tbody>
-<tr><td>Clients & Animaux</td><td style="text-align:center;color:#10B981">Illimités</td><td style="text-align:center;color:#10B981">Illimités</td><td style="text-align:center;color:#10B981">Illimités</td></tr>
-<tr><td>Utilisateurs</td><td style="text-align:center">1</td><td style="text-align:center">3</td><td style="text-align:center;color:#10B981">Illimités</td></tr>
-<tr><td>Sites / Établissements</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center;color:#10B981">Illimités</td></tr>
-<tr><td>Facturation NF525</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td></tr>
-<tr><td>Export FEC</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td></tr>
-<tr><td>GED Documents</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td></tr>
-<tr><td>Stock & Achats</td><td style="text-align:center;color:#64748B">—</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td></tr>
-<tr><td>Portail Client</td><td style="text-align:center;color:#64748B">—</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td></tr>
-<tr><td>CRM & Leads</td><td style="text-align:center;color:#64748B">—</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td></tr>
-<tr><td>Signatures électroniques</td><td style="text-align:center;color:#64748B">—</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td></tr>
-<tr><td>RFE Facturation électronique</td><td style="text-align:center;color:#64748B">—</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td></tr>
-<tr><td>Eliot Agent IA (22 outils)</td><td style="text-align:center;color:#64748B">—</td><td style="text-align:center;color:#10B981">✓</td><td style="text-align:center;color:#10B981">✓</td></tr>
-<tr><td>Support</td><td style="text-align:center">Email 48h</td><td style="text-align:center">Email 24h</td><td style="text-align:center;color:#10B981">Tél + Email 4h</td></tr>
-</tbody></table></div>
-
-</div>
-<footer>Anim'Gest · NoSage's Editor — Comparatif des formules — Sprint S114 · 2026</footer>
-<script>
-document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
-  q.nextElementSibling.classList.toggle('open');
-  q.querySelector('.faq-arrow').textContent=q.nextElementSibling.classList.contains('open')?'−':'+';
-}));
-document.querySelectorAll('.check-box').forEach(b=>b.addEventListener('click',()=>{
-  b.classList.toggle('done');
-  b.textContent=b.classList.contains('done')?'✓':'';
-}));
-</script>
-</body></html>
+</body>
+</html>
