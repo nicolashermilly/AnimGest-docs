@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extensions Upload — Anim'Gest Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --gold-pale: #FEF3C7;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 60px 32px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 12px;
+}
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
+
+/* SECTION HEADERS */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+
+/* SECTION GAP */
+.section { margin-bottom: 48px; }
+
+/* CALLOUTS */
+.callout {
+  background: var(--card);
+  border-left: 3px solid;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 16px 0 24px;
+  font-size: 0.9rem;
+}
+.callout-info { border-color: var(--cyan); }
+.callout-info strong { color: var(--cyan); }
+.callout-warn { border-color: var(--orange); }
+.callout-warn strong { color: var(--orange); }
+.callout-ok { border-color: var(--green); }
+.callout-ok strong { color: var(--green); }
+.callout p { margin: 0; color: var(--text); }
+.callout p + p { margin-top: 8px; }
+
+/* INTRO PARAGRAPH */
+.intro-text {
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.intro-text + .intro-text { margin-top: 12px; }
+
+/* TABLE STYLE (cohérent dette-table) */
+.ext-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; background: var(--card); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; }
+.ext-table th {
+  text-align: left; padding: 12px 16px;
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-muted);
+  background: var(--navy-800);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+}
+.ext-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-muted);
+  vertical-align: top;
+}
+.ext-table tr:last-child td { border-bottom: none; }
+.ext-table td:first-child { color: var(--text); font-weight: 500; }
+.mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--gold); }
+.size-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+/* CHIP LIST (refus) */
+.chip-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 8px; }
+.chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  background: rgba(239,68,68,0.08);
+  color: #FCA5A5;
+  border: 1px solid rgba(239,68,68,0.25);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.chip-group { margin-bottom: 18px; }
+.chip-group-title {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* PIPELINE STEPS */
+.pipeline-list {
+  list-style: none;
+  counter-reset: pipeline;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+.pipeline-list li {
+  background: var(--navy-800);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 14px 18px 14px 56px;
+  position: relative;
+  font-size: 0.88rem;
+}
+.pipeline-list li::before {
+  counter-increment: pipeline;
+  content: counter(pipeline);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  position: absolute;
+  left: 14px;
+  top: 14px;
+}
+.pipeline-list strong { color: var(--gold); font-weight: 600; }
+
+/* CHECKLIST */
+.checklist { list-style: none; margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.checklist li {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  padding-left: 24px;
+  position: relative;
+}
+.checklist li::before {
+  content: '▸';
+  position: absolute; left: 8px;
+  color: var(--gold);
+  font-size: 0.85rem;
+  top: 0;
+}
+.checklist strong { color: var(--text); }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 32px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 60px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="07-audit-stack.html">Audit Stack</a>
+  <a href="17-api-reference.html">API Reference</a>
+  <a href="20-pilotage-projet.html">Pilotage</a>
+  <span class="nav-badge">S126</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">SÉCURITÉ — UPLOADS</div>
+  <h1>Extensions de fichiers acceptées</h1>
+  <p>Liste de référence des formats autorisés en téléversement dans Anim'Gest, pipeline de validation et conformité RGPD — à destination des utilisateurs professionnels et de leurs clients.</p>
+</div>
+
+<div class="main">
+
+  <!-- INTRO -->
+  <div class="section">
+    <div class="callout callout-info">
+      <p><strong>Pourquoi cette liste ?</strong> Anim'Gest applique une politique stricte de validation des fichiers téléversés pour protéger vos données et celles de vos clients. Tout fichier dont l'extension n'apparaît pas dans cette liste sera refusé à l'upload avec un message d'erreur explicite.</p>
+    </div>
+  </div>
+
+  <!-- PHOTOS -->
+  <div class="section">
+    <div class="section-title"><span class="num">01</span> Photos et images</div>
+    <p class="intro-text">Pour les photos d'animaux, justificatifs visuels, comptes-rendus illustrés.</p>
+    <table class="ext-table">
+      <thead>
+        <tr><th>Extension</th><th>Type</th><th>Taille max</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="mono">.jpg</span> <span class="mono">.jpeg</span></td><td>Photo JPEG</td><td><span class="size-badge">10 Mo</span></td><td>Format recommandé pour photos d'animaux</td></tr>
+        <tr><td><span class="mono">.png</span></td><td>Image PNG</td><td><span class="size-badge">10 Mo</span></td><td>Idéal pour captures d'écran, schémas</td></tr>
+        <tr><td><span class="mono">.heic</span> <span class="mono">.heif</span></td><td>Photo iPhone récent</td><td><span class="size-badge">10 Mo</span></td><td>Conversion automatique en JPEG côté serveur</td></tr>
+        <tr><td><span class="mono">.webp</span></td><td>Image WebP</td><td><span class="size-badge">10 Mo</span></td><td>Format Google moderne, pleinement supporté</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DOCUMENTS -->
+  <div class="section">
+    <div class="section-title"><span class="num">02</span> Documents administratifs et sanitaires</div>
+    <p class="intro-text">Carnet de santé, ordonnances, certificats vétérinaires, vaccinations, contrats de garde, factures.</p>
+    <table class="ext-table">
+      <thead>
+        <tr><th>Extension</th><th>Type</th><th>Taille max</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="mono">.pdf</span></td><td>Document PDF</td><td><span class="size-badge">20 Mo</span></td><td>Format privilégié pour documents officiels</td></tr>
+        <tr><td><span class="mono">.docx</span></td><td>Microsoft Word</td><td><span class="size-badge">15 Mo</span></td><td>Versions 2007 et ultérieures uniquement</td></tr>
+        <tr><td><span class="mono">.xlsx</span></td><td>Microsoft Excel</td><td><span class="size-badge">15 Mo</span></td><td>Tableurs Excel modernes uniquement</td></tr>
+        <tr><td><span class="mono">.odt</span></td><td>OpenDocument Texte</td><td><span class="size-badge">15 Mo</span></td><td>LibreOffice / OpenOffice</td></tr>
+        <tr><td><span class="mono">.ods</span></td><td>OpenDocument Tableur</td><td><span class="size-badge">15 Mo</span></td><td>LibreOffice / OpenOffice</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TEXTE -->
+  <div class="section">
+    <div class="section-title"><span class="num">03</span> Comptes-rendus et données textuelles</div>
+    <p class="intro-text">Notes de comportement, observations longitudinales, rapports d'expertise.</p>
+    <table class="ext-table">
+      <thead>
+        <tr><th>Extension</th><th>Type</th><th>Taille max</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="mono">.txt</span></td><td>Texte brut</td><td><span class="size-badge">2 Mo</span></td><td>Encodage UTF-8 recommandé</td></tr>
+        <tr><td><span class="mono">.rtf</span></td><td>Rich Text Format</td><td><span class="size-badge">5 Mo</span></td><td>Texte formaté multi-plateforme</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DONNEES STRUCTUREES -->
+  <div class="section">
+    <div class="section-title"><span class="num">04</span> Données structurées (import / export)</div>
+    <p class="intro-text">Pour l'import de listes de clients, d'animaux, ou l'export pour analyse externe.</p>
+    <table class="ext-table">
+      <thead>
+        <tr><th>Extension</th><th>Type</th><th>Taille max</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="mono">.csv</span></td><td>Données tabulaires</td><td><span class="size-badge">10 Mo</span></td><td>Séparateur virgule ou point-virgule (auto-détecté)</td></tr>
+        <tr><td><span class="mono">.json</span></td><td>JSON structuré</td><td><span class="size-badge">5 Mo</span></td><td>Pour interopérabilités API</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- EXTENSIONS REFUSEES -->
+  <div class="section">
+    <div class="section-title"><span class="num">05</span> Extensions refusées</div>
+    <p class="intro-text">Pour la sécurité de tous les utilisateurs d'Anim'Gest, les extensions suivantes sont systématiquement rejetées, y compris si le contenu paraît inoffensif.</p>
+
+    <div class="chip-group">
+      <div class="chip-group-title">Exécutables et scripts</div>
+      <div class="chip-list">
+        <span class="chip">.exe</span><span class="chip">.bat</span><span class="chip">.cmd</span><span class="chip">.com</span><span class="chip">.msi</span><span class="chip">.sh</span><span class="chip">.ps1</span><span class="chip">.vbs</span><span class="chip">.js</span><span class="chip">.jar</span><span class="chip">.apk</span>
+      </div>
+    </div>
+
+    <div class="chip-group">
+      <div class="chip-group-title">Archives (peuvent contenir n'importe quoi — déposez les fichiers individuellement)</div>
+      <div class="chip-list">
+        <span class="chip">.zip</span><span class="chip">.rar</span><span class="chip">.7z</span><span class="chip">.tar</span><span class="chip">.gz</span>
+      </div>
+    </div>
+
+    <div class="chip-group">
+      <div class="chip-group-title">Documents Office anciens (vulnérabilités macros connues)</div>
+      <div class="chip-list">
+        <span class="chip">.doc</span><span class="chip">.xls</span><span class="chip">.ppt</span>
+      </div>
+    </div>
+
+    <div class="chip-group">
+      <div class="chip-group-title">Pages web (risque de scripts intégrés)</div>
+      <div class="chip-list">
+        <span class="chip">.html</span><span class="chip">.htm</span><span class="chip">.xhtml</span><span class="chip">.svg</span>
+      </div>
+    </div>
+
+    <div class="chip-group">
+      <div class="chip-group-title">Bases de données (passez par les imports CSV à la place)</div>
+      <div class="chip-list">
+        <span class="chip">.db</span><span class="chip">.sqlite</span><span class="chip">.mdb</span>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <p><strong>Cas particulier :</strong> tout fichier sans extension, ou avec une extension multiple suspecte (ex. <span class="mono">document.pdf.exe</span>), est systématiquement refusé même si l'extension finale est dans la liste blanche.</p>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="section">
+    <div class="section-title"><span class="num">06</span> Pipeline de validation</div>
+    <p class="intro-text">Tout fichier téléversé dans Anim'Gest passe par les étapes suivantes <em>avant</em> d'être stocké.</p>
+    <ol class="pipeline-list">
+      <li><strong>Validation de l'extension</strong> contre la liste blanche ci-dessus.</li>
+      <li><strong>Vérification du contenu réel</strong> (magic bytes) — un fichier renommé <span class="mono">.pdf</span> mais qui est en réalité un exécutable sera détecté et refusé.</li>
+      <li><strong>Vérification de la taille</strong> contre les maximums autorisés par catégorie.</li>
+      <li><strong>Scan antivirus ClamAV</strong> avec signatures mises à jour quotidiennement — refus immédiat si une signature malveillante connue est détectée.</li>
+      <li><strong>Stockage avec nom de fichier randomisé</strong> sur disque — votre nom original reste affiché dans l'interface, mais le fichier physique a un identifiant unique aléatoire (UUID).</li>
+    </ol>
+  </div>
+
+  <!-- RGPD -->
+  <div class="section">
+    <div class="section-title"><span class="num">07</span> Hébergement et conformité RGPD</div>
+    <div class="callout callout-ok">
+      <p><strong>Hébergement en France.</strong> Les fichiers téléversés dans Anim'Gest sont stockés sur une infrastructure hébergée sur le territoire français, sur un système de stockage redondant (RAID 6 — tolérance jusqu'à 2 disques en panne simultanée). Des sauvegardes régulières sont effectuées.</p>
+      <p>Aucun fichier n'est transmis à des tiers sans votre consentement explicite. Vous pouvez à tout moment demander l'export ou la suppression de vos données conformément aux articles 15 à 22 du RGPD.</p>
+    </div>
+    <p class="intro-text">Les durées de conservation des fichiers sont définies dans nos Conditions Générales d'Utilisation et varient selon le type de document — par exemple, les documents fiscaux sont conservés au minimum 10 ans conformément au Code de commerce, alors que les photos peuvent être supprimées sur demande à tout moment.</p>
+  </div>
+
+  <!-- TELECHARGEMENT -->
+  <div class="section">
+    <div class="section-title"><span class="num">08</span> Téléchargement de fichiers</div>
+    <p class="intro-text">Lorsque vous téléchargez un fichier depuis Anim'Gest, votre navigateur déclenche systématiquement une boîte de dialogue de téléchargement — le fichier n'est jamais affiché directement dans la page web.</p>
+    <p class="intro-text">Cette mesure de sécurité protège votre poste contre l'exécution accidentelle de contenu actif éventuellement caché dans certains formats. Le téléchargement est toujours servi avec <span class="mono">Content-Disposition: attachment</span> et <span class="mono">X-Content-Type-Options: nosniff</span>.</p>
+  </div>
+
+  <!-- SI REFUSE -->
+  <div class="section">
+    <div class="section-title"><span class="num">09</span> Que faire si mon fichier est refusé&nbsp;?</div>
+    <ul class="checklist">
+      <li><strong>Vérifiez l'extension</strong> de votre fichier dans la liste autorisée ci-dessus.</li>
+      <li><strong>Vérifiez la taille</strong> du fichier face à la limite affichée pour son type.</li>
+      <li><strong>Format non listé</strong> (ex. <span class="mono">.psd</span>, <span class="mono">.ai</span>, <span class="mono">.dwg</span>) : exportez-le en PDF depuis votre logiciel d'origine — c'est presque toujours possible.</li>
+      <li><strong>Fichier volumineux</strong> : compressez les images avec un outil dédié (Squoosh, TinyPNG, ImageOptim) avant l'upload.</li>
+      <li><strong>Scan antivirus négatif</strong> : ne renvoyez pas le même fichier, mais régénérez-le depuis sa source originale puis ré-uploadez.</li>
+    </ul>
+    <p class="intro-text" style="margin-top: 16px;">Si le problème persiste, contactez votre administrateur Anim'Gest ou notre support à <a href="mailto:support@animgest.fr" style="color: var(--gold); text-decoration: none;">support@animgest.fr</a>.</p>
+  </div>
+
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor — Extensions Upload — MaJ Sprint S126 &mdash; 31/05/2026 &mdash; Conformité RGPD &mdash; Pipeline ClamAV
+  <br><a href="index.html">← Retour à l'accueil</a>
+</footer>
+
+</body>
+</html>
