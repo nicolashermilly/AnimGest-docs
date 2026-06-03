@@ -8,8 +8,9 @@
   ============================================================================
    Anim'Gest Documentation — Index complet
    ============================================================================
-   Sentinelle : S123_DOCS_INDEX_REWRITE_V1
+   Sentinelle : S123_DOCS_INDEX_REWRITE_V1 + S124_DOCS_NEWS_V1
    Refonte    : Sprint S123 J1 (28 mai 2026)
+   Maj recente: Sprint S127 (03 juin 2026) - journal NF525 facture_audit (S127_DOCS_NF525_V1)
    Charte     : alignee sur 20-pilotage-projet.html (navy/gold + Playfair/DM Sans/DM Mono)
    Auteur     : Nicolas Hermilly + Claude (NoSage's Editor)
   ============================================================================
@@ -364,7 +365,7 @@ footer a { color: var(--gold); text-decoration: none; }
   <a href="ref-faq.html">FAQ</a>
   <a href="tech-schema-donnees.html">Schéma BDD</a>
   <a href="guide-parametrage.html">Paramétrage</a>
-  <span class="nav-badge">S126</span>
+  <span class="nav-badge">S124</span>
 </nav>
 
 <!-- ============================================================================ -->
@@ -381,9 +382,9 @@ footer a { color: var(--gold); text-decoration: none; }
 <!-- ============================================================================ -->
 <div class="kpi-grid">
   <div class="kpi-card">
-    <div class="kpi-value">S126</div>
+    <div class="kpi-value">S127</div>
     <div class="kpi-label">Sprint actuel</div>
-    <div class="kpi-badge">S126 clos</div>
+    <div class="kpi-badge">S127 livr&eacute;</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-value">146</div>
@@ -398,7 +399,7 @@ footer a { color: var(--gold); text-decoration: none; }
     <div class="kpi-label">Métiers couverts</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-value">245</div>
+    <div class="kpi-value">244</div>
     <div class="kpi-label">Q/R Centre aide</div>
   </div>
 </div>
@@ -413,30 +414,17 @@ footer a { color: var(--gold); text-decoration: none; }
     <div class="section-title"><span class="num">01</span> Nouveautés récentes</div>
     <div class="news-list">
 
-      <!-- S126_DOCS_NEWS_PRODUIT_V1 -->
+      <!-- S124_DOCS_NEWS_V1 -->
       <div class="news-item">
-        <span class="news-sprint">S126</span>
+        <span class="news-sprint">S124 J5</span>
         <div class="news-content">
-          <div class="news-title">Redressement audit CIC &mdash; NF525, num&eacute;rotation atomique &amp; intercepteur d'erreurs</div>
-          <div class="news-desc">12 r&eacute;gressions de l'audit Claude in Chrome corrig&eacute;es. Num&eacute;rotation des factures unifi&eacute;e au format <code>FAC-AAAA-NNNN</code> avec attribution atomique (table <code>facture_compteur</code>), conforme NF525 : ni trou ni doublon. Nouvel intercepteur d'erreurs API global (toasts lisibles) ; les blocages m&eacute;tier 409 restent g&eacute;r&eacute;s par la modale d&eacute;di&eacute;e.</div>
+          <div class="news-title">4 fixes r&eacute;gressions t0050 + audit getDb routing &mdash; cl&ocirc;ture pr&eacute;-NAS</div>
+          <div class="news-desc">Session de stabilisation avant migration NAS Asustor : modale Modifier tiers compl&eacute;t&eacute;e (Condition paiement + 4 r&eacute;seaux sociaux + autocomplete ville), alignement front sur backend canonical <code>VIL_*</code> (B-A2), <code>RaceSelector</code> align&eacute; sur API <code>string[]</code> (B-A3), guard null sur recherche Animaux (B-A4). Audit <code>getDb</code> routing confirm&eacute; by-design (tid &rarr; pool tenant 3331, absent &rarr; fallback .env legacy 3307). Garde fail-loud <code>GETDB_STRICT</code> livr&eacute;e. 4 sentinels <code>S124_FIX_BA{1..4}_V1</code> pos&eacute;s, tous v&eacute;rifi&eacute;s en live via Chrome MCP.</div>
           <div class="news-tags">
-            <span class="tag tag-bdd">facture_compteur</span>
-            <span class="tag tag-api">FAC-AAAA-NNNN</span>
-            <span class="tag tag-front">intercepteur erreurs</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- S126_DOCS_NEWS_V1 -->
-      <div class="news-item">
-        <span class="news-sprint">S126</span>
-        <div class="news-content">
-          <div class="news-title">Migration NAS Asustor AS6508T &mdash; Partie 1 install&eacute;e</div>
-          <div class="news-desc">NAS de prod en place : RAID 6 Btrfs sur 4 SSDs KingSpec (3,72 To utile), 10 GbE n&eacute;goci&eacute;, ADM 5.1.3, IP statique <code>192.168.1.77</code>, ports custom <code>1411/1105</code>. Architecture multi-tenant GED formalis&eacute;e : <code>T_NNNNNN_&lt;slug&gt;/SCT_NNN/</code>. Page publique des extensions de fichiers accept&eacute;es en upload livr&eacute;e.</div>
-          <div class="news-tags">
-            <span class="tag tag-bdd">RAID 6 Btrfs</span>
-            <span class="tag tag-security">ADM 5.1.3</span>
-            <span class="tag tag-front">extensions upload</span>
+            <span class="tag tag-front">4 fixes T0050</span>
+            <span class="tag tag-api">getDb by-design</span>
+            <span class="tag tag-bdd">GETDB_STRICT</span>
+            <span class="tag tag-security">NAS go</span>
           </div>
         </div>
       </div>
@@ -451,6 +439,19 @@ footer a { color: var(--gold); text-decoration: none; }
             <span class="tag tag-api">R-26</span>
             <span class="tag tag-api">4 routes</span>
             <span class="tag tag-front">shadow fix</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="news-item">
+        <span class="news-sprint">S127</span>
+        <div class="news-content">
+          <div class="news-title">Journal d'audit NF525 (facture_audit)</div>
+          <div class="news-desc"><!-- S127_DOCS_NF525_V1 -->Nouvelle table <code>facture_audit</code> (append-only) + 4 déclencheurs : journalisation automatique des factures émises / payées / annulées et immutabilité (anti-UPDATE/DELETE). <code>facture_compteur</code> clonée sur tous les tenants. Déployé sur le template + 9 tenants.</div>
+          <div class="news-tags">
+            <span class="tag tag-bdd">facture_audit</span>
+            <span class="tag tag-security">immutabilité</span>
+            <span class="tag tag-bdd">facture_compteur</span>
           </div>
         </div>
       </div>
@@ -703,13 +704,6 @@ footer a { color: var(--gold); text-decoration: none; }
           <div class="doc-card-desc">Ouvrir Anim'Gest aux clients IA externes · 5 couches sécurité</div>
         </div>
       </a>
-      <a class="doc-card" href="EXTENSIONS_UPLOAD_ANIMGEST.html">
-        <div class="doc-card-icon">📎</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Extensions Upload <span class="doc-card-new">S126</span></div>
-          <div class="doc-card-desc">Formats accept&eacute;s en upload · Pipeline ClamAV · MIME validation · RGPD</div>
-        </div>
-      </a>
     </div>
   </div>
 
@@ -899,9 +893,9 @@ footer a { color: var(--gold); text-decoration: none; }
 <!-- FOOTER                                                                        -->
 <!-- ============================================================================ -->
 <footer>
-  Anim'Gest · NoSage's Editor — Documentation complète — <strong>Sprint S126</strong> · 31/05/2026 — <a href="https://nicolashermilly.github.io/AnimGest-docs">nicolashermilly.github.io/AnimGest-docs</a>
+  Anim'Gest · NoSage's Editor — Documentation complète — <strong>Sprint S120 J1</strong> · 26 mai 2026 — <a href="https://nicolashermilly.github.io/AnimGest-docs">nicolashermilly.github.io/AnimGest-docs</a>
   <br>
-  <span style="font-size:0.7rem;font-family:'DM Mono',monospace;color:var(--navy-600)">S126_DOCS_INDEX_NAS_MIGRATION_V1</span>
+  <span style="font-size:0.7rem;font-family:'DM Mono',monospace;color:var(--navy-600)">S120_J1_DOCS_INDEX_REWRITE_V1</span>
 </footer>
 
 </body>
