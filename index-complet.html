@@ -416,6 +416,102 @@ footer a { color: var(--gold); text-decoration: none; }
 
       <!-- S124_DOCS_NEWS_V1 -->
       <div class="news-item">
+        <span class="news-sprint">S133</span>
+        <div class="news-content">
+          <div class="news-title">Webhook Calendly sign&eacute; &amp; isolation multi-tenant durcie</div>
+          <div class="news-desc"><!-- S133_NEWS_CATCHUP_V1 -->Validation HMAC-SHA256 du webhook Calendly (rejet fail-closed des appels non sign&eacute;s), <code>getDb()</code> fail-loud sur le scope legacy (fin du fallback silencieux, gate multi-tenant vert) et cadrage de la r&eacute;forme facturation &eacute;lectronique (r&eacute;ception B2B au 01/09/2026).</div>
+          <div class="news-tags">
+            <span class="tag tag-front">Calendly HMAC</span>
+            <span class="tag tag-api">multi-tenant G3</span>
+            <span class="tag tag-bdd">Factur-X cadrage</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item">
+        <span class="news-sprint">S132</span>
+        <div class="news-content">
+          <div class="news-title">Passe s&eacute;curit&eacute; &amp; qualit&eacute;</div>
+          <div class="news-desc">Signature HMAC du webhook Yousign, paiements Stripe en SCA/3DS (PSD2) et durcissement des gardes null sur les champs montants et recherches. Aucun changement fonctionnel visible &mdash; durcissement seul, z&eacute;ro r&eacute;gression.</div>
+          <div class="news-tags">
+            <span class="tag tag-front">guards null</span>
+            <span class="tag tag-api">Yousign HMAC</span>
+            <span class="tag tag-bdd">Stripe 3DS</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item">
+        <span class="news-sprint">S131</span>
+        <div class="news-content">
+          <div class="news-title">Cloisonnement m&eacute;tier &amp; s&eacute;ances par mode</div>
+          <div class="news-desc">Liens et menus filtr&eacute;s par m&eacute;tier, s&eacute;ances cloisonn&eacute;es par mode COLLECTIF/INDIVIDUEL (<code>STY_MODE</code>), r&eacute;paration du d&eacute;tail membre et de la recette &eacute;v&eacute;nement. Tour de recette de 14 d&eacute;fauts sold&eacute;.</div>
+          <div class="news-tags">
+            <span class="tag tag-front">cloisonnement</span>
+            <span class="tag tag-api">recette 14</span>
+            <span class="tag tag-bdd">STY_MODE</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item">
+        <span class="news-sprint">S130</span>
+        <div class="news-content">
+          <div class="news-title">Correctifs Associations &amp; s&eacute;ances-groupe</div>
+          <div class="news-desc">6 correctifs sur le cluster associations / s&eacute;ances de groupe (devis-contrat, colonnes BDD), valid&eacute;s en live. Non-r&eacute;gression Playwright verte et session d'audit manuel sans r&eacute;gression.</div>
+          <div class="news-tags">
+            <span class="tag tag-front">associations</span>
+            <span class="tag tag-api">seances-groupe</span>
+            <span class="tag tag-bdd">devis-contrat</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item">
+        <span class="news-sprint">S129</span>
+        <div class="news-content">
+          <div class="news-title">Migration hors OneDrive</div>
+          <div class="news-desc">Racine projet migr&eacute;e vers <code>C:\AnimGest_Logiciel</code> (sortie d'OneDrive), build direct sans hydratation et suppression des verrous de synchronisation. Socle d'infrastructure stabilis&eacute; avant la bascule NAS.</div>
+          <div class="news-tags">
+            <span class="tag tag-front">build direct</span>
+            <span class="tag tag-api">hors OneDrive</span>
+            <span class="tag tag-bdd">socle NAS</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item">
+        <span class="news-sprint">S128</span>
+        <div class="news-content">
+          <div class="news-title">Finitions pr&eacute;sentation &amp; remboursement de dette</div>
+          <div class="news-desc">11 correctifs UX post-pr&eacute;sentation (notes de frais, pi&egrave;ces jointes s&eacute;ance, recherche g&eacute;o, &eacute;levage), migration i18n compl&egrave;te vers <code>lib/format.ts</code> (46 fichiers) et cha&icirc;nage SHA-256 du journal NF525.</div>
+          <div class="news-tags">
+            <span class="tag tag-front">11 correctifs UX</span>
+            <span class="tag tag-api">i18n format.ts</span>
+            <span class="tag tag-bdd">NF525 hash chain</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item">
+        <span class="news-sprint">S126</span>
+        <div class="news-content">
+          <div class="news-title">Num&eacute;rotation NF525 unifi&eacute;e &amp; r&eacute;gressions</div>
+          <div class="news-desc">12 r&eacute;gressions corrig&eacute;es et num&eacute;rotation de facture unifi&eacute;e au format <code>FAC-AAAA-NNNN</code> avec attribution atomique centralis&eacute;e. Intercepteur d'erreurs API global (toasts non bloquants).</div>
+          <div class="news-tags">
+            <span class="tag tag-front">intercepteur erreurs</span>
+            <span class="tag tag-api">12 regressions</span>
+            <span class="tag tag-bdd">FAC-AAAA-NNNN</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item">
+        <span class="news-sprint">S125</span>
+        <div class="news-content">
+          <div class="news-title">Audit de non-r&eacute;gression automatis&eacute;</div>
+          <div class="news-desc">Industrialisation d'un audit autonome : 28 contr&ocirc;les statiques/BDD + suite Playwright auto-d&eacute;couverte, planificateur hebdomadaire et alerting e-mail / GitHub sur les r&eacute;gressions rouges.</div>
+          <div class="news-tags">
+            <span class="tag tag-front">audit auto</span>
+            <span class="tag tag-api">Playwright L3</span>
+            <span class="tag tag-bdd">28 checks</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item">
         <span class="news-sprint">S124 J5</span>
         <div class="news-content">
           <div class="news-title">4 fixes r&eacute;gressions t0050 + audit getDb routing &mdash; cl&ocirc;ture pr&eacute;-NAS</div>
