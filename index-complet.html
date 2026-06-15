@@ -10,7 +10,7 @@
    ============================================================================
    Sentinelle : S123_DOCS_INDEX_REWRITE_V1 + S124_DOCS_NEWS_V1
    Refonte    : Sprint S123 J1 (28 mai 2026)
-   Maj recente: Sprint S133 (13 juin 2026) - webhook Calendly signe HMAC + gate multi-tenant (B-FIX-CTX-TID) + cadrage e-invoicing (S133_DOCS_CLOTURE_V1)
+   Maj recente: Sprint S135 (15 juin 2026) - fiabilite de la suite E2E : triage ROUGE-VERT + 4 durcissements (gate readiness, fix B69, scrub fuite secret), 94/94 (S135_DOCS_CLOTURE_V1)
    Charte     : alignee sur 20-pilotage-projet.html (navy/gold + Playfair/DM Sans/DM Mono)
    Auteur     : Nicolas Hermilly + Claude (NoSage's Editor)
   ============================================================================
@@ -382,9 +382,9 @@ footer a { color: var(--gold); text-decoration: none; }
 <!-- ============================================================================ -->
 <div class="kpi-grid">
   <div class="kpi-card">
-    <div class="kpi-value">S133</div>
+    <div class="kpi-value">S135</div>
     <div class="kpi-label">Sprint actuel</div>
-    <div class="kpi-badge">S133 livr&eacute;</div>
+    <div class="kpi-badge">S135 livr&eacute;</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-value">146</div>
@@ -414,6 +414,31 @@ footer a { color: var(--gold); text-decoration: none; }
     <div class="section-title"><span class="num">01</span> Nouveautés récentes</div>
     <div class="news-list">
 
+      <!-- S135_DOCS_NEWS_V1 -->
+      <div class="news-item">
+        <span class="news-sprint">S135</span>
+        <div class="news-content">
+          <div class="news-title">Fiabilit&eacute; de la suite de tests E2E</div>
+          <div class="news-desc">Triage de la suite end-to-end (un faux &eacute;chec venait d'un red&eacute;marrage de l'API sur une session sans contexte tenant, le garde multi-tenant faisant son office), puis quatre durcissements : v&eacute;rification de disponibilit&eacute; de l'API avant les tests, &eacute;tat d'erreur distinct sur la liste des factures (fix B69), assertions renforc&eacute;es, et suppression d'une fuite de secret dans les logs de test. Aucun changement fonctionnel visible &mdash; fiabilit&eacute; seule, 94/94.</div>
+          <div class="news-tags">
+            <span class="tag tag-front">fix B69</span>
+            <span class="tag tag-api">gate readiness</span>
+            <span class="tag tag-bdd">E2E 94/94</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item">
+        <span class="news-sprint">S134</span>
+        <div class="news-content">
+          <div class="news-title">Cloisonnement m&eacute;tier des tableaux de bord &amp; agenda</div>
+          <div class="news-desc">Tableaux de bord et agenda filtr&eacute;s par m&eacute;tier, avec <code>STY_METIER</code> comme source de v&eacute;rit&eacute; (endpoints types de s&eacute;ance et agenda d&eacute;sormais m&eacute;tier-aware).</div>
+          <div class="news-tags">
+            <span class="tag tag-front">agenda m&eacute;tier</span>
+            <span class="tag tag-api">STY_METIER</span>
+            <span class="tag tag-bdd">seance_type</span>
+          </div>
+        </div>
+      </div>
       <!-- S124_DOCS_NEWS_V1 -->
       <div class="news-item">
         <span class="news-sprint">S133</span>
