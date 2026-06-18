@@ -12,7 +12,7 @@
    Refonte    : Sprint S120 J1 (26 mai 2026)
    Charte     : alignee sur 20-pilotage-projet.html (navy/gold + Playfair/DM Sans/DM Mono)
    Contenu    : 28 termes existants + 9 nouveaux termes S115-S120
-                (AES-GCM, param_stripe, param_eliot, param_yousign, param_pdp,
+                (AES-GCM, param_stripe, param_eliot, param_yousign, param_pa,
                  param_smtp, loadStripeConfig, tenantContext, JWT HS256,
                  B99 Licensing, Multi-tenant)
   ============================================================================
@@ -307,7 +307,7 @@ footer a { color: var(--gold); text-decoration: none; }
           <span class="gterm-new">S119</span>
           <span class="gterm-word">AES-GCM</span>
         </div>
-        <div class="gterm-def">Algorithme de chiffrement authentifié symétrique (256 bits). Format de sortie&nbsp;: <code>iv:tag:ciphertext</code>. Utilisé depuis S119 pour stocker tous les secrets sensibles (clés API, webhooks) en BDD&nbsp;: Stripe, Eliot, YouSign, PDP, SMTP. Garantit confidentialité ET intégrité grâce au tag d'authentification.</div>
+        <div class="gterm-def">Algorithme de chiffrement authentifié symétrique (256 bits). Format de sortie&nbsp;: <code>iv:tag:ciphertext</code>. Utilisé depuis S119 pour stocker tous les secrets sensibles (clés API, webhooks) en BDD&nbsp;: Stripe, Eliot, YouSign, PA, SMTP. Garantit confidentialité ET intégrité grâce au tag d'authentification.</div>
       </div>
 
       <div class="gterm">
@@ -332,7 +332,7 @@ footer a { color: var(--gold); text-decoration: none; }
         <div class="gterm-header">
           <span class="gterm-tag tag-archi">BDD</span>
           <span class="gterm-new">S119 J2-J4</span>
-          <span class="gterm-word"><code>param_yousign</code> / <code>param_pdp</code> / <code>param_smtp</code></span>
+          <span class="gterm-word"><code>param_yousign</code> / <code>param_pa</code> / <code>param_smtp</code></span>
         </div>
         <div class="gterm-def">Trois tables tenant-aware (S119 J2/J3/J4) stockant les secrets pour signature électronique YouSign (API token), facturation Pennylane (client ID + secret), et envoi mail SMTP (mot de passe). Tous chiffrés AES-GCM.</div>
       </div>
@@ -343,7 +343,7 @@ footer a { color: var(--gold); text-decoration: none; }
           <span class="gterm-new">S119</span>
           <span class="gterm-word"><code>loadStripeConfig()</code></span>
         </div>
-        <div class="gterm-def">Helper TypeScript dans <code>api/src/utils/stripe-config.util.ts</code> qui lit la config Stripe du tenant courant et déchiffre les secrets AES-GCM. Équivalents existent pour Eliot (<code>loadEliotConfig</code>), YouSign, PDP, SMTP — pattern uniforme.</div>
+        <div class="gterm-def">Helper TypeScript dans <code>api/src/utils/stripe-config.util.ts</code> qui lit la config Stripe du tenant courant et déchiffre les secrets AES-GCM. Équivalents existent pour Eliot (<code>loadEliotConfig</code>), YouSign, PA, SMTP — pattern uniforme.</div>
       </div>
 
       <div class="gterm">
@@ -571,7 +571,7 @@ footer a { color: var(--gold); text-decoration: none; }
           <span class="gterm-tag tag-rfe">RFE</span>
           <span class="gterm-word">RFE</span>
         </div>
-        <div class="gterm-def">Réforme de la Facturation Électronique. Obligation progressive 2026-2027 d'émettre et recevoir des factures au format structuré via une PDP agréée.</div>
+        <div class="gterm-def">Réforme de la Facturation Électronique. Obligation progressive 2026-2027 d'émettre et recevoir des factures au format structuré via une PA agréée.</div>
       </div>
 
       <div class="gterm">
@@ -585,9 +585,9 @@ footer a { color: var(--gold); text-decoration: none; }
       <div class="gterm">
         <div class="gterm-header">
           <span class="gterm-tag tag-rfe">RFE</span>
-          <span class="gterm-word">PDP</span>
+          <span class="gterm-word">PA (ex-PDP)</span>
         </div>
-        <div class="gterm-def">Plateforme de Dématérialisation Partenaire. Intermédiaire agréé par l'État pour la transmission des factures électroniques B2B. Obligatoire à partir de 2026-2027. Voir <code>param_pdp</code> pour la configuration.</div>
+        <div class="gterm-def">Plateforme Agréée (PA), anciennement « Plateforme de Dématérialisation Partenaire » (PDP). Intermédiaire agréé par l'État pour la transmission des factures électroniques B2B. Obligatoire à partir de 2026-2027. Voir <code>param_pa</code> pour la configuration.</div>
       </div>
 
       <div class="gterm">
