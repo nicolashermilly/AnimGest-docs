@@ -1,1036 +1,202 @@
+
+<!-- Polices, variables CSS, composants communs -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Documentation Anim'Gest — Index complet</title>
-<!--
-  ============================================================================
-   Anim'Gest Documentation — Index complet
-   ============================================================================
-   Sentinelle : S123_DOCS_INDEX_REWRITE_V1 + S124_DOCS_NEWS_V1
-   Refonte    : Sprint S123 J1 (28 mai 2026)
-   Maj recente: Sprint S135 (15 juin 2026) - fiabilite de la suite E2E : triage ROUGE-VERT + 4 durcissements (gate readiness, fix B69, scrub fuite secret), 94/94 (S135_DOCS_CLOTURE_V1)
-   Charte     : alignee sur 20-pilotage-projet.html (navy/gold + Playfair/DM Sans/DM Mono)
-   Auteur     : Nicolas Hermilly + Claude (NoSage's Editor)
-  ============================================================================
--->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ============================================================================ */
-/* CHARTE GLOBALE — VARIABLES & RESET                                            */
-/* ============================================================================ */
-:root {
-  --navy: #0F172A;
-  --navy-800: #1E293B;
-  --navy-700: #334155;
-  --navy-600: #475569;
-  --gold: #F59E0B;
-  --gold-light: #FCD34D;
-  --gold-pale: #FEF3C7;
-  --cyan: #06B6D4;
-  --violet: #4F46E5;
-  --green: #10B981;
-  --red: #EF4444;
-  --orange: #F97316;
-  --text: #E2E8F0;
-  --text-muted: #94A3B8;
-  --border: #1E293B;
-  --card: #1E293B;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--navy);
-  color: var(--text);
-  min-height: 100vh;
-  line-height: 1.6;
-}
-
-/* ============================================================================ */
-/* NAV STICKY                                                                    */
-/* ============================================================================ */
-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(15,23,42,0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(245,158,11,0.2);
-  padding: 14px 32px;
-  display: flex; align-items: center; gap: 24px;
-  flex-wrap: wrap;
-}
-.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
-nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
-nav a:hover { color: var(--gold); }
-.nav-badge {
-  margin-left: auto;
-  background: rgba(245,158,11,0.15);
-  border: 1px solid rgba(245,158,11,0.4);
-  color: var(--gold);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-/* ============================================================================ */
-/* HERO                                                                          */
-/* ============================================================================ */
-.hero {
-  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
-  border-bottom: 1px solid rgba(245,158,11,0.15);
-  padding: 60px 32px 48px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-label {
-  display: inline-block;
-  background: rgba(245,158,11,0.1);
-  border: 1px solid rgba(245,158,11,0.3);
-  color: var(--gold);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 4px 14px;
-  border-radius: 20px;
-  margin-bottom: 16px;
-  position: relative;
-}
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: #F8FAFC;
-  margin-bottom: 12px;
-  position: relative;
-}
-.hero p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  max-width: 620px;
-  margin: 0 auto;
-  position: relative;
-}
-
-/* ============================================================================ */
-/* KPI GRID                                                                      */
-/* ============================================================================ */
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1px;
-  background: rgba(245,158,11,0.1);
-  border-top: 1px solid rgba(245,158,11,0.1);
-}
-.kpi-card {
-  background: var(--navy);
-  padding: 28px 20px;
-  text-align: center;
-  transition: background .2s;
-}
-.kpi-card:hover { background: var(--navy-800); }
-.kpi-value {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 8px;
-}
-.kpi-label {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-.kpi-badge {
-  display: inline-block;
-  background: rgba(16,185,129,0.1);
-  color: var(--green);
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 10px;
-  margin-top: 6px;
-  letter-spacing: 0.05em;
-}
-
-/* ============================================================================ */
-/* MAIN CONTAINER                                                                */
-/* ============================================================================ */
-.main { max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
-
-/* ============================================================================ */
-/* SECTION TITLES                                                                */
-/* ============================================================================ */
-.section { margin-bottom: 48px; }
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #F8FAFC;
-  margin-bottom: 24px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(245,158,11,0.2);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.section-title .num {
-  background: rgba(245,158,11,0.1);
-  border: 1px solid rgba(245,158,11,0.3);
-  color: var(--gold);
-  font-size: 0.75rem;
-  font-weight: 700;
-  width: 28px; height: 28px;
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'DM Mono', monospace;
-}
-
-/* ============================================================================ */
-/* DOC CARDS GRID                                                                */
-/* ============================================================================ */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 14px;
-}
-.doc-card {
-  background: var(--card);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 20px;
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  transition: all .2s;
-}
-.doc-card:hover {
-  border-color: rgba(245,158,11,0.25);
-  transform: translateY(-2px);
-}
-.doc-card-icon { font-size: 1.4rem; flex-shrink: 0; }
-.doc-card-content { flex: 1; min-width: 0; }
-.doc-card-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #F8FAFC;
-  margin-bottom: 4px;
-}
-.doc-card-desc {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-.doc-card-new {
-  display: inline-block;
-  background: rgba(16,185,129,0.15);
-  color: var(--green);
-  font-size: 0.6rem;
-  font-weight: 700;
-  padding: 1px 6px;
-  border-radius: 8px;
-  margin-left: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  vertical-align: middle;
-}
-
-/* ============================================================================ */
-/* NOUVEAUTES BLOCK                                                              */
-/* ============================================================================ */
-.news-list { display: flex; flex-direction: column; gap: 12px; }
-.news-item {
-  background: var(--card);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
-.news-sprint {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--gold);
-  background: rgba(245,158,11,0.1);
-  border: 1px solid rgba(245,158,11,0.2);
-  padding: 4px 10px;
-  border-radius: 6px;
-  min-width: 56px;
-  text-align: center;
-  flex-shrink: 0;
-}
-.news-content { flex: 1; }
-.news-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; color: #F8FAFC; }
-.news-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.6; }
-.news-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-.tag {
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
-.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
-.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
-.tag-security { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
-.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
-
-/* ============================================================================ */
-/* CHANGELOGS GRID                                                               */
-/* ============================================================================ */
-.changelog-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 8px;
-  margin-top: 12px;
-}
-.changelog-link {
-  display: block;
-  padding: 8px 6px;
-  background: var(--navy-800);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 6px;
-  color: var(--cyan);
-  text-decoration: none;
-  text-align: center;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.8rem;
-  transition: all .2s;
-}
-.changelog-link:hover {
-  border-color: rgba(6,182,212,0.4);
-  background: rgba(6,182,212,0.08);
-}
-.changelog-info {
-  background: var(--card);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 16px 20px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.7;
-}
-.changelog-info a { color: var(--cyan); text-decoration: none; font-weight: 500; }
-.changelog-info em { color: var(--gold); font-style: italic; }
-
-/* ============================================================================ */
-/* FOOTER                                                                        */
-/* ============================================================================ */
-footer {
-  text-align: center;
-  padding: 32px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 60px;
-}
-footer a { color: var(--gold); text-decoration: none; }
-
-/* ============================================================================ */
-/* RESPONSIVE                                                                    */
-/* ============================================================================ */
-@media (max-width: 768px) {
-  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero h1 { font-size: 1.8rem; }
-  nav { gap: 12px; padding: 12px 16px; }
-}
+:root{--navy:#0F172A;--navy-mid:#1E293B;--navy-light:#334155;--gold:#F59E0B;--gold-light:#FCD34D;--violet:#4F46E5;--cyan:#06B6D4;--emerald:#10B981;--rose:#F43F5E;--surface:#1E293B;--border:rgba(255,255,255,.08);--text:#F1F5F9;--muted:#94A3B8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1a1040 50%,#0F172A 100%);padding:56px 48px 72px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,70,229,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(6,182,212,.12) 0%,transparent 60%)}
+.hero-back{position:relative;display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:24px;transition:color .2s}
+.hero-back:hover{color:var(--text)}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;position:relative}
+.hero-sub{font-size:16px;color:var(--muted);max-width:600px;position:relative;line-height:1.6}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;position:relative}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);padding:6px 14px;border-radius:100px;border:1px solid var(--border)}
+.container{max-width:1000px;margin:0 auto;padding:56px 48px}
+.timeline{position:relative;padding-left:52px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--violet),var(--cyan),var(--emerald))}
+.step{position:relative;margin-bottom:28px}
+.step-dot{position:absolute;left:-40px;top:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid var(--navy);color:#fff}
+.step-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);padding:22px 26px;transition:all .2s}
+.step-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(4px)}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.step-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.step-title{font-size:15px;font-weight:600;color:#fff}
+.step-body{color:var(--muted);font-size:13px;line-height:1.7}
+.step-body ul{list-style:none;margin-top:8px}
+.step-body li{padding:3px 0;padding-left:16px;position:relative}
+.step-body li::before{content:'→';position:absolute;left:0;color:var(--violet)}
+.step-note{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(245,158,11,.08);border-left:3px solid var(--gold);color:var(--gold-light)}
+.step-warn{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(244,63,94,.08);border-left:3px solid var(--rose);color:#fda4af}
+.step-ok{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:12px;background:rgba(16,185,129,.08);border-left:3px solid var(--emerald);color:#6ee7b7}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.stat-card{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.result-box{background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(6,182,212,.08));border:1px solid rgba(16,185,129,.2);border-radius:16px;padding:22px 26px;margin-top:32px}
+.result-title{font-size:15px;font-weight:600;color:var(--emerald);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.result-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nav-bar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 48px;background:var(--navy-mid);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-link{padding:7px 16px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.home{background:var(--violet);color:#fff;border-color:var(--violet)}
+footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
 </style>
-</head>
+<title>Documentation complète — Anim'Gest</title></head>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0F172A;color:#F1F5F9;font-family:'DM Sans',sans-serif}
+.hero{background:linear-gradient(135deg,#0F172A,#1a1040);padding:56px 48px;text-align:center;border-bottom:1px solid rgba(255,255,255,.08)}
+.badge{display:inline-block;background:linear-gradient(135deg,#4F46E5,#06B6D4);color:#fff;padding:5px 18px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;background:linear-gradient(135deg,#fff,#FCD34D);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.hero p{color:#94A3B8;font-size:16px}
+.container{max-width:1100px;margin:0 auto;padding:48px}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin:40px 0 20px;display:flex;align-items:center;gap:12px}
+.section-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:32px}
+.card{background:#1E293B;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;text-decoration:none;color:inherit;transition:all .2s;display:flex;gap:14px;align-items:flex-start}
+.card:hover{border-color:rgba(255,255,255,.2);transform:translateY(-2px)}
+.card-icon{font-size:22px;flex-shrink:0}
+.card-content{flex:1}
+.card-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
+.card-desc{font-size:11px;color:#64748B;line-height:1.4}
+footer{background:#1E293B;border-top:1px solid rgba(255,255,255,.08);padding:20px 48px;text-align:center;color:#64748B;font-size:12px}
+.stats-bar{display:flex;gap:0;background:#1E293B;border-bottom:1px solid rgba(255,255,255,.08);padding:16px 48px}
+.stat-b{flex:1;text-align:center;padding:8px;border-right:1px solid rgba(255,255,255,.06)}
+.stat-b:last-child{border-right:none}
+.stat-b-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff}
+.stat-b-lbl{font-size:11px;color:#64748B;margin-top:2px}
+</style>
 <body>
-
-<!-- ============================================================================ -->
-<!-- NAV STICKY                                                                    -->
-<!-- ============================================================================ -->
-<nav>
-  <a href="index-complet.html" class="nav-logo">Anim'Gest Docs</a>
-  <a href="scenarios/index.html">Scénarios</a>
-  <a href="ref-glossaire.html">Glossaire</a>
-  <a href="ref-faq.html">FAQ</a>
-  <a href="tech-schema-donnees.html">Schéma BDD</a>
-  <a href="guide-parametrage.html">Paramétrage</a>
-  <span class="nav-badge">S124</span>
-</nav>
-
-<!-- ============================================================================ -->
-<!-- HERO                                                                          -->
-<!-- ============================================================================ -->
 <div class="hero">
-  <div class="hero-label">DOCUMENTATION COMPLÈTE</div>
-  <h1>Centre d'aide Anim'Gest</h1>
-  <p>Scénarios métier · Guides opérationnels · Références techniques · Glossaire · FAQ — par <em style="color:var(--gold);font-style:normal">NoSage's Editor</em></p>
+  <div class="badge">Anim'Gest · NoSage's Editor</div>
+  <h1>Documentation complète</h1>
+  <p>Centre d'aide · Scénarios métier · Guides opérationnels · Références techniques</p>
+</div>
+<div class="stats-bar">
+  <div class="stat-b"><div class="stat-b-val">244</div><div class="stat-b-lbl">Q/R Centre aide</div></div>
+  <div class="stat-b"><div class="stat-b-val">21</div><div class="stat-b-lbl">Scénarios complets</div></div>
+  <div class="stat-b"><div class="stat-b-val">21</div><div class="stat-b-lbl">Guides & Références</div></div>
+  <div class="stat-b"><div class="stat-b-val">10</div><div class="stat-b-lbl">Métiers couverts</div></div>
+  <div class="stat-b"><div class="stat-b-val">S107</div><div class="stat-b-lbl">Version</div></div>
+</div>
+<div class="container">
+
+<div class="section-title">📖 Références générales</div>
+<div class="grid">
+  <a class="card" href="scenarios/index.html"><div class="card-icon">🎭</div><div class="card-content"><div class="card-title">Bibliothèque de scénarios</div><div class="card-desc">21 scénarios complets — 11 métiers + 11 transverses</div></div></a>
+  <a class="card" href="ref-glossaire.html"><div class="card-icon">📖</div><div class="card-content"><div class="card-title">Glossaire métier</div><div class="card-desc">Tous les termes techniques et réglementaires expliqués</div></div></a>
+  <a class="card" href="ref-raccourcis.html"><div class="card-icon">⌨️</div><div class="card-content"><div class="card-title">Raccourcis & Astuces</div><div class="card-desc">Raccourcis clavier et astuces de productivité</div></div></a>
+  <a class="card" href="ref-faq.html"><div class="card-icon">❓</div><div class="card-content"><div class="card-title">FAQ — Questions fréquentes</div><div class="card-desc">Réponses aux questions les plus posées au support</div></div></a>
 </div>
 
-<!-- ============================================================================ -->
-<!-- KPI GRID                                                                      -->
-<!-- ============================================================================ -->
-<div class="kpi-grid">
-  <div class="kpi-card">
-    <div class="kpi-value">S135</div>
-    <div class="kpi-label">Sprint actuel</div>
-    <div class="kpi-badge">S135 livr&eacute;</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-value">146</div>
-    <div class="kpi-label">Pages UI</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-value">~340</div>
-    <div class="kpi-label">Routes API</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-value">12</div>
-    <div class="kpi-label">Métiers couverts</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-value">244</div>
-    <div class="kpi-label">Q/R Centre aide</div>
-  </div>
+<div class="section-title">📅 Guides opérationnels</div>
+<div class="grid">
+  <a class="card" href="com-onboarding.html"><div class="card-icon">🎯</div><div class="card-content"><div class="card-title">Démarrage rapide</div><div class="card-desc">De l'installation à votre premier client en 2 heures</div></div></a>
+  <a class="card" href="ops-cloture-mensuelle.html"><div class="card-icon">📅</div><div class="card-content"><div class="card-title">Clôture mensuelle</div><div class="card-desc">Checklist complète — facturation, règlements, relances</div></div></a>
+  <a class="card" href="ops-cloture-annuelle.html"><div class="card-icon">📆</div><div class="card-content"><div class="card-title">Clôture annuelle</div><div class="card-desc">Inventaire, FEC, registres, transmission expert-comptable</div></div></a>
+  <a class="card" href="ops-migration.html"><div class="card-icon">🚀</div><div class="card-content"><div class="card-title">Migration</div><div class="card-desc">Importer vos données depuis un autre logiciel</div></div></a>
+  <a class="card" href="ops-reprise-incident.html"><div class="card-icon">🚨</div><div class="card-content"><div class="card-title">Reprise après incident</div><div class="card-desc">Diagnostic, redémarrage et restauration depuis sauvegarde</div></div></a>
 </div>
 
-<!-- ============================================================================ -->
-<!-- MAIN CONTENT                                                                  -->
-<!-- ============================================================================ -->
-<div class="main">
-
-  <!-- ====== NOUVEAUTES S119-S122 ====== -->
-  <div class="section">
-    <div class="section-title"><span class="num">01</span> Nouveautés récentes</div>
-    <div class="news-list">
-
-      <!-- S136_DOCS_NEWS_V1 -->
-      <div class="news-item">
-        <span class="news-sprint">S136</span>
-        <div class="news-content">
-          <div class="news-title">Conformit&eacute; RFE : Plateforme Agr&eacute;&eacute;e (PA)</div>
-          <div class="news-desc">Alignement sur la d&eacute;nomination l&eacute;gale 2026 : &laquo; Plateforme Agr&eacute;&eacute;e (PA) &raquo; remplace &laquo; PDP &raquo; dans tout le produit (&eacute;cran de configuration, libell&eacute;s, glossaire). Cadrage de la r&eacute;ception des factures &eacute;lectroniques (obligation B2B au 01/09/2026) finalis&eacute;. Journal NF525 intact, z&eacute;ro r&eacute;gression.</div>
-          <div class="news-tags">
-            <span class="tag tag-front">Plateforme Agr&eacute;&eacute;e</span>
-            <span class="tag tag-api">RFE 01/09/2026</span>
-            <span class="tag tag-bdd">param_pa</span>
-          </div>
-        </div>
-      </div>
-      <!-- S135_DOCS_NEWS_V1 -->
-      <div class="news-item">
-        <span class="news-sprint">S135</span>
-        <div class="news-content">
-          <div class="news-title">Fiabilit&eacute; de la suite de tests E2E</div>
-          <div class="news-desc">Triage de la suite end-to-end (un faux &eacute;chec venait d'un red&eacute;marrage de l'API sur une session sans contexte tenant, le garde multi-tenant faisant son office), puis quatre durcissements : v&eacute;rification de disponibilit&eacute; de l'API avant les tests, &eacute;tat d'erreur distinct sur la liste des factures (fix B69), assertions renforc&eacute;es, et suppression d'une fuite de secret dans les logs de test. Aucun changement fonctionnel visible &mdash; fiabilit&eacute; seule, 94/94.</div>
-          <div class="news-tags">
-            <span class="tag tag-front">fix B69</span>
-            <span class="tag tag-api">gate readiness</span>
-            <span class="tag tag-bdd">E2E 94/94</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item">
-        <span class="news-sprint">S134</span>
-        <div class="news-content">
-          <div class="news-title">Cloisonnement m&eacute;tier des tableaux de bord &amp; agenda</div>
-          <div class="news-desc">Tableaux de bord et agenda filtr&eacute;s par m&eacute;tier, avec <code>STY_METIER</code> comme source de v&eacute;rit&eacute; (endpoints types de s&eacute;ance et agenda d&eacute;sormais m&eacute;tier-aware).</div>
-          <div class="news-tags">
-            <span class="tag tag-front">agenda m&eacute;tier</span>
-            <span class="tag tag-api">STY_METIER</span>
-            <span class="tag tag-bdd">seance_type</span>
-          </div>
-        </div>
-      </div>
-      <!-- S124_DOCS_NEWS_V1 -->
-      <div class="news-item">
-        <span class="news-sprint">S133</span>
-        <div class="news-content">
-          <div class="news-title">Webhook Calendly sign&eacute; &amp; isolation multi-tenant durcie</div>
-          <div class="news-desc"><!-- S133_NEWS_CATCHUP_V1 -->Validation HMAC-SHA256 du webhook Calendly (rejet fail-closed des appels non sign&eacute;s), <code>getDb()</code> fail-loud sur le scope legacy (fin du fallback silencieux, gate multi-tenant vert) et cadrage de la r&eacute;forme facturation &eacute;lectronique (r&eacute;ception B2B au 01/09/2026).</div>
-          <div class="news-tags">
-            <span class="tag tag-front">Calendly HMAC</span>
-            <span class="tag tag-api">multi-tenant G3</span>
-            <span class="tag tag-bdd">Factur-X cadrage</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item">
-        <span class="news-sprint">S132</span>
-        <div class="news-content">
-          <div class="news-title">Passe s&eacute;curit&eacute; &amp; qualit&eacute;</div>
-          <div class="news-desc">Signature HMAC du webhook Yousign, paiements Stripe en SCA/3DS (PSD2) et durcissement des gardes null sur les champs montants et recherches. Aucun changement fonctionnel visible &mdash; durcissement seul, z&eacute;ro r&eacute;gression.</div>
-          <div class="news-tags">
-            <span class="tag tag-front">guards null</span>
-            <span class="tag tag-api">Yousign HMAC</span>
-            <span class="tag tag-bdd">Stripe 3DS</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item">
-        <span class="news-sprint">S131</span>
-        <div class="news-content">
-          <div class="news-title">Cloisonnement m&eacute;tier &amp; s&eacute;ances par mode</div>
-          <div class="news-desc">Liens et menus filtr&eacute;s par m&eacute;tier, s&eacute;ances cloisonn&eacute;es par mode COLLECTIF/INDIVIDUEL (<code>STY_MODE</code>), r&eacute;paration du d&eacute;tail membre et de la recette &eacute;v&eacute;nement. Tour de recette de 14 d&eacute;fauts sold&eacute;.</div>
-          <div class="news-tags">
-            <span class="tag tag-front">cloisonnement</span>
-            <span class="tag tag-api">recette 14</span>
-            <span class="tag tag-bdd">STY_MODE</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item">
-        <span class="news-sprint">S130</span>
-        <div class="news-content">
-          <div class="news-title">Correctifs Associations &amp; s&eacute;ances-groupe</div>
-          <div class="news-desc">6 correctifs sur le cluster associations / s&eacute;ances de groupe (devis-contrat, colonnes BDD), valid&eacute;s en live. Non-r&eacute;gression Playwright verte et session d'audit manuel sans r&eacute;gression.</div>
-          <div class="news-tags">
-            <span class="tag tag-front">associations</span>
-            <span class="tag tag-api">seances-groupe</span>
-            <span class="tag tag-bdd">devis-contrat</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item">
-        <span class="news-sprint">S129</span>
-        <div class="news-content">
-          <div class="news-title">Migration hors OneDrive</div>
-          <div class="news-desc">Racine projet migr&eacute;e vers <code>C:\AnimGest_Logiciel</code> (sortie d'OneDrive), build direct sans hydratation et suppression des verrous de synchronisation. Socle d'infrastructure stabilis&eacute; avant la bascule NAS.</div>
-          <div class="news-tags">
-            <span class="tag tag-front">build direct</span>
-            <span class="tag tag-api">hors OneDrive</span>
-            <span class="tag tag-bdd">socle NAS</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item">
-        <span class="news-sprint">S128</span>
-        <div class="news-content">
-          <div class="news-title">Finitions pr&eacute;sentation &amp; remboursement de dette</div>
-          <div class="news-desc">11 correctifs UX post-pr&eacute;sentation (notes de frais, pi&egrave;ces jointes s&eacute;ance, recherche g&eacute;o, &eacute;levage), migration i18n compl&egrave;te vers <code>lib/format.ts</code> (46 fichiers) et cha&icirc;nage SHA-256 du journal NF525.</div>
-          <div class="news-tags">
-            <span class="tag tag-front">11 correctifs UX</span>
-            <span class="tag tag-api">i18n format.ts</span>
-            <span class="tag tag-bdd">NF525 hash chain</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item">
-        <span class="news-sprint">S126</span>
-        <div class="news-content">
-          <div class="news-title">Num&eacute;rotation NF525 unifi&eacute;e &amp; r&eacute;gressions</div>
-          <div class="news-desc">12 r&eacute;gressions corrig&eacute;es et num&eacute;rotation de facture unifi&eacute;e au format <code>FAC-AAAA-NNNN</code> avec attribution atomique centralis&eacute;e. Intercepteur d'erreurs API global (toasts non bloquants).</div>
-          <div class="news-tags">
-            <span class="tag tag-front">intercepteur erreurs</span>
-            <span class="tag tag-api">12 regressions</span>
-            <span class="tag tag-bdd">FAC-AAAA-NNNN</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item">
-        <span class="news-sprint">S125</span>
-        <div class="news-content">
-          <div class="news-title">Audit de non-r&eacute;gression automatis&eacute;</div>
-          <div class="news-desc">Industrialisation d'un audit autonome : 28 contr&ocirc;les statiques/BDD + suite Playwright auto-d&eacute;couverte, planificateur hebdomadaire et alerting e-mail / GitHub sur les r&eacute;gressions rouges.</div>
-          <div class="news-tags">
-            <span class="tag tag-front">audit auto</span>
-            <span class="tag tag-api">Playwright L3</span>
-            <span class="tag tag-bdd">28 checks</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item">
-        <span class="news-sprint">S124 J5</span>
-        <div class="news-content">
-          <div class="news-title">4 fixes r&eacute;gressions t0050 + audit getDb routing &mdash; cl&ocirc;ture pr&eacute;-NAS</div>
-          <div class="news-desc">Session de stabilisation avant migration NAS Asustor : modale Modifier tiers compl&eacute;t&eacute;e (Condition paiement + 4 r&eacute;seaux sociaux + autocomplete ville), alignement front sur backend canonical <code>VIL_*</code> (B-A2), <code>RaceSelector</code> align&eacute; sur API <code>string[]</code> (B-A3), guard null sur recherche Animaux (B-A4). Audit <code>getDb</code> routing confirm&eacute; by-design (tid &rarr; pool tenant 3331, absent &rarr; fallback .env legacy 3307). Garde fail-loud <code>GETDB_STRICT</code> livr&eacute;e. 4 sentinels <code>S124_FIX_BA{1..4}_V1</code> pos&eacute;s, tous v&eacute;rifi&eacute;s en live via Chrome MCP.</div>
-          <div class="news-tags">
-            <span class="tag tag-front">4 fixes T0050</span>
-            <span class="tag tag-api">getDb by-design</span>
-            <span class="tag tag-bdd">GETDB_STRICT</span>
-            <span class="tag tag-security">NAS go</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- S123_DOCS_NEWS_V1 -->
-      <div class="news-item">
-        <span class="news-sprint">S123</span>
-        <div class="news-content">
-          <div class="news-title">Audit routing R-26 &mdash; 4 routes param&eacute;triques corrig&eacute;es</div>
-          <div class="news-desc">Quatre handlers <code>/:id</code> masquaient leurs sous-routes (ged-cac/initial, seances-groupe/participants + facturer, bon-retour/lignes, demande-avoir-fourn/lignes). Garde de segment ajout&eacute;e (R-ROUTING-SEGMENT-GUARD). Bugs actifs corrig&eacute;s, 0 r&eacute;gression.</div>
-          <div class="news-tags">
-            <span class="tag tag-api">R-26</span>
-            <span class="tag tag-api">4 routes</span>
-            <span class="tag tag-front">shadow fix</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S127</span>
-        <div class="news-content">
-          <div class="news-title">Journal d'audit NF525 (facture_audit)</div>
-          <div class="news-desc"><!-- S127_DOCS_NF525_V1 -->Nouvelle table <code>facture_audit</code> (append-only) + 4 déclencheurs : journalisation automatique des factures émises / payées / annulées et immutabilité (anti-UPDATE/DELETE). <code>facture_compteur</code> clonée sur tous les tenants. Déployé sur le template + 9 tenants.</div>
-          <div class="news-tags">
-            <span class="tag tag-bdd">facture_audit</span>
-            <span class="tag tag-security">immutabilité</span>
-            <span class="tag tag-bdd">facture_compteur</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S123</span>
-        <div class="news-content">
-          <div class="news-title">Persistance des URLs publiques (param_urls)</div>
-          <div class="news-desc">Nouvelle table <code>param_url</code> (PRM_*) cr&eacute;&eacute;e sur 15 sch&eacute;mas. Handler GET liste + POST upsert avec whitelist de 12 cl&eacute;s (URL_LOF, URL_ICAD, URL_GOOGLE_MAPS...). Correction de la lecture du body (R-44). Configurable via <code>/parametres/api-keys</code>.</div>
-          <div class="news-tags">
-            <span class="tag tag-bdd">param_url x15</span>
-            <span class="tag tag-api">upsert</span>
-            <span class="tag tag-front">/api-keys</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S123</span>
-        <div class="news-content">
-          <div class="news-title">S&eacute;curisation &mdash; suppression du controller deploy mort</div>
-          <div class="news-desc"><code>deploy.controller.ts</code> (code mort, jamais mont&eacute; dans un module) contenait un secret hardcod&eacute; et une primitive d&apos;&eacute;criture-fichier arbitraire. Supprim&eacute; enti&egrave;rement : secret ET surface d&apos;attaque &eacute;limin&eacute;s.</div>
-          <div class="news-tags">
-            <span class="tag tag-security">secret retir&eacute;</span>
-            <span class="tag tag-security">code mort</span>
-            <span class="tag tag-api">cleanup</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S121 J4</span>
-        <div class="news-content">
-          <div class="news-title">Migration WhatsApp Business API tenant-aware</div>
-          <div class="news-desc">Nouvelle table <code>param_whatsapp</code> (10 cols PW_*) avec chiffrement AES-GCM 256-bit. Webhook Meta avec auth HMAC-SHA256 (<code>X-Hub-Signature-256</code>) + GET challenge subscription. Triple format compat WA_/PW_/camelCase. Test E2E 36/36 sur 3 browsers.</div>
-          <div class="news-tags">
-            <span class="tag tag-bdd">14 BDD</span>
-            <span class="tag tag-security">AES-GCM</span>
-            <span class="tag tag-api">webhook Meta</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S121 J3</span>
-        <div class="news-content">
-          <div class="news-title">Migration SMS multi-provider tenant-aware</div>
-          <div class="news-desc">Nouvelle table <code>param_sms</code> (12 cols PSM_*) avec provider ENUM Twilio/OVH/MessageBird/Vonage. Webhook Twilio HMAC-SHA1 base64 (<code>X-Twilio-Signature</code>). Triple format compat SMS_/PSM_/camelCase. Test E2E 36/36 sur 3 browsers.</div>
-          <div class="news-tags">
-            <span class="tag tag-bdd">14 BDD</span>
-            <span class="tag tag-security">AES-GCM</span>
-            <span class="tag tag-api">webhook Twilio</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S121 J1-J2</span>
-        <div class="news-content">
-          <div class="news-title">Migration Klarna tenant-aware + webhook HMAC-SHA256</div>
-          <div class="news-desc">Nouvelle table <code>param_klarna</code> (PK_*) avec credentials chiffres AES-GCM. Webhook <code>POST /api/webhooks/klarna/:tid</code> avec auth HMAC-SHA256 dediee tenant. Cleanup <code>ENT_KLARNA_ACTIF</code> sur 5 BDD.</div>
-          <div class="news-tags">
-            <span class="tag tag-bdd">param_klarna</span>
-            <span class="tag tag-security">HMAC-SHA256</span>
-            <span class="tag tag-api">webhook</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S120 J1</span>
-        <div class="news-content">
-          <div class="news-title">Cleanup ENT_STRIPE_*, fix webhook Stripe, audit dette</div>
-          <div class="news-desc">DROP de 56 colonnes <code>ENT_STRIPE_*</code> sur 14 BDD (suite migration S119 J5). Webhook Stripe restauré avec vérification signature HMAC. Suppression des pages Stripe legacy doublonnées.</div>
-          <div class="news-tags">
-            <span class="tag tag-bdd">14 BDD</span>
-            <span class="tag tag-api">webhook fix</span>
-            <span class="tag tag-security">AES-GCM</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S119 J5</span>
-        <div class="news-content">
-          <div class="news-title">Migration Stripe → AES-GCM tenant-aware</div>
-          <div class="news-desc">Nouvelle table <code>param_stripe</code> avec chiffrement AES-GCM (256 bits) des clés secrètes et webhook secrets. Configuration via <a href="#" style="color:var(--gold)">/parametres/api-keys</a>.</div>
-          <div class="news-tags">
-            <span class="tag tag-bdd">param_stripe</span>
-            <span class="tag tag-security">AES-GCM</span>
-            <span class="tag tag-front">/api-keys</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S119 J1-J4</span>
-        <div class="news-content">
-          <div class="news-title">Migration Eliot / YouSign / PA / SMTP → AES-GCM</div>
-          <div class="news-desc">Tables <code>param_eliot</code>, <code>param_yousign</code>, <code>param_pa</code>, <code>param_smtp</code> avec secrets chiffrés tenant-aware. Helpers <code>loadXxxConfig()</code> centralisés dans <code>api/src/utils/</code>.</div>
-          <div class="news-tags">
-            <span class="tag tag-bdd">4 tables param_*</span>
-            <span class="tag tag-security">AES-GCM</span>
-            <span class="tag tag-ia">Eliot</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S115</span>
-        <div class="news-content">
-          <div class="news-title">B99 Licensing — Activation tenant par clé JWT</div>
-          <div class="news-desc">UI publique <code>/activate</code> (3 pages) pour l'activation des comptes clients. Clés JWT HS256 signées avec rotation dual-secret et révocation hybride (BDD + cache 24h).</div>
-          <div class="news-tags">
-            <span class="tag tag-front">/activate</span>
-            <span class="tag tag-security">JWT HS256</span>
-            <span class="tag tag-bdd">animgest_licensing</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="news-item">
-        <span class="news-sprint">S116</span>
-        <div class="news-content">
-          <div class="news-title">Multi-tenant — AsyncLocalStorage tenantContext</div>
-          <div class="news-desc">Propagation du <code>tid</code> (tenant ID) à travers toutes les promesses/callbacks d'une requête HTTP via <code>tenantContext</code>. Login dédié <code>/t/[tid]/login</code> pour chaque tenant.</div>
-          <div class="news-tags">
-            <span class="tag tag-api">tenantContext</span>
-            <span class="tag tag-front">/t/[tid]/login</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ====== REFERENCES GENERALES ====== -->
-  <div class="section">
-    <div class="section-title"><span class="num">02</span> Références générales</div>
-    <div class="cards-grid">
-      <a class="doc-card" href="scenarios/index.html">
-        <div class="doc-card-icon">🎭</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Bibliothèque de scénarios</div>
-          <div class="doc-card-desc">21 scénarios complets — 11 métiers + 11 transverses</div>
-        </div>
-      </a>
-      <a class="doc-card" href="ref-glossaire.html">
-        <div class="doc-card-icon">📖</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Glossaire <span class="doc-card-new">+ S119/S120</span></div>
-          <div class="doc-card-desc">Termes techniques, réglementaires et nouveautés AES-GCM / multi-tenant</div>
-        </div>
-      </a>
-      <a class="doc-card" href="ref-raccourcis.html">
-        <div class="doc-card-icon">⌨️</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Raccourcis &amp; Astuces</div>
-          <div class="doc-card-desc">Raccourcis clavier et astuces de productivité</div>
-        </div>
-      </a>
-      <a class="doc-card" href="ref-faq.html">
-        <div class="doc-card-icon">❓</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">FAQ <span class="doc-card-new">+ Stripe tenant</span></div>
-          <div class="doc-card-desc">Questions fréquentes — configuration Stripe, sécurité, multi-tenant</div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- ====== GUIDES OPERATIONNELS ====== -->
-  <div class="section">
-    <div class="section-title"><span class="num">03</span> Guides opérationnels</div>
-    <div class="cards-grid">
-      <a class="doc-card" href="com-onboarding.html">
-        <div class="doc-card-icon">🎯</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Démarrage rapide</div>
-          <div class="doc-card-desc">De l'installation à votre premier client en 2 heures</div>
-        </div>
-      </a>
-      <a class="doc-card" href="guide-parametrage.html">
-        <div class="doc-card-icon">⚙️</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Guide de paramétrage</div>
-          <div class="doc-card-desc">Configuration complète : entreprise, charte, API keys, modules</div>
-        </div>
-      </a>
-      <a class="doc-card" href="ops-cloture-mensuelle.html">
-        <div class="doc-card-icon">📅</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Clôture mensuelle</div>
-          <div class="doc-card-desc">Checklist complète — facturation, règlements, relances</div>
-        </div>
-      </a>
-      <a class="doc-card" href="ops-cloture-annuelle.html">
-        <div class="doc-card-icon">📆</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Clôture annuelle</div>
-          <div class="doc-card-desc">Inventaire, FEC, registres, transmission expert-comptable</div>
-        </div>
-      </a>
-      <a class="doc-card" href="ops-migration.html">
-        <div class="doc-card-icon">🚀</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Migration</div>
-          <div class="doc-card-desc">Importer vos données depuis un autre logiciel</div>
-        </div>
-      </a>
-      <a class="doc-card" href="ops-reprise-incident.html">
-        <div class="doc-card-icon">🚨</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Reprise après incident</div>
-          <div class="doc-card-desc">Diagnostic, redémarrage et restauration depuis sauvegarde</div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- ====== REFERENCES TECHNIQUES ====== -->
-  <div class="section">
-    <div class="section-title"><span class="num">04</span> Références techniques</div>
-    <div class="cards-grid">
-      <a class="doc-card" href="tech-schema-donnees.html">
-        <div class="doc-card-icon">🗄️</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Schéma de données <span class="doc-card-new">+ param_*</span></div>
-          <div class="doc-card-desc">Tables principales, relations, conventions BDD, tables AES-GCM</div>
-        </div>
-      </a>
-      <a class="doc-card" href="tech-carte-modules.html">
-        <div class="doc-card-icon">🗺️</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Carte des modules</div>
-          <div class="doc-card-desc">Dépendances et ordre d'activation recommandé</div>
-        </div>
-      </a>
-      <a class="doc-card" href="tech-rgpd.html">
-        <div class="doc-card-icon">🔒</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Guide RGPD</div>
-          <div class="doc-card-desc">Données traitées, droits des personnes, obligations</div>
-        </div>
-      </a>
-      <a class="doc-card" href="tech-mcp.html">
-        <div class="doc-card-icon">🤖</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">MCP — Model Context Protocol</div>
-          <div class="doc-card-desc">Ouvrir Anim'Gest aux clients IA externes · 5 couches sécurité</div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- ====== SCENARIOS TRANSVERSES MIS EN AVANT ====== -->
-  <div class="section">
-    <div class="section-title"><span class="num">05</span> Scénarios transverses</div>
-    <div class="cards-grid">
-      <a class="doc-card" href="scenarios/trans-facturation.html">
-        <div class="doc-card-icon">💳</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Facturation &amp; encaissement <span class="doc-card-new">+ Stripe AES-GCM</span></div>
-          <div class="doc-card-desc">Devis → facture → paiement Stripe (tenant-aware) → relances</div>
-        </div>
-      </a>
-      <a class="doc-card" href="scenarios/trans-eliot.html">
-        <div class="doc-card-icon">🤖</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Eliot IA — Assistant</div>
-          <div class="doc-card-desc">22 outils, boucles agentiques, intégration métier</div>
-        </div>
-      </a>
-      <a class="doc-card" href="scenarios/trans-portail-client.html">
-        <div class="doc-card-icon">🌐</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Portail client</div>
-          <div class="doc-card-desc">Accès sécurisé client, signatures, paiements en ligne</div>
-        </div>
-      </a>
-      <a class="doc-card" href="scenarios/trans-rfe.html">
-        <div class="doc-card-icon">📑</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">RFE — Réforme facturation électronique</div>
-          <div class="doc-card-desc">Factur-X, PA, calendrier 2026-2027</div>
-        </div>
-      </a>
-      <a class="doc-card" href="scenarios/trans-compta-fec.html">
-        <div class="doc-card-icon">📊</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Comptabilité &amp; FEC</div>
-          <div class="doc-card-desc">Plan comptable, écritures, export FEC normalisé</div>
-        </div>
-      </a>
-      <a class="doc-card" href="scenarios/trans-notes-frais.html">
-        <div class="doc-card-icon">💼</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Notes de frais</div>
-          <div class="doc-card-desc">Saisie, validation, export CSV — dépenses professionnelles</div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- ====== FONCTIONNALITES AVANCEES ====== -->
-  <div class="section">
-    <div class="section-title"><span class="num">06</span> Fonctionnalités avancées</div>
-    <div class="cards-grid">
-      <a class="doc-card" href="adv-multi-utilisateurs.html">
-        <div class="doc-card-icon">👥</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Multi-utilisateurs</div>
-          <div class="doc-card-desc">Rôles, permissions et gestion des accès</div>
-        </div>
-      </a>
-      <a class="doc-card" href="adv-multi-sites.html">
-        <div class="doc-card-icon">🏢</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Multi-sites</div>
-          <div class="doc-card-desc">Gérer plusieurs établissements depuis une instance</div>
-        </div>
-      </a>
-      <a class="doc-card" href="adv-compta-avancee.html">
-        <div class="doc-card-icon">📊</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Comptabilité avancée</div>
-          <div class="doc-card-desc">Journaux, plan comptable personnalisé, analytique, TVA</div>
-        </div>
-      </a>
-      <a class="doc-card" href="adv-impayes.html">
-        <div class="doc-card-icon">⚠️</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Impayés &amp; Contentieux</div>
-          <div class="doc-card-desc">Recouvrement en 5 niveaux, intérêts légaux, injonction</div>
-        </div>
-      </a>
-      <a class="doc-card" href="adv-tarification-avancee.html">
-        <div class="doc-card-icon">💰</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Tarification avancée</div>
-          <div class="doc-card-desc">Grilles tarifaires, forfaits, abonnements, marges</div>
-        </div>
-      </a>
-      <a class="doc-card" href="adv-eliot-avance.html">
-        <div class="doc-card-icon">🧠</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Eliot IA — Référence avancée</div>
-          <div class="doc-card-desc">22 outils, boucles agentiques, limites de sécurité</div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- ====== COMMERCIAL ====== -->
-  <div class="section">
-    <div class="section-title"><span class="num">07</span> Commercial &amp; Formules</div>
-    <div class="cards-grid">
-      <a class="doc-card" href="com-formules.html">
-        <div class="doc-card-icon">💎</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Comparatif formules</div>
-          <div class="doc-card-desc">Starter · Pro · Expert — fonctionnalités et tarifs</div>
-        </div>
-      </a>
-      <a class="doc-card" href="com-roi.html">
-        <div class="doc-card-icon">📈</div>
-        <div class="doc-card-content">
-          <div class="doc-card-title">Simulateur ROI</div>
-          <div class="doc-card-desc">Calculez votre retour sur investissement</div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- ====== CHANGELOGS ====== -->
-  <div class="section">
-    <div class="section-title"><span class="num">08</span> Changelogs par sprint</div>
-    <div class="changelog-info">
-      Accès direct aux notes de version, sprint par sprint.
-      Page de synthèse : <a href="docs-changelog.html">docs-changelog.html</a>
-      <br>
-      <strong>47 changelogs</strong> disponibles, du sprint S62 au sprint S115.
-      <em>Manquants : S76, S108-S113, S116-S120 (ticket DETTE-DOCS-02 S121+, régénération depuis HANDOVERS).</em>
-    </div>
-    <div class="changelog-grid">
-      <a class="changelog-link" href="changelog-sprint-S115.html">S115</a>
-      <a class="changelog-link" href="changelog-sprint-S114.html">S114</a>
-      <a class="changelog-link" href="changelog-sprint-S107.html">S107</a>
-      <a class="changelog-link" href="changelog-sprint-S106.html">S106</a>
-      <a class="changelog-link" href="changelog-sprint-S105.html">S105</a>
-      <a class="changelog-link" href="changelog-sprint-S104.html">S104</a>
-      <a class="changelog-link" href="changelog-sprint-S103.html">S103</a>
-      <a class="changelog-link" href="changelog-sprint-S102.html">S102</a>
-      <a class="changelog-link" href="changelog-sprint-S101.html">S101</a>
-      <a class="changelog-link" href="changelog-sprint-S100.html">S100</a>
-      <a class="changelog-link" href="changelog-sprint-S99.html">S99</a>
-      <a class="changelog-link" href="changelog-sprint-S98.html">S98</a>
-      <a class="changelog-link" href="changelog-sprint-S97.html">S97</a>
-      <a class="changelog-link" href="changelog-sprint-S96.html">S96</a>
-      <a class="changelog-link" href="changelog-sprint-S95.html">S95</a>
-      <a class="changelog-link" href="changelog-sprint-S94.html">S94</a>
-      <a class="changelog-link" href="changelog-sprint-S93.html">S93</a>
-      <a class="changelog-link" href="changelog-sprint-S92.html">S92</a>
-      <a class="changelog-link" href="changelog-sprint-S91.html">S91</a>
-      <a class="changelog-link" href="changelog-sprint-S90.html">S90</a>
-      <a class="changelog-link" href="changelog-sprint-S89.html">S89</a>
-      <a class="changelog-link" href="changelog-sprint-S88.html">S88</a>
-      <a class="changelog-link" href="changelog-sprint-S87.html">S87</a>
-      <a class="changelog-link" href="changelog-sprint-S86.html">S86</a>
-      <a class="changelog-link" href="changelog-sprint-S85.html">S85</a>
-      <a class="changelog-link" href="changelog-sprint-S84.html">S84</a>
-      <a class="changelog-link" href="changelog-sprint-S83.html">S83</a>
-      <a class="changelog-link" href="changelog-sprint-S82.html">S82</a>
-      <a class="changelog-link" href="changelog-sprint-S81.html">S81</a>
-      <a class="changelog-link" href="changelog-sprint-S80.html">S80</a>
-      <a class="changelog-link" href="changelog-sprint-S79.html">S79</a>
-      <a class="changelog-link" href="changelog-sprint-S78.html">S78</a>
-      <a class="changelog-link" href="changelog-sprint-S77.html">S77</a>
-      <a class="changelog-link" href="changelog-sprint-S75.html">S75</a>
-      <a class="changelog-link" href="changelog-sprint-S74.html">S74</a>
-      <a class="changelog-link" href="changelog-sprint-S73.html">S73</a>
-      <a class="changelog-link" href="changelog-sprint-S72.html">S72</a>
-      <a class="changelog-link" href="changelog-sprint-S71.html">S71</a>
-      <a class="changelog-link" href="changelog-sprint-S70.html">S70</a>
-      <a class="changelog-link" href="changelog-sprint-S69.html">S69</a>
-      <a class="changelog-link" href="changelog-sprint-S68.html">S68</a>
-      <a class="changelog-link" href="changelog-sprint-S67.html">S67</a>
-      <a class="changelog-link" href="changelog-sprint-S66.html">S66</a>
-      <a class="changelog-link" href="changelog-sprint-S65.html">S65</a>
-      <a class="changelog-link" href="changelog-sprint-S64.html">S64</a>
-      <a class="changelog-link" href="changelog-sprint-S63.html">S63</a>
-      <a class="changelog-link" href="changelog-sprint-S62.html">S62</a>
-    </div>
-  </div>
-
+<div class="section-title">🔧 Références techniques</div>
+<div class="grid">
+  <a class="card" href="tech-schema-donnees.html"><div class="card-icon">🗄️</div><div class="card-content"><div class="card-title">Schéma de données</div><div class="card-desc">Tables principales, relations et conventions BDD</div></div></a>
+  <a class="card" href="tech-carte-modules.html"><div class="card-icon">🗺️</div><div class="card-content"><div class="card-title">Carte des modules</div><div class="card-desc">Dépendances et ordre d'activation recommandé</div></div></a>
+  <a class="card" href="tech-rgpd.html"><div class="card-icon">🔒</div><div class="card-content"><div class="card-title">Guide RGPD</div><div class="card-desc">Données traitées, droits des personnes, obligations</div></div></a>
+  <a class="card" href="tech-mcp.html"><div class="card-icon">🤖</div><div class="card-content"><div class="card-title">MCP — Model Context Protocol</div><div class="card-desc">Ouvrir Anim'Gest aux clients IA externes · 5 couches sécurité · Audit RGPD-safe</div></div></a>
 </div>
 
-<!-- ============================================================================ -->
-<!-- FOOTER                                                                        -->
-<!-- ============================================================================ -->
-<footer>
-  Anim'Gest · NoSage's Editor — Documentation complète — <strong>Sprint S120 J1</strong> · 26 mai 2026 — <a href="https://nicolashermilly.github.io/AnimGest-docs">nicolashermilly.github.io/AnimGest-docs</a>
-  <br>
-  <span style="font-size:0.7rem;font-family:'DM Mono',monospace;color:var(--navy-600)">S120_J1_DOCS_INDEX_REWRITE_V1</span>
-</footer>
+<div class="section-title">💎 Commercial & Formules</div>
+<div class="grid">
+  <a class="card" href="com-formules.html"><div class="card-icon">💎</div><div class="card-content"><div class="card-title">Comparatif formules</div><div class="card-desc">Starter · Pro · Expert — fonctionnalités et tarifs</div></div></a>
+  <a class="card" href="com-roi.html"><div class="card-icon">📊</div><div class="card-content"><div class="card-title">Simulateur ROI</div><div class="card-desc">Calculez votre retour sur investissement</div></div></a>
+</div>
 
-</body>
-</html>
+<div class="section-title">⚡ Fonctionnalités avancées</div>
+<div class="grid">
+  <a class="card" href="75-connecteur-yousign.html"><div class="card-icon">✍️</div><div class="card-content"><div class="card-title">Signature électronique (Yousign)</div><div class="card-desc">Envoyer devis et contrats à signer — signataires ordonnés, copie, suivi</div></div></a>
+  <a class="card" href="adv-multi-utilisateurs.html"><div class="card-icon">👥</div><div class="card-content"><div class="card-title">Multi-utilisateurs</div><div class="card-desc">Rôles, permissions et gestion des accès</div></div></a>
+  <a class="card" href="adv-multi-sites.html"><div class="card-icon">🏢</div><div class="card-content"><div class="card-title">Multi-sites</div><div class="card-desc">Gérer plusieurs établissements depuis une instance</div></div></a>
+  <a class="card" href="adv-compta-avancee.html"><div class="card-icon">📊</div><div class="card-content"><div class="card-title">Comptabilité avancée</div><div class="card-desc">Journaux, plan comptable personnalisé, analytique, TVA</div></div></a>
+    <!-- S85-LIENS -->
+    <a class="card" href="scenarios/trans-notes-frais.html"><div class="card-icon">💳</div><div class="card-content"><div class="card-title">Notes de frais</div><div class="card-desc">Saisie, validation, export CSV &mdash; d&eacute;penses professionnelles</div></div></a>
+    <a class="card" href="scenarios/trans-seances-groupe.html"><div class="card-icon">👥</div><div class="card-content"><div class="card-title">S&eacute;ances de groupe</div><div class="card-desc">Capacit&eacute;, participants, tarification diff&eacute;renci&eacute;e</div></div></a>
+  <a class="card" href="adv-impayes.html"><div class="card-icon">⚠️</div><div class="card-content"><div class="card-title">Impayés & Contentieux</div><div class="card-desc">Recouvrement en 5 niveaux, intérêts légaux, injonction</div></div></a>
+  <a class="card" href="adv-tarification-avancee.html"><div class="card-icon">💰</div><div class="card-content"><div class="card-title">Tarification avancée</div><div class="card-desc">Grilles tarifaires, forfaits, abonnements, marges</div></div></a>
+  <a class="card" href="adv-eliot-avance.html"><div class="card-icon">🤖</div><div class="card-content"><div class="card-title">Eliot IA — Référence</div><div class="card-desc">22 outils, boucles agentiques, limites de sécurité</div></div></a>
+</div>
+
+</div>
+<footer>Anim'Gest · NoSage's Editor — Documentation complète — Sprint S114 · 2026 — nicolashermilly.github.io/AnimGest-docs</footer>
+<!-- S118 DETTE-DOCS-01 changelogs TOC -->
+<section style="margin-top:32px; padding:24px; background:#1E293B; border-radius:8px; border:1px solid #334155;">
+  <h2 style="color:#F59E0B; margin:0 0 16px 0; font-family:'Playfair Display', serif;">Changelogs par sprint</h2>
+  <p style="color:#E2E8F0; margin:0 0 12px 0;">
+    Acces direct aux notes de version, sprint par sprint.
+    Page de synthese : <a href="docs-changelog.html" style="color:#06B6D4; font-weight:600;">docs-changelog.html</a>
+  </p>
+  <p style="color:#94A3B8; font-size:0.85rem; margin:0 0 16px 0;">
+    <strong>47 changelogs</strong> disponibles, du sprint S62 au sprint S115.
+    <em style="color:#F59E0B;">Manquants : S76, S108, S109, S110, S111, S112, S113 (ticket DETTE-DOCS-02 S119+, regeneration depuis HANDOVERS).</em>
+  </p>
+  <ul style="list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(90px, 1fr)); gap:8px;">
+    <li><a href="changelog-sprint-S115.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S115</a></li>
+    <li><a href="changelog-sprint-S114.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S114</a></li>
+    <li><a href="changelog-sprint-S107.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S107</a></li>
+    <li><a href="changelog-sprint-S106.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S106</a></li>
+    <li><a href="changelog-sprint-S105.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S105</a></li>
+    <li><a href="changelog-sprint-S104.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S104</a></li>
+    <li><a href="changelog-sprint-S103.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S103</a></li>
+    <li><a href="changelog-sprint-S102.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S102</a></li>
+    <li><a href="changelog-sprint-S101.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S101</a></li>
+    <li><a href="changelog-sprint-S100.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S100</a></li>
+    <li><a href="changelog-sprint-S99.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S99</a></li>
+    <li><a href="changelog-sprint-S98.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S98</a></li>
+    <li><a href="changelog-sprint-S97.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S97</a></li>
+    <li><a href="changelog-sprint-S96.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S96</a></li>
+    <li><a href="changelog-sprint-S95.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S95</a></li>
+    <li><a href="changelog-sprint-S94.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S94</a></li>
+    <li><a href="changelog-sprint-S93.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S93</a></li>
+    <li><a href="changelog-sprint-S92.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S92</a></li>
+    <li><a href="changelog-sprint-S91.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S91</a></li>
+    <li><a href="changelog-sprint-S90.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S90</a></li>
+    <li><a href="changelog-sprint-S89.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S89</a></li>
+    <li><a href="changelog-sprint-S88.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S88</a></li>
+    <li><a href="changelog-sprint-S87.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S87</a></li>
+    <li><a href="changelog-sprint-S86.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S86</a></li>
+    <li><a href="changelog-sprint-S85.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S85</a></li>
+    <li><a href="changelog-sprint-S84.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S84</a></li>
+    <li><a href="changelog-sprint-S83.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S83</a></li>
+    <li><a href="changelog-sprint-S82.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S82</a></li>
+    <li><a href="changelog-sprint-S81.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S81</a></li>
+    <li><a href="changelog-sprint-S80.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S80</a></li>
+    <li><a href="changelog-sprint-S79.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S79</a></li>
+    <li><a href="changelog-sprint-S78.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S78</a></li>
+    <li><a href="changelog-sprint-S77.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S77</a></li>
+    <li><a href="changelog-sprint-S75.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S75</a></li>
+    <li><a href="changelog-sprint-S74.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S74</a></li>
+    <li><a href="changelog-sprint-S73.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S73</a></li>
+    <li><a href="changelog-sprint-S72.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S72</a></li>
+    <li><a href="changelog-sprint-S71.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S71</a></li>
+    <li><a href="changelog-sprint-S70.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S70</a></li>
+    <li><a href="changelog-sprint-S69.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S69</a></li>
+    <li><a href="changelog-sprint-S68.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S68</a></li>
+    <li><a href="changelog-sprint-S67.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S67</a></li>
+    <li><a href="changelog-sprint-S66.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S66</a></li>
+    <li><a href="changelog-sprint-S65.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S65</a></li>
+    <li><a href="changelog-sprint-S64.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S64</a></li>
+    <li><a href="changelog-sprint-S63.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S63</a></li>
+    <li><a href="changelog-sprint-S62.html" style="color:#06B6D4; text-decoration:none; padding:6px 8px; display:block; background:#0F172A; border-radius:4px; text-align:center; font-family:'DM Mono', monospace; font-size:0.85rem; border:1px solid #334155;">S62</a></li>
+  </ul>
+</section>
+</body></html>
