@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connecteur Klarna — Paiement fractionné — Anim'Gest Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F172A; --navy-800:#1E293B; --navy-700:#334155; --navy-600:#475569;
+  --gold:#F59E0B; --gold-light:#FCD34D; --gold-pale:#FEF3C7;
+  --cyan:#06B6D4; --violet:#4F46E5; --green:#10B981; --red:#EF4444; --orange:#F97316;
+  --text:#E2E8F0; --text-muted:#94A3B8; --border:#1E293B; --card:#1E293B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+code{font-family:'DM Mono',monospace;font-size:0.82em;background:rgba(255,255,255,0.06);padding:1px 6px;border-radius:5px;color:var(--gold-light)}
+.mono{font-family:'DM Mono',monospace}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,158,11,0.2);padding:14px 32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);font-weight:700}
+nav a{color:var(--text-muted);font-size:0.85rem;font-weight:500;transition:color .2s}
+nav a:hover{color:var(--gold)}
+.nav-badge{margin-left:auto;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);color:var(--gold);padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:600}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1E293B 50%,#0F172A 100%);border-bottom:1px solid rgba(245,158,11,0.15);padding:58px 32px 44px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,158,11,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-label{display:inline-block;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--gold);font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:16px;position:relative;z-index:1}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:#F8FAFC;margin-bottom:12px;position:relative;z-index:1}
+.hero p{color:var(--text-muted);font-size:0.95rem;max-width:620px;margin:0 auto;position:relative;z-index:1}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(245,158,11,0.1);border-top:1px solid rgba(245,158,11,0.1);border-bottom:1px solid rgba(245,158,11,0.1)}
+.kpi-card{background:var(--navy);padding:24px 16px;text-align:center;transition:background .2s}
+.kpi-card:hover{background:var(--navy-800)}
+.kpi-value{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--gold);line-height:1.1;margin-bottom:6px}
+.kpi-label{font-size:0.72rem;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
+
+/* MAIN */
+.main{max-width:880px;margin:0 auto;padding:48px 24px 32px}
+.section{margin-bottom:48px}
+.section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:#F8FAFC;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid rgba(245,158,11,0.2);display:flex;align-items:center;gap:12px}
+.section-title .num{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--gold);font-size:0.75rem;font-weight:700;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace}
+p.lead{color:var(--text);margin-bottom:14px}
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.feature-list li{padding-left:20px;position:relative;color:var(--text-muted)}
+.feature-list li::before{content:'▸';position:absolute;left:0;color:var(--gold)}
+.feature-list b{color:var(--text)}
+
+/* STEPS */
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 18px 52px;border-left:1px solid rgba(255,255,255,0.08);margin-left:16px}
+ol.steps>li:last-child{border-left-color:transparent;padding-bottom:0}
+ol.steps>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:-15px;top:-2px;width:30px;height:30px;border-radius:8px;background:var(--navy);border:1px solid rgba(245,158,11,0.4);color:var(--gold);font-weight:700;font-size:0.78rem;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace}
+ol.steps>li h3{font-size:0.98rem;margin:2px 0 4px;color:#F8FAFC}
+ol.steps>li .d{font-size:0.88rem;color:var(--text-muted)}
+.ui{font-family:'DM Mono',monospace;font-size:0.82em;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);color:var(--gold-light);padding:1px 7px;border-radius:5px;white-space:nowrap}
+
+/* NOTES */
+.note{border-radius:8px;padding:12px 14px;font-size:0.86rem;margin:12px 0;border:1px solid}
+.note.warn{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.3);color:var(--gold-light)}
+.note.info{background:rgba(6,182,212,0.08);border-color:rgba(6,182,212,0.3);color:#67E8F9}
+.note b{color:#F8FAFC}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:0.86rem;margin:6px 0}
+th{text-align:left;padding:10px 14px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.08)}
+td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--text-muted);vertical-align:top}
+td:first-child{color:var(--text);font-weight:500}
+tr:last-child td{border-bottom:none}
+
+footer{text-align:center;padding:32px;border-top:1px solid rgba(255,255,255,0.06);font-size:0.8rem;color:var(--text-muted);margin-top:48px}
+@media(max-width:600px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:1.9rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="tuto-klarna.html">Tutoriel vidéo</a>
+  <a href="ref-faq.html">FAQ</a>
+  <span class="nav-badge">S138</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">Connecteur · Paiement</div>
+  <h1>Paiement fractionné — Klarna</h1>
+  <p>Proposez le paiement en plusieurs fois à vos clients via Klarna, avec rapprochement automatique des règlements. Chaque établissement dispose de sa propre adresse de notification sécurisée.</p>
+</div>
+
+<div class="kpi-grid"><div class="kpi-card"><div class="kpi-value">Par tenant</div><div class="kpi-label">Webhook dédié</div></div><div class="kpi-card"><div class="kpi-value">HMAC-SHA256</div><div class="kpi-label">Webhook signé</div></div><div class="kpi-card"><div class="kpi-value">AES-256</div><div class="kpi-label">Identifiants chiffrés</div></div><div class="kpi-card"><div class="kpi-value">Auto</div><div class="kpi-label">Rapprochement</div></div></div>
+
+<div class="main">
+
+  <div class="section">
+    <div class="section-title"><span class="num">01</span> Ce que permet le connecteur</div>
+    <p class="lead">Le connecteur Klarna ajoute le <b>paiement fractionné</b> à vos encaissements Anim'Gest.</p><ul class="feature-list"><li><b>Paiement en plusieurs fois</b> proposé à vos clients via Klarna.</li><li><b>Rapprochement automatique</b> : à chaque notification de paiement, le règlement est enregistré sur la facture.</li><li><b>Notification sécurisée</b> (webhook signé HMAC-SHA256) : la signature est vérifiée avant tout enregistrement.</li><li><b>Une adresse par établissement</b> : l'URL de notification se termine par votre identifiant <code>tXXXXXX</code>.</li><li><b>Identifiants chiffrés</b> (AES-256), jamais affichés en clair.</li></ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">02</span> Prérequis</div>
+    <table><tbody><tr><td style="width:34%">Compte Klarna</td><td>Un compte marchand Klarna actif. <b>Playground</b> pour tester, <b>Production</b> pour les encaissements réels.</td></tr><tr><td>Identifiants API</td><td>Vos clés d'API Klarna, à renseigner dans <span class="ui">Paramètres › API › Klarna</span>. Stockées <b>chiffrées</b>.</td></tr><tr><td>Identifiant établissement</td><td>Au format <code>tXXXXXX</code>, visible dans l'URL de votre espace. Il termine l'adresse du webhook.</td></tr><tr><td>Accès Merchant Portal</td><td>Droits suffisants pour déclarer une URL de notification dans votre espace Klarna.</td></tr></tbody></table>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">03</span> Configurer le connecteur</div>
+    <ol class="steps"><li><h3>Repérer votre identifiant</h3><div class="d">Notez l'identifiant <code>tXXXXXX</code> de votre établissement, visible dans l'URL de votre espace.</div></li><li><h3>Récupérer vos identifiants Klarna</h3><div class="d">Depuis votre Merchant Portal Klarna, récupérez vos clés d'API (Playground ou Production).</div></li><li><h3>Renseigner dans Anim'Gest</h3><div class="d">Dans <span class="ui">Paramètres › API › Klarna</span>, collez vos identifiants, choisissez l'environnement, <b>Enregistrez</b>, puis <b>Tester la connexion</b>.</div></li><li><h3>Déclarer l'URL de notification</h3><div class="d">Dans Klarna, déclarez l'adresse propre à votre établissement : <code>https://animgest-app-saas.no-sages-editor.com/api/webhooks/klarna/tXXXXXX</code>.</div></li><li><h3>Tester</h3><div class="d">Déclenchez un paiement de test : la signature est vérifiée et le règlement apparaît sur la facture.</div></li></ol><div class="note info"><b>Bon à savoir.</b> L'adresse du webhook est <b>propre à chaque établissement</b> : elle se termine par <code>tXXXXXX</code>. Ne réutilisez pas l'URL d'un autre établissement.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">04</span> Suivi &amp; dépannage</div>
+    <table><thead><tr><th>Cas</th><th>Signification &amp; action</th></tr></thead><tbody><tr><td>Test 200</td><td>Identifiants valides, connexion Klarna établie.</td></tr><tr><td>Test 401 / 403</td><td><b>Identifiants invalides.</b> Vérifiez la clé et l'environnement (Playground vs Production).</td></tr><tr><td>Webhook rejeté</td><td><b>Signature invalide.</b> Vérifiez l'URL déclarée côté Klarna et l'identifiant <code>tXXXXXX</code>.</td></tr><tr><td>Aucune notification</td><td>URL non (ou mal) déclarée dans Klarna — recopiez l'adresse de l'étape 4.</td></tr></tbody></table><div class="note info"><b>Sans doublon.</b> Un même paiement n'est rapproché qu'une seule fois.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">05</span> Bonnes pratiques</div>
+    <ul class="feature-list"><li><b>Playground d'abord</b>, puis Production pour les encaissements réels.</li><li><b>Une URL par établissement</b> : vérifiez que <code>tXXXXXX</code> est bien le vôtre.</li><li><b>Après un paiement test</b>, contrôlez le règlement sur la facture.</li><li>Si vous changez d'identifiants, recopiez-les et re-testez la connexion.</li></ul><div class="note warn"><b>Confidentialité.</b> Vos clés Klarna ne doivent jamais être partagées. Stockées chiffrées, non réaffichées.</div>
+  </div>
+
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor · Connecteur Klarna · <a href="tuto-klarna.html">Voir le tutoriel vidéo</a> · <a href="index.html">← Retour à l'accueil</a>
+</footer>
+
+</body>
+</html>
