@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connecteur SMTP — Envoi d'e-mails — Anim'Gest Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F172A; --navy-800:#1E293B; --navy-700:#334155; --navy-600:#475569;
+  --gold:#F59E0B; --gold-light:#FCD34D; --gold-pale:#FEF3C7;
+  --cyan:#06B6D4; --violet:#4F46E5; --green:#10B981; --red:#EF4444; --orange:#F97316;
+  --text:#E2E8F0; --text-muted:#94A3B8; --border:#1E293B; --card:#1E293B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+code{font-family:'DM Mono',monospace;font-size:0.82em;background:rgba(255,255,255,0.06);padding:1px 6px;border-radius:5px;color:var(--gold-light)}
+.mono{font-family:'DM Mono',monospace}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,158,11,0.2);padding:14px 32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);font-weight:700}
+nav a{color:var(--text-muted);font-size:0.85rem;font-weight:500;transition:color .2s}
+nav a:hover{color:var(--gold)}
+.nav-badge{margin-left:auto;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);color:var(--gold);padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:600}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1E293B 50%,#0F172A 100%);border-bottom:1px solid rgba(245,158,11,0.15);padding:58px 32px 44px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,158,11,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-label{display:inline-block;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--gold);font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:16px;position:relative;z-index:1}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:#F8FAFC;margin-bottom:12px;position:relative;z-index:1}
+.hero p{color:var(--text-muted);font-size:0.95rem;max-width:620px;margin:0 auto;position:relative;z-index:1}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(245,158,11,0.1);border-top:1px solid rgba(245,158,11,0.1);border-bottom:1px solid rgba(245,158,11,0.1)}
+.kpi-card{background:var(--navy);padding:24px 16px;text-align:center;transition:background .2s}
+.kpi-card:hover{background:var(--navy-800)}
+.kpi-value{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--gold);line-height:1.1;margin-bottom:6px}
+.kpi-label{font-size:0.72rem;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
+
+/* MAIN */
+.main{max-width:880px;margin:0 auto;padding:48px 24px 32px}
+.section{margin-bottom:48px}
+.section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:#F8FAFC;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid rgba(245,158,11,0.2);display:flex;align-items:center;gap:12px}
+.section-title .num{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--gold);font-size:0.75rem;font-weight:700;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace}
+p.lead{color:var(--text);margin-bottom:14px}
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.feature-list li{padding-left:20px;position:relative;color:var(--text-muted)}
+.feature-list li::before{content:'▸';position:absolute;left:0;color:var(--gold)}
+.feature-list b{color:var(--text)}
+
+/* STEPS */
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 18px 52px;border-left:1px solid rgba(255,255,255,0.08);margin-left:16px}
+ol.steps>li:last-child{border-left-color:transparent;padding-bottom:0}
+ol.steps>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:-15px;top:-2px;width:30px;height:30px;border-radius:8px;background:var(--navy);border:1px solid rgba(245,158,11,0.4);color:var(--gold);font-weight:700;font-size:0.78rem;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace}
+ol.steps>li h3{font-size:0.98rem;margin:2px 0 4px;color:#F8FAFC}
+ol.steps>li .d{font-size:0.88rem;color:var(--text-muted)}
+.ui{font-family:'DM Mono',monospace;font-size:0.82em;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);color:var(--gold-light);padding:1px 7px;border-radius:5px;white-space:nowrap}
+
+/* NOTES */
+.note{border-radius:8px;padding:12px 14px;font-size:0.86rem;margin:12px 0;border:1px solid}
+.note.warn{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.3);color:var(--gold-light)}
+.note.info{background:rgba(6,182,212,0.08);border-color:rgba(6,182,212,0.3);color:#67E8F9}
+.note b{color:#F8FAFC}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:0.86rem;margin:6px 0}
+th{text-align:left;padding:10px 14px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.08)}
+td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--text-muted);vertical-align:top}
+td:first-child{color:var(--text);font-weight:500}
+tr:last-child td{border-bottom:none}
+
+footer{text-align:center;padding:32px;border-top:1px solid rgba(255,255,255,0.06);font-size:0.8rem;color:var(--text-muted);margin-top:48px}
+@media(max-width:600px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:1.9rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="tuto-smtp.html">Tutoriel vidéo</a>
+  <a href="ref-faq.html">FAQ</a>
+  <span class="nav-badge">S138</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">Connecteur · E-mail</div>
+  <h1>SMTP — Envoi d'e-mails</h1>
+  <p>Envoyez vos devis, factures et relances depuis votre propre adresse professionnelle. Identifiants chiffrés, expéditeur à votre domaine.</p>
+</div>
+
+<div class="kpi-grid"><div class="kpi-card"><div class="kpi-value">E-mail</div><div class="kpi-label">SMTP sortant</div></div><div class="kpi-card"><div class="kpi-value">Votre domaine</div><div class="kpi-label">Meilleure délivrabilité</div></div><div class="kpi-card"><div class="kpi-value">AES-256</div><div class="kpi-label">Identifiants chiffrés</div></div><div class="kpi-card"><div class="kpi-value">TLS/SSL</div><div class="kpi-label">Chiffrement</div></div></div>
+
+<div class="main">
+
+  <div class="section">
+    <div class="section-title"><span class="num">01</span> Ce que permet le connecteur</div>
+    <p class="lead"><b>SMTP</b> permet d'envoyer vos e-mails (devis, factures, relances) depuis <b>votre propre adresse professionnelle</b>.</p><ul class="feature-list"><li>Envoi des documents directement aux clients.</li><li>Expéditeur à votre nom de domaine (meilleure délivrabilité).</li><li>Identifiants stockés <b>chiffrés</b> (AES-256).</li><li>Compatible avec la plupart des fournisseurs (OVH, Gmail, Microsoft 365…).</li></ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">02</span> Prérequis</div>
+    <table><tbody><tr><td style="width:34%">Serveur SMTP</td><td>Hôte et port fournis par votre fournisseur d'e-mail (ex. <code>smtp.exemple.fr</code>, port <code>587</code>).</td></tr><tr><td>Identifiants</td><td>Nom d'utilisateur et mot de passe (idéalement un <b>mot de passe d'application</b>).</td></tr><tr><td>Expéditeur</td><td>Adresse d'envoi (à votre domaine), à saisir dans <span class="ui">Paramètres › API › SMTP</span>.</td></tr><tr><td>Chiffrement</td><td>TLS (port 587) ou SSL (port 465) selon le fournisseur.</td></tr></tbody></table>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">03</span> Configurer le connecteur</div>
+    <ol class="steps"><li><h3>Récupérer les paramètres SMTP</h3><div class="d">Relevez l'hôte, le port et vos identifiants chez votre fournisseur d'e-mail.</div></li><li><h3>Saisir dans Anim'Gest</h3><div class="d">Dans <span class="ui">Paramètres › API › SMTP</span>, renseignez hôte, port, utilisateur et mot de passe.</div></li><li><h3>Expéditeur &amp; chiffrement</h3><div class="d">Indiquez l'adresse d'expédition et le mode de chiffrement (TLS/SSL), puis <b>Enregistrez</b>.</div></li><li><h3>Tester l'envoi</h3><div class="d">Cliquez sur <b>Envoyer un e-mail de test</b> : s'il arrive, le connecteur est opérationnel.</div></li></ol><div class="note info"><b>Délivrabilité.</b> Configurez SPF et DKIM sur votre domaine pour éviter le classement en spam.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">04</span> Suivi &amp; dépannage</div>
+    <table><thead><tr><th>Cas</th><th>Signification &amp; action</th></tr></thead><tbody><tr><td>Test OK</td><td>L'e-mail est parti : connecteur opérationnel.</td></tr><tr><td>Authentication failed</td><td>Identifiants incorrects : vérifiez utilisateur/mot de passe (mot de passe d'application si MFA).</td></tr><tr><td>Connection refused / timeout</td><td>Hôte ou port incorrect, ou chiffrement inadapté (TLS vs SSL).</td></tr><tr><td>E-mail en spam</td><td>Configurez SPF/DKIM ; utilisez un expéditeur à votre domaine.</td></tr></tbody></table>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="num">05</span> Bonnes pratiques</div>
+    <ul class="feature-list"><li>Préférez un <b>mot de passe d'application</b> dédié.</li><li>Expéditeur à votre <b>nom de domaine</b>, pas une adresse gratuite générique.</li><li>Activez <b>SPF et DKIM</b> pour la délivrabilité.</li><li>Testez après chaque changement de mot de passe.</li></ul><div class="note warn"><b>Sécurité.</b> Le mot de passe SMTP est stocké chiffré, jamais réaffiché après enregistrement.</div>
+  </div>
+
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor · Connecteur E-mail (SMTP) · <a href="tuto-smtp.html">Voir le tutoriel vidéo</a> · <a href="index.html">← Retour à l'accueil</a>
+</footer>
+
+</body>
+</html>
