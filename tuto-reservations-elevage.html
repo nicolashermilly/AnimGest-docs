@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutoriel vidéo — Réservations (élevage) — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F172A; --navy-800:#1E293B; --navy-700:#334155; --navy-600:#475569;
+  --gold:#F59E0B; --gold-light:#FCD34D; --gold-pale:#FEF3C7;
+  --cyan:#06B6D4; --violet:#4F46E5; --green:#10B981; --red:#EF4444; --orange:#F97316;
+  --text:#E2E8F0; --text-muted:#94A3B8; --border:#1E293B; --card:#1E293B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+code{font-family:'DM Mono',monospace;font-size:.82em;background:rgba(255,255,255,.06);padding:1px 6px;border-radius:5px;color:var(--gold-light)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,158,11,.2);padding:14px 32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);font-weight:700}
+nav a{color:var(--text-muted);font-size:.85rem;font-weight:500;transition:color .2s}
+nav a:hover{color:var(--gold)}
+.nav-badge{margin-left:auto;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);color:var(--gold);padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1E293B 50%,#0F172A 100%);border-bottom:1px solid rgba(245,158,11,.15);padding:46px 24px 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,158,11,.08) 0%,transparent 70%);pointer-events:none}
+.hero-label{display:inline-block;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:var(--gold);font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:14px;position:relative;z-index:1}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:700;color:#F8FAFC;margin-bottom:10px;position:relative;z-index:1}
+.hero p{color:var(--text-muted);font-size:.92rem;max-width:600px;margin:0 auto;position:relative;z-index:1}
+
+.main{max-width:920px;margin:0 auto;padding:34px 20px 48px}
+
+/* PLAYER */
+.player{background:var(--card);border:1px solid rgba(245,158,11,.25);border-radius:14px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.stage{position:relative;background:#0B1220;aspect-ratio:16/9;overflow:hidden}
+.screen{position:absolute;inset:0;opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease;padding:26px;display:flex;flex-direction:column;gap:14px}
+.screen.active{opacity:1;transform:none}
+.win{background:var(--navy-800);border:1px solid rgba(255,255,255,.08);border-radius:10px;flex:1;display:flex;flex-direction:column;overflow:hidden}
+.win-bar{background:#162133;border-bottom:1px solid rgba(255,255,255,.06);padding:9px 14px;display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text-muted)}
+.dot{width:9px;height:9px;border-radius:50%}
+.dot.r{background:#FF5F57}.dot.y{background:#FEBC2E}.dot.g{background:#28C840}
+.win-title{margin-left:10px;font-family:'DM Mono',monospace;font-size:.74rem;color:var(--text-muted)}
+.win-body{flex:1;padding:16px;display:flex;flex-direction:column;gap:12px;justify-content:center}
+
+/* mock components */
+.dropzone{border:2px dashed rgba(245,158,11,.45);border-radius:10px;padding:26px;text-align:center;color:var(--text-muted);background:rgba(245,158,11,.04)}
+.dropzone .ic{font-size:1.8rem;display:block;margin-bottom:6px}
+.field{background:#0F1B2D;border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:9px 12px;font-size:.82rem;color:var(--text)}
+.field .lbl{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:3px}
+.field .mono{font-family:'DM Mono',monospace;color:var(--gold-light)}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.chip{display:inline-flex;align-items:center;gap:6px;background:rgba(79,70,229,.14);border:1px solid rgba(79,70,229,.35);color:#C7D2FE;border-radius:16px;padding:4px 12px;font-size:.78rem;width:max-content}
+.chip.gold{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.4);color:var(--gold-light)}
+.docpage{background:#fff;color:#0F172A;border-radius:6px;padding:14px;font-size:.62rem;position:relative;min-height:120px}
+.docpage .h{background:#0F172A;color:#fff;text-align:center;font-family:'Playfair Display',serif;letter-spacing:1px;padding:8px;border-radius:4px;margin:-14px -14px 10px}
+.toggle{display:flex;border:1px solid rgba(255,255,255,.12);border-radius:8px;overflow:hidden;width:max-content}
+.toggle span{padding:7px 14px;font-size:.8rem;color:var(--text-muted)}
+.toggle span.on{background:rgba(245,158,11,.16);color:var(--gold-light)}
+.btn-send{align-self:flex-end;background:var(--gold);color:#0F172A;font-weight:700;font-size:.82rem;padding:9px 18px;border-radius:8px}
+.status{display:flex;align-items:center;gap:10px;font-size:.85rem}
+.pill{font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:12px}
+.pill.cur{background:rgba(245,158,11,.15);color:var(--gold);border:1px solid rgba(245,158,11,.3)}
+.pill.done{background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.25)}
+.bar{height:6px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light))}
+.muted{color:var(--text-muted);font-size:.8rem}
+.big{font-family:'Playfair Display',serif;font-size:1.1rem;color:#F8FAFC}
+
+/* url field (endpoint par tenant) */
+.urlbar{font-family:'DM Mono',monospace;font-size:.8rem;background:#0F1B2D;border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:11px 12px;color:var(--text);word-break:break-all}
+.urlbar .tid{color:var(--gold-light);font-weight:600}
+
+/* checklist evenement */
+.evt{display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--text-muted)}
+.evt .box{width:16px;height:16px;border-radius:4px;border:1px solid rgba(255,255,255,.2)}
+.evt.on{color:var(--text)}
+.evt.on .box{background:var(--gold);border-color:var(--gold);color:#0F172A;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700}
+.evt .mono{font-family:'DM Mono',monospace}
+
+/* highlight pulse */
+.hl{position:relative}
+.hl::after{content:'';position:absolute;inset:-6px;border:2px solid var(--gold);border-radius:10px;animation:pulse 1.6s infinite;pointer-events:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(245,158,11,.45);opacity:1}70%{box-shadow:0 0 0 10px rgba(245,158,11,0);opacity:.7}100%{box-shadow:0 0 0 0 rgba(245,158,11,0);opacity:1}}
+
+/* legende (caption overlay) */
+.legende{position:absolute;left:18px;top:18px;z-index:5;background:rgba(15,23,42,.85);border:1px solid rgba(245,158,11,.4);color:var(--gold-light);font-size:.74rem;font-weight:600;letter-spacing:.03em;padding:6px 12px;border-radius:8px;backdrop-filter:blur(6px);max-width:70%}
+.stepnum{position:absolute;right:18px;top:18px;z-index:5;font-family:'DM Mono',monospace;font-size:.74rem;color:var(--gold);background:rgba(15,23,42,.85);border:1px solid rgba(245,158,11,.3);padding:5px 10px;border-radius:8px}
+
+/* subtitle (commentaire) */
+.subtitle{position:absolute;left:0;right:0;bottom:0;z-index:5;background:linear-gradient(to top,rgba(11,18,32,.96),rgba(11,18,32,.6) 70%,transparent);padding:30px 22px 16px;font-size:.92rem;color:#F1F5F9;text-align:center}
+
+/* controls */
+.controls{display:flex;align-items:center;gap:14px;padding:14px 18px;background:#162133;border-top:1px solid rgba(255,255,255,.06)}
+.ctrl-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text);border-radius:8px;padding:8px 12px;font-size:.85rem;cursor:pointer;font-family:inherit;transition:.15s}
+.ctrl-btn:hover{border-color:rgba(245,158,11,.5);color:var(--gold-light)}
+.ctrl-btn.play{background:var(--gold);color:#0F172A;font-weight:700;border-color:var(--gold)}
+.progress{flex:1;height:6px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width .25s linear}
+.counter{font-family:'DM Mono',monospace;font-size:.78rem;color:var(--text-muted);min-width:42px;text-align:right}
+
+/* SCRIPT section */
+.section-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600;color:#F8FAFC;margin:40px 0 16px;padding-bottom:10px;border-bottom:1px solid rgba(245,158,11,.2);display:flex;align-items:center;gap:12px}
+.section-title .num{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:var(--gold);font-size:.72rem;font-weight:700;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace}
+.script{display:flex;flex-direction:column;gap:14px;counter-reset:sc}
+.sc{counter-increment:sc;background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px 16px 14px 56px;position:relative}
+.sc::before{content:counter(sc,decimal-leading-zero);position:absolute;left:14px;top:14px;width:30px;height:30px;border-radius:8px;background:var(--navy);border:1px solid rgba(245,158,11,.4);color:var(--gold);font-weight:700;font-size:.78rem;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace}
+.sc .t{font-weight:600;color:#F8FAFC;margin-bottom:3px}
+.sc .vo{color:var(--text);font-size:.92rem}
+.sc .ec{color:var(--text-muted);font-size:.8rem;margin-top:5px}
+.sc .ec b{color:var(--gold-light);font-weight:600}
+
+.tip{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.3);color:#67E8F9;border-radius:8px;padding:12px 14px;font-size:.86rem;margin-top:18px}
+.tip b{color:#F8FAFC}
+
+/* depannage */
+.troubleshoot{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.ts-row{display:flex;align-items:flex-start;gap:12px;background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:11px 14px;font-size:.86rem}
+.ts-code{font-family:'DM Mono',monospace;font-weight:600;font-size:.8rem;padding:3px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0}
+.ts-code.err{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#FCA5A5}
+.ts-code.ok{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:#6EE7B7}
+.ts-row .d{color:var(--text-muted)}
+.ts-row .d b{color:#F8FAFC;font-weight:600}
+
+footer{text-align:center;padding:30px;border-top:1px solid rgba(255,255,255,.06);font-size:.8rem;color:var(--text-muted);margin-top:40px}
+@media(max-width:600px){.hero h1{font-size:1.6rem}.subtitle{font-size:.82rem}.legende{font-size:.66rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="ref-faq.html">FAQ</a>
+  <span class="nav-badge">S138</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">Tutoriel vidéo</div>
+  <h1>Gérer les réservations</h1>
+  <p>Suivez les réservations de petits par les futurs acquéreurs, avec acomptes.</p>
+</div>
+
+<div class="main">
+
+  <div class="player">
+    <div class="stage" id="stage">
+      <div class="legende" id="legende"></div>
+      <div class="stepnum" id="stepnum"></div>
+
+      <div class="screen" data-i="0">
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Réservations</span></div><div class="win-body" style="align-items:flex-start;gap:8px"><div class="field"><span class="lbl">Acquéreur</span>Famille Petit</div><div class="field"><span class="lbl">Petit</span>Mâle n°3</div></div></div>
+      </div>
+
+      <div class="screen" data-i="1">
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Acompte</span></div><div class="win-body" style="align-items:flex-start;gap:8px"><div class="field"><span class="lbl">Acompte</span><span class="mono">300,00 €</span></div><div class="status"><span>Statut</span><span class="pill done">Confirmée</span></div></div></div>
+      </div>
+
+      <div class="screen" data-i="2">
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Enregistrée</span></div><div class="win-body" style="gap:14px"><div class="status"><span class="big">Réservation</span> <span class="pill cur" id="st-pill" data-pending="Enregistrement…" data-done="✓ Confirmée">Enregistrement…</span></div><div class="bar"><i id="st-bar" style="width:8%"></i></div><div class="muted">La réservation sécurise la cession.</div></div></div>
+      </div>
+
+      <div class="subtitle" id="subtitle"></div>
+    </div>
+
+    <div class="controls">
+      <button class="ctrl-btn" id="prev">◀ Précédent</button>
+      <button class="ctrl-btn play" id="play">⏸ Pause</button>
+      <button class="ctrl-btn" id="next">Suivant ▶</button>
+      <div class="progress"><i id="prog"></i></div>
+      <div class="counter" id="counter">1 / 3</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="num">VO</span> Script narré — commentaires voix off</div>
+  <p class="muted" style="margin-bottom:14px">À lire en voix off pendant l'enregistrement de l'écran.</p>
+  <div class="script" id="script"></div>
+
+  <div class="tip"><b>Conseil.</b> Relie acompte → facture de cession. Durée cible : ~35 s.</div>
+
+</div>
+
+<footer>
+  Anim'Gest — NoSage's Editor · Tutoriel Gérer les réservations · <a href="index.html">← Retour à l'accueil</a>
+</footer>
+
+<script>
+const steps = [
+  {
+    "titre": "Créer la réservation",
+    "legende": "Étape 1 — Acquéreur",
+    "vo": "Associez un acquéreur à un petit de la portée.",
+    "ec": "Éleveur › Réservations."
+  },
+  {
+    "titre": "Enregistrer l'acompte",
+    "legende": "Étape 2 — Acompte",
+    "vo": "Saisissez l'acompte versé pour confirmer.",
+    "ec": "Acompte + statut."
+  },
+  {
+    "titre": "Confirmer",
+    "legende": "Étape 3 — Suivi",
+    "vo": "La réservation sécurise la future cession.",
+    "ec": "Réservation confirmée."
+  }
+];
+
+const screens=[...document.querySelectorAll('.screen')];
+const legende=document.getElementById('legende');const stepnum=document.getElementById('stepnum');
+const subtitle=document.getElementById('subtitle');const prog=document.getElementById('prog');
+const counter=document.getElementById('counter');const playBtn=document.getElementById('play');
+let i=0, playing=true, t0=0, raf=null;const DUR=7000;
+function render(){
+  screens.forEach((s,k)=>s.classList.toggle('active',k===i));
+  legende.textContent=steps[i].legende;stepnum.textContent=(i+1)+' / '+steps.length;
+  subtitle.textContent=steps[i].vo;counter.textContent=(i+1)+' / '+steps.length;
+  if(i===steps.length-1){ const p=document.getElementById('st-pill'),b=document.getElementById('st-bar');
+    if(p&&b){ const pend=p.dataset.pending||p.textContent, done=p.dataset.done||'OK';
+      p.textContent=pend;p.className='pill cur';b.style.width='8%';
+      setTimeout(()=>{if(i===steps.length-1){p.textContent=done;p.className='pill done';b.style.width='100%';}},2500); } }
+}
+function go(n){ i=(n+steps.length)%steps.length; t0=performance.now(); render(); }
+function tick(now){ if(playing){ const e=now-t0; let pct=Math.min(e/DUR,1); prog.style.width=(pct*100)+'%'; if(pct>=1){ go(i+1); } } raf=requestAnimationFrame(tick); }
+function setPlay(p){ playing=p; playBtn.textContent=p?'\u23f8 Pause':'\u25b6 Lecture'; playBtn.classList.toggle('play',p); if(p)t0=performance.now()-(parseFloat(prog.style.width||0)/100*DUR); }
+document.getElementById('prev').onclick=()=>{go(i-1)};document.getElementById('next').onclick=()=>{go(i+1)};
+playBtn.onclick=()=>setPlay(!playing);
+document.getElementById('script').innerHTML=steps.map(s=>`<div class="sc"><div class="t">${s.titre}</div><div class="vo">\u00ab ${s.vo} \u00bb</div><div class="ec"><b>\u00c0 l'\u00e9cran :</b> ${s.ec}</div></div>`).join('');
+go(0); raf=requestAnimationFrame(tick);
+
+</script>
+
+</body>
+</html>
