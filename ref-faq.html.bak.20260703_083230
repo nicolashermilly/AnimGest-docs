@@ -146,7 +146,6 @@ footer a { color: var(--gold); text-decoration: none; }
     <a href="#cat-10" class="cat-link">📣 Réseaux sociaux</a>
     <a href="#cat-11" class="cat-link">👥 Séances de groupe</a>
     <a href="#cat-12" class="cat-link">🔗 Webhooks &amp; Intégrations</a>
-    <a href="#cat-13" class="cat-link">🐾 Métiers — Santé, Sport canin, Associations</a>
   </div>
 
   <!-- ====== SECTION 01 — 🔐 Sécurité & API keys ====== -->
@@ -419,59 +418,6 @@ footer a { color: var(--gold); text-decoration: none; }
     <details class="faq-item">
       <summary>Le webhook Calendly ne reçoit aucun événement, que vérifier ?</summary>
       <div class="faq-a">Vérifiez que l’URL webhook est accessible depuis l’extérieur (utilisez ngrok pour les tests locaux). Contrôlez les logs Docker (docker logs micro_api) pour voir les requêtes entrantes. Assurez-vous que le port 80 est ouvert et que nginx transmet les requêtes /api/webhooks/.</div>
-    </details>
-  </div>
-
-  <!-- ====== SECTION 14 — Médiation animale ====== -->
-  <div class="section" id="cat-mediation">
-    <div class="section-title"><span class="num">14</span> 🤝 Médiation animale <span class="badge-new">Prochainement</span></div>
-    <details class="faq-item">
-      <summary>Comment Anim'Gest protège-t-il les données de santé des bénéficiaires ?</summary>
-      <div class="faq-a">Les champs sensibles (nom, pathologie, objectifs de santé, contre-indications) sont chiffrés AES-256-GCM en base, jamais en clair ni dans les journaux techniques. L'accès est restreint par rôle et la pseudonymisation est possible par défaut. Anim'Gest agit en sous-traitant (Art. 28).</div>
-    </details>
-    <details class="faq-item">
-      <summary>À qui appartient l'animal médiateur ?</summary>
-      <div class="faq-a">Au professionnel — contrairement aux autres métiers où l'animal appartient au client. C'est un outil de travail avec son propre carnet de santé, son aptitude et ses règles de bien-être (charge / repos).</div>
-    </details>
-    <details class="faq-item">
-      <summary>Peut-on gérer des séances collectives avec plusieurs bénéficiaires ?</summary>
-      <div class="faq-a">Oui : les séances collectives permettent de suivre des objectifs et une grille d'observation par bénéficiaire.</div>
-    </details>
-    <details class="faq-item">
-      <summary>Comment facturer une structure (EHPAD, IME…) ?</summary>
-      <div class="faq-a">Via une convention pluri-séances (cycle de N séances), facturable au cycle ou à la séance, avec signature électronique et suivi FEC.</div>
-    </details>
-    <details class="faq-item">
-      <summary>Le rapport d'impact contient-il des données nominatives ?</summary>
-      <div class="faq-a">Non par défaut, en mode pseudonymisé : le rapport agrège l'évolution des objectifs sans donnée de santé nominative.</div>
-    </details>
-    <details class="faq-item">
-      <summary>L'assistant Eliot peut-il lire les données de santé ?</summary>
-      <div class="faq-a">Non. Les données de santé des bénéficiaires sont exclues de l'accès de l'assistant IA ; seules des vues agrégées et anonymisées peuvent être exposées.</div>
-    </details>
-    <details class="faq-item">
-      <summary>Faut-il le consentement du bénéficiaire ?</summary>
-      <div class="faq-a">Oui : le consentement est tracé (date + autorisation signée archivée) et il est requis pour activer un bénéficiaire.</div>
-    </details>
-  </div>
-
-  <div class="faq-section" id="cat-13">
-    <div class="section-title"><span class="num">13</span> 🐾 Métiers — Santé, Sport canin, Associations <span class="badge-new">S148</span></div>
-    <details class="faq-item">
-      <summary>L'assistant Eliot peut-il calculer une posologie, une dose ou une ration ?</summary>
-      <div class="faq-a"><strong>Non, jamais.</strong> Anim'Gest <strong>trace</strong> les consultations, ordonnances, plans et rappels que le professionnel décide ; Eliot ne fournit <strong>aucune posologie, dose, ration ni diagnostic</strong> — décisions réservées au professionnel, et au <strong>vétérinaire</strong> pour tout acte médical (art. L243-1 CRPM). <strong>S148</strong>.</div>
-    </details>
-    <details class="faq-item">
-      <summary>Un ostéopathe ou un nutritionniste peut-il poser un diagnostic ou prescrire ?</summary>
-      <div class="faq-a">Non. L'<strong>ostéopathe</strong> agit sur les <strong>troubles fonctionnels</strong> uniquement et doit être inscrit au <strong>RNA</strong>. Le <strong>conseil nutritionnel</strong> vise l'animal <strong>en bonne santé</strong>. Dès qu'il y a pathologie ou acte médical, l'app oriente vers le vétérinaire (ré-orientation tracée).</div>
-    </details>
-    <details class="faq-item">
-      <summary>Qu'est-ce qui conditionne l'engagement d'un binôme en concours de sport canin ?</summary>
-      <div class="faq-a">Une <strong>licence valide</strong> pour la saison, un <strong>carnet de travail</strong>, les certificats requis (CSAU/CAESC), les vaccins à jour, et une <strong>race éligible</strong> pour les disciplines de mordant. Sans licence valide&nbsp;: pas d'engagement.</div>
-    </details>
-    <details class="faq-item">
-      <summary>Comment une association gère-t-elle une adoption et un reçu fiscal ?</summary>
-      <div class="faq-a">L'<strong>adoption</strong> est une cession <strong>non lucrative</strong>&nbsp;: le contrat ne peut être signé tant que l'animal n'est pas <strong>identifié (ICAD)</strong>. Pour un don éligible, l'app génère un <strong>reçu fiscal</strong> conforme (intérêt général/agrément), archivé en GED.</div>
     </details>
   </div>
 
