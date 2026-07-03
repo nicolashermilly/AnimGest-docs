@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutoriel — Médiateur animalier — Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F172A; --navy-800:#1E293B; --navy-700:#334155; --navy-600:#475569;
+  --gold:#F59E0B; --gold-light:#FCD34D; --gold-pale:#FEF3C7;
+  --cyan:#06B6D4; --violet:#4F46E5; --green:#10B981; --red:#EF4444; --orange:#F97316;
+  --text:#E2E8F0; --text-muted:#94A3B8; --border:#1E293B; --card:#1E293B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+code{font-family:'DM Mono',monospace;font-size:.82em;background:rgba(255,255,255,.06);padding:1px 6px;border-radius:5px;color:var(--gold-light)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,158,11,.2);padding:14px 32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);font-weight:700}
+nav a{color:var(--text-muted);font-size:.85rem;font-weight:500;transition:color .2s}
+nav a:hover{color:var(--gold)}
+.nav-badge{margin-left:auto;background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.4);color:var(--cyan);padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1E293B 50%,#0F172A 100%);border-bottom:1px solid rgba(245,158,11,.15);padding:46px 24px 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,158,11,.08) 0%,transparent 70%);pointer-events:none}
+.hero-label{display:inline-block;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:var(--gold);font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:14px;position:relative;z-index:1}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:700;color:#F8FAFC;margin-bottom:10px;position:relative;z-index:1}
+.hero .emoji{display:block;font-size:2.1rem;margin-bottom:6px;line-height:1;position:relative;z-index:1}
+.hero p{color:var(--text-muted);font-size:.92rem;max-width:600px;margin:0 auto;position:relative;z-index:1}
+
+.main{max-width:920px;margin:0 auto;padding:34px 20px 48px}
+
+/* NOTICE "en preparation" */
+.notice{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.35);color:#67E8F9;border-radius:12px;padding:16px 18px;margin-bottom:26px;font-size:.9rem;text-align:center}
+.notice strong{color:#F8FAFC}
+
+/* APERCU (mock statique, non anime) */
+.preview{background:var(--card);border:1px solid rgba(245,158,11,.25);border-radius:14px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.35);margin-bottom:8px}
+.win{display:flex;flex-direction:column}
+.win-bar{background:#162133;border-bottom:1px solid rgba(255,255,255,.06);padding:9px 14px;display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text-muted)}
+.dot{width:9px;height:9px;border-radius:50%}
+.dot.r{background:#FF5F57}.dot.y{background:#FEBC2E}.dot.g{background:#28C840}
+.win-title{margin-left:10px;font-family:'DM Mono',monospace;font-size:.74rem;color:var(--text-muted)}
+.win-body{padding:18px;display:flex;flex-direction:column;gap:12px}
+.field{background:#0F1B2D;border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:9px 12px;font-size:.82rem;color:var(--text)}
+.field .lbl{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:3px}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1;min-width:160px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:rgba(79,70,229,.14);border:1px solid rgba(79,70,229,.35);color:#C7D2FE;border-radius:16px;padding:4px 12px;font-size:.78rem;width:max-content}
+.chip.gold{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.4);color:var(--gold-light)}
+.chip.green{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.35);color:#86EFAC}
+.muted{color:var(--text-muted);font-size:.82rem}
+.cap{text-align:center;font-size:.78rem;color:var(--text-muted);margin:0 0 28px}
+
+/* SECTION + pas-a-pas (composant script du gabarit tuto) */
+.section-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600;color:#F8FAFC;margin:40px 0 16px;padding-bottom:10px;border-bottom:1px solid rgba(245,158,11,.2);display:flex;align-items:center;gap:12px}
+.section-title .num{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:var(--gold);font-size:.72rem;font-weight:700;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace}
+.script{display:flex;flex-direction:column;gap:14px;counter-reset:sc}
+.sc{counter-increment:sc;background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px 16px 14px 56px;position:relative}
+.sc::before{content:counter(sc,decimal-leading-zero);position:absolute;left:14px;top:14px;width:30px;height:30px;border-radius:8px;background:var(--navy);border:1px solid rgba(245,158,11,.4);color:var(--gold);font-weight:700;font-size:.78rem;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace}
+.sc .t{font-weight:600;color:#F8FAFC;margin-bottom:3px}
+.sc .vo{color:var(--text);font-size:.92rem}
+.sc .ec{color:var(--text-muted);font-size:.8rem;margin-top:5px}
+.sc .ec b{color:var(--gold-light);font-weight:600}
+
+.tip{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.3);color:#67E8F9;border-radius:8px;padding:12px 14px;font-size:.86rem;margin-top:18px}
+.tip b{color:#F8FAFC}
+.warn{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:#FCA5A5;border-radius:8px;padding:12px 14px;font-size:.86rem;margin-top:14px}
+.warn b{color:#F8FAFC}
+
+footer{text-align:center;padding:30px;border-top:1px solid rgba(255,255,255,.06);font-size:.8rem;color:var(--text-muted);margin-top:40px}
+@media(max-width:600px){.hero h1{font-size:1.6rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="76-metier-mediation.html">Médiateur animalier</a>
+  <a href="ref-faq.html">FAQ</a>
+  <span class="nav-badge">Prochainement</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">Tutoriel · En préparation</div>
+  <span class="emoji">&#128159;</span>
+  <h1>Utiliser le module Médiateur animalier</h1>
+  <p>Au quotidien : créer un bénéficiaire dans le respect du consentement, planifier une séance, remplir une grille d'observation et éditer un rapport d'impact.</p>
+</div>
+
+<div class="main">
+
+  <div class="notice"><strong>En préparation.</strong> Ce tutoriel présente l'utilisation <strong>cible</strong> du module « Médiateur animalier », en cours de développement. Les écrans ci-dessous sont des aperçus indicatifs — l'interface définitive pourra évoluer.</div>
+
+  <div class="preview">
+    <div class="win">
+      <div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Médiation · Nouveau bénéficiaire (aperçu)</span></div>
+      <div class="win-body">
+        <div class="row">
+          <div class="field"><span class="lbl">Référence</span>Résident A-01</div>
+          <div class="field"><span class="lbl">Structure</span>EHPAD Les Tilleuls</div>
+        </div>
+        <div class="row">
+          <div class="field"><span class="lbl">Objectif principal</span>Cognitif — mémoire</div>
+          <div class="field"><span class="lbl">Animal médiateur</span>Pixel (disponible)</div>
+        </div>
+        <div class="row">
+          <span class="chip green">&#10003; Consentement recueilli</span>
+          <span class="chip gold">Données de santé protégées</span>
+          <span class="chip">Mode pseudonymisé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="cap">Aperçu indicatif — fiche bénéficiaire pseudonymisée.</p>
+
+  <div class="section-title"><span class="num">01</span> Pas à pas</div>
+  <div class="script">
+
+    <div class="sc">
+      <div class="t">Accéder au module</div>
+      <div class="vo">Depuis le menu métier, ouvrez « Médiateur animalier ». Le tableau de bord regroupe animaux médiateurs, structures, bénéficiaires, séances et rapports.</div>
+      <div class="ec"><b>À l'écran :</b> Menu métier &rsaquo; Médiation &rsaquo; Tableau de bord.</div>
+    </div>
+
+    <div class="sc">
+      <div class="t">Créer un bénéficiaire (consentement)</div>
+      <div class="vo">Renseignez une référence (ex. « Résident A-01 »), rattachez la structure et son référent, puis enregistrez le consentement RGPD avant toute activation.</div>
+      <div class="ec"><b>À l'écran :</b> Bénéficiaires &rsaquo; + Nouveau &rsaquo; cocher le consentement et sa date.</div>
+    </div>
+
+    <div class="sc">
+      <div class="t">Définir les objectifs</div>
+      <div class="vo">Ajoutez un ou plusieurs objectifs par domaine (cognitif, moteur, social…), avec un niveau de départ et un niveau visé. Ils structureront les observations.</div>
+      <div class="ec"><b>À l'écran :</b> Fiche bénéficiaire &rsaquo; Objectifs.</div>
+    </div>
+
+    <div class="sc">
+      <div class="t">Planifier une séance</div>
+      <div class="vo">Créez une séance collective ou individuelle, choisissez l'animal médiateur et les bénéficiaires participants. La disponibilité de l'animal est vérifiée automatiquement.</div>
+      <div class="ec"><b>À l'écran :</b> Séances &rsaquo; + Nouvelle &rsaquo; sélection animal + participants.</div>
+    </div>
+
+    <div class="sc">
+      <div class="t">Renseigner la grille d'observation</div>
+      <div class="vo">Pendant ou après la séance, notez pour chaque bénéficiaire le niveau observé, la participation et une observation libre. Complétez le protocole sanitaire.</div>
+      <div class="ec"><b>À l'écran :</b> Fiche séance &rsaquo; Observations (par bénéficiaire).</div>
+    </div>
+
+    <div class="sc">
+      <div class="t">Éditer le rapport d'impact</div>
+      <div class="vo">En fin de cycle, générez le bilan et le rapport d'impact : l'évolution des objectifs par domaine, agrégée et anonymisée, prête à être remise à la structure.</div>
+      <div class="ec"><b>À l'écran :</b> Rapports d'impact &rsaquo; Générer (par structure / cycle).</div>
+    </div>
+
+  </div>
+
+  <div class="tip"><b>Bon à savoir.</b> Les données de santé des bénéficiaires (Art. 9 RGPD) sont chiffrées et leur lecture est réservée aux rôles autorisés. En mode pseudonymisé, aucun nom n'est requis : une référence interne suffit.</div>
+  <div class="warn"><b>Rappel.</b> Un bénéficiaire ne peut être activé sans consentement enregistré (date + autorisation signée archivée dans la GED).</div>
+
+</div>
+
+<footer>
+  Anim'Gest &mdash; NoSage's Editor &middot; Tutoriel « Médiateur animalier » (en préparation)
+  &middot; <a href="76-metier-mediation.html">Fiche métier</a>
+  &middot; <a href="sc-metier-mediation.html">Scénario de recette</a>
+  &middot; <a href="index.html">&larr; Retour à l'accueil</a>
+</footer>
+
+</body>
+</html>
