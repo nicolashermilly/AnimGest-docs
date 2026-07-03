@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Médiateur animalier &mdash; Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  /* Accent metier MEDIATION : emeraude (l'appli utilise emerald pour la 13e verticale).
+     Teinte de marque du metier : --brand-metier #0D9488 (= var CSS app --color-metier-mediation). */
+  --accent: #10B981;
+  --accent-light: #34D399;
+  --accent-pale: #D1FAE5;
+  --brand-metier: #0D9488;
+  /* Statut "en preparation" : ambre (distinct de l'accent, signale un metier a venir). */
+  --amber: #F59E0B;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(16,185,129,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--accent); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--accent); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.45);
+  color: var(--amber);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(16,185,129,0.15);
+  padding: 56px 32px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 10px;
+  position: relative; z-index: 1;
+}
+.hero .emoji { display: block; font-size: 2.4rem; margin-bottom: 8px; line-height: 1; }
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 660px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.soon-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.45);
+  color: var(--amber);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+  letter-spacing: 0.02em;
+}
+.soon-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); display: inline-block; }
+.hero-stats { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 22px; position: relative; z-index: 1; }
+.hero-stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 18px; min-width: 120px; text-align: center; }
+.hero-stat-val { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--accent); line-height: 1.1; }
+.hero-stat-lbl { font-size: 0.7rem; color: var(--text-muted); margin-top: 3px; }
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(16,185,129,0.1);
+  border-top: 1px solid rgba(16,185,129,0.1);
+  border-bottom: 1px solid rgba(16,185,129,0.1);
+}
+.kpi-card {
+  background: var(--navy);
+  padding: 26px 18px;
+  text-align: center;
+  transition: background .2s;
+}
+.kpi-card:hover { background: var(--navy-800); }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px 32px; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(16,185,129,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+.section { margin-bottom: 48px; }
+.section-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+
+/* PREP NOTE (bandeau "en preparation") */
+.prep-note {
+  background: rgba(245,158,11,0.07);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+.prep-note strong { color: var(--amber); }
+
+/* Vue d'ensemble cards */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.ov-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 20px 22px;
+}
+.ov-card .ov-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.ov-card .ov-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+.ov-card .ov-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: #F8FAFC;
+  margin: 4px 0 8px;
+  font-weight: 600;
+}
+.ov-card .ov-desc { font-size: 0.86rem; color: var(--text-muted); line-height: 1.6; }
+.ov-card .ov-desc strong { color: var(--text); }
+
+/* Modules grid */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.module-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-left: 3px solid var(--amber);
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: border-color .2s;
+}
+.module-card:hover { border-color: rgba(16,185,129,0.25); border-left-color: var(--amber); }
+.module-head { display: flex; align-items: center; gap: 10px; }
+.module-name { font-weight: 600; font-size: 0.92rem; color: #F8FAFC; flex: 1; }
+.module-status {
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(245,158,11,0.1);
+  color: var(--amber);
+  border: 1px solid rgba(245,158,11,0.25);
+}
+.module-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+
+/* Workflow horizontal */
+.workflow-steps {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.wf-step {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex; align-items: center; gap: 8px;
+  flex: 1; min-width: 130px;
+}
+.wf-step .wf-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--accent);
+  background: rgba(16,185,129,0.1);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+.wf-step strong { color: var(--text); }
+.wf-arrow { color: var(--accent); font-size: 1.2rem; display: flex; align-items: center; }
+
+/* Conformité grid */
+.compliance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.compliance-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-left: 3px solid var(--cyan);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.compliance-item.accent { border-left-color: var(--accent); }
+.compliance-item.red { border-left-color: var(--red); }
+.compliance-item.green { border-left-color: var(--green); }
+.compliance-title { font-weight: 600; font-size: 0.88rem; color: #F8FAFC; margin-bottom: 4px; }
+.compliance-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+/* Liens utiles */
+.links-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.link-pill {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-decoration: none;
+  display: flex; align-items: center; gap: 10px;
+  transition: all .2s;
+  color: inherit;
+}
+.link-pill:hover { border-color: rgba(16,185,129,0.3); }
+.link-pill .lp-icon { font-size: 1.2rem; }
+.link-pill .lp-label { font-size: 0.85rem; font-weight: 600; color: #F8FAFC; }
+.link-pill .lp-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 28px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 40px;
+}
+footer a { color: var(--accent); text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 1.8rem; }
+  .main { padding: 32px 18px; }
+  nav { padding: 12px 18px; gap: 18px; }
+  .nav-badge { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="scenarios-index.html">Scénarios</a>
+  <a href="36-metier-comportementaliste.html">Métiers</a>
+  <a href="15-rgpd-conformite.html">RGPD</a>
+  <span class="nav-badge">En préparation</span>
+</nav>
+<div class="hero">
+  <div class="hero-label">MODULE MÉTIER &middot; #76</div>
+  <span class="emoji">&#129309;</span>
+  <h1>Médiateur animalier</h1>
+  <div class="soon-badge"><span class="dot"></span> Prochainement &mdash; verticale en préparation</div>
+  <p>Zoothérapie et intervention assistée par l'animal : gérez vos animaux médiateurs, vos structures clientes et leurs bénéficiaires, vos séances de médiation et le rapport d'impact qui justifie le renouvellement de la convention.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-val">Verticale dédiée</div><div class="hero-stat-lbl">Nouveau métier Anim'Gest</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">B2B2C</div><div class="hero-stat-lbl">Structures &amp; bénéficiaires</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">Chiffrées</div><div class="hero-stat-lbl">Données de santé protégées</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">RGPD Art. 9</div><div class="hero-stat-lbl">Conformité intégrée</div></div>
+  </div>
+</div>
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-value">Animal médiateur</div><div class="kpi-label">Outil du professionnel</div></div>
+  <div class="kpi-card"><div class="kpi-value">Structure</div><div class="kpi-label">Client payeur (EHPAD, IME…)</div></div>
+  <div class="kpi-card"><div class="kpi-value">Bénéficiaires</div><div class="kpi-label">Personnes accompagnées</div></div>
+  <div class="kpi-card"><div class="kpi-value">Rapport d'impact</div><div class="kpi-label">Livrable de suivi</div></div>
+</div>
+<div class="main">
+
+<div class="section">
+  <div class="section-title"><span class="num">01</span> Vue d'ensemble</div>
+  <div class="prep-note">
+    <strong>En préparation.</strong> La verticale « Médiateur animalier » est en cours de développement et sera activable prochainement. Cette page présente le périmètre prévu ; les fonctionnalités décrites ci-dessous ne sont pas encore disponibles dans l'application.
+  </div>
+  <p class="section-intro">La médiation animale inverse le modèle des autres métiers sur trois axes &mdash; c'est ce qui en fait une verticale à part entière.</p>
+  <div class="overview-grid">
+    <div class="ov-card">
+      <div class="ov-icon">&#128021;</div>
+      <div class="ov-num">INVERSION 01</div>
+      <div class="ov-title">L'animal appartient au professionnel</div>
+      <div class="ov-desc">L'<strong>animal médiateur</strong> est un outil de travail du praticien (chien, lapin, cochon d'Inde, âne, cheval…), avec son propre suivi de santé, son aptitude et ses règles de bien-être &mdash; pas l'animal d'un client.</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-icon">&#127973;</div>
+      <div class="ov-num">INVERSION 02</div>
+      <div class="ov-title">Le client est une structure (B2B2C)</div>
+      <div class="ov-desc">Le payeur est un <strong>établissement</strong> médico-social, sanitaire, éducatif ou social (EHPAD, IME, MAS, ESAT, hôpital, école, foyer), le plus souvent lié par une convention annuelle.</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-icon">&#129309;</div>
+      <div class="ov-num">INVERSION 03</div>
+      <div class="ov-title">Les personnes servies sont des bénéficiaires</div>
+      <div class="ov-desc">Résidents, patients, enfants &mdash; souvent <strong>vulnérables</strong>, avec des <strong>données de santé</strong> (catégorie particulière, Art. 9 RGPD) traitées avec le plus haut niveau de protection.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="num">02</span> Modules &amp; Fonctionnalités</div>
+  <p class="section-intro">Le périmètre prévu de la verticale. Statut : à venir.</p>
+  <div class="modules-grid">
+    <div class="module-card">
+      <div class="module-head"><span class="module-name">Animaux médiateurs</span><span class="module-status">À venir</span></div>
+      <div class="module-desc">Carnet de santé, certificat d'aptitude, suivi des vaccins, charge de travail et jours de repos (bien-être animal).</div>
+    </div>
+    <div class="module-card">
+      <div class="module-head"><span class="module-name">Structures &amp; référents</span><span class="module-status">À venir</span></div>
+      <div class="module-desc">Fiches des établissements clients et de leurs interlocuteurs (psychologue, ergothérapeute, cadre de santé) qui co-définissent les objectifs.</div>
+    </div>
+    <div class="module-card">
+      <div class="module-head"><span class="module-name">Bénéficiaires</span><span class="module-status">À venir</span></div>
+      <div class="module-desc">Suivi des personnes accompagnées avec consentement tracé, objectifs par domaine et contre-indications &mdash; données de santé protégées.</div>
+    </div>
+    <div class="module-card">
+      <div class="module-head"><span class="module-name">Séances de médiation</span><span class="module-status">À venir</span></div>
+      <div class="module-desc">Séances collectives ou individuelles, objectifs et grille d'observation par bénéficiaire, protocole sanitaire par séance.</div>
+    </div>
+    <div class="module-card">
+      <div class="module-head"><span class="module-name">Conventions &amp; facturation</span><span class="module-status">À venir</span></div>
+      <div class="module-desc">Convention pluri-séances (cycle de N séances), signature électronique, facturation au cycle ou à la séance, export FEC.</div>
+    </div>
+    <div class="module-card">
+      <div class="module-head"><span class="module-name">Rapport d'impact</span><span class="module-status">À venir</span></div>
+      <div class="module-desc">Document agrégé par structure et par cycle retraçant l'évolution des objectifs (observé vs cible) &mdash; le livrable qui justifie le renouvellement.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="num">03</span> Workflow type</div>
+  <p class="section-intro">Du paramétrage au rapport d'impact adressé à la structure.</p>
+  <div class="workflow-steps">
+    <div class="wf-step"><span class="wf-num">01</span>Paramétrage</div>
+    <div class="wf-arrow">&rarr;</div>
+    <div class="wf-step"><span class="wf-num">02</span><strong>Animal médiateur</strong></div>
+    <div class="wf-arrow">&rarr;</div>
+    <div class="wf-step"><span class="wf-num">03</span>Structure</div>
+    <div class="wf-arrow">&rarr;</div>
+    <div class="wf-step"><span class="wf-num">04</span><strong>Convention</strong></div>
+    <div class="wf-arrow">&rarr;</div>
+    <div class="wf-step"><span class="wf-num">05</span>Bénéficiaires</div>
+    <div class="wf-arrow">&rarr;</div>
+    <div class="wf-step"><span class="wf-num">06</span><strong>Séance collective</strong></div>
+    <div class="wf-arrow">&rarr;</div>
+    <div class="wf-step"><span class="wf-num">07</span>Observations</div>
+    <div class="wf-arrow">&rarr;</div>
+    <div class="wf-step"><span class="wf-num">08</span><strong>Bilan &amp; rapport d'impact</strong></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="num">04</span> Conformité RGPD (Art. 9)</div>
+  <p class="section-intro">Les données de santé des bénéficiaires sont le point de vigilance n&deg;1 &mdash; la protection est prévue dès la conception.</p>
+  <div class="compliance-grid">
+    <div class="compliance-item red"><div class="compliance-title">Données de santé (Art. 9)</div><div class="compliance-desc">Pathologie, objectifs de santé, contre-indications : catégorie particulière traitée avec le plus haut niveau de protection.</div></div>
+    <div class="compliance-item accent"><div class="compliance-title">Chiffrement AES-256-GCM</div><div class="compliance-desc">Les champs sensibles sont chiffrés en base, jamais en clair ni dans les journaux techniques.</div></div>
+    <div class="compliance-item accent"><div class="compliance-title">Pseudonymisation par défaut</div><div class="compliance-desc">Possibilité de ne conserver qu'une référence interne (ex. « Résident A-12 ») ; le rattachement à l'identité reste chez la structure.</div></div>
+    <div class="compliance-item green"><div class="compliance-title">Consentement tracé</div><div class="compliance-desc">Consentement daté et autorisation signée archivée ; requis pour activer un bénéficiaire.</div></div>
+    <div class="compliance-item"><div class="compliance-title">Accès restreint par rôle</div><div class="compliance-desc">Les champs de santé ne sont visibles que par les rôles habilités (administration, encadrement, praticien rattaché).</div></div>
+    <div class="compliance-item"><div class="compliance-title">Assistant IA exclu</div><div class="compliance-desc">L'assistant Éliot n'a aucun accès aux données de santé des bénéficiaires ; seules des vues agrégées et anonymisées peuvent être exposées.</div></div>
+    <div class="compliance-item green"><div class="compliance-title">Anim'Gest sous-traitant (Art. 28)</div><div class="compliance-desc">La structure reste responsable de traitement ; une convention de sous-traitance encadre la relation.</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="num">05</span> Liens utiles</div>
+  <div class="links-row">
+    <a class="link-pill" href="sc-metier-mediation.html"><span class="lp-icon">&#128218;</span><div><div class="lp-label">Scénario complet</div><div class="lp-sub">Parcours guidé (à venir)</div></div></a>
+    <a class="link-pill" href="tuto-mediation.html"><span class="lp-icon">&#127891;</span><div><div class="lp-label">Tutoriel</div><div class="lp-sub">Prise en main (à venir)</div></div></a>
+    <a class="link-pill" href="15-rgpd-conformite.html"><span class="lp-icon">&#128274;</span><div><div class="lp-label">RGPD &amp; conformité</div><div class="lp-sub">Données de santé</div></div></a>
+    <a class="link-pill" href="index.html"><span class="lp-icon">&#127968;</span><div><div class="lp-label">Documentation</div><div class="lp-sub">Retour à l'accueil</div></div></a>
+  </div>
+</div>
+
+</div>
+<footer>
+  Anim'Gest &mdash; NoSage's Editor &mdash; Sprint S148 &middot; 03/07/2026 &middot; <span style="color:var(--amber);font-weight:600;">Verticale en préparation</span>
+  <br><a href="index.html">&larr; Documentation</a>
+  &middot;
+  <a href="scenarios-index.html">Scénarios</a>
+</footer>
+
+</body>
+</html>
