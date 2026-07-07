@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  PAGE PUBLIQUE — Securite & confidentialite · Anim'Gest / No Sage's Editor
+  Site docs public (no-sages-editor.com). Charte docs (navy + or).
+  Destinee aux decideurs et RSSI. SENSIBILITE : principes & posture UNIQUEMENT.
+  NE JAMAIS publier ici : durees exactes, noms de cookies/en-tetes,
+  algorithmes/couts, topologie interne, IP, chemins, secrets.
+  Chaque controle porte un statut honnete (En place / En cours). Ne revendiquer
+  que ce qui est vrai en production au moment de la publication.
+  A deposer a la RACINE de AnimGest-docs (zero sous-dossier).
+  =====================================================================
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sécurité &amp; confidentialité — Anim'Gest</title>
+<meta name="description" content="La posture de sécurité et de confidentialité d'Anim'Gest : isolation des données, chiffrement, authentification, sauvegardes et engagements.">
+<meta name="theme-color" content="#0F172A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F172A; --navy-800:#1E293B; --navy-700:#334155; --navy-600:#475569;
+    --gold:#F59E0B; --gold-light:#FCD34D; --gold-pale:#FEF3C7;
+    --cyan:#06B6D4; --violet:#4F46E5; --green:#10B981; --red:#EF4444; --orange:#F97316;
+    --text:#E2E8F0; --text-muted:#94A3B8; --border:#1E293B; --card:#1E293B;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0; background:var(--navy); color:var(--text);
+    font-family:'DM Sans',system-ui,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  nav{position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between;
+    padding:14px 32px; background:rgba(15,23,42,.95); backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(245,158,11,.18)}
+  .nav-logo{font-family:'Playfair Display',serif; font-weight:700; font-size:1.1rem; color:var(--gold); text-decoration:none; letter-spacing:.01em}
+  .nav-logo span{color:var(--text)}
+  .nav-badge{font-family:'DM Mono',monospace; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-muted);
+    border:1px solid var(--border); border-radius:20px; padding:5px 12px}
+  .main{max-width:960px; margin-inline:auto; padding:48px 24px}
+  .hero{position:relative; overflow:hidden; padding:60px 32px 48px; border-radius:16px; border:1px solid var(--border);
+    background:linear-gradient(160deg,var(--navy-800),var(--navy)); margin-bottom:48px}
+  .hero::before{content:""; position:absolute; inset:-40% 30% auto auto; width:60%; height:120%;
+    background:radial-gradient(closest-side,rgba(245,158,11,.14),transparent 70%); pointer-events:none}
+  .hero-label{display:inline-block; font-family:'DM Sans',sans-serif; font-size:.7rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase;
+    color:var(--gold); border:1px solid rgba(245,158,11,.35); border-radius:20px; padding:6px 14px; margin:0 0 18px}
+  .hero h1{font-family:'Playfair Display',serif; font-weight:700; font-size:2.4rem; line-height:1.12; margin:0; color:#F8FAFC; max-width:20ch}
+  .hero p{color:var(--text-muted); max-width:62ch; margin:18px 0 0; font-size:1.02rem}
+  .section{margin-bottom:48px}
+  .section-title{font-family:'Playfair Display',serif; font-weight:600; font-size:1.3rem; color:#F8FAFC; margin:0 0 20px;
+    padding-bottom:12px; border-bottom:1px solid rgba(245,158,11,.25); display:flex; align-items:center; gap:14px}
+  .section-title .num{font-family:'DM Mono',monospace; font-size:.8rem; color:var(--gold); border:1px solid rgba(245,158,11,.35);
+    border-radius:6px; padding:4px 8px; font-weight:500}
+  p.lead{color:var(--text); font-size:1.05rem; max-width:70ch}
+  p{color:var(--text-muted); max-width:72ch}
+  strong{color:var(--text)}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px}
+  @media(max-width:720px){ .grid{grid-template-columns:1fr} }
+  .ctrl{background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px 20px; transition:border-color .2s}
+  .ctrl:hover{border-color:rgba(245,158,11,.25)}
+  .ctrl h3{font-family:'DM Sans',sans-serif; font-weight:600; font-size:1rem; color:#F8FAFC; margin:0 0 8px; display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .ctrl p{font-size:.92rem; margin:0}
+  .pill{font-family:'DM Mono',monospace; font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; padding:3px 9px; border-radius:20px; white-space:nowrap; font-weight:500}
+  .pill.live{color:var(--green); background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.3)}
+  .pill.soon{color:var(--gold); background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.3)}
+  ul.feature{list-style:none; margin:8px 0 0; padding:0; max-width:72ch}
+  ul.feature li{position:relative; padding:8px 0 8px 22px; color:var(--text-muted); border-bottom:1px solid var(--border)}
+  ul.feature li:last-child{border-bottom:none}
+  ul.feature li::before{content:"▸"; position:absolute; left:0; color:var(--gold)}
+  ul.feature li b{color:var(--text)}
+  .note{border-radius:10px; padding:16px 20px; margin-top:20px; max-width:74ch; font-size:.95rem}
+  .note.info{border:1px solid rgba(6,182,212,.3); background:rgba(6,182,212,.07); color:var(--text-muted)}
+  .note.gold{border:1px solid rgba(245,158,11,.3); background:rgba(245,158,11,.07); color:var(--text-muted)}
+  .note b{color:var(--text)}
+  .legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:18px; font-size:.82rem; color:var(--text-muted)}
+  .legend span{display:inline-flex; align-items:center; gap:7px}
+  .contact{background:var(--card); border:1px solid var(--border); border-left:3px solid var(--gold); border-radius:10px; padding:22px 24px; margin-top:8px}
+  .contact a{color:var(--gold); text-decoration:none; font-weight:500}
+  footer{border-top:1px solid var(--border); text-align:center; padding:28px 24px; color:var(--text-muted); font-size:.85rem}
+  footer a{color:var(--gold); text-decoration:none}
+  code{font-family:'DM Mono',monospace; font-size:.86em; color:var(--gold-light)}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:3px; border-radius:4px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Anim'<span>Gest</span></a>
+  <span class="nav-badge">Sécurité &amp; confidentialité</span>
+</nav>
+
+<div class="main">
+
+  <section class="hero">
+    <span class="hero-label">Confiance</span>
+    <h1>Vos données méritent une sécurité qui se vérifie.</h1>
+    <p>Anim'Gest héberge des données professionnelles sensibles. Cette page présente notre approche de la sécurité et de la confidentialité, à destination des dirigeants et des responsables de la sécurité des systèmes d'information (RSSI). Nous y distinguons clairement ce qui est <strong>en place</strong> de ce qui est <strong>en cours de déploiement</strong> — parce qu'une posture de sécurité crédible est une posture honnête.</p>
+    <div class="legend">
+      <span><span class="pill live">En place</span> déployé en production</span>
+      <span><span class="pill soon">En cours 2026</span> engagé, en déploiement</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title"><span class="num">01</span> Notre approche</h2>
+    <p class="lead">La sécurité n'est pas une option ajoutée après coup : elle guide nos choix de conception.</p>
+    <p>Trois principes structurent Anim'Gest : la <strong>minimisation</strong> (chaque composant n'accède qu'à ce dont il a strictement besoin), la <strong>défense en profondeur</strong> (plusieurs barrières indépendantes plutôt qu'une seule), et la <strong>vérifiabilité</strong> (ce que nous affichons peut être audité). Le détail technique complet est mis à disposition des RSSI sur demande, sous accord de confidentialité.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title"><span class="num">02</span> Vos données vous appartiennent</h2>
+    <div class="grid">
+      <div class="ctrl"><h3>Isolation par client <span class="pill live">En place</span></h3><p>Les données de chaque établissement sont conservées dans un espace de stockage <strong>dédié et cloisonné</strong>. Aucune donnée d'un client n'est mélangée à celle d'un autre.</p></div>
+      <div class="ctrl"><h3>Propriété &amp; portabilité <span class="pill live">En place</span></h3><p>Vous restez propriétaire de vos données. Elles sont exportables et récupérables ; nous ne les revendons pas et n'affichons pas de publicité.</p></div>
+      <div class="ctrl"><h3>Conformité RGPD <span class="pill live">En place</span></h3><p>Traitement conforme au RGPD. Notre annexe RGPD (accord de traitement des données) et nos conditions générales sont communiquées <strong>sur demande</strong>.</p></div>
+      <div class="ctrl"><h3>Traçabilité comptable <span class="pill live">En place</span></h3><p>Les pièces comptables sont scellées et inaltérables, conformément aux exigences applicables aux logiciels de gestion.</p></div>
+      <div class="ctrl"><h3>Hébergement en France <span class="pill live">En place</span></h3><p>Vos données sont hébergées sur une infrastructure <strong>située en France</strong>. Certains prestataires techniques (protection réseau, assistant IA optionnel) peuvent impliquer des transferts encadrés — détaillés dans notre annexe RGPD.</p></div>
+    </div>
+    <div class="note info"><b>Transparence des sous-traitants.</b> La liste des prestataires techniques, leur localisation et les garanties encadrant les transferts hors Union européenne figurent dans notre annexe RGPD (accord de traitement des données), <strong>communiquée sur demande</strong>.</div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title"><span class="num">03</span> Chiffrement</h2>
+    <ul class="feature">
+      <li><b>En transit</b> — toutes les communications entre votre navigateur et Anim'Gest sont chiffrées (HTTPS/TLS), avec transport strictement sécurisé imposé. <span class="pill live">En place</span></li>
+      <li><b>Au repos (secrets)</b> — les informations les plus sensibles (identifiants de connexion à des services tiers, clés d'intégration) sont chiffrées avant stockage et ne sont jamais affichées en clair. <span class="pill live">En place</span></li>
+      <li><b>Mots de passe</b> — jamais stockés en clair : ils sont protégés par une fonction de hachage lente dédiée, conçue pour résister aux attaques. <span class="pill live">En place</span></li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title"><span class="num">04</span> Accès &amp; authentification</h2>
+    <p>L'accès à votre espace est protégé par mot de passe robuste et par des rôles : chaque utilisateur ne voit que ce que son rôle autorise. Nous renforçons actuellement le cycle de vie des sessions et l'authentification forte.</p>
+    <div class="grid">
+      <div class="ctrl"><h3>Rôles &amp; permissions <span class="pill live">En place</span></h3><p>Séparation des droits (administration, gestion, consultation, comptabilité). Le moindre privilège s'applique aussi aux comptes techniques.</p></div>
+      <div class="ctrl"><h3>Déconnexion sur inactivité <span class="pill soon">En cours 2026</span></h3><p>Une session laissée inactive se ferme automatiquement. Le délai est réglable par l'administrateur de votre établissement.</p></div>
+      <div class="ctrl"><h3>Sessions à durée maîtrisée <span class="pill soon">En cours 2026</span></h3><p>Sessions courtes, renouvelées de façon transparente tant que vous travaillez, et <strong>révocables</strong> à tout moment (« déconnecter partout »).</p></div>
+      <div class="ctrl"><h3>Double authentification <span class="pill soon">En cours 2026</span></h3><p>Second facteur par application d'authentification (code temporaire), activable par l'utilisateur et pouvant être rendu obligatoire par l'administrateur.</p></div>
+    </div>
+    <div class="note gold"><b>Transparence.</b> Les contrôles marqués « En cours » sont engagés et en cours de déploiement en 2026. Nous ne les présentons pas comme acquis tant qu'ils ne sont pas actifs en production.</div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title"><span class="num">05</span> Surveillance &amp; continuité</h2>
+    <div class="grid">
+      <div class="ctrl"><h3>Journalisation <span class="pill live">En place</span></h3><p>Les événements d'accès sont journalisés. Le périmètre de journalisation de sécurité est en cours d'enrichissement (échecs de connexion, événements de session).</p></div>
+      <div class="ctrl"><h3>Protection en périphérie <span class="pill live">En place</span></h3><p>Pare-feu applicatif (WAF) et protection contre les attaques par déni de service en amont de l'application ; l'origine n'est pas exposée directement.</p></div>
+      <div class="ctrl"><h3>Sauvegardes chiffrées <span class="pill live">En place</span></h3><p>Sauvegardes automatiques quotidiennes, chiffrées, avec procédure de restauration documentée.</p></div>
+      <div class="ctrl"><h3>Anti-force-brute <span class="pill soon">En cours 2026</span></h3><p>Limitation des tentatives de connexion répétées, en complément des protections en périphérie.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title"><span class="num">06</span> Contact sécurité &amp; divulgation responsable</h2>
+    <p>Nous accueillons favorablement les signalements de sécurité. Si vous pensez avoir identifié une vulnérabilité, contactez-nous avant toute divulgation publique : nous nous engageons à examiner chaque signalement de bonne foi.</p>
+    <div class="contact">
+      <p style="margin:0"><strong>Contact sécurité</strong> — <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a></p>
+      <p style="margin:8px 0 0; font-size:.9rem">Les RSSI peuvent obtenir, sous accord de confidentialité, notre dossier de sécurité détaillé (architecture, chiffrement, gestion des clés, procédures d'incident).</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Anim'Gest — édité par No Sage's Editor · <a href="index.html">Documentation</a></p>
+  <p style="font-size:.78rem; color:var(--navy-600)">Sécurité &amp; confidentialité — <span id="yr">2026</span></p>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>
