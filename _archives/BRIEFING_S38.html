@@ -156,8 +156,8 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
   <ul>
     <li>Toujours <code>cd deploy</code> avant <code>docker compose</code></li>
     <li>Injections Python → <code>[System.IO.File]::WriteAllText(...)</code> avec <code>New-Object System.Text.UTF8Encoding $false</code></li>
-    <li><strong>TOUTES les éditions PDF = Modal/Popup</strong> — jamais de navigation vers nouvelle page</li>
-    <li>Commentaires BDD FK : <code>COMMENT 'Relation NomTable — description'</code></li>
+    <li><strong>TOUTES les éditions PDF = Modal/Popup</strong> - jamais de navigation vers nouvelle page</li>
+    <li>Commentaires BDD FK : <code>COMMENT 'Relation NomTable - description'</code></li>
   </ul>
 </div>
 
@@ -165,7 +165,7 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
   <div class="section-title">🏆 État fin S37</div>
   <h3>✅ Infrastructure & API</h3>
   <ul>
-    <li><code>custom-routes.ts</code> : 88 748 chars — toutes les routes S37 opérationnelles</li>
+    <li><code>custom-routes.ts</code> : 88 748 chars - toutes les routes S37 opérationnelles</li>
     <li>Modules dynamiques <code>POST /parametres/modules</code> → 4 modules OK</li>
     <li>Routes S37 : <code>/achats/:id/reglements</code>, <code>/achats/:id/avoirs</code>, <code>/achats/:id/retours</code>, <code>/achats/:id/sepa</code>, <code>/factures/:id/rfe</code>, <code>/factures/:id/litiges</code>, <code>/param-pdp</code>, <code>/tva</code>, <code>/utilisateurs</code></li>
   </ul>
@@ -180,25 +180,25 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
 </div>
 
 <div class="section">
-  <div class="section-title">🚨 Priorité 1 — Signature électronique Yousign</div>
+  <div class="section-title">🚨 Priorité 1 - Signature électronique Yousign</div>
   <h3>Routes à créer (7)</h3>
-  <pre>GET  /signatures            — liste toutes signatures
-GET  /signatures/:id        — détail + événements
-POST /signatures/init       — upload PDF + créer signataire Yousign
-POST /signatures/:id/send   — activer/envoyer
-POST /signatures/:id/cancel — annuler
-GET  /devis/:id/signature   — signature liée à un devis
-POST /devis/:id/signature   — initier signature depuis devis
-POST /signatures/webhook    — callback Yousign (vérif HMAC)</pre>
+  <pre>GET  /signatures            - liste toutes signatures
+GET  /signatures/:id        - détail + événements
+POST /signatures/init       - upload PDF + créer signataire Yousign
+POST /signatures/:id/send   - activer/envoyer
+POST /signatures/:id/cancel - annuler
+GET  /devis/:id/signature   - signature liée à un devis
+POST /devis/:id/signature   - initier signature depuis devis
+POST /signatures/webhook    - callback Yousign (vérif HMAC)</pre>
   <h3>Pages à créer</h3>
   <ul>
-    <li><code>/app/signatures</code> — liste + statuts + liens signature</li>
+    <li><code>/app/signatures</code> - liste + statuts + liens signature</li>
     <li>Bouton <code>🖊️ Envoyer à la signature</code> dans <code>/app/devis/[id]</code></li>
   </ul>
 </div>
 
 <div class="section">
-  <div class="section-title">🚨 Priorité 2 — Corrections API urgentes</div>
+  <div class="section-title">🚨 Priorité 2 - Corrections API urgentes</div>
   <table>
     <tr><th>Route</th><th>Erreur</th><th>Fix</th></tr>
     <tr><td><code>POST /reglements</code></td><td class="err">400 body parsing</td><td>Ajouter <code>req.on('data')</code></td></tr>
@@ -231,12 +231,12 @@ POST /signatures/webhook    — callback Yousign (vérif HMAC)</pre>
 <div class="section">
   <div class="section-title">🎬 Vidéos de démonstration</div>
   <ul>
-    <li><strong>Vidéo 1 — Tour complet (8 min)</strong> : Paramètres → Client+2contacts+2chiens → EC → Devis → Signature → Facture → Règlement → FEC → Stats → CRM → PDF</li>
-    <li><strong>Comportementaliste</strong> — EC + programmes + CAC + facturation</li>
-    <li><strong>Toiletteur</strong> — Planning salon + forfaits + abonnements</li>
-    <li><strong>Pet-sitter</strong> — Visites + gardes + rapports + promenades</li>
-    <li><strong>Éleveur</strong> — Saillies + gestations + portées + LOF + cessions</li>
-    <li><strong>Éducateur</strong> — Cours collectifs/individuels + bilans + progression</li>
+    <li><strong>Vidéo 1 - Tour complet (8 min)</strong> : Paramètres → Client+2contacts+2chiens → EC → Devis → Signature → Facture → Règlement → FEC → Stats → CRM → PDF</li>
+    <li><strong>Comportementaliste</strong> - EC + programmes + CAC + facturation</li>
+    <li><strong>Toiletteur</strong> - Planning salon + forfaits + abonnements</li>
+    <li><strong>Pet-sitter</strong> - Visites + gardes + rapports + promenades</li>
+    <li><strong>Éleveur</strong> - Saillies + gestations + portées + LOF + cessions</li>
+    <li><strong>Éducateur</strong> - Cours collectifs/individuels + bilans + progression</li>
   </ul>
 </div>
 

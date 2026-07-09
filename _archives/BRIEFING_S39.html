@@ -155,28 +155,28 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
 & "C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe" -h 192.168.1.62 -P 3307 -u "@lgorithme" --password="@lgoritHme+2025+977_73300" --single-transaction --skip-lock-tables anim_gest > C:\Backup\anim_gest\20260322_debut_s39.sql</pre>
   <ul>
     <li>Toujours <code>cd deploy</code> avant <code>docker compose</code></li>
-    <li><strong>TOUTES les éditions PDF = Modal/Popup</strong> — jamais de navigation vers nouvelle page</li>
-    <li>Commentaires BDD FK : <code>COMMENT 'Relation NomTable — description'</code></li>
+    <li><strong>TOUTES les éditions PDF = Modal/Popup</strong> - jamais de navigation vers nouvelle page</li>
+    <li>Commentaires BDD FK : <code>COMMENT 'Relation NomTable - description'</code></li>
     <li><strong>EDC supprimé</strong> → utiliser <code>EC</code> (Étude Comportementale) partout</li>
   </ul>
 </div>
 
 <div class="section">
   <div class="section-title">🏆 État fin S38</div>
-  <h3>✅ Module Élevage — complet S38</h3>
+  <h3>✅ Module Élevage - complet S38</h3>
   <ul>
     <li><strong>14 routes API élevage</strong> opérationnelles : saillies, gestations, portées, naissances, poids, vaccins, réservations, déclarations, carnet PDF</li>
     <li><strong>3 tables créées</strong> : <code>elevage_chiot_poids</code>, <code>elevage_reservation</code>, <code>elevage_vaccination</code></li>
     <li><strong>Seeds démo</strong> : 2 portées, 10 chiots, poids J0→J60, vaccinations, 8 réservations</li>
-    <li>Page <code>/app/elevage</code> branchée API — 4 onglets : Portées / Suivi naissance / Réservations / Déclarations</li>
+    <li>Page <code>/app/elevage</code> branchée API - 4 onglets : Portées / Suivi naissance / Réservations / Déclarations</li>
   </ul>
-  <h3>✅ Signature Yousign — livré S38</h3>
+  <h3>✅ Signature Yousign - livré S38</h3>
   <ul>
     <li>7 routes API créées, <code>signature_evenement</code> créée en BDD</li>
     <li>Pages <code>/app/signatures</code> + <code>/app/signatures/[id]</code></li>
     <li><code>SignatureModal</code> v2 avec contacts + TTS vocal</li>
     <li><code>DocumentActions</code> composant unique PDF/Email/Signature</li>
-    <li>Page <code>/app/parametres/api-keys</code> — 5 services (Yousign, Pennylane, SMTP, Stripe, SMS)</li>
+    <li>Page <code>/app/parametres/api-keys</code> - 5 services (Yousign, Pennylane, SMTP, Stripe, SMS)</li>
     <li>Test end-to-end réussi : SGN_ID créé, PDF généré via pdfkit, signataire Yousign OK</li>
   </ul>
   <h3>✅ Refonte charte S39</h3>
@@ -189,8 +189,8 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
 </div>
 
 <div class="section">
-  <div class="section-title">🚨 Priorité 1 — Carnet de naissance PDF (Modal)</div>
-  <div class="alert as">✅ Route <code>GET /elevage/carnet/:nai_id</code> prête — génère HTML complet avec courbe poids SVG, filiation, identification, zones signature</div>
+  <div class="section-title">🚨 Priorité 1 - Carnet de naissance PDF (Modal)</div>
+  <div class="alert as">✅ Route <code>GET /elevage/carnet/:nai_id</code> prête - génère HTML complet avec courbe poids SVG, filiation, identification, zones signature</div>
   <ul>
     <li>Bouton <strong>📄 Carnet de naissance</strong> dans onglet "Suivi naissance" → modal iframe</li>
     <li>Pattern identique modal PDF des devis</li>
@@ -198,7 +198,7 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
 </div>
 
 <div class="section">
-  <div class="section-title">🚨 Priorité 2 — Corrections API urgentes S39</div>
+  <div class="section-title">🚨 Priorité 2 - Corrections API urgentes S39</div>
   <table>
     <tr><th>Route</th><th>Erreur</th><th>Fix</th></tr>
     <tr><td><code>POST /reglements</code></td><td class="err">400 body parsing</td><td>Ajouter <code>req.on('data')</code></td></tr>
@@ -210,22 +210,22 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
 </div>
 
 <div class="section">
-  <div class="section-title">🚨 Priorité 3 — DocumentActions sur tous les écrans</div>
+  <div class="section-title">🚨 Priorité 3 - DocumentActions sur tous les écrans</div>
   <p>Le composant <code>DocumentActions</code> (PDF/Email/Signature) doit être intégré sur :</p>
   <ul>
     <li><code>/app/factures/[id]</code> + onglets RFE + litige</li>
     <li><code>/app/achats/[id]</code> + onglets Règlements / Avoirs / Retours / SEPA</li>
-    <li><code>/app/achats/[id]/avoir</code> — formulaire avoir + bon de retour</li>
-    <li><code>/app/factures/entrants</code> — inbox factures reçues PDP</li>
+    <li><code>/app/achats/[id]/avoir</code> - formulaire avoir + bon de retour</li>
+    <li><code>/app/factures/entrants</code> - inbox factures reçues PDP</li>
   </ul>
 </div>
 
 <div class="section">
-  <div class="section-title">🚨 Priorité 4 — Module Élevage améliorations S39</div>
+  <div class="section-title">🚨 Priorité 4 - Module Élevage améliorations S39</div>
   <ul>
-    <li>Onglet <strong>Saillies</strong> dans <code>/app/elevage</code> — formulaire + liste (routes ✅)</li>
-    <li>Onglet <strong>Gestations</strong> — suivi échographies + terme (routes ✅)</li>
-    <li>Page <code>/app/elevage/portees/[id]</code> — vue détaillée avec tous les chiots</li>
+    <li>Onglet <strong>Saillies</strong> dans <code>/app/elevage</code> - formulaire + liste (routes ✅)</li>
+    <li>Onglet <strong>Gestations</strong> - suivi échographies + terme (routes ✅)</li>
+    <li>Page <code>/app/elevage/portees/[id]</code> - vue détaillée avec tous les chiots</li>
     <li>Sidebar : section "Élevage" avec liens Portées / Réservations / Déclarations</li>
   </ul>
 </div>

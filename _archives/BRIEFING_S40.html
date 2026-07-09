@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Briefing Session S40 — Anim'Gest</title>
+  <title>Briefing Session S40 - Anim'Gest</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <style>
   :root {
@@ -48,7 +48,7 @@
 </nav>
 <div class="container">
   <div class="hero">
-    <div class="hero-title">Briefing Session S40 — Anim'Gest</div>
+    <div class="hero-title">Briefing Session S40 - Anim'Gest</div>
     <div class="hero-sub">PetSuite Documentation</div>
   </div>
   <div class="card">
@@ -57,7 +57,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Briefing Session S40 — Anim'Gest</title>
+<title>Briefing Session S40 - Anim'Gest</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0f; color: #e2e0d8; line-height: 1.7; }
@@ -148,9 +148,9 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
 & "C:\ProgramData\OptimBTP\MariaDB\bin\mysqldump.exe" -h 192.168.1.62 -P 3307 -u "@lgorithme" --password="@lgoritHme+2025+977_73300" --single-transaction --skip-lock-tables anim_gest > C:\Backup\anim_gest\20260322_debut_s40.sql</pre>
   <ul>
     <li>Toujours <code>cd deploy</code> avant <code>docker compose</code></li>
-    <li><strong>TOUTES les éditions PDF = Modal/Popup</strong> — jamais de navigation vers nouvelle page</li>
-    <li>Commentaires BDD FK : <code>COMMENT 'Relation NomTable — description'</code></li>
-    <li><strong>EC</strong> (Étude Comportementale) — plus jamais EDC</li>
+    <li><strong>TOUTES les éditions PDF = Modal/Popup</strong> - jamais de navigation vers nouvelle page</li>
+    <li>Commentaires BDD FK : <code>COMMENT 'Relation NomTable - description'</code></li>
+    <li><strong>EC</strong> (Étude Comportementale) - plus jamais EDC</li>
   </ul>
 </div>
 
@@ -178,28 +178,28 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
   </ul>
   <h3>⚠️ Non terminé en S39</h3>
   <ul>
-    <li>Événements RFE (<code>facture_rfe_evenement</code>) — colonnes à confirmer</li>
-    <li>Litiges (<code>facture_litige</code>) — colonnes à confirmer</li>
-    <li>Page <code>/app/parametres/api-keys</code> — version S39 avec URLs paramétrables non déployée</li>
-    <li>Route <code>GET/POST /param-urls</code> — à créer dans custom-routes.ts</li>
+    <li>Événements RFE (<code>facture_rfe_evenement</code>) - colonnes à confirmer</li>
+    <li>Litiges (<code>facture_litige</code>) - colonnes à confirmer</li>
+    <li>Page <code>/app/parametres/api-keys</code> - version S39 avec URLs paramétrables non déployée</li>
+    <li>Route <code>GET/POST /param-urls</code> - à créer dans custom-routes.ts</li>
     <li>Fixes body parsing : <code>POST /reglements</code>, <code>POST /achats</code> toujours cassés</li>
   </ul>
 </div>
 
 <div class="section">
-  <div class="st">🚨 Priorité 1 — Corrections API body parsing</div>
+  <div class="st">🚨 Priorité 1 - Corrections API body parsing</div>
   <table>
     <tr><th>Route</th><th>Erreur</th><th>Fix</th></tr>
-    <tr><td><code>POST /reglements</code></td><td class="err">400 — body non lu</td><td>Remplacer <code>req.body</code> par <code>req.on('data')</code></td></tr>
-    <tr><td><code>POST /achats</code></td><td class="err">500 — undefined bind</td><td>Null-safety sur champs optionnels</td></tr>
-    <tr><td><code>POST /seances</code></td><td class="warn">500 — NestJS conflit</td><td>Pointer frontend sur <code>/seances/custom</code></td></tr>
-    <tr><td><code>POST /communaute/moderer/:id</code></td><td class="warn">500 — undefined bind</td><td>Null-safety + body parsing</td></tr>
+    <tr><td><code>POST /reglements</code></td><td class="err">400 - body non lu</td><td>Remplacer <code>req.body</code> par <code>req.on('data')</code></td></tr>
+    <tr><td><code>POST /achats</code></td><td class="err">500 - undefined bind</td><td>Null-safety sur champs optionnels</td></tr>
+    <tr><td><code>POST /seances</code></td><td class="warn">500 - NestJS conflit</td><td>Pointer frontend sur <code>/seances/custom</code></td></tr>
+    <tr><td><code>POST /communaute/moderer/:id</code></td><td class="warn">500 - undefined bind</td><td>Null-safety + body parsing</td></tr>
   </table>
-  <p>Toutes les routes POST élevage ont le même bug body parsing — les corriger en même temps.</p>
+  <p>Toutes les routes POST élevage ont le même bug body parsing - les corriger en même temps.</p>
 </div>
 
 <div class="section">
-  <div class="st">🚨 Priorité 2 — Finaliser seeds RFE</div>
+  <div class="st">🚨 Priorité 2 - Finaliser seeds RFE</div>
   <p>Exécuter <code>DESCRIBE facture_rfe_evenement; DESCRIBE facture_litige;</code> dans HeidiSQL puis insérer :</p>
   <ul>
     <li>Événements RFE sur factures 1-5 : cycle complet DEPOSEE → TRANSMISE → ACCEPTEE</li>
@@ -209,24 +209,24 @@ docker compose build api frontend --no-cache && docker compose up -d api fronten
 </div>
 
 <div class="section">
-  <div class="st">🚨 Priorité 3 — Déployer page Interfaces API S39</div>
+  <div class="st">🚨 Priorité 3 - Déployer page Interfaces API S39</div>
   <pre>$root = "D:\...\anim_gest_frontend_nextjs"
 Copy-Item "C:\Users\AdminPC\Downloads\api-keys-page-s39.tsx" "$root\src\app\app\parametres\api-keys\page.tsx" -Force</pre>
-  <p>Puis créer la route <code>GET/POST /param-urls</code> dans custom-routes.ts — table <code>param_url</code> à créer (PRM_KEY, PRM_VALUE).</p>
+  <p>Puis créer la route <code>GET/POST /param-urls</code> dans custom-routes.ts - table <code>param_url</code> à créer (PRM_KEY, PRM_VALUE).</p>
 </div>
 
 <div class="section">
-  <div class="st">🚨 Priorité 4 — DocumentActions sur tous les écrans</div>
+  <div class="st">🚨 Priorité 4 - DocumentActions sur tous les écrans</div>
   <p>Intégrer <code>&lt;DocumentActions /&gt;</code> dans les PageHeader de :</p>
   <ul>
     <li><code>/app/factures/[id]</code> + onglets RFE + litige</li>
     <li><code>/app/achats/[id]</code> + onglets Règlements / Avoirs / Retours / SEPA</li>
-    <li><code>/app/devis/[id]</code> — bouton signature déjà présent, uniformiser</li>
+    <li><code>/app/devis/[id]</code> - bouton signature déjà présent, uniformiser</li>
   </ul>
 </div>
 
 <div class="section">
-  <div class="st">🚨 Priorité 5 — Refactoring custom-routes.ts</div>
+  <div class="st">🚨 Priorité 5 - Refactoring custom-routes.ts</div>
   <p>Le fichier fait ~110 000 chars. Découper en modules :</p>
   <table>
     <tr><th>Fichier</th><th>Contenu</th></tr>
@@ -238,11 +238,11 @@ Copy-Item "C:\Users\AdminPC\Downloads\api-keys-page-s39.tsx" "$root\src\app\app\
 </div>
 
 <div class="section">
-  <div class="st">🚨 Priorité 6 — Composants S40</div>
+  <div class="st">🚨 Priorité 6 - Composants S40</div>
   <ul>
-    <li><code>StatusBadge</code> — badge statut coloré (BROUILLON, ENVOYE, SIGNE, ACCEPTEE…)</li>
-    <li><code>TabBar</code> — barre d'onglets uniforme (remplacer les implémentations ad-hoc)</li>
-    <li><code>ContactSelector</code> — extraire de EmailModal + SignatureModal</li>
+    <li><code>StatusBadge</code> - badge statut coloré (BROUILLON, ENVOYE, SIGNE, ACCEPTEE…)</li>
+    <li><code>TabBar</code> - barre d'onglets uniforme (remplacer les implémentations ad-hoc)</li>
+    <li><code>ContactSelector</code> - extraire de EmailModal + SignatureModal</li>
   </ul>
 </div>
 
@@ -250,14 +250,14 @@ Copy-Item "C:\Users\AdminPC\Downloads\api-keys-page-s39.tsx" "$root\src\app\app\
   <div class="st">📊 État routes API (fin S39)</div>
   <table>
     <tr><th>Route</th><th>Méthode</th><th>Statut</th></tr>
-    <tr><td>/elevage/portees</td><td>GET</td><td class="ok">✅ 200 — 2 portées</td></tr>
-    <tr><td>/elevage/gestations</td><td>GET</td><td class="ok">✅ 200 — 2 gestations</td></tr>
-    <tr><td>/elevage/reservations</td><td>GET</td><td class="ok">✅ 200 — 6 réservations</td></tr>
-    <tr><td>/elevage/carnet/:nai_id</td><td>GET</td><td class="ok">✅ 200 — HTML imprimable</td></tr>
+    <tr><td>/elevage/portees</td><td>GET</td><td class="ok">✅ 200 - 2 portées</td></tr>
+    <tr><td>/elevage/gestations</td><td>GET</td><td class="ok">✅ 200 - 2 gestations</td></tr>
+    <tr><td>/elevage/reservations</td><td>GET</td><td class="ok">✅ 200 - 6 réservations</td></tr>
+    <tr><td>/elevage/carnet/:nai_id</td><td>GET</td><td class="ok">✅ 200 - HTML imprimable</td></tr>
     <tr><td>/signatures</td><td>GET</td><td class="ok">✅ 200 S38</td></tr>
     <tr><td>/devis/:id/signature</td><td>GET/POST</td><td class="ok">✅ 200 S38</td></tr>
     <tr><td>/factures/:id/rfe</td><td>GET/POST</td><td class="ok">✅ 200</td></tr>
-    <tr><td>/param-pdp</td><td>GET/POST</td><td class="ok">✅ 200 — Pennylane actif</td></tr>
+    <tr><td>/param-pdp</td><td>GET/POST</td><td class="ok">✅ 200 - Pennylane actif</td></tr>
     <tr><td>/reglements</td><td>POST</td><td class="err">❌ 400 body parsing</td></tr>
     <tr><td>/achats</td><td>POST</td><td class="err">❌ 500 undefined params</td></tr>
     <tr><td>/seances</td><td>POST</td><td class="warn">⚠️ 500 NestJS conflit</td></tr>
