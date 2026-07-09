@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tutoriel vidéo - Portail client - Anim'Gest</title>
+<title>Tutoriel - Paramétrer la réservation en ligne - Anim'Gest</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -135,32 +135,33 @@ footer{text-align:center;padding:30px;border-top:1px solid rgba(255,255,255,.06)
   <a href="index.html">Accueil</a>
   <a href="changelog.html">Nouveautés</a>
   <a href="ref-faq.html">FAQ</a>
-  <span class="nav-badge">S138</span>
+  <span class="nav-badge">Prochainement</span>
 </nav>
 
 <div class="hero">
-  <div class="hero-label">Tutoriel vidéo</div>
-  <h1>Donner accès au portail client</h1>
-  <p>Offrez à vos clients un portail pour consulter leurs documents et remplir vos formulaires.</p>
+  <div class="hero-label">Tutoriel · En préparation</div>
+  <h1>Paramétrer la réservation en ligne</h1>
+  <p>Horaires d'ouverture, exceptions, disponibilité par intervenant : les créneaux proposés se déduisent de votre paramétrage.</p>
 </div>
 
 <div class="main">
-
+<div style="max-width:900px;margin:0 auto 22px;padding:14px 18px;border:1px solid rgba(245,158,11,.35);border-left:3px solid #F59E0B;border-radius:10px;background:rgba(245,158,11,.06);font-size:.9rem;line-height:1.6"><b style="color:#FCD34D">En préparation.</b> Ce tutoriel présente l'utilisation <i>cible</i> d'une fonctionnalité en cours de développement. Les écrans ci-dessous sont des aperçus indicatifs : l'interface définitive pourra evoluer.</div>
   <div class="player">
     <div class="stage" id="stage">
       <div class="legende" id="legende"></div>
       <div class="stepnum" id="stepnum"></div>
 
       <div class="screen" data-i="0">
-        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Portail · Activer</span></div><div class="win-body" style="align-items:flex-start;gap:10px"><div class="toggle hl"><span>Inactif</span><span class="on">Actif</span></div><div class="field"><span class="lbl">Lien client</span><span class="mono">https://…/portail/…</span></div></div></div>
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Horaires d'ouverture (aperçu)</span></div><div class="win-body" style="align-items:flex-start;gap:8px"><div class="field"><span class="lbl">Lundi au vendredi</span><span class="mono">09:00 - 18:00</span></div><div class="field"><span class="lbl">Samedi</span><span class="mono">09:00 - 12:00</span></div></div></div>
       </div>
-
       <div class="screen" data-i="1">
-        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Côté client</span></div><div class="win-body" style="align-items:flex-start"><div class="field"><span class="lbl">Mes documents</span>Devis, factures, comptes-rendus</div></div></div>
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Exceptions (aperçu)</span></div><div class="win-body" style="align-items:flex-start;gap:8px"><div class="field"><span class="lbl">Congés</span>du 10 au 24 août</div><div class="field"><span class="lbl">Jours fériés</span>fermé</div></div></div>
       </div>
-
       <div class="screen" data-i="2">
-        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Actif</span></div><div class="win-body" style="gap:14px"><div class="status"><span class="big">Portail</span> <span class="pill cur" id="st-pill" data-pending="Activation…" data-done="✓ Actif">Activation…</span></div><div class="bar"><i id="st-bar" style="width:8%"></i></div><div class="muted">Vos clients accèdent à leurs documents en autonomie.</div></div></div>
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Par intervenant (aperçu)</span></div><div class="win-body" style="align-items:flex-start;gap:8px"><div class="field"><span class="lbl">Intervenant</span>Camille</div><div class="field"><span class="lbl">Prestations</span>Bilan (1 h), Suivi (45 min)</div></div></div>
+      </div>
+      <div class="screen" data-i="3">
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Publiés</span></div><div class="win-body" style="gap:14px"><div class="status"><span class="big">Créneaux</span> <span class="pill cur" id="st-pill" data-pending="Calcul…" data-done="✓ Publiés">Calcul…</span></div><div class="bar"><i id="st-bar" style="width:8%"></i></div><div class="muted">Les créneaux se déduisent de la durée de la prestation choisie, jamais d'une grille fixe.</div></div></div>
       </div>
 
       <div class="subtitle" id="subtitle"></div>
@@ -171,7 +172,7 @@ footer{text-align:center;padding:30px;border-top:1px solid rgba(255,255,255,.06)
       <button class="ctrl-btn play" id="play">⏸ Pause</button>
       <button class="ctrl-btn" id="next">Suivant ▶</button>
       <div class="progress"><i id="prog"></i></div>
-      <div class="counter" id="counter">1 / 3</div>
+      <div class="counter" id="counter">1 / 4</div>
     </div>
   </div>
 
@@ -179,35 +180,42 @@ footer{text-align:center;padding:30px;border-top:1px solid rgba(255,255,255,.06)
   <p class="muted" style="margin-bottom:14px">À lire en voix off pendant l'enregistrement de l'écran.</p>
   <div class="script" id="script"></div>
 
-  <div class="tip"><b>Conseil.</b> Montre l'expérience côté client (mobile). Durée cible : ~40 s.</div>
+  <div class="tip"><b>Conseil.</b> Le paramétrage et le calendrier interne arrivent d'abord. La page de réservation publique viendra dans un second temps.</div>
 
 </div>
 
 <footer>
-  Anim'Gest - No Sage's Editor · Tutoriel Donner accès au portail client · <a href="index.html">← Retour à l'accueil</a>
+  Anim'Gest - No Sage's Editor · Tutoriel Paramétrer la réservation en ligne · <a href="index.html">← Retour à l'accueil</a>
 </footer>
 
 <script>
 const steps = [
   {
-    "titre": "Activer le portail",
-    "legende": "Étape 1 - Activation",
-    "vo": "Activez le portail et récupérez le lien d'accès client.",
-    "ec": "Portail › Activer."
+    "titre": "Poser les horaires",
+    "legende": "Étape 1 - Horaires",
+    "vo": "Vous déclarez vos plages d'ouverture, jour par jour.",
+    "ec": "Paramètres › Horaires."
   },
   {
-    "titre": "Présenter le portail",
-    "legende": "Étape 2 - Côté client",
-    "vo": "Le client consulte ses documents et remplit vos formulaires.",
-    "ec": "Vue client (documents)."
+    "titre": "Déclarer les exceptions",
+    "legende": "Étape 2 - Exceptions",
+    "vo": "Congés, jours fériés, fermetures ponctuelles : les exceptions l'emportent sur les horaires.",
+    "ec": "Exceptions et fermetures."
   },
   {
-    "titre": "Confirmer",
-    "legende": "Étape 3 - Autonomie",
-    "vo": "Vos clients accèdent à leurs documents en toute autonomie.",
-    "ec": "Portail actif."
+    "titre": "Distinguer les intervenants",
+    "legende": "Étape 3 - Intervenants",
+    "vo": "Chaque intervenant a ses propres disponibilités et ses propres prestations.",
+    "ec": "Disponibilité par intervenant."
+  },
+  {
+    "titre": "Publier les créneaux",
+    "legende": "Étape 4 - Créneaux",
+    "vo": "Le moteur déduit les créneaux de la durée de la prestation demandée.",
+    "ec": "Créneaux publiés."
   }
 ];
+
 
 const screens=[...document.querySelectorAll('.screen')];
 const legende=document.getElementById('legende');const stepnum=document.getElementById('stepnum');
@@ -235,3 +243,4 @@ go(0); raf=requestAnimationFrame(tick);
 
 </body>
 </html>
+

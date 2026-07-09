@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tutoriel vidéo — Tableau de bord métier — Anim'Gest</title>
+<title>Tutoriel - Suivre vos crédits Eliot - Anim'Gest</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -133,14 +133,15 @@ footer{text-align:center;padding:30px;border-top:1px solid rgba(255,255,255,.06)
 <nav>
   <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
   <a href="index.html">Accueil</a>
+  <a href="changelog.html">Nouveautés</a>
   <a href="ref-faq.html">FAQ</a>
-  <span class="nav-badge">S138</span>
+  <span class="nav-badge">S152</span>
 </nav>
 
 <div class="hero">
   <div class="hero-label">Tutoriel vidéo</div>
-  <h1>Votre tableau de bord métier</h1>
-  <p>Chaque métier dispose d'un tableau de bord adapté à son activité (selon votre métier).</p>
+  <h1>Suivre vos crédits Eliot</h1>
+  <p>Consultez votre consommation d'assistant IA, votre quota et vos seuils d'alerte, avant d'être bloqué.</p>
 </div>
 
 <div class="main">
@@ -151,15 +152,16 @@ footer{text-align:center;padding:30px;border-top:1px solid rgba(255,255,255,.06)
       <div class="stepnum" id="stepnum"></div>
 
       <div class="screen" data-i="0">
-        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Dashboard métier</span></div><div class="win-body" style="align-items:flex-start;gap:8px"><div class="row"><div class="field"><span class="lbl">Séances à venir</span><span class="mono">7</span></div><div class="field"><span class="lbl">À facturer</span><span class="mono">3</span></div></div><div class="muted">Indicateurs propres à votre métier.</div></div></div>
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Eliot · Bandeau de crédits</span></div><div class="win-body" style="align-items:flex-start;gap:8px"><div class="field"><span class="lbl">Consommé ce mois</span><span class="mono">1 240</span></div><div class="field"><span class="lbl">Quota mensuel</span><span class="mono">5 000</span></div></div></div>
       </div>
-
       <div class="screen" data-i="1">
-        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Accès rapides</span></div><div class="win-body" style="align-items:flex-start;gap:10px"><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip gold hl">+ Séance</span><span class="chip">Planning</span><span class="chip">Programmes</span></div></div></div>
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Crédits · Détail</span></div><div class="win-body" style="align-items:flex-start;gap:8px"><div class="field"><span class="lbl">Reste</span><span class="mono">3 760</span></div><div class="field"><span class="lbl">Dernière mise à jour</span>il y a 2 minutes</div></div></div>
       </div>
-
       <div class="screen" data-i="2">
-        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">À jour</span></div><div class="win-body" style="gap:14px"><div class="status"><span class="big">Tableau de bord</span> <span class="pill cur" id="st-pill" data-pending="Chargement…" data-done="✓ À jour">Chargement…</span></div><div class="bar"><i id="st-bar" style="width:8%"></i></div><div class="muted">Votre activité métier en un coup d'œil.</div></div></div>
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Seuils d'alerte</span></div><div class="win-body" style="align-items:flex-start;gap:10px"><div class="btn-send hl">Alerte à 80 %</div><div class="muted">Vous êtes prévenu avant d'atteindre la limite.</div></div></div>
+      </div>
+      <div class="screen" data-i="3">
+        <div class="win"><div class="win-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="win-title">Requête refusée</span></div><div class="win-body" style="gap:14px"><div class="status"><span class="big">Quota atteint</span> <span class="pill cur" id="st-pill" data-pending="Vérification…" data-done="✓ Requête refusée">Vérification…</span></div><div class="bar"><i id="st-bar" style="width:8%"></i></div><div class="muted">Au-delà du quota, Eliot refuse la requête. Aucun dépassement facturé à votre insu.</div></div></div>
       </div>
 
       <div class="subtitle" id="subtitle"></div>
@@ -170,43 +172,50 @@ footer{text-align:center;padding:30px;border-top:1px solid rgba(255,255,255,.06)
       <button class="ctrl-btn play" id="play">⏸ Pause</button>
       <button class="ctrl-btn" id="next">Suivant ▶</button>
       <div class="progress"><i id="prog"></i></div>
-      <div class="counter" id="counter">1 / 3</div>
+      <div class="counter" id="counter">1 / 4</div>
     </div>
   </div>
 
-  <div class="section-title"><span class="num">VO</span> Script narré — commentaires voix off</div>
+  <div class="section-title"><span class="num">VO</span> Script narré - commentaires voix off</div>
   <p class="muted" style="margin-bottom:14px">À lire en voix off pendant l'enregistrement de l'écran.</p>
   <div class="script" id="script"></div>
 
-  <div class="tip"><b>Conseil.</b> Un seul tuto, valable pour les 11 métiers. Durée cible : ~30 s.</div>
+  <div class="tip"><b>Conseil.</b> Si aucun quota n'est configuré pour votre structure, l'usage est illimité et le bandeau n'affiche pas de plafond. Durée cible : ~40 s.</div>
 
 </div>
 
 <footer>
-  Anim'Gest — NoSage's Editor · Tutoriel Votre tableau de bord métier · <a href="index.html">← Retour à l'accueil</a>
+  Anim'Gest - No Sage's Editor · Tutoriel Suivre vos crédits Eliot · <a href="index.html">← Retour à l'accueil</a>
 </footer>
 
 <script>
 const steps = [
   {
-    "titre": "Ouvrir le dashboard métier",
-    "legende": "Étape 1 — Vue métier",
-    "vo": "Selon votre métier, le tableau de bord affiche vos indicateurs clés.",
-    "ec": "Menu métier › Tableau de bord."
+    "titre": "Lire le bandeau",
+    "legende": "Étape 1 - Bandeau",
+    "vo": "Le bandeau de crédits affiche en permanence ce que vous avez consommé et ce qu'il vous reste.",
+    "ec": "Bandeau de crédits Eliot."
   },
   {
-    "titre": "Accès rapides",
-    "legende": "Étape 2 — Raccourcis",
-    "vo": "Lancez une séance, ouvrez le planning ou les programmes.",
-    "ec": "Accès rapides."
+    "titre": "Consulter le détail",
+    "legende": "Étape 2 - Consommation",
+    "vo": "Le détail montre le reste disponible et la date de dernière mise à jour.",
+    "ec": "Détail de consommation."
   },
   {
-    "titre": "Piloter",
-    "legende": "Étape 3 — Pilotage",
-    "vo": "Votre activité métier est centralisée.",
-    "ec": "Dashboard à jour."
+    "titre": "Régler vos seuils",
+    "legende": "Étape 3 - Seuils",
+    "vo": "Un seuil d'alerte vous prévient avant la limite. Vous n'êtes jamais coupé sans préavis.",
+    "ec": "Seuils d'alerte."
+  },
+  {
+    "titre": "Comprendre le blocage",
+    "legende": "Étape 4 - Quota atteint",
+    "vo": "Au-delà du quota, la requête est refusée. Rien n'est facturé en dépassement.",
+    "ec": "Requête refusée."
   }
 ];
+
 
 const screens=[...document.querySelectorAll('.screen')];
 const legende=document.getElementById('legende');const stepnum=document.getElementById('stepnum');
@@ -234,3 +243,4 @@ go(0); raf=requestAnimationFrame(tick);
 
 </body>
 </html>
+
