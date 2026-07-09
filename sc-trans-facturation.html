@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cycle de facturation complet &mdash; Anim'Gest</title>
+<title>Cycle de facturation complet - Anim'Gest</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -335,165 +335,336 @@ footer a { color: var(--gold); text-decoration: none; }
   .nav-badge { margin-left: 0; }
 }
 
+
+/* --- S152 : blocs de cadrage scenario --- */
+.frame { display:grid; gap:14px; margin-bottom:28px; }
+@media(min-width:820px){ .frame.cols-2 { grid-template-columns:1fr 1fr; } }
+.frame-box { background:var(--card); border:1px solid var(--border); border-left:3px solid var(--gold);
+  border-radius:10px; padding:16px 18px; }
+.frame-box.ctx { border-left-color:var(--cyan); }
+.frame-box.pre { border-left-color:var(--violet); }
+.frame-box.exp { border-left-color:var(--green); }
+.frame-box h3 { font-family:'DM Sans',sans-serif; font-size:0.72rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--text-muted); font-weight:600; margin-bottom:10px; }
+.frame-box ul { list-style:none; }
+.frame-box li { font-size:0.88rem; color:var(--text); padding:4px 0 4px 16px; position:relative; }
+.frame-box li:before { content:"\25B8"; position:absolute; left:0; color:var(--gold); font-size:0.7rem; top:7px; }
+.frame-box p { font-size:0.88rem; color:var(--text-muted); }
+.check { background:rgba(16,185,129,0.07); border:1px solid rgba(16,185,129,0.25);
+  border-radius:8px; padding:12px 14px; margin-top:12px; font-size:0.85rem; color:var(--text); }
+.check b { color:var(--green); }
+.limit { background:rgba(249,115,22,0.06); border:1px solid rgba(249,115,22,0.22);
+  border-radius:8px; padding:12px 14px; margin-top:10px; font-size:0.85rem; color:var(--text); }
+.limit b { color:var(--orange); }
+
+/* --- S152 : fil de nouveautes --- */
+.news { border-left:2px solid var(--border); padding-left:24px; margin-left:6px; }
+.news-item { position:relative; padding-bottom:30px; }
+.news-item:before { content:""; position:absolute; left:-30px; top:6px; width:10px; height:10px;
+  border-radius:50%; background:var(--gold); border:2px solid var(--navy); }
+.news-item.next:before { background:var(--navy-600); }
+.news-date { font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--text-muted);
+  letter-spacing:0.06em; text-transform:uppercase; }
+.news-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--gold-light);
+  margin:4px 0 10px; }
+.news-body ul { list-style:none; }
+.news-body li { font-size:0.9rem; color:var(--text); padding:5px 0 5px 18px; position:relative; line-height:1.55; }
+.news-body li:before { content:"\2014"; position:absolute; left:0; color:var(--navy-600); }
+.news-body li b { color:var(--gold-light); font-weight:600; }
+.pill { display:inline-block; font-size:0.68rem; padding:2px 9px; border-radius:20px;
+  font-weight:600; letter-spacing:0.04em; margin-left:8px; vertical-align:2px; }
+.pill-prod { background:rgba(16,185,129,0.15); color:var(--green); border:1px solid rgba(16,185,129,0.35); }
+.pill-prep { background:rgba(148,163,184,0.12); color:var(--text-muted); border:1px solid rgba(148,163,184,0.3); }
+.pill-sec  { background:rgba(79,70,229,0.15); color:#A5B4FC; border:1px solid rgba(79,70,229,0.4); }
 </style>
 </head>
 <body>
 <nav>
   <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
   <a href="index.html">Accueil</a>
+  <a href="changelog.html">Nouveaut&eacute;s</a>
   <a href="scenarios-index.html">Sc&eacute;narios</a>
   <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
   <a href="15-rgpd-conformite.html">RGPD</a>
-  <span class="nav-badge">S122</span>
+  <span class="nav-badge">S152</span>
 </nav>
+
 <div class="hero">
   <div class="hero-label">SC&Eacute;NARIO TRANSVERSE</div>
-  <span class="emoji">&#129534;</span>
+  <span class="emoji" style="display:block;font-size:2.4rem;margin-bottom:8px;line-height:1;">&#129534;</span>
   <h1>Cycle de facturation complet</h1>
-  <p>Devis &rarr; acompte &rarr; signature &rarr; facture solde &rarr; relances &rarr; avoir total et partiel &mdash; le cycle complet sur un cas concret.</p>
-  <div class="hero-tags"><span class="hero-tag">NF525</span><span class="hero-tag">Yousign</span><span class="hero-tag">Stripe</span><span class="hero-tag">Avoirs</span><span class="hero-tag">Relances auto</span></div>
+  <p>Du devis &agrave; l'&eacute;criture comptable : acompte, signature, solde, relances, avoir. Le parcours int&eacute;gral sur un cas concret.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">NF525</span>
+    <span class="hero-tag">Signature &eacute;lectronique</span>
+    <span class="hero-tag">Paiement en ligne</span>
+    <span class="hero-tag">Avoirs</span>
+    <span class="hero-tag">Relances</span>
+  </div>
 </div>
+
 <div class="kpi-grid">
   <div class="kpi-card"><div class="kpi-value">10</div><div class="kpi-label">&Eacute;tapes</div></div>
   <div class="kpi-card"><div class="kpi-value">NF525</div><div class="kpi-label">Conformit&eacute;</div></div>
-  <div class="kpi-card"><div class="kpi-value">Yousign</div><div class="kpi-label">Signature</div></div>
-  <div class="kpi-card"><div class="kpi-value">Stripe</div><div class="kpi-label">Encaissement</div></div>
+  <div class="kpi-card"><div class="kpi-value">4</div><div class="kpi-label">Points de contr&ocirc;le</div></div>
+  <div class="kpi-card"><div class="kpi-value">5</div><div class="kpi-label">Cas limites</div></div>
 </div>
+
 <div class="main">
+
 <div class="section">
-  <div class="section-title"><span class="num">01</span> &Eacute;tapes du sc&eacute;nario</div>
-  
-  <div class="step-list">
-<div class="step-item">
-  <div class="step-header">
-    <span class="step-num">01</span>
-    <span class="step-title">Cr&eacute;ation du devis</span>
+  <div class="section-title"><span class="num">01</span> Avant de commencer</div>
+
+  <div class="frame cols-2">
+    <div class="frame-box ctx">
+      <h3>Contexte</h3>
+      <p style="margin-bottom:10px;">Un client vous contacte pour une prestation planifi&eacute;e sur plusieurs s&eacute;ances. Vous voulez s&eacute;curiser l'engagement par une signature et un acompte, puis facturer le solde une fois la prestation r&eacute;alis&eacute;e.</p>
+      <ul>
+        <li>Qui : le g&eacute;rant ou un utilisateur au r&ocirc;le Gestion.</li>
+        <li>Quand : d&egrave;s la demande du client, avant toute s&eacute;ance.</li>
+        <li>D&eacute;clencheur : une demande de devis, par t&eacute;l&eacute;phone, par formulaire ou depuis un lead CRM.</li>
+        <li>Dur&eacute;e du cycle : de quelques jours &agrave; plusieurs mois.</li>
+      </ul>
+    </div>
+    <div class="frame-box pre">
+      <h3>Pr&eacute;requis</h3>
+      <ul>
+        <li>Votre entreprise est param&eacute;tr&eacute;e : raison sociale, coordonn&eacute;es, logo, mentions l&eacute;gales, CGV.</li>
+        <li>Vos taux de TVA et votre plan comptable sont renseign&eacute;s.</li>
+        <li>Vos prestations et articles existent au catalogue, avec un prix hors taxes.</li>
+        <li>Votre num&eacute;rotation est initialis&eacute;e (elle l'est par d&eacute;faut &agrave; la cr&eacute;ation de la structure).</li>
+        <li>Optionnel : connecteur de signature &eacute;lectronique et connecteur de paiement en ligne activ&eacute;s.</li>
+        <li>Votre r&ocirc;le autorise les &eacute;critures financi&egrave;res (Administrateur, Gestion ou Comptabilit&eacute;).</li>
+      </ul>
+    </div>
   </div>
-  <div class="step-body">
-    
-    <ul class="step-items"><li><strong>Devis &rarr; Nouveau devis</strong> : s&eacute;lection client + animal</li><li>Choisir le mod&egrave;le m&eacute;tier (devis BC, devis toilettage, devis pension...)</li><li>Ajouter les lignes : prestations et articles avec quantit&eacute;s, prix HT, TVA</li><li>Conditions de paiement : 30 jours, &eacute;ch&eacute;ance, mode (CB/SEPA/ch&egrave;que)</li><li>Num&eacute;ro de devis attribu&eacute; automatiquement : <code>DEV-2606-0042</code></li><li>Pr&eacute;visualisation PDF avec votre charte (logo, couleurs, CGV en annexe)</li></ul>
-    
-    
-  </div>
-</div>
-<div class="step-item">
-  <div class="step-header">
-    <span class="step-num">02</span>
-    <span class="step-title">Envoi et signature &eacute;lectronique</span>
-  </div>
-  <div class="step-body">
-    
-    <ul class="step-items"><li><strong>Envoyer par email</strong> : PDF en pi&egrave;ce jointe + lien portail</li><li>Option signature &eacute;lectronique Yousign : juridiquement valable, qualifi&eacute;e eIDAS</li><li>Le client clique sur le lien et signe en 3 clics depuis mobile/desktop</li><li>Statut du devis : <code>ENVOYE</code> &rarr; <code>SIGNE</code> automatiquement</li><li>Le PDF sign&eacute; (avec horodatage qualifi&eacute;) est archiv&eacute; en GED</li></ul>
-    <div class="step-ok"><strong>&#10003; Bonne pratique :</strong> La signature &eacute;lectronique Yousign a la m&ecirc;me valeur l&eacute;gale qu'une signature manuscrite, et bien plus tra&ccedil;able.</div>
-    
-  </div>
-</div>
-<div class="step-item">
-  <div class="step-header">
-    <span class="step-num">03</span>
-    <span class="step-title">Facture d'acompte</span>
-  </div>
-  <div class="step-body">
-    
-    <ul class="step-items"><li>Depuis le devis sign&eacute; : <strong>G&eacute;n&eacute;rer une facture d'acompte</strong></li><li>Choisir le montant : 30% par d&eacute;faut (configurable)</li><li>Num&eacute;ro de facture : <code>FAC-2606-0078</code> &mdash; conforme NF525</li><li>Envoi PDF + lien de paiement Stripe int&eacute;gr&eacute; dans l'email</li><li>Encaissement CB &mdash; statut facture : <code>PAYEE</code></li><li>&Eacute;criture comptable g&eacute;n&eacute;r&eacute;e : 411 (client) / 4191 (acompte) / 44571 (TVA)</li></ul>
-    
-    
-  </div>
-</div>
-<div class="step-item">
-  <div class="step-header">
-    <span class="step-num">04</span>
-    <span class="step-title">R&eacute;alisation de la prestation</span>
-  </div>
-  <div class="step-body">
-    
-    <ul class="step-items"><li>Cr&eacute;er les s&eacute;ances planifi&eacute;es depuis le devis (g&eacute;n&eacute;ration en lot)</li><li>R&eacute;aliser les prestations &mdash; statut s&eacute;ance : <code>REALISEE</code></li><li>Le client suit en temps r&eacute;el depuis son portail</li><li>Comptes-rendus envoy&eacute;s automatiquement &agrave; chaque s&eacute;ance</li></ul>
-    
-    
+
+  <div class="frame">
+    <div class="frame-box exp">
+      <h3>Attendu &agrave; l'issue du sc&eacute;nario</h3>
+      <ul>
+        <li>Un devis sign&eacute; &eacute;lectroniquement, archiv&eacute; en GED.</li>
+        <li>Une facture d'acompte et une facture de solde, num&eacute;rot&eacute;es en s&eacute;quence annuelle continue, toutes deux <span class="mono">PAYEE</span>.</li>
+        <li>Les liens devis vers factures visibles dans les deux sens.</li>
+        <li>Les &eacute;critures comptables correspondantes au journal, exportables en FEC.</li>
+        <li>Le cas &eacute;ch&eacute;ant, un avoir rattach&eacute; &agrave; sa facture d'origine, avec motif.</li>
+        <li>Une cha&icirc;ne d'int&eacute;grit&eacute; NF525 intacte de bout en bout.</li>
+      </ul>
+    </div>
   </div>
 </div>
-<div class="step-item">
+
+<div class="section">
+  <div class="section-title"><span class="num">02</span> D&eacute;roul&eacute; pas &agrave; pas</div>
+  <div class="step-items">
+<div class="step-item" style="border:none;padding:0;">
   <div class="step-header">
-    <span class="step-num">05</span>
-    <span class="step-title">Facture de solde</span>
+    <div class="step-num">01</div>
+    <div class="step-title">Cr&eacute;ation du devis</div>
   </div>
   <div class="step-body">
-    
-    <ul class="step-items"><li>Devis enti&egrave;rement r&eacute;alis&eacute; : <strong>G&eacute;n&eacute;rer la facture de solde</strong></li><li>Calcul automatique : Total devis - Acompte d&eacute;j&agrave; pay&eacute; = Solde d&ucirc;</li><li>Num&eacute;ro facture solde : <code>FAC-2606-0089</code></li><li>Envoi automatique + lien paiement Stripe</li><li>Pr&eacute;l&egrave;vement SEPA programm&eacute; si client en mandat</li></ul>
-    
-    
+    <div class="step-intro"><span class="mono">Devis &rsaquo; Nouveau devis</span></div>
+    <div class="step-items">
+      <div class="step-item">S&eacute;lectionner le client, puis l'animal concern&eacute;. Si le client n'existe pas, le cr&eacute;er sans quitter l'&eacute;cran.</div>
+      <div class="step-item">Choisir le mod&egrave;le de devis correspondant &agrave; votre m&eacute;tier (bilan comportemental, forfait toilettage, s&eacute;jour en pension...).</div>
+      <div class="step-item">Ajouter les lignes : prestations et articles, avec quantit&eacute;, prix hors taxes et taux de TVA.</div>
+      <div class="step-item">Renseigner les conditions de paiement (comptant, &eacute;ch&eacute;ance 30 jours) et le mode de r&egrave;glement attendu.</div>
+      <div class="step-item">Le num&eacute;ro est attribu&eacute; automatiquement par le serveur, au format annuel <span class="mono">DEV-2026-0042</span>. Vous ne le saisissez jamais.</div>
+      <div class="step-item">Pr&eacute;visualisation PDF avec votre charte : logo, couleurs, mentions l&eacute;gales et CGV en annexe.</div>
+    </div>
+      <div class="step-ok">&#10003; R&eacute;sultat observable : le devis existe au statut <span class="mono">BROUILLON</span>, num&eacute;rot&eacute;, avec un total TTC calcul&eacute;.</div>
+      <div class="step-tip">&#128161; Bonne pratique : Le num&eacute;ro de devis est annuel et continu. Un trou dans la s&eacute;quence signale un devis supprim&eacute; : pr&eacute;f&eacute;rez l'annulation &agrave; la suppression.</div>
   </div>
 </div>
-<div class="step-item">
+<div class="step-item" style="border:none;padding:0;">
   <div class="step-header">
-    <span class="step-num">06</span>
-    <span class="step-title">Relance automatique impay&eacute;</span>
+    <div class="step-num">02</div>
+    <div class="step-title">Envoi et signature &eacute;lectronique</div>
   </div>
   <div class="step-body">
-    
-    <ul class="step-items"><li>Apr&egrave;s &eacute;ch&eacute;ance : statut facture passe &agrave; <code>EN_RETARD</code></li><li>Relance 1 (J+7) : email courtois automatique</li><li>Relance 2 (J+15) : email plus ferme + appel programm&eacute;</li><li>Relance 3 (J+30) : mise en demeure formelle (LRAR g&eacute;n&eacute;r&eacute;e)</li><li>Indemnit&eacute; forfaitaire 40&euro; (article L441-10 Code commerce) ajout&eacute;e automatiquement</li></ul>
-    <div class="step-tip"><strong>&#128161; Conseil :</strong> La proc&eacute;dure de relance automatis&eacute;e divise par 3 le d&eacute;lai moyen de paiement (DSO).</div>
-    
+    <div class="step-intro"><span class="mono">Devis &rsaquo; Fiche devis &rsaquo; Envoyer</span></div>
+    <div class="step-items">
+      <div class="step-item">L'envoi par courriel joint le PDF et un lien vers le portail client.</div>
+      <div class="step-item">Option signature &eacute;lectronique : le devis part en circuit de signature, le client signe depuis son t&eacute;l&eacute;phone ou son ordinateur.</div>
+      <div class="step-item">La signature est horodat&eacute;e et qualifi&eacute;e eIDAS. Elle a la m&ecirc;me valeur juridique qu'une signature manuscrite, avec une tra&ccedil;abilit&eacute; sup&eacute;rieure.</div>
+      <div class="step-item">&Agrave; la r&eacute;ception de l'&eacute;v&eacute;nement de signature, le statut passe seul de <span class="mono">ENVOYE</span> &agrave; <span class="mono">SIGNE</span>.</div>
+      <div class="step-item">Le PDF sign&eacute; est archiv&eacute; en GED, sur disque, class&eacute; par structure.</div>
+    </div>
+      <div class="step-ok">&#10003; R&eacute;sultat observable : statut <span class="mono">SIGNE</span> et PDF sign&eacute; consultable depuis la fiche devis.</div>
+      <div class="step-warn">&#9888; Attention : si le statut reste &agrave; <span class="mono">ENVOYE</span> alors que le client affirme avoir sign&eacute;, v&eacute;rifiez d'abord le journal de signature de la fiche : l'&eacute;v&eacute;nement peut &ecirc;tre en attente de r&eacute;ception.</div>
   </div>
 </div>
-<div class="step-item">
+<div class="step-item" style="border:none;padding:0;">
   <div class="step-header">
-    <span class="step-num">07</span>
-    <span class="step-title">Avoir total &mdash; Annulation facture</span>
+    <div class="step-num">03</div>
+    <div class="step-title">Facture d'acompte</div>
   </div>
   <div class="step-body">
-    
-    <ul class="step-items"><li>Cas : prestation annul&eacute;e apr&egrave;s facturation</li><li><strong>Factures &rarr; [id] &rarr; Cr&eacute;er un avoir</strong></li><li>Avoir total = facture inverse (montants n&eacute;gatifs)</li><li>Num&eacute;ro avoir : <code>AVO-2606-0012</code> &mdash; conforme NF525</li><li>&Eacute;criture comptable contre-pass&eacute;e automatiquement</li><li>Si paiement d&eacute;j&agrave; encaiss&eacute; : remboursement Stripe en 1 clic</li></ul>
-    
-    
+    <div class="step-intro"><span class="mono">Devis sign&eacute; &rsaquo; G&eacute;n&eacute;rer une facture d'acompte</span></div>
+    <div class="step-items">
+      <div class="step-item">Choisir le pourcentage d'acompte. La valeur par d&eacute;faut est de 30 %, param&eacute;trable.</div>
+      <div class="step-item">La facture est num&eacute;rot&eacute;e <span class="mono">FAC-2026-0078</span>, conforme NF525 : num&eacute;rotation continue, aucune modification apr&egrave;s &eacute;mission.</div>
+      <div class="step-item">Le lien devis vers facture est enregistr&eacute; : depuis la facture, vous voyez toujours de quel devis elle provient, et inversement.</div>
+      <div class="step-item">L'envoi inclut un lien de paiement en ligne.</div>
+      <div class="step-item">L'encaissement bascule la facture en <span class="mono">PAYEE</span> et g&eacute;n&egrave;re l'&eacute;criture comptable (client, acompte re&ccedil;u, TVA collect&eacute;e).</div>
+    </div>
+      <div class="step-ok">&#10003; R&eacute;sultat observable : facture d'acompte &eacute;mise, r&eacute;gl&eacute;e, &eacute;criture pass&eacute;e, lien vers le devis visible des deux c&ocirc;t&eacute;s.</div>
+      <div class="step-warn">&#9888; Attention : une facture &eacute;mise ne se modifie jamais et ne se supprime jamais. La seule voie de correction est l'avoir (&eacute;tape 8) ou l'annulation par la route applicative, qui pr&eacute;serve la cha&icirc;ne d'int&eacute;grit&eacute;.</div>
   </div>
 </div>
-<div class="step-item">
+<div class="step-item" style="border:none;padding:0;">
   <div class="step-header">
-    <span class="step-num">08</span>
-    <span class="step-title">Avoir partiel &mdash; Remise a posteriori</span>
+    <div class="step-num">04</div>
+    <div class="step-title">R&eacute;alisation de la prestation</div>
   </div>
   <div class="step-body">
-    
-    <ul class="step-items"><li>Cas : geste commercial apr&egrave;s facturation (-15% par exemple)</li><li><strong>Cr&eacute;er un avoir partiel</strong> : montant personnalis&eacute;</li><li>Lignes : remise sur prestation X = -45&euro; HT</li><li>La facture initiale reste intacte, l'avoir vient en d&eacute;duction</li><li>Solde du compte client mis &agrave; jour automatiquement</li></ul>
-    
-    
+    <div class="step-intro"><span class="mono">Devis sign&eacute; &rsaquo; G&eacute;n&eacute;rer les s&eacute;ances</span></div>
+    <div class="step-items">
+      <div class="step-item">Les s&eacute;ances planifi&eacute;es sont cr&eacute;&eacute;es en lot depuis les lignes du devis.</div>
+      <div class="step-item">Chaque s&eacute;ance r&eacute;alis&eacute;e passe en <span class="mono">REALISEE</span>.</div>
+      <div class="step-item">Le client suit l'avancement en temps r&eacute;el depuis son portail.</div>
+      <div class="step-item">Les comptes rendus sont envoy&eacute;s automatiquement apr&egrave;s chaque s&eacute;ance.</div>
+    </div>
+      <div class="step-ok">&#10003; R&eacute;sultat observable : toutes les s&eacute;ances du devis sont au statut <span class="mono">REALISEE</span>, le solde restant &agrave; facturer est calcul&eacute;.</div>
   </div>
 </div>
-<div class="step-item">
+<div class="step-item" style="border:none;padding:0;">
   <div class="step-header">
-    <span class="step-num">09</span>
-    <span class="step-title">Facture proforma</span>
+    <div class="step-num">05</div>
+    <div class="step-title">Facture de solde</div>
   </div>
   <div class="step-body">
-    
-    <ul class="step-items"><li>Cas : devis demand&eacute; sur format facture sans valeur commerciale</li><li><strong>Devis &rarr; Type Proforma</strong></li><li>Aspect identique &agrave; une facture mais marqu&eacute; <em>PROFORMA</em></li><li>Pas de num&eacute;rotation facture, pas d'&eacute;criture comptable</li><li>Conversion en vraie facture en 1 clic si accept&eacute;e</li></ul>
-    
-    
+    <div class="step-intro"><span class="mono">Facturation &rsaquo; Facturer le solde</span></div>
+    <div class="step-items">
+      <div class="step-item">Le solde est calcul&eacute; automatiquement : total du devis moins acompte d&eacute;j&agrave; encaiss&eacute;.</div>
+      <div class="step-item">L'acompte appara&icirc;t en d&eacute;duction sur le PDF, avec le num&eacute;ro de la facture d'acompte d'origine.</div>
+      <div class="step-item">M&ecirc;me num&eacute;rotation annuelle continue, m&ecirc;me interdiction de modification apr&egrave;s &eacute;mission.</div>
+    </div>
+      <div class="step-ok">&#10003; R&eacute;sultat observable : la somme acompte plus solde &eacute;gale exactement le total TTC du devis sign&eacute;.</div>
+      <div class="step-tip">&#128161; Bonne pratique : v&eacute;rifiez ce contr&ocirc;le d'&eacute;galit&eacute; sur votre premi&egrave;re facture avec acompte : c'est le meilleur test de votre param&eacute;trage de TVA.</div>
   </div>
 </div>
-<div class="step-item">
+<div class="step-item" style="border:none;padding:0;">
   <div class="step-header">
-    <span class="step-num">10</span>
-    <span class="step-title">Export et contr&ocirc;le des factures</span>
+    <div class="step-num">06</div>
+    <div class="step-title">Encaissement et rapprochement</div>
   </div>
   <div class="step-body">
-    
-    <ul class="step-items"><li><strong>Factures &rarr; Export CSV</strong> &mdash; UTF-8 BOM, s&eacute;parateur &laquo;&nbsp;;&nbsp;&raquo;</li><li>Filtres : p&eacute;riode, client, statut (pay&eacute;es/impay&eacute;es/avoir)</li><li>Export FEC compatible expert-comptable</li><li>Journal des modifications : tra&ccedil;abilit&eacute; compl&egrave;te NF525</li><li>Archive l&eacute;gale 10 ans &mdash; sauvegarde GED + NAS</li></ul>
-    
-    
+    <div class="step-intro"><span class="mono">R&egrave;glements &rsaquo; Saisir un r&egrave;glement</span></div>
+    <div class="step-items">
+      <div class="step-item">Le r&egrave;glement peut &ecirc;tre saisi manuellement (ch&egrave;que, virement, esp&egrave;ces) ou remont&eacute; automatiquement par le prestataire de paiement.</div>
+      <div class="step-item">Un r&egrave;glement peut couvrir plusieurs factures, une facture peut recevoir plusieurs r&egrave;glements.</div>
+      <div class="step-item">Chaque r&egrave;glement enregistr&eacute; est sign&eacute; dans la cha&icirc;ne d'int&eacute;grit&eacute; NF525.</div>
+      <div class="step-item">Le solde client se met &agrave; jour imm&eacute;diatement.</div>
+    </div>
+      <div class="step-ok">&#10003; R&eacute;sultat observable : la facture est <span class="mono">PAYEE</span>, le solde client refl&egrave;te le reste d&ucirc; r&eacute;el.</div>
+  </div>
+</div>
+<div class="step-item" style="border:none;padding:0;">
+  <div class="step-header">
+    <div class="step-num">07</div>
+    <div class="step-title">Relances des impay&eacute;s</div>
+  </div>
+  <div class="step-body">
+    <div class="step-intro"><span class="mono">Impay&eacute;s &rsaquo; Relances</span></div>
+    <div class="step-items">
+      <div class="step-item">Le tableau des impay&eacute;s liste les factures &eacute;chues, tri&eacute;es par anciennet&eacute;.</div>
+      <div class="step-item">Trois niveaux de relance : rappel courtois, mise en demeure, recouvrement.</div>
+      <div class="step-item">L'envoi peut &ecirc;tre d&eacute;clench&eacute; en lot, chaque relance &eacute;tant trac&eacute;e sur la fiche facture.</div>
+      <div class="step-item">Une facture r&eacute;gl&eacute;e sort automatiquement du tableau.</div>
+    </div>
+      <div class="step-ok">&#10003; R&eacute;sultat observable : chaque facture &eacute;chue porte l'historique dat&eacute; de ses relances.</div>
+  </div>
+</div>
+<div class="step-item" style="border:none;padding:0;">
+  <div class="step-header">
+    <div class="step-num">08</div>
+    <div class="step-title">Avoir total ou partiel</div>
+  </div>
+  <div class="step-body">
+    <div class="step-intro"><span class="mono">Facture &rsaquo; &Eacute;mettre un avoir</span></div>
+    <div class="step-items">
+      <div class="step-item">Un avoir se cr&eacute;e toujours depuis la facture d'origine, jamais &agrave; part.</div>
+      <div class="step-item">Avoir total : annule int&eacute;gralement la facture. Avoir partiel : ne porte que sur les lignes ou le montant &agrave; corriger.</div>
+      <div class="step-item">Le motif est obligatoire et figure sur le PDF.</div>
+      <div class="step-item">L'&eacute;criture de l'avoir est atomique : soit l'avoir est enregistr&eacute; en entier, soit rien ne l'est. Un incident en cours d'&eacute;criture ne laisse jamais d'avoir partiel en base.</div>
+      <div class="step-item">La facture d'origine reste intacte. L'avoir la neutralise, il ne la r&eacute;&eacute;crit pas.</div>
+    </div>
+      <div class="step-ok">&#10003; R&eacute;sultat observable : avoir num&eacute;rot&eacute; et rattach&eacute; &agrave; sa facture, TVA r&eacute;gularis&eacute;e, cha&icirc;ne d'int&eacute;grit&eacute; NF525 intacte.</div>
+      <div class="step-warn">&#9888; Attention : ne tentez jamais de corriger une facture par une modification directe en base. La cha&icirc;ne d'int&eacute;grit&eacute; NF525 le d&eacute;tecterait et l'exercice deviendrait non conforme &agrave; un contr&ocirc;le.</div>
+  </div>
+</div>
+<div class="step-item" style="border:none;padding:0;">
+  <div class="step-header">
+    <div class="step-num">09</div>
+    <div class="step-title">&Eacute;critures comptables et export</div>
+  </div>
+  <div class="step-body">
+    <div class="step-intro"><span class="mono">Comptabilit&eacute; &rsaquo; Journal, puis Export FEC</span></div>
+    <div class="step-items">
+      <div class="step-item">Chaque facture, avoir et r&egrave;glement g&eacute;n&egrave;re son &eacute;criture au journal, selon votre plan comptable.</div>
+      <div class="step-item">L'export FEC produit le fichier attendu par l'administration fiscale.</div>
+      <div class="step-item">Les dates export&eacute;es sont normalis&eacute;es : la date de la pi&egrave;ce est celle enregistr&eacute;e, ind&eacute;pendamment du fuseau horaire du poste qui consulte.</div>
+    </div>
+      <div class="step-ok">&#10003; R&eacute;sultat observable : le FEC s'ouvre sans erreur de format et le total des &eacute;critures &eacute;quilibre.</div>
+  </div>
+</div>
+<div class="step-item" style="border:none;padding:0;">
+  <div class="step-header">
+    <div class="step-num">10</div>
+    <div class="step-title">Cl&ocirc;ture et archivage</div>
+  </div>
+  <div class="step-body">
+    <div class="step-intro"><span class="mono">GED &rsaquo; Documents commerciaux</span></div>
+    <div class="step-items">
+      <div class="step-item">Devis sign&eacute;, factures, avoirs et relances sont archiv&eacute;s dans la GED, sur disque, class&eacute;s par structure et par ann&eacute;e.</div>
+      <div class="step-item">Les documents restent consultables depuis la fiche client comme depuis la fiche animal.</div>
+      <div class="step-item">L'archivage suit la dur&eacute;e de conservation d&eacute;clar&eacute;e dans votre registre RGPD.</div>
+    </div>
+      <div class="step-ok">&#10003; R&eacute;sultat observable : le cycle est complet et auditable : du devis &agrave; l'&eacute;criture comptable, chaque pi&egrave;ce est retrouvable en deux clics.</div>
   </div>
 </div>
   </div>
 </div>
 
+<div class="section">
+  <div class="section-title"><span class="num">03</span> Points de contr&ocirc;le</div>
+  <p class="section-intro">Quatre v&eacute;rifications qui prouvent que le cycle s'est bien pass&eacute;. Faites-les au moins une fois, sur votre premier dossier r&eacute;el.</p>
+  <div class="check"><b>1. &Eacute;galit&eacute; des montants.</b> Acompte plus solde &eacute;gale le total TTC du devis sign&eacute;. Un &eacute;cart de quelques centimes signale un arrondi de TVA mal param&eacute;tr&eacute;.</div>
+  <div class="check"><b>2. Continuit&eacute; de la num&eacute;rotation.</b> Sur l'ann&eacute;e en cours, la s&eacute;quence des factures est continue et sans trou. C'est l'exigence centrale de la NF525.</div>
+  <div class="check"><b>3. Tra&ccedil;abilit&eacute; crois&eacute;e.</b> Depuis la facture, le devis d'origine est cliquable. Depuis le devis, les factures issues sont list&eacute;es.</div>
+  <div class="check"><b>4. &Eacute;quilibre comptable.</b> Le journal &eacute;quilibre, et l'export FEC s'ouvre sans erreur de format.</div>
 </div>
+
+<div class="section">
+  <div class="section-title"><span class="num">04</span> Cas limites et erreurs fr&eacute;quentes</div>
+  <div class="limit"><b>Le client refuse de signer.</b> Laissez le devis en <span class="mono">ENVOYE</span> puis passez-le en <span class="mono">REFUSE</span>. Ne le supprimez pas : le num&eacute;ro serait perdu et cr&eacute;erait un trou dans la s&eacute;quence.</div>
+  <div class="limit"><b>Vous avez factur&eacute; le mauvais client.</b> N'annulez pas par suppression. &Eacute;mettez un avoir total, avec le motif, puis refacturez le bon client. La facture erron&eacute;e reste en base, neutralis&eacute;e.</div>
+  <div class="limit"><b>La prestation s'arr&ecirc;te en cours de route.</b> Facturez le solde au prorata des s&eacute;ances r&eacute;alis&eacute;es, ou &eacute;mettez un avoir partiel sur l'acompte si aucune s&eacute;ance n'a eu lieu.</div>
+  <div class="limit"><b>Le r&egrave;glement arrive avant la facture.</b> Saisissez le r&egrave;glement comme acompte client, il se rapprochera de la facture &agrave; son &eacute;mission.</div>
+  <div class="limit"><b>Une date semble d&eacute;cal&eacute;e d'un jour.</b> Ce comportement a &eacute;t&eacute; corrig&eacute; : les dates sont d&eacute;sormais normalis&eacute;es &agrave; la lecture comme &agrave; l'&eacute;criture. Si vous le constatez encore, signalez-le, c'est un bug.</div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="num">05</span> Pour aller plus loin</div>
+  <div class="cards-grid">
+    <a class="scenario-card" href="tuto-devis.html"><div class="icon">&#128209;</div><div class="title">Tutoriel Devis</div><div class="desc">L'&eacute;cran devis en d&eacute;tail.</div></a>
+    <a class="scenario-card" href="tuto-avoirs.html"><div class="icon">&#8630;</div><div class="title">Tutoriel Avoirs</div><div class="desc">Total, partiel, motifs.</div></a>
+    <a class="scenario-card" href="23-Prise-en-compte-de-la-NF-525.html"><div class="icon">&#128274;</div><div class="title">Conformit&eacute; NF525</div><div class="desc">Ce que la norme impose.</div></a>
+    <a class="scenario-card" href="sc-trans-compta-fec.html"><div class="icon">&#128202;</div><div class="title">Comptabilit&eacute; et FEC</div><div class="desc">Du journal &agrave; l'export.</div></a>
+  </div>
+</div>
+
+</div>
+
 <footer>
-  Anim'Gest &mdash; NoSage's Editor &mdash; Sprint S122 &middot; 28/05/2026
-  <br><a href="scenarios-index.html">&larr; Tous les sc&eacute;narios</a>
+  Anim'Gest &middot; No Sage's Editor &middot; Sprint S152 &middot; 09/07/2026
+  <br>
+  &#128231; <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a>
   &middot;
-  <a href="index.html">Documentation</a>
+  <a href="https://github.com/nicolashermilly/AnimGest-docs" target="_blank">GitHub</a>
+  &middot;
+  <a href="scenarios-index.html">Sc&eacute;narios</a>
 </footer>
-
 </body>
 </html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nouveaut&eacute;s - Anim'Gest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F172A;
+  --navy-800: #1E293B;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --gold-pale: #FEF3C7;
+  --cyan: #06B6D4;
+  --violet: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F97316;
+  --text: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border: #1E293B;
+  --card: #1E293B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover { color: var(--gold); }
+.nav-badge {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  border-bottom: 1px solid rgba(245,158,11,0.15);
+  padding: 56px 32px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero .emoji { display: block; font-size: 2.4rem; margin-bottom: 8px; line-height: 1; }
+.hero p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.hero-tags {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
+  margin-top: 18px; position: relative; z-index: 1;
+}
+.hero-tag {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 14px;
+}
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,158,11,0.1);
+  border-top: 1px solid rgba(245,158,11,0.1);
+  border-bottom: 1px solid rgba(245,158,11,0.1);
+}
+.kpi-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.kpi-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi-card {
+  background: var(--navy);
+  padding: 26px 18px;
+  text-align: center;
+  transition: background .2s;
+}
+.kpi-card:hover { background: var(--navy-800); }
+.kpi-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.kpi-badge {
+  display: inline-block;
+  background: rgba(16,185,129,0.1);
+  color: var(--green);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 24px 32px; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #F8FAFC;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .num {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+}
+.section { margin-bottom: 48px; }
+.section-intro { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+
+/* STEP LIST (adapte de sprint-list) */
+.step-list { display: flex; flex-direction: column; gap: 14px; }
+.step-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.step-item:hover { border-color: rgba(245,158,11,0.25); }
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 50px;
+  text-align: center;
+}
+.step-title { font-weight: 600; font-size: 0.95rem; flex: 1; color: #F8FAFC; }
+.step-body {
+  padding: 0 20px 18px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.step-intro { color: var(--text-muted); font-size: 0.88rem; padding-top: 14px; margin-bottom: 8px; font-style: italic; }
+.step-items { list-style: none; padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.step-items.no-pad { padding-top: 0; }
+.step-items li {
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  padding-left: 18px;
+  position: relative;
+}
+.step-items li::before {
+  content: '▸';
+  position: absolute; left: 0; top: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+.step-items li strong { color: var(--text); font-weight: 600; }
+.step-items li code, .step-items li .mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  background: rgba(15,23,42,0.6);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--gold-light);
+}
+.step-tip {
+  background: rgba(245,158,11,0.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+}
+.step-tip strong { color: var(--gold); }
+.step-warn {
+  background: rgba(239,68,68,0.06);
+  border-left: 3px solid var(--red);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #FCA5A5;
+}
+.step-warn strong { color: var(--red); }
+.step-ok {
+  background: rgba(16,185,129,0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #86EFAC;
+}
+.step-ok strong { color: var(--green); }
+.step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+/* TAGS */
+.tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tag-api { background: rgba(6,182,212,0.1); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+.tag-front { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+.tag-bdd { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+.tag-fix { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-ia { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.tag-violet { background: rgba(79,70,229,0.1); color: #818CF8; border: 1px solid rgba(79,70,229,0.2); }
+
+/* TABLE */
+.table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 8px; background: var(--card); border-radius: 8px; overflow: hidden; }
+.table th { text-align: left; padding: 10px 14px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+.table tr:last-child td { border-bottom: none; }
+.table td:first-child { color: var(--text); font-weight: 500; }
+.mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; }
+
+/* INDEX CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.scenario-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all .2s;
+}
+.scenario-card:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); }
+.scenario-card .icon { font-size: 1.6rem; }
+.scenario-card .title { font-weight: 600; font-size: 0.98rem; color: #F8FAFC; }
+.scenario-card .desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.scenario-card .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 28px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 40px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .kpi-grid, .kpi-grid.cols-5, .kpi-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 1.8rem; }
+  .main { padding: 32px 18px; }
+  nav { padding: 12px 18px; gap: 18px; }
+  .nav-badge { margin-left: 0; }
+}
+
+
+/* --- S152 : blocs de cadrage scenario --- */
+.frame { display:grid; gap:14px; margin-bottom:28px; }
+@media(min-width:820px){ .frame.cols-2 { grid-template-columns:1fr 1fr; } }
+.frame-box { background:var(--card); border:1px solid var(--border); border-left:3px solid var(--gold);
+  border-radius:10px; padding:16px 18px; }
+.frame-box.ctx { border-left-color:var(--cyan); }
+.frame-box.pre { border-left-color:var(--violet); }
+.frame-box.exp { border-left-color:var(--green); }
+.frame-box h3 { font-family:'DM Sans',sans-serif; font-size:0.72rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--text-muted); font-weight:600; margin-bottom:10px; }
+.frame-box ul { list-style:none; }
+.frame-box li { font-size:0.88rem; color:var(--text); padding:4px 0 4px 16px; position:relative; }
+.frame-box li:before { content:"\25B8"; position:absolute; left:0; color:var(--gold); font-size:0.7rem; top:7px; }
+.frame-box p { font-size:0.88rem; color:var(--text-muted); }
+.check { background:rgba(16,185,129,0.07); border:1px solid rgba(16,185,129,0.25);
+  border-radius:8px; padding:12px 14px; margin-top:12px; font-size:0.85rem; color:var(--text); }
+.check b { color:var(--green); }
+.limit { background:rgba(249,115,22,0.06); border:1px solid rgba(249,115,22,0.22);
+  border-radius:8px; padding:12px 14px; margin-top:10px; font-size:0.85rem; color:var(--text); }
+.limit b { color:var(--orange); }
+
+/* --- S152 : fil de nouveautes --- */
+.news { border-left:2px solid var(--border); padding-left:24px; margin-left:6px; }
+.news-item { position:relative; padding-bottom:30px; }
+.news-item:before { content:""; position:absolute; left:-30px; top:6px; width:10px; height:10px;
+  border-radius:50%; background:var(--gold); border:2px solid var(--navy); }
+.news-item.next:before { background:var(--navy-600); }
+.news-date { font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--text-muted);
+  letter-spacing:0.06em; text-transform:uppercase; }
+.news-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--gold-light);
+  margin:4px 0 10px; }
+.news-body ul { list-style:none; }
+.news-body li { font-size:0.9rem; color:var(--text); padding:5px 0 5px 18px; position:relative; line-height:1.55; }
+.news-body li:before { content:"\2014"; position:absolute; left:0; color:var(--navy-600); }
+.news-body li b { color:var(--gold-light); font-weight:600; }
+.pill { display:inline-block; font-size:0.68rem; padding:2px 9px; border-radius:20px;
+  font-weight:600; letter-spacing:0.04em; margin-left:8px; vertical-align:2px; }
+.pill-prod { background:rgba(16,185,129,0.15); color:var(--green); border:1px solid rgba(16,185,129,0.35); }
+.pill-prep { background:rgba(148,163,184,0.12); color:var(--text-muted); border:1px solid rgba(148,163,184,0.3); }
+.pill-sec  { background:rgba(79,70,229,0.15); color:#A5B4FC; border:1px solid rgba(79,70,229,0.4); }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index.html">Accueil</a>
+  <a href="changelog.html">Nouveaut&eacute;s</a>
+  <a href="scenarios-index.html">Sc&eacute;narios</a>
+  <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
+  <a href="15-rgpd-conformite.html">RGPD</a>
+  <span class="nav-badge">S152</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">JOURNAL DES NOUVEAUT&Eacute;S</div>
+  <span class="emoji" style="display:block;font-size:2.4rem;margin-bottom:8px;line-height:1;">&#10024;</span>
+  <h1>Ce qui a chang&eacute; dans Anim'Gest</h1>
+  <p>Chaque sprint apporte son lot de corrections et de fonctionnalit&eacute;s, souvent issues directement des retours du terrain. Cette page les recense, du plus r&eacute;cent au plus ancien.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">En production</span>
+    <span class="hero-tag">S&eacute;curit&eacute;</span>
+    <span class="hero-tag">En pr&eacute;paration</span>
+  </div>
+</div>
+
+<div class="main">
+
+<div class="section">
+  <div class="section-title"><span class="num">01</span> Comment lire cette page</div>
+  <p class="section-intro">
+    <span class="pill pill-prod">En production</span> la fonctionnalit&eacute; est d&eacute;ploy&eacute;e et utilisable d&egrave;s aujourd'hui.
+    <span class="pill pill-sec">S&eacute;curit&eacute;</span> mesure de protection des donn&eacute;es, activ&eacute;e progressivement pour ne jamais interrompre votre travail.
+    <span class="pill pill-prep">En pr&eacute;paration</span> con&ccedil;u et sp&eacute;cifi&eacute;, pas encore livr&eacute;. Annonc&eacute; ici par transparence, jamais pr&eacute;sent&eacute; comme disponible.
+  </p>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="num">02</span> Journal</div>
+
+  <div class="news">
+
+    <div class="news-item">
+      <div class="news-date">Juillet 2026 &middot; Sprint S151</div>
+      <div class="news-title">S&eacute;curit&eacute; des sessions et cloisonnement</div>
+      <div class="news-body">
+        <ul>
+          <li><b>Cloisonnement du portail commercial</b> <span class="pill pill-sec">S&eacute;curit&eacute;</span> : les &eacute;crans de gestion des licences sont d&eacute;sormais r&eacute;serv&eacute;s &agrave; l'&eacute;diteur. Ils disparaissent du menu des structures clientes et toute tentative d'acc&egrave;s direct par l'URL est refus&eacute;e c&ocirc;t&eacute; serveur.</li>
+          <li><b>Socle de session serveur</b> <span class="pill pill-sec">S&eacute;curit&eacute;</span> : la m&eacute;canique de session est d&eacute;sormais valid&eacute;e par le serveur et non plus seulement par le navigateur. D&eacute;ploy&eacute;e en veille, elle sera activ&eacute;e progressivement, sans coupure pour les utilisateurs connect&eacute;s.</li>
+          <li><b>Protection contre les tentatives r&eacute;p&eacute;t&eacute;es de connexion</b> <span class="pill pill-prod">En production</span> : les &eacute;checs d'authentification sont trac&eacute;s et le rythme des tentatives est limit&eacute;.</li>
+          <li><b>Cookies de session durcis</b> <span class="pill pill-prod">En production</span> : transmission chiffr&eacute;e obligatoire, port&eacute;e du jeton de rafra&icirc;chissement restreinte &agrave; la seule route qui en a besoin.</li>
+          <li><b>Avoirs : &eacute;mission atomique</b> <span class="pill pill-prod">En production</span> : un avoir NF525 est d&eacute;sormais &eacute;crit d'un seul bloc. En cas d'incident en cours d'&eacute;criture, rien n'est enregistr&eacute; : plus d'avoir &agrave; moiti&eacute; cr&eacute;&eacute;.</li>
+          <li><b>Bons de retour fournisseur : &eacute;mission atomique</b> <span class="pill pill-prod">En production</span> : m&ecirc;me garantie que pour les avoirs, c&ocirc;t&eacute; achats.</li>
+          <li><b>Robustesse des dates</b> <span class="pill pill-prod">En production</span> : normalisation du stockage et de la lecture des dates, pour supprimer tout d&eacute;calage d'un jour selon le fuseau du poste.</li>
+          <li><b>Corrections issues de la recette b&ecirc;ta</b> <span class="pill pill-prod">En production</span> : plus de quarante points remont&eacute;s par les structures pilotes ont &eacute;t&eacute; trait&eacute;s (ergonomie, libell&eacute;s, ancrage de l'agenda, &eacute;ditions PDF).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-date">Juillet 2026 &middot; Sprint S150</div>
+      <div class="news-title">Ouverture de la b&ecirc;ta, cr&eacute;dits IA et bons de livraison</div>
+      <div class="news-body">
+        <ul>
+          <li><b>B&ecirc;ta ouverte</b> : les premi&egrave;res structures professionnelles utilisent Anim'Gest en conditions r&eacute;elles. Leurs retours pilotent d&eacute;sormais la priorisation.</li>
+          <li><b>Cr&eacute;dits Eliot</b> <span class="pill pill-prod">En production</span> : un bandeau affiche votre consommation d'assistant IA, votre quota et vos seuils d'alerte. Vous savez toujours o&ugrave; vous en &ecirc;tes avant d'&ecirc;tre bloqu&eacute;.</li>
+          <li><b>Achats : bon de livraison</b> <span class="pill pill-prod">En production</span> : r&eacute;ception d'un BL, rapprochement avec la commande, validation, entr&eacute;e en stock. L'entr&eacute;e en stock est idempotente : valider deux fois par erreur n'incr&eacute;mente pas deux fois.</li>
+          <li><b>Portail : correction des codes m&eacute;tier</b> <span class="pill pill-prod">En production</span> : la cr&eacute;ation d'un acc&egrave;s portail ne rejette plus certains m&eacute;tiers.</li>
+          <li><b>Terminologie m&eacute;diation</b> : la verticale s'appelle d&eacute;sormais <b>Intervenant en M&eacute;diation Animale (MA)</b>, conform&eacute;ment au vocabulaire de la profession. Le vocabulaire du domaine (animal m&eacute;diateur, s&eacute;ance de m&eacute;diation) est pr&eacute;serv&eacute; partout.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <div class="news-date">Juin &agrave; juillet 2026 &middot; Sprints S148 et S149</div>
+      <div class="news-title">Profondeur m&eacute;tier et posture de s&eacute;curit&eacute;</div>
+      <div class="news-body">
+        <ul>
+          <li><b>Conception approfondie des douze m&eacute;tiers</b> : chaque verticale a &eacute;t&eacute; reprise sur quatorze axes (vocabulaire, cadre r&eacute;glementaire fran&ccedil;ais, objets m&eacute;tier, workflow r&eacute;el, livrable cl&eacute;, r&egrave;gles bloquantes), en s'appuyant sur des sources officielles et non sur des suppositions.</li>
+          <li><b>Page S&eacute;curit&eacute; et confidentialit&eacute;</b> <span class="pill pill-prod">En production</span> : notre posture est publi&eacute;e et tenue &agrave; jour au fil des sprints. <a href="securite-confidentialite.html" style="color:var(--gold);">La consulter</a>.</li>
+          <li><b>Eliot passe &agrave; l'action</b> <span class="pill pill-prod">En production</span> : l'assistant ne se contente plus de lire, il peut cr&eacute;er un client, un animal ou planifier une s&eacute;ance. Toute &eacute;criture passe par une confirmation explicite et respecte les droits de votre r&ocirc;le. Par d&eacute;faut, tout est refus&eacute; : une action n'est possible que si elle vous est express&eacute;ment autoris&eacute;e. <a href="eliot-actions.html" style="color:var(--gold);">D&eacute;tail</a>.</li>
+          <li><b>Gardes m&eacute;tier non n&eacute;gociables</b> : Eliot ne calcule jamais une posologie, une dose, une ration, et ne pose jamais de diagnostic. Ces valeurs proviennent de tables valid&eacute;es par le praticien, avec double confirmation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="news-item next">
+      <div class="news-date">En pr&eacute;paration</div>
+      <div class="news-title">Ce qui arrive</div>
+      <div class="news-body">
+        <ul>
+          <li><b>R&eacute;servation en ligne</b> <span class="pill pill-prep">En pr&eacute;paration</span> : param&eacute;trage des horaires d'ouverture, exceptions (cong&eacute;s, jours f&eacute;ri&eacute;s), disponibilit&eacute; par intervenant, cr&eacute;neaux d&eacute;duits de la dur&eacute;e de la prestation. La page de r&eacute;servation publique viendra dans un second temps.</li>
+          <li><b>Carnet de sant&eacute; animal</b> <span class="pill pill-prep">En pr&eacute;paration</span> : historique des vaccins, poids, rappels, partag&eacute; par huit m&eacute;tiers.</li>
+          <li><b>Cha&icirc;ne document unifi&eacute;e</b> <span class="pill pill-prep">En pr&eacute;paration</span> : g&eacute;n&eacute;ration du livrable (contrat de cession, contrat de pension, convention, bilan), signature &eacute;lectronique, archivage GED, facturation, avec un statut unique de bout en bout.</li>
+          <li><b>Moteur d'&eacute;ch&eacute;ances et de rappels</b> <span class="pill pill-prep">En pr&eacute;paration</span> : rappels de vaccin, &eacute;ch&eacute;ances l&eacute;gales, renouvellements, avec alerte par courriel &agrave; J moins x.</li>
+          <li><b>Double authentification</b> <span class="pill pill-prep">En pr&eacute;paration</span> : second facteur par application, activable par l'utilisateur, rendable obligatoire par l'administrateur de la structure.</li>
+          <li><b>Lien d'activation durci</b> <span class="pill pill-prep">En pr&eacute;paration</span> : usage unique renforc&eacute;, rattachement &agrave; l'appareil, jeton hors URL. Remont&eacute; par une structure pilote, corrig&eacute; &agrave; la source.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="num">03</span> Une remont&eacute;e, une correction</div>
+  <p class="section-intro">
+    La majorit&eacute; des lignes ci-dessus vient d'un usage r&eacute;el, pas d'une feuille de route th&eacute;orique. Le lien d'activation rejouable, le d&eacute;calage de dates, l'ancrage de l'agenda : tous ont &eacute;t&eacute; signal&eacute;s par une utilisatrice, reproduits, corrig&eacute;s &agrave; la racine, puis document&eacute;s ici.
+    Si vous constatez un comportement qui vous surprend, &eacute;crivez &agrave; <a href="mailto:contact@no-sages-editor.com" style="color:var(--gold);">contact@no-sages-editor.com</a>.
+  </p>
+</div>
+
+</div>
+
+<footer>
+  Anim'Gest &middot; No Sage's Editor &middot; Sprint S152 &middot; 09/07/2026
+  <br>
+  &#128231; <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a>
+  &middot;
+  <a href="https://github.com/nicolashermilly/AnimGest-docs" target="_blank">GitHub</a>
+  &middot;
+  <a href="scenarios-index.html">Sc&eacute;narios</a>
+</footer>
+</body>
+</html>
