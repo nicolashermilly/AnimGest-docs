@@ -547,7 +547,7 @@ footer a { color: var(--gold); text-decoration: none; }
   <a href="scenarios-index.html">Sc&eacute;narios</a>
   <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
   <a href="15-rgpd-conformite.html">RGPD</a>
-  <span class="nav-badge">S122</span>
+  <span class="nav-badge">Juillet 2026</span>
 </nav>
 <div class="hero">
   <div class="hero-label">MODULE &middot; #33 ACHATS</div>
@@ -565,7 +565,7 @@ footer a { color: var(--gold); text-decoration: none; }
   <h3>Cycle complet 7 &eacute;tapes</h3>
   <ol style="padding-left:18px; color:var(--text-muted); line-height:1.8;">
   <li><strong>BC</strong> &mdash; Bon de commande envoy&eacute; au fournisseur</li>
-  <li><strong>BL</strong> &mdash; R&eacute;ception physique des marchandises, stock incr&eacute;ment&eacute;</li>
+  <li><strong>BL</strong> &mdash; R&eacute;ception physique des marchandises, stock incr&eacute;ment&eacute; (entr&eacute;e en stock idempotente : valider deux fois n'incr&eacute;mente qu'une fois)</li>
   <li><strong>FF</strong> &mdash; Facture fournisseur arriv&eacute;e, &eacute;criture comptable</li>
   <li><strong>R&egrave;glement</strong> &mdash; Paiement &agrave; &eacute;ch&eacute;ance (30j typique)</li>
   <li><strong>BR</strong> &mdash; Bon de retour si non-conforme (optionnel)</li>
@@ -574,35 +574,11 @@ footer a { color: var(--gold); text-decoration: none; }
 </ol>
 </div>
 </div>
-<div class="section">
-  <div class="section-title"><span class="num">02</span> Routes API</div>
-  <p class="section-intro">12 endpoints pour la gestion compl&egrave;te des achats.</p>
-  <table class="api-table">
-  <thead><tr><th>Route</th><th>Description</th></tr></thead>
-  <tbody>
-<tr><td><span class="method m-get">GET</span><code>/api/bons-commande</code></td><td>Liste des BC</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/bons-commande</code></td><td>Cr&eacute;er un BC + envoi PDF email auto</td></tr>
-<tr><td><span class="method m-get">GET</span><code>/api/bons-livraison</code></td><td>Liste des BL</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/bons-livraison</code></td><td>Cr&eacute;er un BL li&eacute; &agrave; un BC</td></tr>
-<tr><td><span class="method m-get">GET</span><code>/api/factures-fournisseurs</code></td><td>Liste des FF</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/factures-fournisseurs</code></td><td>Cr&eacute;er une FF li&eacute;e &agrave; un BL</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/factures-fournisseurs/:id/regler</code></td><td>Enregistrer le r&egrave;glement</td></tr>
-<tr><td><span class="method m-get">GET</span><code>/api/bons-retour</code></td><td>Liste des BR</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/bons-retour</code></td><td>Cr&eacute;er un BR (retour produit)</td></tr>
-<tr><td><span class="method m-get">GET</span><code>/api/demandes-avoir-fourn</code></td><td>Liste des DAF</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/demandes-avoir-fourn</code></td><td>Cr&eacute;er une DAF</td></tr>
-<tr><td><span class="method m-get">GET</span><code>/api/avoirs-fourn</code></td><td>Liste des AF re&ccedil;us</td></tr>
-  </tbody>
-</table>
+<!-- S153_ACHATS_NO_API -->
 </div>
-<div class="section">
-  <div class="section-title"><span class="num">03</span> Notes techniques</div>
-  <p class="section-intro">Guards, whitelist, PDF.</p>
-  <div class="callout callout-warn"><strong>Whitelist colonnes :</strong> guards R-26 et R-32 actifs sur toutes les routes BC/BL/FF (S73-S74). Toute modification de colonne BDD doit passer par la whitelist explicite dans <code>custom-routes.ts</code>.</div><div class="callout callout-success"><strong>S74 :</strong> 4 routes PDF &eacute;ditions livr&eacute;es : <code>/editions/bon-livraison/:id</code>, <code>/editions/bon-retour/:id</code>, <code>/editions/demande-avoir-fourn/:id</code>, <code>/editions/avoir-client/:id</code>.</div>
-</div>
-</div>
+
 <footer>
-  Anim'Gest &mdash; No Sage's Editor &mdash; Sprint S122 &middot; 28/05/2026
+  Anim'Gest &middot; No Sage's Editor &middot; Juillet 2026
   <br><a href="index.html">&larr; Documentation</a>
   &middot;
   <a href="scenarios-index.html">Sc&eacute;narios</a>
