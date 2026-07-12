@@ -547,53 +547,20 @@ footer a { color: var(--gold); text-decoration: none; }
   <a href="scenarios-index.html">Sc&eacute;narios</a>
   <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
   <a href="15-rgpd-conformite.html">RGPD</a>
-  <span class="nav-badge">S122</span>
+  <span class="nav-badge">Juillet 2026</span>
 </nav>
 <div class="hero">
   <div class="hero-label">MODULE &middot; #57 PORTAIL</div>
   <span class="emoji">&#127760;</span>
   <h1>Portail Client</h1>
-  <p>Espace client en libre-service &mdash; consultation des s&eacute;ances, signature de devis, paiement CB, t&eacute;l&eacute;chargement de documents. Acc&egrave;s s&eacute;curis&eacute; JWT + cookie httpOnly, white-label aux couleurs du professionnel.</p>
-  <div class="hero-tags"><span class="hero-tag">JWT HS256</span><span class="hero-tag">Stripe int&eacute;gr&eacute;</span><span class="hero-tag">Yousign</span><span class="hero-tag">Mobile-first</span><span class="hero-tag">Multi-tenant</span></div>
+  <p>Espace client en libre-service &mdash; consultation des s&eacute;ances, signature de devis, paiement CB, t&eacute;l&eacute;chargement de documents. Acc&egrave;s s&eacute;curis&eacute; par lien personnel, aux couleurs du professionnel (white-label).</p>
+  <div class="hero-tags"><span class="hero-tag">Acc&egrave;s s&eacute;curis&eacute;</span><span class="hero-tag">Stripe int&eacute;gr&eacute;</span><span class="hero-tag">Yousign</span><span class="hero-tag">Mobile-first</span><span class="hero-tag">Multi-tenant</span></div>
 </div>
-<div class="kpi-grid"><div class="kpi-card"><div class="kpi-value">11</div><div class="kpi-label">Routes API</div></div><div class="kpi-card"><div class="kpi-value">4</div><div class="kpi-label">Onglets client</div></div><div class="kpi-card"><div class="kpi-value">JWT</div><div class="kpi-label">Authentification</div></div><div class="kpi-card"><div class="kpi-value">White-label</div><div class="kpi-label">Brandable</div></div></div>
+<div class="kpi-grid"><div class="kpi-card"><div class="kpi-value">S&eacute;curis&eacute;</div><div class="kpi-label">Lien personnel</div></div><div class="kpi-card"><div class="kpi-value">4</div><div class="kpi-label">Onglets client</div></div><div class="kpi-card"><div class="kpi-value">CB</div><div class="kpi-label">Paiement en ligne</div></div><div class="kpi-card"><div class="kpi-value">White-label</div><div class="kpi-label">Brandable</div></div></div>
 <div class="main">
+<!-- S153_PORTAIL_METIER_ONLY -->
 <div class="section">
-  <div class="section-title"><span class="num">01</span> Architecture</div>
-  <p class="section-intro">Stack technique du portail client.</p>
-  <div class="ref-block">
-  <h3>Architecture</h3>
-  <ul>
-  <li><strong>Frontend</strong> : route <code>/client/[token]</code> &mdash; Next.js 15 App Router</li>
-  <li><strong>Backend</strong> : 11 routes <code>instance.use()</code> dans <code>custom-routes.ts</code></li>
-  <li><strong>Authentification</strong> : token magique sign&eacute; JWT (valid&eacute; 7 jours), cookie <code>portail_session</code> httpOnly</li>
-  <li><strong>Base de donn&eacute;es</strong> : 4 tables <code>portail_client_acces</code>, <code>portail_client_session</code>, <code>portail_client_notification</code>, <code>portail_client_action</code></li>
-  <li><strong>S&eacute;curit&eacute;</strong> : token unique par client, r&eacute;vocation 1-clic, journal des connexions</li>
-</ul>
-</div>
-</div>
-<div class="section">
-  <div class="section-title"><span class="num">02</span> Routes API</div>
-  <p class="section-intro">11 endpoints disponibles pour le portail.</p>
-  <table class="api-table">
-  <thead><tr><th>Route</th><th>Description</th></tr></thead>
-  <tbody>
-<tr><td><span class="method m-post">POST</span><code>/api/portail/auth</code></td><td>Validation du token magique + cr&eacute;ation session</td></tr>
-<tr><td><span class="method m-get">GET</span><code>/api/portail/me</code></td><td>Profil du client connect&eacute;</td></tr>
-<tr><td><span class="method m-get">GET</span><code>/api/portail/animaux</code></td><td>Liste des animaux du client</td></tr>
-<tr><td><span class="method m-get">GET</span><code>/api/portail/seances</code></td><td>Historique des s&eacute;ances (CAC inclus)</td></tr>
-<tr><td><span class="method m-get">GET</span><code>/api/portail/factures</code></td><td>Liste des factures avec statut paiement</td></tr>
-<tr><td><span class="method m-get">GET</span><code>/api/portail/notifications</code></td><td>Notifications non lues</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/portail/devis/:id/signer</code></td><td>Signature &eacute;lectronique Yousign</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/portail/facture/:id/payer</code></td><td>Initialisation Stripe Checkout</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/portail/envoyer</code></td><td>Envoi du lien magique par email (c&ocirc;t&eacute; admin)</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/portail/access/toggle</code></td><td>Activer/d&eacute;sactiver un acc&egrave;s</td></tr>
-<tr><td><span class="method m-post">POST</span><code>/api/portail/confirmer</code></td><td>Confirmer un RDV depuis le portail</td></tr>
-  </tbody>
-</table>
-</div>
-<div class="section">
-  <div class="section-title"><span class="num">03</span> 4 onglets client</div>
+  <div class="section-title"><span class="num">01</span> 4 onglets client</div>
   <p class="section-intro">Vues disponibles pour le client connect&eacute;.</p>
   <div class="ref-block">
   <h3>Onglet Animaux</h3>
@@ -628,14 +595,10 @@ footer a { color: var(--gold); text-decoration: none; }
   </ul>
 </div>
 </div>
-<div class="section">
-  <div class="section-title"><span class="num">04</span> Notes techniques</div>
-  <p class="section-intro">Bugs corrig&eacute;s et bonnes pratiques.</p>
-  <div class="callout callout-warn"><strong>R-29 Leaflet race condition :</strong> page <code>/app/clients</code> pr&eacute;sentait un crash sur certains navigateurs &mdash; fix d&eacute;ploy&eacute; S66 (placeholder carte au lieu du geocoding externe).</div><div class="callout callout-success"><strong>Notifications portail :</strong> table <code>portail_client_notification</code> + helper <code>envoyerNotification()</code> (S68) &mdash; email auto d&egrave;s qu'un document est mis &agrave; disposition.</div>
 </div>
-</div>
+
 <footer>
-  Anim'Gest &mdash; No Sage's Editor &mdash; Sprint S122 &middot; 28/05/2026
+  Anim'Gest &middot; No Sage's Editor &middot; Juillet 2026
   <br><a href="index.html">&larr; Documentation</a>
   &middot;
   <a href="scenarios-index.html">Sc&eacute;narios</a>
