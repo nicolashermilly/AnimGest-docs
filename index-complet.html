@@ -51,6 +51,22 @@ body{background:var(--navy);color:var(--text);font-family:'DM Sans',sans-serif;l
 footer{background:var(--navy-mid);border-top:1px solid var(--border);padding:20px 48px;text-align:center;color:var(--muted);font-size:12px}
 </style>
 <title>Documentation complète - Anim'Gest</title><!-- S154_PORTES -->
+<style>
+/* [S154_NAV_UNIQUE_3A_V1] nav unique 3a. Variables ADAPTEES a ce fichier : il definit
+   --muted (et non --text-muted comme les pages soeurs). */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+nav a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color .2s; }
+nav a:hover, nav a.active { color: var(--gold); }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; text-decoration: none; }
+@media (max-width: 768px) { nav { padding: 12px 18px; gap: 18px; } }
+</style>
 </head>
 
 <style>
@@ -78,6 +94,16 @@ footer{background:#1E293B;border-top:1px solid rgba(255,255,255,.08);padding:20p
 .stat-b-lbl{font-size:11px;color:#64748B;margin-top:2px}
 </style>
 <body>
+<nav>
+  <a href="index-complet.html" class="nav-logo">Anim'Gest Docs</a>
+  <a href="index-complet.html" class="active">Accueil</a>
+  <a href="changelog.html">Nouveaut&eacute;s</a>
+  <a href="scenarios-index.html">Sc&eacute;narios</a>
+  <a href="36-metier-comportementaliste.html">M&eacute;tiers</a>
+  <a href="ref-faq.html">FAQ</a>
+  <a href="ref-glossaire.html">Glossaire</a>
+  <a href="15-rgpd-conformite.html">RGPD</a>
+</nav>
 <div class="hero">
   <div class="badge">Anim'Gest · No Sage's Editor</div>
   <h1>Documentation complète</h1>
