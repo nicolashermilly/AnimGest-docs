@@ -1,0 +1,7 @@
+#!/bin/sh
+# [S154_LINT_DOCS_PUBLIC_V1] Cliquet du site public : un compteur ne doit jamais REMONTER.
+# NON ARME : ce hook ne tourne que si le fondateur execute, une fois :
+#     git config core.hooksPath .githooks
+# L'armement lui appartient (doctrine Deploy2 : preflight d'abord, apply ensuite,
+# jamais dans le meme geste).
+exec npm run --silent lint:docs-public -- --check
