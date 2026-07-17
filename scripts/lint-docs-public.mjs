@@ -17,6 +17,20 @@
  *   Stock" sur la foi du SSOT du menu -- faux, les articles vivent dans la tuile "Catalogue
  *   articles". Une erreur remplacee par une autre, et publiee. D'ou TROIS verdicts, jamais deux.
  *
+ *   LES COMPTEURS DE NAV SONT DEUX, ET ILS NE REPONDENT PAS A LA MEME QUESTION :
+ *     c5_nav_non_conforme  les LIBELLES : les 7 entrees de NAV_ATTENDUE, dans l'ordre.
+ *                          Il SAUTE le logo (nav-logo) et ne lit AUCUN href.
+ *     c6_nav_cible         les CIBLES : href de "Accueil" et du nav-logo = index.html
+ *                          (arbitrage du 17/07). Une entree ABSENTE = une violation.
+ *   POURQUOI DEUX, ET PAS UN c5 DURCI : le 17/07, c5 valait 0 alors que 171/171 pages
+ *   envoyaient "Accueil" sur index-complet.html et que le logo partait sur index.html --
+ *   la meme barre servait DEUX accueils, et la gate etait verte. c5 valait 0 avant la
+ *   bascule, et il vaudra 0 apres : il ne mesure pas ce qui bouge. Redefinir c5 en gardant
+ *   son nom aurait casse la comparabilite avec la baseline historique (c5=171 au 496b429)
+ *   et piege la session suivante, qui aurait cru comparer ce que la precedente comparait.
+ *   c6 est donc NEUF, et il est parti NON NUL (174) -- un compteur qui affiche 0 du premier
+ *   coup sur un depot non corrige ne mesure rien.
+ *
  *   Usage :
  *     npm run lint:docs-public               mesure, affiche, exit 0 (preflight)
  *     npm run lint:docs-public -- --baseline ecrit docs-public.baseline.json, exit 0
@@ -42,6 +56,17 @@ const MODE_CHECK = args.includes("--check");
 
 // La nav de reference (arbitrage 3a du 17/07), dans l'ORDRE. Le script est ASCII pur :
 // les libelles accentues passent par des echappements \u, jamais par des octets accentues.
+// La CIBLE de la nav (arbitrage du 17/07 : index.html fait foi). C5 ci-dessous compare des
+// LIBELLES et saute le logo : il ne lit aucun href, donc il vaut 0 avant ET apres la bascule,
+// et 0 aussi si elle est faite a moitie. C6 porte les CIBLES, et lui seul.
+const NAV_CIBLE_ACCUEIL = "index.html";
+
+/** Le href d'une balise <a ...>, ou null s'il n'y en a pas. */
+function hrefDe(tag) {
+  const m = /href\s*=\s*["']([^"']*)["']/i.exec(tag);
+  return m ? m[1] : null;
+}
+
 const NAV_ATTENDUE = [
   "Accueil",
   "Nouveaut\u00e9s",
@@ -222,16 +247,17 @@ function mesurer(fichiers, base) {
   const compteurs = {
     c1_fantome: 0, c1_indetermine: 0, c2_liens_morts: 0,
     c3_cadratins_char: 0, c3_cadratins_entite: 0,
-    c4_morts: 0, c5_nav_non_conforme: 0,
+    c4_morts: 0, c5_nav_non_conforme: 0, c6_nav_cible: 0,
   };
   const parPage = {};
-  const details = { c1: [], c2: [], c3: [], c4: [], c5: [] };
+  const details = { c1: [], c2: [], c3: [], c4: [], c5: [], c6: [] };
 
   for (const f of fichiers) {
     const chemin = join(base, f);
     const html = readFileSync(chemin, "utf8");
     const p = { c1_fantome: 0, c1_indetermine: 0, c2_liens_morts: 0, c3_cadratins_char: 0,
-                c3_cadratins_entite: 0, c4_morts: 0, c5_nav_non_conforme: 0 };
+                c3_cadratins_entite: 0, c4_morts: 0, c5_nav_non_conforme: 0,
+                c6_nav_cible: 0 };
 
     // --- C1 : chemins d'interface.
     //
@@ -360,6 +386,33 @@ function mesurer(fichiers, base) {
       }
     }
 
+    // --- C6 : la nav pointe-t-elle sur la BONNE CIBLE ?
+    // C5 (ci-dessus) ne lit que des libelles, et il SAUTE le logo. Mesure du 17/07 :
+    // 171/171 pages envoient "Accueil" sur index-complet.html, et c5 vaut 0. Le vert ne
+    // protege rien. C6 ne regarde QUE les href, sur les deux entrees qui portent l'accueil.
+    // Une entree ABSENTE compte pour une violation : un compteur qui ne PEUT pas verifier
+    // ne doit pas rendre "conforme" en silence -- c'est le defaut meme de c5.
+    if (!blocNav) {
+      p.c6_nav_cible += 2;
+      details.c6.push(`${f}  AUCUNE NAV -- les 2 cibles sont invalidables`);
+    } else {
+      let hrefLogo = null;
+      let hrefAccueil = null;
+      for (const a of blocNav[1].matchAll(/<a[^>]*>([\s\S]*?)<\/a>/gi)) {
+        if (/nav-logo/.test(a[0])) { hrefLogo = hrefDe(a[0]); continue; }
+        const t = a[1].replace(/<[^>]*>/g, "");
+        if (cle(t) === cle("Accueil")) hrefAccueil = hrefDe(a[0]);
+      }
+      for (const [quoi, href] of [["nav-logo", hrefLogo], ["Accueil", hrefAccueil]]) {
+        if (href !== NAV_CIBLE_ACCUEIL) {
+          p.c6_nav_cible++;
+          details.c6.push(
+            `${f}  ${quoi} -> ${href === null ? "ABSENT" : href}  (attendu ${NAV_CIBLE_ACCUEIL})`,
+          );
+        }
+      }
+    }
+
     parPage[f] = p;
     for (const k of Object.keys(compteurs)) compteurs[k] += p[k];
   }
@@ -384,7 +437,7 @@ for (const [k, v] of Object.entries(r.compteurs)) console.log(`  ${k.padEnd(22)}
 
 if (!MODE_CHECK) {
   const top = Object.entries(r.parPage)
-    .map(([f, p]) => [f, p.c1_fantome + p.c1_indetermine + p.c2_liens_morts + p.c3_cadratins_char + p.c3_cadratins_entite + p.c4_morts + p.c5_nav_non_conforme])
+    .map(([f, p]) => [f, p.c1_fantome + p.c1_indetermine + p.c2_liens_morts + p.c3_cadratins_char + p.c3_cadratins_entite + p.c4_morts + p.c5_nav_non_conforme + p.c6_nav_cible])
     .filter(([, n]) => n > 0)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10);
