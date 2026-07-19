@@ -338,6 +338,10 @@ function mesurer(fichiers, base) {
     for (const m of html.matchAll(/href\s*=\s*"([^"#?]+\.html)(?:[#?][^"]*)?"/gi)) {
       const href = decoder(m[1]);
       if (/^(https?:)?\/\//i.test(href) || /^mailto:/i.test(href)) continue;
+      // [S155_C2_SKIP_JS_HREF] Un href assemble en JS ("'+esc(a.id)+'.html") n'est
+      // pas un chemin statique : la regex happe le texte litteral du source. Ces
+      // caracteres ne vivent jamais dans un nom de fichier html reel. On saute.
+      if (/[+'`${}<>]/.test(href)) continue;
       const cibleFic = resolve(dirname(chemin), href);
       if (!existsSync(cibleFic)) {
         p.c2_liens_morts++;
