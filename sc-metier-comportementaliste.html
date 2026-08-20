@@ -335,6 +335,12 @@ footer a { color: var(--gold); text-decoration: none; }
   .nav-badge { margin-left: 0; }
 }
 
+/* [S157_ENV-CAPTURE-UNBLOCK] Capture d'ecran d'illustration (pipeline capture-aide --docpages).
+   Couleurs par variables de theme uniquement (zero hex en dur). */
+.aide-capture { margin: 24px 0 8px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--card); }
+.aide-capture img { display: block; width: 100%; height: auto; border-bottom: 1px solid var(--border); }
+.aide-capture figcaption { padding: 10px 14px; font-size: 0.8rem; color: var(--text-muted); }
+
 </style>
 </head>
 <body>
@@ -365,7 +371,14 @@ footer a { color: var(--gold); text-decoration: none; }
 <div class="main">
 <div class="section">
   <div class="section-title"><span class="num">01</span> &Eacute;tapes du sc&eacute;nario</div>
-  
+
+  <!-- [S157_ENV-CAPTURE-UNBLOCK] Capture pilote (capture-aide --docpages, t999999/DEV, ecran
+       /app/seances connecte). Styles par la classe .aide-capture (var() de theme, 0 hex en dur). -->
+  <figure class="aide-capture">
+    <img src="_captures/sc-metier-comportementaliste/01.png" alt="Liste des s&eacute;ances de suivi comportemental" loading="lazy">
+    <figcaption>Liste des s&eacute;ances de suivi comportemental - &eacute;cran Planning des s&eacute;ances d'Anim'Gest (tenant de d&eacute;monstration).</figcaption>
+  </figure>
+
   <div class="step-list">
 <div class="step-item">
   <div class="step-header">
@@ -515,6 +528,7 @@ footer a { color: var(--gold); text-decoration: none; }
 </div>
 
 </div>
+
 <footer>
   Anim'Gest &mdash; No Sage's Editor &mdash; Sprint S122 &middot; 28/05/2026
   <br><a href="scenarios-index.html">&larr; Tous les sc&eacute;narios</a>
