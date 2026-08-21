@@ -13,19 +13,26 @@
 <main>
 <p><a href="index.html">Aide AnimGest</a></p>
 <h1>Modèles de messages</h1>
-<p class="chapo">Les messages automatiques envoyés à vos clients : type, sujet, corps et activation. <span class="badge">En cours de mise à jour</span></p>
-<div class="enbref"><p>L&#39;écran Modèles de messages porte les <strong>messages automatiques envoyés à vos clients</strong>, par exemple une confirmation de rendez-vous. Chaque modèle a un <strong>type</strong>, un <strong>sujet</strong>, un <strong>corps</strong> et un état <strong>actif</strong>. Cliquez sur <strong>Modifier</strong> pour l&#39;adapter à votre ton.</p></div>
-<h2>Les champs</h2>
-<p><strong>Type</strong> : le canal du message, <strong>Email</strong> ou <strong>WhatsApp</strong>.</p>
-<p><strong>Sujet</strong> : l&#39;objet du message, par exemple Confirmation RDV.</p>
-<p><strong>Corps</strong> : le texte envoyé.</p>
-<p><strong>Actif</strong> : un modèle inactif n&#39;est pas envoyé.</p>
-<h2>Les variables</h2>
-<p>La liste des <strong>variables disponibles</strong> vous est affichée. Elles se remplissent toutes seules au moment de l&#39;envoi : c&#39;est ce qui permet à un même modèle de valoir pour tous vos clients, avec leur nom et leurs informations.</p>
+<p class="chapo">Les modèles SMS, WhatsApp et Email envoyés à vos clients, avec neuf variables qui se remplissent toutes seules. <span class="badge">En cours de mise à jour</span></p>
+<div class="enbref"><p>L&#39;écran Modèles de messages tient les textes envoyés automatiquement à vos clients. Ils sont rangés en <strong>trois familles</strong> : <strong>SMS</strong>, <strong>WhatsApp</strong> et <strong>Email</strong>. Le bouton <strong>+ Nouveau</strong> en crée un, <strong>Modifier</strong> ouvre un modèle existant.</p></div>
+<h2>Créer un modèle</h2>
+<p>Quatre champs, plus une case :</p>
+<p><strong>Nom</strong> : votre repère à vous, par exemple <em>Confirmation RDV</em>. Le client ne le voit pas.</p>
+<p><strong>Type</strong> : SMS, WhatsApp ou Email. C&#39;est ce choix qui range le modèle dans sa famille.</p>
+<p><strong>Sujet</strong> : il n&#39;a de sens que pour un Email. Un SMS n&#39;a pas d&#39;objet.</p>
+<p><strong>Corps</strong> : le message lui-même.</p>
+<p><strong>Actif</strong> : décoché, le modèle existe mais ne sert pas.</p>
+<h2>Les neuf variables</h2>
+<p>En haut d&#39;écran, une bande rappelle les variables disponibles. Écrites dans le corps du message, elles sont remplacées à l&#39;envoi :</p>
+<p><code>{CLIENT_NOM}</code>, <code>{DATE}</code>, <code>{HEURE}</code>, <code>{LIEU}</code>, <code>{ANI_NOM}</code>, <code>{TYPE_SEANCE}</code>, <code>{ENT_NOM}</code>, <code>{MONTANT}</code>, <code>{LIEN_PAIEMENT}</code>.</p>
+<p>Elles s&#39;écrivent <strong>exactement</strong> comme cela, accolades comprises et en majuscules. Une variable mal orthographiée n&#39;est pas signalée : elle part telle quelle chez le client, qui lit alors <code>{CLIENT_NOM}</code> au lieu de son nom. Relisez-les avant d&#39;activer un modèle.</p>
 <h2>Bon à savoir</h2>
-<p>Ces modèles partent <strong>automatiquement</strong> : relisez-les avant de les activer, ils vous représentent sans que vous les revoyiez à chaque fois.</p>
-<p>Un message de type Email suppose que votre envoi d&#39;emails est configuré ; un message WhatsApp suppose le raccordement correspondant. Un modèle actif dont le canal n&#39;est pas configuré ne part pas.</p>
-<h2>Sujets voisins</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<p>Ces modèles ne règlent que <strong>le texte</strong>. Le canal, lui, doit être configuré à part : l&#39;envoi des SMS sur l&#39;écran SMS, celui des emails sur l&#39;écran SMTP / Emails, et WhatsApp sur l&#39;écran Interfaces et API. Un modèle actif sur un canal non configuré ne part pas.</p>
+<p>Rien ne se déclenche depuis cet écran : il prépare des textes, il n&#39;envoie rien.</p>
+<h2>&Agrave; lire avant</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<h2>Sujets voisins</h2><a class="carte" href="param.sms.html"><b>SMS</b> <span>Quatre fournisseurs au choix, chacun avec ses propres champs d&#39;accès et ses propres règles d&#39;expéditeur. WhatsApp se configure ailleurs.</span></a>
+<a class="carte" href="param.smtp-emails.html"><b>SMTP / Emails</b> <span>Par quel service vos emails partent : fournisseur pré-réglé, serveur, expéditeur, test d&#39;envoi. Et le bandeau à lire avant de re-saisir un mot de passe.</span></a>
+<h2>Mots-cl&eacute;s</h2><a class="mc" href="index.html#mc-client">#client</a><a class="mc" href="index.html#mc-seance">#seance</a>
 <footer>
 Aide AnimGest -- page generee depuis le corpus <code>docs/aide/*.md</code>.<br>
 Une question sans reponse ici ? Ecrivez-nous : <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a>

@@ -13,17 +13,23 @@
 <main>
 <p><a href="index.html">Aide AnimGest</a></p>
 <h1>SMS</h1>
-<p class="chapo">La configuration d&#39;envoi de vos SMS : fournisseur, expéditeur et activation. <span class="badge">En cours de mise à jour</span></p>
-<div class="enbref"><p>L&#39;écran SMS règle l&#39;envoi de vos notifications par SMS. Vous choisissez un <strong>fournisseur</strong>, renseignez ses accès, définissez l&#39;<strong>expéditeur</strong> affiché sur le téléphone de vos destinataires, puis activez l&#39;envoi.</p></div>
-<h2>La configuration</h2>
-<p><strong>Provider</strong> : le fournisseur qui achemine vos SMS. Plusieurs sont proposés, dont Twilio, OVH, MessageBird et Vonage. Chacun a ses propres accès, à créer chez lui.</p>
-<p><strong>Expéditeur</strong> : le nom ou le numéro qui s&#39;affiche à la réception.</p>
-<p><strong>Activer l&#39;envoi de SMS</strong> : tant que cette case n&#39;est pas cochée, aucun SMS ne part.</p>
+<p class="chapo">Quatre fournisseurs au choix, chacun avec ses propres champs d&#39;accès et ses propres règles d&#39;expéditeur. WhatsApp se configure ailleurs. <span class="badge">En cours de mise à jour</span></p>
+<div class="enbref"><p>L&#39;écran SMS règle l&#39;envoi de vos notifications par SMS. Vous choisissez un <strong>fournisseur</strong>, vous renseignez ses deux accès, vous définissez l&#39;<strong>expéditeur</strong> qui s&#39;affichera sur le téléphone de votre destinataire, puis vous cochez <strong>Activer l&#39;envoi de SMS</strong>.</p></div>
+<h2>Les quatre fournisseurs, et ce que chacun demande</h2>
+<p>Le choix du fournisseur change <strong>le nom des deux champs d&#39;accès</strong> et <strong>la règle sur l&#39;expéditeur</strong>. L&#39;écran se réétiquette tout seul quand vous changez de fournisseur, il n&#39;y a rien à deviner.</p>
+<table><thead><tr><th>Fournisseur</th><th>Premier accès</th><th>Second accès</th><th>Expéditeur</th></tr></thead><tbody><tr><td>Twilio</td><td>Account SID</td><td>Auth Token</td><td>un numéro au format international, acheté chez Twilio</td></tr><tr><td>OVH SMS</td><td>API Key</td><td>API Secret</td><td>un nom alphanumérique, 11 caractères au maximum</td></tr><tr><td>MessageBird</td><td>API Key</td><td>Access Key</td><td>un nom ou un numéro international</td></tr><tr><td>Vonage (Nexmo)</td><td>API Key</td><td>API Secret</td><td>un nom d&#39;expéditeur, selon les régions</td></tr></tbody></table>
+<p>Les accès se créent <strong>chez le fournisseur</strong>, dans votre compte chez lui. Cet écran ne fait que les recevoir.</p>
+<h2>L&#39;expéditeur</h2>
+<p>C&#39;est le champ qui réserve le plus de surprises. Chez <strong>Twilio</strong>, ce doit être un numéro que vous avez acheté : un nom ne passera pas. Chez <strong>OVH</strong>, c&#39;est l&#39;inverse, un nom court est attendu, et <strong>onze caractères</strong> sont la limite. Chez <strong>Vonage</strong>, un nom d&#39;expéditeur n&#39;est accepté que dans certaines régions.</p>
+<p>Ces règles ne viennent pas d&#39;Anim&#39;Gest : elles viennent des opérateurs, et elles varient selon les pays de destination. Un SMS qui n&#39;arrive pas sans message d&#39;erreur a souvent cette cause.</p>
+<h2>WhatsApp n&#39;est pas ici</h2>
+<p>Le bloc <strong>WhatsApp Business</strong> en bas d&#39;écran n&#39;est qu&#39;un renvoi. Sa configuration, qui passe par l&#39;API Meta, vit sur l&#39;écran <strong>Interfaces et API</strong>, avec les autres raccordements. Le bouton <strong>Configurer WhatsApp</strong> vous y emmène.</p>
 <h2>Bon à savoir</h2>
-<p>Le <strong>secret</strong> de votre fournisseur est conservé une fois enregistré : laissez le champ <strong>vide pour ne pas le changer</strong>. Le re-saisir n&#39;est nécessaire que si vous le remplacez.</p>
-<p>L&#39;expéditeur est soumis aux règles du fournisseur et de l&#39;opérateur : un nom d&#39;expéditeur personnalisé n&#39;est pas accepté partout, et les règles varient selon les pays.</p>
-<p>L&#39;écran propose aussi <strong>WhatsApp Business</strong>, qui se configure à part.</p>
-<h2>Sujets voisins</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<p>Le <strong>secret</strong> de votre fournisseur est conservé une fois enregistré : laissez le champ <strong>vide pour ne pas le changer</strong>. Le remplir ne sert qu&#39;à le remplacer.</p>
+<p>Tant que la case <strong>Activer l&#39;envoi de SMS</strong> n&#39;est pas cochée, aucun SMS ne part, même avec des accès valides.</p>
+<h2>&Agrave; lire avant</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<h2>Sujets voisins</h2><a class="carte" href="param.interfaces-api.html"><b>Interfaces et API</b> <span>Le raccordement aux services extérieurs : Eliot, signature, facturation électronique, paiement, SMS, WhatsApp et liens externes. Depuis S158, Eliot n&#39;y demande plus de clé : il y affiche votre consommation.</span></a>
+<a class="carte" href="param.smtp-emails.html"><b>SMTP / Emails</b> <span>Par quel service vos emails partent : fournisseur pré-réglé, serveur, expéditeur, test d&#39;envoi. Et le bandeau à lire avant de re-saisir un mot de passe.</span></a>
 <footer>
 Aide AnimGest -- page generee depuis le corpus <code>docs/aide/*.md</code>.<br>
 Une question sans reponse ici ? Ecrivez-nous : <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a>

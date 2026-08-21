@@ -13,20 +13,28 @@
 <main>
 <p><a href="index.html">Aide AnimGest</a></p>
 <h1>Référentiels de paramètres</h1>
-<p class="chapo">L&#39;écran commun aux référentiels simples : conditions de paiement, exercices comptables, modes de paiement, catégories. <span class="badge">En cours de mise à jour</span></p>
-<div class="enbref"><p>Plusieurs référentiels de paramètres partagent <strong>le même écran</strong> : un tableau où chaque ligne est une entrée que vous ajoutez, modifiez ou désactivez. Seules les colonnes changent d&#39;un référentiel à l&#39;autre. Une fois que vous en avez utilisé un, vous savez utiliser les autres.</p></div>
-<h2>Les référentiels concernés</h2>
-<p><strong>Conditions de paiement</strong> : vos délais de règlement, avec leur libellé et leur nombre de jours.</p>
-<p><strong>Exercices comptables</strong> : vos exercices, avec leur code, leur date de début, leur date de fin et leur état de clôture.</p>
-<p><strong>Modes de paiement</strong> : les moyens par lesquels vous êtes réglé, avec leur type (banque, caisse ou autre) et leur compte de rattachement.</p>
-<p><strong>Catégories</strong> : vos catégories, avec leur compte de vente.</p>
-<p><strong>Paramètres comptables</strong> : les réglages comptables généraux.</p>
-<h2>Le fonctionnement, commun à tous</h2>
-<p>Chaque ligne s&#39;édite directement dans le tableau. Une nouvelle entrée part de valeurs par défaut que vous ajustez. Les référentiels qui portent une colonne <strong>Actif</strong> vous permettent de retirer une entrée de la circulation sans la supprimer : c&#39;est presque toujours le bon geste, car vos documents passés continuent d&#39;y faire référence.</p>
+<p class="chapo">Un seul écran sert dix référentiels : conditions de paiement, exercices, modes de paiement, catégories, comptes, types et statuts de séance. Même table, mêmes gestes, colonnes différentes. <span class="badge">En cours de mise à jour</span></p>
+<div class="enbref"><p>Plusieurs listes de référence partagent <strong>le même écran</strong>. Vous y retrouvez toujours la même chose : un tableau, une ligne par entrée, l&#39;ajout et la modification <strong>sur place</strong>. Seules les colonnes changent d&#39;un référentiel à l&#39;autre. Apprendre le geste une fois suffit pour les dix.</p></div>
+<h2>Les dix référentiels et leurs colonnes</h2>
+<p><strong>Conditions de paiement</strong> : libellé, nombre de jours.</p>
+<p><strong>Exercices comptables</strong> : code, début, fin, clôture.</p>
+<p><strong>Modes de paiement</strong> : code, libellé, type (banque, caisse ou autre), compte comptable, actif.</p>
+<p><strong>Taux de TVA</strong> : code, libellé, taux, actif.</p>
+<p><strong>Catégories</strong> : libellé, compte de vente.</p>
+<p><strong>Plan comptable</strong> : numéro de compte, libellé.</p>
+<p><strong>Paramètres comptables</strong> : les quatre comptes par défaut, client, TVA collectée, banque et caisse.</p>
+<p><strong>Types de séance</strong> : code, libellé, catégorie, durée par défaut, facturable, unique par animal, actif.</p>
+<p><strong>Statuts de séance</strong> et <strong>articles de prestation</strong> complètent la liste, sur le même modèle.</p>
+<h2>Ce qui se lit dans les colonnes</h2>
+<p>Le type <strong>booléen</strong> (actif, clôture, facturable) est une case, pas un texte : elle se coche directement dans la ligne. Le type <strong>compte</strong> ouvre un sélecteur de compte comptable plutôt qu&#39;une saisie libre : c&#39;est ce qui empêche d&#39;écrire un numéro qui n&#39;existe pas dans votre plan.</p>
+<p>Une colonne <strong>actif</strong> ne supprime rien. Décochée, l&#39;entrée cesse d&#39;être proposée sur les nouveaux documents, mais reste attachée à tout ce qui l&#39;utilisait déjà. C&#39;est la bonne façon de retirer un mode de paiement ou un taux devenu obsolète sans réécrire le passé.</p>
 <h2>Bon à savoir</h2>
-<p>Un <strong>exercice clôturé</strong> n&#39;est pas un exercice ordinaire : la clôture est ce qui empêche de retoucher le passé. C&#39;est elle que la Tarification vérifie quand elle refuse une date d&#39;application.</p>
-<p>Le <strong>compte</strong> rattaché à un mode de paiement ou à une catégorie n&#39;est pas décoratif : c&#39;est lui qui oriente vos écritures. En cas de doute, demandez à votre comptable plutôt que de choisir au jugé.</p>
-<h2>Sujets voisins</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<p><strong>Trois de ces référentiels seulement ont leur tuile sur l&#39;écran Paramètres</strong> : conditions de paiement, catégories et taux de TVA. Les sept autres existent et fonctionnent, mais s&#39;atteignent depuis un autre écran ou par leur adresse directe. Si vous cherchez les exercices comptables ou les modes de paiement dans les tuiles, vous ne les y trouverez pas : ce n&#39;est pas une panne.</p>
+<p>Les taux de TVA et le plan de comptes ont par ailleurs <strong>leur propre écran dédié</strong>, plus complet que la table générique. C&#39;est celui-là que les tuiles ouvrent.</p>
+<h2>&Agrave; lire avant</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<h2>Sujets voisins</h2><a class="carte" href="param.taux-tva.html"><b>Taux de TVA</b> <span>Le référentiel de vos taux de TVA : taux, libellé, code, et l&#39;état actif ou inactif.</span></a>
+<a class="carte" href="param.plan-comptable.html"><b>Plan de comptes</b> <span>Le référentiel de vos comptes comptables : numéro et libellé. Vous pouvez renommer un libellé.</span></a>
+<a class="carte" href="param.types-seance.html"><b>Types de séance</b> <span>Vos types de séance : code, libellé, catégorie libre, métier de rattachement, durée par défaut, facturation et couleur d&#39;agenda, avec un filtre par métier.</span></a>
 <h2>Mots-cl&eacute;s</h2><a class="mc" href="index.html#mc-tva">#tva</a><a class="mc" href="index.html#mc-reglement">#reglement</a>
 <footer>
 Aide AnimGest -- page generee depuis le corpus <code>docs/aide/*.md</code>.<br>

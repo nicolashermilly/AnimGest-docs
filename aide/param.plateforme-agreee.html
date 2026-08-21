@@ -13,24 +13,23 @@
 <main>
 <p><a href="index.html">Aide AnimGest</a></p>
 <h1>Plateforme agréée de facturation électronique</h1>
-<p class="chapo">L&#39;identification de votre entreprise et le raccordement à une plateforme agréée, pour la facturation électronique. <span class="badge">En cours de mise à jour</span></p>
-<div class="enbref"><p>L&#39;écran Plateforme agréée prépare votre <strong>facturation électronique</strong>. Il réunit deux choses : l&#39;<strong>identification de votre entreprise</strong> (SIREN, numéro de TVA intracommunautaire, IBAN) et le <strong>raccordement à la plateforme agréée</strong> qui transmettra vos factures.</p>
-<p>Le terme réglementaire pour cette plateforme est <strong>PDP</strong>, plateforme de dématérialisation partenaire immatriculée. C&#39;est le même objet : l&#39;écran de votre logiciel s&#39;appelle <em>Plateforme agréée</em>, les textes officiels et votre expert-comptable diront <em>PDP</em>.</p></div>
-<h2>L&#39;identification de l&#39;entreprise</h2>
-<p><strong>SIREN</strong> : neuf chiffres. Le bouton <strong>Utiliser le SIREN de Mon Entreprise</strong> le reprend de votre fiche entreprise plutôt que de le ressaisir.</p>
-<p><strong>Numéro de TVA intracommunautaire</strong> : au format FR suivi de vos chiffres.</p>
-<p><strong>IBAN du compte principal</strong> : le compte sur lequel vous êtes réglé.</p>
-<p>Si ces informations manquent, l&#39;écran vous renvoie vers <strong>Mon entreprise</strong> : c&#39;est là qu&#39;elles se saisissent une fois pour toutes.</p>
-<h2>Le raccordement</h2>
-<p><strong>PA choisie</strong> : la plateforme agréée que vous utilisez.</p>
-<p><strong>Clé API</strong>, <strong>URL API</strong> et <strong>URL Webhook</strong> : les accès fournis par cette plateforme. L&#39;URL de l&#39;API et le webhook sont optionnels.</p>
-<p><strong>Environnement</strong> : le mode de raccordement.</p>
-<p><strong>PA active</strong> : tant que cette case n&#39;est pas cochée, aucune transmission électronique n&#39;a lieu.</p>
+<p class="chapo">Identifier votre entreprise et la raccorder à une plateforme agréée. Onze plateformes proposées, deux environnements, et une case qui commande la transmission réelle. <span class="badge">En cours de mise à jour</span></p>
+<div class="enbref"><p>L&#39;écran se lit en deux colonnes. À gauche, <strong>l&#39;identification de votre entreprise</strong> : les données d&#39;état civil que la facturation électronique exige. À droite, <strong>la plateforme agréée</strong> à laquelle vous vous raccordez, et l&#39;environnement dans lequel vous travaillez.</p>
+<p>En tête d&#39;écran, un bandeau rappelle les <strong>échéances de la réforme de la facturation électronique</strong> et le format recommandé pour les PME. Ces échéances sont réglementaires : vérifiez-les auprès de votre expert-comptable ou de la source officielle avant d&#39;en tirer une date pour votre entreprise. Le logiciel les rappelle, il ne les fixe pas.</p></div>
+<h2>Identification de l&#39;entreprise</h2>
+<p>Quatre informations : <strong>SIREN</strong> (neuf chiffres, le champ n&#39;en accepte pas davantage), <strong>numéro de TVA intracommunautaire</strong>, <strong>IBAN du compte principal</strong> et <strong>BIC</strong>.</p>
+<p>L&#39;écran indique lui-même que ces données proviennent de votre <strong>fiche entreprise</strong>. C&#39;est là qu&#39;il faut les corriger si elles sont fausses : cet écran les reprend, il n&#39;est pas leur source. Un SIREN erroné ici est un SIREN erroné partout.</p>
+<h2>La plateforme agréée</h2>
+<p><strong>PA choisie</strong> : onze plateformes sont proposées, dont <strong>Pennylane</strong>, <strong>Chorus Pro</strong> pour le secteur public, <strong>Cegedim</strong>, <strong>Generix</strong>, <strong>Sage</strong>, <strong>Cegid</strong>, <strong>Yooz</strong>, <strong>Basware</strong>, <strong>Esker</strong>, <strong>Tradeshift</strong>, et une entrée <strong>Autre</strong>. Tant qu&#39;aucune n&#39;est sélectionnée, la liste affiche <em>Sélectionner votre PA</em>.</p>
+<p><strong>Clé API (Token)</strong> : l&#39;accès fourni par la plateforme que vous avez choisie. Il se récupère chez elle, pas ici.</p>
+<p><strong>URL API</strong> et <strong>URL Webhook</strong> sont <strong>optionnelles</strong> : la plupart des plateformes n&#39;en demandent pas. Ne les remplissez que si la vôtre vous en donne.</p>
+<h2>Sandbox, production, et la case qui décide</h2>
+<p><strong>Environnement</strong> : <em>Sandbox / Recette</em> pour éprouver le raccordement sans conséquence, <em>Production</em> pour le fonctionnement réel.</p>
+<p><strong>PA active</strong> commande la <strong>transmission électronique</strong>. C&#39;est la case qui compte : décochée, vous pouvez avoir tout rempli correctement, rien ne part.</p>
+<p>Lisez les deux ensemble. Une plateforme <strong>active en Sandbox</strong> transmet à un bac à sable : vos factures semblent parties, et elles ne sont arrivées nulle part. C&#39;est le piège classique de ce type d&#39;écran, et il ne se voit pas depuis la liste des factures.</p>
 <h2>Bon à savoir</h2>
-<p>La <strong>clé API est conservée</strong> une fois enregistrée : laissez le champ <strong>vide pour ne pas la changer</strong>.</p>
-<p>L&#39;écran rappelle le cadre de la <strong>réforme de la facturation électronique</strong>, avec ses deux échéances distinctes : <strong>recevoir</strong> une facture électronique est obligatoire pour toutes les entreprises au <strong>1er septembre 2026</strong> ; <strong>émettre</strong> l&#39;est plus tard, au <strong>1er septembre 2027</strong> pour les TPE et PME. Il indique <strong>Factur-X</strong> comme format recommandé pour les PME.</p>
-<p>Renseigner cet écran ne vous rend pas conforme à lui seul : le raccordement à votre plateforme est en cours de recette côté Anim&#39;Gest. Tant que la case <strong>PA active</strong> n&#39;est pas cochée, aucune transmission n&#39;a lieu.</p>
-<p>Le SIREN et le numéro de TVA ne sont pas des formalités : ce sont eux qui identifient vos factures auprès de la plateforme. Une erreur ici se voit à la première transmission refusée.</p>
+<p>Ce raccordement ne fait rien à lui seul. Ce qui se passe ensuite, facture par facture, se suit sur l&#39;écran de facturation électronique.</p>
+<p>Le raccordement se règle aussi, en partie, depuis l&#39;écran Interfaces et API, qui porte un bloc de facturation électronique recoupant celui-ci. Les deux écrans parlent du même réglage.</p>
 <h2>&Agrave; lire avant</h2><a class="carte" href="param.entreprise.html"><b>Mon entreprise</b> <span>L&#39;identité de votre société : raison sociale, SIRET, numéro de TVA intracommunautaire, coordonnées, mentions légales, mention de pied de facture et coordonnées bancaires.</span></a>
 <h2>Et ensuite</h2><a class="carte" href="commercial.facturation-electronique.html"><b>Facturation électronique</b> <span>Le tableau de bord de la réforme : où en sont vos factures face à l&#39;obligation, et ce que la réforme attend de vous.</span></a>
 <h2>Sujets voisins</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
