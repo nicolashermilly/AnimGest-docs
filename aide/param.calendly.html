@@ -13,17 +13,20 @@
 <main>
 <p><a href="index.html">Aide AnimGest</a></p>
 <h1>Calendly</h1>
-<p class="chapo">Le raccordement à Calendly : identifiants, notification entrante et activation. <span class="badge">En cours de mise à jour</span></p>
-<div class="enbref"><p>L&#39;écran Calendly raccorde votre espace à votre compte Calendly, pour que les rendez-vous pris là-bas remontent ici. Vous renseignez vos <strong>identifiants Calendly</strong>, vous communiquez à Calendly l&#39;<strong>adresse de notification</strong> affichée par l&#39;écran, puis vous activez l&#39;<strong>intégration</strong>.</p></div>
-<h2>Le raccordement</h2>
-<p><strong>Identifiants Calendly</strong> : les accès obtenus dans votre compte Calendly.</p>
-<p><strong>URL du webhook</strong> : l&#39;adresse que l&#39;écran vous donne et que <strong>vous reportez chez Calendly</strong>. C&#39;est par elle que Calendly vous prévient d&#39;un nouveau rendez-vous. Elle est faite pour être exposée à Calendly.</p>
-<p><strong>Intégration active</strong> : tant que la case n&#39;est pas cochée, aucun rendez-vous ne remonte.</p>
+<p class="chapo">Raccorder Calendly pour que les rendez-vous pris là-bas remontent ici. Le flux va dans un seul sens, et les vingt derniers événements reçus sont visibles. <span class="badge">En cours de mise à jour</span></p>
+<div class="enbref"><p>L&#39;écran Calendly raccorde votre espace à votre compte Calendly, pour que les rendez-vous pris là-bas remontent ici. Trois gestes : renseigner vos <strong>identifiants Calendly</strong>, reporter chez Calendly l&#39;<strong>URL du webhook</strong> que l&#39;écran vous donne, puis activer l&#39;<strong>intégration</strong>.</p></div>
+<h2>Le raccordement, dans l&#39;ordre</h2>
+<ol><li><strong>Identifiants Calendly</strong> : le jeton d&#39;accès obtenu dans votre compte Calendly. Il est chiffré à l&#39;enregistrement.</li><li>L&#39;écran affiche alors l&#39;<strong>URL du webhook (exposée à Calendly)</strong> et une <strong>clé de signature</strong>.</li><li>Chez Calendly, allez dans <strong>Intégrations</strong>, puis <strong>Webhooks</strong>, puis <strong>Add new webhook</strong>. Collez l&#39;URL. Choisissez les événements <strong>invitee.created</strong> et <strong>invitee.canceled</strong>. Reportez ensuite la clé de signature renvoyée par Calendly dans l&#39;écran d&#39;Anim&#39;Gest.</li><li>Cochez <strong>Intégration active</strong>. Tant qu&#39;elle ne l&#39;est pas, aucun rendez-vous ne remonte.</li></ol>
+<p>L&#39;écran affiche <strong>Webhook opérationnel (signature valide)</strong> quand le raccordement fonctionne. Cet indicateur est votre preuve, pas votre souvenir d&#39;avoir tout collé au bon endroit.</p>
+<h2>Vérifier ce qui arrive vraiment</h2>
+<p>En bas d&#39;écran, le bloc <strong>Derniers événements reçus</strong> liste les <strong>vingt derniers</strong>, avec pour chacun la <strong>date</strong>, l&#39;<strong>événement</strong>, l&#39;<strong>invité</strong>, son <strong>email</strong>, le <strong>rendez-vous</strong> créé et le <strong>statut</strong>. Le bouton <strong>Rafraîchir</strong> recharge la liste.</p>
+<p>C&#39;est là qu&#39;il faut regarder si un rendez-vous pris chez Calendly n&#39;apparaît pas chez vous : soit l&#39;événement n&#39;est jamais arrivé, et le problème est du côté du webhook chez Calendly ; soit il est arrivé et son statut vous dit pourquoi il n&#39;a rien produit. Ce sont deux pannes différentes, et cette liste les sépare.</p>
 <h2>Bon à savoir</h2>
-<p>Chaque notification reçue est <strong>vérifiée par signature</strong> : votre espace s&#39;assure qu&#39;elle vient bien de Calendly et pas d&#39;un tiers. C&#39;est automatique, vous n&#39;avez rien à régler pour cela.</p>
-<p>Le sens du flux est important : Calendly reste le lieu où vos clients prennent rendez-vous ; votre espace en est informé. Ce n&#39;est pas une synchronisation dans les deux sens.</p>
-<p>L&#39;écran conserve un <strong>journal</strong> des notifications reçues : c&#39;est là qu&#39;il faut regarder si un rendez-vous pris chez Calendly n&#39;apparaît pas chez vous.</p>
-<h2>Sujets voisins</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<p>Chaque notification reçue est <strong>vérifiée par signature</strong> : votre espace s&#39;assure qu&#39;elle vient bien de Calendly et pas d&#39;un tiers. C&#39;est automatique, il n&#39;y a rien à régler pour cela, mais c&#39;est la raison pour laquelle la clé de signature doit être exacte.</p>
+<p>Le sens du flux compte : Calendly reste le lieu où vos clients prennent rendez-vous, votre espace en est informé. <strong>Ce n&#39;est pas une synchronisation dans les deux sens</strong> : un rendez-vous créé ici ne remonte pas chez Calendly.</p>
+<h2>&Agrave; lire avant</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<h2>Sujets voisins</h2><a class="carte" href="param.interfaces-api.html"><b>Interfaces et API</b> <span>Le raccordement aux services extérieurs : Eliot, signature, facturation électronique, paiement, SMS, WhatsApp et liens externes. Depuis S158, Eliot n&#39;y demande plus de clé : il y affiche votre consommation.</span></a>
+<h2>Mots-cl&eacute;s</h2><a class="mc" href="index.html#mc-agenda">#agenda</a>
 <footer>
 Aide AnimGest -- page generee depuis le corpus <code>docs/aide/*.md</code>.<br>
 Une question sans reponse ici ? Ecrivez-nous : <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a>

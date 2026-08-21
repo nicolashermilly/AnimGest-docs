@@ -13,20 +13,26 @@
 <main>
 <p><a href="index.html">Aide AnimGest</a></p>
 <h1>Portail client</h1>
-<p class="chapo">L&#39;espace client en ligne : créer des accès, suivre les connexions et régler les notifications automatiques. <span class="badge">En cours de mise à jour</span></p>
-<div class="enbref"><p>L&#39;écran Portail client gère <strong>l&#39;espace en ligne de vos clients</strong> : vous y créez leurs accès, vous suivez leurs connexions, et vous réglez les <strong>notifications automatiques</strong> qui les préviennent qu&#39;un document les attend.</p></div>
+<p class="chapo">Créer les accès à l&#39;espace client, suivre les connexions, et personnaliser les emails automatiques. Un accès se désactive, il ne se révoque ni ne se renouvelle. <span class="badge">En cours de mise à jour</span></p>
+<div class="enbref"><p>L&#39;écran Portail Client gère <strong>l&#39;espace en ligne de vos clients</strong>. Il a <strong>deux onglets, et deux seulement</strong> : <strong>Accès clients</strong>, où vous créez et suivez les accès, et <strong>Notifications</strong>, où vous réglez les emails automatiques qui préviennent le client qu&#39;un document l&#39;attend.</p></div>
 <h2>Créer un accès</h2>
-<ol><li>Cliquez sur <strong>Créer un accès</strong>.</li><li>Choisissez le <strong>client</strong>. C&#39;est le seul champ obligatoire.</li><li>Renseignez une <strong>expiration</strong> si vous voulez que l&#39;accès soit temporaire. Le champ est optionnel : laissé vide, l&#39;accès ne se périme pas.</li><li>Enregistrez.</li></ol>
-<p>Une fois l&#39;accès créé, vous pouvez <strong>copier le lien du portail</strong> ou <strong>l&#39;envoyer par email</strong> au client.</p>
+<p>Le bloc <strong>Nouvel accès portail</strong> demande :</p>
+<ol><li>Le <strong>client</strong>. C&#39;est le seul champ obligatoire.</li><li>Une <strong>expiration</strong>, optionnelle. Laissée vide, l&#39;accès ne se périme pas.</li></ol>
+<p>Une fois l&#39;accès créé, vous pouvez <strong>copier le lien du portail</strong> ou cliquer <strong>Envoyer le lien par email</strong>.</p>
+<p><strong>Ce point mérite attention : la date d&#39;expiration se fixe à la création.</strong> Il n&#39;y a pas de bouton pour prolonger un accès existant. Un accès expiré ne se renouvelle pas, il se recrée.</p>
 <h2>Suivre les accès</h2>
-<p>La liste des accès affiche pour chacun le <strong>client</strong>, son <strong>email</strong>, son <strong>statut</strong>, sa <strong>dernière connexion</strong> et son nombre de <strong>connexions</strong>. Des compteurs récapitulent les accès créés, actifs et désactivés.</p>
+<p>Trois compteurs en tête : <strong>Accès créés</strong>, <strong>Actifs</strong>, <strong>Désactivés</strong>. La liste donne pour chaque accès le <strong>client</strong>, son <strong>email</strong>, son <strong>statut</strong>, sa <strong>dernière connexion</strong> et son nombre de <strong>connexions</strong>.</p>
+<p>L&#39;action disponible sur une ligne est une <strong>bascule Activer / Désactiver</strong>. Il n&#39;y a pas de révocation : un accès désactivé n&#39;est pas supprimé, le client ne peut simplement plus se connecter, et son historique reste.</p>
 <h2>Les notifications automatiques</h2>
-<p>L&#39;écran permet de <strong>personnaliser les emails</strong> envoyés au client : leur <strong>objet</strong> et leur <strong>corps</strong>. Des <strong>variables</strong> sont disponibles pour insérer automatiquement les éléments du devis, de la facture ou du document concerné. L&#39;<strong>historique des envois</strong> garde la trace de ce qui est parti.</p>
+<p>L&#39;onglet <strong>Notifications</strong> permet de personnaliser, pour chaque type d&#39;envoi, l&#39;<strong>objet de l&#39;email</strong> et son <strong>corps HTML</strong>. Des <strong>variables</strong> sont proposées pour insérer automatiquement les éléments du <strong>devis</strong>, de la <strong>facture</strong> ou du <strong>document</strong> concerné.</p>
+<p>En dessous, l&#39;<strong>historique des envois</strong> liste ce qui est parti, avec la <strong>date</strong>, le <strong>type</strong>, le <strong>client</strong>, l&#39;<strong>email</strong> et le <strong>statut</strong>.</p>
 <h2>Bon à savoir</h2>
-<p>Le compteur de <strong>connexions</strong> et la <strong>dernière connexion</strong> répondent à une question fréquente : le client a-t-il seulement ouvert son espace ? Avant de relancer, regardez cette colonne.</p>
-<p>Un accès <strong>désactivé</strong> n&#39;est pas supprimé : le client ne peut plus se connecter, mais son historique reste.</p>
-<h2>Sujets voisins</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
-<h2>Mots-cl&eacute;s</h2><a class="mc" href="index.html#mc-facture">#facture</a>
+<p>Le compteur de <strong>connexions</strong> et la <strong>dernière connexion</strong> répondent à une question fréquente : le client a-t-il seulement ouvert son espace ? Regardez cette colonne avant de relancer. En revanche, l&#39;écran ne dit <strong>pas</strong> quelles pages il a consultées : cette information n&#39;est pas suivie.</p>
+<p>Les emails du portail partent par votre configuration SMTP. Si aucun ne parvient à vos clients, c&#39;est cet écran-là qu&#39;il faut vérifier, pas celui-ci.</p>
+<h2>&Agrave; lire avant</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<h2>Sujets voisins</h2><a class="carte" href="param.interfaces-api.html"><b>Interfaces et API</b> <span>Le raccordement aux services extérieurs : Eliot, signature, facturation électronique, paiement, SMS, WhatsApp et liens externes. Depuis S158, Eliot n&#39;y demande plus de clé : il y affiche votre consommation.</span></a>
+<a class="carte" href="param.smtp-emails.html"><b>SMTP / Emails</b> <span>Par quel service vos emails partent : fournisseur pré-réglé, serveur, expéditeur, test d&#39;envoi. Et le bandeau à lire avant de re-saisir un mot de passe.</span></a>
+<h2>Mots-cl&eacute;s</h2><a class="mc" href="index.html#mc-facture">#facture</a><a class="mc" href="index.html#mc-devis">#devis</a><a class="mc" href="index.html#mc-client">#client</a>
 <footer>
 Aide AnimGest -- page generee depuis le corpus <code>docs/aide/*.md</code>.<br>
 Une question sans reponse ici ? Ecrivez-nous : <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a>

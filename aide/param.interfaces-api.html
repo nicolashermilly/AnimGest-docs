@@ -13,23 +13,31 @@
 <main>
 <p><a href="index.html">Aide AnimGest</a></p>
 <h1>Interfaces et API</h1>
-<p class="chapo">Le raccordement aux services externes : assistant IA, signature, facturation électronique, paiement, SMS, WhatsApp et liens externes. <span class="badge">En cours de mise à jour</span></p>
-<div class="enbref"><p>L&#39;écran Interfaces et API réunit <strong>le raccordement de votre espace aux services extérieurs</strong>. Chaque service a son bloc : vous y collez les accès obtenus chez le prestataire, vous choisissez l&#39;environnement, et vous activez le service. Les liens externes paramétrables sont regroupés en fin d&#39;écran.</p></div>
-<h2>Les services</h2>
-<p><strong>Assistant IA</strong> : les accès du service qui fait fonctionner Eliot, avec le choix du modèle et ses réglages.</p>
-<p><strong>Signature électronique</strong> : les accès de votre service de signature, son environnement et son retour de notification.</p>
-<p><strong>Facturation électronique</strong> : le choix de votre plateforme agréée parmi celles proposées, avec ses accès. Ce bloc recoupe l&#39;écran Plateforme agréée.</p>
-<p><strong>Paiement en ligne</strong> et <strong>paiement fractionné</strong> : les accès de vos services d&#39;encaissement.</p>
-<p><strong>Notifications SMS</strong> et <strong>WhatsApp Business</strong> : les accès de vos services de messagerie.</p>
-<p><strong>URLs et liens externes</strong> : les adresses des sites et portails que votre espace ouvre pour vous. Chaque lien peut être réinitialisé à sa valeur par défaut.</p>
+<p class="chapo">Le raccordement aux services extérieurs : Eliot, signature, facturation électronique, paiement, SMS, WhatsApp et liens externes. Depuis S158, Eliot n&#39;y demande plus de clé : il y affiche votre consommation. <span class="badge">En cours de mise à jour</span></p>
+<div class="enbref"><p>L&#39;écran Interfaces et API réunit <strong>le raccordement de votre espace aux services extérieurs</strong>. Neuf blocs, dans cet ordre : <strong>Eliot</strong>, <strong>signature électronique</strong>, <strong>facturation électronique</strong>, <strong>SMTP</strong>, <strong>paiement en ligne</strong>, <strong>paiement fractionné</strong>, <strong>SMS</strong>, <strong>WhatsApp Business</strong>, et les <strong>URLs et liens externes</strong>. Chaque bloc reçoit les accès obtenus chez le prestataire, propose son environnement, et porte sa case d&#39;activation.</p></div>
+<h2>Eliot ne demande plus de clé</h2>
+<p><strong>C&#39;est le changement le plus important de cet écran.</strong> Le champ de clé API a disparu : l&#39;accès au service qui fait fonctionner Eliot est <strong>fourni par Anim&#39;Gest</strong>. Vous n&#39;avez rien à saisir, rien à renouveler, rien à surveiller chez un prestataire.</p>
+<p>À la place, le bloc affiche <strong>Consommation du mois</strong>. Deux cas :</p>
+<ul><li>Vous avez un <strong>plafond</strong> : une jauge montre où vous en êtes. Plafond atteint, Eliot cesse de répondre jusqu&#39;à la <strong>réinitialisation, le 1er du mois</strong>.</li><li>Vous n&#39;en avez pas : le nombre de crédits consommés s&#39;affiche <strong>sans jauge</strong>. C&#39;est délibéré, une barre à zéro pour cent laisserait croire à un quota qui n&#39;existe pas.</li></ul>
+<p>Le <strong>choix du modèle</strong> reste dans ce bloc, entre <strong>Claude Sonnet 4.6</strong> (rapide, par défaut) et <strong>Claude Opus 4.8</strong> (avancé, plus lent). Il est <strong>réservé aux administrateurs</strong> : les autres comptes voient le réglage mais ne peuvent pas le changer.</p>
+<p>Le bouton <strong>Tester la connexion</strong> vérifie que le service répond. Si Eliot se tait alors que le test passe et que votre consommation est en dessous du plafond, la panne n&#39;est pas chez vous.</p>
+<h2>Les autres services</h2>
+<p><strong>Signature électronique</strong>, <strong>facturation électronique</strong>, <strong>paiement en ligne</strong>, <strong>paiement fractionné</strong>, <strong>SMS</strong>, <strong>WhatsApp Business</strong> : chacun reçoit les accès de son prestataire. Le bloc de facturation électronique recoupe l&#39;écran Plateforme agréée.</p>
+<p><strong>SMTP</strong> est ici en raccourci, mais sa configuration complète, ses fournisseurs pré-réglés et son test d&#39;envoi vivent sur l&#39;écran SMTP / Emails.</p>
+<p><strong>URLs et liens externes</strong> : les adresses que votre espace ouvre pour vous, du fichier I-CAD au LOF. Chaque lien se réinitialise à sa valeur par défaut.</p>
 <h2>Sandbox et production</h2>
-<p>Plusieurs services proposent un <strong>environnement</strong> : <strong>Sandbox (test)</strong> pour vérifier votre raccordement sans conséquence, <strong>Production</strong> pour le fonctionnement réel. Un service raccordé en Sandbox ne produit rien de réel : c&#39;est voulu.</p>
-<p>Chaque service porte une case <strong>Service actif</strong>. Un service configuré mais inactif n&#39;envoie rien.</p>
+<p>Plusieurs services proposent un <strong>environnement</strong> : <strong>Sandbox (test)</strong> pour vérifier le raccordement sans conséquence, <strong>Production</strong> pour le fonctionnement réel. Un service raccordé en Sandbox ne produit rien de réel, et c&#39;est voulu.</p>
+<p>Chaque service porte en plus une case d&#39;<strong>activation</strong>. Configuré mais inactif, il n&#39;envoie rien.</p>
 <h2>Bon à savoir</h2>
-<p><strong>Les secrets déjà enregistrés ne se re-saisissent pas.</strong> L&#39;écran vous indique qu&#39;une clé est configurée : laissez le champ vide pour la conserver, remplissez-le seulement pour la remplacer.</p>
-<p>Les accès ne se créent pas ici : ils se récupèrent <strong>chez le prestataire</strong>, dans votre compte chez lui. Cet écran ne fait que les recevoir. Des liens vers les consoles des prestataires y sont proposés.</p>
-<p>Le choix du modèle de l&#39;assistant est <strong>réservé aux administrateurs</strong>.</p>
-<h2>Sujets voisins</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<p><strong>Les secrets déjà enregistrés ne se re-saisissent pas.</strong> L&#39;écran indique qu&#39;une clé est configurée : laissez le champ vide pour la conserver, remplissez-le seulement pour la remplacer.</p>
+<p>Un bandeau peut signaler qu&#39;un secret <strong>ne peut plus être déchiffré</strong>. Dans ce cas précis, ne le re-saisissez pas de vous-même : la marche à suivre est décrite sur l&#39;écran SMTP / Emails, où le même bandeau existe, et elle passe par l&#39;éditeur.</p>
+<p>Les accès ne se créent pas ici : ils se récupèrent <strong>chez le prestataire</strong>, dans votre compte chez lui. Cet écran ne fait que les recevoir.</p>
+<h2>&Agrave; lire avant</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<h2>Et ensuite</h2><a class="carte" href="param.smtp-emails.html"><b>SMTP / Emails</b> <span>Par quel service vos emails partent : fournisseur pré-réglé, serveur, expéditeur, test d&#39;envoi. Et le bandeau à lire avant de re-saisir un mot de passe.</span></a>
+<a class="carte" href="param.sms.html"><b>SMS</b> <span>Quatre fournisseurs au choix, chacun avec ses propres champs d&#39;accès et ses propres règles d&#39;expéditeur. WhatsApp se configure ailleurs.</span></a>
+<a class="carte" href="param.memoire-eliot.html"><b>Mémoire Eliot</b> <span>Ce qu&#39;Eliot a retenu de vos échanges : chaque fait mémorisé, sa source, son degré de confiance, et le bouton pour l&#39;oublier.</span></a>
+<h2>Sujets voisins</h2><a class="carte" href="param.plateforme-agreee.html"><b>Plateforme agréée de facturation électronique</b> <span>Identifier votre entreprise et la raccorder à une plateforme agréée. Onze plateformes proposées, deux environnements, et une case qui commande la transmission réelle.</span></a>
+<a class="carte" href="param.portail-client.html"><b>Portail client</b> <span>Créer les accès à l&#39;espace client, suivre les connexions, et personnaliser les emails automatiques. Un accès se désactive, il ne se révoque ni ne se renouvelle.</span></a>
 <footer>
 Aide AnimGest -- page generee depuis le corpus <code>docs/aide/*.md</code>.<br>
 Une question sans reponse ici ? Ecrivez-nous : <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a>

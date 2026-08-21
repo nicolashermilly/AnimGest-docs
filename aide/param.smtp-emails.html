@@ -13,24 +13,32 @@
 <main>
 <p><a href="index.html">Aide AnimGest</a></p>
 <h1>SMTP / Emails</h1>
-<p class="chapo">La configuration d&#39;envoi de vos emails : serveur, chiffrement, identifiants et expéditeur par défaut. <span class="badge">En cours de mise à jour</span></p>
-<div class="enbref"><p>L&#39;écran SMTP / Emails règle <strong>par quel service vos emails partent</strong>. Vous choisissez un fournisseur de messagerie, renseignez le serveur et vos identifiants, définissez l&#39;expéditeur affiché, puis <strong>testez la configuration</strong> avant de l&#39;activer.</p></div>
+<p class="chapo">Par quel service vos emails partent : fournisseur pré-réglé, serveur, expéditeur, test d&#39;envoi. Et le bandeau à lire avant de re-saisir un mot de passe. <span class="badge">En cours de mise à jour</span></p>
+<div class="enbref"><p>L&#39;écran SMTP / Emails règle <strong>par quel service vos emails partent</strong> : les factures, les devis et les rappels de paiement envoyés à vos clients. Vous choisissez un fournisseur, l&#39;écran pré-remplit le serveur et le port, vous saisissez vos identifiants, vous définissez l&#39;expéditeur affiché, puis vous <strong>testez avant d&#39;activer</strong>.</p></div>
+<h2>Le bandeau à lire avant de toucher au mot de passe</h2>
+<p>Un bandeau orange peut apparaître en haut : <em>le mot de passe SMTP est enregistré, mais le serveur ne peut plus le relire</em>. Il ne dit pas que le mot de passe a été perdu : il est <strong>bien présent en base</strong>, c&#39;est la clé de chiffrement du serveur qui a changé.</p>
+<p><strong>Ne le re-saisissez pas.</strong> Le geste réflexe remplacerait la valeur d&#39;origine sans rien réparer. Le bandeau vous dit ensuite laquelle des deux situations est la vôtre :</p>
+<ul><li><strong>Vos emails partent peut-être encore normalement</strong>, un ancien mot de passe de secours prenant le relais. C&#39;est précisément ce qui rend la panne invisible : elle se déclarera d&#39;un coup, sans préavis, le jour où ce secours sera retiré.</li><li>Ou bien <strong>l&#39;envoi est interrompu</strong>, et vous le voyez tout de suite.</li></ul>
+<p>Dans les deux cas, la seule action utile est de <strong>contacter l&#39;éditeur</strong> pour rétablir la clé de chiffrement.</p>
+<h2>Les fournisseurs pré-réglés</h2>
+<p>Six choix : <strong>Gmail</strong>, <strong>OVH</strong>, <strong>Office 365</strong>, <strong>Brevo</strong>, <strong>IONOS</strong> et <strong>Personnalisé</strong>. Choisir un fournisseur remplit le serveur, le port et le chiffrement à votre place, et affiche l&#39;avertissement propre à ce service.</p>
+<p><strong>Gmail</strong> : activez la validation en deux étapes, puis générez un <em>mot de passe d&#39;application</em>. Votre mot de passe habituel ne fonctionne pas.</p>
+<p><strong>Office 365</strong> : le <em>SMTP AUTH</em> doit être activé dans la console d&#39;administration Microsoft. Identifiant = l&#39;adresse email complète.</p>
+<p><strong>OVH</strong> : identifiant = l&#39;adresse email complète de votre hébergement, mot de passe = celui de la boîte. Serveur <code>ssl0.ovh.net</code>, port 587.</p>
+<p><strong>Brevo</strong> (ex-Sendinblue) : créez une clé SMTP chez eux. Identifiant = votre email Brevo, mot de passe = la clé générée.</p>
 <h2>La configuration</h2>
-<p><strong>Fournisseur de messagerie</strong> : le service que vous utilisez.</p>
-<p><strong>Serveur</strong> et <strong>port</strong> : l&#39;adresse du serveur d&#39;envoi et son port.</p>
-<p><strong>Chiffrement</strong> : trois choix. <strong>STARTTLS (port 587)</strong> convient à la plupart des fournisseurs et c&#39;est le réglage recommandé. <strong>SSL/TLS (port 465)</strong> en est l&#39;alternative. <strong>Aucun</strong> est déconseillé.</p>
-<p><strong>Identifiant</strong> et <strong>mot de passe</strong> : vos accès au service d&#39;envoi.</p>
-<h2>L&#39;expéditeur par défaut</h2>
-<p><strong>Nom affiché</strong> : ce que vos destinataires lisent comme expéditeur, par exemple le nom de votre cabinet.</p>
-<p><strong>Email expéditeur</strong> : l&#39;adresse d&#39;envoi.</p>
-<p><strong>Reply-To</strong> : optionnel. L&#39;adresse à laquelle les réponses arrivent, si elle diffère de l&#39;adresse d&#39;envoi. Laissée vide, les réponses reviennent à l&#39;expéditeur.</p>
+<p><strong>Serveur</strong> et <strong>port</strong> : pré-remplis par le fournisseur choisi, modifiables.</p>
+<p><strong>Chiffrement</strong> : <strong>STARTTLS (port 587)</strong> convient à la plupart des fournisseurs, c&#39;est le réglage recommandé. <strong>SSL/TLS (port 465)</strong> en est l&#39;alternative. <strong>Aucun</strong> est déconseillé.</p>
+<p><strong>Expéditeur par défaut</strong> : le <strong>nom affiché</strong> que vos destinataires lisent, l&#39;<strong>email expéditeur</strong>, et un <strong>Reply-To</strong> optionnel si les réponses doivent arriver ailleurs. Laissé vide, les réponses reviennent à l&#39;adresse d&#39;envoi.</p>
 <h2>Tester avant d&#39;activer</h2>
-<p>Le bouton <strong>Tester la configuration</strong> envoie un email à l&#39;adresse de destination que vous indiquez. C&#39;est le moyen de vérifier vos réglages <strong>sans attendre qu&#39;un vrai envoi échoue</strong>. La case <strong>Service SMTP actif</strong> commande l&#39;envoi réel.</p>
+<p>Le bouton <strong>Tester la configuration</strong> envoie un email à l&#39;adresse de destination que vous indiquez. C&#39;est le moyen de vérifier vos réglages <strong>sans attendre qu&#39;un vrai envoi échoue</strong>. La case <strong>Service SMTP actif</strong> commande ensuite l&#39;envoi réel : décochée, vos emails ne partent pas.</p>
 <h2>Bon à savoir</h2>
-<p>Le mot de passe est <strong>chiffré</strong> une fois enregistré : l&#39;écran vous indique qu&#39;il est configuré et vous n&#39;avez <strong>pas à le re-saisir</strong> pour modifier un autre réglage. Laissez le champ vide pour le conserver.</p>
-<p>Sur <strong>Gmail</strong> et <strong>Office 365</strong>, votre mot de passe habituel ne fonctionne pas : ces services demandent un <strong>mot de passe d&#39;application</strong>, à générer chez eux. C&#39;est la cause la plus fréquente d&#39;un test qui échoue.</p>
-<p>Si le service est inactif, vos emails ne partent pas depuis cette configuration.</p>
-<h2>Sujets voisins</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<p>Le mot de passe est <strong>chiffré</strong> une fois enregistré et n&#39;est jamais renvoyé en clair : seul un aperçu masqué reste visible. Vous n&#39;avez donc pas à le re-saisir pour modifier un autre réglage, laissez le champ vide.</p>
+<p>L&#39;écran porte en bas un rappel des prérequis par fournisseur, avec un lien vers le guide de paramétrage.</p>
+<h2>&Agrave; lire avant</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
+<h2>Sujets voisins</h2><a class="carte" href="param.interfaces-api.html"><b>Interfaces et API</b> <span>Le raccordement aux services extérieurs : Eliot, signature, facturation électronique, paiement, SMS, WhatsApp et liens externes. Depuis S158, Eliot n&#39;y demande plus de clé : il y affiche votre consommation.</span></a>
+<a class="carte" href="param.sms.html"><b>SMS</b> <span>Quatre fournisseurs au choix, chacun avec ses propres champs d&#39;accès et ses propres règles d&#39;expéditeur. WhatsApp se configure ailleurs.</span></a>
+<h2>Mots-cl&eacute;s</h2><a class="mc" href="index.html#mc-facture">#facture</a><a class="mc" href="index.html#mc-devis">#devis</a><a class="mc" href="index.html#mc-relance">#relance</a>
 <footer>
 Aide AnimGest -- page generee depuis le corpus <code>docs/aide/*.md</code>.<br>
 Une question sans reponse ici ? Ecrivez-nous : <a href="mailto:contact@no-sages-editor.com">contact@no-sages-editor.com</a>
