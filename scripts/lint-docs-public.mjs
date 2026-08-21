@@ -53,6 +53,12 @@ const JOURS_PEREMPTION = 30;
 const args = process.argv.slice(2);
 const MODE_BASELINE = args.includes("--baseline");
 const MODE_CHECK = args.includes("--check");
+// [S168_DETAILS_COMPLETS_V1] `--tout` leve le plafond d'affichage des details.
+// POURQUOI. Les details sont tronques a 25 lignes par compteur. C1 en porte 63 (36 fantomes
+// + 27 indetermines) : on ne pouvait donc PAS lire la liste des chemins fantomes, alors que
+// le script la calcule entierement. Un compteur qu'on ne peut pas ouvrir ne se repare pas.
+// La mesure ne change pas d'un iota : seul le nombre de lignes AFFICHEES change.
+const PLAFOND_DETAILS = args.includes("--tout") ? Infinity : 25;
 
 // La nav de reference (arbitrage 3a du 17/07), dans l'ORDRE. Le script est ASCII pur :
 // les libelles accentues passent par des echappements \u, jamais par des octets accentues.
@@ -452,8 +458,8 @@ if (!MODE_CHECK) {
   for (const [code, lignes] of Object.entries(r.details)) {
     if (!lignes.length) continue;
     console.log(`\n--- ${code.toUpperCase()} (${lignes.length}) ---`);
-    for (const l of lignes.slice(0, 25)) console.log(`  ${l}`);
-    if (lignes.length > 25) console.log(`  ... ${lignes.length - 25} de plus`);
+    for (const l of lignes.slice(0, PLAFOND_DETAILS)) console.log(`  ${l}`);
+    if (lignes.length > PLAFOND_DETAILS) console.log(`  ... ${lignes.length - PLAFOND_DETAILS} de plus (relancer avec --tout)`);
   }
 }
 
