@@ -39,6 +39,16 @@
  *   &middot; chacune. Le cadratin y est une incoherence avec la ligne elle-meme, et maj-cadratins
  *   -docs.mjs, qui traitait les pieds de page, les a laisses passer. C'est une correction de bug.
  *
+ *   *** CORRIGE LE 24/08, APRES LECTURE DE PAGES ENTIERES. ***
+ *   Deux trous, trouves non par le script mais en lisant adv-eliot-avance et 62-tarification :
+ *     TITRE ratait "<div class=\"section-title\"><span class=\"num\">04</span> X &mdash; Y</div>".
+ *       Le </span> intermediaire cassait le motif, qui n'admettait que des balises OUVRANTES entre
+ *       l'attribut de classe et le cadratin. 4 titres tombaient donc en PROSE.
+ *     GARDE connaissait "ne fournit jamais" mais pas "ne derive jamais" : le garde-fou sante de
+ *       adv-eliot-avance.html:660 passait pour de la prose ordinaire.
+ *   Aucun des deux n'etait dangereux (PROSE veut dire "un humain lit"), mais tous deux faisaient
+ *   sous-estimer le mecanique. C'est l'argument pour lire les pages plutot que la liste.
+ *
  *   Usage : node scripts/etat-cadratins-structure.mjs [--racine C:\AnimGest-docs] [--tout]
  *           [--page X] [--role PROSE]
  */
@@ -64,9 +74,9 @@ const CAD_G = new RegExp(CAD, "g");
 const REGLES = [
   ["CELLULE", new RegExp(`<t[dh][^>]*>\\s*${CAD}\\s*</t[dh]>`, "gi")],
   ["PIED", new RegExp(`Anim'Gest\\s*${CAD}\\s*No Sage's Editor`, "gi")],
-  ["TITRE", new RegExp(`<(?:title|h[1-6])[^>]*>[^<]*${CAD}|class="[^"]*title[^"]*"[^>]*>(?:<[^>]+>)*[^<]*${CAD}`, "gi")],
+  ["TITRE", new RegExp(`<(?:title|h[1-6])[^>]*>[^<]*${CAD}|class="[^"]*title[^"]*"[^>]*>(?:[^<]|<(?!/(?:div|p|h[1-6]|li)\\b)[^>]*>)*?${CAD}`, "gi")],
   ["GLOSE", new RegExp(`<li>\\s*<strong>[^<]+</strong>\\s*${CAD}`, "gi")],
-  ["GARDE", new RegExp(`Cadre Eliot|ne (?:fournit|calcule|prescrit) jamais`, "gi")],
+  ["GARDE", new RegExp(`Cadre Eliot|ne (?:fournit|calcule|prescrit|d(?:&eacute;|\\u00e9)rive) jamais`, "gi")],
   ["LEGAL", new RegExp(`(?:Arr&ecirc;t&eacute;|Arr[e\\u00ea]t[e\\u00e9]|Article|D[e\\u00e9]cret|NF ?525|Code rural)[^<]{0,80}${CAD}`, "gi")],
 ];
 
