@@ -151,9 +151,9 @@ footer{text-align:center;padding:32px;border-top:1px solid rgba(255,255,255,0.06
       <thead><tr><th>Code</th><th>Signification &amp; action</th></tr></thead>
       <tbody>
         <tr><td>200</td><td>La notification a &eacute;t&eacute; re&ccedil;ue, sa signature v&eacute;rifi&eacute;e et le r&egrave;glement rapproch&eacute;. Rien &agrave; faire.</td></tr>
-        <tr><td>503</td><td><b>Cl&eacute; manquante.</b> Aucun secret webhook n'est renseign&eacute; pour cet &eacute;tablissement &mdash; collez le <code>whsec_&hellip;</code> dans <span class="ui">Param&egrave;tres &rsaquo; API &rsaquo; Stripe</span>.</td></tr>
-        <tr><td>400</td><td><b>Signature invalide.</b> Le secret collé ne correspond pas &agrave; celui du endpoint &mdash; recopiez la bonne cl&eacute; du bon endpoint.</td></tr>
-        <tr><td>400 &middot; BAD_TENANT</td><td><b>Identifiant mal form&eacute;.</b> L'URL ne se termine pas par un <code>tXXXXXX</code> valide &mdash; corrigez la fin de l'adresse du endpoint.</td></tr>
+        <tr><td>503</td><td><b>Cl&eacute; manquante.</b> Aucun secret webhook n'est renseign&eacute; pour cet &eacute;tablissement : collez le <code>whsec_&hellip;</code> dans <span class="ui">Param&egrave;tres &rsaquo; API &rsaquo; Stripe</span>.</td></tr>
+        <tr><td>400</td><td><b>Signature invalide.</b> Le secret collé ne correspond pas &agrave; celui du endpoint : recopiez la bonne cl&eacute; du bon endpoint.</td></tr>
+        <tr><td>400 &middot; BAD_TENANT</td><td><b>Identifiant mal form&eacute;.</b> L'URL ne se termine pas par un <code>tXXXXXX</code> valide : corrigez la fin de l'adresse du endpoint.</td></tr>
       </tbody>
     </table>
     <div class="note info"><b>Idempotence.</b> Si Stripe renvoie deux fois la m&ecirc;me notification, le r&egrave;glement n'est enregistr&eacute; qu'une seule fois&nbsp;: aucun doublon sur la facture.</div>
