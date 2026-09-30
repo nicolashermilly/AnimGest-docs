@@ -143,7 +143,7 @@ select.tool{cursor:pointer}
     <button class="play" id="play" aria-label="Lecture automatique"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
     <button class="nav primary" id="next">Suivant &#8594;</button>
   </div>
-  <audio id="vo" preload="none"></audio>
+  <audio id="vo" preload="auto"></audio>
 </div>
 
 <div class="overlay" id="ovSom">
@@ -210,7 +210,7 @@ var FAQ_ICON="<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" s
   }, S[i].duree_s*1000); }
   function setAuto(v){ autoplay=v; playBtn.innerHTML=v?PAUSE_ICON:PLAY_ICON;
     playBtn.setAttribute('aria-label', v?'Pause':'Lecture automatique');
-    if(v){ arm(); if(voEl){ var p=voEl.play(); if(p&&p.catch) p.catch(function(){}); } }
+    if(v){ arm(); playVO(); }
     else { clearTimeout(timer); if(voEl) voEl.pause(); } }
 
   // [S171_G-T53_VOIX_OFF_PLAYER_V1] Voix off : la voix SUIT les slides (un MP3 par scene et par voix).
