@@ -13,23 +13,25 @@
 <main>
 <p><a href="index.html">Aide AnimGest</a></p>
 <h1>Créer ou modifier un article</h1>
-<p class="chapo">Le détail d&#39;un article ou d&#39;une prestation : référence, libellé, catégorie, type, unité, prix HT, TVA et statut. Le type décide si l&#39;article remonte à l&#39;inventaire. <span class="badge">En cours de mise à jour</span></p>
-<div class="enbref"><p>Cet écran <strong>crée</strong> un article ou une prestation, et <strong>met à jour</strong> ceux qui existent déjà. Vous renseignez sa <strong>référence</strong>, son <strong>libellé</strong>, sa <strong>catégorie</strong>, son <strong>type</strong>, son <strong>unité</strong>, son <strong>prix HT</strong>, son <strong>taux de TVA</strong> et son <strong>statut</strong>. Une fois enregistré, l&#39;article rejoint le catalogue et devient disponible sur vos documents.</p></div>
+<p class="chapo">Le détail d&#39;un article ou d&#39;une prestation : référence, libellé, catégorie, nature, unité, prix HT, TVA et statut. La case Suivi en inventaire, distincte de la nature, décide si l&#39;article remonte au stock. <span class="badge">Vérifié Septembre 2026</span></p>
+<div class="enbref"><p>Cet écran <strong>crée</strong> un article ou une prestation (<em>Nouvel article</em>), et <strong>modifie</strong> ceux qui existent déjà (<em>Modifier l&#39;article</em>). Vous renseignez sa <strong>référence</strong>, son <strong>libellé</strong>, sa <strong>catégorie</strong>, sa <strong>nature</strong>, son <strong>unité</strong>, son <strong>prix HT</strong>, sa <strong>TVA</strong> et son <strong>statut</strong>, et vous indiquez s&#39;il est <strong>suivi en inventaire</strong>. Une fois enregistré, l&#39;article rejoint le catalogue et devient disponible sur vos documents.</p></div>
 <h2>Les champs</h2>
 <p><strong>Référence</strong> : l&#39;identifiant de l&#39;article, par exemple PREST-001.</p>
-<p><strong>Libellé</strong> : le nom lisible, celui qui s&#39;affichera sur vos devis et factures.</p>
-<p><strong>Catégorie</strong> : le regroupement de l&#39;article. C&#39;est elle qui alimente le filtre par catégorie du catalogue. Un lien <strong>Gérer les catégories</strong> permet de les administrer sans quitter l&#39;idée.</p>
-<p><strong>Type d&#39;article</strong> : <strong>Prestation (non stockée)</strong> ou <strong>Article stocké (inventaire)</strong>. L&#39;écran le dit sous le champ : <em>seuls les articles stockés sont proposés à l&#39;inventaire, les prestations en sont exclues</em>.</p>
+<p><strong>Libellé</strong> (obligatoire) : le nom lisible, celui qui s&#39;affichera sur vos devis et factures.</p>
+<p><strong>Catégorie</strong> (obligatoire) : le regroupement de l&#39;article, qui alimente le filtre par catégorie du catalogue. Un lien <strong>Gérer les catégories</strong> permet de les administrer sans quitter l&#39;écran. À la création, s&#39;il n&#39;existe encore aucune catégorie, l&#39;écran vous invite à en créer une d&#39;abord.</p>
+<p><strong>Nature</strong> : <strong>Article</strong> (un objet cédé) ou <strong>Prestation</strong> (un service rendu), avec un choix <em>À qualifier</em> tant que ce n&#39;est pas tranché.</p>
+<p><strong>Suivi en inventaire</strong> : une case, distincte de la nature. C&#39;est <strong>elle</strong> qui décide si l&#39;article est compté au stock.</p>
 <p><strong>Unité</strong> : ce que vous comptez. Une unité, une heure, un forfait.</p>
 <p><strong>Prix HT</strong> : le prix de référence, hors taxe.</p>
-<p><strong>TVA</strong> : le taux appliqué, choisi parmi vos taux paramétrés.</p>
-<p><strong>Statut</strong> : <strong>Actif</strong> pour qu&#39;il soit proposé, <strong>Inactif</strong> pour le garder au catalogue sans le proposer.</p>
-<h2>Le type est le champ à ne pas se tromper</h2>
-<p>C&#39;est le seul champ de cet écran qui a des conséquences ailleurs. Une prestation classée par erreur en <strong>article stocké</strong> apparaîtra dans vos inventaires et faussera votre valorisation. Un consommable classé en <strong>prestation</strong> en sera absent, et votre stock valorisé sera sous-évalué sans que rien ne le signale.</p>
-<p>Posez-vous la question simplement : est-ce que je le <strong>compte en rayon</strong> ? Si oui, article stocké.</p>
+<p><strong>TVA</strong> : le taux appliqué, choisi parmi vos taux paramétrés, ou <em>Exonéré (0%)</em>.</p>
+<p><strong>Statut</strong> : <strong>Actif</strong> pour qu&#39;il soit proposé, <strong>Inactif</strong> pour le garder au catalogue et dans vos documents passés sans le proposer à la sélection.</p>
+<p>L&#39;écran porte aussi de quoi cadrer l&#39;usage de l&#39;article : les <strong>métiers</strong> qui peuvent le vendre (par défaut, tous), et, le cas échéant, un <strong>type de séance</strong> et un <strong>métier d&#39;origine</strong>.</p>
+<h2>La case Suivi en inventaire est celle à ne pas se tromper</h2>
+<p>C&#39;est le réglage de cet écran qui a des conséquences ailleurs. Un consommable qu&#39;on oublie de cocher <strong>Suivi en inventaire</strong> n&#39;apparaîtra pas dans vos inventaires, et votre stock valorisé sera sous-évalué sans que rien ne le signale. À l&#39;inverse, une prestation cochée par erreur s&#39;y invitera et faussera la valorisation ; l&#39;écran vous le signale d&#39;ailleurs et vous invite à la repasser en <em>Article</em> pour décocher.</p>
+<p>Posez-vous la question simplement : est-ce que je le <strong>compte en rayon</strong> ? Si oui, cochez <em>Suivi en inventaire</em>.</p>
 <h2>Bon à savoir</h2>
 <p>Un article créé <strong>Inactif</strong> n&#39;est pas une erreur : c&#39;est une façon de préparer un catalogue avant de l&#39;ouvrir.</p>
-<p>Si l&#39;écran annonce qu&#39;il <strong>n&#39;a pas pu charger les catégories</strong>, ne forcez pas l&#39;enregistrement : rechargez la page. Une liste de catégories vide et une liste qui n&#39;a pas pu être lue se ressemblent, et seule la seconde vous ferait perdre le rattachement de l&#39;article.</p>
+<p>Si l&#39;écran annonce qu&#39;il <strong>n&#39;a pas pu charger les catégories</strong> (ou vos taux de TVA), ne forcez pas l&#39;enregistrement : rechargez la page. Une liste vide et une liste qui n&#39;a pas pu être lue se ressemblent, et seule la seconde vous ferait perdre un rattachement.</p>
 <p>Si l&#39;écran affiche <em>Article introuvable</em>, la référence n&#39;existe plus : repassez par le catalogue.</p>
 <h2>&Agrave; lire avant</h2><a class="carte" href="param.articles.html"><b>Catalogue articles et prestations</b> <span>Le catalogue de ce que vous vendez : référence, libellé, unité, prix HT, TVA et état actif. Un article peut être une prestation ou un article stocké, et cette distinction commande l&#39;inventaire.</span></a>
 <h2>Sujets voisins</h2><a class="carte" href="param.hub.html"><b>Paramètres</b> <span>Le point d&#39;entrée de la configuration de votre espace, en cinq familles : identité et présentation, métier et activité, comptabilité et paiements, interfaces et communications, administration.</span></a>
