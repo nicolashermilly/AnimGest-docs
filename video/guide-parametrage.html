@@ -218,8 +218,16 @@ var FAQ_ICON="<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" s
   function voiceName(){ return voice==='claudia' ? 'Claudia (F)' : 'Claude (H)'; }
   function playVO(){ if(!voEl) return;
     var inl = (VOAUDIO[voice]||[])[i];
-    voEl.src = inl || ('voix-off/'+voice+'/scene-'+String(S[i].n).padStart(2,'0')+'.mp3');
-    var p = voEl.play(); if(p&&p.catch) p.catch(function(){}); }
+    var src = inl || ('voix-off/'+voice+'/scene-'+String(S[i].n).padStart(2,'0')+'.mp3');
+    // [S171_G-T53] Jouer CHAQUE scene, pas seulement la 1re : appeler play() une fois la source PRETE.
+    // Sinon play() est declenche avant le chargement de la nouvelle src et rejette (seule la scene 1,
+    // jouee au clic, passait). On attache 'canplay' AVANT load() pour ne pas rater l'evenement.
+    try { voEl.pause(); } catch(e){}
+    var tryPlay = function(){ var p = voEl.play(); if(p&&p.catch) p.catch(function(){}); };
+    voEl.oncanplay = function(){ voEl.oncanplay = null; tryPlay(); };
+    voEl.src = src;
+    try { voEl.load(); } catch(e){}
+    if (voEl.readyState >= 3) { voEl.oncanplay = null; tryPlay(); } }
 
   function setSubs(v){ subs=v; var b=$('#tSubs'); if(b) b.classList.toggle('on',v);
     var e=$('#subs'); if(e) e.classList.toggle('hidden',!v); }
