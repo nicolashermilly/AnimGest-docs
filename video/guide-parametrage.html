@@ -47,13 +47,16 @@ select.tool{cursor:pointer}
 .stage{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start;padding-bottom:8px}
 .frame{position:relative;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;
   display:flex;align-items:center;justify-content:center;min-height:220px}
-.frame img{display:block;width:100%;height:auto;max-height:80vh;object-fit:contain;background:#0b1220}
+.main{display:flex;flex-direction:column;gap:12px;min-width:0}
+.frame img{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain;background:#0b1220}
 .ph{color:var(--muted);text-align:center;padding:2rem;font-family:var(--font-mono);font-size:.85rem}
 .ph b{display:block;color:var(--cyan-2);font-family:var(--font-display);font-size:1rem;margin-bottom:.4rem}
 .badge-chap{position:absolute;top:12px;left:12px;background:rgba(79,70,229,.85);color:var(--white);
   font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:99px;backdrop-filter:blur(4px)}
-.subs{position:absolute;left:0;right:0;bottom:0;padding:14px 16px;background:linear-gradient(0deg,rgba(8,12,22,.92),rgba(8,12,22,0));
-  color:var(--white);font-size:1rem;line-height:1.4;text-align:center}
+/* [S171_VIDEO_SOUS-TITRE_HORS-IMAGE_V1] sous-titre SOUS la capture (jamais par-dessus l'ecran montre) */
+.subs{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 18px;
+  color:var(--white);font-size:1.05rem;line-height:1.45;text-align:center;min-height:3.6em;
+  display:flex;align-items:center;justify-content:center}
 .subs.hidden{display:none}
 
 /* -- panneau -- */
@@ -135,7 +138,10 @@ select.tool{cursor:pointer}
     <span class="counter" id="counter"></span>
   </div>
   <div class="stage">
-    <div class="frame" id="frame"></div>
+    <div class="main">
+      <div class="frame" id="frame"></div>
+      <div id="subs" class="subs" aria-live="polite"></div>
+    </div>
     <div class="panel" id="panel"></div>
   </div>
   <div class="controls">
@@ -179,9 +185,9 @@ var FAQ_ICON="<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" s
     var media = sc.img
       ? '<img src="'+sc.img+'" alt="'+esc('Ecran : '+(sc.helpId||sc.titre))+'">'
       : '<div class="ph"><b>Capture a produire</b>'+esc(sc.capture||sc.helpId||'')+'</div>';
-    var sub = '<div id="subs" class="subs'+(subs?'':' hidden')+'">'+esc(sc.synthese.join(' '))+'</div>';
-    frame.innerHTML = chap + media + sub;
-    subsEl = $('#subs');
+    frame.innerHTML = chap + media;
+    // lignes de synthese jointes par un point si la ligne n'a pas deja sa ponctuation finale
+    subsEl.textContent = sc.synthese.map(function(x,k,a){ return (k<a.length-1 && !/[.!?:;…]$/.test(x)) ? x+'.' : x; }).join(' ');
   }
   function renderPanel(sc){
     var lis = sc.synthese.map(function(x){return '<li>'+esc(x)+'</li>';}).join('');
@@ -204,14 +210,23 @@ var FAQ_ICON="<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" s
   function go(d){ var j=i+d; if(j<0||j>N-1) return; i=j; render(); if(autoplay) arm(); }
   function jump(j){ i=Math.max(0,Math.min(N-1,j)); render(); if(autoplay) arm(); closeOverlay(); }
 
-  // autoplay : avance apres duree_s ; s'arrete a la fin
-  function arm(){ clearTimeout(timer); remain=S[i].duree_s; timer=setTimeout(function(){
-    if(i<N-1){ go(1); } else { setAuto(false); }
-  }, S[i].duree_s*1000); }
+  // [S171_VIDEO_CALAGE_VOIX_V1] autoplay : la slide dure le temps de SA voix off + 0,5 s.
+  // La slide suivante part GAP_MS apres la fin du MP3 (evenement 'ended') : ni blanc, ni voix coupee.
+  // duree_s du script ne sert plus que de REPLI (MP3 absent, illisible ou lecture refusee).
+  var GAP_MS = 500;
+  function advance(){ clearTimeout(timer); if(i<N-1){ go(1); } else { setAuto(false); } }
+  function fallback(){ clearTimeout(timer); timer=setTimeout(advance, S[i].duree_s*1000); }
+  function arm(){ clearTimeout(timer); if(!voEl) fallback(); }
   function setAuto(v){ autoplay=v; playBtn.innerHTML=v?PAUSE_ICON:PLAY_ICON;
     playBtn.setAttribute('aria-label', v?'Pause':'Lecture automatique');
-    if(v){ arm(); playVO(); }
-    else { clearTimeout(timer); if(voEl) voEl.pause(); } }
+    clearTimeout(timer);
+    if(v){
+      if(!voEl){ fallback(); return; }
+      if(voEl.ended){ timer=setTimeout(advance, GAP_MS); }                       // voix deja finie
+      else if(voEl.paused && voEl.currentTime>0){ var p=voEl.play(); if(p&&p.catch) p.catch(fallback); } // reprise
+      else if(voEl.paused){ playVO(); }                                          // jamais lancee
+    }
+    else { if(voEl) voEl.pause(); } }
 
   // [S171_G-T53_VOIX_OFF_PLAYER_V1] Voix off : la voix SUIT les slides (un MP3 par scene et par voix).
   // Fallback silencieux si le MP3 manque (onerror + play().catch) : aucun crash, sous-titres intacts.
@@ -223,7 +238,7 @@ var FAQ_ICON="<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" s
     // Sinon play() est declenche avant le chargement de la nouvelle src et rejette (seule la scene 1,
     // jouee au clic, passait). On attache 'canplay' AVANT load() pour ne pas rater l'evenement.
     try { voEl.pause(); } catch(e){}
-    var tryPlay = function(){ var p = voEl.play(); if(p&&p.catch) p.catch(function(){}); };
+    var tryPlay = function(){ var p = voEl.play(); if(p&&p.catch) p.catch(function(){ if(autoplay) fallback(); }); };
     voEl.oncanplay = function(){ voEl.oncanplay = null; tryPlay(); };
     voEl.src = src;
     try { voEl.load(); } catch(e){}
@@ -246,7 +261,8 @@ var FAQ_ICON="<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" s
 
   // prompteur
   function openPrompt(){ var sc=S[i];
-    $('#promptMeta').textContent='Scene '+sc.n+' - '+sc.titre+'  ('+sc.duree_s+' s)  -  Voix off : '+voiceName();
+    var d = (voEl && isFinite(voEl.duration) && voEl.duration>0) ? (Math.round(voEl.duration*10)/10)+' s de voix + 0,5 s' : sc.duree_s+' s';
+    $('#promptMeta').textContent='Scene '+sc.n+' - '+sc.titre+'  ('+d+')  -  Voix off : '+voiceName();
     $('#promptTxt').textContent=sc.narration||'(pas de narration)';
     $('#ovPrompt').classList.add('open');
   }
@@ -270,7 +286,10 @@ var FAQ_ICON="<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" s
     else if(e.key.toLowerCase()==='p'){ closeOverlay(); openPrompt(); }
   });
 
-  if(voEl) voEl.onerror=function(){};
+  if(voEl){
+    voEl.onended=function(){ if(!autoplay) return; clearTimeout(timer); timer=setTimeout(advance, GAP_MS); };
+    voEl.onerror=function(){ if(autoplay) fallback(); };
+  }
   if(voiceSel) voiceSel.value=voice;
   buildSom(); setSubs(true); render();
 })();
