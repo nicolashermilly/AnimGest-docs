@@ -1,0 +1,155 @@
+/* ==========================================================================
+   theme.css — Charte Anim'Gest (socle éditeur No Sage's Editor)
+   Implémente les jetons officiels de CHARTE-GRAPHIQUE_SITE-EDITEUR (editeur.css)
+   pour le jeu de composants du sous-domaine docs. Anim'Gest = BLEU (jeu par défaut).
+   Chargée APRÈS les styles inline de chaque page : surcharge variables + composants.
+   navy #070C1C · surfaces #101B38 · lignes #293a63
+   primaire indigo #6366F1 -> accent cyan #22D3EE · violet #8B5CF6 · purple #C026D3
+   titres serif Georgia · corps sans système · technique mono
+   ========================================================================== */
+
+:root{
+  /* Polices charte éditeur */
+  --display:Georgia,'Times New Roman',serif;
+  --body:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+  /* Fonds */
+  --navy:#070C1C; --navy-800:#101B38; --navy-700:#16244A; --navy-600:#293a63;
+  --border:#293a63; --card:#101B38;
+  /* Accent : on remappe l'ancien "gold" sur le cyan de la charte, et le violet sur l'indigo */
+  --gold:#22D3EE; --gold-light:#67E8F9; --gold-pale:#16244A;
+  --cyan:#22D3EE; --violet:#6366F1;
+  /* Texte */
+  --text:#EEF2FF; --text-muted:#A6B6D9;
+  /* Nouveaux tokens charte */
+  --indigo:#6366F1; --accent:#22D3EE; --purple:#C026D3;
+  --grad:linear-gradient(120deg,#6366F1,#22D3EE);
+  --glow:rgba(34,211,238,.45);
+}
+
+/* Fond global plus profond */
+html,body{background:var(--navy) !important;}
+
+/* ---- Marque : dégradé indigo->cyan sur le logo texte ---- */
+.nav-logo,.brand{
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;
+  color:transparent !important;
+}
+
+/* ---- Barre de navigation ---- */
+nav{
+  background:rgba(7,12,28,.82) !important;
+  border-bottom:1px solid var(--border) !important;
+}
+nav a:hover{color:var(--accent) !important;}
+.nav-badge{
+  background:rgba(34,211,238,.12) !important;
+  border:1px solid rgba(34,211,238,.4) !important;
+}
+
+/* ---- Héros : aurora indigo/cyan au lieu du halo gold ---- */
+.hero{
+  background:
+    radial-gradient(42% 55% at 14% 8%,rgba(99,102,241,.26),transparent 60%),
+    radial-gradient(38% 48% at 86% 0%,rgba(34,211,238,.18),transparent 60%),
+    radial-gradient(50% 60% at 60% 120%,rgba(192,38,211,.14),transparent 62%),
+    linear-gradient(135deg,#070C1C 0%,#0a1430 55%,#070C1C 100%) !important;
+  border-bottom:1px solid rgba(99,102,241,.22) !important;
+}
+.hero::before{
+  background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,.16) 0%,transparent 70%) !important;
+}
+.hero-label{
+  background:rgba(99,102,241,.12) !important;
+  border:1px solid rgba(99,102,241,.38) !important;
+  color:var(--accent) !important;
+}
+.hero-tag{border-color:rgba(255,255,255,.1) !important;}
+
+/* ---- Bandeaux de KPI ---- */
+.kpi-grid{
+  background:var(--border) !important;
+  border-top:1px solid rgba(34,211,238,.18) !important;
+  border-bottom:1px solid rgba(34,211,238,.18) !important;
+}
+.kpi-value{
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent !important;
+}
+
+/* ---- Titres de section ---- */
+.section-title{border-bottom:1px solid rgba(99,102,241,.28) !important;}
+.section-title .num{
+  background:rgba(34,211,238,.1) !important;
+  border:1px solid rgba(34,211,238,.32) !important;
+}
+
+/* ---- Listes d'étapes / cartes ---- */
+.step-item:hover{border-color:rgba(34,211,238,.32) !important;}
+.step-num{
+  background:rgba(34,211,238,.1) !important;
+  border:1px solid rgba(34,211,238,.22) !important;
+}
+ol.steps>li::before{border-color:rgba(34,211,238,.4) !important;}
+.scenario-card:hover{border-color:rgba(34,211,238,.35) !important;}
+.scenario-card:hover{transform:translateY(-2px);box-shadow:0 18px 40px -22px var(--glow);}
+
+/* ---- Chips / pastilles de code ---- */
+.ui,.mc{
+  background:rgba(34,211,238,.1) !important;
+  border-color:rgba(34,211,238,.25) !important;
+  color:var(--gold-light) !important;
+}
+.badge{
+  background:rgba(99,102,241,.14) !important;
+  border:1px solid rgba(99,102,241,.4) !important;
+  color:var(--accent) !important;
+}
+
+/* ---- Notes ---- (on garde l'ambre pour les avertissements, sémantique) */
+.note.info{border-color:rgba(34,211,238,.32) !important;}
+
+/* ---- Tableaux ---- */
+main th,.table th{ } /* couleur via var(--gold) -> cyan, rien à forcer */
+
+/* ---- Boutons (pages avec CTA, dont l'accueil) ---- */
+.btn-primary,.btn.primary,.cta-primary,.cta-nav,button.primary{
+  background:var(--grad) !important;background-size:200% 200% !important;
+  color:#fff !important;border:0 !important;
+  box-shadow:0 14px 34px -14px rgba(99,102,241,.7);
+}
+.btn-ghost,.btn.ghost,.cta-ghost{border:1px solid var(--border) !important;color:var(--text) !important;}
+.btn-ghost:hover,.btn.ghost:hover{border-color:var(--accent) !important;box-shadow:0 0 0 3px rgba(34,211,238,.12) !important;}
+
+/* ---- Liens accent ---- */
+a{color:var(--accent);}
+
+/* ---- Fil de nouveautés (changelog) : puce + titres ---- */
+.news-item:before{background:var(--accent) !important;}
+.news{border-left-color:var(--border) !important;}
+
+/* ---- Divider animé facultatif (si présent) ---- */
+.divider{background:linear-gradient(90deg,transparent,var(--cyan),var(--violet),transparent) !important;}
+
+/* ---- Surcharges défensives (fonds/bordures gold rgba résiduels) ---- */
+.featured-card:hover{border-color:rgba(34,211,238,.5) !important;}
+.scenario-card .badge-update,.tag-bdd{
+  background:rgba(34,211,238,.1) !important;border-color:rgba(34,211,238,.25) !important;
+}
+.step-tip{background:rgba(99,102,241,.08) !important;border-left-color:var(--accent) !important;}
+.frame-box,.enbref{border-left-color:var(--accent) !important;}
+.hero-stat-val{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent !important;}
+.news-title{color:var(--gold-light) !important;}
+
+/* ---- Polices charte (remplace Playfair/DM par Georgia / sans système / mono) ---- */
+body,p,li,td,th,input,textarea,button,.lede,.section-intro,.step-intro,.card p,.news-body li{
+  font-family:var(--body) !important;
+}
+h1,h2,h3,.nav-logo,.brand,.hero h1,.hero-stat-val,.section-title,.kpi-value,.news-title,
+.carte b,.featured-title,.fs-val,main h1,main h2,.scenario-card .title,.pillar h3,.step-title,
+.sec-head h2,h2.big,.enbref b{
+  font-family:var(--display) !important;letter-spacing:-.5px;
+}
+.mono,code,.ui,.mc,.kpi-label,.hero-label,.eyebrow,.breadcrumb,.step-num,.news-date,.section-title .num,
+.nav-badge,.tag,.pill{
+  font-family:var(--mono) !important;
+}
